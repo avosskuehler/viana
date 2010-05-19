@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="VianaNET.TopFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Height="80">
+  <UserControl.Resources>
+    <ResourceDictionary Source="../VianaControls/VianaStyle.xaml"/>
+  </UserControl.Resources>
+  <Border Grid.Row="1" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80" Background="{StaticResource BannerBackgroundBrush}">
+    <StackPanel Orientation="Horizontal">
+      <Image Name="icon" Width="64" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
+      <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Name="title" Foreground="White" FontSize="14" TextWrapping="Wrap" Margin="5">Title</TextBlock>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>

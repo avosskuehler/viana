@@ -1,0 +1,45 @@
+﻿<Window
+    x:Class="VianaNET.WindowWithHelp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ 	  xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+    xmlns:Viana="clr-namespace:VianaNET"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    lex:LocalizeDictionary.DesignCulture="de"
+	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
+  WindowStartupLocation="CenterScreen"
+  Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}"
+  PreviewKeyDown="Window_PreviewKeyDown" Topmost="True">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/VianaControls/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonDown="Container_MouseLeftButtonDown" MouseLeftButtonUp="Container_MouseLeftButtonUp">
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}"/>
+    <Canvas Name="windowCanvas">
+      <Canvas.Width>
+        <Binding ElementName="VideoImage" Path="ActualWidth" />
+      </Canvas.Width>
+      <Canvas.Height>
+        <Binding ElementName="VideoImage" Path="ActualHeight" />
+      </Canvas.Height>
+      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+        <StackPanel Orientation="Vertical">
+          <Grid Grid.Row="0" x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="LabelTitle" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol">Control Panel Title</Label>
+            <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
+            <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
+          </Grid>
+          <Separator/>
+          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description"/>
+          <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap"/>
+          <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:LocText VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
+        </StackPanel>
+      </Border>
+    </Canvas>
+  </Grid>
+</Window>

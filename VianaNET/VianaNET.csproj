@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B78F89B8-61CF-4DBA-9E96-BBD210848855}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VianaNET</RootNamespace>
+    <AssemblyName>VianaNET</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <ApplicationIcon>Images\VianaNET.ico</ApplicationIcon>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Properties\VianaNETKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\VianaNETKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Application\RecentFiles.cs" />
+    <Compile Include="Application\VianaNETApplication.xaml.cs">
+      <DependentUpon>VianaNETApplication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyles\Colors\Gradients.cs" />
+    <Compile Include="CustomStyles\Colors\Coloration.cs" />
+    <Compile Include="CustomStyles\Colors\ColorType.cs" />
+    <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
+    <Compile Include="CustomStyles\Colors\HSXColor.cs" />
+    <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
+    <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
+    <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
+    <Compile Include="CustomStyles\Office\OfficeColorPallet.cs" />
+    <Compile Include="CustomStyles\Office\OfficeColors.cs" />
+    <Compile Include="CustomStyles\Office\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Utitlity\ExtensionMethods.cs" />
+    <Compile Include="CustomStyles\Utitlity\ObservableObjectCollection.cs" />
+    <Compile Include="CustomStyles\Utitlity\Pair.cs" />
+    <Compile Include="Data\Calibration.cs" />
+    <Compile Include="Data\ExportData.cs" />
+    <Compile Include="Data\StatusBarContent.cs" />
+    <Compile Include="Data\MeasurementType.cs" />
+    <Compile Include="Data\SortedCollection.cs" />
+    <Compile Include="Data\SortedObservableCollection.cs" />
+    <Compile Include="Data\Unit.cs" />
+    <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
+    <Compile Include="Data\DataAxes.cs" />
+    <Compile Include="Data\DataCollection.cs" />
+    <Compile Include="Data\DataSample.cs" />
+    <Compile Include="Data\VideoData.cs" />
+    <Compile Include="Localization\Labels.en.Designer.cs">
+      <DependentUpon>Labels.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localization\Labels.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\ErrorLogger.cs" />
+    <Compile Include="MainWindow\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\VianaDialog.xaml.cs">
+      <DependentUpon>VianaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\TopFrame.xaml.cs">
+      <DependentUpon>TopFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Chart\ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Chart\ExportChart.cs" />
+    <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
+      <DependentUpon>DataGridWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\CalibrateVideoWindow.cs" />
+    <Compile Include="Modules\Video\ClipVideoWindow.cs" />
+    <Compile Include="Modules\Video\Control\Video.cs" />
+    <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
+    <Compile Include="Modules\Video\SelectColorWindow.cs" />
+    <Compile Include="Modules\Video\VideoMode.cs" />
+    <Compile Include="Modules\WindowWithHelp.xaml.cs">
+      <DependentUpon>WindowWithHelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
+      <DependentUpon>BlobsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\BlobDetection\Sharp.xaml.cs">
+      <DependentUpon>Sharp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml.cs">
+      <DependentUpon>ManualDataAquisitionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyles\Converter\DoubleConverter.cs" />
+    <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
+    <Compile Include="Modules\Video\MediaInfo\MediaInfoDLL.cs" />
+    <Compile Include="Modules\Video\LengthDialog.xaml.cs">
+      <DependentUpon>LengthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\VideoWindow.xaml.cs">
+      <DependentUpon>VideoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Localization\Labels.Designer.cs">
+      <DependentUpon>Labels.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\RibbonComboBoxSimple.xaml.cs">
+      <DependentUpon>RibbonComboBoxSimple.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\SliderStyles.xaml.cs">
+      <DependentUpon>SliderStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\MediaSliderControl.xaml.cs">
+      <DependentUpon>MediaSliderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\RibbonSliderValue.xaml.cs">
+      <DependentUpon>RibbonSliderValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\VianaChart.xaml.cs">
+      <DependentUpon>VianaChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\CheckBoxPallet.cs" />
+    <Compile Include="VianaControls\ComboBoxPallet.cs" />
+    <Compile Include="VianaControls\DualTextBox.xaml.cs">
+      <DependentUpon>DualTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\ImageButton.xaml.cs">
+      <DependentUpon>ImageButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\ImageButtonPallet.cs" />
+    <Compile Include="VianaControls\LabeledSlider.xaml.cs">
+      <DependentUpon>LabeledSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\LabeledTextBox.xaml.cs">
+      <DependentUpon>LabeledTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\MediaSlider.xaml.cs">
+      <DependentUpon>MediaSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\MediaTickBar.cs" />
+    <Compile Include="VianaControls\MediaTrack.cs" />
+    <Compile Include="VianaControls\NumericUpDown.xaml.cs">
+      <DependentUpon>NumericUpDown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VianaControls\RadioButtonPallet.cs" />
+    <Compile Include="VianaControls\ScrollBarPallet.cs" />
+    <Compile Include="VianaControls\ScrollViewerPallet.cs" />
+    <Compile Include="VianaControls\SliderValue.xaml.cs">
+      <DependentUpon>SliderValue.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application\VianaNETApplication.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="CustomStyles\Colors\BackgroundStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Colors\GeometryItems.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Converter\Converter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\WindowWithHelp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\BlobDetection\BlobsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Video\BlobDetection\Sharp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\RibbonComboBoxSimple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\SliderStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\MediaSliderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VianaControls\RibbonSliderValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\DataGridStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\VianaChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\VianaStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\VianaDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\TopFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Chart\ChartWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataGrid\DataGridWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\LengthDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\VideoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\CheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\ComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\DualTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\ImageButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\LabeledSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\LabeledTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\MediaSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\NumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\ScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\ScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\Slider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\SliderValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AForge, Version=2.1.2.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.1.2.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock, Version=1.2.2691.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL" />
+    <Reference Include="DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="RibbonControlsLibrary, Version=3.5.31016.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\RibbonControlsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folder_Open.png" />
+    <Resource Include="Images\files.png" />
+    <Resource Include="Images\folder.png" />
+    <Resource Include="Images\save.png" />
+    <Resource Include="Images\Record.png" />
+    <Resource Include="Images\Color.png" />
+    <Resource Include="Images\ColorReset.png" />
+    <Resource Include="Images\RevertLayout.png" />
+    <Resource Include="Images\SaveLayout.png" />
+    <Resource Include="Images\SaveImage.png" />
+    <Resource Include="Images\Help.png" />
+    <Resource Include="Images\Help_small.png" />
+    <Resource Include="Images\LogoFU.png" />
+    <Resource Include="Images\Reconstruction.png" />
+    <Resource Include="Images\Properties.png" />
+    <Resource Include="Images\Properties_small.png" />
+    <Resource Include="Images\Reset32.png" />
+    <Resource Include="Images\Reset16.png" />
+    <Resource Include="Images\Stop.png" />
+    <Resource Include="Images\Stop_small.png" />
+    <Resource Include="Images\Start_small.png" />
+    <Resource Include="Images\Start.png" />
+    <Resource Include="Images\saveHS.png" />
+    <Resource Include="Images\UpArrow.png" />
+    <Resource Include="Images\DownArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Labels.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Labels.de.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.de.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Labels.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VianaNET.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Analyse32.png" />
+    <Resource Include="Images\Video32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VianaNET_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Analyse16.png" />
+    <Resource Include="Images\Video16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Videos\spacebal.avi">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Revert.png" />
+    <Resource Include="Images\Revert_small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VideoOpen32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SeekNext16.png" />
+    <Resource Include="Images\SeekPrevious16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Revert16.png" />
+    <Resource Include="Images\Start16.png" />
+    <Resource Include="Images\Stop16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Pause_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SelectColor16.png" />
+    <Resource Include="Images\SelectColor32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AutomaticDataAquisition16.png" />
+    <Resource Include="Images\AutomaticDataAquisition32.png" />
+    <Resource Include="Images\Calibrate16.png" />
+    <Resource Include="Images\Calibrate_32.png" />
+    <Resource Include="Images\ManualDataAquisition16.png" />
+    <Resource Include="Images\ManualDataAquisition32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ClipVideo16.png" />
+    <Resource Include="Images\ClipVideo32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Chart16.png" />
+    <Resource Include="Images\Chart32.png" />
+    <Resource Include="Images\Datagrid16.png" />
+    <Resource Include="Images\Datagrid32.png" />
+    <Resource Include="Images\VianaLogo64.png" />
+    <Content Include="EVRPresenter32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\Options16.png" />
+    <Resource Include="Images\Options32.png" />
+    <Resource Include="Images\ExportToCsv16.png" />
+    <Resource Include="Images\ExportToCsv32.png" />
+    <Resource Include="Images\ExportToTxt16.png" />
+    <Resource Include="Images\ExportToTxt32.png" />
+    <Resource Include="Images\ExportToXls16.png" />
+    <Resource Include="Images\ExportToXls32.png" />
+    <Resource Include="Images\ExportToXml16.png" />
+    <Resource Include="Images\ExportToXml32.png" />
+    <Resource Include="Images\Capture16.png" />
+    <Resource Include="Images\Capture32.png" />
+    <Resource Include="Images\ExportChartToClipboard16.png" />
+    <Resource Include="Images\ExportChartToClipboard32.png" />
+    <Resource Include="Images\ExportChartToFile16.png" />
+    <Resource Include="Images\ExportChartToFile32.png" />
+    <Resource Include="Images\ExportChartToWord16.png" />
+    <Resource Include="Images\ExportChartToWord32.png" />
+    <Resource Include="Images\LoadVideo16.png" />
+    <Resource Include="Images\LoadVideo32.png" />
+    <Resource Include="Images\VideoWindow16.png" />
+    <Resource Include="Images\VideoWindow32.png" />
+    <Resource Include="Images\AutomaticDataAquisitionStop16.png" />
+    <Resource Include="Images\AutomaticDataAquisitionStop32.png" />
+    <Resource Include="Images\DataDelete16.png" />
+    <Resource Include="Images\DataDelete32.png" />
+    <Resource Include="Images\Recalculate16.png" />
+    <Resource Include="Images\Recalculate32.png" />
+    <Resource Include="Images\VideoDeviceOptions16.png" />
+    <Resource Include="Images\VideoDeviceOptions32.png" />
+    <Content Include="MediaInfo.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\Butterfly.wmv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WPFMediaKit\WPFMediaKit\WPFMediaKit.csproj">
+      <Project>{6030628D-EE93-4D61-B6BE-8B6AE99F3935}</Project>
+      <Name>WPFMediaKit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
+      <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
+      <Name>WPFLocalizeExtension</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

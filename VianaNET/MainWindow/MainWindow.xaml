@@ -1,0 +1,605 @@
+﻿<r:RibbonWindow x:Class="VianaNET.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+    xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    xmlns:Viana="clr-namespace:VianaNET"
+    xmlns:WPFMediaKit="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
+    lex:LocalizeDictionary.DesignCulture="de"
+    ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Icon="/VianaNET;component/Images/VianaNET.ico"
+    IconVisibility="Collapsed"
+    Height="700" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}">
+
+  <r:RibbonWindow.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../VianaControls/VianaStyle.xaml"/>
+        <ResourceDictionary	Source="/RibbonControlsLibrary;component/Themes/Office2007Blue.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </r:RibbonWindow.Resources>
+
+  <DockPanel>
+    <r:Ribbon DockPanel.Dock="Top" 
+              Title="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type r:RibbonWindow}},Path=Title}" 
+              x:Name="mainRibbon" BorderThickness="1" BorderBrush="Black">
+      <r:Ribbon.Resources>
+        <r:RibbonCommand x:Key="QATButtonSave" 
+                         CanExecute="SaveCommand_CanExecute" 
+                         Executed="SaveCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:QATButtonSaveLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:QATButtonSaveLabelDescription}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonSaveToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonSaveToolTipDescription}" 
+                         SmallImageSource="..\Images\saveHS.png" 
+                         LargeImageSource="..\Images\saveHS.png" />
+        
+        <r:RibbonCommand x:Key="ButtonVideoWindow" 
+                         CanExecute="VideoWindowCommand_CanExecute" 
+                         Executed="VideoWindowCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonVideoWindowLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonVideoWindowLabelDescription}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipDescription}" 
+                         SmallImageSource="..\Images\VideoWindow16.png" 
+                         LargeImageSource="..\Images\VideoWindow32.png" />
+        <r:RibbonCommand x:Key="CalibrationOptionsShowCalibration" 
+                         CanExecute="CalibrationOptionsShowCalibrationCommand_CanExecute" 
+                         Executed="CalibrationOptionsShowCalibrationCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ShowCalibrationLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ShowCalibrationLabelDescription}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ShowCalibrationToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ShowCalibrationToolTipDescription}"/>
+        <r:RibbonCommand x:Key="CalibrationOptionsShowClipRegion" 
+                         CanExecute="CalibrationOptionsShowClipRegionCommand_CanExecute" 
+                         Executed="CalibrationOptionsShowClipRegionCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ShowClipRegionLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ShowClipRegionLabelDescription}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ShowClipRegionToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ShowClipRegionToolTipDescription}"/>
+        <r:RibbonCommand x:Key="DatagridDisplayUnits" 
+                         CanExecute="DatagridDisplayUnitsCommand_CanExecute" 
+                         Executed="DatagridDisplayUnitsCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsLabelDescription}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsToolTipDescription}"/>
+        <r:RibbonCommand x:Key="ChartDisplayOptions" 
+                         CanExecute="ChartDisplayOptionsCommand_CanExecute" 
+                         Executed="ChartDisplayOptionsCommand_Executed" 
+                         SmallImageSource="..\Images\Options16.png" 
+                         LargeImageSource="..\Images\Options32.png"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ChartDisplayOptionsLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ChartDisplayOptionsLabelDescription}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ChartDisplayOptionsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ChartDisplayOptionsToolTipDescription}"/>
+        <r:RibbonCommand x:Key="ButtonDatagridWindow" 
+                         CanExecute="DatagridWindowCommand_CanExecute"
+                         Executed="DatagridWindowCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonDatagridWindowLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonDatagridWindowLabelDescription}" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipDescription}" SmallImageSource="..\Images\Datagrid16.png" LargeImageSource="..\Images\Datagrid32.png" />
+        <r:RibbonCommand x:Key="ButtonChartWindow" 
+                         CanExecute="ChartWindowCommand_CanExecute" 
+                         Executed="ChartWindowCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonChartWindowLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonChartWindowLabelDescription}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipDescription}" SmallImageSource="..\Images\Chart16.png" LargeImageSource="..\Images\Chart32.png" />
+        <r:RibbonCommand x:Key="ButtonAbout" Executed="AboutCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonAboutLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonAboutLabelDescription}" SmallImageSource="../Images/Help_small.png" LargeImageSource="../Images/Help.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAboutToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAboutToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonApplication" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonApplicationLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonApplicationLabelDescription}" 
+                         LargeImageSource="../Images/VianaNET_32.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonApplicationToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonApplicationToolTipDescription}" />
+        <r:RibbonCommand x:Key="Close" 
+                         Executed="CloseCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonCloseApplicationLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonCloseApplicationLabelDescription}" 
+                         SmallImageSource="../Images/Reset16.png" 
+                         LargeImageSource="../Images/Reset32.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonNew" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonNewLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonNewLabelDescription}" LargeImageSource="../Images/files.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonNewToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonNewToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonCaptureVideo" 
+                         CanExecute="ButtonCaptureVideoCommand_CanExecute"
+                         Executed="ButtonCaptureVideoCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelDescription}" 
+                         LargeImageSource="../Images/Capture32.png" 
+                         SmallImageSource="../Images/Capture16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonVideoCaptureDeviceProperties" 
+                         CanExecute="ButtonVideoCaptureDevicePropertiesCommand_CanExecute"
+                         Executed="ButtonVideoCaptureDevicePropertiesCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesLabelDescription}" 
+                         LargeImageSource="../Images/VideoDeviceOptions32.png" 
+                         SmallImageSource="../Images/VideoDeviceOptions16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="Open" CanExecute="OpenCommand_CanExecute" Executed="OpenCommand_Executed" LabelTitle="Open" LabelDescription="Open data source." LargeImageSource="../Images/Folder_Open.png" ToolTipTitle="Open data source" ToolTipDescription="Click here to open an existing data source from a file." />
+        <r:RibbonCommand x:Key="Save" CanExecute="SaveCommand_CanExecute" Executed="SaveCommand_Executed" LabelTitle="Save" LabelDescription="Save data points." LargeImageSource="../Images/save.png" ToolTipTitle="Save data points" ToolTipDescription="Click here to save the measured data to disk." />
+        <r:RibbonCommand x:Key="SaveAs" CanExecute="SaveCommand_CanExecute" Executed="SaveAsCommand_Executed" LabelTitle="SaveAs" LabelDescription="Save data points in different file." LargeImageSource="../Images/save.png" ToolTipTitle="Save data points as " ToolTipDescription="Click here to save the measured data to another file." />
+        <r:RibbonCommand x:Key="SaveSelection" CanExecute="SaveCommand_CanExecute" Executed="SaveSelectionCommand_Executed" LabelTitle="Save selected data points" LabelDescription="Save only selected data points in a file." LargeImageSource="../Images/save.png" ToolTipTitle="Save selection to file" ToolTipDescription="Click here to save only the selected range of data to disk." />
+        <r:RibbonCommand x:Key="SaveSelectionAs" CanExecute="SaveCommand_CanExecute" Executed="SaveSelectionAsCommand_Executed" LabelTitle="Save selected data points as" LabelDescription="Save only selected data points in a different file." LargeImageSource="../Images/save.png" ToolTipTitle="Save selection to different file" ToolTipDescription="Click here to save only the selected range of data to disk in another file." />
+        <r:RibbonCommand x:Key="SaveVideoWindowImage" CanExecute="SaveCommand_CanExecute" Executed="SaveVideoWindowImageCommand_Executed" LabelTitle="Save time series image" LabelDescription="Save time series image in different formats." LargeImageSource="../Images/SaveImage.png" ToolTipTitle="Save time series image to disk" ToolTipDescription="Click here to save the time series screenhot into the image file." />
+        <r:RibbonCommand x:Key="SaveVideoWindowImageAs" CanExecute="SaveCommand_CanExecute" Executed="SaveVideoWindowImageAsCommand_Executed" LabelTitle="Save time series image as" LabelDescription="Save time series image in different formats and with new name." LargeImageSource="../Images/SaveImage.png" ToolTipTitle="Save time series image to disk as" ToolTipDescription="Click here to save the time series image screenhot into an image file with a new filename." />
+        <r:RibbonCommand x:Key="SaveReconstruction" CanExecute="SaveCommand_CanExecute" Executed="SaveReconstructionCommand_Executed" LabelTitle="Save reconstruction" LabelDescription="Save image of the reconstruction module in different formats." LargeImageSource="../Images/SaveImage.png" ToolTipTitle="Save reconstruction image to disk" ToolTipDescription="Click here to save the reconstruction module screenhot into the image file." />
+        <r:RibbonCommand x:Key="SaveReconstructionAs" CanExecute="SaveCommand_CanExecute" Executed="SaveReconstructionAsCommand_Executed" LabelTitle="Save reconstruction as" LabelDescription="Save image of the reconstruction module in different formats and with new name." LargeImageSource="../Images/SaveImage.png" ToolTipTitle="Save reconstruction image to disk as" ToolTipDescription="Click here to save the reconstruction module screenhot into an image file with a new filename." />
+        <r:RibbonCommand x:Key="ButtonChangeColorScheme" Executed="ChangeColorCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeLabelDescription}" LargeImageSource="../Images/Color.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonChangeLanguage" Executed="ChangeLanguageCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonChangeLanguageLabelTitle, ForceCulture=en}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonChangeLanguageLabelDescription, ForceCulture=en}" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChangeLanguageToolTipTitle, ForceCulture=en}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChangeLanguageToolTipDescription, ForceCulture=en}" />
+        <r:RibbonCommand x:Key="ButtonResetColorScheme" Executed="ResetColorCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeLabelDescription}" LargeImageSource="../Images/ColorReset.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonSaveLayout" Executed="SaveLayoutCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonSaveLayoutLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonSaveLayoutLabelDescription}" LargeImageSource="../Images/SaveLayout.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSaveLayoutToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSaveLayoutToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonRestoreLayout" Executed="RestoreLayoutCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonRestoreLayoutLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonRestoreLayoutLabelDescription}" LargeImageSource="../Images/RevertLayout.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonRestoreLayoutToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonRestoreLayoutToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonLoadVideo" 
+                         Executed="LoadVideoCommand_Executed"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonLoadVideoLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonLoadVideoLabelDescription}" 
+                         LargeImageSource="../Images/LoadVideo32.png" 
+                         SmallImageSource="../Images/LoadVideo16.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonCalibrateVideo" CanExecute="CalibrateVideoCommand_CanExecute" Executed="CalibrateVideoCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoLabelDescription}" LargeImageSource="../Images/Calibrate_32.png" SmallImageSource="../Images/Calibrate16.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonManualDataAquisition" 
+                         CanExecute="ManualDataAquisitionCommand_CanExecute"
+                         Executed="ManualDataAquisitionCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionLabelDescription}" 
+                         LargeImageSource="../Images/ManualDataAquisition32.png" 
+                         SmallImageSource="../Images/ManualDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonAutomaticDataAquisition" 
+                         CanExecute="AutomaticDataAquisitionCommand_CanExecute" 
+                         Executed="AutomaticDataAquisitionCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionLabelDescription}" 
+                         LargeImageSource="../Images/AutomaticDataAquisition32.png" 
+                         SmallImageSource="../Images/AutomaticDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonAutomaticDataAquisitionStop" 
+                         CanExecute="AutomaticDataAquisitionStopCommand_CanExecute" 
+                         Executed="AutomaticDataAquisitionStopCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopLabelDescription}" 
+                         LargeImageSource="../Images/AutomaticDataAquisitionStop32.png" 
+                         SmallImageSource="../Images/AutomaticDataAquisitionStop16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonDeleteData" 
+                         CanExecute="ButtonDeleteDataCommand_CanExecute" 
+                         Executed="ButtonDeleteDataCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonDeleteDataLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonDeleteDataLabelDescription}" 
+                         LargeImageSource="../Images/DataDelete32.png" 
+                         SmallImageSource="../Images/DataDelete16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonDeleteDataToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonDeleteDataToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonCalculateVelocity" 
+                         CanExecute="ButtonCalculateVelocityCommand_CanExecute" 
+                         Executed="ButtonCalculateVelocityCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityLabelTitle}"
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityLabelDescription}" 
+                         LargeImageSource="../Images/Recalculate32.png" 
+                         SmallImageSource="../Images/Recalculate16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonOtherOptions" 
+                         CanExecute="ButtonOtherOptionsCommand_CanExecute" 
+                         Executed="ButtonOtherOptionsCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonOtherOptionsLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonOtherOptionsLabelDescription}" 
+                         LargeImageSource="../Images/Options32.png" 
+                         SmallImageSource="../Images/Options16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonOtherOptionsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonOtherOptionsToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonChooseAnalysis" 
+                         CanExecute="ButtonChooseAnalysisCommand_CanExecute" 
+                         Executed="ButtonChooseAnalysisCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonChooseAnalysisLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonChooseAnalysisLabelDescription}" 
+                         LargeImageSource="../Images/Options32.png" 
+                         SmallImageSource="../Images/Options16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChooseAnalysisToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChooseAnalysisToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonChooseAutomaticAnalysis" 
+                         CanExecute="ButtonChooseAutomaticAnalysisCommand_CanExecute" 
+                         Executed="ButtonChooseAutomaticAnalysisCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisLabelDescription}" 
+                         LargeImageSource="../Images/AutomaticDataAquisition32.png" 
+                         SmallImageSource="../Images/AutomaticDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonExportDataToTxt" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportDataToTxt_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtLabelDescription}" 
+                         LargeImageSource="../Images/ExportToTxt32.png" 
+                         SmallImageSource="../Images/ExportToTxt16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonExportDataToCsv" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportDataToCsv_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvLabelDescription}" 
+                         LargeImageSource="../Images/ExportToCsv32.png" 
+                         SmallImageSource="../Images/ExportToCsv16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonExportDataToXml" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportDataToXml_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlLabelDescription}" 
+                         LargeImageSource="../Images/ExportToXml32.png" 
+                         SmallImageSource="../Images/ExportToXml16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonExportDataToXls" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportDataToXls_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsLabelDescription}" 
+                         LargeImageSource="../Images/ExportToXls32.png" 
+                         SmallImageSource="../Images/ExportToXls16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonExportChartToClipboard" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportChartToClipboard_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardLabelDescription}" 
+                         LargeImageSource="../Images/ExportChartToClipboard32.png" 
+                         SmallImageSource="../Images/ExportChartToClipboard16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonExportChartToFile" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportChartToFile_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToFileLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToFileLabelDescription}" 
+                         LargeImageSource="../Images/ExportChartToFile32.png" 
+                         SmallImageSource="../Images/ExportChartToFile16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonExportChartToWord" 
+                         CanExecute="ButtonExportData_CanExecute" 
+                         Executed="ButtonExportChartToWord_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToWordLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToWordLabelDescription}" 
+                         LargeImageSource="../Images/ExportChartToWord32.png" 
+                         SmallImageSource="../Images/ExportChartToWord16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipDescription}" />
+
+        <r:RibbonCommand x:Key="ButtonSelectColor" 
+                         CanExecute="SelectColorCommand_CanExecute" 
+                         Executed="SelectColorCommand_Executed" 
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonSelectColorLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonSelectColorLabelDescription}" 
+                         LargeImageSource="../Images/SelectColor32.png" 
+                         SmallImageSource="../Images/SelectColor16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonClipVideo" CanExecute="ClipVideoCommand_CanExecute" Executed="ClipVideoCommand_Executed" LabelTitle="{lex:LocText VianaNET:Labels:ButtonClipVideoLabelTitle}" LabelDescription="{lex:LocText VianaNET:Labels:ButtonClipVideoLabelDescription}" LargeImageSource="../Images/ClipVideo32.png" SmallImageSource="../Images/ClipVideo16.png" ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipTitle}" ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipDescription}" />
+      </r:Ribbon.Resources>
+      <r:Ribbon.QuickAccessToolBar>
+        <r:RibbonQuickAccessToolBar>
+          <!--<r:RibbonButton Command="{StaticResource QATButtonSave}" />-->
+          <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
+          <r:RibbonButton Command="{StaticResource ButtonDatagridWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
+          <r:RibbonButton Command="{StaticResource ButtonChartWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
+        </r:RibbonQuickAccessToolBar>
+      </r:Ribbon.QuickAccessToolBar>
+      <r:Ribbon.ApplicationMenu>
+        <r:RibbonApplicationMenu Command="{StaticResource ButtonApplication}">
+          <r:RibbonApplicationMenuItem Command="{StaticResource ButtonLoadVideo}" />
+          <r:RibbonApplicationMenuItem Command="{StaticResource ButtonCaptureVideo}" />
+          <Separator />
+          <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportDataToXls}" />
+          <r:RibbonApplicationSplitMenuItem Command="{StaticResource ButtonExportDataToTxt}">
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportDataToTxt}" />
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportDataToCsv}" />
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportDataToXml}" />
+          </r:RibbonApplicationSplitMenuItem>
+          <r:RibbonApplicationSplitMenuItem Command="{StaticResource ButtonExportChartToClipboard}">
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportChartToClipboard}" />
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportChartToFile}" />
+            <r:RibbonApplicationMenuItem Command="{StaticResource ButtonExportChartToWord}" />
+          </r:RibbonApplicationSplitMenuItem>
+          <r:RibbonApplicationMenu.RecentItemList>
+            <StackPanel>
+              <r:RibbonLabel Content="{lex:LocText VianaNET:Labels:RibbonApplicationMenuRecentFilesTitle}"/>
+              <r:RibbonSeparator/>
+              <r:RibbonHighlightingList x:Name="RecentItemsList" ItemsSource="{Binding Path=RibbonList, Source={x:Static Viana:RecentFiles.Instance}}" MostRecentFileSelected="RecentItemsList_MostRecentFileSelected" />
+            </StackPanel>
+          </r:RibbonApplicationMenu.RecentItemList>
+          <r:RibbonApplicationMenu.Footer>
+            <DockPanel LastChildFill="False">
+              <r:RibbonButton DockPanel.Dock="Right" Command="{StaticResource Close}"/>
+              <r:RibbonButton DockPanel.Dock="Right" Tag="Options" Visibility="Hidden"/>
+            </DockPanel>
+          </r:RibbonApplicationMenu.Footer>
+        </r:RibbonApplicationMenu>
+      </r:Ribbon.ApplicationMenu>
+      <r:RibbonTab x:Name="RibbonTabHome" Label="{lex:LocText VianaNET:Labels:RibbonTabHomeLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupOpenVideoLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonGroup.GroupSizeDefinitions>
+            <r:RibbonGroupSizeDefinitionCollection>
+              <r:RibbonGroupSizeDefinition>
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+              </r:RibbonGroupSizeDefinition>
+            </r:RibbonGroupSizeDefinitionCollection>
+          </r:RibbonGroup.GroupSizeDefinitions>
+          <r:RibbonButton Command="{StaticResource ButtonLoadVideo}" />
+          <r:RibbonButton Command="{StaticResource ButtonCaptureVideo}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupPrepareLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonGroup.GroupSizeDefinitions>
+            <r:RibbonGroupSizeDefinitionCollection>
+              <r:RibbonGroupSizeDefinition>
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+              </r:RibbonGroupSizeDefinition>
+            </r:RibbonGroupSizeDefinitionCollection>
+          </r:RibbonGroup.GroupSizeDefinitions>
+          <r:RibbonButton Command="{StaticResource ButtonCalibrateVideo}" />
+          <r:RibbonButton Command="{StaticResource ButtonManualDataAquisition}" />
+          <r:RibbonButton Command="{StaticResource ButtonChooseAutomaticAnalysis}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupWindowsLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonGroup.GroupSizeDefinitions>
+            <r:RibbonGroupSizeDefinitionCollection>
+              <r:RibbonGroupSizeDefinition>
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+              </r:RibbonGroupSizeDefinition>
+            </r:RibbonGroupSizeDefinitionCollection>
+          </r:RibbonGroup.GroupSizeDefinitions>
+          <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" />
+          <r:RibbonButton Command="{StaticResource ButtonDatagridWindow}" />
+          <r:RibbonButton Command="{StaticResource ButtonChartWindow}" />
+        </r:RibbonGroup>
+
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabAnalysis" Label="{lex:LocText VianaNET:Labels:RibbonTabAnalysisLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupManualAquisitionLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonManualDataAquisition}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupAutomaticAquisitionLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonGroup.GroupSizeDefinitions>
+            <r:RibbonGroupSizeDefinitionCollection>
+              <r:RibbonGroupSizeDefinition>
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+              </r:RibbonGroupSizeDefinition>
+            </r:RibbonGroupSizeDefinitionCollection>
+          </r:RibbonGroup.GroupSizeDefinitions>
+          <r:RibbonButton Name="selectColorRibbonButton" Command="{StaticResource ButtonSelectColor}" />
+          <r:RibbonButton Command="{StaticResource ButtonClipVideo}" />
+          <r:RibbonButton Name="StartAutomaticAquisition" 
+                          Command="{StaticResource ButtonAutomaticDataAquisition}" 
+                          Visibility="{Binding Path=IsDataAcquisitionRunning,
+            Source={x:Static Viana:Video.Instance},
+            Converter={StaticResource BoolVisibleConverterInverse}}"/>
+          <r:RibbonButton Name="StopAutomaticAquisition" Command="{StaticResource ButtonAutomaticDataAquisitionStop}" 
+                          Visibility="{Binding Path=IsDataAcquisitionRunning,
+              Source={x:Static Viana:Video.Instance},
+              Converter={StaticResource BoolVisibleConverter}}" />
+          <!--<r:RibbonButton Command="{StaticResource ButtonOtherOptions}" />-->
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupVideoAutoDetectionOptionsLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <Viana:RibbonSliderValue 
+                                   Style="{StaticResource RibbonSliderValue}"
+                                   MinWidth="100"
+                                   Height="20"
+                                   Minimum="0"
+                                   Maximum="255"
+                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
+                                   Value="{Binding Path=ColorTolerance, Source={x:Static Viana:Calibration.Instance}}" 
+                                   SmallChange="1" 
+                                   IsSnapToTickEnabled="True" />
+          <Viana:RibbonSliderValue 
+                                   Style="{StaticResource RibbonSliderValue}"
+                                   Height="20"
+                                   MinWidth="100"
+                                   Minimum="1"
+                                   Maximum="500"
+                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
+                                   Value="{Binding Path=BlobMinDiameter, Source={x:Static Viana:Calibration.Instance}}"
+                                   SmallChange="1" 
+                                   IsSnapToTickEnabled="True" />
+          <Viana:RibbonSliderValue 
+                                   Style="{StaticResource RibbonSliderValue}"
+                                    Height="20"
+                                  MinWidth="100"
+                                   Minimum="1"
+                                   Maximum="500"
+                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
+                                   Value="{Binding Path=BlobMaxDiameter, Source={x:Static Viana:Calibration.Instance}}"
+                                   SmallChange="1" 
+                                   IsSnapToTickEnabled="True" />
+        </r:RibbonGroup>
+
+      </r:RibbonTab>
+
+      <r:RibbonTab x:Name="RibbonTabVideo" Label="{lex:LocText VianaNET:Labels:RibbonTabVideoLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupVideoShowWindowLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup HasDialogLauncher="True" Command="{StaticResource ButtonVideoCaptureDeviceProperties}">
+          <r:RibbonLabel Content="{lex:LocText VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
+          <Viana:RibbonComboBoxSimple x:Name="VideoInputDeviceCombo" IsEditable="False" IsReadOnly="False" />
+          <!--ItemsSource="{Binding Source={x:Static WPFMediaKit:MultimediaUtil.VideoInputDevices}}"
+            SelectedItem="{Binding Mode=OneWayToSource, Path=VideoCapturerElement.VideoCaptureDevice ,Source={x:Static Viana:Video.Instance}}"
+            DisplayMemberPath="Name"
+            SelectedIndex="0"/>-->
+
+          <r:RibbonButton Margin="20,0,0,0" Command="{StaticResource ButtonVideoCaptureDeviceProperties}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonCheckBox Name="ShowCalibrationCheckbox"  Command="{StaticResource CalibrationOptionsShowCalibration}" IsEnabled="{Binding Path=IsVideoCalibrated, Source={x:Static Viana:Calibration.Instance}}" IsChecked="True"/>
+          <r:RibbonCheckBox Name="ShowClipRegionCheckbox"  Command="{StaticResource CalibrationOptionsShowClipRegion}" IsEnabled="{Binding Path=HasClipRegion, Source={x:Static Viana:Calibration.Instance}}" IsChecked="True"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabDatagrid" Label="{lex:LocText VianaNET:Labels:RibbonTabDatagridLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupDatagridShowWindowLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonDatagridWindow}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupDatagridExportLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonExportDataToTxt}" />
+          <r:RibbonButton Command="{StaticResource ButtonExportDataToCsv}" />
+          <r:RibbonButton Command="{StaticResource ButtonExportDataToXml}" />
+          <r:RibbonButton Command="{StaticResource ButtonExportDataToXls}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupDatagridUpdateDataLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonDeleteData}" />
+          <r:RibbonButton Command="{StaticResource ButtonCalculateVelocity}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupDatagridOptionsLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonCheckBox Name="DisplayUnitsCheckbox" Command="{StaticResource DatagridDisplayUnits}" IsChecked="{Binding Path=IsShowingUnits, Source={x:Static Viana:Calibration.Instance}}"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabChart" Label="{lex:LocText VianaNET:Labels:RibbonTabChartLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupChartShowWindowLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonChartWindow}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupChartExportLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonExportChartToClipboard}" />
+          <r:RibbonButton Command="{StaticResource ButtonExportChartToFile}" />
+          <r:RibbonButton Command="{StaticResource ButtonExportChartToWord}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupChartOptionsLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ChartDisplayOptions}"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabOptions" Label="{lex:LocText VianaNET:Labels:RibbonTabOptionsLabel}">
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupLanguageLabelTitle, ForceCulture=en }" />
+          </r:RibbonGroup.Command>
+          <r:RibbonComboBox x:Name="LanguageCombo" Command="{StaticResource ButtonChangeLanguage}" Width="80" Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem.Content}" IsEditable="True" IsReadOnly="True">
+            <r:RibbonComboBoxItem Content="Deutsch" IsSelected="True"></r:RibbonComboBoxItem>
+            <r:RibbonComboBoxItem Content="English"></r:RibbonComboBoxItem>
+          </r:RibbonComboBox>
+        </r:RibbonGroup>
+        <!--<r:RibbonGroup>
+                    <r:RibbonGroup.Command>
+                        <r:RibbonCommand LabelTitle="Layout" />
+                    </r:RibbonGroup.Command>
+                    <r:RibbonButton Command="{StaticResource SaveLayout}" />
+                    <r:RibbonButton Command="{StaticResource RestoreLayout}" />
+                </r:RibbonGroup>-->
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupStyleLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonButton Command="{StaticResource ButtonChangeColorScheme}" />
+          <r:RibbonButton Command="{StaticResource ButtonResetColorScheme}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup>
+          <r:RibbonGroup.Command>
+            <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupHelpLabelTitle}" />
+          </r:RibbonGroup.Command>
+          <r:RibbonGroup.GroupSizeDefinitions>
+            <r:RibbonGroupSizeDefinitionCollection>
+              <r:RibbonGroupSizeDefinition>
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+              </r:RibbonGroupSizeDefinition>
+            </r:RibbonGroupSizeDefinitionCollection>
+          </r:RibbonGroup.GroupSizeDefinitions>
+          <r:RibbonButton Command="{StaticResource ButtonAbout}" />
+        </r:RibbonGroup>
+
+      </r:RibbonTab>
+    </r:Ribbon>
+    <ContentControl x:Name="ContentContainer" Margin="3" DockPanel.Dock="Bottom">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ad:DockingManager x:Name="dockingManager" Grid.Row="0">
+          <ad:DockablePane x:Name="modulePane" RequestBringIntoView="modulePane_RequestBringIntoView" ShowHeader="False"/>
+        </ad:DockingManager>
+        <StatusBar VerticalAlignment="Bottom" Grid.Row="1">
+          <StatusBarItem>
+            <Label Content="{Binding Path=StatusLabel,
+              Source={x:Static Viana:StatusBarContent.Instance}}"/>
+          </StatusBarItem>
+          <StatusBarItem>
+            <ProgressBar Width="120" Height="20" Value="{Binding Path=ProgressBarValue,
+              Source={x:Static Viana:StatusBarContent.Instance}}"/>
+          </StatusBarItem>
+          <StatusBarItem HorizontalAlignment="Right">
+            <Label Content="{Binding Path=MessagesLabel,
+              Source={x:Static Viana:StatusBarContent.Instance}}"/>
+          </StatusBarItem>
+        </StatusBar>
+      </Grid>
+    </ContentControl>
+  </DockPanel>
+</r:RibbonWindow>

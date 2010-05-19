@@ -1,0 +1,66 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Viana="clr-namespace:VianaNET"
+    >
+  
+  <Style x:Key="HeaderStyle" TargetType="ContentControl">
+    <Setter Property="HorizontalAlignment" Value="Center"/>
+    <Setter Property="FontWeight" Value="Bold"/>
+    <Setter Property="Margin" Value="5"/>
+  </Style>
+
+  <SolidColorBrush x:Key="ReadOnlyTextBoxBackground" Color="LightGray"/>
+
+  <Style x:Key="SpacerStyle" TargetType="StackPanel">
+    <Setter Property="Height" Value="15"/>
+  </Style>
+
+  <Style x:Key="SubSpacerStyle" TargetType="StackPanel">
+    <Setter Property="Height" Value="10"/>
+  </Style>
+
+  <LinearGradientBrush x:Key="BannerBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FF567DB1" />
+        <GradientStop Offset="0.5" Color="#FF6591CD" />
+        <GradientStop Offset="0.8" Color="#FF9EBEE7" />
+        <GradientStop Offset="1" Color="#FF6591CD" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF84AEE0" />
+        <GradientStop Offset="0.1" Color="#FFF1F6FB" />
+        <GradientStop Offset="1" Color="#FFD1E7F6" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PropertiesBackgroundBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+        <GradientStop Offset="0" Color="#FFD1E7F6" />
+        <GradientStop Offset="0.7" Color="#FFF1F6FB" />
+        <GradientStop Offset="1" Color="#FF84AEE0" />
+    </LinearGradientBrush>
+    
+    <SolidColorBrush x:Key="DefaultWorkspaceAdorner1BackgroundBrush" Color="#FF97B6DC" />
+    <SolidColorBrush x:Key="DefaultWorkspaceAdorner1StrokeBrush" Color="#FFAEC7E8" />
+    <SolidColorBrush x:Key="DefaultWorkspaceAdorner2BackgroundBrush" Color="#FFAEC7E8" />
+    <SolidColorBrush x:Key="DefaultWorkspaceRibbonBackgroundBrush" Color="#BFDBFF" />
+    <VisualBrush x:Key="DefaultOfficeBackgroundBrush">
+        <VisualBrush.Visual>
+            <Grid Background="{DynamicResource DefaultWorkspaceBackgroundBrush}">
+                <Path Fill="{DynamicResource DefaultWorkspaceAdorner1BackgroundBrush}"
+					Stretch="Fill"
+					Stroke="{DynamicResource DefaultWorkspaceAdorner1StrokeBrush}"
+					Data="M0.5,0.5 L480.5,0.5 C362.06667,12.09897 210.5,53.233083 0.5,169.5 z"
+					StrokeThickness="1.5"/>
+                <Path
+					Fill="{DynamicResource DefaultWorkspaceAdorner1BackgroundBrush}"
+					Stretch="Fill"
+					Stroke="{DynamicResource DefaultWorkspaceAdorner1StrokeBrush}"
+					Data="M0.5,0.5 L480.5,0.5 C362.06667,12.09897 210.5,53.233083 0.5,169.5 z"
+					StrokeThickness="1.5"/>
+            </Grid>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <LinearGradientBrush x:Key="DefaultWorkspaceBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0" Color="#FF9EBEE7" />
+        <GradientStop Offset="0.7" Color="#FF567DB1" />
+        <GradientStop Offset="1" Color="#FF6591CD" />
+    </LinearGradientBrush>
+</ResourceDictionary>
