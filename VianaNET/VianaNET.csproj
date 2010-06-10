@@ -538,13 +538,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WPFMediaKit\WPFMediaKit\WPFMediaKit.csproj">
-      <Project>{6030628D-EE93-4D61-B6BE-8B6AE99F3935}</Project>
-      <Name>WPFMediaKit</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
       <Name>WPFLocalizeExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPFMediaKit\WPFMediaKit.csproj">
+      <Project>{6030628D-EE93-4D61-B6BE-8B6AE99F3935}</Project>
+      <Name>WPFMediaKit</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
