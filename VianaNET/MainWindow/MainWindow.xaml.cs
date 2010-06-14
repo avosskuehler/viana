@@ -98,6 +98,8 @@ namespace VianaNET
       {
         this.VideoInputDeviceCombo.Text = "No Video device found.";
         this.VideoInputDeviceCombo.IsEnabled = false;
+        this.CaptureVideoButton.Visibility = Visibility.Hidden;
+        this.VideoCaptureRibbonGroup.Visibility = Visibility.Collapsed;
       }
       else
       {

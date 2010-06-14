@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Data;
+using DirectShowLib;
 
 namespace VianaNET
 {
@@ -105,6 +106,7 @@ namespace VianaNET
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
       this.videoCaptureElement = new VideoCapturer();
+
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
     }

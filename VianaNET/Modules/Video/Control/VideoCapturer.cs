@@ -45,7 +45,11 @@ namespace VianaNET
       this.FPS = 25;
       this.frameWatch = new Stopwatch();
       this.EnableSampleGrabbing = true;
-      this.VideoCaptureDevice = DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)[0];
+      if (MultimediaUtil.VideoInputDevices.Length > 0)
+      {
+        this.VideoCaptureDevice = DsDevice.GetDevicesOfCat(DirectShowLib.FilterCategory.VideoInputDevice)[0];
+      }
+
       this.VideoImage.SizeChanged += new SizeChangedEventHandler(VideoImage_SizeChanged);
       this.MediaOpened += new RoutedEventHandler(VideoCapturer_MediaOpened);
       this.MediaEnded += new RoutedEventHandler(VideoCapturer_MediaEnded);

@@ -350,7 +350,7 @@
             </r:RibbonGroupSizeDefinitionCollection>
           </r:RibbonGroup.GroupSizeDefinitions>
           <r:RibbonButton Command="{StaticResource ButtonLoadVideo}" />
-          <r:RibbonButton Command="{StaticResource ButtonCaptureVideo}" />
+          <r:RibbonButton Name="CaptureVideoButton" Command="{StaticResource ButtonCaptureVideo}"/>
         </r:RibbonGroup>
         <r:RibbonGroup>
           <r:RibbonGroup.Command>
@@ -466,7 +466,7 @@
           </r:RibbonGroup.Command>
           <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" />
         </r:RibbonGroup>
-        <r:RibbonGroup HasDialogLauncher="True" Command="{StaticResource ButtonVideoCaptureDeviceProperties}">
+        <r:RibbonGroup Name="VideoCaptureRibbonGroup" HasDialogLauncher="True" Command="{StaticResource ButtonVideoCaptureDeviceProperties}">
           <r:RibbonLabel Content="{lex:LocText VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
           <Viana:RibbonComboBoxSimple x:Name="VideoInputDeviceCombo" IsEditable="False" IsReadOnly="False" />
           <!--ItemsSource="{Binding Source={x:Static WPFMediaKit:MultimediaUtil.VideoInputDevices}}"
