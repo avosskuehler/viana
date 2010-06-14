@@ -59,4 +59,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.*")]
+[assembly: AssemblyVersion("1.2.*")]
+[assembly: GuidAttribute("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]

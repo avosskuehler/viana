@@ -411,7 +411,7 @@ namespace WPFMediaKit.DirectShow.Controls
         D3DImage.Unlock();
         SetNaturalWidthHeight();
       }
-      catch (Exception ex)
+      catch (Exception)
       { }
 
       /* Clear our flag, so this won't be ran again
