@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B78F89B8-61CF-4DBA-9E96-BBD210848855}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -187,6 +187,9 @@
     <Compile Include="VianaControls\RibbonSliderValue.xaml.cs">
       <DependentUpon>RibbonSliderValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VianaControls\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VianaControls\VianaChart.xaml.cs">
       <DependentUpon>VianaChart.xaml</DependentUpon>
     </Compile>
@@ -263,6 +266,10 @@
     </Page>
     <Page Include="VianaControls\DataGridStyles.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="VianaControls\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VianaControls\VianaChart.xaml">
       <Generator>MSBuild:Compile</Generator>

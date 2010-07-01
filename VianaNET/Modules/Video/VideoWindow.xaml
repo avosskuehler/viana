@@ -8,7 +8,7 @@
     lex:LocalizeDictionary.DesignCulture="de"
     Width="630"
     Height="436" Title="{lex:LocText VianaNET:Labels:VideoWindowTitle}" 
-  DockableStyle="Dockable" HideOnClose="False" Loaded="DockableContent_Loaded">
+  DockableStyle="Dockable" HideOnClose="False">
   <ad:DockableContent.Resources>
     <ResourceDictionary Source="../../VianaControls/VianaStyle.xaml"/>
   </ad:DockableContent.Resources>
@@ -65,7 +65,7 @@
       </Grid>
       <Viana:BlobsControl Width="Auto" Height="Auto" Visibility="Collapsed" Grid.Column="1" x:Name="BlobsControl"/>
     </Grid>
-    <Grid Grid.Row="1" Background="{StaticResource PropertiesBackgroundBrush}" >
+    <Grid Background="{StaticResource PropertiesBackgroundBrush}" Height="40" Grid.RowSpan="2" VerticalAlignment="Bottom">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" MinWidth="100" />
         <ColumnDefinition Width="*"/>
@@ -85,16 +85,13 @@
         FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
         Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
         Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}"
+        SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
+        SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
         SmallChange="1" 
-        SelectionStart="10" 
         TickPlacement="BottomRight" 
         Interval="1" 
-        SelectionEnd="50" 
-         Minimum="0" 
-        MouseLeftButtonDown="timelineSlider_MouseLeftButtonDown"
-        MouseLeftButtonUp="timelineSlider_MouseLeftButtonUp"
-        MouseMove="timelineSlider_MouseMove"
-          />
+        Minimum="0"
+        />
     </Grid>
   </Grid>
 </ad:DockableContent>

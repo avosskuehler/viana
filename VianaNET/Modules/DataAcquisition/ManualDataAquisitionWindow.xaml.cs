@@ -60,8 +60,8 @@ namespace VianaNET
       //VideoPlayer.Instance.MouseDown += new MouseButtonEventHandler(player_MouseDown);
       //VideoPlayer.Instance.MouseMove += new MouseEventHandler(player_MouseMove);
 
-      this.timelineSlider.SelectionStart = 0;
-      this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
+      //this.timelineSlider.SelectionStart = 0;
+      //this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
 
       if (Video.Instance.VideoMode == VideoMode.Capture)
       {

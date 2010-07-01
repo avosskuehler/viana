@@ -28,16 +28,34 @@
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Label Grid.Row="2" 
+               Grid.Column="0" 
+               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               HorizontalAlignment="Center" 
+               Content="{TemplateBinding Viana:MediaSlider.SelectionStartString}"
+               Padding="0"
+               Margin="0,-2,0,0"
+               FontSize="10"
+               Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
         <Label Grid.Row="1" Grid.Column="0" Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding Viana:MediaSlider.CurrentTimeString}"/>
         <Label Grid.Row="1" Grid.Column="4" Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding Viana:MediaSlider.MaximumString}"/>
+        <Label Grid.Row="2" 
+               Grid.Column="4" 
+               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               HorizontalAlignment="Center" 
+               Content="{TemplateBinding Viana:MediaSlider.SelectionEndString}"
+               Padding="0"
+               Margin="0,-2,0,0"
+               FontSize="10"
+               Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
-        <RepeatButton Grid.Column="1" Grid.Row="1" 
+        <RepeatButton Name="TickDownButton"  Grid.Column="1" Grid.Row="1" 
           Command="{x:Static Viana:MediaSlider.TickDownClickedCommand}"
           Style="{StaticResource BaseSliderSidesButtonStyle}">
           <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
         </RepeatButton>
 
-        <RepeatButton Grid.Row="1" Grid.Column="3"
+        <RepeatButton Name="TickUpButton" Grid.Row="1" Grid.Column="3"
 						Command="{x:Static Viana:MediaSlider.TickUpClickedCommand}"
             Style="{StaticResource BaseSliderSidesButtonStyle}">
 
@@ -67,9 +85,11 @@
                 Fill="{TemplateBinding TextElement.Foreground}"
                 Placement="Bottom"
                 Name="BottomTick"
-                Height="4"
+                Height="Auto"
+                Margin="0"
                 Visibility="Collapsed"
-                Grid.Row="2"  Grid.Column="2"/>
+                Grid.Row="2"
+                Grid.Column="2"/>
         <Border
                 BorderThickness="1,1,1,1"
                 CornerRadius="1,1,1,1"
@@ -100,11 +120,9 @@
                         Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                         StrokeThickness="1"
                         Name="PART_SelectionRange"
+                        Margin="0"
                         Height="4"
-                        Visibility="Hidden" />
-                        <!--MouseLeftButtonDown="SelectionRange_MouseLeftButtonDown"
-                        MouseLeftButtonUp="SelectionRange_MouseLeftButtonUp"
-                        MouseMove="SelectionRange_MouseMove"-->
+                        Visibility="Hidden"/>
           </Canvas>
         </Border>
         <Track Name="PART_Track" Grid.Row="1" Grid.Column="2">
@@ -1006,4 +1024,4 @@
     </Style.Triggers>
   </Style>
 
-  </ResourceDictionary>
+</ResourceDictionary>

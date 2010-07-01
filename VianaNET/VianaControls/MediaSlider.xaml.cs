@@ -5,34 +5,93 @@ namespace VianaNET
   using System;
   using System.Windows.Input;
   using System.Windows;
+  using System.Windows.Shapes;
+  using System.Windows.Controls.Primitives;
 
   /// <summary>
   /// Interaction logic for MediaSlider.xaml
   /// </summary>
   public partial class MediaSlider : Slider
   {
-    private void UpdateTickStyle()
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTANTS
+
+    private const int timelineMouseCaptureMargin = 25;
+
+    #endregion //CONSTANTS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region FIELDS
+
+    private Rectangle timelineSelectionRange;
+    private Thumb timelineThumb;
+    private Canvas timelineSelectionCanvas;
+    private RangeSelectionThumb currentRangeSelectionThumb;
+    private RepeatButton timelineTickUpButton;
+    private RepeatButton timelineTickDownButton;
+
+    public event EventHandler SelectionEndReached;
+    public event EventHandler SelectionStartReached;
+
+    #endregion //FIELDS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTRUCTION
+
+    static MediaSlider()
     {
-      this.IsSnapToTickEnabled = true;
-      //this.TickFrequency = 0;
-      switch (Video.Instance.VideoPlayerElement.CurrentPositionFormat)
-      {
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.None:
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.MediaTime:
-          this.TickFrequency = this.FrameTime * 10000;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Frame:
-          this.TickFrequency = 1;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Byte:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Field:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Sample:
-          this.TickFrequency = 1;
-          break;
-      }
+      MediaSlider.DefaultStyleKeyProperty.OverrideMetadata(typeof(MediaSlider),
+            new FrameworkPropertyMetadata(typeof(MediaSlider)));
+
+      MediaSlider.TickDownClickedCommand = new RoutedCommand("TickDown", typeof(MediaSlider));
+      MediaSlider.TickUpClickedCommand = new RoutedCommand("TickUp", typeof(MediaSlider));
     }
+
+    public MediaSlider()
+    {
+      CommandBinding bindingTickDownClicked = new CommandBinding(
+          MediaSlider.TickDownClickedCommand,
+          new ExecutedRoutedEventHandler(this.TickDownClickedCommand_Executed));
+      this.CommandBindings.Add(bindingTickDownClicked);
+
+      CommandBinding bindingTickUpClicked = new CommandBinding(
+        MediaSlider.TickUpClickedCommand,
+        new ExecutedRoutedEventHandler(this.TickUpClickedCommand_Executed));
+      this.CommandBindings.Add(bindingTickUpClicked);
+    }
+
+    #endregion //CONSTRUCTION
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+
+    private enum RangeSelectionThumb
+    {
+      None,
+      Start,
+      End,
+    }
+
+    public static RoutedCommand TickDownClickedCommand;
+    public static RoutedCommand TickUpClickedCommand;
+
+    public event EventHandler TickDownClicked;
+    public event EventHandler TickUpClicked;
+
+    #endregion EVENTS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PROPERTIES
 
     /// <summary>
     /// Time between frames in ms units.
@@ -52,17 +111,6 @@ namespace VianaNET
         default(double),
         new PropertyChangedCallback(OnFrameTimeChanged)));
 
-    private static void OnFrameTimeChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
-    {
-      (obj as MediaSlider).OnFrameTimeChanged(args);
-    }
-
-    private void OnFrameTimeChanged(DependencyPropertyChangedEventArgs args)
-    {
-      UpdateTickStyle();
-    }
 
     public static readonly DependencyProperty IsShowingTimesProperty = DependencyProperty.Register(
       "IsShowingTimes",
@@ -116,110 +164,155 @@ namespace VianaNET
       set { SetValue(MinimumStringProperty, value); }
     }
 
+    public static readonly DependencyProperty SelectionStartStringProperty = DependencyProperty.Register(
+      "SelectionStartString",
+      typeof(string),
+      typeof(MediaSlider),
+      new FrameworkPropertyMetadata("0:000",
+        FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public string SelectionStartString
+    {
+      get { return (string)GetValue(SelectionStartStringProperty); }
+      set { SetValue(SelectionStartStringProperty, value); }
+    }
+
+    public static readonly DependencyProperty SelectionEndStringProperty = DependencyProperty.Register(
+      "SelectionEndString",
+      typeof(string),
+      typeof(MediaSlider),
+      new FrameworkPropertyMetadata("0:000",
+        FrameworkPropertyMetadataOptions.AffectsRender));
+
+    public string SelectionEndString
+    {
+      get { return (string)GetValue(SelectionEndStringProperty); }
+      set { SetValue(SelectionEndStringProperty, value); }
+    }
+
+    #endregion //PROPERTIES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PUBLICMETHODS
+    #endregion //PUBLICMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+
+
+    public override void OnApplyTemplate()
+    {
+      base.OnApplyTemplate();
+
+      if (this.Template != null)
+      {
+        this.timelineSelectionRange =
+          this.Template.FindName("PART_SelectionRange", this) as Rectangle;
+        this.timelineThumb =
+          this.Template.FindName("Thumb", this) as Thumb;
+        this.timelineSelectionCanvas =
+          this.Template.FindName("SelectionCanvas", this) as Canvas;
+        this.timelineTickDownButton =
+          this.Template.FindName("TickDownButton", this) as RepeatButton;
+        this.timelineTickUpButton =
+         this.Template.FindName("TickUpButton", this) as RepeatButton;
+      }
+    }
+
     protected override void OnValueChanged(double oldValue, double newValue)
     {
-      base.OnValueChanged(oldValue, newValue);
+      if (newValue > this.SelectionEnd)
+      {
+        if (this.SelectionEndReached != null)
+        {
+          this.SelectionEndReached(this, EventArgs.Empty);
+        }
+        this.Value = this.SelectionEnd;
+        newValue = oldValue;
+      }
+      else if (newValue < this.SelectionStart)
+      {
+        if (this.SelectionStartReached != null)
+        {
+          this.SelectionStartReached(this, EventArgs.Empty);
+        }
+        this.Value = this.SelectionStart;
+        newValue = oldValue;
+      }
+
       this.CurrentTimeString = ConvertToTimeString(newValue);
+      base.OnValueChanged(oldValue, newValue);
     }
 
     protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
     {
       base.OnMaximumChanged(oldMaximum, newMaximum);
       this.MaximumString = ConvertToTimeString(newMaximum);
+      this.SelectionEnd = newMaximum;
+      this.SelectionEndString = ConvertToTimeString(this.SelectionEnd);
     }
 
     protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
     {
       base.OnMinimumChanged(oldMinimum, newMinimum);
       this.MinimumString = ConvertToTimeString(newMinimum);
+      this.SelectionStartString = ConvertToTimeString(this.SelectionStart);
     }
 
-    public static RoutedCommand TickDownClickedCommand;
-    public static RoutedCommand TickUpClickedCommand;
-    //public static RoutedCommand SelectionRangeLeftMouseDownCommand;
-    //public static RoutedCommand SelectionRangeMouseMoveCommand;
-    //public static RoutedCommand SelectionRangeLeftMouseUpCommand;
-
-    public event EventHandler TickDownClicked;
-    public event EventHandler TickUpClicked;
-    public event MouseButtonEventHandler SelectionRangeMouseLeftButtonDown;
-    public event MouseEventHandler SelectionRangeMouseMove;
-    public event MouseButtonEventHandler SelectionRangeMouseLeftButtonUp;
-
-    static MediaSlider()
+    protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
     {
-      MediaSlider.DefaultStyleKeyProperty.OverrideMetadata(typeof(MediaSlider),
-            new FrameworkPropertyMetadata(typeof(MediaSlider)));
-
-      MediaSlider.TickDownClickedCommand = new RoutedCommand("TickDown", typeof(MediaSlider));
-      MediaSlider.TickUpClickedCommand = new RoutedCommand("TickUp", typeof(MediaSlider));
-      //MediaSlider.SelectionRangeLeftMouseDownCommand = new RoutedCommand("SelectionRangeLeftMouseDown", typeof(MediaSlider));
-      //MediaSlider.SelectionRangeMouseMoveCommand = new RoutedCommand("SelectionRangeMouseMove", typeof(MediaSlider));
-      //MediaSlider.SelectionRangeLeftMouseUpCommand = new RoutedCommand("SelectionRangeLeftMouseUp", typeof(MediaSlider));
+      base.OnPreviewMouseLeftButtonDown(e);
+      if (!this.timelineThumb.IsMouseOver &&
+        !this.timelineTickUpButton.IsMouseOver &&
+        !this.timelineTickDownButton.IsMouseOver)
+      {
+        CheckWhichRangeEndToChange(e.GetPosition(this.timelineSelectionRange));
+        this.CaptureMouse();
+      }
     }
 
-    public MediaSlider()
+    protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
     {
-      CommandBinding bindingTickDownClicked = new CommandBinding(
-          MediaSlider.TickDownClickedCommand,
-          new ExecutedRoutedEventHandler(this.TickDownClickedCommand_Executed));
-      this.CommandBindings.Add(bindingTickDownClicked);
-
-      CommandBinding bindingTickUpClicked = new CommandBinding(
-        MediaSlider.TickUpClickedCommand,
-        new ExecutedRoutedEventHandler(this.TickUpClickedCommand_Executed));
-      this.CommandBindings.Add(bindingTickUpClicked);
-
-                        //      MouseLeftButtonDown="SelectionRange_MouseLeftButtonDown"
-                        //MouseLeftButtonUp="SelectionRange_MouseLeftButtonUp"
-                        //MouseMove="SelectionRange_MouseMove"
-
-
-      //CommandBinding bindingSelectionRangeLeftMouseDown = new CommandBinding(
-      //  MediaSlider.SelectionRangeLeftMouseDownCommand,
-      //  new ExecutedRoutedEventHandler(this.SelectionRangeLeftMouseDownCommand_Executed));
-      //this.CommandBindings.Add(bindingSelectionRangeLeftMouseDown);
-
-      //CommandBinding bindingSelectionRangeMouseMove = new CommandBinding(
-      //  MediaSlider.SelectionRangeMouseMoveCommand,
-      //  new ExecutedRoutedEventHandler(this.SelectionRangeMouseMoveCommand_Executed));
-      //this.CommandBindings.Add(bindingSelectionRangeMouseMove);
-
-      //CommandBinding bindingSelectionRangeLeftMouseUp = new CommandBinding(
-      //  MediaSlider.SelectionRangeLeftMouseUpCommand,
-      //  new ExecutedRoutedEventHandler(this.SelectionRangeLeftMouseUpCommand_Executed));
-      //this.CommandBindings.Add(bindingSelectionRangeLeftMouseUp);
+      base.OnPreviewMouseLeftButtonUp(e);
+      if (!this.timelineThumb.IsMouseOver &&
+        !this.timelineTickUpButton.IsMouseOver &&
+        !this.timelineTickDownButton.IsMouseOver)
+      {
+        UpdateSelectionRange(e.GetPosition(this.timelineSelectionCanvas));
+        this.currentRangeSelectionThumb = RangeSelectionThumb.None;
+        this.ReleaseMouseCapture();
+      }
     }
 
-    private void SelectionRange_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    protected override void OnPreviewMouseMove(MouseEventArgs e)
     {
-      this.SelectionRangeMouseLeftButtonDown(this, e);
+      base.OnPreviewMouseMove(e);
+      if (e.LeftButton == MouseButtonState.Pressed &&
+        !this.timelineThumb.IsMouseOver &&
+        !this.timelineTickUpButton.IsMouseOver &&
+        !this.timelineTickDownButton.IsMouseOver)
+      {
+        UpdateSelectionRange(e.GetPosition(this.timelineSelectionCanvas));
+      }
     }
 
-    private void SelectionRange_MouseMove(object sender, MouseEventArgs e)
+    #endregion //OVERRIDES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTHANDLER
+
+    private static void OnFrameTimeChanged(
+  DependencyObject obj,
+  DependencyPropertyChangedEventArgs args)
     {
-      this.SelectionRangeMouseMove(this, e);
+      (obj as MediaSlider).OnFrameTimeChanged(args);
     }
-
-    private void SelectionRange_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      this.SelectionRangeMouseLeftButtonUp(this, e);
-    }
-
-    //private void SelectionRangeLeftMouseDownCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-    //{
-    //  this.SelectionRangeMouseLeftButtonDown(this, null);
-    //}
-
-    //private void SelectionRangeMouseMoveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-    //{
-    //  this.SelectionRangeMouseMove(this, null);
-    //}
-
-    //private void SelectionRangeLeftMouseUpCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-    //{
-    //  this.SelectionRangeMouseLeftButtonUp(this, null);
-    //}
 
     private void TickDownClickedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
@@ -231,6 +324,102 @@ namespace VianaNET
       this.TickUpClicked(this, e);
     }
 
+    #endregion //EVENTHANDLER
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region THREAD
+    #endregion //THREAD
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PRIVATEMETHODS
+
+    private void OnFrameTimeChanged(DependencyPropertyChangedEventArgs args)
+    {
+      UpdateTickStyle();
+    }
+
+    private void UpdateTickStyle()
+    {
+      this.IsSnapToTickEnabled = false;//true;
+      //this.TickFrequency = 0;
+      switch (Video.Instance.VideoPlayerElement.CurrentPositionFormat)
+      {
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.None:
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.MediaTime:
+          this.TickFrequency = this.FrameTime * 10000;
+          break;
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Frame:
+          this.TickFrequency = 1;
+          break;
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Byte:
+          break;
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Field:
+          break;
+        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Sample:
+          this.TickFrequency = 1;
+          break;
+      }
+    }
+
+    private void CheckWhichRangeEndToChange(Point mouseDownPosition)
+    {
+      if (this.IsMouseOver && !this.timelineThumb.IsMouseOver)
+      {
+        if (mouseDownPosition.X > -timelineMouseCaptureMargin && mouseDownPosition.X < timelineMouseCaptureMargin)
+        {
+          this.currentRangeSelectionThumb = RangeSelectionThumb.Start;
+        }
+        else if (mouseDownPosition.X > this.timelineSelectionRange.ActualWidth - timelineMouseCaptureMargin &&
+          mouseDownPosition.X < this.timelineSelectionRange.ActualWidth + timelineMouseCaptureMargin)
+        {
+          this.currentRangeSelectionThumb = RangeSelectionThumb.End;
+        }
+      }
+    }
+
+    private void UpdateSelectionRange(Point selectionPosition)
+    {
+      if (this.IsMouseOver && !this.timelineThumb.IsMouseOver)
+      {
+        double factor = this.Maximum / this.timelineSelectionCanvas.ActualWidth;
+        switch (currentRangeSelectionThumb)
+        {
+          case RangeSelectionThumb.None:
+            break;
+          case RangeSelectionThumb.Start:
+            this.SelectionStart = selectionPosition.X * factor;
+            this.SelectionStartString = this.ConvertToTimeString(this.SelectionStart);
+            if (this.Value < this.SelectionStart)
+            {
+              this.Value = this.SelectionStart;
+            }
+
+            break;
+          case RangeSelectionThumb.End:
+            this.SelectionEnd = selectionPosition.X * factor;
+            this.SelectionEndString = this.ConvertToTimeString(this.SelectionEnd);
+            if (this.Value > this.SelectionEnd)
+            {
+              this.Value = this.SelectionEnd;
+            }
+
+            break;
+          default:
+            break;
+        }
+      }
+    }
+
+    #endregion //PRIVATEMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region HELPER
 
     private string ConvertToTimeString(double value)
     {
@@ -261,6 +450,12 @@ namespace VianaNET
 
       return timeValue;
     }
+
+    #endregion //HELPER
+
+
+
+
 
   }
 }

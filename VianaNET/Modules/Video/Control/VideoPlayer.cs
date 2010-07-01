@@ -168,6 +168,28 @@ namespace VianaNET
       typeof(System.Drawing.Bitmap),
       typeof(VideoPlayer), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
+  "SelectionStart",
+  typeof(double),
+  typeof(MediaSlider));
+
+    public double SelectionStart
+    {
+      get { return (double)GetValue(SelectionStartProperty); }
+      set { SetValue(SelectionStartProperty, value); }
+    }
+
+    public static readonly DependencyProperty SelectionEndProperty = DependencyProperty.Register(
+      "SelectionEnd",
+      typeof(double),
+      typeof(MediaSlider));
+
+    public double SelectionEnd
+    {
+      get { return (double)GetValue(SelectionEndProperty); }
+      set { SetValue(SelectionEndProperty, value); }
+    }
+
     #endregion //PROPERTIES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -301,7 +323,7 @@ namespace VianaNET
     {
       if (!this.IsPlaying && this.NaturalVideoHeight > 0)
       {
-        this.CurrentFrameBitmap = CreateBitmapFromCurrentImageSource();
+        //this.CurrentFrameBitmap = CreateBitmapFromCurrentImageSource();
       }
     }
 
@@ -355,6 +377,17 @@ namespace VianaNET
 
     protected override void OnMediaPositionChanged(DependencyPropertyChangedEventArgs e)
     {
+      //if (this.MediaPosition > (long)Math.Round(this.SelectionEnd))
+      //{
+      //  this.MediaPosition = (long)Math.Round(this.SelectionEnd);
+      //  return;
+      //}
+      //else if (this.MediaPosition < (long)Math.Round(this.SelectionStart))
+      //{
+      //  this.MediaPosition = (long)Math.Round(this.SelectionStart);
+      //  return;
+      //}
+
       base.OnMediaPositionChanged(e);
 
       switch (this.CurrentPositionFormat)

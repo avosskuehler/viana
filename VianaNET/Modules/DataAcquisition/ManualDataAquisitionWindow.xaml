@@ -41,20 +41,22 @@
             <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
             <Label Name="FrameCount" Content="{Binding Path=VideoPlayerElement.FrameCount, Source={x:Static Viana:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
           </StackPanel>
-          <Viana:MediaSlider Margin="5" Grid.Column="1" 
-                             IsShowingTimes="Collapsed" 
-                             x:Name="timelineSlider"  
-                             FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
-                             Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
-                             Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}" 
-                             SmallChange="1" 
-                             IsSelectionRangeEnabled="True" 
-                             SelectionStart="10" 
-                             TickPlacement="BottomRight" 
-                             Interval="1" 
-                             SelectionEnd="50" 
-                             TickDownClicked="timelineSlider_TickDownClicked" 
-                             TickUpClicked="timelineSlider_TickUpClicked"/>
+          <Viana:MediaSlider 
+            Margin="5" 
+            Grid.Column="1" 
+            IsShowingTimes="Collapsed" 
+            x:Name="timelineSlider"  
+            FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
+            Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}"
+            SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
+            SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
+            Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
+            SmallChange="1" 
+            IsSelectionRangeEnabled="True" 
+            TickPlacement="BottomRight" 
+            Interval="1" 
+            TickDownClicked="timelineSlider_TickDownClicked" 
+            TickUpClicked="timelineSlider_TickUpClicked"/>
           <Separator/>
           <Button Name="ButtonReady" Width="60" Content="{lex:LocText VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReady_Click" />
           <Expander IsExpanded="False">

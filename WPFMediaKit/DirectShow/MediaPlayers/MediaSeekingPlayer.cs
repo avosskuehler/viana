@@ -155,7 +155,7 @@ namespace WPFMediaKit.DirectShow.MediaPlayers
         long lCurrentPos;
 
         int hr = m_mediaSeeking.GetCurrentPosition(out lCurrentPos);
-        Console.WriteLine("CurrentPosition: " + lCurrentPos.ToString("N2"));
+        //Console.WriteLine("CurrentPosition: " + lCurrentPos.ToString("N2"));
         if (hr == 0)
         {
           if (lCurrentPos != m_currentPosition)

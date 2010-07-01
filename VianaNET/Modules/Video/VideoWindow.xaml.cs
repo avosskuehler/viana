@@ -22,12 +22,8 @@ namespace VianaNET
   public partial class VideoWindow : DockableContent
   {
     private const int margin = 10;
-    private const int timelineMouseCaptureMargin = 15;
 
     private Line currentLine;
-    private Rectangle timelineSelectionRange;
-    private Thumb timelineThumb;
-    private Canvas timelineSelectionCanvas;
     bool isReady = true;
 
     public void LoadVideo()
@@ -129,34 +125,52 @@ namespace VianaNET
     {
       InitializeComponent();
       this.SetVideoMode(VideoMode.File);
+      this.timelineSlider.SelectionEndReached += new EventHandler(timelineSlider_SelectionEndReached);
+    }
+
+    void timelineSlider_SelectionEndReached(object sender, EventArgs e)
+    {
+      Video.Instance.Pause();
     }
 
     void VideoPlayer_VideoFileOpened(object sender, EventArgs e)
     {
       //this.BlobsControl.UpdatedProcessedImage();
       this.BlobsControl.UpdateScale();
-      this.timelineSlider.SelectionStart = 0;
-      this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
+      //this.timelineSlider.SelectionStart = 0;
+      //this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
     }
 
     void timelineSlider_TickUpClicked(object sender, EventArgs e)
     {
-      Video.Instance.StepOneFrame(true);
+      if (this.timelineSlider.Value < this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(true);
+      }
     }
 
     void timelineSlider_TickDownClicked(object sender, EventArgs e)
     {
-      Video.Instance.StepOneFrame(false);
+      if (this.timelineSlider.Value > this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(false);
+      }
     }
 
     private void btnSeekPrevious_Click(object sender, RoutedEventArgs e)
     {
-      Video.Instance.StepOneFrame(false);
+      if (this.timelineSlider.Value > this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(false);
+      }
     }
 
     private void btnSeekNext_Click(object sender, RoutedEventArgs e)
     {
-      Video.Instance.StepOneFrame(true);
+      if (this.timelineSlider.Value < this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(true);
+      }
     }
 
     private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -171,7 +185,7 @@ namespace VianaNET
 
     private void btnRevert_Click(object sender, RoutedEventArgs e)
     {
-      Video.Instance.Revert();
+      this.timelineSlider.Value = this.timelineSlider.SelectionStart;
     }
 
     private void btnPause_Click(object sender, RoutedEventArgs e)
@@ -478,84 +492,6 @@ namespace VianaNET
     {
       PlaceCalibration();
       PlaceClippingRegion();
-    }
-
-    private enum RangeSelectionThumb
-    {
-      None,
-      Start,
-      End,
-    }
-
-    private RangeSelectionThumb currentRangeSelectionThumb;
-
-    private void timelineSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      CheckWhichRangeEndToChange(e.GetPosition(this.timelineSelectionRange));
-      this.timelineSlider.CaptureMouse();
-    }
-
-    private void CheckWhichRangeEndToChange(Point mouseDownPosition)
-    {
-      if (this.timelineSlider.IsMouseOver && !this.timelineThumb.IsMouseOver)
-      {
-        if (mouseDownPosition.X > -timelineMouseCaptureMargin && mouseDownPosition.X < timelineMouseCaptureMargin)
-        {
-          this.currentRangeSelectionThumb = RangeSelectionThumb.Start;
-        }
-        else if (mouseDownPosition.X > this.timelineSelectionRange.ActualWidth - timelineMouseCaptureMargin &&
-          mouseDownPosition.X < this.timelineSelectionRange.ActualWidth + timelineMouseCaptureMargin)
-        {
-          this.currentRangeSelectionThumb = RangeSelectionThumb.End;
-        }
-      }
-    }
-
-    private void timelineSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      UpdateSelectionRange(e.GetPosition(this.timelineSelectionCanvas));
-      this.currentRangeSelectionThumb = RangeSelectionThumb.None;
-      this.timelineSlider.ReleaseMouseCapture();
-    }
-
-    private void UpdateSelectionRange(Point selectionPosition)
-    {
-      if (this.timelineSlider.IsMouseOver && !this.timelineThumb.IsMouseOver)
-      {
-        double factor = this.timelineSlider.Maximum / this.timelineSelectionCanvas.ActualWidth;
-        switch (currentRangeSelectionThumb)
-        {
-          case RangeSelectionThumb.None:
-            break;
-          case RangeSelectionThumb.Start:
-            this.timelineSlider.SelectionStart = selectionPosition.X * factor;
-            break;
-          case RangeSelectionThumb.End:
-            this.timelineSlider.SelectionEnd = selectionPosition.X * factor;
-            break;
-          default:
-            break;
-        }
-      }
-    }
-
-    private void timelineSlider_MouseMove(object sender, MouseEventArgs e)
-    {
-      if (e.LeftButton == MouseButtonState.Pressed)
-      {
-        UpdateSelectionRange(e.GetPosition(this.timelineSelectionCanvas));
-      }
-    }
-
-    private void DockableContent_Loaded(object sender, RoutedEventArgs e)
-    {
-      this.timelineSelectionRange =
-        this.timelineSlider.Template.FindName("PART_SelectionRange", this.timelineSlider) as Rectangle;
-      this.timelineThumb =
-        this.timelineSlider.Template.FindName("Thumb", this.timelineSlider) as Thumb;
-      this.timelineSelectionCanvas =
-        this.timelineSlider.Template.FindName("SelectionCanvas", this.timelineSlider) as Canvas;
-
     }
   }
 }
