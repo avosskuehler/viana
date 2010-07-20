@@ -345,24 +345,7 @@ namespace VianaNET
     private void UpdateTickStyle()
     {
       this.IsSnapToTickEnabled = false;//true;
-      //this.TickFrequency = 0;
-      switch (Video.Instance.VideoPlayerElement.CurrentPositionFormat)
-      {
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.None:
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.MediaTime:
-          this.TickFrequency = this.FrameTime * 10000;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Frame:
-          this.TickFrequency = 1;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Byte:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Field:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Sample:
-          this.TickFrequency = 1;
-          break;
-      }
+      this.TickFrequency = this.FrameTime;
     }
 
     private void CheckWhichRangeEndToChange(Point mouseDownPosition)
@@ -423,26 +406,7 @@ namespace VianaNET
 
     private string ConvertToTimeString(double value)
     {
-      double timeInMS = 0;
-      switch (Video.Instance.VideoPlayerElement.CurrentPositionFormat)
-      {
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.MediaTime:
-          timeInMS = value / 10000;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Frame:
-          timeInMS = value * this.FrameTime;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Byte:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Field:
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.Sample:
-          timeInMS = value * this.FrameTime;
-          break;
-        case WPFMediaKit.DirectShow.MediaPlayers.MediaPositionFormat.None:
-          break;
-      }
-
+      double timeInMS = value;
       int seconds = (int)Math.Floor(timeInMS / 1000);
       int milliseconds = (int)(timeInMS - seconds * 1000);
       string timeValue = seconds.ToString("N0") +
@@ -452,10 +416,5 @@ namespace VianaNET
     }
 
     #endregion //HELPER
-
-
-
-
-
   }
 }

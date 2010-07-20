@@ -10,17 +10,24 @@
   <UserControl.Resources>
     <ResourceDictionary Source="../../../VianaControls/VianaStyle.xaml"/>
   </UserControl.Resources>
-  <UniformGrid MinWidth="50" Rows="3" IsItemsHost="False" SizeChanged="UniformGrid_SizeChanged">
+  <UniformGrid MinWidth="50" Rows="3" IsItemsHost="False">
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlProcessedImageHeader}">
-      <Image Name="ProcessedImageControl"  Source="{Binding ProcessedImage}" HorizontalAlignment="Center"/>
+      <Image Name="ProcessedImageControl" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center"/>
     </GroupBox>
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlFoundBlobsHeader}">
-      <Canvas Name="CanvasHulls">
-        <Canvas.RenderTransform>
+      <Grid Name="CanvasHulls">
+        <Image Name="OverlayImageControl"  Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center"/>
+        <Canvas Name="OverlayCanvas" Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"
+                Height="{Binding ElementName=OverlayImageControl, Path=ActualHeight}">
+          <Ellipse Name="BlobEllipse" Stroke="Red" StrokeThickness="3"/>
+        </Canvas>
+      </Grid>
+      <!--<Canvas Name="CanvasHulls" Background="DarkBlue">-->
+      <!--<Canvas.LayoutTransform>
           <ScaleTransform ScaleX="{Binding XScale}" ScaleY="{Binding YScale}"/>
-        </Canvas.RenderTransform>
-        <!--<Polygon Name="BlobHull" Stroke="Red" StrokeThickness="3" />-->
-      </Canvas>
+        </Canvas.LayoutTransform>-->
+      <!--<Polygon Name="BlobHull" Stroke="Red" StrokeThickness="3" />-->
+      <!--</Canvas>-->
     </GroupBox>
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
       <Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">

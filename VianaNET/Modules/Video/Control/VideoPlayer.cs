@@ -1,22 +1,18 @@
-﻿
-using WPFMediaKit.DirectShow.Controls;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using MediaInfoLib;
 using System.Globalization;
 using System;
 using System.Windows.Controls;
 using System.Windows;
-using WPFMediaKit.DirectShow.MediaPlayers;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Threading;
 
 namespace VianaNET
 {
-  public class VideoPlayer : MediaUriElement
+  public class VideoPlayer : VideoBase
   {
-    //    //Timeline.DesiredFrameRateProperty.OverrideMetadata(  typeof(Timeline),    new FrameworkPropertyMetadata { DefaultValue = 20 }   );
-
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
@@ -27,6 +23,12 @@ namespace VianaNET
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
     #region FIELDS
+
+    private MediaPlayer mediaPlayer;
+    private VideoDrawing videoDrawing;
+    private DrawingImage drawingImage;
+    private DrawingVisual drawingVisual;
+
     #endregion //FIELDS
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -36,14 +38,15 @@ namespace VianaNET
 
     public VideoPlayer()
     {
-      this.BeginInit();
-      this.MediaOpened += new RoutedEventHandler(VideoPlayer_MediaOpened);
-      this.MediaEnded += new RoutedEventHandler(VideoPlayer_MediaEnded);
-      this.VideoRenderer = VideoRendererType.VideoMixingRenderer9;
-      this.PreferedPositionFormat = MediaPositionFormat.MediaTime;
-      this.LoadedBehavior = WPFMediaKit.DirectShow.MediaPlayers.MediaState.Pause;
-      this.VideoImage.SizeChanged += new SizeChangedEventHandler(VideoImage_SizeChanged);
-      this.EndInit();
+      this.mediaPlayer = new MediaPlayer();
+      this.mediaPlayer.ScrubbingEnabled = true;
+      this.videoDrawing = new VideoDrawing();
+      this.videoDrawing.Player = this.mediaPlayer;
+      this.drawingImage = new DrawingImage(this.videoDrawing);
+      this.drawingVisual = new DrawingVisual();
+      //this.drawingImage.Freeze();
+      this.videoDrawing.Rect = new Rect(0, 0, 100, 100);
+      this.ImageSource = drawingImage;
     }
 
     #endregion //CONSTRUCTION
@@ -52,9 +55,6 @@ namespace VianaNET
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region EVENTS
-
-    public event EventHandler VideoFileOpened;
-
     #endregion EVENTS
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -62,111 +62,59 @@ namespace VianaNET
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
 
-    public new double UniformHeight
-    {
-      get { return (double)GetValue(UniformHeightProperty); }
-      set { SetValue(UniformHeightProperty, value); }
-    }
+    public RenderTargetBitmap RenderTargetBitmap { get; set; }
 
-    public static readonly DependencyProperty UniformHeightProperty =
-      DependencyProperty.Register(
-      "UniformHeight",
-      typeof(double),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(double)));
-
-    public new double UniformWidth
-    {
-      get { return (double)GetValue(UniformWidthProperty); }
-      set { SetValue(UniformWidthProperty, value); }
-    }
-
-    public static readonly DependencyProperty UniformWidthProperty =
-      DependencyProperty.Register(
-      "UniformWidth",
-      typeof(double),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(double)));
-
-    /// <summary>
-    /// Time between frames in ms units.
-    /// </summary>
-    public double FrameTime
-    {
-      get { return (double)GetValue(FrameTimeProperty); }
-      set { SetValue(FrameTimeProperty, value); }
-    }
-
-    public static readonly DependencyProperty FrameTimeProperty =
-      DependencyProperty.Register(
-      "FrameTime",
-      typeof(double),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(double)));
-
-    public int MediaPositionFrameIndex
-    {
-      get { return (int)GetValue(MediaPositionFrameIndexProperty); }
-      set { SetValue(MediaPositionFrameIndexProperty, value); }
-    }
-
-    public static readonly DependencyProperty MediaPositionFrameIndexProperty =
-      DependencyProperty.Register(
-      "MediaPositionFrameIndex",
-      typeof(int),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(int)));
-
-    public long MediaPositionTime
-    {
-      get { return (long)GetValue(MediaPositionTimeProperty); }
-      set { SetValue(MediaPositionTimeProperty, value); }
-    }
-
-    public static readonly DependencyProperty MediaPositionTimeProperty =
-      DependencyProperty.Register(
-      "MediaPositionTime",
-      typeof(long),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(long)));
-
-    public int FrameCount
-    {
-      get { return (int)GetValue(FrameCountProperty); }
-      set { SetValue(FrameCountProperty, value); }
-    }
-
-    public static readonly DependencyProperty FrameCountProperty =
-      DependencyProperty.Register(
-      "FrameCount",
-      typeof(int),
-      typeof(VideoPlayer),
-      new UIPropertyMetadata(default(int)));
-
-    //public ImageSource VideoSource
+    //public double UniformHeight
     //{
-    //  get { return (ImageSource)GetValue(VideoSourceProperty); }
-    //  set { SetValue(VideoSourceProperty, value); }
+    //  get { return (double)GetValue(UniformHeightProperty); }
+    //  set { SetValue(UniformHeightProperty, value); }
     //}
 
-    //public static readonly DependencyProperty VideoSourceProperty =
+    //public static readonly DependencyProperty UniformHeightProperty =
     //  DependencyProperty.Register(
-    //  "VideoSource",
-    //  typeof(ImageSource),
+    //  "UniformHeight",
+    //  typeof(double),
     //  typeof(VideoPlayer),
-    //  new UIPropertyMetadata(null));
+    //  new UIPropertyMetadata(default(double)));
 
-    public System.Drawing.Bitmap CurrentFrameBitmap
+    //public double UniformWidth
+    //{
+    //  get { return (double)GetValue(UniformWidthProperty); }
+    //  set { SetValue(UniformWidthProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty UniformWidthProperty =
+    //  DependencyProperty.Register(
+    //  "UniformWidth",
+    //  typeof(double),
+    //  typeof(VideoPlayer),
+    //  new UIPropertyMetadata(default(double)));
+
+    public override long MediaPositionInMS
     {
-      get { return (System.Drawing.Bitmap)GetValue(CurrentFrameBitmapProperty); }
-      set { SetValue(CurrentFrameBitmapProperty, value); }
+      get
+      {
+        return (long)this.mediaPlayer.Position.TotalMilliseconds;
+      }
+
+      set
+      {
+        this.mediaPlayer.Position = new TimeSpan(0, 0, 0, 0, (int)value);
+      }
     }
 
-    public static readonly DependencyProperty CurrentFrameBitmapProperty =
+    public double MediaDuration
+    {
+      get { return (double)GetValue(MediaDurationProperty); }
+      set { SetValue(MediaDurationProperty, value); }
+    }
+
+    public static readonly DependencyProperty MediaDurationProperty =
       DependencyProperty.Register(
-      "CurrentFrameBitmap",
-      typeof(System.Drawing.Bitmap),
-      typeof(VideoPlayer), new PropertyMetadata(null));
+      "MediaDuration",
+      typeof(double),
+      typeof(VideoPlayer),
+      new UIPropertyMetadata(default(double)));
 
     public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
   "SelectionStart",
@@ -250,117 +198,127 @@ namespace VianaNET
 
       videoHeader.Close();
 
-      this.Source = new Uri(fileName);
+      this.mediaPlayer.Open(new Uri(fileName));
+      this.mediaPlayer.Pause();
+
+      while (!this.mediaPlayer.NaturalDuration.HasTimeSpan)
+      {
+        Thread.Sleep(200);
+      }
+
+      this.MediaDuration = this.mediaPlayer.NaturalDuration.TimeSpan.TotalMilliseconds;
+      this.NaturalVideoHeight = this.mediaPlayer.NaturalVideoHeight;
+      this.NaturalVideoWidth = this.mediaPlayer.NaturalVideoWidth;
+      this.videoDrawing.Rect = new Rect(0, 0, NaturalVideoWidth, NaturalVideoHeight);
+
+      this.CreateMemoryMapping(4);
+
+      this.RenderTargetBitmap = new RenderTargetBitmap(
+  (int)this.NaturalVideoWidth,
+  (int)this.NaturalVideoHeight,
+  96d,
+  96d,
+  PixelFormats.Default);
+      this.RenderTargetBitmap.Changed += new EventHandler(renderTargetBitmap_Changed);
+
+      this.HasVideo = true;
+      this.OnVideoAvailable();
       return true;
+    }
+
+    private void renderTargetBitmap_Changed(object sender, EventArgs e)
+    {
+      this.RenderTargetBitmap.CopyPixels(new Int32Rect(0, 0, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight), this.Map, this.bufferLength, this.Stride);
+
+      // Encoding the RenderBitmapTarget as a PNG file.
+      PngBitmapEncoder png = new PngBitmapEncoder();
+      png.Frames.Add(BitmapFrame.Create(this.RenderTargetBitmap));
+      using (Stream stm = File.Create(@"c:\Dumps\RTB.png"))
+      {
+        png.Save(stm);
+      }
+      this.OnVideoFrameChanged();
     }
 
     public void StepOneFrame(bool forward)
     {
-      if (this.IsPlaying)
-      {
-        this.Pause();
-      }
-
-      switch (this.CurrentPositionFormat)
-      {
-        case MediaPositionFormat.MediaTime:
-          if (forward)
-          {
-            this.MediaPosition += (long)(this.FrameTime * 10000);
-          }
-          else
-          {
-            this.MediaPosition -= (long)(this.FrameTime * 10000);
-          }
-          break;
-        case MediaPositionFormat.Frame:
-          if (forward)
-          {
-            this.MediaPosition++;
-          }
-          else
-          {
-            this.MediaPosition--;
-          }
-          break;
-        case MediaPositionFormat.Byte:
-          break;
-        case MediaPositionFormat.Field:
-          break;
-        case MediaPositionFormat.Sample:
-          if (forward)
-          {
-            this.MediaPosition++;
-          }
-          else
-          {
-            this.MediaPosition--;
-          }
-          break;
-        case MediaPositionFormat.None:
-          break;
-        default:
-          break;
-      }
-
-      if (this.MediaPosition > this.MediaDuration)
-      {
-        this.MediaPosition = this.MediaDuration;
-      }
-      else if (this.MediaPosition < 0)
-      {
-        this.MediaPosition = 0;
-      }
+      //    RenderTargetBitmap rtp = new RenderTargetBitmap(
+      //(int)this.NaturalVideoWidth,
+      //(int)this.NaturalVideoHeight,
+      //96d,
+      //96d,
+      //PixelFormats.Default);
+      //    MediaElement me = new MediaElement();
+      //    rtp.Render(me);
+      //    rtp.CopyPixels
     }
 
-    public void Revert()
+    public override void Play()
     {
-      this.MediaPosition = 0;
-      this.Pause();
+      this.mediaPlayer.Play();
+      base.Play();
     }
 
-    public void UpdateNativeBitmap()
+    public override void Pause()
     {
-      if (!this.IsPlaying && this.NaturalVideoHeight > 0)
-      {
-        //this.CurrentFrameBitmap = CreateBitmapFromCurrentImageSource();
-      }
+      this.mediaPlayer.Pause();
     }
 
-    public System.Drawing.Bitmap CreateBitmapFromCurrentImageSource()
+    public override void Stop()
     {
-      if (this.NaturalVideoWidth <= 0)
-      {
-        return null;
-      }
-
-      System.Drawing.Bitmap returnBitmap;
-      DrawingVisual visual = new DrawingVisual();
-      DrawingContext dc = visual.RenderOpen();
-      dc.DrawImage(
-        this.D3DImage,
-        new Rect(0, 0, this.NaturalVideoWidth, this.NaturalVideoHeight));
-
-      dc.Close();
-      RenderTargetBitmap rtp = new RenderTargetBitmap(
-        this.NaturalVideoWidth,
-        this.NaturalVideoHeight,
-        96d,
-        96d,
-        PixelFormats.Default);
-      rtp.Render(visual);
-
-      using (MemoryStream outStream = new MemoryStream())
-      {
-        PngBitmapEncoder pnge = new PngBitmapEncoder();
-        pnge.Frames.Add(BitmapFrame.Create(rtp));
-        pnge.Save(outStream);
-        returnBitmap = new System.Drawing.Bitmap(outStream);
-        //returnBitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
-      }
-
-      return returnBitmap;
+      this.mediaPlayer.Stop();
+      base.Stop();
     }
+
+    public override void Revert()
+    {
+      this.mediaPlayer.Pause();
+      TimeSpan ts = new TimeSpan(0, 0, 0, 0, 0);
+      this.mediaPlayer.Position = ts;
+    }
+
+    //public void UpdateNativeBitmap()
+    //{
+    //  if (!this.IsPlaying && this.NaturalVideoHeight > 0)
+    //  {
+    //    //this.CurrentFrameBitmap = CreateBitmapFromCurrentImageSource();
+    //  }
+    //}
+
+    //public System.Drawing.Bitmap CreateBitmapFromCurrentImageSource()
+    //{
+    //  if (this.NaturalVideoWidth <= 0)
+    //  {
+    //    return null;
+    //  }
+
+    //  System.Drawing.Bitmap returnBitmap;
+    //  DrawingVisual visual = new DrawingVisual();
+    //  DrawingContext dc = visual.RenderOpen();
+    //  dc.DrawImage(
+    //    this.D3DImage,
+    //    new Rect(0, 0, this.NaturalVideoWidth, this.NaturalVideoHeight));
+
+    //  dc.Close();
+    //  RenderTargetBitmap rtp = new RenderTargetBitmap(
+    //    this.NaturalVideoWidth,
+    //    this.NaturalVideoHeight,
+    //    96d,
+    //    96d,
+    //    PixelFormats.Default);
+    //  rtp.Render(visual);
+
+    //  using (MemoryStream outStream = new MemoryStream())
+    //  {
+    //    PngBitmapEncoder pnge = new PngBitmapEncoder();
+    //    pnge.Frames.Add(BitmapFrame.Create(rtp));
+    //    pnge.Save(outStream);
+    //    returnBitmap = new System.Drawing.Bitmap(outStream);
+    //    //returnBitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
+    //  }
+
+    //  return returnBitmap;
+    //}
 
     #endregion //PUBLICMETHODS
 
@@ -368,55 +326,6 @@ namespace VianaNET
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region OVERRIDES
-
-    protected override void OnUnloadedOverride()
-    {
-      // Don´t unload when just hiding surface...
-      //base.OnUnloadedOverride();
-    }
-
-    protected override void OnMediaPositionChanged(DependencyPropertyChangedEventArgs e)
-    {
-      //if (this.MediaPosition > (long)Math.Round(this.SelectionEnd))
-      //{
-      //  this.MediaPosition = (long)Math.Round(this.SelectionEnd);
-      //  return;
-      //}
-      //else if (this.MediaPosition < (long)Math.Round(this.SelectionStart))
-      //{
-      //  this.MediaPosition = (long)Math.Round(this.SelectionStart);
-      //  return;
-      //}
-
-      base.OnMediaPositionChanged(e);
-
-      switch (this.CurrentPositionFormat)
-      {
-        case MediaPositionFormat.MediaTime:
-          this.MediaPositionFrameIndex = (int)Math.Round(this.MediaPosition / this.FrameTime / 10000);
-          this.MediaPositionTime = this.MediaPosition / 10000;
-          break;
-        case MediaPositionFormat.Frame:
-          this.MediaPositionFrameIndex = (int)this.MediaPosition;
-          this.MediaPositionTime = (long)(this.MediaPosition * this.FrameTime);
-          break;
-        case MediaPositionFormat.Byte:
-          break;
-        case MediaPositionFormat.Field:
-          break;
-        case MediaPositionFormat.Sample:
-          this.MediaPositionFrameIndex = (int)this.MediaPosition;
-          this.MediaPositionTime = (long)(this.MediaPosition * this.FrameTime);
-          break;
-        case MediaPositionFormat.None:
-          break;
-        default:
-          break;
-      }
-
-      UpdateNativeBitmap();
-    }
-
     #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -426,36 +335,13 @@ namespace VianaNET
 
     void VideoImage_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-      this.UniformWidth = this.VideoImage.ActualWidth;
-      this.UniformHeight = this.VideoImage.ActualHeight;
+      //this.UniformWidth = this.mediaPlayer.ActualWidth;
+      //this.UniformHeight = this.VideoImage.ActualHeight;
     }
 
     void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
     {
       this.Pause();
-    }
-
-    void VideoPlayer_MediaOpened(object sender, RoutedEventArgs e)
-    {
-      switch (this.CurrentPositionFormat)
-      {
-        case MediaPositionFormat.MediaTime:
-          this.FrameCount = (int)(this.MediaDuration / this.FrameTime / 10000);
-          break;
-        case MediaPositionFormat.Frame:
-          this.FrameCount = (int)(this.MediaDuration);
-          break;
-        case MediaPositionFormat.Byte:
-          break;
-        case MediaPositionFormat.Field:
-          break;
-        case MediaPositionFormat.Sample:
-          this.FrameCount = (int)(this.MediaDuration);
-          break;
-      }
-
-      this.OnVideoFileOpened();
-      UpdateNativeBitmap();
     }
 
     #endregion //EVENTHANDLER
@@ -476,15 +362,18 @@ namespace VianaNET
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
     #region HELPER
-
-    private void OnVideoFileOpened()
-    {
-      if (this.VideoFileOpened != null)
-      {
-        this.VideoFileOpened(this, EventArgs.Empty);
-      }
-    }
-
     #endregion //HELPER
+
+    internal void RenderVideo()
+    {
+      DrawingContext drawingContext = drawingVisual.RenderOpen();
+
+      using (drawingContext)
+      {
+        drawingContext.DrawVideo(this.mediaPlayer, new Rect(0, 0, this.NaturalVideoWidth,this.NaturalVideoHeight));
+      }
+
+      this.RenderTargetBitmap.Render(drawingVisual);
+    }
   }
 }

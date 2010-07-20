@@ -78,7 +78,7 @@ namespace VianaNET
       this.VelocityUnit = "px/s";
       this.AccelerationUnit = "px/s^2";
       this.TargetColor = Colors.Red;
-      this.ColorTolerance = 60;
+      this.ColorThreshold = 0.3;
       this.IsShowingUnits = false;
       this.BlobMinDiameter = 4;
       this.BlobMaxDiameter = 100;
@@ -188,7 +188,7 @@ namespace VianaNET
       typeof(Calibration),
       new FrameworkPropertyMetadata(default(double)));
 
-    public double ColorTolerance
+    public double ColorThreshold
     {
       get { return (double)this.GetValue(ColorToleranceProperty); }
       set { this.SetValue(ColorToleranceProperty, value); }
@@ -198,7 +198,7 @@ namespace VianaNET
       "ColorTolerance",
       typeof(double),
       typeof(Calibration),
-      new FrameworkPropertyMetadata(60d,
+      new FrameworkPropertyMetadata(0.3d,
         FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnBlobDetectionPropertyChanged)));
 
     public double BlobMinDiameter

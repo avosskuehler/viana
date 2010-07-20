@@ -5,7 +5,6 @@
     xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
     xmlns:lex="http://schemas.root-project.org/xaml/presentation"
     xmlns:Viana="clr-namespace:VianaNET"
-    xmlns:WPFMediaKit="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
     lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
     Icon="/VianaNET;component/Images/VianaNET.ico"
@@ -430,11 +429,11 @@
                                    MinWidth="100"
                                    Height="20"
                                    Minimum="0"
-                                   Maximum="255"
+                                   Maximum="1"
                                    SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
                                    Value="{Binding Path=ColorTolerance, Source={x:Static Viana:Calibration.Instance}}" 
-                                   SmallChange="1" 
-                                   IsSnapToTickEnabled="True" />
+                                   SmallChange="0.01" 
+                                   LargeChange="0.1" TickFrequency="0.01" IsSnapToTickEnabled="True" />
           <Viana:RibbonSliderValue 
                                    Style="{StaticResource RibbonSliderValue}"
                                    Height="20"

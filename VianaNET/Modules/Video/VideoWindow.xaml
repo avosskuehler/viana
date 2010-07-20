@@ -18,7 +18,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
-      <RowDefinition Height="32"/>
+      <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
     <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}">
       <Grid.ColumnDefinitions>
@@ -26,8 +26,10 @@
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
       <Grid Name="LeftVideoPanel" Grid.Column="0">
-
-        <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvas_SizeChanged">
+        <Image Name="VideoImage" HorizontalAlignment="Center" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}"/>
+        <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvas_SizeChanged"
+                Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
+                Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
           <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
             <Path.Data>
               <GeometryGroup FillRule="EvenOdd">
@@ -37,6 +39,7 @@
               </GeometryGroup>
             </Path.Data>
           </Path>
+          <Label Name="frameRateLabel"></Label>
           <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="1" Visibility="Hidden" />
           <Border Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <Label Name="RulerLabel" Padding="1" 
@@ -63,7 +66,7 @@
           </Path>
         </Canvas>
       </Grid>
-      <Viana:BlobsControl Width="Auto" Height="Auto" Visibility="Collapsed" Grid.Column="1" x:Name="BlobsControl"/>
+      <Viana:BlobsControl Width="Auto" Height="Auto" Visibility="Visible" Grid.Column="1" x:Name="BlobsControl"/>
     </Grid>
     <Grid Background="{StaticResource PropertiesBackgroundBrush}" Height="40" Grid.RowSpan="2" VerticalAlignment="Bottom">
       <Grid.ColumnDefinitions>
@@ -83,7 +86,6 @@
         TickDownClicked="timelineSlider_TickDownClicked"
         TickUpClicked="timelineSlider_TickUpClicked"
         FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
-        Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
         Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}"
         SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
         SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
@@ -91,6 +93,8 @@
         TickPlacement="BottomRight" 
         Interval="1" 
         Minimum="0"
+        Thumb.DragStarted="timelineSlider_DragStarted"
+        Thumb.DragCompleted="timelineSlider_DragCompleted"
         />
     </Grid>
   </Grid>

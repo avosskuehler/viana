@@ -104,7 +104,7 @@
         fs = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VianaNETErrorLog.txt", FileMode.Append);
         logWriter = new StreamWriter(fs);
       }
-
+      
       logWriter.WriteLine(line);
       logWriter.Flush();
       Console.WriteLine(line);

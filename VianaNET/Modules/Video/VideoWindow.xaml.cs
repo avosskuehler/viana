@@ -16,6 +16,7 @@ using AForge.Imaging.Filters;
 using AForge;
 using System.Windows.Threading;
 using System.Threading;
+using System.Diagnostics;
 
 namespace VianaNET
 {
@@ -24,7 +25,8 @@ namespace VianaNET
     private const int margin = 10;
 
     private Line currentLine;
-    bool isReady = true;
+    //bool isReady = true;
+    private DispatcherTimer timer;
 
     public void LoadVideo()
     {
@@ -32,6 +34,8 @@ namespace VianaNET
       {
         return;
       }
+
+      this.timer.Start();
     }
 
     public void SetVideoMode(VideoMode newVideoMode)
@@ -48,84 +52,87 @@ namespace VianaNET
       ShowCalibration(false);
       ShowClipRegion(false);
 
-      this.BlobsControl.Visibility = Visibility.Collapsed;
+      //this.BlobsControl.Visibility = Visibility.Collapsed;
 
-      if (this.LeftVideoPanel.Children.Count > 1)
-      {
-        Video.Instance.Stop();
-        this.LeftVideoPanel.Children.RemoveAt(0);
-      }
-
-      this.LeftVideoPanel.Children.Insert(0, Video.Instance.VideoElement);
+      //if (this.LeftVideoPanel.Children.Count > 1)
+      //{
+      //  Video.Instance.Stop();
+      //  this.LeftVideoPanel.Children.RemoveAt(0);
+      //}
 
       // This bindings could not be set in XAML, because
       // when switching VideoElement, they get lost.
-      Binding widthBinding = new Binding();
-      Binding heightBinding = new Binding();
+      //Binding widthBinding = new Binding();
+      //Binding heightBinding = new Binding();
 
       switch (newVideoMode)
       {
         case VideoMode.File:
-          // Unregister existing capture events
-          Video.Instance.VideoCapturerElement.NewVideoSample -=
-            new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
-          // Register to video open event
-          Video.Instance.VideoPlayerElement.VideoFileOpened +=
-            new EventHandler(VideoPlayer_VideoFileOpened);
+          //// Unregister existing capture events
+          //Video.Instance.VideoCapturerElement.NewVideoSample -=
+          //  new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
+          //// Register to video open event
+          //Video.Instance.VideoPlayerElement.VideoFileOpened +=
+          //  new EventHandler(VideoPlayer_VideoFileOpened);
 
           // Set Overlay height and width bindings
-          widthBinding.Source = Video.Instance.VideoPlayerElement;
-          heightBinding.Source = Video.Instance.VideoPlayerElement;
+          //widthBinding.Source = Video.Instance.VideoPlayerElement;
+          //heightBinding.Source = Video.Instance.VideoPlayerElement;
 
           // Update UI
           this.timelineSlider.Visibility = Visibility.Visible;
           this.btnRevert.Visibility = Visibility.Visible;
           break;
         case VideoMode.Capture:
-          Video.Instance.VideoPlayerElement.VideoFileOpened -=
-            new EventHandler(VideoPlayer_VideoFileOpened);
+          //Video.Instance.VideoPlayerElement.VideoFileOpened -=
+          //  new EventHandler(VideoPlayer_VideoFileOpened);
 
-          Video.Instance.VideoCapturerElement.NewVideoSample +=
-          new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
+          //Video.Instance.VideoCapturerElement.NewVideoSample +=
+          //new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
 
           // Set Overlay height and width bindings sources
-          widthBinding.Source = Video.Instance.VideoCapturerElement;
-          heightBinding.Source = Video.Instance.VideoCapturerElement;
+          //widthBinding.Source = Video.Instance.VideoCapturerElement;
+          //heightBinding.Source = Video.Instance.VideoCapturerElement;
 
           this.timelineSlider.Visibility = Visibility.Collapsed;
           this.btnRevert.Visibility = Visibility.Collapsed;
           break;
       }
 
-      // Set Overlay height and width bindings
-      widthBinding.Path = new PropertyPath("UniformWidth");
-      this.OverlayCanvas.SetBinding(Canvas.WidthProperty, widthBinding);
-      heightBinding.Path = new PropertyPath("UniformHeight");
-      this.OverlayCanvas.SetBinding(Canvas.HeightProperty, heightBinding);
+      //// Set Overlay height and width bindings
+      //widthBinding.Path = new PropertyPath("UniformWidth");
+      //this.OverlayCanvas.SetBinding(Canvas.WidthProperty, widthBinding);
+      //heightBinding.Path = new PropertyPath("UniformHeight");
+      //this.OverlayCanvas.SetBinding(Canvas.HeightProperty, heightBinding);
     }
 
-    private void Instance_NewVideoSample(object sender, WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs e)
-    {
-      if (this.isReady)
-      {
-        this.isReady = false;
 
-        Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, (SendOrPostCallback)delegate
-        {
-          Video.Instance.CurrentFrameBitmap = e.VideoFrame;
-          //this.BlobsControl.NativeBitmap = e.VideoFrame;
-          this.BlobsControl.UpdatedProcessedImage();
-        }, null);
 
-        this.isReady = true;
-      }
-    }
+    //private void Instance_NewVideoSample(object sender, WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs e)
+    //{
+    //if (this.isReady)
+    //{
+    //  this.isReady = false;
+
+    //  Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Render, (SendOrPostCallback)delegate
+    //  {
+    //    Video.Instance.CurrentFrameBitmap = e.VideoFrame;
+    //    //this.BlobsControl.NativeBitmap = e.VideoFrame;
+    //    this.BlobsControl.UpdatedProcessedImage();
+    //  }, null);
+
+    //  this.isReady = true;
+    //}
+    //}
 
     public VideoWindow()
     {
       InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.timelineSlider.SelectionEndReached += new EventHandler(timelineSlider_SelectionEndReached);
+      this.timer = new DispatcherTimer();
+      this.timer.Interval = TimeSpan.FromMilliseconds(50);
+      this.timer.Tick += new EventHandler(timer_Tick);
     }
 
     void timelineSlider_SelectionEndReached(object sender, EventArgs e)
@@ -133,10 +140,33 @@ namespace VianaNET
       Video.Instance.Pause();
     }
 
+    bool isDragging = false;
+
+    void timer_Tick(object sender, EventArgs e)
+    {
+      if (!isDragging)
+      {
+        this.timelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
+      }
+
+      Video.Instance.Render(this.VideoImage);
+    }
+
+    private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
+    {
+      isDragging = true;
+    }
+
+    private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      isDragging = false;
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
+    }
+
     void VideoPlayer_VideoFileOpened(object sender, EventArgs e)
     {
       //this.BlobsControl.UpdatedProcessedImage();
-      this.BlobsControl.UpdateScale();
+      //this.BlobsControl.UpdateScale();
       //this.timelineSlider.SelectionStart = 0;
       //this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
     }
@@ -239,10 +269,26 @@ namespace VianaNET
 
     private bool GetScales(out double scaleX, out double scaleY)
     {
-      scaleX = Video.Instance.VideoElement.UniformWidth / Video.Instance.VideoElement.NaturalVideoWidth;
-      scaleY = Video.Instance.VideoElement.UniformHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+      //double sourceRatio = Video.Instance.VideoElement.NaturalVideoWidth / Video.Instance.VideoElement.NaturalVideoHeight;
+      //double destinationRatio = this.VideoImage.ActualWidth / this.VideoImage.ActualHeight;
 
-      return !double.IsNaN(scaleX);
+      //double uniformWidth = this.VideoImage.ActualHeight /
+      //  Video.Instance.VideoElement.NaturalVideoHeight *
+      //  Video.Instance.VideoElement.NaturalVideoWidth;
+      //double uniformHeight = this.VideoImage.ActualHeight;
+
+      //if (sourceRatio < destinationRatio)
+      //{
+      //  uniformWidth = this.VideoImage.ActualWidth;
+      //  uniformHeight = this.VideoImage.ActualWidth /
+      //  Video.Instance.VideoElement.NaturalVideoWidth *
+      //  Video.Instance.VideoElement.NaturalVideoHeight;
+      //}
+
+      scaleX = this.VideoImage.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
+      scaleY = this.VideoImage.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+
+      return (!double.IsInfinity(scaleX) && !double.IsNaN(scaleX));
     }
 
     private void ShowOrHideCalibration(Visibility visibility)
@@ -336,12 +382,12 @@ namespace VianaNET
       {
         double newX = e.GetPosition(this.OverlayCanvas).X;
         double newY = e.GetPosition(this.OverlayCanvas).Y;
-        if (newX < 0 || newX > Video.Instance.VideoElement.UniformWidth)
+        if (newX < 0 || newX > this.VideoImage.ActualWidth)
         {
           return;
         }
 
-        if (newY < 0 || newY > Video.Instance.VideoElement.UniformHeight)
+        if (newY < 0 || newY > this.VideoImage.ActualHeight)
         {
           return;
         }
@@ -399,7 +445,7 @@ namespace VianaNET
     {
       CombinedGeometry geometry = this.OuterRegion.Data as CombinedGeometry;
       RectangleGeometry outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
-      outerRectangleGeometry.Rect = new Rect(0, 0, Video.Instance.VideoElement.UniformWidth, Video.Instance.VideoElement.UniformHeight);
+      outerRectangleGeometry.Rect = new Rect(0, 0, VideoImage.ActualWidth, VideoImage.ActualHeight);
       RectangleGeometry innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
       Rect innerRect = new Rect(new Point(this.LeftLine.X1, this.TopLine.Y1), new Point(this.RightLine.X1, this.BottomLine.Y1));
       innerRectangleGeometry.Rect = innerRect;
@@ -429,7 +475,7 @@ namespace VianaNET
     public void RunAutomaticDataAquisition()
     {
       StatusBarContent.Instance.StatusLabel = Localization.Labels.StatusIsCalculating;
-      Video.Instance.VideoElement.D3DImageChanged += new EventHandler(VideoPlayer_D3DImageChanged);
+      //Video.Instance.VideoElement.D3DImageChanged += new EventHandler(VideoPlayer_D3DImageChanged);
 
       // Set acquisition mode
       Video.Instance.IsDataAcquisitionRunning = true;
@@ -439,9 +485,9 @@ namespace VianaNET
         // Go back to initial position
         Video.Instance.Revert();
 
-        // Start refreshing first D3DImage, that will call the first
-        // D3DImageChanged event which itself calls the next frame
-        Video.Instance.VideoPlayerElement.InvalidateVideoImage();
+        //// Start refreshing first D3DImage, that will call the first
+        //// D3DImageChanged event which itself calls the next frame
+        //Video.Instance.VideoPlayerElement.InvalidateVideoImage();
       }
     }
 
@@ -476,7 +522,7 @@ namespace VianaNET
 
     private void AutomaticAquisitionFinished()
     {
-      Video.Instance.VideoElement.D3DImageChanged -= new EventHandler(VideoPlayer_D3DImageChanged);
+      //Video.Instance.VideoElement.D3DImageChanged -= new EventHandler(VideoPlayer_D3DImageChanged);
 
       Video.Instance.IsDataAcquisitionRunning = false;
 

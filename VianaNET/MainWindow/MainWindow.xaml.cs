@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Globalization;
 using WPFLocalizeExtension.Engine;
-using WPFMediaKit.DirectShow.Controls;
 using System.Windows.Data;
 # endregion
 
@@ -94,7 +93,7 @@ namespace VianaNET
       this.chartWindow = new ChartWindow();
       this.modulePane.Items.Add(this.chartWindow);
 
-      if (MultimediaUtil.VideoInputDevices.Length == 0)
+      if (DShowUtils.GetVideoInputDevices().Count == 0)
       {
         this.VideoInputDeviceCombo.Text = "No Video device found.";
         this.VideoInputDeviceCombo.IsEnabled = false;
@@ -103,7 +102,7 @@ namespace VianaNET
       }
       else
       {
-        this.VideoInputDeviceCombo.ItemsSource = MultimediaUtil.VideoInputDevices;
+        this.VideoInputDeviceCombo.ItemsSource = DShowUtils.GetVideoInputDevices();
         this.VideoInputDeviceCombo.DisplayMemberPath = "Name";
         Binding captureDeviceBinding = new Binding();
         captureDeviceBinding.Source = Video.Instance;
@@ -515,8 +514,8 @@ namespace VianaNET
         bmp.Render(drawingVisual);
         ((RibbonCommand)this.selectColorRibbonButton.Command).LargeImageSource = bmp;
         Calibration.Instance.IsTargetColorSet = true;
-        this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
-        Video.Instance.UpdateNativeBitmap();
+        //this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
+        //Video.Instance.UpdateNativeBitmap();
       }
     }
 
@@ -772,7 +771,7 @@ namespace VianaNET
 
     private void ButtonCaptureVideoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
-      e.CanExecute = MultimediaUtil.VideoInputDevices.Length > 0;
+      e.CanExecute = DShowUtils.GetVideoInputDevices().Count > 0;
     }
 
     private void ButtonCaptureVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -857,12 +856,12 @@ namespace VianaNET
 
     private void ButtonVideoCaptureDevicePropertiesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
-      e.CanExecute = Video.Instance.VideoCapturerElement.IsPlaying;
+      e.CanExecute = Video.Instance.VideoCapturerElement.IsRunning;
     }
 
     private void ButtonVideoCaptureDevicePropertiesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
-      Video.Instance.VideoCapturerElement.ShowPropertyPage();
+      Video.Instance.VideoCapturerElement.ShowPropertyPageOfVideoDevice();
     }
 
     private void RecentItemsList_MostRecentFileSelected(object sender, MostRecentFileSelectedEventArgs e)

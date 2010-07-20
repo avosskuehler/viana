@@ -1,0 +1,451 @@
+﻿<UserControl x:Class="VianaNET.VianaControls.UserControl1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:Viana="clr-namespace:VianaNET" Width="200" >
+  <UserControl.Resources>
+    <ResourceDictionary Source="SliderStyles.xaml"/>
+  </UserControl.Resources>
+  <Border
+        BorderThickness="{TemplateBinding Border.BorderThickness}"
+        BorderBrush="{TemplateBinding Border.BorderBrush}"
+        Background="{TemplateBinding Panel.Background}"
+        SnapsToDevicePixels="True">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="18"/>
+        <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}"/>
+        <ColumnDefinition Width="18"/>
+        <ColumnDefinition Width="Auto"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" MinHeight="{TemplateBinding FrameworkElement.MinHeight}" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Label Grid.Row="2" 
+               Grid.Column="0" 
+               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               HorizontalAlignment="Center" 
+               Content="0:000"
+               Padding="0"
+               Margin="0,-2,0,0"
+               FontSize="10"
+               Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+             />
+      <Label Grid.Row="1" 
+             Grid.Column="0" 
+             Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+             HorizontalAlignment="Center" 
+             Content="0:000"/>
+      <Label Grid.Row="1" 
+             Grid.Column="4" 
+             Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+             HorizontalAlignment="Center" 
+             Content="0:000"/>
+      <Label Grid.Row="2" 
+               Grid.Column="4" 
+               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               HorizontalAlignment="Center" 
+               Content="0:000"
+               Padding="0"
+               Margin="0,-2,0,0"
+             
+               FontSize="10"
+               Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+
+      <RepeatButton Grid.Column="1" Grid.Row="1" 
+          Command="{x:Static Viana:MediaSlider.TickDownClickedCommand}"
+          Style="{StaticResource BaseSliderSidesButtonStyle}">
+        <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
+      </RepeatButton>
+
+      <RepeatButton Grid.Row="1" Grid.Column="3"
+						Command="{x:Static Viana:MediaSlider.TickUpClickedCommand}"
+            Style="{StaticResource BaseSliderSidesButtonStyle}">
+
+        <Path Fill="{StaticResource GlyphBrush}" Stretch="None">
+          <Path.Data>
+            <CombinedGeometry GeometryCombineMode="Union">
+              <CombinedGeometry.Geometry1>
+                <RectangleGeometry Rect="3,0,2,8"></RectangleGeometry>
+              </CombinedGeometry.Geometry1>
+              <CombinedGeometry.Geometry2>
+                <RectangleGeometry Rect="0,3,8,2"></RectangleGeometry>
+              </CombinedGeometry.Geometry2>
+            </CombinedGeometry>
+          </Path.Data>
+        </Path>
+
+      </RepeatButton>
+
+      <TickBar
+                Fill="{TemplateBinding TextElement.Foreground}"
+                Placement="Top"
+                Name="TopTick"
+                Height="4"
+                Visibility="Collapsed"
+                Grid.Row="0" Grid.Column="2"/>
+      <TickBar
+                Fill="{TemplateBinding TextElement.Foreground}"
+                Placement="Bottom"
+                Name="BottomTick"
+                Height="Auto"
+                Margin="0"
+                Visibility="Visible"
+                Grid.Row="2"
+                Grid.Column="2"/>
+      <Border
+                BorderThickness="1,1,1,1"
+                CornerRadius="1,1,1,1"
+                Background="#FFE7EAEA"
+                Name="TrackBackground"
+                Height="4"
+                Margin="5,0,5,0"
+                VerticalAlignment="Center"
+                Grid.Row="1" Grid.Column="2">
+        <Border.BorderBrush>
+          <LinearGradientBrush
+                        StartPoint="0,0"
+                        EndPoint="0,1">
+            <LinearGradientBrush.GradientStops>
+              <GradientStop
+                                Color="#FFAEB1AF"
+                                Offset="0.1" />
+              <GradientStop
+                                Color="#FFFFFFFF"
+                                Offset="0.9" />
+            </LinearGradientBrush.GradientStops>
+          </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Canvas Name="SelectionCanvas"
+                    Margin="-6,-1,-6,-1">
+          <Rectangle
+                        Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                        StrokeThickness="1"
+                        Name="PART_SelectionRange"
+                        Margin="0"
+                        Height="4"
+                        Visibility="Hidden"/>
+        </Canvas>
+      </Border>
+      <Track Name="PART_Track" Grid.Row="1" Grid.Column="2">
+        <Track.DecreaseRepeatButton>
+          <RepeatButton>
+            <RepeatButton.Command>
+              <RoutedCommand />
+            </RepeatButton.Command>
+            <RepeatButton.Style>
+              <Style
+                                TargetType="RepeatButton">
+                <Style.Resources>
+                  <ResourceDictionary />
+                </Style.Resources>
+                <Setter
+                                    Property="FrameworkElement.OverridesDefaultStyle">
+                  <Setter.Value>
+                    <s:Boolean>True</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="KeyboardNavigation.IsTabStop">
+                  <Setter.Value>
+                    <s:Boolean>False</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="UIElement.Focusable">
+                  <Setter.Value>
+                    <s:Boolean>False</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="Control.Template">
+                  <Setter.Value>
+                    <ControlTemplate
+                                            TargetType="RepeatButton">
+                      <Rectangle
+                                                Fill="#00FFFFFF" />
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </RepeatButton.Style>
+          </RepeatButton>
+        </Track.DecreaseRepeatButton>
+        <Track.Thumb>
+          <Thumb
+                        Name="Thumb">
+            <Thumb.Style>
+              <Style
+                                TargetType="Thumb">
+                <Style.Resources>
+                  <ResourceDictionary />
+                </Style.Resources>
+                <Setter
+                                    Property="UIElement.Focusable">
+                  <Setter.Value>
+                    <s:Boolean>False</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="FrameworkElement.OverridesDefaultStyle">
+                  <Setter.Value>
+                    <s:Boolean>True</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="FrameworkElement.Height">
+                  <Setter.Value>
+                    <s:Double>22</s:Double>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="FrameworkElement.Width">
+                  <Setter.Value>
+                    <s:Double>11</s:Double>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="TextElement.Foreground">
+                  <Setter.Value>
+                    <SolidColorBrush>#FF808080</SolidColorBrush>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="Control.Template">
+                  <Setter.Value>
+                    <ControlTemplate
+                                            TargetType="Thumb">
+                      <Canvas
+                                                SnapsToDevicePixels="True">
+                        <Canvas.RenderTransform>
+                          <TranslateTransform
+                                                        X="5.5"
+                                                        Y="11" />
+                        </Canvas.RenderTransform>
+                        <Path
+                                                    Data="M-5,-9.5A1,1,0,0,1,-4,-10.5L4,-10.5A1,1,0,0,1,5,-9.5L5,9.5A1,1,0,0,1,4,10.5L-4,10.5A1,1,0,0,1,-5,9.5z"
+                                                    Name="Background">
+                          <Path.Fill>
+                            <LinearGradientBrush
+                                                            StartPoint="0,0"
+                                                            EndPoint="0,1">
+                              <LinearGradientBrush.GradientStops>
+                                <GradientStop
+                                                                    Color="#FFFFFFFF"
+                                                                    Offset="0" />
+                                <GradientStop
+                                                                    Color="#FFF0EFEF"
+                                                                    Offset="0.4" />
+                                <GradientStop
+                                                                    Color="#FFD6D5D5"
+                                                                    Offset="0.8" />
+                              </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                          </Path.Fill>
+                        </Path>
+                        <Path
+                                                    Data="M-4,-9.5L4,-9.5 4,9.5 -4,9.5z"
+                                                    Stroke="#FFFFFFFF"
+                                                    Name="InnerBorder" />
+                        <Path
+                                                    Data="M-5,-9.5A1,1,0,0,1,-4,-10.5L4,-10.5A1,1,0,0,1,5,-9.5L5,9.5A1,1,0,0,1,4,10.5L-4,10.5A1,1,0,0,1,-5,9.5z"
+                                                    Stroke="#FF929292"
+                                                    Name="OuterBorder" />
+                      </Canvas>
+                      <ControlTemplate.Triggers>
+                        <Trigger
+                                                    Property="UIElement.IsMouseOver">
+                          <Setter
+                                                        Property="Shape.Fill"
+                                                        TargetName="Background">
+                            <Setter.Value>
+                              <LinearGradientBrush
+                                                                StartPoint="0,0"
+                                                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                  <GradientStop
+                                                                        Color="#FFFFFFFF"
+                                                                        Offset="0" />
+                                  <GradientStop
+                                                                        Color="#FFB8E2F9"
+                                                                        Offset="0.5" />
+                                  <GradientStop
+                                                                        Color="#FFB0DFF8"
+                                                                        Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                              </LinearGradientBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Shape.Stroke"
+                                                        TargetName="OuterBorder">
+                            <Setter.Value>
+                              <SolidColorBrush>#FF3C7FB1</SolidColorBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Trigger.Value>
+                            <s:Boolean>True</s:Boolean>
+                          </Trigger.Value>
+                        </Trigger>
+                        <Trigger
+                                                    Property="TextElement.Foreground">
+                          <Setter
+                                                        Property="Shape.Fill"
+                                                        TargetName="Background">
+                            <Setter.Value>
+                              <LinearGradientBrush
+                                                                StartPoint="0,0"
+                                                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                  <GradientStop
+                                                                        Color="#FFFFFFFF"
+                                                                        Offset="0" />
+                                  <GradientStop
+                                                                        Color="#FFB8E2F9"
+                                                                        Offset="0.5" />
+                                  <GradientStop
+                                                                        Color="#FFB0DFF8"
+                                                                        Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                              </LinearGradientBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Shape.Stroke"
+                                                        TargetName="OuterBorder">
+                            <Setter.Value>
+                              <SolidColorBrush>#FF3C7FB1</SolidColorBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Trigger.Value>
+                            <SolidColorBrush>#FF0000FF</SolidColorBrush>
+                          </Trigger.Value>
+                        </Trigger>
+                        <Trigger
+                                                    Property="Thumb.IsDragging">
+                          <Setter
+                                                        Property="Shape.Fill"
+                                                        TargetName="Background">
+                            <Setter.Value>
+                              <LinearGradientBrush
+                                                                StartPoint="0,0"
+                                                                EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                  <GradientStop
+                                                                        Color="#FFB8E4FA"
+                                                                        Offset="0.25" />
+                                  <GradientStop
+                                                                        Color="#FF5EB4E3"
+                                                                        Offset="0.5" />
+                                  <GradientStop
+                                                                        Color="#FF4C8BB4"
+                                                                        Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                              </LinearGradientBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Shape.Stroke"
+                                                        TargetName="OuterBorder">
+                            <Setter.Value>
+                              <SolidColorBrush>#FF2C628B</SolidColorBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Trigger.Value>
+                            <s:Boolean>True</s:Boolean>
+                          </Trigger.Value>
+                        </Trigger>
+                        <Trigger
+                                                    Property="UIElement.IsEnabled">
+                          <Setter
+                                                        Property="Shape.Fill"
+                                                        TargetName="Background">
+                            <Setter.Value>
+                              <SolidColorBrush>#FFF4F4F4</SolidColorBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Shape.Stroke"
+                                                        TargetName="InnerBorder">
+                            <Setter.Value>
+                              <x:Null />
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Path.Data"
+                                                        TargetName="OuterBorder">
+                            <Setter.Value>
+                              <StreamGeometry>M-5,-10.5L5,-10.5 5,10.5 -5,10.5z</StreamGeometry>
+                            </Setter.Value>
+                          </Setter>
+                          <Setter
+                                                        Property="Shape.Stroke"
+                                                        TargetName="OuterBorder">
+                            <Setter.Value>
+                              <SolidColorBrush>#FFAEB1AF</SolidColorBrush>
+                            </Setter.Value>
+                          </Setter>
+                          <Trigger.Value>
+                            <s:Boolean>False</s:Boolean>
+                          </Trigger.Value>
+                        </Trigger>
+                      </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </Thumb.Style>
+          </Thumb>
+        </Track.Thumb>
+        <Track.IncreaseRepeatButton>
+          <RepeatButton>
+            <RepeatButton.Command>
+              <RoutedCommand />
+            </RepeatButton.Command>
+            <RepeatButton.Style>
+              <Style
+                                TargetType="RepeatButton">
+                <Style.Resources>
+                  <ResourceDictionary />
+                </Style.Resources>
+                <Setter
+                                    Property="FrameworkElement.OverridesDefaultStyle">
+                  <Setter.Value>
+                    <s:Boolean>True</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="KeyboardNavigation.IsTabStop">
+                  <Setter.Value>
+                    <s:Boolean>False</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="UIElement.Focusable">
+                  <Setter.Value>
+                    <s:Boolean>False</s:Boolean>
+                  </Setter.Value>
+                </Setter>
+                <Setter
+                                    Property="Control.Template">
+                  <Setter.Value>
+                    <ControlTemplate
+                                            TargetType="RepeatButton">
+                      <Rectangle
+                                                Fill="#00FFFFFF" />
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </RepeatButton.Style>
+          </RepeatButton>
+        </Track.IncreaseRepeatButton>
+      </Track>
+    </Grid>
+  </Border>
+</UserControl>

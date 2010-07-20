@@ -8,7 +8,6 @@ using System.Windows.Data;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
-using WPFMediaKit.DirectShow.Controls;
 
 namespace VianaNET
 {

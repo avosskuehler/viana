@@ -8,7 +8,6 @@ using System.Windows.Data;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
-using WPFMediaKit.DirectShow.Controls;
 
 namespace VianaNET
 {
@@ -32,8 +31,8 @@ namespace VianaNET
     private int visualDataPointRadius = 5;
     private List<Ellipse> visualDataPoints;
     private int indexOfVisualDataPointRingBuffer;
-    private D3DRenderer videoSurfaceClone;
     private Point mouseDownLocation;
+    private Image videoSurfaceClone;
 
     #endregion //FIELDS
 
@@ -51,11 +50,11 @@ namespace VianaNET
       this.CursorEllipse.Width = 2 * visualDataPointRadius;
       this.CursorEllipse.Height = 2 * visualDataPointRadius;
 
-      this.videoSurfaceClone = Video.Instance.VideoElement.CloneD3DRenderer();
-      this.videoSurfaceClone.MouseDown += new MouseButtonEventHandler(player_MouseDown);
-      this.videoSurfaceClone.MouseMove += new MouseEventHandler(player_MouseMove);
-      this.playerContainerGrid.Children.Insert(0, this.videoSurfaceClone);
-      this.videoSurfaceClone.InvalidateVideoImage();
+      //this.videoSurfaceClone = Video.Instance.VideoElement.CloneD3DRenderer();
+      //this.videoSurfaceClone.MouseDown += new MouseButtonEventHandler(player_MouseDown);
+      //this.videoSurfaceClone.MouseMove += new MouseEventHandler(player_MouseMove);
+      //this.playerContainerGrid.Children.Insert(0, this.videoSurfaceClone);
+      //this.videoSurfaceClone.InvalidateVideoImage();
       //VideoPlayer.Instance.AttachToControl(this.playerContainerGrid);
       //VideoPlayer.Instance.MouseDown += new MouseButtonEventHandler(player_MouseDown);
       //VideoPlayer.Instance.MouseMove += new MouseEventHandler(player_MouseMove);
@@ -142,10 +141,10 @@ namespace VianaNET
       {
         double scaledX = e.GetPosition(this.videoSurfaceClone).X;
         double scaledY = e.GetPosition(this.videoSurfaceClone).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.videoSurfaceClone.UniformWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.videoSurfaceClone.UniformHeight;
-        double spaceX = (this.videoSurfaceClone.ActualWidth - this.videoSurfaceClone.UniformWidth) / 2;
-        double spaceY = (this.videoSurfaceClone.ActualHeight - this.videoSurfaceClone.UniformHeight) / 2;
+        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.videoSurfaceClone.ActualWidth;
+        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.videoSurfaceClone.ActualHeight;
+        double spaceX = 0;//(this.videoSurfaceClone.ActualWidth - this.videoSurfaceClone.UniformWidth) / 2;
+        double spaceY = 0;// (this.videoSurfaceClone.ActualHeight - this.videoSurfaceClone.UniformHeight) / 2;
         double originalX = factorX * (scaledX - spaceX);
         double originalY = Video.Instance.VideoElement.NaturalVideoHeight - factorY * (scaledY - spaceY);
 

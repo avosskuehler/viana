@@ -132,8 +132,14 @@
     <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
       <DependentUpon>DataGridWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Filter\Blob.cs" />
+    <Compile Include="Modules\Video\Filter\BlobDetection.cs" />
+    <Compile Include="Modules\Video\Filter\ColorFilter.cs" />
+    <Compile Include="Modules\Video\Filter\FilterBase.cs" />
     <Compile Include="Modules\Video\CalibrateVideoWindow.cs" />
     <Compile Include="Modules\Video\ClipVideoWindow.cs" />
+    <Compile Include="Modules\Video\Control\VideoBase.cs" />
+    <Compile Include="Modules\Video\Control\DShowUtils.cs" />
     <Compile Include="Modules\Video\Control\Video.cs" />
     <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
     <Compile Include="Modules\Video\SelectColorWindow.cs" />
@@ -569,16 +575,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VianaNETShaderEffectLibrary\VianaNETShaderEffectLibrary.csproj">
+      <Project>{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}</Project>
+      <Name>VianaNETShaderEffectLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
       <Name>WPFLocalizeExtension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WPFMediaKit\WPFMediaKit.csproj">
-      <Project>{6030628D-EE93-4D61-B6BE-8B6AE99F3935}</Project>
-      <Name>WPFMediaKit</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Videos\" />
   </ItemGroup>
 </Project>

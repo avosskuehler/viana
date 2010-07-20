@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WPFMediaKit.DirectShow.Controls;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Data;
 using DirectShowLib;
+using System.Windows.Controls;
 
 namespace VianaNET
 {
   public class Video : DependencyObject
   {
+    public event EventHandler VideoFrameChanged;
     private static Video instance;
 
     private VideoMode videoMode;
-    private MediaElementBase videoElement;
+    private VideoBase videoElement;
     private VideoCapturer videoCaptureElement;
     private VideoPlayer videoPlayerElement;
 
@@ -29,35 +30,12 @@ namespace VianaNET
 
     public int FrameIndex
     {
-      get
-      {
-        switch (this.videoMode)
-        {
-          case VideoMode.File:
-            return this.videoPlayerElement.MediaPositionFrameIndex;
-          case VideoMode.Capture:
-            return VideoData.Instance.Count;
-        }
-
-        return 0;
-      }
-
+      get { return this.videoElement.MediaPositionFrameIndex; }
     }
 
     public long FrameTimestamp
     {
-      get
-      {
-        switch (this.videoMode)
-        {
-          case VideoMode.File:
-            return this.videoPlayerElement.MediaPositionTime;
-          case VideoMode.Capture:
-            return this.videoCaptureElement.CaptureTime;
-        }
-
-        return 0;
-      }
+      get { return this.videoElement.MediaPositionInMS; }
     }
 
     public bool IsDataAcquisitionRunning
@@ -86,18 +64,18 @@ namespace VianaNET
       typeof(Video),
       new UIPropertyMetadata(null));
 
-    public System.Drawing.Bitmap CurrentFrameBitmap
-    {
-      get { return (System.Drawing.Bitmap)GetValue(CurrentFrameBitmapProperty); }
-      set { SetValue(CurrentFrameBitmapProperty, value); }
-    }
+    //public System.Drawing.Bitmap CurrentFrameBitmap
+    //{
+    //  get { return (System.Drawing.Bitmap)GetValue(CurrentFrameBitmapProperty); }
+    //  set { SetValue(CurrentFrameBitmapProperty, value); }
+    //}
 
-    public static readonly DependencyProperty CurrentFrameBitmapProperty =
-      DependencyProperty.Register(
-      "CurrentFrameBitmap",
-      typeof(System.Drawing.Bitmap),
-      typeof(Video),
-      new PropertyMetadata(null));
+    //public static readonly DependencyProperty CurrentFrameBitmapProperty =
+    //  DependencyProperty.Register(
+    //  "CurrentFrameBitmap",
+    //  typeof(System.Drawing.Bitmap),
+    //  typeof(Video),
+    //  new PropertyMetadata(null));
 
     private Video()
     {
@@ -105,13 +83,13 @@ namespace VianaNET
       // in constructor, to get the databindings to their 
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
-      this.videoCaptureElement = new VideoCapturer();
+      //this.videoCaptureElement = new VideoCapturer();
 
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
     }
 
-    public MediaElementBase VideoElement
+    public VideoBase VideoElement
     {
       get { return this.videoElement; }
     }
@@ -133,17 +111,19 @@ namespace VianaNET
         return;
       }
 
-      BindingOperations.ClearAllBindings(this);
+      this.videoElement.VideoFrameChanged -= new EventHandler(videoElement_VideoFrameChanged);
+
+      //BindingOperations.ClearAllBindings(this);
 
       this.videoMode = newVideoMode;
       switch (this.videoMode)
       {
         case VideoMode.File:
           this.videoElement = this.videoPlayerElement;
-          Binding bitmapBinding = new Binding();
-          bitmapBinding.Source = this.videoPlayerElement;
-          bitmapBinding.Path = new PropertyPath("CurrentFrameBitmap");
-          BindingOperations.SetBinding(this, Video.CurrentFrameBitmapProperty, bitmapBinding);
+          //Binding bitmapBinding = new Binding();
+          //bitmapBinding.Source = this.videoPlayerElement;
+          //bitmapBinding.Path = new PropertyPath("CurrentFrameBitmap");
+          //BindingOperations.SetBinding(this, Video.CurrentFrameBitmapProperty, bitmapBinding);
 
           break;
         case VideoMode.Capture:
@@ -151,7 +131,21 @@ namespace VianaNET
           break;
       }
 
-      this.VideoSource = this.videoElement.D3DImage;
+      this.videoElement.VideoFrameChanged += new EventHandler(videoElement_VideoFrameChanged);
+      this.VideoSource = this.videoElement.ImageSource;
+    }
+
+    void videoElement_VideoFrameChanged(object sender, EventArgs e)
+    {
+      this.OnVideoFrameChanged();
+    }
+
+    private void OnVideoFrameChanged()
+    {
+      if (this.VideoFrameChanged != null)
+      {
+        this.VideoFrameChanged(this, EventArgs.Empty);
+      }
     }
 
     /// <summary>
@@ -198,13 +192,13 @@ namespace VianaNET
       DrawingVisual visual = new DrawingVisual();
       DrawingContext dc = visual.RenderOpen();
       dc.DrawImage(
-        this.videoElement.D3DImage,
+        this.videoElement.ImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
       RenderTargetBitmap rtp = new RenderTargetBitmap(
-        this.videoElement.NaturalVideoWidth,
-        this.videoElement.NaturalVideoHeight,
+        (int)this.videoElement.NaturalVideoWidth,
+        (int)this.videoElement.NaturalVideoHeight,
         96d,
         96d,
         PixelFormats.Default);
@@ -221,7 +215,6 @@ namespace VianaNET
 
       return returnBitmap;
     }
-
 
     public void Play()
     {
@@ -240,26 +233,31 @@ namespace VianaNET
 
     public void Revert()
     {
-      switch (this.videoMode)
-      {
-        case VideoMode.File:
-          this.videoPlayerElement.Revert();
-          break;
-        case VideoMode.Capture:
-          break;
-      }
-
-      this.UpdateNativeBitmap();
+      this.videoElement.Revert();
     }
 
-    public void UpdateNativeBitmap()
+    //public void UpdateNativeBitmap()
+    //{
+    //  switch (this.videoMode)
+    //  {
+    //    case VideoMode.File:
+    //      this.videoPlayerElement.UpdateNativeBitmap();
+    //      break;
+    //    case VideoMode.Capture:
+    //      break;
+    //  }
+    //}
+
+    public void Render(Image image)
     {
       switch (this.videoMode)
       {
         case VideoMode.File:
-          this.videoPlayerElement.UpdateNativeBitmap();
+          this.videoPlayerElement.RenderVideo();
           break;
         case VideoMode.Capture:
+          // Do not render, because the mapped view is already
+          // populated with the video data
           break;
       }
     }
