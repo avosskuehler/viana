@@ -8,14 +8,11 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using AForge;
-using AForge.Imaging;
-using AForge.Imaging.Filters;
-using AForge.Math.Geometry;
 using System.ComponentModel;
 using System.Windows.Data;
 using VianaNETShaderEffectLibrary;
 using System.Windows.Interop;
+using System.Diagnostics;
 
 namespace VianaNET
 {
@@ -80,9 +77,6 @@ DependencyPropertyChangedEventArgs args)
       //this.SetBinding(BlobsControl.NativeBitmapProperty, bitmapBinding2);
 
       thresholdEffect = new ThresholdEffect();
-      thresholdEffect.Threshold = 0.3;
-      thresholdEffect.BlankColor = Colors.Green;
-      thresholdEffect.TargetColor = Colors.Red;
 
       backgroundEffect = new BackgroundEffect();
       backgroundEffect.Threshold = 0.3;
@@ -111,24 +105,25 @@ DependencyPropertyChangedEventArgs args)
       this.blobDetection.MaxHeight = (int)Calibration.Instance.BlobMaxDiameter;
       this.blobDetection.ObjectsOrder = ObjectsOrder.Area;
 
-      this.blobCounter.FilterBlobs = true;
-      this.blobCounter.CoupledSizeFiltering = true;
-      this.blobCounter.MinHeight = (int)Calibration.Instance.BlobMinDiameter;
-      this.blobCounter.MinWidth = (int)Calibration.Instance.BlobMinDiameter;
-      this.blobCounter.MaxWidth = (int)Calibration.Instance.BlobMaxDiameter;
-      this.blobCounter.MaxHeight = (int)Calibration.Instance.BlobMaxDiameter;
-      this.blobCounter.ObjectsOrder =AForge.Imaging.ObjectsOrder.Area;
+      //this.blobCounter.FilterBlobs = true;
+      //this.blobCounter.CoupledSizeFiltering = true;
+      //this.blobCounter.MinHeight = (int)Calibration.Instance.BlobMinDiameter;
+      //this.blobCounter.MinWidth = (int)Calibration.Instance.BlobMinDiameter;
+      //this.blobCounter.MaxWidth = (int)Calibration.Instance.BlobMaxDiameter;
+      //this.blobCounter.MaxHeight = (int)Calibration.Instance.BlobMaxDiameter;
+      //this.blobCounter.ObjectsOrder = AForge.Imaging.ObjectsOrder.Area;
 
       this.colorFilter.ImageWidth = (int)Video.Instance.VideoElement.NaturalVideoWidth;
       this.colorFilter.ImageHeight = (int)Video.Instance.VideoElement.NaturalVideoHeight;
       this.colorFilter.ImageStride = Video.Instance.VideoElement.Stride;
       this.colorFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
-      this.colorFilter.BlankColor = Colors.Green;
+      this.colorFilter.BlankColor = Colors.Black;
       this.colorFilter.TargetColor = Calibration.Instance.TargetColor;
       this.colorFilter.Threshold = (int)(Calibration.Instance.ColorThreshold * 255);
 
       thresholdEffect.Threshold = Calibration.Instance.ColorThreshold;
       thresholdEffect.TargetColor = Calibration.Instance.TargetColor;
+      thresholdEffect.BlankColor = Colors.Black;
     }
 
     void OnVideoFrameChanged(object sender, EventArgs e)
@@ -175,66 +170,7 @@ DependencyPropertyChangedEventArgs args)
     public static readonly DependencyProperty ProcessedImageProperty =
       DependencyProperty.Register("ProcessedImage", typeof(ImageSource), typeof(BlobsControl));
 
-    //public void UpdatedProcessedImage()
-    //{
-    //  //if (this.NativeBitmap == null)
-    //  //{
-    //  //  return;
-    //  //}
-
-    //  // Do not process if we are invisible
-    //  if (this.Visibility != Visibility.Visible)
-    //  {
-    //    return;
-    //  }
-
-    //  this.filteredImage = AForge.Imaging.Image.Clone(
-    //    this.NativeBitmap,
-    //    System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-    //  // Flip video image of capture
-    //  switch (Video.Instance.VideoMode)
-    //  {
-    //    case VideoMode.File:
-    //      break;
-    //    case VideoMode.Capture:
-    //      this.filteredImage.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
-    //      break;
-    //  }
-
-    //  if (!Calibration.Instance.ClipRegion.IsEmpty)
-    //  {
-    //    // Preprocess image with search area filter
-    //    CanvasCrop cropFilter = new CanvasCrop(
-    //      Calibration.Instance.SystemDrawingClipRegion,
-    //      System.Drawing.Color.Black);
-
-    //    // apply the filter
-    //    cropFilter.ApplyInPlace(this.filteredImage);
-    //  }
-
-    //  // create color search filter
-    //  ColorFiltering filter = new ColorFiltering();
-    //  Color targetColor = Calibration.Instance.TargetColor;
-
-    //  // set color ranges to keep
-    //  filter.Red = ApplyTolerance(targetColor.R);
-    //  filter.Green = ApplyTolerance(targetColor.G);
-    //  filter.Blue = ApplyTolerance(targetColor.B);
-
-    //  // apply the filter
-    //  filter.ApplyInPlace(this.filteredImage);
-
-    //  this.ProcessedImage = BitmapToSource(this.filteredImage);
-    //  this.UpdateScale();
-
-    //  this.SetImage(this.filteredImage);
-    //}
-
-    //public ColorRangeFilter SkinColorFilter { get; set; }
-
-    //Ellipse blobEllipse = new Ellipse();
-    private BlobCounter blobCounter = new BlobCounter();
+    private Stopwatch watch = new Stopwatch();
 
     private void UpdatedProcessedImage()
     {
@@ -243,6 +179,7 @@ DependencyPropertyChangedEventArgs args)
       {
         return;
       }
+      watch.Start();
 
       // create color search filter
       //this.colorFilter.TargetColor = Colors.Red;
@@ -261,115 +198,130 @@ DependencyPropertyChangedEventArgs args)
       //  pnge.Frames.Add(BitmapFrame.Create(bmp));
       //  pnge.Save(outStream);
       //}
-      System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(
-        (int)Video.Instance.VideoElement.NaturalVideoWidth,
-        (int)Video.Instance.VideoElement.NaturalVideoHeight,
-        Video.Instance.VideoElement.Stride,
-        System.Drawing.Imaging.PixelFormat.Format32bppArgb,
-        Video.Instance.VideoElement.Map);
+      //System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(
+      //  (int)Video.Instance.VideoElement.NaturalVideoWidth,
+      //  (int)Video.Instance.VideoElement.NaturalVideoHeight,
+      //  Video.Instance.VideoElement.Stride,
+      //  System.Drawing.Imaging.PixelFormat.Format32bppArgb,
+      //  Video.Instance.VideoElement.Map);
 
-      // create color search filter
-      ColorFiltering filter = new ColorFiltering();
-      Color targetColor = Calibration.Instance.TargetColor;
+      //// create color search filter
+      //ColorFiltering filter = new ColorFiltering();
+      //Color targetColor = Calibration.Instance.TargetColor;
 
-      // set color ranges to keep
-      filter.Red = ApplyTolerance(targetColor.R);
-      filter.Green = ApplyTolerance(targetColor.G);
-      filter.Blue = ApplyTolerance(targetColor.B);
+      //// set color ranges to keep
+      //filter.Red = ApplyTolerance(targetColor.R);
+      //filter.Green = ApplyTolerance(targetColor.G);
+      //filter.Blue = ApplyTolerance(targetColor.B);
 
-      // apply the filter
-      filter.ApplyInPlace(bmp);
+      //// apply the filter
+      //filter.ApplyInPlace(bmp);
 
-      blobCounter.ProcessImage(bmp);
-      AForge.Imaging.Blob[] blobs = blobCounter.GetObjectsInformation();
+      //blobCounter.ProcessImage(bmp);
+      //AForge.Imaging.Blob[] blobs = blobCounter.GetObjectsInformation();
 
-      double scaleX;
-      double scaleY;
-      if (GetScales(out scaleX, out scaleY))
-      {
-        foreach (AForge.Imaging.Blob blob in blobs)
-        {
-          BlobEllipse.Width = blob.Rectangle.Width * scaleX;
-          BlobEllipse.Height = blob.Rectangle.Height * scaleY;
-          Canvas.SetLeft(BlobEllipse, blob.Rectangle.Left * scaleX);
-          Canvas.SetTop(BlobEllipse, blob.Rectangle.Top * scaleY);
-
-          //  //if (Video.Instance.IsDataAcquisitionRunning)
-          {
-            double blobX = blob.CenterOfGravity.X;
-            double blobY = blob.CenterOfGravity.Y;
-
-            // Flip y coordinate in video file mode.
-            switch (Video.Instance.VideoMode)
-            {
-              case VideoMode.File:
-                blobY = Video.Instance.VideoElement.NaturalVideoHeight - blobY;
-                break;
-              case VideoMode.Capture:
-                break;
-            }
-
-            VideoData.Instance.AddPoint(new Point(blobX, blobY));
-          }
-
-        }
-      }
-
-
-      // Get video memory of new bitmap
-      //this.blobDetection.ProcessInPlace(Video.Instance.VideoElement.Map);
-      //this.CanvasHulls.Children.Clear();
-      //foreach (Blob blob in this.blobDetection.GetObjects(Video.Instance.VideoElement.Map))
+      //double scaleX;
+      //double scaleY;
+      //if (GetScales(out scaleX, out scaleY))
       //{
-      //  blob.Image.Save(@"c:\Dumps\test.jpg",System.Drawing.Imaging.ImageFormat.Jpeg);
-      //}
-
-      ////GrahamConvexHull grahamScan = new GrahamConvexHull();
-      //foreach (Blob blob in this.blobDetection.Blobs)
-      //{
-      //  //BlobEllipse.Stroke = Brushes.Red;
-      //  //blobEllipse.StrokeThickness = 3;
-      //  double scaleX;
-      //  double scaleY;
-
-      //  if (GetScales(out scaleX, out scaleY))
+      //  foreach (AForge.Imaging.Blob blob in blobs)
       //  {
       //    BlobEllipse.Width = blob.Rectangle.Width * scaleX;
       //    BlobEllipse.Height = blob.Rectangle.Height * scaleY;
       //    Canvas.SetLeft(BlobEllipse, blob.Rectangle.Left * scaleX);
       //    Canvas.SetTop(BlobEllipse, blob.Rectangle.Top * scaleY);
-      //  }
 
-      //  //if (Video.Instance.IsDataAcquisitionRunning)
-      //  {
-      //    double blobX = blob.CenterOfGravity.X;
-      //    double blobY = blob.CenterOfGravity.Y;
-
-      //    // Flip y coordinate in video file mode.
-      //    switch (Video.Instance.VideoMode)
+      //    //  //if (Video.Instance.IsDataAcquisitionRunning)
       //    {
-      //      case VideoMode.File:
-      //        blobY = Video.Instance.VideoElement.NaturalVideoHeight - blobY;
-      //        break;
-      //      case VideoMode.Capture:
-      //        break;
+      //      double blobX = blob.CenterOfGravity.X;
+      //      double blobY = blob.CenterOfGravity.Y;
+
+      //      // Flip y coordinate in video file mode.
+      //      switch (Video.Instance.VideoMode)
+      //      {
+      //        case VideoMode.File:
+      //          blobY = Video.Instance.VideoElement.NaturalVideoHeight - blobY;
+      //          break;
+      //        case VideoMode.Capture:
+      //          break;
+      //      }
+
+      //      VideoData.Instance.AddPoint(new Point(blobX, blobY));
       //    }
 
-      //    VideoData.Instance.AddPoint(new Point(blobX, blobY));
       //  }
       //}
+      Console.Write("Before: ");
+      Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+      // Process video memory of new bitmap
+      this.colorFilter.ProcessInPlace(Video.Instance.VideoElement.Map);
 
-      if (blobs.Length == 0)
+      //BitmapSource bmp = Imaging.CreateBitmapSourceFromMemorySection(
+      //  Video.Instance.VideoElement.section,
+      //  (int)Video.Instance.VideoElement.NaturalVideoWidth,
+      //  (int)Video.Instance.VideoElement.NaturalVideoHeight,
+      //  PixelFormats.Bgra32, Video.Instance.VideoElement.Stride, 0);
+
+      //using (FileStream outStream = new FileStream(@"c:\Dumps\test.png", FileMode.Create))
+      //{
+      //  PngBitmapEncoder pnge = new PngBitmapEncoder();
+      //  pnge.Frames.Add(BitmapFrame.Create(bmp));
+      //  pnge.Save(outStream);
+      //}
+
+      Console.Write("AfterColorFilter: ");
+      Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+      this.blobDetection.ProcessInPlace(Video.Instance.VideoElement.Map);
+      Console.Write("AfterBlobDetection: ");
+      Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+
+      foreach (Blob blob in this.blobDetection.Blobs)
+      {
+        double scaleX;
+        double scaleY;
+
+        if (GetScales(out scaleX, out scaleY))
+        {
+          BlobEllipse.Width = blob.Rectangle.Width * scaleX;
+          BlobEllipse.Height = blob.Rectangle.Height * scaleY;
+          Canvas.SetLeft(BlobEllipse, blob.Rectangle.Left * scaleX);
+          Canvas.SetTop(BlobEllipse, blob.Rectangle.Top * scaleY);
+        }
+
+        if (Video.Instance.IsDataAcquisitionRunning)
+        {
+          double blobX = blob.CenterOfGravity.X;
+          double blobY = blob.CenterOfGravity.Y;
+
+          // Flip y coordinate in video file mode.
+          switch (Video.Instance.VideoMode)
+          {
+            case VideoMode.File:
+              blobY = Video.Instance.VideoElement.NaturalVideoHeight - blobY;
+              break;
+            case VideoMode.Capture:
+              break;
+          }
+
+          VideoData.Instance.AddPoint(new Point(blobX, blobY));
+        }
+      }
+
+      Console.Write("AfterBlobDisplay: ");
+      Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+
+      if (this.blobDetection.Blobs.Count == 0)
       {
         StatusBarContent.Instance.MessagesLabel = Localization.Labels.BlobsNoObjectFound;
       }
       else
       {
         StatusBarContent.Instance.MessagesLabel =
-          blobs.Length.ToString() + " " + Localization.Labels.BlobsObjectsFound;
+          this.blobDetection.Blobs.Count.ToString() + " " + Localization.Labels.BlobsObjectsFound;
       }
 
-      //this.UpdateScale();
+      Console.Write("Finished: ");
+      Console.WriteLine(watch.ElapsedMilliseconds.ToString());
     }
 
     //public void UpdatedProcessedImage()
@@ -423,24 +375,24 @@ DependencyPropertyChangedEventArgs args)
     //  this.SetImage(this.filteredImage);
     //}
 
-    private IntRange ApplyTolerance(byte color)
-    {
-      double tolerance = Calibration.Instance.ColorThreshold*255;
-      int min = (int)color - (int)tolerance;
-      int max = (int)color + (int)tolerance;
+    //private IntRange ApplyTolerance(byte color)
+    //{
+    //  double tolerance = Calibration.Instance.ColorThreshold * 255;
+    //  int min = (int)color - (int)tolerance;
+    //  int max = (int)color + (int)tolerance;
 
-      if (min < 0)
-      {
-        min = 0;
-      }
+    //  if (min < 0)
+    //  {
+    //    min = 0;
+    //  }
 
-      if (max > 255)
-      {
-        max = 255;
-      }
+    //  if (max > 255)
+    //  {
+    //    max = 255;
+    //  }
 
-      return new IntRange(min, max);
-    }
+    //  return new IntRange(min, max);
+    //}
 
     //private BlobCounter blobCounter = new BlobCounter();
     //private Blob[] blobs;
@@ -687,6 +639,14 @@ DependencyPropertyChangedEventArgs args)
       scaleY = this.OverlayImageControl.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
 
       return (!double.IsInfinity(scaleX) && !double.IsNaN(scaleX));
+    }
+
+    private void BlobsControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+      if ((bool)e.NewValue)
+      {
+        InitializeImageFilters();
+      }
     }
 
 

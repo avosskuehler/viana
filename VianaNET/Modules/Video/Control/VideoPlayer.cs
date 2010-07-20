@@ -27,7 +27,6 @@ namespace VianaNET
     private MediaPlayer mediaPlayer;
     private VideoDrawing videoDrawing;
     private DrawingImage drawingImage;
-    private DrawingVisual drawingVisual;
 
     #endregion //FIELDS
 
@@ -43,7 +42,6 @@ namespace VianaNET
       this.videoDrawing = new VideoDrawing();
       this.videoDrawing.Player = this.mediaPlayer;
       this.drawingImage = new DrawingImage(this.videoDrawing);
-      this.drawingVisual = new DrawingVisual();
       //this.drawingImage.Freeze();
       this.videoDrawing.Rect = new Rect(0, 0, 100, 100);
       this.ImageSource = drawingImage;
@@ -228,29 +226,27 @@ namespace VianaNET
 
     private void renderTargetBitmap_Changed(object sender, EventArgs e)
     {
-      this.RenderTargetBitmap.CopyPixels(new Int32Rect(0, 0, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight), this.Map, this.bufferLength, this.Stride);
+      // Copy content of RenderTargetBitmap to memory map
+      this.RenderTargetBitmap.CopyPixels(
+        new Int32Rect(0, 0, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight),
+        this.Map,
+        this.bufferLength,
+        this.Stride);
 
-      // Encoding the RenderBitmapTarget as a PNG file.
-      PngBitmapEncoder png = new PngBitmapEncoder();
-      png.Frames.Add(BitmapFrame.Create(this.RenderTargetBitmap));
-      using (Stream stm = File.Create(@"c:\Dumps\RTB.png"))
-      {
-        png.Save(stm);
-      }
+      // Raise event
       this.OnVideoFrameChanged();
     }
 
     public void StepOneFrame(bool forward)
     {
-      //    RenderTargetBitmap rtp = new RenderTargetBitmap(
-      //(int)this.NaturalVideoWidth,
-      //(int)this.NaturalVideoHeight,
-      //96d,
-      //96d,
-      //PixelFormats.Default);
-      //    MediaElement me = new MediaElement();
-      //    rtp.Render(me);
-      //    rtp.CopyPixels
+      if (forward)
+      {
+        this.MediaPositionInMS += (long)this.FrameTime;
+      }
+      else
+      {
+        this.MediaPositionInMS -= (long)this.FrameTime;
+      }
     }
 
     public override void Play()
@@ -262,6 +258,7 @@ namespace VianaNET
     public override void Pause()
     {
       this.mediaPlayer.Pause();
+      base.Pause();
     }
 
     public override void Stop()
@@ -272,8 +269,8 @@ namespace VianaNET
 
     public override void Revert()
     {
-      this.mediaPlayer.Pause();
-      TimeSpan ts = new TimeSpan(0, 0, 0, 0, 0);
+      this.Pause();
+      TimeSpan ts = new TimeSpan(0, 0, 0, 0, (int)Video.Instance.VideoPlayerElement.SelectionStart);
       this.mediaPlayer.Position = ts;
     }
 
@@ -366,11 +363,11 @@ namespace VianaNET
 
     internal void RenderVideo()
     {
-      DrawingContext drawingContext = drawingVisual.RenderOpen();
+      DrawingVisual drawingVisual = new DrawingVisual();
 
-      using (drawingContext)
+      using (DrawingContext drawingContext = drawingVisual.RenderOpen())
       {
-        drawingContext.DrawVideo(this.mediaPlayer, new Rect(0, 0, this.NaturalVideoWidth,this.NaturalVideoHeight));
+        drawingContext.DrawVideo(this.mediaPlayer, new Rect(0, 0, this.NaturalVideoWidth, this.NaturalVideoHeight));
       }
 
       this.RenderTargetBitmap.Render(drawingVisual);

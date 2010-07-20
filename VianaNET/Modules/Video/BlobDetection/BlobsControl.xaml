@@ -6,7 +6,7 @@
              lex:LocalizeDictionary.DesignCulture="de"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              Width="300" 
-             Height="400">
+             Height="400" IsVisibleChanged="BlobsControl_IsVisibleChanged">
   <UserControl.Resources>
     <ResourceDictionary Source="../../../VianaControls/VianaStyle.xaml"/>
   </UserControl.Resources>
@@ -29,7 +29,8 @@
       <!--<Polygon Name="BlobHull" Stroke="Red" StrokeThickness="3" />-->
       <!--</Canvas>-->
     </GroupBox>
-    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
+    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}"
+              Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">
       <Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
         <charting:Chart.Series>
           <charting:ScatterSeries 

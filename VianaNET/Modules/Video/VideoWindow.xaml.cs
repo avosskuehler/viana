@@ -17,6 +17,7 @@ using AForge;
 using System.Windows.Threading;
 using System.Threading;
 using System.Diagnostics;
+using VianaNETShaderEffectLibrary;
 
 namespace VianaNET
 {
@@ -26,7 +27,8 @@ namespace VianaNET
 
     private Line currentLine;
     //bool isReady = true;
-    private DispatcherTimer timer;
+    private DispatcherTimer renderTimer;
+    private DispatcherTimer timesliderUpdateTimer;
 
     public void LoadVideo()
     {
@@ -35,7 +37,8 @@ namespace VianaNET
         return;
       }
 
-      this.timer.Start();
+      this.renderTimer.Start();
+      this.timesliderUpdateTimer.Start();
     }
 
     public void SetVideoMode(VideoMode newVideoMode)
@@ -125,14 +128,22 @@ namespace VianaNET
     //}
     //}
 
+    //private ThresholdEffect thresholdEffect;
+
     public VideoWindow()
     {
       InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.timelineSlider.SelectionEndReached += new EventHandler(timelineSlider_SelectionEndReached);
-      this.timer = new DispatcherTimer();
-      this.timer.Interval = TimeSpan.FromMilliseconds(50);
-      this.timer.Tick += new EventHandler(timer_Tick);
+      this.renderTimer = new DispatcherTimer();
+      this.renderTimer.Interval = TimeSpan.FromMilliseconds(500);
+      this.renderTimer.Tick += new EventHandler(renderTimer_Tick);
+      this.timesliderUpdateTimer = new DispatcherTimer();
+      this.timesliderUpdateTimer.Interval = TimeSpan.FromMilliseconds(40);
+      this.timesliderUpdateTimer.Tick += new EventHandler(timesliderUpdateTimer_Tick);
+
+      //thresholdEffect = new ThresholdEffect();
+      //this.VideoImage.Effect = thresholdEffect;
     }
 
     void timelineSlider_SelectionEndReached(object sender, EventArgs e)
@@ -142,19 +153,31 @@ namespace VianaNET
 
     bool isDragging = false;
 
-    void timer_Tick(object sender, EventArgs e)
+    void renderTimer_Tick(object sender, EventArgs e)
     {
-      if (!isDragging)
+      //thresholdEffect.Threshold = Calibration.Instance.ColorThreshold;
+      //thresholdEffect.TargetColor = Calibration.Instance.TargetColor;
+      //thresholdEffect.BlankColor = Colors.Black;
+
+      Video.Instance.Render(this.VideoImage);
+    }
+
+    void timesliderUpdateTimer_Tick(object sender, EventArgs e)
+    {
+      if (!isDragging && Video.Instance.VideoMode == VideoMode.File)
       {
         this.timelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
       }
-
-      Video.Instance.Render(this.VideoImage);
     }
 
     private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
     {
       isDragging = true;
+    }
+
+    private void timelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
     }
 
     private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
@@ -215,7 +238,8 @@ namespace VianaNET
 
     private void btnRevert_Click(object sender, RoutedEventArgs e)
     {
-      this.timelineSlider.Value = this.timelineSlider.SelectionStart;
+      Video.Instance.Revert();
+      //this.timelineSlider.Value = this.timelineSlider.SelectionStart;
     }
 
     private void btnPause_Click(object sender, RoutedEventArgs e)
@@ -539,5 +563,6 @@ namespace VianaNET
       PlaceCalibration();
       PlaceClippingRegion();
     }
+
   }
 }

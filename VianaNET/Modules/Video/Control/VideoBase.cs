@@ -210,18 +210,21 @@
     /// </summary>
     public virtual void Play()
     {
-      //this.IsRunning = true;
+      this.IsRunning = true;
     }
 
     /// <summary>
     /// Pause the capture graph. Running the graph takes up a lot of resources.  
     /// Pause it when it isn't needed.
     /// </summary>
-    public abstract void Pause();
+    public virtual void Pause()
+    {
+      this.IsRunning = false;
+    }
 
     public virtual void Stop()
     {
-      //this.IsRunning = false;
+      this.IsRunning = false;
     }
 
     public abstract void Revert();

@@ -50,10 +50,13 @@ namespace VianaNET
 
           // check pixel
           if (
-              (r < TargetColor.R - this.Threshold) || (r > TargetColor.R + this.Threshold) ||
-              (g < TargetColor.G - this.Threshold) || (g > TargetColor.G + this.Threshold) ||
-              (b < TargetColor.B - this.Threshold) || (b > TargetColor.B + this.Threshold)
+              (r >= TargetColor.R - this.Threshold) && (r <= TargetColor.R + this.Threshold) &&
+              (g >= TargetColor.G - this.Threshold) && (g <= TargetColor.G + this.Threshold) &&
+              (b >= TargetColor.B - this.Threshold) && (b <= TargetColor.B + this.Threshold)
               )
+          {
+          }
+          else
           {
             ptr[R] = BlankColor.R;
             ptr[G] = BlankColor.G;

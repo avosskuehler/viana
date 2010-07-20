@@ -66,7 +66,11 @@
           </Path>
         </Canvas>
       </Grid>
-      <Viana:BlobsControl Width="Auto" Height="Auto" Visibility="Visible" Grid.Column="1" x:Name="BlobsControl"/>
+      <Viana:BlobsControl Width="Auto" 
+                          Height="Auto" 
+                          Visibility="{Binding Path=IsTargetColorSet, Source={x:Static Viana:Calibration.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Grid.Column="1" 
+                          x:Name="BlobsControl"/>
     </Grid>
     <Grid Background="{StaticResource PropertiesBackgroundBrush}" Height="40" Grid.RowSpan="2" VerticalAlignment="Bottom">
       <Grid.ColumnDefinitions>
@@ -95,6 +99,7 @@
         Minimum="0"
         Thumb.DragStarted="timelineSlider_DragStarted"
         Thumb.DragCompleted="timelineSlider_DragCompleted"
+        Thumb.DragDelta="timelineSlider_DragDelta"
         />
     </Grid>
   </Grid>

@@ -83,7 +83,7 @@ namespace VianaNET
       // in constructor, to get the databindings to their 
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
-      //this.videoCaptureElement = new VideoCapturer();
+      this.videoCaptureElement = new VideoCapturer();
 
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
