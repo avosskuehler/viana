@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Globalization;
 using WPFLocalizeExtension.Engine;
+using System.Threading;
 
 namespace VianaNET
 {
@@ -29,6 +30,12 @@ namespace VianaNET
       }
 
       MessageBox.Show(message);
+    }
+    
+    public static void DoEvents()
+    {
+      if (Application.Current != null)
+        Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
     }
   }
 }

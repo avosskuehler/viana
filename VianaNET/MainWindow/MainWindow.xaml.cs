@@ -237,7 +237,7 @@ namespace VianaNET
 
     private void AutomaticDataAquisitionCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
-      e.CanExecute = Calibration.Instance.IsTargetColorSet;
+      e.CanExecute = Video.Instance.ImageProcessing.IsTargetColorSet;
     }
 
     private void ButtonOtherOptionsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -503,7 +503,7 @@ namespace VianaNET
           5,
           5);
         drawingContext.DrawRoundedRectangle(
-          new SolidColorBrush(Calibration.Instance.TargetColor),
+          new SolidColorBrush(Video.Instance.ImageProcessing.TargetColor),
           new Pen(Brushes.White, 2f),
           new Rect(2, 2, 28, 28),
           5,
@@ -513,7 +513,7 @@ namespace VianaNET
         RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
         bmp.Render(drawingVisual);
         ((RibbonCommand)this.selectColorRibbonButton.Command).LargeImageSource = bmp;
-        Calibration.Instance.IsTargetColorSet = true;
+        Video.Instance.ImageProcessing.IsTargetColorSet = true;
         //this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
         //Video.Instance.UpdateNativeBitmap();
       }
@@ -532,12 +532,21 @@ namespace VianaNET
 
     private void Refresh()
     {
+      // Update data grid
       VideoData.Instance.RefreshDistanceVelocityAcceleration();
+
+      // Update BlobsControl Dataview if visible
+      if (Video.Instance.ImageProcessing.IsTargetColorSet)
+      {
+        this.videoWindow.BlobsControl.UpdateDataPoints();
+      }
       //this.datagridWindow.Refresh();
     }
 
     private void ManualDataAquisitionCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
+      VideoData.Instance.Reset();
+
       ManualDataAquisitionWindow manualAquisitionWindow = new ManualDataAquisitionWindow();
       manualAquisitionWindow.ShowDialog();
 
@@ -842,6 +851,7 @@ namespace VianaNET
     private void ButtonDeleteDataCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       VideoData.Instance.Reset();
+      this.Refresh();
     }
 
     private void ButtonCalculateVelocityCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -856,7 +866,7 @@ namespace VianaNET
 
     private void ButtonVideoCaptureDevicePropertiesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
-      e.CanExecute = Video.Instance.VideoCapturerElement.IsRunning;
+      e.CanExecute = (Video.Instance.VideoCapturerElement.CurrentState == VideoBase.PlayState.Running);
     }
 
     private void ButtonVideoCaptureDevicePropertiesCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -876,6 +886,11 @@ namespace VianaNET
           break;
         }
       }
+    }
+
+    private void RibbonWindow_Closing(object sender, CancelEventArgs e)
+    {
+      Video.Instance.Cleanup();
     }
 
     ///////////////////////////////////////////////////////////////////////////////

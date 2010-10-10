@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
+using System.Windows.Threading;
 
 namespace VianaNET
 {
@@ -32,7 +33,8 @@ namespace VianaNET
     private List<Ellipse> visualDataPoints;
     private int indexOfVisualDataPointRingBuffer;
     private Point mouseDownLocation;
-    private Image videoSurfaceClone;
+    private DispatcherTimer timesliderUpdateTimer;
+    bool isDragging = false;
 
     #endregion //FIELDS
 
@@ -49,6 +51,10 @@ namespace VianaNET
 
       this.CursorEllipse.Width = 2 * visualDataPointRadius;
       this.CursorEllipse.Height = 2 * visualDataPointRadius;
+
+      this.timesliderUpdateTimer = new DispatcherTimer();
+      this.timesliderUpdateTimer.Interval = TimeSpan.FromMilliseconds(200);
+      this.timesliderUpdateTimer.Tick += new EventHandler(timesliderUpdateTimer_Tick);
 
       //this.videoSurfaceClone = Video.Instance.VideoElement.CloneD3DRenderer();
       //this.videoSurfaceClone.MouseDown += new MouseButtonEventHandler(player_MouseDown);
@@ -113,6 +119,8 @@ namespace VianaNET
       this.HorizontalCursorLineRight.X2 = this.windowCanvas.ActualWidth;
       this.VerticalCursorLineTop.Y2 = this.windowCanvas.ActualHeight;
       this.VerticalCursorLineBottom.Y2 = this.windowCanvas.ActualHeight;
+
+      this.timesliderUpdateTimer.Start();
     }
 
     private void player_MouseMove(object sender, MouseEventArgs e)
@@ -139,18 +147,18 @@ namespace VianaNET
     {
       if (e.ChangedButton == MouseButton.Left)
       {
-        double scaledX = e.GetPosition(this.videoSurfaceClone).X;
-        double scaledY = e.GetPosition(this.videoSurfaceClone).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.videoSurfaceClone.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.videoSurfaceClone.ActualHeight;
+        double scaledX = e.GetPosition(this.VideoImage).X;
+        double scaledY = e.GetPosition(this.VideoImage).Y;
+        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
         double spaceX = 0;//(this.videoSurfaceClone.ActualWidth - this.videoSurfaceClone.UniformWidth) / 2;
         double spaceY = 0;// (this.videoSurfaceClone.ActualHeight - this.videoSurfaceClone.UniformHeight) / 2;
         double originalX = factorX * (scaledX - spaceX);
-        double originalY = Video.Instance.VideoElement.NaturalVideoHeight - factorY * (scaledY - spaceY);
+        double originalY = factorY * (scaledY - spaceY);
 
         VideoData.Instance.AddPoint(new Point(originalX, originalY));
 
-        Video.Instance.StepOneFrame(true);
+        this.StepOneFrameForward();
 
         double canvasPosX = e.GetPosition(this.windowCanvas).X;
         double canvasPosY = e.GetPosition(this.windowCanvas).Y;
@@ -174,7 +182,7 @@ namespace VianaNET
       }
       else if (e.ChangedButton == MouseButton.Right)
       {
-        Video.Instance.StepOneFrame(false);
+        this.StepOneFrameBackward();
       }
     }
 
@@ -199,12 +207,56 @@ namespace VianaNET
 
     private void timelineSlider_TickDownClicked(object sender, EventArgs e)
     {
-      Video.Instance.StepOneFrame(false);
+      StepOneFrameBackward();
+    }
+
+    private void StepOneFrameBackward()
+    {
+      if (this.timelineSlider.Value >= this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(false);
+      }
     }
 
     private void timelineSlider_TickUpClicked(object sender, EventArgs e)
     {
-      Video.Instance.StepOneFrame(true);
+      StepOneFrameForward();
+    }
+
+    private void StepOneFrameForward()
+    {
+      if (this.timelineSlider.Value <= this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(true);
+      }
+    }
+
+    void timesliderUpdateTimer_Tick(object sender, EventArgs e)
+    {
+      if (!isDragging && Video.Instance.VideoMode == VideoMode.File)
+      {
+        double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
+        //double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
+        // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
+        this.timelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        Video.Instance.VideoPlayerElement.UpdateFrameIndex();
+      }
+    }
+
+    private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
+    {
+      isDragging = true;
+    }
+
+    private void timelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+      //     Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
+    }
+
+    private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds = (long)(timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      isDragging = false;
     }
 
     private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
@@ -305,6 +357,9 @@ namespace VianaNET
           visualDataPoint.Width = 2 * visualDataPointRadius;
           visualDataPoint.Height = 2 * visualDataPointRadius;
           visualDataPoint.Stroke = Brushes.Red;
+          visualDataPoint.IsEnabled = false;
+          visualDataPoint.IsHitTestVisible = false;
+
           this.windowCanvas.Children.Add(visualDataPoint);
           this.visualDataPoints.Add(visualDataPoint);
         }
@@ -329,6 +384,5 @@ namespace VianaNET
     }
 
     #endregion //HELPER
-
   }
 }

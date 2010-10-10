@@ -121,7 +121,7 @@
     <value>Beschreibung</value>
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
-    <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. Es basisert auf dem hervorragenden Vorgänger Viana von Thomas Kersting an der Universität Essen.
+    <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. Es ist eine komplett modernisierte Version der Software Viana von Thomas Kersting an der Universität Essen.
 Wir freuen uns über Feedback -&gt;</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
@@ -713,7 +713,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Kein Objekt gefunden</value>
   </data>
   <data name="BlobsObjectsFound" xml:space="preserve">
-    <value>Objekt(e) gefunden</value>
+    <value>Objekt gefunden</value>
   </data>
   <data name="StatusIsCalculating" xml:space="preserve">
     <value>Berechne ...</value>

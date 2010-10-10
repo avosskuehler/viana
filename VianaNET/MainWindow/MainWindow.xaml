@@ -10,7 +10,7 @@
     Icon="/VianaNET;component/Images/VianaNET.ico"
     IconVisibility="Collapsed"
     Height="700" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
-    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}">
+    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="RibbonWindow_Closing">
 
   <r:RibbonWindow.Resources>
     <ResourceDictionary>
@@ -429,11 +429,14 @@
                                    MinWidth="100"
                                    Height="20"
                                    Minimum="0"
-                                   Maximum="1"
+                                   Maximum="100"
                                    SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
-                                   Value="{Binding Path=ColorTolerance, Source={x:Static Viana:Calibration.Instance}}" 
-                                   SmallChange="0.01" 
-                                   LargeChange="0.1" TickFrequency="0.01" IsSnapToTickEnabled="True" />
+                                   Value="{
+            Binding Path=ImageProcessing.ColorThreshold, 
+            Source={x:Static Viana:Video.Instance},
+            Converter={StaticResource PercentToDoubleConverter}}" 
+                                   SmallChange="1" 
+                                   LargeChange="1" TickFrequency="1" IsSnapToTickEnabled="True" />
           <Viana:RibbonSliderValue 
                                    Style="{StaticResource RibbonSliderValue}"
                                    Height="20"
@@ -441,7 +444,7 @@
                                    Minimum="1"
                                    Maximum="500"
                                    SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
-                                   Value="{Binding Path=BlobMinDiameter, Source={x:Static Viana:Calibration.Instance}}"
+                                   Value="{Binding Path=ImageProcessing.BlobMinDiameter, Source={x:Static Viana:Video.Instance}}"
                                    SmallChange="1" 
                                    IsSnapToTickEnabled="True" />
           <Viana:RibbonSliderValue 
@@ -451,7 +454,7 @@
                                    Minimum="1"
                                    Maximum="500"
                                    SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
-                                   Value="{Binding Path=BlobMaxDiameter, Source={x:Static Viana:Calibration.Instance}}"
+                                   Value="{Binding Path=ImageProcessing.BlobMaxDiameter, Source={x:Static Viana:Video.Instance}}"
                                    SmallChange="1" 
                                    IsSnapToTickEnabled="True" />
         </r:RibbonGroup>

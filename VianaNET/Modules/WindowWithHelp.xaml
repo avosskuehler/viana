@@ -13,7 +13,11 @@
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/VianaControls/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonDown="Container_MouseLeftButtonDown" MouseLeftButtonUp="Container_MouseLeftButtonUp">
+  <Grid RenderTransformOrigin="0.5,0.5" Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonDown="Container_MouseLeftButtonDown" MouseLeftButtonUp="Container_MouseLeftButtonUp">
+    <Grid.RenderTransform>
+      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+    </Grid.RenderTransform>
+
     <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}"/>
     <Canvas Name="windowCanvas">
       <Canvas.Width>
@@ -22,7 +26,10 @@
       <Canvas.Height>
         <Binding ElementName="VideoImage" Path="ActualHeight" />
       </Canvas.Height>
-      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+        <Border.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Border.RenderTransform>
         <StackPanel Orientation="Vertical">
           <Grid Grid.Row="0" x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>

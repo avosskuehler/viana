@@ -13,24 +13,22 @@ namespace VianaNET
 {
   public class Calibration : DependencyObject, INotifyPropertyChanged
   {
-    public event PropertyChangedEventHandler CalibrationPropertyChanged;
-
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged(string propertyName)
+    private static void OnPropertyChanged(
+      DependencyObject obj,
+      DependencyPropertyChangedEventArgs args)
+    {
+      (obj as Calibration).OnPropertyChanged(args);
+    }
+
+    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
       if (this.PropertyChanged != null)
       {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
       }
     }
-
-    //private static void OnPropertyChanged(
-    //  DependencyObject obj,
-    //  DependencyPropertyChangedEventArgs args)
-    //{
-    //  (obj as Calibration).OnPropertyChanged(args);
-    //}
 
     /// <summary>
     /// Holds the instance of singleton
@@ -77,12 +75,7 @@ namespace VianaNET
       this.PositionUnit = "px";
       this.VelocityUnit = "px/s";
       this.AccelerationUnit = "px/s^2";
-      this.TargetColor = Colors.Red;
-      this.ColorThreshold = 0.3;
       this.IsShowingUnits = false;
-      this.BlobMinDiameter = 4;
-      this.BlobMaxDiameter = 100;
-      this.IsTargetColorSet = false;
     }
 
     public bool IsShowingUnits
@@ -98,12 +91,7 @@ namespace VianaNET
       new FrameworkPropertyMetadata(
         false,
         FrameworkPropertyMetadataOptions.AffectsRender,
-        new PropertyChangedCallback(OnIsShowingUnitsPropertyChanged)));
-
-    private static void OnIsShowingUnitsPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-    {
-      (obj as Calibration).OnPropertyChanged("IsShowingUnits");
-    }
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public LinearGradientBrush GradientBackground
     {
@@ -115,8 +103,10 @@ namespace VianaNET
       "GradientBackground",
       typeof(LinearGradientBrush),
       typeof(Calibration),
-      new FrameworkPropertyMetadata(default(LinearGradientBrush),
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        default(LinearGradientBrush),
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     private Unit rulerUnit;
 
@@ -162,19 +152,20 @@ namespace VianaNET
 
     public double ScalePixelToUnit { get; set; }
     public string RulerDescription { get; set; }
-    public Rect ClipRegion { get; set; }
 
-    public System.Drawing.Rectangle SystemDrawingClipRegion
+    public Rect ClipRegion
     {
-      get
-      {
-        return new System.Drawing.Rectangle(
-          (int)ClipRegion.X,
-          (int)ClipRegion.Y,
-          (int)ClipRegion.Width,
-          (int)ClipRegion.Height);
-      }
+      get { return (Rect)this.GetValue(ClipRegionProperty); }
+      set { this.SetValue(ClipRegionProperty, value); }
     }
+
+    public static readonly DependencyProperty ClipRegionProperty = DependencyProperty.Register(
+      "ClipRegion",
+      typeof(Rect),
+      typeof(Calibration),
+      new FrameworkPropertyMetadata(
+        default(Rect),
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public double RulerValueInRulerUnits
     {
@@ -186,59 +177,9 @@ namespace VianaNET
       "RulerValueInRulerUnits",
       typeof(double),
       typeof(Calibration),
-      new FrameworkPropertyMetadata(default(double)));
-
-    public double ColorThreshold
-    {
-      get { return (double)this.GetValue(ColorToleranceProperty); }
-      set { this.SetValue(ColorToleranceProperty, value); }
-    }
-
-    public static readonly DependencyProperty ColorToleranceProperty = DependencyProperty.Register(
-      "ColorTolerance",
-      typeof(double),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(0.3d,
-        FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnBlobDetectionPropertyChanged)));
-
-    public double BlobMinDiameter
-    {
-      get { return (double)this.GetValue(BlobMinDiameterProperty); }
-      set { this.SetValue(BlobMinDiameterProperty, value); }
-    }
-
-    public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
-      "BlobMinDiameter",
-      typeof(double),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(4d,
-        FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnBlobDetectionPropertyChanged)));
-
-    public double BlobMaxDiameter
-    {
-      get { return (double)this.GetValue(BlobMaxDiameterProperty); }
-      set { this.SetValue(BlobMaxDiameterProperty, value); }
-    }
-
-    public static readonly DependencyProperty BlobMaxDiameterProperty = DependencyProperty.Register(
-      "BlobMaxDiameter",
-      typeof(double),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(100d,
-        FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnBlobDetectionPropertyChanged)));
-
-    public Color TargetColor
-    {
-      get { return (Color)this.GetValue(TargetColorProperty); }
-      set { this.SetValue(TargetColorProperty, value); }
-    }
-
-    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
-      "TargetColor",
-      typeof(Color),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(Colors.Red,
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        default(double),
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public string TimeUnit
     {
@@ -250,8 +191,10 @@ namespace VianaNET
       "TimeUnit",
       typeof(string),
       typeof(Calibration),
-      new FrameworkPropertyMetadata("ms",
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        "ms",
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public string PixelUnit
     {
@@ -263,8 +206,10 @@ namespace VianaNET
       "PixelUnit",
       typeof(string),
       typeof(Calibration),
-      new FrameworkPropertyMetadata("px",
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        "px",
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public string PositionUnit
     {
@@ -276,8 +221,10 @@ namespace VianaNET
       "PositionUnit",
       typeof(string),
       typeof(Calibration),
-      new FrameworkPropertyMetadata("px",
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        "px",
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public string VelocityUnit
     {
@@ -289,8 +236,10 @@ namespace VianaNET
       "VelocityUnit",
       typeof(string),
       typeof(Calibration),
-      new FrameworkPropertyMetadata("px/s",
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        "px/s",
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public string AccelerationUnit
     {
@@ -302,20 +251,10 @@ namespace VianaNET
       "AccelerationUnit",
       typeof(string),
       typeof(Calibration),
-      new FrameworkPropertyMetadata("px/s^2",
-        FrameworkPropertyMetadataOptions.AffectsRender));
-
-    public Boolean IsTargetColorSet
-    {
-      get { return (Boolean)this.GetValue(IsTargetColorSetProperty); }
-      set { this.SetValue(IsTargetColorSetProperty, value); }
-    }
-
-    public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
-      "IsTargetColorSet",
-      typeof(Boolean),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(false));
+      new FrameworkPropertyMetadata(
+        "px/s^2",
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public Boolean IsVideoCalibrated
     {
@@ -327,8 +266,10 @@ namespace VianaNET
       "IsVideoCalibrated",
       typeof(Boolean),
       typeof(Calibration),
-      new FrameworkPropertyMetadata(false,
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata(
+        false,
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public Boolean HasClipRegion
     {
@@ -337,28 +278,17 @@ namespace VianaNET
     }
 
     public static readonly DependencyProperty HasClipRegionProperty = DependencyProperty.Register(
-      "HasClipRegion", typeof(Boolean), typeof(Calibration));
-
-
-    private static void OnBlobDetectionPropertyChanged(
-  DependencyObject obj,
-  DependencyPropertyChangedEventArgs args)
-    {
-      (obj as Calibration).OnBlobDetectionPropertyChanged(args);
-    }
-
-    private void OnBlobDetectionPropertyChanged(DependencyPropertyChangedEventArgs args)
-    {
-      if (this.CalibrationPropertyChanged != null)
-      {
-        this.CalibrationPropertyChanged(this, new PropertyChangedEventArgs("BlobDetection"));
-      }
-    }
+      "HasClipRegion",
+      typeof(Boolean),
+      typeof(Calibration),
+      new FrameworkPropertyMetadata(
+        false,
+        FrameworkPropertyMetadataOptions.AffectsRender,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public void Reset()
     {
       this.InitFields();
     }
-
   }
 }

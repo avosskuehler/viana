@@ -36,6 +36,7 @@ namespace VianaNET
 
     public event EventHandler SelectionEndReached;
     public event EventHandler SelectionStartReached;
+    public event EventHandler SelectionAndValueChanged;
 
     #endregion //FIELDS
 
@@ -96,19 +97,19 @@ namespace VianaNET
     /// <summary>
     /// Time between frames in ms units.
     /// </summary>
-    public double FrameTime
+    public long FrameTimeInNanoSeconds
     {
-      get { return (double)GetValue(FrameTimeProperty); }
-      set { SetValue(FrameTimeProperty, value); }
+      get { return (long)GetValue(FrameTimeInNanoSecondsProperty); }
+      set { SetValue(FrameTimeInNanoSecondsProperty, value); }
     }
 
-    public static readonly DependencyProperty FrameTimeProperty =
+    public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
       DependencyProperty.Register(
-      "FrameTime",
-      typeof(double),
+      "FrameTimeInNanoSeconds",
+      typeof(long),
       typeof(MediaSlider),
       new UIPropertyMetadata(
-        default(double),
+        default(long),
         new PropertyChangedCallback(OnFrameTimeChanged)));
 
 
@@ -232,7 +233,9 @@ namespace VianaNET
           this.SelectionEndReached(this, EventArgs.Empty);
         }
         this.Value = this.SelectionEnd;
-        newValue = oldValue;
+        //newValue = oldValue;
+        //this.Value = this.SelectionEnd;
+        newValue = this.SelectionEnd;
       }
       else if (newValue < this.SelectionStart)
       {
@@ -241,7 +244,7 @@ namespace VianaNET
           this.SelectionStartReached(this, EventArgs.Empty);
         }
         this.Value = this.SelectionStart;
-        newValue = oldValue;
+        newValue = this.SelectionStart;
       }
 
       this.CurrentTimeString = ConvertToTimeString(newValue);
@@ -344,8 +347,9 @@ namespace VianaNET
 
     private void UpdateTickStyle()
     {
-      this.IsSnapToTickEnabled = false;//true;
-      this.TickFrequency = this.FrameTime;
+      // Ggf. TODO
+      this.IsSnapToTickEnabled = false;
+      this.TickFrequency = this.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs;
     }
 
     private void CheckWhichRangeEndToChange(Point mouseDownPosition)
@@ -379,6 +383,10 @@ namespace VianaNET
             if (this.Value < this.SelectionStart)
             {
               this.Value = this.SelectionStart;
+              if (this.SelectionAndValueChanged != null)
+              {
+                this.SelectionAndValueChanged(this, EventArgs.Empty);
+              }
             }
 
             break;
@@ -388,6 +396,10 @@ namespace VianaNET
             if (this.Value > this.SelectionEnd)
             {
               this.Value = this.SelectionEnd;
+              if (this.SelectionAndValueChanged != null)
+              {
+                this.SelectionAndValueChanged(this, EventArgs.Empty);
+              }
             }
 
             break;

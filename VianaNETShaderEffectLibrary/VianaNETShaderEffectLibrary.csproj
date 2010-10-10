@@ -78,6 +78,7 @@
     <Effect Include="ThresholdEffect.fx">
     </Effect>
     <Compile Include="BackgroundEffect.cs" />
+    <Compile Include="CropEffect.cs" />
     <Compile Include="ThresholdEffect.cs">
     </Compile>
     <Compile Include="EffectLibrary.cs">
@@ -85,6 +86,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
     <Effect Include="BackgroundEffect.fx" />
+    <Effect Include="CropEffect.fx" />
     <None Include="readme.txt" />
     <None Include="Properties\VianaNETShaderEffectLibraryKey.snk" />
   </ItemGroup>

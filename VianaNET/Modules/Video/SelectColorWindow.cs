@@ -44,7 +44,7 @@ namespace VianaNET
 
         System.Drawing.Color color = frame.GetPixel((int)originalX, (int)originalY);
 
-        Calibration.Instance.TargetColor = Color.FromArgb(255, color.R, color.G, color.B);
+        Video.Instance.ImageProcessing.TargetColor = Color.FromArgb(255, color.R, color.G, color.B);
         this.DialogResult = true;
 
       }

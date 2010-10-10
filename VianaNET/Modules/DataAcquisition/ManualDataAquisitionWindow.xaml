@@ -14,14 +14,21 @@
   <Window.Resources>
     <ResourceDictionary Source="../../VianaControls/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid Name="playerContainerGrid">
+  <Grid Name="playerContainerGrid" RenderTransformOrigin="0.5,0.5">
+    <Grid.RenderTransform>
+      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+    </Grid.RenderTransform>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" MouseDown="player_MouseDown" MouseMove="player_MouseMove" />
     <Canvas Name="windowCanvas" MouseMove="windowCanvas_MouseMove" PreviewMouseMove="windowCanvas_MouseMove">
       <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="Red"></Line>
       <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="Red"></Line>
       <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="Red"></Line>
       <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="Red"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="Red" Stretch="Fill" Width="10" Height="10" />
-      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Ellipse Name="CursorEllipse" Stroke="Red" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+        <Border.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Border.RenderTransform>
         <StackPanel Orientation="Vertical">
           <Grid Grid.Row="0" x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>
@@ -37,26 +44,28 @@
           <TextBlock Name="HelpText" Padding="5" Text="{lex:LocText VianaNET:Labels:ManualDataAcquisitionDescription}" TextWrapping="Wrap" />
           <StackPanel Name="FramePanel" Orientation="Horizontal" Margin="5">
             <Label Padding="0" Content="{lex:LocText VianaNET:Labels:ManualDataAcquisitionFrameLabel}" VerticalAlignment="Center"/>
-            <Label Name="FrameIndex" Width="40" Padding="0" Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static Viana:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
+            <Label Name="FrameIndex" Width="40" Padding="0"
+                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static Viana:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
             <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
-            <Label Name="FrameCount" Content="{Binding Path=VideoPlayerElement.FrameCount, Source={x:Static Viana:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+            <Label Name="FrameCount" Content="{Binding Path=VideoElement.FrameCount, Source={x:Static Viana:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
           </StackPanel>
           <Viana:MediaSlider 
             Margin="5" 
             Grid.Column="1" 
             IsShowingTimes="Collapsed" 
             x:Name="timelineSlider"  
-            FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
-            Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}"
+            FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static Viana:Video.Instance}}"
+            Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Viana:Video.Instance}}"
             SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
             SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
-            Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
             SmallChange="1" 
             IsSelectionRangeEnabled="True" 
             TickPlacement="BottomRight" 
             Interval="1" 
             TickDownClicked="timelineSlider_TickDownClicked" 
-            TickUpClicked="timelineSlider_TickUpClicked"/>
+            TickUpClicked="timelineSlider_TickUpClicked"
+            Thumb.DragStarted="timelineSlider_DragStarted"
+            Thumb.DragCompleted="timelineSlider_DragCompleted"/>
           <Separator/>
           <Button Name="ButtonReady" Width="60" Content="{lex:LocText VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReady_Click" />
           <Expander IsExpanded="False">

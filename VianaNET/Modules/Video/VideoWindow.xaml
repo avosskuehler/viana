@@ -25,8 +25,16 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      <Grid Name="LeftVideoPanel" Grid.Column="0">
-        <Image Name="VideoImage" HorizontalAlignment="Center" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}"/>
+      <Grid Name="LeftVideoPanel" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Grid.RenderTransform>
+
+        <Image Name="VideoImage" 
+               HorizontalAlignment="Center" 
+               Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}"
+               >
+        </Image>
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvas_SizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
@@ -40,19 +48,24 @@
             </Path.Data>
           </Path>
           <Label Name="frameRateLabel"></Label>
-          <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Red" StrokeThickness="1" Visibility="Hidden" />
-          <Border Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
+          <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1" Visibility="Hidden" />
+          <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
+            <Border.RenderTransform>
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=RulerValueInRulerUnits,
               Source={x:Static Viana:Calibration.Instance},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
-          <Line Name="TopLine" Visibility="Hidden" Stroke="Red" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseMove="Line_MouseMove" MouseLeftButtonUp="Line_MouseLeftButtonUp" />
-          <Line Name="LeftLine" Visibility="Hidden" Stroke="Red" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
-          <Line Name="BottomLine" Visibility="Hidden" Stroke="Red" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
-          <Line Name="RightLine" Visibility="Hidden" Stroke="Red" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
-          <Path Name="OuterRegion" Visibility="Hidden" Fill="#55FF0000">
+          <Line Name="BlobHorizontalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="0" X2="{Binding ElementName=VideoImage, Path=ActualWidth}" Y1="100" Y2="100"/>
+          <Line Name="BlobVerticalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="350" X2="350" Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"/>
+          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseMove="Line_MouseMove" MouseLeftButtonUp="Line_MouseLeftButtonUp" />
+          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
+          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
+          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
+          <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
             <Path.Data>
               <CombinedGeometry GeometryCombineMode="Xor">
                 <CombinedGeometry.Geometry1>
@@ -68,7 +81,7 @@
       </Grid>
       <Viana:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=IsTargetColorSet, Source={x:Static Viana:Calibration.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ImageProcessing.IsTargetColorSet, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -89,8 +102,8 @@
         IsSelectionRangeEnabled="True" 
         TickDownClicked="timelineSlider_TickDownClicked"
         TickUpClicked="timelineSlider_TickUpClicked"
-        FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
-        Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}"
+        FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static Viana:Video.Instance}}"
+        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Viana:Video.Instance}}"
         SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
         SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
         SmallChange="1" 
@@ -99,8 +112,7 @@
         Minimum="0"
         Thumb.DragStarted="timelineSlider_DragStarted"
         Thumb.DragCompleted="timelineSlider_DragCompleted"
-        Thumb.DragDelta="timelineSlider_DragDelta"
-        />
+        Thumb.DragDelta="timelineSlider_DragDelta"/>
     </Grid>
   </Grid>
 </ad:DockableContent>

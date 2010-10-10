@@ -24,6 +24,21 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Properties\VianaNETKey.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,11 +61,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>..\Release\</OutputPath>
@@ -81,6 +97,7 @@
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
     <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
     <Compile Include="CustomStyles\Colors\HSXColor.cs" />
+    <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
@@ -92,6 +109,7 @@
     <Compile Include="CustomStyles\Utitlity\ObservableObjectCollection.cs" />
     <Compile Include="CustomStyles\Utitlity\Pair.cs" />
     <Compile Include="Data\Calibration.cs" />
+    <Compile Include="Data\ImageProcessing.cs" />
     <Compile Include="Data\ExportData.cs" />
     <Compile Include="Data\StatusBarContent.cs" />
     <Compile Include="Data\MeasurementType.cs" />
@@ -133,9 +151,8 @@
     <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
       <DependentUpon>DataGridWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\Filter\Blob.cs" />
-    <Compile Include="Modules\Video\Filter\BlobDetection.cs" />
-    <Compile Include="Modules\Video\Filter\ColorFilter.cs" />
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilter.cs" />
+    <Compile Include="Modules\Video\Filter\ColorRangeFilter.cs" />
     <Compile Include="Modules\Video\Filter\FilterBase.cs" />
     <Compile Include="Modules\Video\CalibrateVideoWindow.cs" />
     <Compile Include="Modules\Video\ClipVideoWindow.cs" />
@@ -143,6 +160,11 @@
     <Compile Include="Modules\Video\Control\DShowUtils.cs" />
     <Compile Include="Modules\Video\Control\Video.cs" />
     <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
+    <Compile Include="Modules\Video\Filter\Histogram.cs" />
+    <Compile Include="Modules\Video\Filter\HistogramMinMaxSegmentator.cs" />
+    <Compile Include="Modules\Video\Filter\Segment.cs" />
+    <Compile Include="Modules\Video\Filter\VectorInt.cs" />
+    <Compile Include="Modules\Video\Filter\YCbCrColor.cs" />
     <Compile Include="Modules\Video\SelectColorWindow.cs" />
     <Compile Include="Modules\Video\VideoMode.cs" />
     <Compile Include="Modules\WindowWithHelp.xaml.cs">
@@ -151,13 +173,10 @@
     <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
       <DependentUpon>BlobsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\BlobDetection\Sharp.xaml.cs">
-      <DependentUpon>Sharp.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml.cs">
       <DependentUpon>ManualDataAquisitionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Converter\DoubleConverter.cs" />
+    <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
     <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
     <Compile Include="Modules\Video\MediaInfo\MediaInfoDLL.cs" />
     <Compile Include="Modules\Video\LengthDialog.xaml.cs">
@@ -182,6 +201,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="VianaControls\AsyncHelper.cs" />
     <Compile Include="VianaControls\RibbonComboBoxSimple.xaml.cs">
       <DependentUpon>RibbonComboBoxSimple.xaml</DependentUpon>
     </Compile>
@@ -250,10 +270,6 @@
     <Page Include="Modules\Video\BlobDetection\BlobsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Modules\Video\BlobDetection\Sharp.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="VianaControls\RibbonComboBoxSimple.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -371,18 +387,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AForge, Version=2.1.2.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\AForge.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Imaging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\AForge.Imaging.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Math, Version=2.1.2.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\AForge.Math.dll</HintPath>
-    </Reference>
     <Reference Include="AvalonDock, Version=1.2.2691.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\AvalonDock.dll</HintPath>
@@ -592,5 +596,22 @@
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
       <Name>WPFLocalizeExtension</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
 </Project>

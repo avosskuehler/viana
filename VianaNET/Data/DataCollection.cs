@@ -19,7 +19,8 @@ namespace VianaNET
       index = -1;
       foreach (DataSample sample in this)
       {
-        if (sample.Timestamp == sampleToCheck.Timestamp)
+        if (sample.Framenumber == sampleToCheck.Framenumber || 
+          sample.Timestamp == sampleToCheck.Timestamp)
         {
           index = this.IndexOf(sample);
           return true;

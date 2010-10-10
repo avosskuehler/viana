@@ -12,32 +12,41 @@
   </UserControl.Resources>
   <UniformGrid MinWidth="50" Rows="3" IsItemsHost="False">
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlProcessedImageHeader}">
-      <Image Name="ProcessedImageControl" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center"/>
+      <Image Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center">
+        <Image.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Image.RenderTransform>
+      </Image>
     </GroupBox>
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlFoundBlobsHeader}">
-      <Grid Name="CanvasHulls">
-        <Image Name="OverlayImageControl"  Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center"/>
-        <Canvas Name="OverlayCanvas" Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"
+      <Grid RenderTransformOrigin="0.5,0.5" >
+        <Grid.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Grid.RenderTransform>
+        <Image Name="OverlayImageControl" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center">
+        </Image>
+        <Canvas Name="OverlayCanvas" 
+                Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"
                 Height="{Binding ElementName=OverlayImageControl, Path=ActualHeight}">
-          <Ellipse Name="BlobEllipse" Stroke="Red" StrokeThickness="3"/>
         </Canvas>
       </Grid>
-      <!--<Canvas Name="CanvasHulls" Background="DarkBlue">-->
-      <!--<Canvas.LayoutTransform>
-          <ScaleTransform ScaleX="{Binding XScale}" ScaleY="{Binding YScale}"/>
-        </Canvas.LayoutTransform>-->
-      <!--<Polygon Name="BlobHull" Stroke="Red" StrokeThickness="3" />-->
-      <!--</Canvas>-->
     </GroupBox>
-    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}"
-              Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">
-      <Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
+    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
+              <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
+      <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Grid.RenderTransform>
+        <Canvas Name="CanvasDataPoints" SizeChanged="CanvasDataPoints_SizeChanged">
+        </Canvas>
+      </Grid>
+      <!--<Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
         <charting:Chart.Series>
           <charting:ScatterSeries 
             Title="{lex:LocText VianaNET:Labels:ChartWindowChartSeries}" 
-            ItemsSource="{Binding Path=Samples, Mode=OneWay, Source={x:Static Viana:VideoData.Instance}}"
-            IndependentValueBinding="{Binding CoordinateX}" 
-            DependentValueBinding="{Binding CoordinateY}">
+            ItemsSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}"
+            IndependentValueBinding="{Binding DistanceX}" 
+            DependentValueBinding="{Binding DistanceY}">
             <charting:ScatterSeries.IndependentAxis>
               <charting:LinearAxis Orientation="X" Style="{x:Null}" GridLineStyle="{x:Null}" AxisLabelStyle="{x:Null}" TitleStyle="{x:Null}" MajorTickMarkStyle="{x:Null}" MinorTickMarkStyle="{x:Null}" ExtendRangeToOrigin="True" FontSize="5" Minimum="0" Maximum="{Binding Path=VideoElement.NaturalVideoWidth, Source={x:Static Viana:Video.Instance}}" Interval="50"/>
             </charting:ScatterSeries.IndependentAxis>
@@ -46,7 +55,7 @@
             </charting:ScatterSeries.DependentRangeAxis>
           </charting:ScatterSeries>
         </charting:Chart.Series>
-      </Viana:VianaChart>
+      </Viana:VianaChart>-->
     </GroupBox>
   </UniformGrid>
 </UserControl>

@@ -725,10 +725,10 @@ Click OK or press Enter, when ready.</value>
     <value>Ready</value>
   </data>
   <data name="BlobsNoObjectFound" xml:space="preserve">
-    <value>No object found</value>
+    <value>no object found</value>
   </data>
   <data name="BlobsObjectsFound" xml:space="preserve">
-    <value>object(s) found</value>
+    <value>object found</value>
   </data>
   <data name="StatusIsCalculating" xml:space="preserve">
     <value>Calculating ...</value>

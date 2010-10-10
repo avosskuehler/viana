@@ -22,12 +22,16 @@ namespace VianaNET
     public DataGridWindow()
     {
       InitializeComponent();
-      Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(Calibration_PropertyChanged);
+      Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(DataPropertyChanged);
+      VideoData.Instance.PropertyChanged += new PropertyChangedEventHandler(DataPropertyChanged);
     }
 
-    private void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void DataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      this.Refresh();
+      if (e.PropertyName == "Samples" || e.PropertyName == "IsShowingUnits")
+      {
+        this.Refresh();
+      }
     }
 
     private void Refresh()

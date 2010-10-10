@@ -56,7 +56,7 @@ namespace VianaNETShaderEffectLibrary
 
     public static readonly DependencyProperty BlankColorProperty =
         DependencyProperty.Register("BlankColor", typeof(Color), typeof(ThresholdEffect),
-                new UIPropertyMetadata(Colors.Transparent, PixelShaderConstantCallback(1)));
+                new UIPropertyMetadata(Colors.Black, PixelShaderConstantCallback(1)));
 
     public Color TargetColor
     {
@@ -67,6 +67,56 @@ namespace VianaNETShaderEffectLibrary
     public static readonly DependencyProperty TargetColorProperty =
         DependencyProperty.Register("TargetColor", typeof(Color), typeof(ThresholdEffect),
                 new UIPropertyMetadata(Colors.Red, PixelShaderConstantCallback(2)));
+
+    public Color CropColor
+    {
+      get { return (Color)GetValue(CropColorProperty); }
+      set { SetValue(CropColorProperty, value); }
+    }
+
+    public static readonly DependencyProperty CropColorProperty =
+        DependencyProperty.Register("CropColor", typeof(Color), typeof(ThresholdEffect),
+                new UIPropertyMetadata(Colors.Gray, PixelShaderConstantCallback(3)));
+
+    public double MinX
+    {
+      get { return (double)GetValue(MinXProperty); }
+      set { SetValue(MinXProperty, value); }
+    }
+
+    public static readonly DependencyProperty MinXProperty =
+        DependencyProperty.Register("MinX", typeof(double), typeof(ThresholdEffect),
+                new UIPropertyMetadata(0d, PixelShaderConstantCallback(4)));
+
+    public double MaxX
+    {
+      get { return (double)GetValue(MaxXProperty); }
+      set { SetValue(MaxXProperty, value); }
+    }
+
+    public static readonly DependencyProperty MaxXProperty =
+        DependencyProperty.Register("MaxX", typeof(double), typeof(ThresholdEffect),
+                new UIPropertyMetadata(1d, PixelShaderConstantCallback(5)));
+
+    public double MinY
+    {
+      get { return (double)GetValue(MinYProperty); }
+      set { SetValue(MinYProperty, value); }
+    }
+
+    public static readonly DependencyProperty MinYProperty =
+        DependencyProperty.Register("MinY", typeof(double), typeof(ThresholdEffect),
+                new UIPropertyMetadata(0d, PixelShaderConstantCallback(6)));
+
+    public double MaxY
+    {
+      get { return (double)GetValue(MaxYProperty); }
+      set { SetValue(MaxYProperty, value); }
+    }
+
+    public static readonly DependencyProperty MaxYProperty =
+        DependencyProperty.Register("MaxY", typeof(double), typeof(ThresholdEffect),
+                new UIPropertyMetadata(1d, PixelShaderConstantCallback(7)));
 
   }
 }

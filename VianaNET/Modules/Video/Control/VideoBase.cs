@@ -17,12 +17,23 @@
   /// frames can be catched and send into the processing tree of
   /// the application.
   /// </summary>
-  public abstract class VideoBase : DependencyObject, IDisposable
+  public abstract class VideoBase : DependencyObject, ISampleGrabberCB, IDisposable
   {
+    public enum PlayState
+    {
+      Stopped,
+      Paused,
+      Running,
+      Init
+    };
+
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
     #region CONSTANTS
+
+    public const float NanoSecsToMilliSecs = 0.0001f;
+
     #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -33,13 +44,59 @@
     /// <summary>
     /// This points to a file mapping of the video frames.
     /// </summary>
-    public IntPtr section { get; set; }
+    protected IntPtr originalSection;
+
+    /// <summary>
+    /// This points to a file mapping of the video frames.
+    /// </summary>
+    protected IntPtr processingSection;
+
+    /// <summary>
+    /// This points to the starting address of the mapped view of the video frame.
+    /// </summary>
+    protected IntPtr originalMapping;
 
     /// <summary>
     /// Saves the bufferLength of the video stream
     /// </summary>
     protected int bufferLength;
 
+    /// <summary>
+    /// This interface provides methods that enable an application to build a filter graph. 
+    /// The Filter Graph Manager implements this interface.
+    /// </summary>
+    protected IFilterGraph2 filterGraph;
+
+    ///// <summary>
+    ///// The ICaptureGraphBuilder2 interface builds capture graphs and other custom filter graphs. 
+    ///// </summary>
+    //protected ICaptureGraphBuilder2 capGraph = null;
+
+    /// <summary>
+    /// The IMediaControl interface provides methods for controlling the 
+    /// flow of data through the filter graph. It includes methods for running, pausing, and stopping the graph. 
+    /// </summary>
+    protected IMediaControl mediaControl;
+
+    /// <summary>
+    /// The ISampleGrabber interface is exposed by the Sample Grabber Filter.
+    /// It enables an application to retrieve individual media samples as they move through the filter graph.
+    /// </summary>
+    protected ISampleGrabber sampleGrabber;
+
+#if DEBUG
+    /// <summary>
+    /// Helps showing capture graph in GraphBuilder
+    /// </summary>
+    protected DsROTEntry rotEntry;
+#endif
+
+    /// <summary>
+    /// This indicates if the frames of the capture callback should be skipped.
+    /// </summary>
+    protected bool skipFrameMode = false;
+
+    protected int frameCounter;
 
     #endregion //FIELDS
 
@@ -54,6 +111,11 @@
     /// </summary>
     public VideoBase()
     {
+    }
+
+    ~VideoBase()
+    {
+      Dispose();
     }
 
     #endregion //CONSTRUCTION
@@ -76,7 +138,7 @@
     /// <summary>
     /// This points to the starting address of the mapped view of the video frame.
     /// </summary>
-    public IntPtr Map { get; set; }
+    public IntPtr ProcessingMapping { get; set; }
 
     /// <summary>
     /// Saves the stride of the video stream
@@ -89,31 +151,36 @@
     /// </summary>
     public int PixelSize { get; set; }
 
-    public double NaturalVideoWidth
-    {
-      get { return (double)GetValue(NaturalVideoWidthProperty); }
-      set { SetValue(NaturalVideoWidthProperty, value); }
-    }
+    public double NaturalVideoWidth { get; set; }
 
-    public static readonly DependencyProperty NaturalVideoWidthProperty =
-      DependencyProperty.Register(
-      "NaturalVideoWidth",
-      typeof(double),
-      typeof(VideoBase),
-      new UIPropertyMetadata(default(double)));
+    public double NaturalVideoHeight { get; set; }
 
-    public double NaturalVideoHeight
-    {
-      get { return (double)GetValue(NaturalVideoHeightProperty); }
-      set { SetValue(NaturalVideoHeightProperty, value); }
-    }
 
-    public static readonly DependencyProperty NaturalVideoHeightProperty =
-      DependencyProperty.Register(
-      "NaturalVideoHeight",
-      typeof(double),
-      typeof(VideoBase),
-      new UIPropertyMetadata(default(double)));
+    //public double NaturalVideoWidth
+    //{
+    //  get { return (double)GetValue(NaturalVideoWidthProperty); }
+    //  set { SetValue(NaturalVideoWidthProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty NaturalVideoWidthProperty =
+    //  DependencyProperty.Register(
+    //  "NaturalVideoWidth",
+    //  typeof(double),
+    //  typeof(VideoBase),
+    //  new UIPropertyMetadata(default(double)));
+
+    //public double NaturalVideoHeight
+    //{
+    //  get { return (double)GetValue(NaturalVideoHeightProperty); }
+    //  set { SetValue(NaturalVideoHeightProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty NaturalVideoHeightProperty =
+    //  DependencyProperty.Register(
+    //  "NaturalVideoHeight",
+    //  typeof(double),
+    //  typeof(VideoBase),
+    //  new UIPropertyMetadata(default(double)));
 
     public ImageSource ImageSource
     {
@@ -128,18 +195,18 @@
       typeof(VideoBase),
       new UIPropertyMetadata(null));
 
-    public bool IsRunning
+    public PlayState CurrentState
     {
-      get { return (bool)GetValue(IsRunningProperty); }
-      set { SetValue(IsRunningProperty, value); }
+      get { return (PlayState)GetValue(CurrentStateProperty); }
+      set { SetValue(CurrentStateProperty, value); }
     }
 
-    public static readonly DependencyProperty IsRunningProperty =
+    public static readonly DependencyProperty CurrentStateProperty =
       DependencyProperty.Register(
-      "IsRunning",
-      typeof(bool),
+      "CurrentState",
+      typeof(PlayState),
       typeof(VideoBase),
-      new UIPropertyMetadata(false));
+      new UIPropertyMetadata(PlayState.Stopped));
 
     public bool HasVideo
     {
@@ -155,20 +222,20 @@
       new UIPropertyMetadata(false));
 
     /// <summary>
-    /// Time between frames in ms units.
+    /// Time between frames in 100ns units.
     /// </summary>
-    public double FrameTime
+    public long FrameTimeInNanoSeconds
     {
-      get { return (double)GetValue(FrameTimeProperty); }
-      set { SetValue(FrameTimeProperty, value); }
+      get { return (long)GetValue(FrameTimeInNanoSecondsProperty); }
+      set { SetValue(FrameTimeInNanoSecondsProperty, value); }
     }
 
-    public static readonly DependencyProperty FrameTimeProperty =
+    public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
       DependencyProperty.Register(
-      "FrameTime",
-      typeof(double),
+      "FrameTimeInNanoSeconds",
+      typeof(long),
       typeof(VideoBase),
-      new UIPropertyMetadata(default(double)));
+      new UIPropertyMetadata(default(long)));
 
     public int MediaPositionFrameIndex
     {
@@ -183,7 +250,20 @@
       typeof(VideoBase),
       new UIPropertyMetadata(default(int)));
 
-    public virtual long MediaPositionInMS { get; set; }
+    public virtual long MediaPositionInNanoSeconds { get; set; }
+
+    //public long MediaPositionInMilliSeconds
+    //{
+    //  get { return (long)GetValue(MediaPositionInMilliSecondsProperty); }
+    //  set { SetValue(MediaPositionInMilliSecondsProperty, value); }
+    //}
+
+    //public static readonly DependencyProperty MediaPositionInMilliSecondsProperty =
+    //  DependencyProperty.Register(
+    //  "MediaPositionInMilliSeconds",
+    //  typeof(long),
+    //  typeof(VideoBase),
+    //  new UIPropertyMetadata(default(long)));
 
     public int FrameCount
     {
@@ -210,7 +290,19 @@
     /// </summary>
     public virtual void Play()
     {
-      this.IsRunning = true;
+      if (!(this.CurrentState == PlayState.Running) && this.mediaControl != null)
+      {
+        int hr = this.mediaControl.Run();
+
+        if (hr != 0)
+        {
+          ErrorLogger.WriteLine("Error while starting camera. Message: " + DsError.GetErrorText(hr));
+        }
+        else
+        {
+          this.CurrentState = PlayState.Running;
+        }
+      }
     }
 
     /// <summary>
@@ -219,15 +311,59 @@
     /// </summary>
     public virtual void Pause()
     {
-      this.IsRunning = false;
+      if (this.mediaControl == null)
+        return;
+
+      //if ((this.CurrentState == PlayState.Running))
+      {
+        if (this.mediaControl.Pause() >= 0)
+        {
+          this.CurrentState = PlayState.Paused;
+        }
+      }
+
+      //// Toggle play/pause behavior
+      //if ((this.currentState == PlayState.Paused) || (this.currentState == PlayState.Stopped))
+      //{
+      //  if (this.mediaControl.Run() >= 0)
+      //    this.currentState = PlayState.Running;
+      //}
+      //else
+      //{
+      //  if (this.mediaControl.Pause() >= 0)
+      //    this.currentState = PlayState.Paused;
+      //}
     }
 
     public virtual void Stop()
     {
-      this.IsRunning = false;
+      try
+      {
+        if (this.mediaControl != null)
+        {
+          int hr = this.mediaControl.Stop();
+          if (hr != 0)
+          {
+            ErrorLogger.WriteLine("Error while stopping camera. Message: " + DsError.GetErrorText(hr));
+          }
+          else
+          {
+            this.CurrentState = PlayState.Stopped;
+          }
+        }
+
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, false);
+      }
     }
 
-    public abstract void Revert();
+    public virtual void Revert()
+    {
+      this.Stop();
+      this.frameCounter = 0;
+    }
 
     /// <summary>
     /// Shut down capture.
@@ -237,19 +373,73 @@
     {
       this.Stop();
 
-      this.HasVideo = false;
-
-      if (this.Map != IntPtr.Zero)
+      lock (this)
       {
-        UnmapViewOfFile(this.Map);
-        this.Map = IntPtr.Zero;
+        Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+        {
+          this.HasVideo = false;
+          this.CurrentState = PlayState.Init;
+          this.frameCounter = 0;
+        }, null);
+
+
+        if (this.originalMapping != IntPtr.Zero)
+        {
+          UnmapViewOfFile(this.originalMapping);
+          this.originalMapping = IntPtr.Zero;
+        }
+
+        if (this.ProcessingMapping != IntPtr.Zero)
+        {
+          UnmapViewOfFile(this.ProcessingMapping);
+          this.ProcessingMapping = IntPtr.Zero;
+        }
+
+        if (this.originalSection != IntPtr.Zero)
+        {
+          CloseHandle(this.originalSection);
+          this.originalSection = IntPtr.Zero;
+        }
+
+        if (this.processingSection != IntPtr.Zero)
+        {
+          CloseHandle(this.processingSection);
+          this.processingSection = IntPtr.Zero;
+        }
+
+        if (this.sampleGrabber != null)
+        {
+          Marshal.ReleaseComObject(this.sampleGrabber);
+          this.sampleGrabber = null;
+        }
+
+#if DEBUG
+        if (this.rotEntry != null)
+        {
+          this.rotEntry.Dispose();
+        }
+#endif
+
+        if (this.filterGraph != null)
+        {
+          Marshal.ReleaseComObject(this.filterGraph);
+          this.filterGraph = null;
+          this.mediaControl = null;
+          this.HasVideo = false;
+        }
       }
 
-      if (this.section != IntPtr.Zero)
-      {
-        CloseHandle(this.section);
-        this.section = IntPtr.Zero;
-      }
+#if DEBUG
+      // Double check to make sure we aren't releasing something
+      // important.
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
+#endif
+    }
+
+    public void RefreshProcessingMap()
+    {
+      CopyMemory(this.ProcessingMapping, this.originalMapping, this.bufferLength);
     }
 
     #endregion //PUBLICMETHODS
@@ -258,6 +448,82 @@
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region OVERRIDES
+
+    /// <summary> 
+    /// The <see cref="ISampleGrabberCB.SampleCB{Double,IMediaSample}"/> sample callback method.
+    /// NOT USED.
+    /// </summary>
+    /// <param name="sampleTime">Starting time of the sample, in seconds.</param>
+    /// <param name="sample">Pointer to the IMediaSample interface of the sample.</param>
+    /// <returns>Returns S_OK if successful, or an HRESULT error code otherwise.</returns>
+    int ISampleGrabberCB.SampleCB(double sampleTime, IMediaSample sample)
+    {
+      Marshal.ReleaseComObject(sample);
+      return 0;
+    }
+
+    /// <summary> 
+    /// The <see cref="ISampleGrabberCB.BufferCB{Double,IntPtr, Int32}"/> buffer callback method.
+    /// Gets called whenever a new frame arrives down the stream in the SampleGrabber.
+    /// Updates the memory mapping of the OpenCV image and raises the 
+    /// <see cref="FrameCaptureComplete"/> event.
+    /// </summary>
+    /// <param name="sampleTime">Starting time of the sample, in seconds.</param>
+    /// <param name="buffer">Pointer to a buffer that contains the sample data.</param>
+    /// <param name="bufferLength">Length of the buffer pointed to by pBuffer, in bytes.</param>
+    /// <returns>Returns S_OK if successful, or an HRESULT error code otherwise.</returns>
+    int ISampleGrabberCB.BufferCB(double sampleTime, IntPtr buffer, int bufferLength)
+    {
+      ////long last = this.stopwatch.ElapsedMilliseconds;
+      ////Console.Write("BufferCB called at: ");
+      ////Console.Write(last);
+      ////Console.WriteLine(" ms");
+      //this.MediaPositionFrameIndex++;
+      //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+      //{
+      //  this.MediaPositionInMilliSeconds = (long)(sampleTime * 1000);
+      this.frameCounter++;
+      //}, null);
+
+      if (buffer != IntPtr.Zero)
+      {
+        // Do not skip frames here by default.
+        // We skip the processing in the Tracker class if it is not fast enough
+        if (!this.skipFrameMode)
+        {
+          // Check mapping if it is not already released and the buffer is running
+          if (this.originalMapping != IntPtr.Zero)
+          {
+            // This is fast and lasts less than 1 millisecond.
+            CopyMemory(this.originalMapping, buffer, bufferLength);
+            CopyMemory(this.ProcessingMapping, buffer, bufferLength);
+
+            try
+            {
+              Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, (SendOrPostCallback)delegate
+              {
+                ((InteropBitmap)this.ImageSource).Invalidate();
+
+                // Send new image to processing thread
+                this.OnVideoFrameChanged();
+              }, null);
+
+            }
+            catch (ThreadInterruptedException e)
+            {
+              ErrorLogger.ProcessException(e, false);
+            }
+            catch (Exception we)
+            {
+              ErrorLogger.ProcessException(we, false);
+            }
+          }
+        }
+      }
+
+      return 0;
+    }
+
     #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -273,7 +539,7 @@
       }
     }
 
-    protected void OnVideoFrameChanged()
+    protected virtual void OnVideoFrameChanged()
     {
       if (this.VideoFrameChanged != null)
       {
@@ -294,6 +560,82 @@
     ///////////////////////////////////////////////////////////////////////////////
     #region PRIVATEMETHODS
 
+    /// <summary>
+    /// Configure the sample grabber with default Video RGB24 mode.
+    /// </summary>
+    /// <param name="sampGrabber">The <see cref="ISampleGrabber"/> to be configured.</param>
+    protected void ConfigureSampleGrabber(ISampleGrabber sampGrabber)
+    {
+      AMMediaType media;
+      int hr;
+
+      // Set the media type to Video/RBG24
+      media = new AMMediaType();
+      media.majorType = MediaType.Video;
+      media.subType = MediaSubType.RGB32;
+      media.formatType = FormatType.VideoInfo;
+
+      hr = this.sampleGrabber.SetMediaType(media);
+
+      if (hr != 0)
+      {
+        ErrorLogger.WriteLine("Could not ConfigureSampleGrabber in Camera.Capture. Message: " + DsError.GetErrorText(hr));
+      }
+
+      DsUtils.FreeAMMediaType(media);
+      media = null;
+
+      // Configure the samplegrabber
+      hr = this.sampleGrabber.SetCallback(this, 1);
+
+      if (hr != 0)
+      {
+        ErrorLogger.WriteLine("Could not set callback method for sampleGrabber in Camera.Capture. Message: " + DsError.GetErrorText(hr));
+      }
+    }
+
+    /// <summary>
+    /// Saves the video properties of the SampleGrabber into member fields
+    /// and creates a file mapping for the captured frames.
+    /// </summary>
+    /// <param name="sampGrabber">The <see cref="ISampleGrabber"/>
+    /// from which to retreive the sample information.</param>
+    protected void SaveSizeInfo(ISampleGrabber sampGrabber)
+    {
+      int hr;
+
+      // Get the media type from the SampleGrabber
+      AMMediaType media = new AMMediaType();
+      hr = sampGrabber.GetConnectedMediaType(media);
+
+      if (hr != 0)
+      {
+        ErrorLogger.WriteLine("Could not SaveSizeInfo in Camera.Capture. Message: " + DsError.GetErrorText(hr));
+      }
+
+      if ((media.formatType != FormatType.VideoInfo) || (media.formatPtr == IntPtr.Zero))
+      {
+        ErrorLogger.WriteLine("Error in Camera.Capture. Unknown Grabber Media Format");
+      }
+
+      // Grab the size info
+      VideoInfoHeader videoInfoHeader = (VideoInfoHeader)Marshal.PtrToStructure(media.formatPtr, typeof(VideoInfoHeader));
+      this.NaturalVideoWidth = videoInfoHeader.BmiHeader.Width;
+      this.NaturalVideoHeight = videoInfoHeader.BmiHeader.Height;
+
+      this.CreateMemoryMapping(4);
+      this.ImageSource = Imaging.CreateBitmapSourceFromMemorySection(
+        this.originalSection,
+        (int)this.NaturalVideoWidth,
+        (int)this.NaturalVideoHeight,
+        PixelFormats.Bgr32,
+        this.Stride,
+        0) as InteropBitmap;
+
+      DsUtils.FreeAMMediaType(media);
+      media = null;
+    }
+
     protected void CreateMemoryMapping(int byteCountOfBitmap)
     {
       this.PixelSize = byteCountOfBitmap;
@@ -302,9 +644,26 @@
 
       this.bufferLength = (int)(this.NaturalVideoWidth * this.NaturalVideoHeight * this.PixelSize);
 
-      // create memory section and map for the OpenCV Image.
-      this.section = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x04, 0, (uint)this.bufferLength, null);
-      this.Map = MapViewOfFile(this.section, 0xF001F, 0, 0, (uint)this.bufferLength);
+      // create memory section and map for the Image.
+      this.originalSection = CreateFileMapping(
+        new IntPtr(-1),
+        IntPtr.Zero,
+        0x04,
+        0,
+        (uint)this.bufferLength,
+        null);
+
+      // create memory section and map for the Image.
+      this.processingSection = CreateFileMapping(
+        new IntPtr(-1),
+        IntPtr.Zero,
+        0x04,
+        0,
+        (uint)this.bufferLength,
+        null);
+
+      this.originalMapping = MapViewOfFile(this.originalSection, 0xF001F, 0, 0, (uint)this.bufferLength);
+      this.ProcessingMapping = MapViewOfFile(this.processingSection, 0xF001F, 0, 0, (uint)this.bufferLength);
     }
 
     /// <summary>
@@ -373,5 +732,6 @@
     ///////////////////////////////////////////////////////////////////////////////
     #region HELPER
     #endregion //HELPER
+
   }
 }

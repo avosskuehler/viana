@@ -9,11 +9,29 @@ using System.IO;
 using System.Windows.Data;
 using DirectShowLib;
 using System.Windows.Controls;
+using System.ComponentModel;
 
 namespace VianaNET
 {
-  public class Video : DependencyObject
+  public class Video : DependencyObject, INotifyPropertyChanged
   {
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private static void OnPropertyChanged(
+      DependencyObject obj,
+      DependencyPropertyChangedEventArgs args)
+    {
+      (obj as Video).OnPropertyChanged(args);
+    }
+
+    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
+      }
+    }
+
     public event EventHandler VideoFrameChanged;
     private static Video instance;
 
@@ -21,6 +39,8 @@ namespace VianaNET
     private VideoBase videoElement;
     private VideoCapturer videoCaptureElement;
     private VideoPlayer videoPlayerElement;
+
+    public ImageProcessing ImageProcessing { get; set; }
 
     public VideoMode VideoMode
     {
@@ -30,12 +50,13 @@ namespace VianaNET
 
     public int FrameIndex
     {
-      get { return this.videoElement.MediaPositionFrameIndex; }
+      get { return (int)(this.videoElement.MediaPositionFrameIndex); }
     }
 
-    public long FrameTimestamp
+    public long FrameTimestampInMS
     {
-      get { return this.videoElement.MediaPositionInMS; }
+      get { return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs); }
+      //get { return this.videoElement.MediaPositionInMilliSeconds; }
     }
 
     public bool IsDataAcquisitionRunning
@@ -49,7 +70,9 @@ namespace VianaNET
       "IsDataAcquisitionRunning",
       typeof(bool),
       typeof(Video),
-      new UIPropertyMetadata(false));
+      new FrameworkPropertyMetadata(
+        false,
+        new PropertyChangedCallback(OnPropertyChanged)));
 
     public ImageSource VideoSource
     {
@@ -79,14 +102,23 @@ namespace VianaNET
 
     private Video()
     {
+      this.ImageProcessing = new ImageProcessing();
+
       // Need to have the construction of the Video objects
       // in constructor, to get the databindings to their 
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
       this.videoCaptureElement = new VideoCapturer();
-
+      this.videoCaptureElement.VideoAvailable +=
+        new EventHandler(videoCaptureElement_VideoAvailable);
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
+    }
+
+    void videoCaptureElement_VideoAvailable(object sender, EventArgs e)
+    {
+      this.VideoSource = this.videoElement.ImageSource;
+      this.videoElement.Play();
     }
 
     public VideoBase VideoElement
@@ -119,6 +151,7 @@ namespace VianaNET
       switch (this.videoMode)
       {
         case VideoMode.File:
+          this.videoCaptureElement.Dispose();
           this.videoElement = this.videoPlayerElement;
           //Binding bitmapBinding = new Binding();
           //bitmapBinding.Source = this.videoPlayerElement;
@@ -127,7 +160,14 @@ namespace VianaNET
 
           break;
         case VideoMode.Capture:
-          this.videoElement = this.videoCaptureElement;
+          List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
+          if (videoDevices.Count > 0)
+          {
+            this.videoElement = this.videoCaptureElement;
+            //this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 5, 320, 240);
+            this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 0, 0, 0);
+          }
+
           break;
       }
 
@@ -248,18 +288,33 @@ namespace VianaNET
     //  }
     //}
 
-    public void Render(Image image)
+    public bool LoadMovie(string filename)
     {
+      bool success = true;
       switch (this.videoMode)
       {
         case VideoMode.File:
-          this.videoPlayerElement.RenderVideo();
+          success = this.videoPlayerElement.LoadMovie(filename);
+          this.VideoSource = this.videoElement.ImageSource;
           break;
         case VideoMode.Capture:
           // Do not render, because the mapped view is already
           // populated with the video data
           break;
       }
+
+      return success;
+    }
+
+    public void RefreshProcessingMap()
+    {
+      this.videoElement.RefreshProcessingMap();
+    }
+
+    public void Cleanup()
+    {
+      this.videoCaptureElement.Dispose();
+      this.videoPlayerElement.Dispose();
     }
   }
 }

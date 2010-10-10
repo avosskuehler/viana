@@ -7,9 +7,8 @@
     <ResourceDictionary Source="VianaStyle.xaml"/>
   </UserControl.Resources>
   <Viana:MediaSlider x:Name="SliderControl"   
-    FrameTime="{Binding Path=VideoPlayerElement.FrameTime, Source={x:Static Viana:Video.Instance}}"
-        Value="{Binding Path=VideoPlayerElement.MediaPosition, Source={x:Static Viana:Video.Instance}}" 
-        Maximum="{Binding Path=VideoPlayerElement.MediaDuration, Source={x:Static Viana:Video.Instance}}" 
+        FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static Viana:Video.Instance}}"
+        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Viana:Video.Instance}}" 
         SmallChange="1" 
         SelectionStart="10" 
         TickPlacement="BottomRight" 

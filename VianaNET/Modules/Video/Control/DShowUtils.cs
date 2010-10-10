@@ -340,14 +340,14 @@ namespace VianaNET
     /// attached to the system. 
     /// </summary>
     /// <returns>A <see cref="List{String}"/> with the friendly names of the video devices.</returns>
-    public static List<string> GetVideoInputDevices()
+    public static List<DsDevice> GetVideoInputDevices()
     {
-      List<string> devices = new List<string>();
+      List<DsDevice> devices = new List<DsDevice>();
 
       // enumerate Video Input Devices
       foreach (DsDevice ds in DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice))
       {
-        devices.Add(ds.Name);
+        devices.Add(ds);
       }
 
       return devices;

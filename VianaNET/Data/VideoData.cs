@@ -61,6 +61,19 @@ namespace VianaNET
       typeof(VideoData),
       new UIPropertyMetadata(null));
 
+    public Point LastPoint
+    {
+      get { return (Point)GetValue(LastPointProperty); }
+      set { SetValue(LastPointProperty, value); }
+    }
+
+    public static readonly DependencyProperty LastPointProperty =
+      DependencyProperty.Register(
+      "LastPoint",
+      typeof(Point),
+      typeof(VideoData),
+      new UIPropertyMetadata(null));
+
     public int Count
     {
       get { return this.Samples.Count; }
@@ -98,14 +111,19 @@ namespace VianaNET
         this.Samples[i].AccelerationX = GetXAcceleration(this.Samples[i], previousSample);
         this.Samples[i].AccelerationY = GetYAcceleration(this.Samples[i], previousSample);
       }
+
+      // Refresh DataBinding to DataGrid.
+      this.OnPropertyChanged("Samples");
     }
 
     public void AddPoint(Point newSamplePosition)
     {
+      this.LastPoint = newSamplePosition;
+
       DataSample newSample = new DataSample();
 
       newSample.Framenumber = Video.Instance.FrameIndex;
-      newSample.Timestamp = Video.Instance.FrameTimestamp;
+      newSample.Timestamp = Video.Instance.FrameTimestampInMS;
       newSample.CoordinateX = newSamplePosition.X;
       newSample.CoordinateY = newSamplePosition.Y;
 
@@ -120,7 +138,7 @@ namespace VianaNET
         this.Samples.Add(newSample);
       }
 
-      this.OnPropertyChanged("Samples");
+      this.OnPropertyChanged("LastPoint");
     }
 
     private static Point CalibrateSample(DataSample value)
@@ -155,12 +173,12 @@ namespace VianaNET
 
     private static double GetYVelocity(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.CoordinateY - previousSample.CoordinateY) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.DistanceY - previousSample.DistanceY) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
     }
 
     private static double GetXVelocity(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.CoordinateX - previousSample.CoordinateX) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.DistanceX - previousSample.DistanceX) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
     }
 
     private static double GetVelocity(DataSample newSample, DataSample previousSample)
@@ -170,7 +188,7 @@ namespace VianaNET
 
     private static double GetDistance(DataSample newSample, DataSample previousSample)
     {
-      return Math.Sqrt(Math.Pow(newSample.CoordinateY - previousSample.CoordinateY, 2) + Math.Pow(newSample.CoordinateX - previousSample.CoordinateX, 2));
+      return Math.Sqrt(Math.Pow(newSample.DistanceX - previousSample.DistanceY, 2) + Math.Pow(newSample.DistanceX - previousSample.DistanceX, 2));
     }
 
     public bool RemovePoint(long timeStamp)
