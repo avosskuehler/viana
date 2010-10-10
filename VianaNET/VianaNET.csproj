@@ -201,7 +201,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\AsyncHelper.cs" />
     <Compile Include="VianaControls\RibbonComboBoxSimple.xaml.cs">
       <DependentUpon>RibbonComboBoxSimple.xaml</DependentUpon>
     </Compile>
