@@ -79,7 +79,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="Properties\app.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -88,34 +88,33 @@
     <None Include="Properties\VianaNETKey.snk" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ExtensionMethods.cs" />
     <Compile Include="Application\RecentFiles.cs" />
     <Compile Include="Application\VianaNETApplication.xaml.cs">
       <DependentUpon>VianaNETApplication.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Colors\Gradients.cs" />
     <Compile Include="CustomStyles\Colors\Coloration.cs" />
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
     <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColor.cs" />
     <Compile Include="CustomStyles\Colors\HSXColor.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
-    <Compile Include="CustomStyles\Office\OfficeColorPallet.cs" />
-    <Compile Include="CustomStyles\Office\OfficeColors.cs" />
-    <Compile Include="CustomStyles\Office\OfficePallet.cs" />
-    <Compile Include="CustomStyles\Utitlity\ExtensionMethods.cs" />
-    <Compile Include="CustomStyles\Utitlity\ObservableObjectCollection.cs" />
-    <Compile Include="CustomStyles\Utitlity\Pair.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
+    <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Types\AxisType.cs" />
     <Compile Include="Data\Calibration.cs" />
     <Compile Include="Data\ImageProcessing.cs" />
-    <Compile Include="Data\ExportData.cs" />
-    <Compile Include="Data\StatusBarContent.cs" />
-    <Compile Include="Data\MeasurementType.cs" />
-    <Compile Include="Data\SortedCollection.cs" />
-    <Compile Include="Data\SortedObservableCollection.cs" />
-    <Compile Include="Data\Unit.cs" />
+    <Compile Include="Modules\DataGrid\ExportData.cs" />
+    <Compile Include="MainWindow\StatusBarContent.cs" />
+    <Compile Include="CustomStyles\Types\MeasurementType.cs" />
+    <Compile Include="CustomStyles\Types\SortedCollection.cs" />
+    <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
+    <Compile Include="CustomStyles\Types\Unit.cs" />
     <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
     <Compile Include="Data\DataAxes.cs" />
     <Compile Include="Data\DataCollection.cs" />
@@ -151,23 +150,28 @@
     <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
       <DependentUpon>DataGridWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\Filter\ColorAndCropFilter.cs" />
-    <Compile Include="Modules\Video\Filter\ColorRangeFilter.cs" />
+    <Compile Include="Modules\Video\Control\LiveVideoController.cs" />
+    <Compile Include="Modules\Video\Dialogs\SaveVideoDialog.xaml.cs">
+      <DependentUpon>SaveVideoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilterRGB.cs" />
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
     <Compile Include="Modules\Video\Filter\FilterBase.cs" />
-    <Compile Include="Modules\Video\CalibrateVideoWindow.cs" />
-    <Compile Include="Modules\Video\ClipVideoWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\CalibrateVideoWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\ClipVideoWindow.cs" />
     <Compile Include="Modules\Video\Control\VideoBase.cs" />
     <Compile Include="Modules\Video\Control\DShowUtils.cs" />
     <Compile Include="Modules\Video\Control\Video.cs" />
     <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
+    <Compile Include="Modules\Video\Filter\GMFBridge.cs" />
     <Compile Include="Modules\Video\Filter\Histogram.cs" />
     <Compile Include="Modules\Video\Filter\HistogramMinMaxSegmentator.cs" />
     <Compile Include="Modules\Video\Filter\Segment.cs" />
     <Compile Include="Modules\Video\Filter\VectorInt.cs" />
     <Compile Include="Modules\Video\Filter\YCbCrColor.cs" />
-    <Compile Include="Modules\Video\SelectColorWindow.cs" />
-    <Compile Include="Modules\Video\VideoMode.cs" />
-    <Compile Include="Modules\WindowWithHelp.xaml.cs">
+    <Compile Include="Modules\Video\Dialogs\SelectColorWindow.cs" />
+    <Compile Include="CustomStyles\Types\VideoMode.cs" />
+    <Compile Include="Modules\Base\WindowWithHelp.xaml.cs">
       <DependentUpon>WindowWithHelp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
@@ -179,7 +183,7 @@
     <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
     <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
     <Compile Include="Modules\Video\MediaInfo\MediaInfoDLL.cs" />
-    <Compile Include="Modules\Video\LengthDialog.xaml.cs">
+    <Compile Include="Modules\Video\Dialogs\LengthDialog.xaml.cs">
       <DependentUpon>LengthDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Video\VideoWindow.xaml.cs">
@@ -201,51 +205,48 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\RibbonComboBoxSimple.xaml.cs">
+    <Compile Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml.cs">
       <DependentUpon>RibbonComboBoxSimple.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\SliderStyles.xaml.cs">
+    <Compile Include="CustomStyles\Controls\SliderStyles.xaml.cs">
       <DependentUpon>SliderStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\MediaSliderControl.xaml.cs">
+    <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
       <DependentUpon>MediaSliderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\RibbonSliderValue.xaml.cs">
+    <Compile Include="CustomStyles\Controls\RibbonSliderValue.xaml.cs">
       <DependentUpon>RibbonSliderValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="VianaControls\VianaChart.xaml.cs">
+    <Compile Include="CustomStyles\Controls\VianaChart.xaml.cs">
       <DependentUpon>VianaChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\CheckBoxPallet.cs" />
-    <Compile Include="VianaControls\ComboBoxPallet.cs" />
-    <Compile Include="VianaControls\DualTextBox.xaml.cs">
+    <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
+    <Compile Include="CustomStyles\Controls\ComboBoxPallet.cs" />
+    <Compile Include="CustomStyles\Controls\DualTextBox.xaml.cs">
       <DependentUpon>DualTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\ImageButton.xaml.cs">
+    <Compile Include="CustomStyles\Controls\ImageButton.xaml.cs">
       <DependentUpon>ImageButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\ImageButtonPallet.cs" />
-    <Compile Include="VianaControls\LabeledSlider.xaml.cs">
+    <Compile Include="CustomStyles\Controls\ImageButtonPallet.cs" />
+    <Compile Include="CustomStyles\Controls\LabeledSlider.xaml.cs">
       <DependentUpon>LabeledSlider.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\LabeledTextBox.xaml.cs">
+    <Compile Include="CustomStyles\Controls\LabeledTextBox.xaml.cs">
       <DependentUpon>LabeledTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\MediaSlider.xaml.cs">
+    <Compile Include="CustomStyles\Controls\MediaSlider.xaml.cs">
       <DependentUpon>MediaSlider.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\MediaTickBar.cs" />
-    <Compile Include="VianaControls\MediaTrack.cs" />
-    <Compile Include="VianaControls\NumericUpDown.xaml.cs">
+    <Compile Include="CustomStyles\Controls\MediaTickBar.cs" />
+    <Compile Include="CustomStyles\Controls\MediaTrack.cs" />
+    <Compile Include="CustomStyles\Controls\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VianaControls\RadioButtonPallet.cs" />
-    <Compile Include="VianaControls\ScrollBarPallet.cs" />
-    <Compile Include="VianaControls\ScrollViewerPallet.cs" />
-    <Compile Include="VianaControls\SliderValue.xaml.cs">
+    <Compile Include="CustomStyles\Controls\RadioButtonPallet.cs" />
+    <Compile Include="CustomStyles\Controls\ScrollBarPallet.cs" />
+    <Compile Include="CustomStyles\Controls\ScrollViewerPallet.cs" />
+    <Compile Include="CustomStyles\Controls\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -253,16 +254,16 @@
     <ApplicationDefinition Include="Application\VianaNETApplication.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CustomStyles\Colors\BackgroundStyles.xaml">
+    <Page Include="CustomStyles\Controls\BackgroundStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyles\Colors\GeometryItems.xaml">
+    <Page Include="CustomStyles\Controls\GeometryItems.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomStyles\Converter\Converter.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\WindowWithHelp.xaml">
+    <Page Include="Modules\Base\WindowWithHelp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -270,34 +271,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VianaControls\RibbonComboBoxSimple.xaml">
+    <Page Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\SliderStyles.xaml">
+    <Page Include="CustomStyles\Controls\SliderStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\MediaSliderControl.xaml">
+    <Page Include="CustomStyles\Controls\MediaSliderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VianaControls\RibbonSliderValue.xaml">
+    <Page Include="CustomStyles\Controls\RibbonSliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\DataGridStyles.xaml">
+    <Page Include="CustomStyles\Controls\DataGridStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VianaControls\VianaChart.xaml">
+    <Page Include="CustomStyles\Controls\VianaChart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\VianaStyle.xaml">
+    <Page Include="CustomStyles\Controls\VianaStyle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow\AboutWindow.xaml">
@@ -325,62 +322,65 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\Video\LengthDialog.xaml">
+    <Page Include="Modules\Video\Dialogs\SaveVideoDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\Dialogs\LengthDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Video\VideoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\CheckBox.xaml">
+    <Page Include="CustomStyles\Controls\CheckBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\ComboBox.xaml">
+    <Page Include="CustomStyles\Controls\ComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\DualTextBox.xaml">
+    <Page Include="CustomStyles\Controls\DualTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\ImageButton.xaml">
+    <Page Include="CustomStyles\Controls\ImageButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\LabeledSlider.xaml">
+    <Page Include="CustomStyles\Controls\LabeledSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\LabeledTextBox.xaml">
+    <Page Include="CustomStyles\Controls\LabeledTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\MediaSlider.xaml">
+    <Page Include="CustomStyles\Controls\MediaSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\NumericUpDown.xaml">
+    <Page Include="CustomStyles\Controls\NumericUpDown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\RadioButton.xaml">
+    <Page Include="CustomStyles\Controls\RadioButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\ScrollBar.xaml">
+    <Page Include="CustomStyles\Controls\ScrollBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\ScrollViewer.xaml">
+    <Page Include="CustomStyles\Controls\ScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\Slider.xaml">
+    <Page Include="CustomStyles\Controls\Slider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VianaControls\SliderValue.xaml">
+    <Page Include="CustomStyles\Controls\SliderValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -450,30 +450,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Folder_Open.png" />
-    <Resource Include="Images\files.png" />
-    <Resource Include="Images\folder.png" />
-    <Resource Include="Images\save.png" />
-    <Resource Include="Images\Record.png" />
-    <Resource Include="Images\Color.png" />
-    <Resource Include="Images\ColorReset.png" />
-    <Resource Include="Images\RevertLayout.png" />
-    <Resource Include="Images\SaveLayout.png" />
-    <Resource Include="Images\SaveImage.png" />
-    <Resource Include="Images\Help.png" />
-    <Resource Include="Images\Help_small.png" />
+    <Resource Include="Images\Color32.png" />
+    <Resource Include="Images\ColorReset32.png" />
+    <Resource Include="Images\RevertLayout32.png" />
+    <Resource Include="Images\SaveLayout32.png" />
+    <Resource Include="Images\SaveImage32.png" />
+    <Resource Include="Images\Help32.png" />
+    <Resource Include="Images\Help16.png" />
     <Resource Include="Images\LogoFU.png" />
-    <Resource Include="Images\Reconstruction.png" />
-    <Resource Include="Images\Properties.png" />
-    <Resource Include="Images\Properties_small.png" />
+    <Resource Include="Images\Properties32.png" />
+    <Resource Include="Images\Properties16.png" />
     <Resource Include="Images\Reset32.png" />
     <Resource Include="Images\Reset16.png" />
-    <Resource Include="Images\Stop.png" />
-    <Resource Include="Images\Stop_small.png" />
-    <Resource Include="Images\Start_small.png" />
-    <Resource Include="Images\Start.png" />
-    <Resource Include="Images\saveHS.png" />
-    <Resource Include="Images\UpArrow.png" />
+    <Resource Include="Images\Save16.png" />
+    <Resource Include="Images\UpArrow16.png" />
     <Resource Include="Images\DownArrow.png" />
   </ItemGroup>
   <ItemGroup>
@@ -509,10 +499,6 @@
     <Resource Include="Images\Video16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Revert.png" />
-    <Resource Include="Images\Revert_small.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\VideoOpen32.png" />
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +511,7 @@
     <Resource Include="Images\Stop16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Pause_16.png" />
+    <Resource Include="Images\Pause16.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SelectColor16.png" />
@@ -535,7 +521,7 @@
     <Resource Include="Images\AutomaticDataAquisition16.png" />
     <Resource Include="Images\AutomaticDataAquisition32.png" />
     <Resource Include="Images\Calibrate16.png" />
-    <Resource Include="Images\Calibrate_32.png" />
+    <Resource Include="Images\Calibrate32.png" />
     <Resource Include="Images\ManualDataAquisition16.png" />
     <Resource Include="Images\ManualDataAquisition32.png" />
   </ItemGroup>
@@ -582,6 +568,36 @@
     <Resource Include="Images\Recalculate32.png" />
     <Resource Include="Images\VideoDeviceOptions16.png" />
     <Resource Include="Images\VideoDeviceOptions32.png" />
+    <Resource Include="Images\Record16.png" />
+    <Resource Include="Images\ChartTypeArea16.png" />
+    <Resource Include="Images\ChartTypeArea32.png" />
+    <Resource Include="Images\ChartTypeColumn16.png" />
+    <Resource Include="Images\ChartTypeColumn32.png" />
+    <Resource Include="Images\ChartTypeLine16.png" />
+    <Resource Include="Images\ChartTypeLine32.png" />
+    <Resource Include="Images\ChartTypePie16.png" />
+    <Resource Include="Images\ChartTypePie32.png" />
+    <Resource Include="Images\ChartTypeXYScatter16.png" />
+    <Resource Include="Images\ChartTypeXYScatter32.png" />
+    <Resource Include="Images\ChartTypeBubble16.png" />
+    <Resource Include="Images\ChartTypeBubble32.png" />
+    <Resource Include="Images\RecordVideo32.png" />
+    <Resource Include="Images\Save32.png" />
+    <Resource Include="Images\New16.png" />
+    <Resource Include="Images\New32.png" />
+    <Resource Include="Images\FileOpen16.png" />
+    <Resource Include="Images\FileOpen32.png" />
+    <Resource Include="Images\PlayControl16.png" />
+    <Resource Include="Images\PlayControl32.png" />
+    <Resource Include="Images\PlayControl48.png" />
+    <Resource Include="Images\RecordControl16.png" />
+    <Resource Include="Images\RecordControl32.png" />
+    <Resource Include="Images\RecordControl48.png" />
+    <Resource Include="Images\StepForward16.png" />
+    <Resource Include="Images\StepForward32.png" />
+    <Resource Include="Images\StopControl16.png" />
+    <Resource Include="Images\StopControl32.png" />
+    <Resource Include="Images\StopControl48.png" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

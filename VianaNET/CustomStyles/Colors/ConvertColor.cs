@@ -1,330 +1,452 @@
-﻿# region Using Directives
-
-using System;
-using System.Windows.Media;
-
-# endregion
+﻿// <copyright file="ConvertColor.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
 
 namespace VianaNET
 {
+  using System;
+  using System.Windows.Media;
 
-	/// <summary>
-	/// Convert colors from RGB to HSL/HSV and vice-versa.
-	/// http://en.wikipedia.org/wiki/HSL_color_space
-	/// http://en.wikipedia.org/wiki/HSV_color_space
-	/// </summary>
-	public static class ConvertColor
-	{
-		# region Declarations
+  /// <summary>
+  /// Convert colors from RGB to HSL/HSV and vice-versa.
+  /// http://en.wikipedia.org/wiki/HSL_color_space
+  /// http://en.wikipedia.org/wiki/HSV_color_space
+  /// </summary>
+  public static class ConvertColor
+  {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTANTS
 
-		const float _OneThird = 1F / 3F;
-		const float _OneSixth = 1F / 6F;
-		const float _TwoThirds = 2F / 3F; 
+    /// <summary>
+    /// saves the 1/3 value
+    /// </summary>
+    private const float OneThird = 1F / 3F;
 
-		# endregion
+    /// <summary>
+    /// Saves the 1/6 value
+    /// </summary>
+    private const float OneSixth = 1F / 6F;
 
-		# region RBGToHSL
+    /// <summary>
+    /// Saves the value of 2/3.
+    /// </summary>
+    private const float TwoThirds = 2F / 3F;
 
-		/// <summary>
-		/// RGB to HSL Color Converter
-		/// </summary>
-		/// <param name="color">RGB Color.</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSL(Color color)
-		{
-			return ConvertColor.RBGToHSL(color.R, color.G, color.B);
-		}
-		/// <summary>
-		/// RGB to HSL Color Converter
-		/// </summary>
-		/// <param name="r">Red value (0 to 255).</param>
-		/// <param name="g">Green value (0 to 255).</param>
-		/// <param name="b">Blue value (0 to 255).</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSL(byte r, byte g, byte b)
-		{
-			return ConvertColor.RBGToHSL(r / 255F, g / 255F, b / 255F);
-		}
-		/// <summary>
-		/// RGB to HSL Color Converter
-		/// </summary>
-		/// <param name="r">Red value (0 to 1).</param>
-		/// <param name="g">Green value (0 to 1).</param>
-		/// <param name="b">Blue value (0 to 1).</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSL(float r, float g, float b)
-		{			
-			float min = Math.Min(r, Math.Min(g, b));
-			float max = Math.Max(r, Math.Max(g, b));
+    #endregion //CONSTANTS
 
-			float? h = null;
-			float s = 0F;
-			
-			float delta = max - min;
-			
-			// Brightness
-			float l = (max + min) / 2F;
-			
-			if (delta != 0F)
-			{
-				// Hue
-				if (r == max)
-				{
-					h = (g - b) / (6F * delta);
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region FIELDS
+    #endregion //FIELDS
 
-					if (g < b) h += 1F;
-				}
-				else if (g == max)
-				{
-					h = (b - r) / (6F * delta) + _OneThird;
-				}
-				else // b is max
-				{
-					h = (r - g) / (6F * delta) + _TwoThirds;
-				}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTRUCTION
+    #endregion //CONSTRUCTION
 
-				// Saturation
-				if (l != 0F)
-				{
-					if (l < 0.5F)
-					{
-						s = delta / (2F * l);
-					}
-					else
-					{
-						s = delta / (2F - 2F * l);
-					}
-				}
-			}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+    #endregion EVENTS
 
-			return new HSXColor(h, s, l);
-		}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PROPERTIES
+    #endregion //PROPERTIES
 
-		# endregion
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PUBLICMETHODS
 
-		# region HSLToRGB
+    /// <summary>
+    /// RGB to HSL Color Converter
+    /// </summary>
+    /// <param name="color">RGB Color to be converted</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSL(Color color)
+    {
+      return ConvertColor.RBGToHSL(color.R, color.G, color.B);
+    }
 
-		public static Color HSLToRGB(HSXColor hslColor)
-		{
-			return ConvertColor.HSLToRGB(hslColor.Hue, hslColor.Saturation, hslColor.X);
-		}
-		public static Color HSLToRGB(float? h, float s, float l)
-		{
-			float r = 0F;
-			float g = 0F;
-			float b = 0F;
+    /// <summary>
+    /// RGB to HSL Color Converter
+    /// </summary>
+    /// <param name="r">Red value (0 to 255).</param>
+    /// <param name="g">Green value (0 to 255).</param>
+    /// <param name="b">Blue value (0 to 255).</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSL(byte r, byte g, byte b)
+    {
+      return ConvertColor.RBGToHSL(r / 255F, g / 255F, b / 255F);
+    }
 
-			if (h == null || s == 0)
-			{
-				r = g = b = l;
-			}
-			else
-			{
-				float q = 0F;
+    /// <summary>
+    /// RGB to HSL Color Converter
+    /// </summary>
+    /// <param name="r">Red value (0 to 1).</param>
+    /// <param name="g">Green value (0 to 1).</param>
+    /// <param name="b">Blue value (0 to 1).</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSL(float r, float g, float b)
+    {
+      float min = Math.Min(r, Math.Min(g, b));
+      float max = Math.Max(r, Math.Max(g, b));
 
-				if (l < 0.5F)
-				{
-					q = l * (1F + s);
-				}
-				else
-				{
-					q = l + s - (l * s);
-				}
+      float? h = null;
+      float s = 0F;
 
-				float p = 2F * l - q;
+      float delta = max - min;
 
-				r = h.Value + _OneThird;
+      // Brightness
+      float l = (max + min) / 2F;
 
-				if (r > 1F) r -= 1F;
+      if (delta != 0F)
+      {
+        // Hue
+        if (r == max)
+        {
+          h = (g - b) / (6F * delta);
 
-				g = h.Value;
+          if (g < b)
+          {
+            h += 1F;
+          }
+        }
+        else if (g == max)
+        {
+          h = ((b - r) / (6F * delta)) + OneThird;
+        }
+        else
+        {
+          // b is max
+          h = ((r - g) / (6F * delta)) + TwoThirds;
+        }
 
-				b = h.Value - _OneThird;
+        // Saturation
+        if (l != 0F)
+        {
+          if (l < 0.5F)
+          {
+            s = delta / (2F * l);
+          }
+          else
+          {
+            s = delta / (2F - 2F * l);
+          }
+        }
+      }
 
-				if (b < 0F)  b += 1F;
+      return new HSXColor(h, s, l);
+    }
 
-				r = ConvertColor.HSLToRGBAux(r, q, p);
-				g = ConvertColor.HSLToRGBAux(g, q, p);
-				b = ConvertColor.HSLToRGBAux(b, q, p);
-			}
+    /// <summary>
+    /// HSL to RGB Color Converter
+    /// </summary>
+    /// <param name="hslColor">HSL Color to be converted.</param>
+    /// <returns>The HSL color as a RGB <see cref="Color"/></returns>
+    public static Color HSLToRGB(HSXColor hslColor)
+    {
+      return ConvertColor.HSLToRGB(hslColor.Hue, hslColor.Saturation, hslColor.ValueLuminanceBrightness);
+    }
 
-			return Color.FromRgb(Convert.ToByte(r * 255F), Convert.ToByte(g * 255F), Convert.ToByte(b * 255F));
-		}
+    /// <summary>
+    /// HSL to RGB Color Converter
+    /// </summary>
+    /// <param name="h">The hue value</param>
+    /// <param name="s">The saturation value</param>
+    /// <param name="l">The luminance value</param>
+    /// <returns>The HSL color as a RGB <see cref="Color"/></returns>
+    public static Color HSLToRGB(float? h, float s, float l)
+    {
+      float r = 0F;
+      float g = 0F;
+      float b = 0F;
 
-		private static float HSLToRGBAux(float value, float q, float p)
-		{
-			if (value < _OneSixth)
-			{
-				value = p + ((q - p) * 6F * value);
-			}
-			else if (value < 0.5F)
-			{
-				value = q;
-			}
-			else if (value < _TwoThirds)
-			{
-				value = p + ((q - p) * (_TwoThirds - value) * 6F);
-			}
-			else
-			{
-				value = p;
-			}
+      if (h == null || s == 0)
+      {
+        r = g = b = l;
+      }
+      else
+      {
+        float q = 0F;
 
-			return value;
-		}
+        if (l < 0.5F)
+        {
+          q = l * (1F + s);
+        }
+        else
+        {
+          q = l + s - (l * s);
+        }
 
-		# endregion
+        float p = 2F * l - q;
 
-		# region RBGToHSV
+        r = h.Value + OneThird;
 
-		/// <summary>
-		/// RGB to HSV Color Converter
-		/// </summary>
-		/// <param name="color">RGB Color.</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSV(Color color)
-		{
-			return ConvertColor.RBGToHSV(color.R, color.G, color.B);
-		}
-		/// <summary>
-		/// RGB to HSV Color Converter
-		/// </summary>
-		/// <param name="r">Red value (0 to 255).</param>
-		/// <param name="g">Green value (0 to 255).</param>
-		/// <param name="b">Blue value (0 to 255).</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSV(byte r, byte g, byte b)
-		{
-			return ConvertColor.RBGToHSV(r / 255F, g / 255F, b / 255F);
-		}
-		/// <summary>
-		/// RGB to HSV Color Converter
-		/// </summary>
-		/// <param name="r">Red value (0 to 1).</param>
-		/// <param name="g">Green value (0 to 1).</param>
-		/// <param name="b">Blue value (0 to 1).</param>
-		/// <returns></returns>
-		public static HSXColor RBGToHSV(float r, float g, float b)		
-		{
-			float min = Math.Min(r, Math.Min(g, b));
-			float max = Math.Max(r, Math.Max(g, b));
+        if (r > 1F)
+        {
+          r -= 1F;
+        }
 
-			float? h = null;
-			float s = 0F;			
+        g = h.Value;
 
-			float delta = max - min;
+        b = h.Value - OneThird;
 
-			// Brightness
-			float v = max;
+        if (b < 0F)
+        {
+          b += 1F;
+        }
 
-			if (delta != 0F)
-			{
-				// Hue
-				if (r == max)
-				{
-					h = (g - b) / (6F * delta);
+        r = ConvertColor.HSLToRGBAux(r, q, p);
+        g = ConvertColor.HSLToRGBAux(g, q, p);
+        b = ConvertColor.HSLToRGBAux(b, q, p);
+      }
 
-					if (g < b) h += 1F;
-				}
-				else if (g == max)
-				{
-					h = (b - r) / (6F * delta) + _OneThird;
-				}
-				else // b is max
-				{
-					h = (r - g) / (6F * delta) + _TwoThirds;
-				}
-			}
+      return Color.FromRgb(Convert.ToByte(r * 255F), Convert.ToByte(g * 255F), Convert.ToByte(b * 255F));
+    }
 
-			// Saturation
-			if (max != 0F)
-			{
-				s = 1F - (min / max);
-			}
+    /// <summary>
+    /// RGB to HSV Color Converter
+    /// </summary>
+    /// <param name="color">RGB Color.</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSV(Color color)
+    {
+      return ConvertColor.RBGToHSV(color.R, color.G, color.B);
+    }
 
-			return new HSXColor(h, s, v);
-		}
+    /// <summary>
+    /// RGB to HSV Color Converter
+    /// </summary>
+    /// <param name="r">Red value (0 to 255).</param>
+    /// <param name="g">Green value (0 to 255).</param>
+    /// <param name="b">Blue value (0 to 255).</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSV(byte r, byte g, byte b)
+    {
+      return ConvertColor.RBGToHSV(r / 255F, g / 255F, b / 255F);
+    }
 
-		# endregion
+    /// <summary>
+    /// RGB to HSV Color Converter
+    /// </summary>
+    /// <param name="r">Red value (0 to 1).</param>
+    /// <param name="g">Green value (0 to 1).</param>
+    /// <param name="b">Blue value (0 to 1).</param>
+    /// <returns>The RGB color as a <see cref="HSXColor"/></returns>
+    public static HSXColor RBGToHSV(float r, float g, float b)
+    {
+      float min = Math.Min(r, Math.Min(g, b));
+      float max = Math.Max(r, Math.Max(g, b));
 
-		# region HSVToRGB
+      float? h = null;
+      float s = 0F;
 
-		public static Color HSVToRGB(HSXColor hsvColor)
-		{
-			return ConvertColor.HSVToRGB(hsvColor.Hue, hsvColor.Saturation, hsvColor.X);
-		}
-		public static Color HSVToRGB(float? h, float s, float v)
-		{
-			float r = 0F;
-			float g = 0F;
-			float b = 0F;
+      float delta = max - min;
 
-			if (h == null || s == 0)
-			{
-				r = g = b = v;
-			}
-			else
-			{
-				byte h1;
+      // Brightness
+      float v = max;
 
-				if (1F - ((h.Value / _OneSixth) % 1) < 0.0001F)
-				{
-					h1 = (byte)(Math.Ceiling(h.Value / _OneSixth));
-				}
-				else
-				{
-					h1 = (byte)(Math.Floor(h.Value / _OneSixth));
-				}
+      if (delta != 0F)
+      {
+        // Hue
+        if (r == max)
+        {
+          h = (g - b) / (6F * delta);
 
-				float f = h.Value / _OneSixth - h1;
-				float p = v * (1F - s);
-				float q = v * (1F - f * s);
-				float t = v * (1F - (1F - f) * s);
-				
-				switch (h1)
-				{
-					case 0:
-					case 6:
+          if (g < b)
+          {
+            h += 1F;
+          }
+        }
+        else if (g == max)
+        {
+          h = (b - r) / (6F * delta) + OneThird;
+        }
+        else
+        {
+          // b is max
+          h = (r - g) / (6F * delta) + TwoThirds;
+        }
+      }
 
-						r = v; g = t; b = p;
+      // Saturation
+      if (max != 0F)
+      {
+        s = 1F - (min / max);
+      }
 
-						break;
+      return new HSXColor(h, s, v);
+    }
 
-					case 1:
+    /// <summary>
+    /// HSV to RGB Color Converter
+    /// </summary>
+    /// <param name="hsvColor">HSV Color to be converted.</param>
+    /// <returns>The HSV color as a RGB <see cref="Color"/></returns>
+    public static Color HSVToRGB(HSXColor hsvColor)
+    {
+      return ConvertColor.HSVToRGB(hsvColor.Hue, hsvColor.Saturation, hsvColor.ValueLuminanceBrightness);
+    }
 
-						r = q; g = v; b = p;
+    /// <summary>
+    /// HSV to RGB Color Converter
+    /// </summary>
+    /// <param name="h">The hue value</param>
+    /// <param name="s">The saturation value</param>
+    /// <param name="v">The XXX value</param>
+    /// <returns>The HSV color as a RGB <see cref="Color"/></returns>
+    public static Color HSVToRGB(float? h, float s, float v)
+    {
+      float r = 0F;
+      float g = 0F;
+      float b = 0F;
 
-						break;
+      if (h == null || s == 0)
+      {
+        r = g = b = v;
+      }
+      else
+      {
+        byte h1;
 
-					case 2:
+        if (1F - ((h.Value / OneSixth) % 1) < 0.0001F)
+        {
+          h1 = (byte)Math.Ceiling(h.Value / OneSixth);
+        }
+        else
+        {
+          h1 = (byte)Math.Floor(h.Value / OneSixth);
+        }
 
-						r = p; g = v; b = t;
+        float f = h.Value / OneSixth - h1;
+        float p = v * (1F - s);
+        float q = v * (1F - f * s);
+        float t = v * (1F - (1F - f) * s);
 
-						break;
+        switch (h1)
+        {
+          case 0:
+          case 6:
+            r = v;
+            g = t;
+            b = p;
+            break;
+          case 1:
+            r = q;
+            g = v;
+            b = p;
+            break;
+          case 2:
+            r = p;
+            g = v;
+            b = t;
+            break;
+          case 3:
+            r = p;
+            g = q;
+            b = v;
+            break;
+          case 4:
+            r = t;
+            g = p;
+            b = v;
+            break;
+          case 5:
+            r = v;
+            g = p;
+            b = q;
+            break;
+        }
+      }
 
-					case 3:
+      return Color.FromRgb(Convert.ToByte(r * 255F), Convert.ToByte(g * 255F), Convert.ToByte(b * 255F));
+    }
 
-						r = p; g = q; b = v;
+    #endregion //PUBLICMETHODS
 
-						break;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+    #endregion //OVERRIDES
 
-					case 4:
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTHANDLER
+    #endregion //EVENTHANDLER
 
-						r = t; g = p; b = v;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region THREAD
+    #endregion //THREAD
 
-						break;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PRIVATEMETHODS
 
-					case 5:
+    /// <summary>
+    /// Converts colors. Don´t know exactly what it does.
+    /// </summary>
+    /// <param name="value">r,g,b value</param>
+    /// <param name="q">q value (don´t know what that is)</param>
+    /// <param name="p">p value (don´t know what that is)</param>
+    /// <returns>A float with the r,g or b value.</returns>
+    private static float HSLToRGBAux(float value, float q, float p)
+    {
+      if (value < OneSixth)
+      {
+        value = p + ((q - p) * 6F * value);
+      }
+      else if (value < 0.5F)
+      {
+        value = q;
+      }
+      else if (value < TwoThirds)
+      {
+        value = p + ((q - p) * (TwoThirds - value) * 6F);
+      }
+      else
+      {
+        value = p;
+      }
 
-						r = v; g = p; b = q;
+      return value;
+    }
 
-						break;
-				}
-			}
+    #endregion //PRIVATEMETHODS
 
-			return Color.FromRgb(Convert.ToByte(r * 255F), Convert.ToByte(g * 255F), Convert.ToByte(b * 255F));
-		}
-
-		# endregion
-	}	
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region HELPER
+    #endregion //HELPER
+  }
 }

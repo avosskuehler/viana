@@ -124,6 +124,14 @@ namespace VianaNET
       this.rotEntry = new DsROTEntry(this.filterGraph);
 #endif
 
+      //IFileSourceFilter urlSourceFilter = new URLReader() as IFileSourceFilter;
+      //IBaseFilter sourceFilter = urlSourceFilter as IBaseFilter;
+
+      //string fileURL = string.Concat(@"file:///", this.filename.Replace("\\","/"));
+      //hr = urlSourceFilter.Load(fileURL, null);
+      //DsError.ThrowExceptionForHR(hr);
+      //this.filterGraph.AddFilter(sourceFilter, "URL Source");
+
       IBaseFilter sourceFilter;
       this.filterGraph.AddSourceFilter(this.filename, "File Source", out sourceFilter);
 

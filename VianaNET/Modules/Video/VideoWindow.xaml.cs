@@ -94,9 +94,9 @@ namespace VianaNET
     ///////////////////////////////////////////////////////////////////////////////
     #region PUBLICMETHODS
 
-    public void LoadVideo()
+    public void LoadVideo(string fileNameToAnalyse)
     {
-      if (!Video.Instance.LoadMovie(string.Empty))
+      if (!Video.Instance.LoadMovie(fileNameToAnalyse))
       {
         return;
       }
@@ -119,59 +119,20 @@ namespace VianaNET
       ShowCalibration(false);
       ShowClipRegion(false);
 
-      //this.BlobsControl.Visibility = Visibility.Collapsed;
-
-      //if (this.LeftVideoPanel.Children.Count > 1)
-      //{
-      //  Video.Instance.Stop();
-      //  this.LeftVideoPanel.Children.RemoveAt(0);
-      //}
-
-      // This bindings could not be set in XAML, because
-      // when switching VideoElement, they get lost.
-      //Binding widthBinding = new Binding();
-      //Binding heightBinding = new Binding();
-
       switch (newVideoMode)
       {
         case VideoMode.File:
-          //// Unregister existing capture events
-          //Video.Instance.VideoCapturerElement.NewVideoSample -=
-          //  new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
-          //// Register to video open event
-          //Video.Instance.VideoPlayerElement.VideoFileOpened +=
-          //  new EventHandler(VideoPlayer_VideoFileOpened);
-
-          // Set Overlay height and width bindings
-          //widthBinding.Source = Video.Instance.VideoPlayerElement;
-          //heightBinding.Source = Video.Instance.VideoPlayerElement;
-
           // Update UI
           this.timelineSlider.Visibility = Visibility.Visible;
           this.btnRevert.Visibility = Visibility.Visible;
+          this.btnRecord.Visibility = Visibility.Collapsed;
           break;
         case VideoMode.Capture:
-          //Video.Instance.VideoPlayerElement.VideoFileOpened -=
-          //  new EventHandler(VideoPlayer_VideoFileOpened);
-
-          //Video.Instance.VideoCapturerElement.NewVideoSample +=
-          //new EventHandler<WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs>(Instance_NewVideoSample);
-
-          // Set Overlay height and width bindings sources
-          //widthBinding.Source = Video.Instance.VideoCapturerElement;
-          //heightBinding.Source = Video.Instance.VideoCapturerElement;
-
           this.timelineSlider.Visibility = Visibility.Collapsed;
           this.btnRevert.Visibility = Visibility.Collapsed;
+          this.btnRecord.Visibility = Visibility.Visible;
           break;
       }
-
-      //this.VideoImage.Source = Video.Instance.VideoSource;
-      //// Set Overlay height and width bindings
-      //widthBinding.Path = new PropertyPath("UniformWidth");
-      //this.OverlayCanvas.SetBinding(Canvas.WidthProperty, widthBinding);
-      //heightBinding.Path = new PropertyPath("UniformHeight");
-      //this.OverlayCanvas.SetBinding(Canvas.HeightProperty, heightBinding);
     }
 
     public void UpdateCalibration()
@@ -407,6 +368,11 @@ namespace VianaNET
       {
         Video.Instance.StepOneFrame(false);
       }
+    }
+
+    private void btnRecord_Click(object sender, RoutedEventArgs e)
+    {
+      //Video.Instance.Record();
     }
 
     private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -685,5 +651,6 @@ namespace VianaNET
     }
 
     #endregion //HELPER
+
   }
 }

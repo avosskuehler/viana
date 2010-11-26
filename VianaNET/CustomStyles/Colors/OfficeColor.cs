@@ -1,0 +1,187 @@
+﻿// <copyright file="OfficeColor.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
+
+namespace VianaNET
+{
+  using System;
+  using System.Windows.Media;
+  using System.Collections.Generic;
+
+  /// <summary>
+  /// This class defines an office color.
+  /// </summary>
+  public class OfficeColor
+  {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTANTS
+    #endregion //CONSTANTS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region FIELDS
+    #endregion //FIELDS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTRUCTION
+
+    /// <summary>
+    /// Initializes a new instance of the OfficeColor class.
+    /// </summary>
+    /// <param name="r">The red component byte value.</param>
+    /// <param name="g">The green component byte value.</param>
+    /// <param name="b">The blue component byte value.</param>
+    /// <param name="pallet">The <see cref="OfficeColorPallet"/> this 
+    /// color is assigned to.</param>
+    public OfficeColor(byte r, byte g, byte b, OfficeColorPallet pallet)
+      : this(255, r, g, b, pallet)
+    { }
+
+    /// <summary>
+    /// Initializes a new instance of the OfficeColor class.
+    /// </summary>
+    /// <param name="color">The color that defines this office color.</param>
+    /// <param name="pallet">The <see cref="OfficeColorPallet"/> this 
+    /// color is assigned to.</param>
+    public OfficeColor(Color color, OfficeColorPallet pallet)
+      : this(color.A, color.R, color.G, color.B, pallet)
+    { }
+
+    /// <summary>
+    /// Initializes a new instance of the OfficeColor class
+    /// without using a <see cref="OfficeColorPallet"/>.
+    /// </summary>
+    /// <param name="c">The color that defines this office color.</param>
+    public OfficeColor(Color c)
+      : this(c.A, c.R, c.G, c.B, OfficeColorPallet.None)
+    { }
+
+    /// <summary>
+    /// Initializes a new instance of the OfficeColor class.
+    /// </summary>
+    /// <param name="a">The alpha component of the color.</param>
+    /// <param name="r">The red component of the color.</param>
+    /// <param name="g">The green component of the color.</param>
+    /// <param name="b">The blue component of the color.</param>
+    /// <param name="pallet">The <see cref="OfficeColorPallet"/> this 
+    /// color is assigned to.</param>
+    public OfficeColor(byte a, byte r, byte g, byte b, OfficeColorPallet pallet)
+    {
+      this.Pallet = pallet;
+      this.A = a;
+      this.R = r;
+      this.G = g;
+      this.B = b;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the OfficeColor class.
+    /// </summary>
+    /// <param name="color">The color that defines this office color.</param>
+    /// <param name="pallet">The <see cref="OfficeColorPallet"/> this 
+    /// color is assigned to.</param>
+    public OfficeColor(string color, OfficeColorPallet pallet)
+    {
+      Color c = (Color)ColorConverter.ConvertFromString(color);
+      this.Pallet = pallet;
+      this.A = c.A;
+      this.R = c.R;
+      this.G = c.G;
+      this.B = c.B;
+    }
+
+    #endregion //CONSTRUCTION
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+    #endregion EVENTS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PROPERTIES
+    
+    public OfficeColorPallet Pallet { get; set; }
+    
+    public byte A { get; set; }
+
+    public byte R { get; set; }
+
+    public byte G { get; set; }
+
+    public byte B;
+
+    #endregion //PROPERTIES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PUBLICMETHODS
+    #endregion //PUBLICMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+    #endregion //OVERRIDES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTHANDLER
+    #endregion //EVENTHANDLER
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region THREAD
+    #endregion //THREAD
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PRIVATEMETHODS
+    #endregion //PRIVATEMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region HELPER
+    #endregion //HELPER
+
+
+    public static implicit operator Color(OfficeColor oc)
+    {
+      return Color.FromArgb(oc.A, oc.R, oc.G, oc.B);
+    }
+
+    public static implicit operator OfficeColor(Color c)
+    {
+      return new OfficeColor(c.A, c.R, c.G, c.B, OfficeColorPallet.None);
+    }
+  }
+}

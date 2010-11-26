@@ -1,11 +1,29 @@
-﻿#region Using directives
+﻿// <copyright file="AssemblyInfo.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
+
+#region Using directives
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Resources;
-using System.Globalization;
-using System.Windows;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 #endregion
 
@@ -22,33 +40,22 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 
-//In order to begin building localizable applications, set 
-//<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file
-//inside a <PropertyGroup>.  For example, if you are using US english
-//in your source files, set the <UICulture> to en-US.  Then uncomment
-//the NeutralResourceLanguage attribute below.  Update the "en-US" in
-//the line below to match the UICulture setting in the project file.
-
-//[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
-
-
 // Specifies the location in which theme dictionaries are stored for types in an assembly.
 [assembly: ThemeInfo(
-    // Specifies the location of system theme-specific resource dictionaries for this project.
-    // The default setting in this project is "None" since this default project does not
-    // include these user-defined theme files:
-    //     Themes\Aero.NormalColor.xaml
-    //     Themes\Classic.xaml
-    //     Themes\Luna.Homestead.xaml
-    //     Themes\Luna.Metallic.xaml
-    //     Themes\Luna.NormalColor.xaml
-    //     Themes\Royale.NormalColor.xaml
+  // Specifies the location of system theme-specific resource dictionaries for this project.
+  // The default setting in this project is "None" since this default project does not
+  // include these user-defined theme files:
+  //     Themes\Aero.NormalColor.xaml
+  //     Themes\Classic.xaml
+  //     Themes\Luna.Homestead.xaml
+  //     Themes\Luna.Metallic.xaml
+  //     Themes\Luna.NormalColor.xaml
+  //     Themes\Royale.NormalColor.xaml
     ResourceDictionaryLocation.None,
 
     // Specifies the location of the system non-theme specific resource dictionary:
-    //     Themes\generic.xaml
+  //     Themes\generic.xaml
     ResourceDictionaryLocation.ExternalAssembly)]
-
 
 // Version information for an assembly consists of the following four values:
 //
@@ -59,6 +66,6 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.5.*")]
+[assembly: AssemblyVersion("2.0.*")]
 [assembly: GuidAttribute("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]
-[assembly: AssemblyFileVersionAttribute("1.5")]
+[assembly: AssemblyFileVersionAttribute("2.0")]

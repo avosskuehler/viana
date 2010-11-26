@@ -1,20 +1,38 @@
-﻿
+﻿// <copyright file="RecentFiles.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
+
 namespace VianaNET
 {
   using System;
-  using System.Collections;
+  using System.Collections.Generic;
   using System.Collections.Specialized;
-  using System.Configuration;
+  using System.ComponentModel;
   using System.IO;
   using System.Text;
-  using Microsoft.Windows.Controls.Ribbon;
   using System.Windows;
-  using System.Collections.Generic;
-  using System.ComponentModel;
   using System.Windows.Controls;
+  using Microsoft.Windows.Controls.Ribbon;
 
   /// <summary>
-  /// Derived from <see cref="StringCollection"/>.
+  /// Derived from <see cref="DependencyObject"/> and implements <see cref="INotifyPropertyChanged"/>.
   /// Class to handle a string collection with the last recently used files.
   /// Its of a singleton class type, to always have one unique complete list,
   /// if you call <code>RecentFiles.List</code>
@@ -33,6 +51,17 @@ namespace VianaNET
     #region FIELDS
 
     /// <summary>
+    /// Represents the <see cref="DependencyProperty"/> for the
+    /// <see cref="RibbonList"/>
+    /// </summary>
+    public static readonly DependencyProperty RibbonListProperty =
+      DependencyProperty.Register(
+      "RibbonList",
+      typeof(RibbonHighlightingListItem[]),
+      typeof(RecentFiles),
+      new UIPropertyMetadata());
+
+    /// <summary>
     /// The static member, that holds the recent files list.
     /// </summary>
     private static RecentFiles recentFiles;
@@ -48,14 +77,15 @@ namespace VianaNET
     /// </summary>
     private VianaNET.Properties.Settings appSettings;
 
+    /// <summary>
+    /// The <see cref="StringCollection"/> containg the recent files.
+    /// </summary>
     private StringCollection fileCollection;
 
     /// <summary>
-    /// maximum length of file name for display in recent file list
+    /// Maximum length of file name for display in recent file list
     /// </summary>
     private int maxLengthDisplay = 40;
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     #endregion //FIELDS
 
@@ -65,12 +95,12 @@ namespace VianaNET
     #region CONSTRUCTION
 
     /// <summary>
-    /// Prevents a default instance of the RecentFilesList class from being created.
+    /// Prevents a default instance of the RecentFiles class from being created.
     /// Initializes Recentfiles list by reading application settings.
     /// </summary>
     private RecentFiles()
     {
-      this.appSettings = new VianaNET.Properties.Settings();
+      this.appSettings = VianaNET.Properties.Settings.Default;
       maxNumItems = this.appSettings.NumberOfRecentFiles;
       this.fileCollection = new StringCollection();
       this.Load();
@@ -79,10 +109,22 @@ namespace VianaNET
     #endregion //CONSTRUCTION
 
     ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+    
+    /// <summary>
+    /// Occurs when a property value changes.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    #endregion EVENTS
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
-
+    
     /// <summary>
     /// Gets the recent files list.
     /// </summary>
@@ -100,18 +142,15 @@ namespace VianaNET
       }
     }
 
+    /// <summary>
+    /// Gets or sets the <see cref="RibbonHighlightingListItem"/> array
+    /// which contains the recent files list for the ribbon.
+    /// </summary>
     public RibbonHighlightingListItem[] RibbonList
     {
       get { return (RibbonHighlightingListItem[])GetValue(RibbonListProperty); }
       set { SetValue(RibbonListProperty, value); }
     }
-
-    public static readonly DependencyProperty RibbonListProperty =
-      DependencyProperty.Register(
-      "RibbonList",
-      typeof(RibbonHighlightingListItem[]),
-      typeof(RecentFiles),
-      new UIPropertyMetadata());
 
     #endregion //PROPERTIES
 
@@ -173,28 +212,6 @@ namespace VianaNET
       this.Save();
 
       this.RebuildRibbonList();
-    }
-
-    private void RebuildRibbonList()
-    {
-      List<RibbonHighlightingListItem> items = new List<RibbonHighlightingListItem>((int)maxNumItems);
-      foreach (string item in this.fileCollection)
-      {
-        if (!File.Exists(item))
-        {
-          continue;
-        }
-
-        RibbonHighlightingListItem ribbonItem = new RibbonHighlightingListItem();
-        ribbonItem.Content = Path.GetFileName(item);
-        ToolTip itemToolTip = new ToolTip();
-        itemToolTip.Content=item;
-        ribbonItem.ToolTip = itemToolTip;
-        items.Add(ribbonItem);
-      }
-
-      this.RibbonList = items.ToArray();
-      this.OnPropertyChanged("RibbonList");
     }
 
     /// <summary>
@@ -265,21 +282,21 @@ namespace VianaNET
     #endregion //PUBLICMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+    #endregion //OVERRIDES
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler for UI, Menu, Buttons, Toolbars etc.                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region WINDOWSEVENTHANDLER
-    #endregion //WINDOWSEVENTHANDLER
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler for Custom Defined Events                                    //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region CUSTOMEVENTHANDLER
-
+    #region EVENTHANDLER
+    
+    /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="propertyName">A <see cref="String"/> with the property
+    /// that has changed</param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
       if (this.PropertyChanged != null)
@@ -288,26 +305,44 @@ namespace VianaNET
       }
     }
 
-    #endregion //CUSTOMEVENTHANDLER
-
-    #endregion //EVENTS
+    #endregion //EVENTHANDLER
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region BACKGROUNDWORKER
-    #endregion //BACKGROUNDWORKER
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
-    #endregion //OVERRIDES
+    #region THREAD
+    #endregion //THREAD
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region METHODS
+    #region PRIVATEMETHODS
+    
+    /// <summary>
+    /// This method creates a list of <see cref="RibbonHighlightingListItem"/>
+    /// to display the recent files in the ribbon of the application.
+    /// </summary>
+    private void RebuildRibbonList()
+    {
+      List<RibbonHighlightingListItem> items = new List<RibbonHighlightingListItem>((int)maxNumItems);
+      foreach (string item in this.fileCollection)
+      {
+        if (!File.Exists(item))
+        {
+          continue;
+        }
+
+        RibbonHighlightingListItem ribbonItem = new RibbonHighlightingListItem();
+        ribbonItem.Content = Path.GetFileName(item);
+        ToolTip itemToolTip = new ToolTip();
+        itemToolTip.Content = item;
+        ribbonItem.ToolTip = itemToolTip;
+        items.Add(ribbonItem);
+      }
+
+      this.RibbonList = items.ToArray();
+      this.OnPropertyChanged("RibbonList");
+    }
 
     /// <summary>
     /// Loads "|" separated values from application settings into StringCollection base class.
@@ -346,7 +381,7 @@ namespace VianaNET
       return -1;
     }
 
-    #endregion //METHODS
+    #endregion //PRIVATEMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

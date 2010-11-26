@@ -9,6 +9,7 @@
   using System.Windows;
   using System.Windows.Media;
   using System.Windows.Interop;
+  using System.IO;
 
   /// <summary>
   /// This is the main class for the DirectShow interop.
@@ -209,6 +210,7 @@
 
     public override void Stop()
     {
+      int hr = 0;
       try
       {
         // To stop the capture filter before stopping the media control
@@ -216,7 +218,7 @@
         // sancta simplicitas...
         if (this.captureFilter != null)
         {
-          int hr = this.captureFilter.Stop();
+          hr = this.captureFilter.Stop();
           this.frameTimer.Stop();
           if (hr != 0)
           {

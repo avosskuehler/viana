@@ -978,4 +978,40 @@
   <data name="RibbonApplicationMenuRecentFilesTitle" xml:space="preserve">
     <value>@RibbonApplicationMenuRecentFilesTitle</value>
   </data>
+  <data name="ChartWindowAxisStyleHeader" xml:space="preserve">
+    <value>@ChartWindowAxisStyleHeader</value>
+  </data>
+  <data name="ButtonRecordVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonRecordVideoLabelDescription</value>
+  </data>
+  <data name="ButtonRecordVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonRecordVideoLabelTitle</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonRecordVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonRecordVideoToolTipTitle</value>
+  </data>
+  <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
+    <value>@SaveVideoDialogCompressorLabel</value>
+  </data>
+  <data name="SaveVideoDialogFilenameLabel" xml:space="preserve">
+    <value>@SaveVideoDialogFilenameLabel</value>
+  </data>
+  <data name="SaveVideoDialogTitle" xml:space="preserve">
+    <value>@SaveVideoDialogTitle</value>
+  </data>
+  <data name="IsRecordingVideo" xml:space="preserve">
+    <value>@IsRecordingVideo</value>
+  </data>
+  <data name="SaveVideoDialogFolderLabel" xml:space="preserve">
+    <value>@SaveVideoDialogFolderLabel</value>
+  </data>
+  <data name="VideoSaveFolderBrowserDescriptionTitle" xml:space="preserve">
+    <value>@VideoSaveFolderBrowserDescriptionTitle</value>
+  </data>
+  <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
+    <value>@SaveVideoDialogStartAnalysis</value>
+  </data>
 </root>

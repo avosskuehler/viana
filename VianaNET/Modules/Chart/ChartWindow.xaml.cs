@@ -5,6 +5,7 @@ using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Media;
 using AvalonDock;
 using System.Windows.Data;
+using WPFLocalizeExtension.Extensions;
 
 namespace VianaNET
 {
@@ -21,7 +22,14 @@ namespace VianaNET
     ///////////////////////////////////////////////////////////////////////////////
     #region FIELDS
 
-    private bool initialized;
+    private bool isInitialized;
+
+    private ScatterSeries scatterSeries;
+    private LineSeries lineSeries;
+    private AreaSeries areaSeries;
+    private BubbleSeries bubbleSeries;
+    private PieSeries pieSeries;
+    private ColumnSeries columnSeries;
 
     #endregion //FIELDS
 
@@ -33,10 +41,92 @@ namespace VianaNET
     public ChartWindow()
     {
       InitializeComponent();
-      this.initialized = true;
       VideoData.Instance.PropertyChanged +=
         new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      CreateDataSeries();
+      this.isInitialized = true;
       UpdateChartProperties();
+    }
+
+    private void CreateDataSeries()
+    {
+      this.scatterSeries = new ScatterSeries();
+      this.lineSeries = new LineSeries();
+      this.pieSeries = new PieSeries();
+      this.columnSeries = new ColumnSeries();
+      this.bubbleSeries = new BubbleSeries();
+      this.areaSeries = new AreaSeries();
+
+      // Set localized Title Binding
+      LocTextExtension locTitle = new LocTextExtension("VianaNET:Labels:ChartWindowChartSeries");
+
+      // Set Itemssource Bindung
+      Binding itemsSourceBinding = new Binding();
+      itemsSourceBinding.Source = VideoData.Instance;
+      itemsSourceBinding.Mode = BindingMode.OneWay;
+      itemsSourceBinding.Path = new PropertyPath("Samples");
+
+      LinearAxis xAxis = new LinearAxis();
+      xAxis.Orientation = AxisOrientation.X;
+      LocTextExtension locXAxisTitle = new LocTextExtension("VianaNET:Labels:AxisDistanceX");
+      locXAxisTitle.SetBinding(xAxis, LinearAxis.TitleProperty);
+      xAxis.TitleStyle = (Style)this.FindResource("VianaAxisLabelStyle");
+
+      LinearAxis yAxis = new LinearAxis();
+      yAxis.Orientation = AxisOrientation.Y;
+      LocTextExtension locYAxisTitle = new LocTextExtension("VianaNET:Labels:AxisDistanceY");
+      locYAxisTitle.SetBinding(yAxis, LinearAxis.TitleProperty);
+      yAxis.TitleStyle = (Style)this.FindResource("VianaAxisLabelStyle");
+
+      locTitle.SetBinding(this.scatterSeries, ScatterSeries.TitleProperty);
+      this.scatterSeries.IndependentAxis = xAxis;
+      this.scatterSeries.DependentRangeAxis = yAxis;
+      this.scatterSeries.SetBinding(ScatterSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.scatterSeries.IndependentValuePath = "DistanceX";
+      this.scatterSeries.DependentValuePath = "DistanceY";
+      this.scatterSeries.IsSelectionEnabled = true;
+
+      locTitle.SetBinding(this.lineSeries, LineSeries.TitleProperty);
+      this.lineSeries.IndependentAxis = xAxis;
+      this.lineSeries.DependentRangeAxis = yAxis;
+      this.lineSeries.SetBinding(LineSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.lineSeries.IndependentValuePath = "DistanceX";
+      this.lineSeries.DependentValuePath = "DistanceY";
+      this.lineSeries.IsSelectionEnabled = true;
+
+      locTitle.SetBinding(this.pieSeries, PieSeries.TitleProperty);
+      //this.pieSeries.IndependentAxis = xAxis;
+      //this.pieSeries.DependentRangeAxis = yAxis;
+      this.pieSeries.SetBinding(PieSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.pieSeries.IndependentValuePath = "DistanceX";
+      this.pieSeries.DependentValuePath = "DistanceY";
+      this.pieSeries.IsSelectionEnabled = true;
+
+      locTitle.SetBinding(this.columnSeries, ColumnSeries.TitleProperty);
+      this.columnSeries.IndependentAxis = xAxis;
+      this.columnSeries.DependentRangeAxis = yAxis;
+      this.columnSeries.SetBinding(ColumnSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.columnSeries.IndependentValuePath = "DistanceX";
+      this.columnSeries.DependentValuePath = "DistanceY";
+      this.columnSeries.IsSelectionEnabled = true;
+
+      locTitle.SetBinding(this.bubbleSeries, BubbleSeries.TitleProperty);
+      this.bubbleSeries.IndependentAxis = xAxis;
+      this.bubbleSeries.DependentRangeAxis = yAxis;
+      this.bubbleSeries.SetBinding(BubbleSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.bubbleSeries.IndependentValuePath = "DistanceX";
+      this.bubbleSeries.DependentValuePath = "DistanceY";
+      this.bubbleSeries.IsSelectionEnabled = true;
+
+      locTitle.SetBinding(this.areaSeries, AreaSeries.TitleProperty);
+      this.areaSeries.IndependentAxis = xAxis;
+      this.areaSeries.DependentRangeAxis = yAxis;
+      this.areaSeries.SetBinding(AreaSeries.ItemsSourceProperty, itemsSourceBinding);
+      this.areaSeries.IndependentValuePath = "DistanceX";
+      this.areaSeries.DependentValuePath = "DistanceY";
+      this.areaSeries.IsSelectionEnabled = true;
+
+      this.DataChart.Series.Add(this.scatterSeries);
     }
 
     void VideoData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -92,6 +182,11 @@ namespace VianaNET
 
     private void xAxisContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+      UpdateSeriesWithXAxis();
+    }
+
+    private void UpdateSeriesWithXAxis()
+    {
       DataAxis axis = (DataAxis)xAxisContent.SelectedItem;
 
       if (this.DataChart.Series.Count == 0)
@@ -99,17 +194,23 @@ namespace VianaNET
         return;
       }
 
-      ScatterSeries series = this.DataChart.Series[0] as ScatterSeries;
 
       if (this.DataChart.ActualAxes.Count == 0)
       {
         return;
       }
 
-      LinearAxis xAxis = this.DataChart.ActualAxes[0] as LinearAxis;
-      xAxis.Title = XAxisTitle.IsChecked ? axis.Description : null;
-      XAxisTitle.Text = axis.Description;
+      if (this.DataChart.ActualAxes.Count >= 1)
+      {
+        LinearAxis xAxis = this.DataChart.ActualAxes[0] as LinearAxis;
+        if (xAxis != null)
+        {
+          xAxis.Title = XAxisTitle.IsChecked ? axis.Description : null;
+          XAxisTitle.Text = axis.Description;
+        }
+      }
 
+      DataPointSeries series = this.DataChart.Series[0] as DataPointSeries;
       switch (axis.Axis)
       {
         case AxisType.I:
@@ -156,6 +257,11 @@ namespace VianaNET
 
     private void yAxisContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+      UpdateSeriesWithYAxis();
+    }
+
+    private void UpdateSeriesWithYAxis()
+    {
       DataAxis axis = (DataAxis)yAxisContent.SelectedItem;
 
       if (this.DataChart.Series.Count == 0)
@@ -163,16 +269,17 @@ namespace VianaNET
         return;
       }
 
-      ScatterSeries series = this.DataChart.Series[0] as ScatterSeries;
+      DataPointSeries series = this.DataChart.Series[0] as DataPointSeries;
 
-      if (this.DataChart.ActualAxes.Count < 2)
+      if (this.DataChart.ActualAxes.Count >= 2)
       {
-        return;
+        LinearAxis yAxis = this.DataChart.ActualAxes[1] as LinearAxis;
+        if (yAxis != null)
+        {
+          yAxis.Title = YAxisTitle.IsChecked ? axis.Description : null;
+          YAxisTitle.Text = axis.Description;
+        }
       }
-
-      LinearAxis yAxis = this.DataChart.ActualAxes[1] as LinearAxis;
-      yAxis.Title = YAxisTitle.IsChecked ? axis.Description : null;
-      YAxisTitle.Text = axis.Description;
 
       switch (axis.Axis)
       {
@@ -233,15 +340,16 @@ namespace VianaNET
 
     private void UpdateChartProperties()
     {
-      if (this.initialized)
+      if (this.isInitialized)
       {
         this.DataChart.Title = ChartTitle.IsChecked ? ChartTitle.Text : null;
         this.DataChart.LegendTitle = LegendTitle.IsChecked ? LegendTitle.Text : null;
-        ((VianaChart)this.DataChart).IsShowingLegend = ShowLegend.IsChecked() ? Visibility.Visible : Visibility.Collapsed;
-        this.DataPointsPanel.Visibility = ShowLegend.IsChecked() ? Visibility.Visible : Visibility.Collapsed;
-        this.LegendTitle.Visibility = ShowLegend.IsChecked() ? Visibility.Visible : Visibility.Collapsed;
-        ((Series)this.DataChart.Series[0]).Title = SeriesTitle.IsChecked ? SeriesTitle.Text : null;
-        ((ScatterSeries)this.DataChart.Series[0]).IsSelectionEnabled = SelectionEnabled.IsChecked();
+        ((VianaChart)this.DataChart).IsShowingLegend =
+          this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked ? Visibility.Visible : Visibility.Collapsed;
+        foreach (DataPointSeries series in this.DataChart.Series)
+        {
+          series.Title = SeriesTitle.IsChecked ? SeriesTitle.Text : null;
+        }
         //((ScatterSeries)this.DataChart.Series[0]).ItemsSource = null;
         //((ScatterSeries)this.DataChart.Series[0]).ItemsSource = VideoData.Instance.Samples;
         //((ScatterSeries)this.DataChart.Series[0]).Refresh();
@@ -301,6 +409,57 @@ namespace VianaNET
     }
 
     #endregion //PRIVATEMETHODS
+
+    private void RadioChartStyle_Checked(object sender, RoutedEventArgs e)
+    {
+      if (!this.isInitialized)
+      {
+        return;
+      }
+
+      if (e.Source is RadioButton)
+      {
+        RadioButton checkedRadioButton = e.Source as RadioButton;
+        this.DataChart.Series.Clear();
+        this.AxisControls.Visibility = Visibility.Visible;
+        this.xAxisContentGrid.Visibility = Visibility.Visible;
+        if (checkedRadioButton.Name.Contains("Scatter"))
+        {
+          this.DataChart.Series.Add(this.scatterSeries);
+        }
+        else if (checkedRadioButton.Name.Contains("Line"))
+        {
+          this.DataChart.Series.Add(this.lineSeries);
+        }
+        else if (checkedRadioButton.Name.Contains("Pie"))
+        {
+          this.DataChart.Series.Add(this.pieSeries);
+          this.AxisControls.Visibility = Visibility.Hidden;
+          this.xAxisContentGrid.Visibility = Visibility.Hidden;
+        }
+        else if (checkedRadioButton.Name.Contains("Column"))
+        {
+          this.DataChart.Series.Add(this.columnSeries);
+        }
+        else if (checkedRadioButton.Name.Contains("Bubble"))
+        {
+          this.DataChart.Series.Add(this.bubbleSeries);
+        }
+        else if (checkedRadioButton.Name.Contains("Area"))
+        {
+          this.DataChart.Series.Add(this.areaSeries);
+        }
+
+        this.RefreshSeries();
+      }
+    }
+
+    private void RefreshSeries()
+    {
+      UpdateSeriesWithXAxis();
+      UpdateSeriesWithYAxis();
+      UpdateChartProperties();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

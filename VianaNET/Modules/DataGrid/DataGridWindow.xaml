@@ -12,7 +12,7 @@
     DockableStyle="Dockable" 
 	Height="418" Width="770">
   <ad:DockableContent.Resources>
-    <ResourceDictionary Source="../../VianaControls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
   </ad:DockableContent.Resources>
   <ad:DockableContent.Icon>
     <Image Source="..\..\Images\Datagrid16.png" Height="16" Width="16"/>

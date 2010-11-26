@@ -1,114 +1,211 @@
-﻿using System;
+﻿// <copyright file="HSXColor.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
 
 namespace VianaNET
 {
-	public struct HSXColor
-	{
-		# region Constructor
+  using System;
 
-		public HSXColor(HSXColor clone)
-			: this(clone.Hue, clone.Saturation, clone.X)
-		{
-		}
-		public HSXColor(float? hue, float saturation, float x)
-		{
-			this._Hue = null;
-			this._Saturation = 0;
-			this._X = 0;
+  /// <summary>
+  /// Contains a HSL or HSV color value.
+  /// </summary>
+  public struct HSXColor
+  {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTANTS
+    #endregion //CONSTANTS
 
-			this.Hue = hue;
-			this.Saturation = saturation;
-			this.X = x;
-		}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region FIELDS
 
-		# endregion
+    /// <summary>
+    /// The hue value of the current HSXColor.
+    /// </summary>
+    private float? hue;
 
-		# region Hue
+    /// <summary>
+    /// The saturation value of the current HSXColor
+    /// </summary>
+    private float saturation;
 
-		private float? _Hue;
+    /// <summary>
+    /// The X value for the current HSXColor
+    /// </summary>
+    private float valueLuminanceBrightness;
 
-		public float? Hue
-		{
-			get
-			{
-				return this._Hue;
-			}
-			set
-			{
-				if (value == null && this._Hue != null)
-				{
-					this._Hue = null;
-				}
-				else
-				{
-					if (this._Hue == null)
-					{
-						this._Hue = value;
-					}
-					else if (this._Hue != value)
-					{						
-						if (value < 0)
-						{
-							this._Hue = value % 1F + 1;
-						}
-						else
-						{
-							this._Hue = value % 1F;
-						}
-					}
-				}
-			}
-		}
+    #endregion //FIELDS
 
-		# endregion
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTRUCTION
 
-		# region Saturation
+    /// <summary>
+    /// Initializes a new instance of the HSXColor struct.
+    /// Clone constructor
+    /// </summary>
+    /// <param name="clone">The <see cref="HSXColor"/> to clone.</param>
+    public HSXColor(HSXColor clone)
+      : this(clone.Hue, clone.Saturation, clone.ValueLuminanceBrightness)
+    {
+    }
 
-		private float _Saturation;
+    /// <summary>
+    /// Initializes a new instance of the HSXColor struct.
+    /// </summary>
+    /// <param name="hue">A <see cref="Single"/> hue value or null.</param>
+    /// <param name="saturation">The saturation value</param>
+    /// <param name="x">The luminance or v value for the color.</param>
+    public HSXColor(float? hue, float saturation, float x)
+    {
+      this.hue = null;
+      this.saturation = 0;
+      this.valueLuminanceBrightness = 0;
 
-		public float Saturation
-		{
-			get
-			{
-				return this._Saturation;
-			}
-			set
-			{
-				this._Saturation = value;
-			}
-		}
+      this.Hue = hue;
+      this.Saturation = saturation;
+      this.ValueLuminanceBrightness = x;
+    }
 
-		# endregion
+    #endregion //CONSTRUCTION
 
-		# region X (Value/Luminance/Brightness)
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+    #endregion EVENTS
 
-		private float _X;
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PROPERTIES
 
-		/// <summary>
-		/// Value/Luminance/Brightness
-		/// </summary>
-		public float X
-		{
-			get
-			{
-				return this._X;
-			}
-			set
-			{
-				this._X = value;
-			}
-		}
+    /// <summary>
+    /// Gets or sets the hue value of this HSXColor
+    /// </summary>
+    public float? Hue
+    {
+      get
+      {
+        return this.hue;
+      }
 
-		# endregion
+      set
+      {
+        if (value == null && this.hue != null)
+        {
+          this.hue = null;
+        }
+        else
+        {
+          if (this.hue == null)
+          {
+            this.hue = value;
+          }
+          else if (this.hue != value)
+          {
+            if (value < 0)
+            {
+              this.hue = value % 1F + 1;
+            }
+            else
+            {
+              this.hue = value % 1F;
+            }
+          }
+        }
+      }
+    }
 
-		# region ToString()
+    /// <summary>
+    /// Gets or sets Value/Luminance/Brightness
+    /// </summary>
+    public float ValueLuminanceBrightness
+    {
+      get { return this.valueLuminanceBrightness; }
+      set { this.valueLuminanceBrightness = value; }
+    }
 
-		public override string ToString()
-		{
-			return string.Format("Hue: {0}, Saturation: {1:P}, X: {2:P}",
-				this._Hue.HasValue ? this._Hue.Value.ToString("P") : "NULL", this._Saturation, this._X);
-		}
+    /// <summary>
+    /// Gets or sets the saturation of the current HSXColor.
+    /// </summary>
+    public float Saturation
+    {
+      get { return this.saturation; }
+      set { this.saturation = value; }
+    }
 
-		# endregion
-	}
+    #endregion //PROPERTIES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PUBLICMETHODS
+    #endregion //PUBLICMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+
+    /// <summary>
+    /// Overridden <see cref="Object.ToString()"/>.
+    /// </summary>
+    /// <returns>A human readable string for this HSXColor.</returns>
+    public override string ToString()
+    {
+      return string.Format(
+        "Hue: {0}, Saturation: {1:P}, X: {2:P}",
+        this.hue.HasValue ? this.hue.Value.ToString("P") : "NULL",
+        this.Saturation,
+        this.ValueLuminanceBrightness);
+    }
+
+    #endregion //OVERRIDES
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTHANDLER
+    #endregion //EVENTHANDLER
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region THREAD
+    #endregion //THREAD
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PRIVATEMETHODS
+    #endregion //PRIVATEMETHODS
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region HELPER
+    #endregion //HELPER
+  }
 }

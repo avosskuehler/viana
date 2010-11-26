@@ -316,5 +316,6 @@ namespace VianaNET
       this.videoCaptureElement.Dispose();
       this.videoPlayerElement.Dispose();
     }
+
   }
 }

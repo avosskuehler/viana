@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0DE8DB80F4F4AAFACB1E1032E210B312"
-        "OwnerKey" = "8:_CC210F1CFAC34102838A7AA4F1B3B88F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_19F729F0ECA434FCB7EED62CF7D488EF"
         "OwnerKey" = "8:_8BE6E66CB565ADABFA4357D7EF4246BD"
         "MsmSig" = "8:_UNDEFINED"
@@ -57,14 +51,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_23B325AD23834858ABD550D23026643D"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_20A8E148FBE2F24E6666DB7CF1C68614"
+        "OwnerKey" = "8:_CC210F1CFAC34102838A7AA4F1B3B88F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8B0CA41858F1EB1598B374DD13D0E49C"
-        "OwnerKey" = "8:_CC210F1CFAC34102838A7AA4F1B3B88F"
+        "MsmKey" = "8:_23B325AD23834858ABD550D23026643D"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,6 +71,12 @@
         {
         "MsmKey" = "8:_97E7615D3A3425C2C550F61A4D522D86"
         "OwnerKey" = "8:_CC210F1CFAC34102838A7AA4F1B3B88F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A80D70DCCE6C44D6952ECA26701530C1"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -107,6 +107,12 @@
         {
         "MsmKey" = "8:_D3B9ECCB246E44DFBEDC22BAB3BAA619"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D81E7DD4DB5B6FB83344BC68FB306275"
+        "OwnerKey" = "8:_CC210F1CFAC34102838A7AA4F1B3B88F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -202,13 +208,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0DE8DB80F4F4AAFACB1E1032E210B312"
+        "OwnerKey" = "8:_20A8E148FBE2F24E6666DB7CF1C68614"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8B0CA41858F1EB1598B374DD13D0E49C"
+        "OwnerKey" = "8:_D81E7DD4DB5B6FB83344BC68FB306275"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -219,7 +225,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:..\\Debug\\Setup\\VianaNETSetupV1.5.msi"
+        "OutputFilename" = "8:..\\Debug\\Setup\\VianaNETSetupV2.0.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -256,7 +262,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:..\\Release\\Setup\\VianaNETSetupV1.5.msi"
+        "OutputFilename" = "8:..\\Release\\Setup\\VianaNETSetupV2.0.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -330,37 +336,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0DE8DB80F4F4AAFACB1E1032E210B312"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=1.5.3935.39495, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_0DE8DB80F4F4AAFACB1E1032E210B312"
-                    {
-                    "Name" = "8:WPFLocalizeExtension.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WPFLocalizeExtension.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_19F729F0ECA434FCB7EED62CF7D488EF"
             {
             "AssemblyRegister" = "3:1"
@@ -423,6 +398,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_20A8E148FBE2F24E6666DB7CF1C68614"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=1.5.3935.40442, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_20A8E148FBE2F24E6666DB7CF1C68614"
+                    {
+                    "Name" = "8:WPFLocalizeExtension.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WPFLocalizeExtension.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23B325AD23834858ABD550D23026643D"
             {
             "SourcePath" = "8:..\\VianaNET\\Images\\InstallerBanner.jpg"
@@ -441,37 +447,6 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8B0CA41858F1EB1598B374DD13D0E49C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=1.5.3935.39620, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_8B0CA41858F1EB1598B374DD13D0E49C"
-                    {
-                    "Name" = "8:VianaNETShaderEffectLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8BE6E66CB565ADABFA4357D7EF4246BD"
@@ -536,6 +511,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A80D70DCCE6C44D6952ECA26701530C1"
+            {
+            "SourcePath" = "8:..\\VianaNET\\GMFBridge.dll"
+            "TargetName" = "8:GMFBridge.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:4"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CA26C4A1884D15E85685AA9641EBD64D"
             {
             "AssemblyRegister" = "3:1"
@@ -585,6 +580,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D81E7DD4DB5B6FB83344BC68FB306275"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=1.5.3942.39074, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_D81E7DD4DB5B6FB83344BC68FB306275"
+                    {
+                    "Name" = "8:VianaNETShaderEffectLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EFDB3FF50C130C1B68FF9BB03CEDB744"
@@ -797,19 +823,19 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:VianaNET V1.5"
-        "ProductCode" = "8:{B7D68AB3-BF85-4D0D-8CA3-C1CB82F34786}"
-        "PackageCode" = "8:{7393AECF-692F-48F3-8407-2B8E3EABE1AB}"
+        "ProductName" = "8:VianaNET V2.0"
+        "ProductCode" = "8:{5623CB50-64DE-4467-8005-5250A55C7441}"
+        "PackageCode" = "8:{433545A5-6E95-4FCF-9831-C6EC25A3D571}"
         "UpgradeCode" = "8:{8F1F8DFB-7BA8-41F4-A3F5-1AA48CAB1FD3}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5"
+        "ProductVersion" = "8:2.0"
         "Manufacturer" = "8:Freie Universität Berlin"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.viananet.de"
-        "Title" = "8:VianaNET V1.5"
+        "Title" = "8:VianaNET V2.0"
         "Subject" = "8:Video analysis software."
         "ARPCONTACT" = "8:Dr. Adrian Voßkühler"
         "Keywords" = "8:"

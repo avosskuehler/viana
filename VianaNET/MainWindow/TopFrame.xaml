@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Height="80">
   <UserControl.Resources>
-    <ResourceDictionary Source="../VianaControls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
   </UserControl.Resources>
   <Border Grid.Row="1" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80" Background="{StaticResource BannerBackgroundBrush}">
     <StackPanel Orientation="Horizontal">

@@ -104,7 +104,7 @@
         fs = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VianaNETErrorLog.txt", FileMode.Append);
         logWriter = new StreamWriter(fs);
       }
-      
+
       logWriter.WriteLine(line);
       logWriter.Flush();
       Console.WriteLine(line);
@@ -117,23 +117,23 @@
     /// <param name="showMessageBox">True, if this exception should also be displayed in a message box.</param>
     public static void ProcessException(Exception ex, bool showMessageBox)
     {
+      string message = string.Empty;
+      message = ex.Message;
+      Exception innerException = ex;
+
+      // Loop inner exceptions.
+      while (innerException.InnerException != null)
+      {
+        innerException = innerException.InnerException;
+        message = innerException.Message + Environment.NewLine + message;
+      }
+
       WriteLine("Error in: " + ex.TargetSite.ToString());
-      WriteLine("Message: " + ex.Message);
+      WriteLine("Message: " + message);
       //if (showMessageBox)
       {
-        MessageBox.Show(ex.Message);
+        MessageBox.Show(message);
       }
-    }
-
-    /// <summary>
-    /// This method raises the TrackerError event with the given message,
-    /// so that subscribers can display the appropriate Error Window.
-    /// </summary>
-    /// <param name="message">A <see cref="String"/> with the message to display.</param>
-    public static void RaiseGazeTrackerMessage(string message)
-    {
-      OnTrackerError(message);
-      Console.WriteLine(message);
     }
 
     #endregion //PUBLICMETHODS

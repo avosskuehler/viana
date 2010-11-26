@@ -484,7 +484,7 @@ namespace VianaNET
     private void LoadVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       this.videoWindow.SetVideoMode(VideoMode.File);
-      this.videoWindow.LoadVideo();
+      this.videoWindow.LoadVideo(string.Empty);
     }
 
     private void SelectColorCommand_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -778,6 +778,20 @@ namespace VianaNET
       ExportData.ToXls(VideoData.Instance.Samples);
     }
 
+    private void ButtonRecordVideoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+      e.CanExecute = DShowUtils.GetVideoInputDevices().Count > 0;
+    }
+
+    private void ButtonRecordVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
+      if (saveVideoDialog.ShowDialog().Value)
+      {
+        this.videoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+      }
+    }
+
     private void ButtonCaptureVideoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
       e.CanExecute = DShowUtils.GetVideoInputDevices().Count > 0;
@@ -892,6 +906,7 @@ namespace VianaNET
     {
       Video.Instance.Cleanup();
     }
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

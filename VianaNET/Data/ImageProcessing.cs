@@ -15,8 +15,8 @@ namespace VianaNET
   public class ImageProcessing : DependencyObject, INotifyPropertyChanged
   {
     //private BlobDetectionFilter blobDetection;
-    private ColorAndCropFilter colorAndCropFilter;
-    private ColorRangeFilter colorRangeFilter;
+    private ColorAndCropFilterRGB colorAndCropFilter;
+    private ColorAndCropFilterYCbCr colorRangeFilter;
     private Histogram histogrammFilter;
     private HistogramMinMaxSegmentator segmentator;
 
@@ -47,8 +47,8 @@ namespace VianaNET
       this.IsTargetColorSet = false;
       this.isReady = true;
       //this.blobDetection = new BlobDetectionFilter();
-      this.colorAndCropFilter = new ColorAndCropFilter();
-      this.colorRangeFilter = new ColorRangeFilter();
+      this.colorAndCropFilter = new ColorAndCropFilterRGB();
+      this.colorRangeFilter = new ColorAndCropFilterYCbCr();
       this.histogrammFilter = new Histogram();
       this.segmentator = new HistogramMinMaxSegmentator();
 

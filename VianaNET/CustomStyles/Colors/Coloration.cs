@@ -1,298 +1,408 @@
-﻿# region Using Directives
-
-using System;
-using System.Windows.Media;
-using System.Collections.Generic;
-
-# endregion
+﻿// <copyright file="Coloration.cs" company="FU Berlin">
+// ************************************************************************
+// Viana.NET - video analysis for physics education
+// Copyright (C) 2010 Dr. Adrian Voßkühler  
+// ------------------------------------------------------------------------
+// This program is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by the 
+// Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License 
+// along with this program; if not, write to the Free Software Foundation, 
+// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian.vosskuehler@fu-berlin.de</email>
 
 namespace VianaNET
 {
-	public class Coloration
-	{
-		# region Declarations
+  using System;
+  using System.Windows.Media;
 
-		private ColorType _ColorType;
-		//private IEnumerable<HSXColor> _SourcePallet;
-		private HSXColor[] _SourcePallet;
-		private PalletInfo _PalletInfo;
+  /// <summary>
+  /// This class provides support for office style coloration of
+  /// the VianaNET application.
+  /// </summary>
+  public class Coloration
+  {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTANTS
+    #endregion //CONSTANTS
 
-		# endregion
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region FIELDS
 
-		# region Constructor
+    /// <summary>
+    /// The current <see cref="ColorType"/> of the pallet.
+    /// Can be HSL or HSV
+    /// </summary>
+    private ColorType colorType;
 
-		public Coloration(ColorType colorType, params Color[] pallet)
-		//	: this(colorType, pallet.ToList())
-		//{
-		//}
-		//public Coloration(ColorType colorType, IEnumerable<Color> pallet)
-		{
-			if (pallet == null || pallet.Length == 0)
-			{
-				throw new InvalidOperationException("The pallet cannot be empty.");
-			}
-			this._ColorType = colorType;
-			this.SetSourcePallet(pallet);
-		}
+    /// <summary>
+    /// The array of office colors in the source pallet.
+    /// </summary>
+    private HSXColor[] sourcePallet;
 
-		# endregion
+    /// <summary>
+    /// A <see cref="PalletInfo"/> describing the colors
+    /// parameters.
+    /// </summary>
+    private PalletInfo palletInfo;
 
-		# region PalletInfo Struct
+    #endregion //FIELDS
 
-		private struct PalletInfo
-		{
-			public float HueMin;
-			public float HueMax;
-			public float HueAvg;
-			public float SatMin;
-			public float SatMax;
-			public float XMin;
-			public float XMax;
-		}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region CONSTRUCTION
 
-		# endregion
+    /// <summary>
+    /// Initializes a new instance of the Coloration class with
+    /// given <see cref="ColorType"/> and a list of pallet
+    /// colors.
+    /// </summary>
+    /// <param name="colorType">The <see cref="ColorType"/>
+    /// the pallets are defined in.</param>
+    /// <param name="pallet">An array of <see cref="Color"/>
+    /// with the pallet.</param>
+    public Coloration(ColorType colorType, params Color[] pallet)
+    {
+      if (pallet == null || pallet.Length == 0)
+      {
+        throw new InvalidOperationException("The pallet cannot be empty.");
+      }
 
-		# region IsHSL
+      this.colorType = colorType;
+      this.SetSourcePallet(pallet);
+    }
 
-		private bool IsHSL
-		{
-			get
-			{
-				return this._ColorType == ColorType.HSL;
-			}
-		} 
+    #endregion //CONSTRUCTION
 
-		# endregion
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTS
+    #endregion EVENTS
 
-		# region SetSourcePallet
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PROPERTIES
 
-		//private void SetSourcePallet(IEnumerable<Color> pallet)
-		private void SetSourcePallet(Color[] pallet)
-		{
-            //if (!this._ColorType.In(ColorType.HSL, ColorType.HSV)) // C# 3.0
-			if (this._ColorType != ColorType.HSL && this._ColorType != ColorType.HSV)
-            {
-                throw new NotImplementedException(string.Format(
-                      "Not implemented color type: \"{0}\"", this._ColorType));
-            }
+    /// <summary>
+    /// Gets a value indicating whether this pallet
+    /// is of <see cref="ColorType.HSL"/>
+    /// </summary>
+    private bool IsHSL
+    {
+      get { return this.colorType == ColorType.HSL; }
+    }
 
-			# region Linq
+    #endregion //PROPERTIES
 
-			//this._SourcePallet = pallet.Select(c => IsHSL ? ConvertColor.RBGToHSL(c) : ConvertColor.RBGToHSV(c)).ToArray();
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PUBLICMETHODS
 
-			//IEnumerable<float> values = this._SourcePallet.Select(c => c.Hue);
-			//this._PalletInfo.HueMin = values.Min();
-			//this._PalletInfo.HueMax = values.Max();
-			//this._PalletInfo.HueAvg = (this._PalletInfo.HueMin + this._PalletInfo.HueMax) / 2F;
+    /// <summary>
+    /// Gets the average hue value of the pallet.
+    /// </summary>
+    /// <returns>A <see cref="Single"/> with the average
+    /// hue value of the pallet.</returns>
+    public float GetHueAverage()
+    {
+      return this.palletInfo.HueAvg;
+    }
 
-			//values = this._SourcePallet.Select(c => c.Saturation);
-			//this._PalletInfo.SatMin = values.Min();
-			//this._PalletInfo.SatMax = values.Max();
+    /// <summary>
+    /// Returns a colored pallet for the given hue and saturation.
+    /// </summary>
+    /// <param name="hue">A <see cref="Single"/> with the hue to use.</param>
+    /// <param name="hueConstraint">A <see cref="Single"/> with the hue constraint to use.</param>
+    /// <param name="saturation">A <see cref="Single"/> with the saturation to use.</param>
+    /// <param name="x">A <see cref="Single"/> with ???</param>
+    /// <returns>An array of colors defining the pallet.</returns>
+    public Color[] GetColoredPallet(float hue, float hueConstraint, float saturation, float x)
+    {
+      if (this.colorType != ColorType.HSL && this.colorType != ColorType.HSV)
+      {
+        throw new NotImplementedException(string.Format(
+              "Not implemented color type: \"{0}\"", this.colorType));
+      }
 
-			//values = this._SourcePallet.Select(c => c.X);
-			//this._PalletInfo.XMin = values.Min();
-			//this._PalletInfo.XMax = values.Max(); 
+      // Hue
+      float hueDiff = this.palletInfo.HueAvg - hue;
 
-			# endregion
+      // Saturation
+      float satDiff;
+      float satConstraint;
+      float satAux;
 
-            this._PalletInfo.HueMin = float.MaxValue;
-            this._PalletInfo.SatMin = float.MaxValue;
-            this._PalletInfo.XMin = float.MaxValue;
+      this.CalculateParameters(
+        saturation,
+        this.palletInfo.SatMin,
+        this.palletInfo.SatMax,
+        out satDiff,
+        out satConstraint,
+        out satAux);
 
-            this._SourcePallet = new HSXColor[pallet.Length];
+      // X
+      float diffX;
+      float constraintX;
+      float auxX;
 
-			this._PalletInfo.HueAvg = 0F;
+      this.CalculateParameters(
+        x,
+        this.palletInfo.XMin,
+        this.palletInfo.XMax,
+        out diffX,
+        out constraintX,
+        out auxX);
 
-            for (int i = 0; i < pallet.Length; i++)
-            {
-				HSXColor hsx;
+      Color[] result = new Color[this.sourcePallet.Length];
+      HSXColor sourceColor;
+      HSXColor resultColor;
 
-				if (this.IsHSL)
-				{
-					hsx = ConvertColor.RBGToHSL(pallet[i]);
-				}
-				else
-				{
-					hsx = ConvertColor.RBGToHSV(pallet[i]);
-				}
+      // Not Tested yet
+      for (int i = 0; i < this.sourcePallet.Length; i++)
+      {
+        sourceColor = this.sourcePallet[i];
+        resultColor = new HSXColor(
+          sourceColor.Hue + ((this.palletInfo.HueAvg - sourceColor.Hue) * hueConstraint) - hueDiff,
+          sourceColor.Saturation + ((satAux - sourceColor.Saturation) * satConstraint) + satDiff,
+          sourceColor.ValueLuminanceBrightness + ((auxX - sourceColor.ValueLuminanceBrightness) * constraintX) + diffX);
 
-				this._SourcePallet[i] = hsx;
+        result[i] = this.IsHSL ? ConvertColor.HSLToRGB(resultColor) : ConvertColor.HSVToRGB(resultColor);
+      }
 
-				if (hsx.Hue.HasValue)
-				{
-					if (hsx.Hue < this._PalletInfo.HueMin)
-					{
-						this._PalletInfo.HueMin = hsx.Hue.Value;
-					}
-					if (hsx.Hue > this._PalletInfo.HueMax)
-					{
-						this._PalletInfo.HueMax = hsx.Hue.Value;
-					}
+      return result;
+    }
 
-					this._PalletInfo.HueAvg += hsx.Hue.Value;
-				}
+    #endregion //PUBLICMETHODS
 
-				if (hsx.Saturation < this._PalletInfo.SatMin)
-				{
-					this._PalletInfo.SatMin = hsx.Saturation;
-				}
-				if (hsx.Saturation > this._PalletInfo.SatMax)
-				{
-					this._PalletInfo.SatMax = hsx.Saturation;
-				}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region OVERRIDES
+    #endregion //OVERRIDES
 
-				if (hsx.X < this._PalletInfo.XMin)
-				{
-					this._PalletInfo.XMin = hsx.X;
-				}
-				if (hsx.X > this._PalletInfo.XMax)
-				{
-					this._PalletInfo.XMax = hsx.X;
-				}				
-            }
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region EVENTHANDLER
+    #endregion //EVENTHANDLER
 
-			this._PalletInfo.HueAvg /= pallet.Length;			
-		}
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region THREAD
+    #endregion //THREAD
 
-		# endregion
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region PRIVATEMETHODS
 
-		# region GetHueAverage
+    /// <summary>
+    /// Fills coloration class with color array to 
+    /// build pallet info.
+    /// </summary>
+    /// <param name="pallet">An array of <see cref="Color"/>
+    /// defining the pallet</param>
+    private void SetSourcePallet(Color[] pallet)
+    {
+      // if (!this._ColorType.In(ColorType.HSL, ColorType.HSV)) // C# 3.0
+      if (this.colorType != ColorType.HSL && this.colorType != ColorType.HSV)
+      {
+        throw new NotImplementedException(string.Format(
+              "Not implemented color type: \"{0}\"", this.colorType));
+      }
 
-		public float GetHueAverage()
-		{
-			return this._PalletInfo.HueAvg;
-		}
+      this.palletInfo.HueMin = float.MaxValue;
+      this.palletInfo.SatMin = float.MaxValue;
+      this.palletInfo.XMin = float.MaxValue;
 
-		# endregion
+      this.sourcePallet = new HSXColor[pallet.Length];
 
-		# region CalculateParameters
+      this.palletInfo.HueAvg = 0F;
 
-		private void CalculateParameters(float value, float min, float max,
-			out float diff, out float constraint, out float aux)
-		{
-			diff = value;
-			constraint = 0F;
-			aux = 0F;
+      for (int i = 0; i < pallet.Length; i++)
+      {
+        HSXColor hsx;
 
-			if (diff == 0.5F)
-			{
-				diff = 0F;
-			}
-			else if (diff > 0.5F)
-			{
-				aux = max;
+        if (this.IsHSL)
+        {
+          hsx = ConvertColor.RBGToHSL(pallet[i]);
+        }
+        else
+        {
+          hsx = ConvertColor.RBGToHSV(pallet[i]);
+        }
 
-				constraint = 0.5F + (1F - max) / (1F - min) / 2F;
+        this.sourcePallet[i] = hsx;
 
-				if (diff >= constraint) // 100% + constraint
-				{
-					constraint = 1F / (1F - constraint) * (diff - constraint);
-					diff = 1F - max;
-				}
-				else // 0 constraint
-				{
-					diff = ((diff - 0.5F) / (constraint - 0.5F)) * (1F - max);
-					constraint = 0F;
-				}
-			}
-			else if (diff < 0.5F)
-			{
-				aux = min;
+        if (hsx.Hue.HasValue)
+        {
+          if (hsx.Hue < this.palletInfo.HueMin)
+          {
+            this.palletInfo.HueMin = hsx.Hue.Value;
+          }
 
-				constraint = 0.5F - min / max / 2F;
+          if (hsx.Hue > this.palletInfo.HueMax)
+          {
+            this.palletInfo.HueMax = hsx.Hue.Value;
+          }
 
-				if (diff <= constraint) // 100% + constraint
-				{
-					constraint = (constraint - diff) / constraint;
-					diff = -min;
-				}
-				else
-				{
-					diff = -(0.5F - diff) / (0.5F - constraint) * min;
-					constraint = 0;
-				}
-			}
-		}
+          this.palletInfo.HueAvg += hsx.Hue.Value;
+        }
 
-		# endregion
+        if (hsx.Saturation < this.palletInfo.SatMin)
+        {
+          this.palletInfo.SatMin = hsx.Saturation;
+        }
 
-		# region GetColoredPallet
+        if (hsx.Saturation > this.palletInfo.SatMax)
+        {
+          this.palletInfo.SatMax = hsx.Saturation;
+        }
 
-		//public IEnumerable<Color> GetColoredPallet(float hue, float hueConstraint, float saturation, float x)
-		public Color[] GetColoredPallet(float hue, float hueConstraint, float saturation, float x)
-		{
-            if (this._ColorType != ColorType.HSL && this._ColorType != ColorType.HSV)
-            {
-                throw new NotImplementedException(string.Format(
-                      "Not implemented color type: \"{0}\"", this._ColorType));
-            }
+        if (hsx.ValueLuminanceBrightness < this.palletInfo.XMin)
+        {
+          this.palletInfo.XMin = hsx.ValueLuminanceBrightness;
+        }
 
-            #region Linq
+        if (hsx.ValueLuminanceBrightness > this.palletInfo.XMax)
+        {
+          this.palletInfo.XMax = hsx.ValueLuminanceBrightness;
+        }
+      }
 
-            //if (!this._ColorType.In(ColorType.HSL, ColorType.HSV))
-            //{
-            //    throw new NotImplementedException(string.Format(
-            //          "Not implemented color type: \"{0}\"", this._ColorType));
-            //} 
+      this.palletInfo.HueAvg /= pallet.Length;
+    }
 
-            #endregion
+    /// <summary>
+    /// Calculates color parameters.
+    /// </summary>
+    /// <param name="value">A <see cref="Single"/> with the value</param>
+    /// <param name="min">A <see cref="Single"/> with the minimum for the value</param>
+    /// <param name="max">A <see cref="Single"/> with the maximum for the value</param>
+    /// <param name="diff">Out. Returns the diff value.</param>
+    /// <param name="constraint">Out. Returns the constraint.</param>
+    /// <param name="aux">Out. Returns the aux value.</param>
+    private void CalculateParameters(
+      float value,
+      float min,
+      float max,
+      out float diff,
+      out float constraint,
+      out float aux)
+    {
+      diff = value;
+      constraint = 0F;
+      aux = 0F;
 
-			// Hue
-			float hueDiff = this._PalletInfo.HueAvg - hue;
+      if (diff == 0.5F)
+      {
+        diff = 0F;
+      }
+      else if (diff > 0.5F)
+      {
+        aux = max;
 
-			// Saturation
-			float satDiff;
-			float satConstraint;
-			float satAux;
+        constraint = 0.5F + (((1F - max) / (1F - min)) / 2F);
 
-			this.CalculateParameters(saturation, this._PalletInfo.SatMin,
-				this._PalletInfo.SatMax, out satDiff, out satConstraint, out satAux);
+        if (diff >= constraint)
+        {
+          // 100% + constraint
+          constraint = 1F / (1F - constraint) * (diff - constraint);
+          diff = 1F - max;
+        }
+        else
+        {
+          // 0 constraint
+          diff = ((diff - 0.5F) / (constraint - 0.5F)) * (1F - max);
+          constraint = 0F;
+        }
+      }
+      else if (diff < 0.5F)
+      {
+        aux = min;
 
-			// X
-			float xDiff;
-			float xConstraint;
-			float xAux;
+        constraint = 0.5F - ((min / max) / 2F);
 
-			this.CalculateParameters(x, this._PalletInfo.XMin,
-				this._PalletInfo.XMax, out xDiff, out xConstraint, out xAux);
+        if (diff <= constraint)
+        {
+          // 100% + constraint
+          constraint = (constraint - diff) / constraint;
+          diff = -min;
+        }
+        else
+        {
+          diff = -(0.5F - diff) / (0.5F - constraint) * min;
+          constraint = 0;
+        }
+      }
+    }
 
-            Color[] result = new Color[this._SourcePallet.Length];
-            HSXColor sourceColor;
-            HSXColor resultColor;
+    #endregion //PRIVATEMETHODS
 
-            //Not Tested yet
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+    #region HELPER
 
-            for(int i = 0; i < this._SourcePallet.Length; i++)
-            {
-                sourceColor = this._SourcePallet[i];
-                resultColor = new HSXColor(
-						sourceColor.Hue + (this._PalletInfo.HueAvg - sourceColor.Hue) * hueConstraint - hueDiff,
-						sourceColor.Saturation + (satAux - sourceColor.Saturation) * satConstraint + satDiff,
-						sourceColor.X + (xAux - sourceColor.X) * xConstraint + xDiff);
+    /// <summary>
+    /// A structure specifying Hue and Saturation
+    /// of the pallet.
+    /// </summary>
+    private struct PalletInfo
+    {
+      /// <summary>
+      /// Minimum hue value
+      /// </summary>
+      public float HueMin;
 
-                result[i] = (this.IsHSL ? ConvertColor.HSLToRGB(resultColor) : ConvertColor.HSVToRGB(resultColor));
-            }
+      /// <summary>
+      /// Maximum hue value
+      /// </summary>
+      public float HueMax;
 
-			#region Linq
+      /// <summary>
+      /// Average hue value
+      /// </summary>
+      public float HueAvg;
 
-            //Color[] result = (
-            //    from
-            //        c in this._SourcePallet
-            //    select
-            //        new HSXColor(
-            //            c.Hue + (this._PalletInfo.HueAvg - c.Hue) * hueConstraint - hueDiff,
-            //            c.Saturation + (satAux - c.Saturation) * satConstraint + satDiff,
-            //            c.X + (xAux - c.X) * xConstraint + xDiff)
-            //    into n
-            //        select
-            //            IsHSL ? ConvertColor.HSLToRGB(n) : ConvertColor.HSVToRGB(n)
-            //    ).ToArray(); 
+      /// <summary>
+      /// Minimal saturation
+      /// </summary>
+      public float SatMin;
 
-	        #endregion
+      /// <summary>
+      /// Maximal saturation
+      /// </summary>
+      public float SatMax;
 
-			return result;
-		}
+      /// <summary>
+      /// Minimum x value
+      /// </summary>
+      public float XMin;
 
-		# endregion
-	}
+      /// <summary>
+      /// Maximum x value
+      /// </summary>
+      public float XMax;
+    }
+
+    #endregion //HELPER
+  }
 }

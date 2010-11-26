@@ -475,7 +475,7 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Beschriftung</value>
   </data>
   <data name="ChartWindowSelectionEnabledHeader" xml:space="preserve">
-    <value>Auswahl erlauben</value>
+    <value>Auswahl von Datenpunkten erlauben</value>
   </data>
   <data name="ChartWindowSeriesHeader" xml:space="preserve">
     <value>Messpunkte</value>
@@ -972,5 +972,41 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="RibbonApplicationMenuRecentFilesTitle" xml:space="preserve">
     <value>Zuletzt verwendet</value>
+  </data>
+  <data name="ChartWindowAxisStyleHeader" xml:space="preserve">
+    <value>Diagrammtyp</value>
+  </data>
+  <data name="ButtonRecordVideoLabelDescription" xml:space="preserve">
+    <value>Öffnet ein Fenster in dem Videos von angeschlossenen Videogeräten in eine Datei zur weiteren Analyse gespeichert werden können.</value>
+  </data>
+  <data name="ButtonRecordVideoLabelTitle" xml:space="preserve">
+    <value>Video aufnehmen</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um ein Fenster zu öffnen, in dem Videos von angeschlossenen Videogeräten  in eine Datei zur weiteren Analyse gespeichert werden können.</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipTitle" xml:space="preserve">
+    <value>Video von Gerät auf Festplatte aufzeichnen.</value>
+  </data>
+  <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
+    <value>Videokompressor</value>
+  </data>
+  <data name="SaveVideoDialogFilenameLabel" xml:space="preserve">
+    <value>Dateiname</value>
+  </data>
+  <data name="SaveVideoDialogTitle" xml:space="preserve">
+    <value>Video von Kamera aufzeichnen</value>
+  </data>
+  <data name="IsRecordingVideo" xml:space="preserve">
+    <value>Zeichnet Video auf ...</value>
+  </data>
+  <data name="SaveVideoDialogFolderLabel" xml:space="preserve">
+    <value>Verzeichnis</value>
+  </data>
+  <data name="VideoSaveFolderBrowserDescriptionTitle" xml:space="preserve">
+    <value>Bitte Verzeichnis für neue Videodateien auswählen ...</value>
+  </data>
+  <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
+    <value>Starte Analyse</value>
   </data>
 </root>

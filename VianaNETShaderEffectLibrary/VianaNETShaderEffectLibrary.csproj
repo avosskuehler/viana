@@ -87,7 +87,6 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
     <Effect Include="BackgroundEffect.fx" />
     <Effect Include="CropEffect.fx" />
-    <None Include="readme.txt" />
     <None Include="Properties\VianaNETShaderEffectLibraryKey.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

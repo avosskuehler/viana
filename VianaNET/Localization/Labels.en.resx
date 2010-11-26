@@ -988,4 +988,40 @@ Click OK or press Enter, when ready.</value>
   <data name="RibbonApplicationMenuRecentFilesTitle" xml:space="preserve">
     <value>Recent files</value>
   </data>
+  <data name="ChartWindowAxisStyleHeader" xml:space="preserve">
+    <value>Chart style</value>
+  </data>
+  <data name="ButtonRecordVideoLabelDescription" xml:space="preserve">
+    <value>Opens a video recording window, which enables to save life video from connected devices to disk for further analysis.</value>
+  </data>
+  <data name="ButtonRecordVideoLabelTitle" xml:space="preserve">
+    <value>Record Video</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to open a video recording window, which enables to save life video from connected devices to disk for further analysis.</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipTitle" xml:space="preserve">
+    <value>Record video from device to disk.</value>
+  </data>
+  <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
+    <value>Video compressor</value>
+  </data>
+  <data name="SaveVideoDialogFilenameLabel" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="SaveVideoDialogTitle" xml:space="preserve">
+    <value>Record video from camera device</value>
+  </data>
+  <data name="IsRecordingVideo" xml:space="preserve">
+    <value>Recording active ...</value>
+  </data>
+  <data name="SaveVideoDialogFolderLabel" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="VideoSaveFolderBrowserDescriptionTitle" xml:space="preserve">
+    <value>Please select a folder for the new video files ...</value>
+  </data>
+  <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
+    <value>Analyse video</value>
+  </data>
 </root>

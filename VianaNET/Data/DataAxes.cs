@@ -10,23 +10,6 @@ using System.Collections.ObjectModel;
 
 namespace VianaNET
 {
-  public enum AxisType
-  {
-    I,
-    T,
-    PX,
-    PY,
-    D,
-    DX,
-    DY,
-    V,
-    VX,
-    VY,
-    A,
-    AX,
-    AY
-  }
-
   public class DataAxis : DependencyObject
   {
     public static List<DataAxis> DataAxes;

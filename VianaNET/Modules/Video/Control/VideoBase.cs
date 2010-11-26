@@ -371,7 +371,16 @@
     /// </summary>
     public virtual void Dispose()
     {
+      
       this.Stop();
+
+#if DEBUG
+      if (this.rotEntry != null)
+      {
+        this.rotEntry.Dispose();
+        this.rotEntry = null;
+      }
+#endif
 
       lock (this)
       {
@@ -412,13 +421,6 @@
           Marshal.ReleaseComObject(this.sampleGrabber);
           this.sampleGrabber = null;
         }
-
-#if DEBUG
-        if (this.rotEntry != null)
-        {
-          this.rotEntry.Dispose();
-        }
-#endif
 
         if (this.filterGraph != null)
         {
@@ -732,6 +734,5 @@
     ///////////////////////////////////////////////////////////////////////////////
     #region HELPER
     #endregion //HELPER
-
   }
 }
