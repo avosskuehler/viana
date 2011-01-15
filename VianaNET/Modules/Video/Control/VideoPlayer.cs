@@ -49,6 +49,8 @@ namespace VianaNET
 
     public bool LoadMovie(string fileName)
     {
+      this.ReleaseEventThread();
+
       try
       {
         if (!File.Exists(fileName))
@@ -135,7 +137,6 @@ namespace VianaNET
       IBaseFilter sourceFilter;
       this.filterGraph.AddSourceFilter(this.filename, "File Source", out sourceFilter);
 
-      IPin sourceOut = DsFindPin.ByDirection(sourceFilter, PinDirection.Output, 0);
 
       // Create the SampleGrabber interface
       this.sampleGrabber = (ISampleGrabber)new SampleGrabber();
@@ -152,8 +153,22 @@ namespace VianaNET
 
       IPin sampleGrabberIn = DsFindPin.ByDirection(baseGrabFlt, PinDirection.Input, 0);
       IPin sampleGrabberOut = DsFindPin.ByDirection(baseGrabFlt, PinDirection.Output, 0);
+      IPin sourceOut;
 
-      hr = this.filterGraph.Connect(sourceOut, sampleGrabberIn);
+      // Iterate through source output pins, to find video output pin to be connected to
+      // the sample grabber
+      int i = 0;
+      do
+      {
+        sourceOut = DsFindPin.ByDirection(sourceFilter, PinDirection.Output, i);
+        if (sourceOut == null)
+        {
+          throw new ArgumentOutOfRangeException("Found no compatible video source output pin");
+        }
+        hr = this.filterGraph.Connect(sourceOut, sampleGrabberIn);
+        i++;
+      } while (hr < 0);
+
       DsError.ThrowExceptionForHR(hr);
       hr = this.filterGraph.Render(sampleGrabberOut);
       DsError.ThrowExceptionForHR(hr);
@@ -265,25 +280,7 @@ namespace VianaNET
 
     public override void Dispose()
     {
-      // Shut down event loop
-      this.shouldExitEventLoop = true;
-
-      try
-      {
-        // Release the thread (if the thread was started)
-        if (manualResetEvent != null)
-        {
-          manualResetEvent.Set();
-        }
-      }
-      catch (Exception ex)
-      {
-        ErrorLogger.ProcessException(ex, false);
-      }
-      finally
-      {
-        manualResetEvent = null;
-      }
+      this.ReleaseEventThread();
 
       // Release DirectShow interfaces
       base.Dispose();
@@ -309,6 +306,29 @@ namespace VianaNET
 
         // Clear file name to allow selection of new file with open dialog
         this.filename = string.Empty;
+      }
+    }
+
+    private void ReleaseEventThread()
+    {
+      // Shut down event loop
+      this.shouldExitEventLoop = true;
+
+      try
+      {
+        // Release the thread (if the thread was started)
+        if (manualResetEvent != null)
+        {
+          manualResetEvent.Set();
+        }
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, false);
+      }
+      finally
+      {
+        manualResetEvent = null;
       }
     }
 

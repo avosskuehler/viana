@@ -785,10 +785,22 @@ namespace VianaNET
 
     private void ButtonRecordVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
+      bool wasCapturing = false;
+      if (Video.Instance.VideoMode == VideoMode.Capture)
+      {
+        wasCapturing = true;
+        this.videoWindow.SetVideoMode(VideoMode.None);
+      }
+
       SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
       if (saveVideoDialog.ShowDialog().Value)
       {
+        this.videoWindow.SetVideoMode(VideoMode.File);
         this.videoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+      }
+      else if (wasCapturing)
+      {
+        this.videoWindow.SetVideoMode(VideoMode.Capture);
       }
     }
 

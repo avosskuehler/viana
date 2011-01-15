@@ -144,20 +144,14 @@ namespace VianaNET
       }
 
       this.videoElement.VideoFrameChanged -= new EventHandler(videoElement_VideoFrameChanged);
-
-      //BindingOperations.ClearAllBindings(this);
-
       this.videoMode = newVideoMode;
+
       switch (this.videoMode)
       {
         case VideoMode.File:
+        case VideoMode.None:
           this.videoCaptureElement.Dispose();
           this.videoElement = this.videoPlayerElement;
-          //Binding bitmapBinding = new Binding();
-          //bitmapBinding.Source = this.videoPlayerElement;
-          //bitmapBinding.Path = new PropertyPath("CurrentFrameBitmap");
-          //BindingOperations.SetBinding(this, Video.CurrentFrameBitmapProperty, bitmapBinding);
-
           break;
         case VideoMode.Capture:
           List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
