@@ -483,8 +483,18 @@ namespace VianaNET
 
     private void LoadVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
+      this.ResetColorButton();
       this.videoWindow.SetVideoMode(VideoMode.File);
       this.videoWindow.LoadVideo(string.Empty);
+    }
+
+    public void ResetColorButton()
+    {
+      var largeSource = new Uri(@"/VianaNET;component/Images/SelectColor32.png", UriKind.Relative);
+      ((RibbonCommand)this.selectColorRibbonButton.Command).LargeImageSource = new BitmapImage(largeSource);
+      var smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
+      ((RibbonCommand)this.selectColorRibbonButton.Command).SmallImageSource = new BitmapImage(smallSource);
+      ((RibbonCommand)this.selectColorRibbonButton.Command).LabelTitle = Localization.Labels.ButtonSelectColorLabelTitle;
     }
 
     private void SelectColorCommand_Executed(object sender, ExecutedRoutedEventArgs e)

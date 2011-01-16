@@ -35,7 +35,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Freie Universität Berlin")]
 [assembly: AssemblyProduct("Viana.NET")]
-[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2010")]
+[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

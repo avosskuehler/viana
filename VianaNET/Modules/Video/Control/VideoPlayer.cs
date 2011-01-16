@@ -220,6 +220,9 @@ namespace VianaNET
       hr = this.mediaEvent.GetEventHandle(out hEvent);
       DsError.ThrowExceptionForHR(hr);
 
+      // Reset event loop exit flag
+      this.shouldExitEventLoop = false;
+
       // Wrap the graph event with a ManualResetEvent
       manualResetEvent = new ManualResetEvent(false);
       manualResetEvent.SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(hEvent, true);
@@ -452,8 +455,18 @@ namespace VianaNET
 
       do
       {
-        // Wait for an event
-        this.manualResetEvent.WaitOne(-1, true);
+        // If we are shutting down
+        if (this.shouldExitEventLoop)
+        {
+          break;
+        }
+
+        if (this.manualResetEvent != null)
+        {
+          // Wait for an event
+          this.manualResetEvent.WaitOne(-1, true);
+        }
+
         // Make sure that we don't access the media event interface
         // after it has already been released.
         if (this.mediaEvent == null)

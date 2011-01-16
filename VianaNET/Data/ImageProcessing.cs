@@ -40,12 +40,7 @@ namespace VianaNET
 
     public ImageProcessing()
     {
-      this.TargetColor = Colors.Red;
-      this.ColorThreshold = 0.3;
-      this.BlobMinDiameter = 4;
-      this.BlobMaxDiameter = 100;
-      this.IsTargetColorSet = false;
-      this.isReady = true;
+      Reset();
       //this.blobDetection = new BlobDetectionFilter();
       this.colorAndCropFilter = new ColorAndCropFilterRGB();
       this.colorRangeFilter = new ColorAndCropFilterYCbCr();
@@ -54,6 +49,16 @@ namespace VianaNET
 
       this.PropertyChanged += new PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
       Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(Calibration_PropertyChanged);
+    }
+
+    public void Reset()
+    {
+      this.TargetColor = Colors.Red;
+      this.ColorThreshold = 0.3;
+      this.BlobMinDiameter = 4;
+      this.BlobMaxDiameter = 100;
+      this.IsTargetColorSet = false;
+      this.isReady = true;
     }
 
     void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)

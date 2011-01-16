@@ -107,17 +107,21 @@ namespace VianaNET
 
     public void SetVideoMode(VideoMode newVideoMode)
     {
+      // Reset UI
+      Calibration.Instance.Reset();
+      VideoData.Instance.Reset();
+      Video.Instance.ImageProcessing.Reset();
+      this.BlobsControl.UpdateDataPoints();
+      ShowOrHideCalibration(Visibility.Hidden);
+      ShowOrHideClipRegion(Visibility.Hidden);
+
       if (Video.Instance.VideoMode == newVideoMode)
       {
-        // No change in video mode, so nothing to to.
+        // No change in video mode, so nothing else to do.
         return;
       }
 
       Video.Instance.VideoMode = newVideoMode;
-      Calibration.Instance.Reset();
-      VideoData.Instance.Reset();
-      ShowCalibration(false);
-      ShowClipRegion(false);
 
       switch (newVideoMode)
       {
@@ -169,6 +173,7 @@ namespace VianaNET
       {
         case VideoMode.File:
           this.cancelCalculation = true;
+          AutomaticAquisitionFinished();
           break;
         case VideoMode.Capture:
           AutomaticAquisitionFinished();
@@ -583,6 +588,7 @@ namespace VianaNET
         Calibration.Instance.ClipRegion = clipRect;
       }
     }
+
     private void AutomaticAquisitionFinished()
     {
       Video.Instance.IsDataAcquisitionRunning = false;
