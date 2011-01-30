@@ -129,14 +129,14 @@ namespace VianaNET
 
       AxisType chartType = AxisType.YoverX;
 
-      if (this.TabOrtsraum.IsSelected)
+      if (this.TabPositionSpace.IsSelected)
       {
-        DataAxis axis = (DataAxis)this.AxesContentOrtsraum.SelectedItem;
+        DataAxis axis = (DataAxis)this.AxesContentPositionSpace.SelectedItem;
         chartType = axis.Axis;
       }
-      else if (this.TabPhasenraum.IsSelected)
+      else if (this.TabPhaseSpace.IsSelected)
       {
-        DataAxis axis = (DataAxis)this.AxesContentPhasenraum.SelectedItem;
+        DataAxis axis = (DataAxis)this.AxesContentPhaseSpace.SelectedItem;
         chartType = axis.Axis;
       }
       else if (this.TabOther.IsSelected)

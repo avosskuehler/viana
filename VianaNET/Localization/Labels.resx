@@ -1188,10 +1188,10 @@
   <data name="ChartWindowInterpolationOptions" xml:space="preserve">
     <value>@ChartWindowInterpolationOptions</value>
   </data>
-  <data name="ChartWindowOrtsraumHeader" xml:space="preserve">
-    <value>@ChartWindowOrtsraumHeader</value>
+  <data name="ChartWindowPositionSpaceHeader" xml:space="preserve">
+    <value>@ChartWindowPositionSpaceHeader</value>
   </data>
-  <data name="ChartWindowPhasenraumHeader" xml:space="preserve">
-    <value>@ChartWindowPhasenraumHeader</value>
+  <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
+    <value>@ChartWindowPhaseSpaceHeader</value>
   </data>
 </root>

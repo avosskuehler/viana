@@ -13,8 +13,8 @@ namespace VianaNET
   public class DataAxis : DependencyObject
   {
     public static List<DataAxis> DataAxes;
-    public static List<DataAxis> PredefinedChartAxesOrtsraum;
-    public static List<DataAxis> PredefinedChartAxesPhasenraum;
+    public static List<DataAxis> PredefinedChartAxesPositionSpace;
+    public static List<DataAxis> PredefinedChartAxesPhaseSpace;
 
     public AxisType Axis
     {
@@ -171,7 +171,7 @@ namespace VianaNET
       DataAxes.Add(axiAxis);
       DataAxes.Add(ayiAxis);
 
-      // Double axis data ortsraum
+      // Double axis data position space
       DataAxis YoverX = new DataAxis(AxisType.YoverX);
       LocTextExtension locYoverX = new LocTextExtension("VianaNET:Labels:AxisYoverX");
       locYoverX.SetBinding(YoverX, DataAxis.DescriptionProperty);
@@ -203,18 +203,18 @@ namespace VianaNET
       LocTextExtension locAYoverT = new LocTextExtension("VianaNET:Labels:AxisAYoverT");
       locAYoverT.SetBinding(AYoverT, DataAxis.DescriptionProperty);
 
-      PredefinedChartAxesOrtsraum = new List<DataAxis>();
-      PredefinedChartAxesOrtsraum.Add(YoverX);
-      PredefinedChartAxesOrtsraum.Add(XoverT);
-      PredefinedChartAxesOrtsraum.Add(YoverT);
-      PredefinedChartAxesOrtsraum.Add(VoverT);
-      PredefinedChartAxesOrtsraum.Add(VXoverT);
-      PredefinedChartAxesOrtsraum.Add(VYoverT);
-      PredefinedChartAxesOrtsraum.Add(AoverT);
-      PredefinedChartAxesOrtsraum.Add(AXoverT);
-      PredefinedChartAxesOrtsraum.Add(AYoverT);
+      PredefinedChartAxesPositionSpace = new List<DataAxis>();
+      PredefinedChartAxesPositionSpace.Add(YoverX);
+      PredefinedChartAxesPositionSpace.Add(XoverT);
+      PredefinedChartAxesPositionSpace.Add(YoverT);
+      PredefinedChartAxesPositionSpace.Add(VoverT);
+      PredefinedChartAxesPositionSpace.Add(VXoverT);
+      PredefinedChartAxesPositionSpace.Add(VYoverT);
+      PredefinedChartAxesPositionSpace.Add(AoverT);
+      PredefinedChartAxesPositionSpace.Add(AXoverT);
+      PredefinedChartAxesPositionSpace.Add(AYoverT);
 
-      // Double axis data phasenraum
+      // Double axis data phase space
       DataAxis VoverD = new DataAxis(AxisType.VoverD);
       LocTextExtension locDoverV = new LocTextExtension("VianaNET:Labels:AxisDoverV");
       locDoverV.SetBinding(VoverD, DataAxis.DescriptionProperty);
@@ -243,16 +243,16 @@ namespace VianaNET
       LocTextExtension locVYoverAY = new LocTextExtension("VianaNET:Labels:AxisVYoverAY");
       locVYoverAY.SetBinding(AYoverVY, DataAxis.DescriptionProperty);
 
-      PredefinedChartAxesPhasenraum = new List<DataAxis>();
-      PredefinedChartAxesPhasenraum.Add(VoverD);
-      PredefinedChartAxesPhasenraum.Add(VXoverDX);
-      PredefinedChartAxesPhasenraum.Add(VYoverDY);
-      PredefinedChartAxesPhasenraum.Add(VoverS);
-      PredefinedChartAxesPhasenraum.Add(VXoverSX);
-      PredefinedChartAxesPhasenraum.Add(VYoverSY);
-      PredefinedChartAxesPhasenraum.Add(AoverV);
-      PredefinedChartAxesPhasenraum.Add(AXoverVX);
-      PredefinedChartAxesPhasenraum.Add(AYoverVY);
+      PredefinedChartAxesPhaseSpace = new List<DataAxis>();
+      PredefinedChartAxesPhaseSpace.Add(VoverD);
+      PredefinedChartAxesPhaseSpace.Add(VXoverDX);
+      PredefinedChartAxesPhaseSpace.Add(VYoverDY);
+      PredefinedChartAxesPhaseSpace.Add(VoverS);
+      PredefinedChartAxesPhaseSpace.Add(VXoverSX);
+      PredefinedChartAxesPhaseSpace.Add(VYoverSY);
+      PredefinedChartAxesPhaseSpace.Add(AoverV);
+      PredefinedChartAxesPhaseSpace.Add(AXoverVX);
+      PredefinedChartAxesPhaseSpace.Add(AYoverVY);
     }
   }
 }

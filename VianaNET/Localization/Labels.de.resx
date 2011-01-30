@@ -1183,10 +1183,10 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ChartWindowInterpolationOptions" xml:space="preserve">
     <value>Optionen</value>
   </data>
-  <data name="ChartWindowOrtsraumHeader" xml:space="preserve">
+  <data name="ChartWindowPositionSpaceHeader" xml:space="preserve">
     <value>Ortsraum</value>
   </data>
-  <data name="ChartWindowPhasenraumHeader" xml:space="preserve">
+  <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
     <value>Phasenraum</value>
   </data>
 </root>

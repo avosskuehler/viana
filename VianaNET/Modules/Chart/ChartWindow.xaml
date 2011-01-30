@@ -73,8 +73,8 @@
           <ContentControl Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" 
                             Style="{StaticResource HeaderStyle}"/>
           <TabControl Name="ChartContentTab" SelectionChanged="ChartContentTab_SelectionChanged">
-            <TabItem Name="TabOrtsraum" Header="{lex:LocText VianaNET:Labels:ChartWindowOrtsraumHeader}">
-              <Grid Name="OrtsraumGrid">
+            <TabItem Name="TabPositionSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPositionSpaceHeader}">
+              <Grid Name="PositionSpaceGrid">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto"/>
                   <RowDefinition Height="Auto"/>
@@ -83,14 +83,14 @@
                   <ColumnDefinition Width="60"/>
                   <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Name="AxesContentOrtsraum" 
+                <ComboBox Name="AxesContentPositionSpace" 
                           Grid.Row="0"
                       Grid.Column="0" 
                       SelectedIndex="0" 
                       SelectedValuePath="Axis" 
                       DisplayMemberPath="Description" 
                       Margin="2" 
-                      ItemsSource="{Binding Source={x:Static Viana:DataAxis.PredefinedChartAxesOrtsraum}}" 
+                      ItemsSource="{Binding Source={x:Static Viana:DataAxis.PredefinedChartAxesPositionSpace}}" 
                       SelectionChanged="AxesContent_SelectionChanged" />
                 <ContentControl 
                   Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" 
@@ -118,8 +118,8 @@
                 </UniformGrid>
               </Grid>
             </TabItem>
-            <TabItem Name="TabPhasenraum" Header="{lex:LocText VianaNET:Labels:ChartWindowPhasenraumHeader}">
-              <Grid Name="PhasenraumGrid">
+            <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">
+              <Grid Name="PhaseSpaceGrid">
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto"/>
                   <RowDefinition Height="Auto"/>
@@ -128,13 +128,13 @@
                   <ColumnDefinition Width="60"/>
                   <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Name="AxesContentPhasenraum" 
+                <ComboBox Name="AxesContentPhaseSpace" 
                       Grid.Column="0" 
                       SelectedIndex="0" 
                       SelectedValuePath="Axis" 
                       DisplayMemberPath="Description" 
                       Margin="2" 
-                      ItemsSource="{Binding Source={x:Static Viana:DataAxis.PredefinedChartAxesPhasenraum}}" 
+                      ItemsSource="{Binding Source={x:Static Viana:DataAxis.PredefinedChartAxesPhaseSpace}}" 
                       SelectionChanged="AxesContent_SelectionChanged" />
                 <ContentControl Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Margin="5" Grid.Column="1"/>
                 <Label Grid.Column="0" Grid.Row="1" Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationHeader}"/>

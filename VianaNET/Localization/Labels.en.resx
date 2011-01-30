@@ -1136,7 +1136,7 @@ Click OK or press Enter, when ready.</value>
     <value>x-y</value>
   </data>
   <data name="ChartWindowCustomAxisHeader" xml:space="preserve">
-    <value>Custom axis specification</value>
+    <value>Custom</value>
   </data>
   <data name="ChartWindowCustomDiagrammTypes" xml:space="preserve">
     <value>Custom</value>
@@ -1198,10 +1198,10 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartWindowInterpolationOptions" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="ChartWindowOrtsraumHeader" xml:space="preserve">
-    <value>Ortsraum</value>
+  <data name="ChartWindowPositionSpaceHeader" xml:space="preserve">
+    <value>Position space</value>
   </data>
-  <data name="ChartWindowPhasenraumHeader" xml:space="preserve">
-    <value>Phasenraum</value>
+  <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
+    <value>Phase space</value>
   </data>
 </root>

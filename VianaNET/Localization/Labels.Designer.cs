@@ -2122,20 +2122,20 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @ChartWindowOrtsraumHeader.
+        ///   Looks up a localized string similar to @ChartWindowPhaseSpaceHeader.
         /// </summary>
-        internal static string ChartWindowOrtsraumHeader {
+        internal static string ChartWindowPhaseSpaceHeader {
             get {
-                return ResourceManager.GetString("ChartWindowOrtsraumHeader", resourceCulture);
+                return ResourceManager.GetString("ChartWindowPhaseSpaceHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @ChartWindowPhasenraumHeader.
+        ///   Looks up a localized string similar to @ChartWindowPositionSpaceHeader.
         /// </summary>
-        internal static string ChartWindowPhasenraumHeader {
+        internal static string ChartWindowPositionSpaceHeader {
             get {
-                return ResourceManager.GetString("ChartWindowPhasenraumHeader", resourceCulture);
+                return ResourceManager.GetString("ChartWindowPositionSpaceHeader", resourceCulture);
             }
         }
         
