@@ -584,6 +584,17 @@ namespace VianaNET
       this.videoWindow.UpdateClippingRegion();
     }
 
+    private void ButtonInterpolationProperties_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      Interpolation.ShowInterpolationOptionsDialog();
+    }
+
+    private void ButtonIsInterpolatingDataCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      Interpolation.Instance.IsInterpolatingData = this.ButtonIsInterpolatingData.IsChecked.GetValueOrDefault();
+    }
+
+
     #endregion //Executed
 
     #endregion //EVENTHANDLER
@@ -895,6 +906,11 @@ namespace VianaNET
       e.CanExecute = VideoData.Instance.Count > 1;
     }
 
+    private void ButtonIsInterpolatingDataCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+      e.CanExecute = VideoData.Instance.Count > 1;
+    }
+
     private void ButtonCalculateVelocityCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       VideoData.Instance.RefreshDistanceVelocityAcceleration();
@@ -928,7 +944,6 @@ namespace VianaNET
     {
       Video.Instance.Cleanup();
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

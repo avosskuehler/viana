@@ -23,6 +23,10 @@ namespace VianaNET
       {
         valueToConvert = (long)value;
       }
+      else if (value == null)
+      {
+        return string.Empty;
+      }
 
       MeasurementType param = (MeasurementType)parameter;
 

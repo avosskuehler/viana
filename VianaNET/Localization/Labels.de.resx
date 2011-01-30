@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutBoxDescription" xml:space="preserve">
     <value>Beschreibung</value>
@@ -445,7 +445,7 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Y Koordinate</value>
   </data>
   <data name="ChartWindowAxesHeader" xml:space="preserve">
-    <value>Achseneinstellungen</value>
+    <value>Diagramm</value>
   </data>
   <data name="ChartWindowAxisIntervalHeader" xml:space="preserve">
     <value>Intervall</value>
@@ -1008,5 +1008,185 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
     <value>Starte Analyse</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelDescription" xml:space="preserve">
+    <value>Interpoliert die berechneten Werte</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelTitle" xml:space="preserve">
+    <value>Daten glätten</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um Geschwindigkeiten und Beschleunigungen zu glätten.</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipTitle" xml:space="preserve">
+    <value>Daten glätten</value>
+  </data>
+  <data name="InterpolationDescriptionTitle" xml:space="preserve">
+    <value>Beschreibung des Glättungsfilters</value>
+  </data>
+  <data name="InterpolationDialogNumberOfSamplesToUse" xml:space="preserve">
+    <value>Anzahl der in die Mittelung eingehenden Datenpunkte</value>
+  </data>
+  <data name="InterpolationDialogTitle" xml:space="preserve">
+    <value>Hier können Sie die Parameter für den Glättungsfilter einstellen.</value>
+  </data>
+  <data name="InterpolationDialogTopTitle" xml:space="preserve">
+    <value>Parameter angeben ...</value>
+  </data>
+  <data name="InterpolationMovingAverageDescription" xml:space="preserve">
+    <value>Dieser Glättungsfilter bildet aus der angegebenen Anzahl von Messwerten den Mittelwert für den in den Mitte der Messwerte liegenden Wert und so fort ...</value>
+  </data>
+  <data name="InterpolationPropertiesTitle" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="MovingAverageDialogTitle" xml:space="preserve">
+    <value>Gleitender Mittelwert ...</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelDescription" xml:space="preserve">
+    <value>Blendet einen Dialog zu Optionen der Datenglättung ein.</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelTitle" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um einen Dialog mit Optionen der Datenglättung einzublenden.</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipTitle" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="InterpolationDialogInterpolationType" xml:space="preserve">
+    <value>Glättungsfilter auswählen</value>
+  </data>
+  <data name="AxisAccelerationInterpolated" xml:space="preserve">
+    <value>Beschleunigung (geglättet)</value>
+  </data>
+  <data name="AxisAccelerationXDirectionInterpolated" xml:space="preserve">
+    <value>Beschleunigung in x-Richtung (geglättet)</value>
+  </data>
+  <data name="AxisAccelerationYDirectionInterpolated" xml:space="preserve">
+    <value>Beschleunigung in y-Richtung (geglättet)</value>
+  </data>
+  <data name="AxisVelocityInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit (geglättet)</value>
+  </data>
+  <data name="AxisVelocityXDirectionInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit in x-Richtung (geglättet)</value>
+  </data>
+  <data name="AxisVelocityYDirectionInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit in y-Richtung (geglättet)</value>
+  </data>
+  <data name="DataGridAccelerationInterpolated" xml:space="preserve">
+    <value>Beschleunigung (geglättet)</value>
+  </data>
+  <data name="DataGridVelocityInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit (geglättet)</value>
+  </data>
+  <data name="DataGridXAccelerationInterpolated" xml:space="preserve">
+    <value>Beschleunigung (X) (geglättet)</value>
+  </data>
+  <data name="DataGridXVelocityInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit (X) (geglättet)</value>
+  </data>
+  <data name="DataGridYAccelerationInterpolated" xml:space="preserve">
+    <value>Beschleunigung (Y) (geglättet)</value>
+  </data>
+  <data name="DataGridYVelocityInterpolated" xml:space="preserve">
+    <value>Geschwindigkeit (Y) (geglättet)</value>
+  </data>
+  <data name="AxisAoverT" xml:space="preserve">
+    <value>a-t</value>
+  </data>
+  <data name="AxisAXoverT" xml:space="preserve">
+    <value>ax-t</value>
+  </data>
+  <data name="AxisAYoverT" xml:space="preserve">
+    <value>ay-t</value>
+  </data>
+  <data name="AxisVoverT" xml:space="preserve">
+    <value>v-t</value>
+  </data>
+  <data name="AxisVXoverT" xml:space="preserve">
+    <value>vx-t</value>
+  </data>
+  <data name="AxisVYoverT" xml:space="preserve">
+    <value>vy-t</value>
+  </data>
+  <data name="AxisXoverT" xml:space="preserve">
+    <value>x-t</value>
+  </data>
+  <data name="AxisYoverT" xml:space="preserve">
+    <value>y-t</value>
+  </data>
+  <data name="AxisYoverX" xml:space="preserve">
+    <value>x-y</value>
+  </data>
+  <data name="ChartWindowCustomAxisHeader" xml:space="preserve">
+    <value>Weitere</value>
+  </data>
+  <data name="ChartWindowCustomDiagrammTypes" xml:space="preserve">
+    <value>Weitere Diagramme</value>
+  </data>
+  <data name="ChartWindowInterpolationLineLabel" xml:space="preserve">
+    <value>Trendlinie</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleColored" xml:space="preserve">
+    <value>Bunt</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleSingleColored" xml:space="preserve">
+    <value>Einfarbig</value>
+  </data>
+  <data name="AxisDoverV" xml:space="preserve">
+    <value>d-v</value>
+  </data>
+  <data name="AxisDXoverVX" xml:space="preserve">
+    <value>dx-vx</value>
+  </data>
+  <data name="AxisDYoverVY" xml:space="preserve">
+    <value>dy-vy</value>
+  </data>
+  <data name="AxisLength" xml:space="preserve">
+    <value>Strecke</value>
+  </data>
+  <data name="AxisLengthX" xml:space="preserve">
+    <value>Strecke in x-Richtung</value>
+  </data>
+  <data name="AxisLengthY" xml:space="preserve">
+    <value>Strecke in y-Richtung</value>
+  </data>
+  <data name="AxisSoverT" xml:space="preserve">
+    <value>s-t</value>
+  </data>
+  <data name="AxisSoverV" xml:space="preserve">
+    <value>s-v</value>
+  </data>
+  <data name="AxisSXoverVX" xml:space="preserve">
+    <value>sx-vx</value>
+  </data>
+  <data name="AxisSYoverVY" xml:space="preserve">
+    <value>sy-vy</value>
+  </data>
+  <data name="AxisVoverA" xml:space="preserve">
+    <value>v-a</value>
+  </data>
+  <data name="AxisVXoverAX" xml:space="preserve">
+    <value>vx-ax</value>
+  </data>
+  <data name="AxisVYoverAY" xml:space="preserve">
+    <value>vy-ay</value>
+  </data>
+  <data name="ChartWindowChartProperties" xml:space="preserve">
+    <value>Eigenschaften</value>
+  </data>
+  <data name="ChartWindowInterpolationHeader" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ChartWindowInterpolationOptions" xml:space="preserve">
+    <value>Optionen</value>
+  </data>
+  <data name="ChartWindowOrtsraumHeader" xml:space="preserve">
+    <value>Ortsraum</value>
+  </data>
+  <data name="ChartWindowPhasenraumHeader" xml:space="preserve">
+    <value>Phasenraum</value>
   </data>
 </root>

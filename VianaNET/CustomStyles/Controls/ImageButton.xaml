@@ -18,7 +18,7 @@
   </Style>
 
   <SolidColorBrush x:Key="ForegroundColorBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.ForegroundColor}"/>
-  <SolidColorBrush x:Key="NormalBorderBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.NormalBorder}"></SolidColorBrush>
+  <SolidColorBrush x:Key="NormalBorderBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.NormalBorder}"/>
   <SolidColorBrush x:Key="LightBorderBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.LightBorder}"/>
   <SolidColorBrush x:Key="PlusLightBorderBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.PlusLightBorder}"/>
   <SolidColorBrush x:Key="DisabledBorderBrush" Color="{x:Static Viana:ImageButtonDefaultStylePallet.DisabledBorder}"/>
@@ -70,12 +70,12 @@
 
             <StackPanel x:Name="dockPanel" Orientation="Horizontal">
 
-              <TextBlock x:Name="textContent" TextWrapping="Wrap" Text="{TemplateBinding Content}" TextAlignment="Center"/>
-
+ 
               <!--<ContentPresenter  x:Name="_Content" DockPanel.Dock="Right" Margin="2"
 								HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
 
               <Image x:Name="image" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{TemplateBinding ImageSource}" Stretch="None" />
+              <TextBlock  Margin="2" x:Name="textContent" TextWrapping="Wrap" Text="{TemplateBinding Content}" TextAlignment="Center"/>
 
             </StackPanel>
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Media;
 using AvalonDock;
 using System.Windows.Data;
 using WPFLocalizeExtension.Extensions;
+using Visifire.Charts;
 
 namespace VianaNET
 {
@@ -23,13 +23,6 @@ namespace VianaNET
     #region FIELDS
 
     private bool isInitialized;
-
-    private ScatterSeries scatterSeries;
-    private LineSeries lineSeries;
-    private AreaSeries areaSeries;
-    private BubbleSeries bubbleSeries;
-    private PieSeries pieSeries;
-    private ColumnSeries columnSeries;
 
     #endregion //FIELDS
 
@@ -50,87 +43,23 @@ namespace VianaNET
 
     private void CreateDataSeries()
     {
-      this.scatterSeries = new ScatterSeries();
-      this.lineSeries = new LineSeries();
-      this.pieSeries = new PieSeries();
-      this.columnSeries = new ColumnSeries();
-      this.bubbleSeries = new BubbleSeries();
-      this.areaSeries = new AreaSeries();
-
       // Set localized Title Binding
       LocTextExtension locTitle = new LocTextExtension("VianaNET:Labels:ChartWindowChartSeries");
 
-      // Set Itemssource Bindung
-      Binding itemsSourceBinding = new Binding();
-      itemsSourceBinding.Source = VideoData.Instance;
-      itemsSourceBinding.Mode = BindingMode.OneWay;
-      itemsSourceBinding.Path = new PropertyPath("Samples");
-
-      LinearAxis xAxis = new LinearAxis();
-      xAxis.Orientation = AxisOrientation.X;
-      LocTextExtension locXAxisTitle = new LocTextExtension("VianaNET:Labels:AxisDistanceX");
-      locXAxisTitle.SetBinding(xAxis, LinearAxis.TitleProperty);
-      xAxis.TitleStyle = (Style)this.FindResource("VianaAxisLabelStyle");
-
-      LinearAxis yAxis = new LinearAxis();
-      yAxis.Orientation = AxisOrientation.Y;
-      LocTextExtension locYAxisTitle = new LocTextExtension("VianaNET:Labels:AxisDistanceY");
-      locYAxisTitle.SetBinding(yAxis, LinearAxis.TitleProperty);
-      yAxis.TitleStyle = (Style)this.FindResource("VianaAxisLabelStyle");
-
-      locTitle.SetBinding(this.scatterSeries, ScatterSeries.TitleProperty);
-      this.scatterSeries.IndependentAxis = xAxis;
-      this.scatterSeries.DependentRangeAxis = yAxis;
-      this.scatterSeries.SetBinding(ScatterSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.scatterSeries.IndependentValuePath = "DistanceX";
-      this.scatterSeries.DependentValuePath = "DistanceY";
-      this.scatterSeries.IsSelectionEnabled = true;
-
-      locTitle.SetBinding(this.lineSeries, LineSeries.TitleProperty);
-      this.lineSeries.IndependentAxis = xAxis;
-      this.lineSeries.DependentRangeAxis = yAxis;
-      this.lineSeries.SetBinding(LineSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.lineSeries.IndependentValuePath = "DistanceX";
-      this.lineSeries.DependentValuePath = "DistanceY";
-      this.lineSeries.IsSelectionEnabled = true;
-
-      locTitle.SetBinding(this.pieSeries, PieSeries.TitleProperty);
-      //this.pieSeries.IndependentAxis = xAxis;
-      //this.pieSeries.DependentRangeAxis = yAxis;
-      this.pieSeries.SetBinding(PieSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.pieSeries.IndependentValuePath = "DistanceX";
-      this.pieSeries.DependentValuePath = "DistanceY";
-      this.pieSeries.IsSelectionEnabled = true;
-
-      locTitle.SetBinding(this.columnSeries, ColumnSeries.TitleProperty);
-      this.columnSeries.IndependentAxis = xAxis;
-      this.columnSeries.DependentRangeAxis = yAxis;
-      this.columnSeries.SetBinding(ColumnSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.columnSeries.IndependentValuePath = "DistanceX";
-      this.columnSeries.DependentValuePath = "DistanceY";
-      this.columnSeries.IsSelectionEnabled = true;
-
-      locTitle.SetBinding(this.bubbleSeries, BubbleSeries.TitleProperty);
-      this.bubbleSeries.IndependentAxis = xAxis;
-      this.bubbleSeries.DependentRangeAxis = yAxis;
-      this.bubbleSeries.SetBinding(BubbleSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.bubbleSeries.IndependentValuePath = "DistanceX";
-      this.bubbleSeries.DependentValuePath = "DistanceY";
-      this.bubbleSeries.IsSelectionEnabled = true;
-
-      locTitle.SetBinding(this.areaSeries, AreaSeries.TitleProperty);
-      this.areaSeries.IndependentAxis = xAxis;
-      this.areaSeries.DependentRangeAxis = yAxis;
-      this.areaSeries.SetBinding(AreaSeries.ItemsSourceProperty, itemsSourceBinding);
-      this.areaSeries.IndependentValuePath = "DistanceX";
-      this.areaSeries.DependentValuePath = "DistanceY";
-      this.areaSeries.IsSelectionEnabled = true;
-
-      this.DataChart.Series.Add(this.scatterSeries);
+      this.DefaultSeries.MovingMarkerEnabled = true;
+      this.DefaultSeries.SelectionEnabled = true;
+      this.DefaultSeries.SelectionMode = SelectionModes.Multiple;
+      this.DefaultSeries.ShowInLegend = true;
+      this.DefaultSeries.RenderAs = RenderAs.Point;
     }
 
     void VideoData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+      if (e.PropertyName == "Interpolation")
+      {
+        this.Refresh();
+      }
+
       //ScatterSeries data = ((ScatterSeries)this.DataChart.Series[0]);
       //BindingExpression be = data.GetBindingExpression(ScatterSeries.ItemsSourceProperty);
       //be.UpdateTarget();
@@ -160,6 +89,7 @@ namespace VianaNET
     public void Refresh()
     {
       UpdateChartProperties();
+      RefreshSeries();
     }
 
     #endregion //PUBLICMETHODS
@@ -185,74 +115,241 @@ namespace VianaNET
       UpdateSeriesWithXAxis();
     }
 
+    private void AxesContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      SetDefaultDiagramm();
+    }
+
+    private void SetDefaultDiagramm()
+    {
+      if (!this.IsInitialized)
+      {
+        return;
+      }
+
+      AxisType chartType = AxisType.YoverX;
+
+      if (this.TabOrtsraum.IsSelected)
+      {
+        DataAxis axis = (DataAxis)this.AxesContentOrtsraum.SelectedItem;
+        chartType = axis.Axis;
+      }
+      else if (this.TabPhasenraum.IsSelected)
+      {
+        DataAxis axis = (DataAxis)this.AxesContentPhasenraum.SelectedItem;
+        chartType = axis.Axis;
+      }
+      else if (this.TabOther.IsSelected)
+      {
+        DataAxis xAxis = (DataAxis)xAxisContent.SelectedItem;
+        DataAxis yAxis = (DataAxis)yAxisContent.SelectedItem;
+        xAxisContent.SelectedValue = xAxis.Axis;
+        yAxisContent.SelectedValue = yAxis.Axis;
+
+        // axes content already set, so return
+        return;
+      }
+
+      switch (chartType)
+      {
+        case AxisType.YoverX:
+          xAxisContent.SelectedValue = AxisType.DX;
+          yAxisContent.SelectedValue = AxisType.DY;
+          break;
+        case AxisType.XoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.PX;
+          break;
+        case AxisType.YoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.PY;
+          break;
+        case AxisType.VoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case AxisType.VXoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case AxisType.VYoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case AxisType.AoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.A;
+          break;
+        case AxisType.AXoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.AX;
+          break;
+        case AxisType.AYoverT:
+          xAxisContent.SelectedValue = AxisType.T;
+          yAxisContent.SelectedValue = AxisType.AY;
+          break;
+        case AxisType.VoverD:
+          xAxisContent.SelectedValue = AxisType.D;
+          yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case AxisType.VXoverDX:
+          xAxisContent.SelectedValue = AxisType.DX;
+          yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case AxisType.VYoverDY:
+          xAxisContent.SelectedValue = AxisType.DY;
+          yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case AxisType.VoverS:
+          xAxisContent.SelectedValue = AxisType.S;
+          yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case AxisType.VXoverSX:
+          xAxisContent.SelectedValue = AxisType.SX;
+          yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case AxisType.VYoverSY:
+          xAxisContent.SelectedValue = AxisType.SY;
+          yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case AxisType.AoverV:
+          xAxisContent.SelectedValue = AxisType.V;
+          yAxisContent.SelectedValue = AxisType.A;
+          break;
+        case AxisType.AXoverVX:
+          xAxisContent.SelectedValue = AxisType.VX;
+          yAxisContent.SelectedValue = AxisType.AX;
+          break;
+        case AxisType.AYoverVY:
+          xAxisContent.SelectedValue = AxisType.VY;
+          yAxisContent.SelectedValue = AxisType.AY;
+          break;
+      }
+    }
+
+
     private void UpdateSeriesWithXAxis()
     {
-      DataAxis axis = (DataAxis)xAxisContent.SelectedItem;
+      if (!this.isInitialized)
+      {
+        return;
+      }
 
       if (this.DataChart.Series.Count == 0)
       {
         return;
       }
 
-
-      if (this.DataChart.ActualAxes.Count == 0)
+      if (this.DataChart.AxesX.Count == 0)
       {
         return;
       }
 
-      if (this.DataChart.ActualAxes.Count >= 1)
+      DataAxis axis = (DataAxis)xAxisContent.SelectedItem;
+
+      if (this.DataChart.AxesX.Count >= 1)
       {
-        LinearAxis xAxis = this.DataChart.ActualAxes[0] as LinearAxis;
-        if (xAxis != null)
-        {
-          xAxis.Title = XAxisTitle.IsChecked ? axis.Description : null;
-          XAxisTitle.Text = axis.Description;
-        }
+        this.DataChart.AxesX[0].Title = XAxisTitle.IsChecked ? axis.Description : null;
+        XAxisTitle.Text = axis.Description;
       }
 
-      DataPointSeries series = this.DataChart.Series[0] as DataPointSeries;
+      DataMapping map = this.DefaultSeries.DataMappings[0];
+      DataMapping map2 = this.InterpolationSeries.DataMappings[0];
+
+      UpdateAxisMappings(axis, map, map2);
+
+      RefreshChartDataPoints();
+    }
+
+    private static void UpdateAxisMappings(DataAxis axis, DataMapping map, DataMapping map2)
+    {
       switch (axis.Axis)
       {
         case AxisType.I:
-          series.IndependentValuePath = "Framenumber";
+          map.Path = "Framenumber";
+          map2.Path = "Framenumber";
           break;
         case AxisType.T:
-          series.IndependentValuePath = "Timestamp";
+          map.Path = "Timestamp";
+          map2.Path = "Timestamp";
           break;
         case AxisType.PX:
-          series.IndependentValuePath = "CoordinateX";
+          map.Path = "CoordinateX";
+          map2.Path = "CoordinateX";
           break;
         case AxisType.PY:
-          series.IndependentValuePath = "CoordinateY";
+          map.Path = "CoordinateY";
+          map2.Path = "CoordinateY";
           break;
         case AxisType.D:
-          series.IndependentValuePath = "Distance";
+          map.Path = "Distance";
+          map2.Path = "Distance";
           break;
         case AxisType.DX:
-          series.IndependentValuePath = "DistanceX";
+          map.Path = "DistanceX";
+          map2.Path = "DistanceX";
           break;
         case AxisType.DY:
-          series.IndependentValuePath = "DistanceY";
+          map.Path = "DistanceY";
+          map2.Path = "DistanceY";
           break;
         case AxisType.V:
-          series.IndependentValuePath = "Velocity";
+          map.Path = "Velocity";
+          map2.Path = "VelocityI";
           break;
         case AxisType.VX:
-          series.IndependentValuePath = "VelocityX";
+          map.Path = "VelocityX";
+          map2.Path = "VelocityXI";
           break;
         case AxisType.VY:
-          series.IndependentValuePath = "VelocityY";
+          map.Path = "VelocityY";
+          map2.Path = "VelocityYI";
+          break;
+        case AxisType.VI:
+          map.Path = "VelocityI";
+          map2.Path = "VelocityI";
+          break;
+        case AxisType.VXI:
+          map.Path = "VelocityXI";
+          map2.Path = "VelocityXI";
+          break;
+        case AxisType.VYI:
+          map.Path = "VelocityYI";
+          map2.Path = "VelocityYI";
           break;
         case AxisType.A:
-          series.IndependentValuePath = "Acceleration";
+          map.Path = "Acceleration";
+          map2.Path = "AccelerationI";
           break;
         case AxisType.AX:
-          series.IndependentValuePath = "AccelerationX";
+          map.Path = "AccelerationX";
+          map2.Path = "AccelerationXI";
           break;
         case AxisType.AY:
-          series.IndependentValuePath = "AccelerationY";
+          map.Path = "AccelerationY";
+          map2.Path = "AccelerationYI";
+          break;
+        case AxisType.AI:
+          map.Path = "AccelerationI";
+          map2.Path = "AccelerationI";
+          break;
+        case AxisType.AXI:
+          map.Path = "AccelerationXI";
+          map2.Path = "AccelerationXI";
+          break;
+        case AxisType.AYI:
+          map.Path = "AccelerationYI";
+          map2.Path = "AccelerationYI";
           break;
       }
+    }
+
+    private void RefreshChartDataPoints()
+    {
+      this.DefaultSeries.DataSource = null;
+      this.DefaultSeries.DataSource = VideoData.Instance.Samples;
+      this.InterpolationSeries.DataSource = null;
+      this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
     }
 
     private void yAxisContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -262,67 +359,30 @@ namespace VianaNET
 
     private void UpdateSeriesWithYAxis()
     {
-      DataAxis axis = (DataAxis)yAxisContent.SelectedItem;
+      if (!this.isInitialized)
+      {
+        return;
+      }
 
       if (this.DataChart.Series.Count == 0)
       {
         return;
       }
 
-      DataPointSeries series = this.DataChart.Series[0] as DataPointSeries;
+      DataAxis axis = (DataAxis)yAxisContent.SelectedItem;
+      this.SeriesTitle.Text = axis.Description;
 
-      if (this.DataChart.ActualAxes.Count >= 2)
+      if (this.DataChart.AxesY.Count >= 1)
       {
-        LinearAxis yAxis = this.DataChart.ActualAxes[1] as LinearAxis;
-        if (yAxis != null)
-        {
-          yAxis.Title = YAxisTitle.IsChecked ? axis.Description : null;
-          YAxisTitle.Text = axis.Description;
-        }
+        this.DataChart.AxesY[0].Title = YAxisTitle.IsChecked ? axis.Description : null;
+        YAxisTitle.Text = axis.Description;
       }
 
-      switch (axis.Axis)
-      {
-        case AxisType.I:
-          series.DependentValuePath = "Framenumber";
-          break;
-        case AxisType.T:
-          series.DependentValuePath = "Timestamp";
-          break;
-        case AxisType.PX:
-          series.DependentValuePath = "CoordinateX";
-          break;
-        case AxisType.PY:
-          series.DependentValuePath = "CoordinateY";
-          break;
-        case AxisType.D:
-          series.DependentValuePath = "Distance";
-          break;
-        case AxisType.DX:
-          series.DependentValuePath = "DistanceX";
-          break;
-        case AxisType.DY:
-          series.DependentValuePath = "DistanceY";
-          break;
-        case AxisType.V:
-          series.DependentValuePath = "Velocity";
-          break;
-        case AxisType.VX:
-          series.DependentValuePath = "VelocityX";
-          break;
-        case AxisType.VY:
-          series.DependentValuePath = "VelocityY";
-          break;
-        case AxisType.A:
-          series.DependentValuePath = "Acceleration";
-          break;
-        case AxisType.AX:
-          series.DependentValuePath = "AccelerationX";
-          break;
-        case AxisType.AY:
-          series.DependentValuePath = "AccelerationY";
-          break;
-      }
+      DataMapping map = this.DefaultSeries.DataMappings[1];
+      DataMapping map2 = this.InterpolationSeries.DataMappings[1];
+      UpdateAxisMappings(axis, map, map2);
+
+      RefreshChartDataPoints();
     }
 
     #endregion //EVENTHANDLER
@@ -342,25 +402,16 @@ namespace VianaNET
     {
       if (this.isInitialized)
       {
-        this.DataChart.Title = ChartTitle.IsChecked ? ChartTitle.Text : null;
-        this.DataChart.LegendTitle = LegendTitle.IsChecked ? LegendTitle.Text : null;
-        ((VianaChart)this.DataChart).IsShowingLegend =
-          this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked ? Visibility.Visible : Visibility.Collapsed;
-        foreach (DataPointSeries series in this.DataChart.Series)
-        {
-          series.Title = SeriesTitle.IsChecked ? SeriesTitle.Text : null;
-        }
-        //((ScatterSeries)this.DataChart.Series[0]).ItemsSource = null;
-        //((ScatterSeries)this.DataChart.Series[0]).ItemsSource = VideoData.Instance.Samples;
-        //((ScatterSeries)this.DataChart.Series[0]).Refresh();
+        this.DataChart.Titles[0].Text = ChartTitle.IsChecked ? ChartTitle.Text : null;
+        this.DataChart.Legends[0].Title = LegendTitle.IsChecked ? LegendTitle.Text : null;
+        this.DataChart.Legends[0].Enabled = this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked ? true : false;
+        this.DefaultSeries.LegendText = SeriesTitle.IsChecked ? SeriesTitle.Text : null;
 
-
-        if (this.DataChart.ActualAxes.Count > 0)
+        if (this.DataChart.AxesX.Count > 0)
         {
-          LinearAxis xAxis = this.DataChart.ActualAxes[0] as LinearAxis;
+          Axis xAxis = this.DataChart.AxesX[0] as Axis;
           xAxis.Title = XAxisTitle.IsChecked ? XAxisTitle.Text : null;
-          xAxis.ShowGridLines = XAxisShowGridLines.IsChecked();
-          var today = DateTime.Now.Date;
+          xAxis.Grids[0].Enabled = XAxisShowGridLines.IsChecked();
 
           if (null != xAxis)
           {
@@ -369,23 +420,30 @@ namespace VianaNET
               XAxisMinimum.Value = XAxisMaximum.Value;
             }
 
-            xAxis.Minimum = XAxisMinimum.IsChecked ? XAxisMinimum.Value : new double?();
+            xAxis.AxisMinimum = XAxisMinimum.IsChecked ? XAxisMinimum.Value : new double?();
 
             if (XAxisMaximum.Value < XAxisMinimum.Value)
             {
               XAxisMaximum.Value = XAxisMinimum.Value;
             }
 
-            xAxis.Maximum = XAxisMaximum.IsChecked ? XAxisMaximum.Value : new double?();
-            xAxis.Interval = XAxisInterval.IsChecked ? XAxisInterval.Value : new double?();
+            xAxis.AxisMaximum = XAxisMaximum.IsChecked ? XAxisMaximum.Value : new double?();
+            if (XAxisInterval.IsChecked)
+            {
+              xAxis.Interval = XAxisInterval.Value;
+            }
+            else
+            {
+              xAxis.Interval = double.NaN;
+            }
           }
         }
-        if (this.DataChart.ActualAxes.Count > 1)
+
+        if (this.DataChart.AxesY.Count > 0)
         {
-          LinearAxis yAxis = this.DataChart.ActualAxes[1] as LinearAxis;
+          Axis yAxis = this.DataChart.AxesY[0] as Axis;
           yAxis.Title = YAxisTitle.IsChecked ? YAxisTitle.Text : null;
-          yAxis.ShowGridLines = YAxisShowGridLines.IsChecked();
-          var today = DateTime.Now.Date;
+          yAxis.Grids[0].Enabled = YAxisShowGridLines.IsChecked();
 
           if (null != yAxis)
           {
@@ -394,15 +452,22 @@ namespace VianaNET
               YAxisMinimum.Value = YAxisMaximum.Value;
             }
 
-            yAxis.Minimum = YAxisMinimum.IsChecked ? YAxisMinimum.Value : new double?();
+            yAxis.AxisMinimum = YAxisMinimum.IsChecked ? YAxisMinimum.Value : new double?();
 
             if (YAxisMaximum.Value < YAxisMinimum.Value)
             {
               YAxisMaximum.Value = YAxisMinimum.Value;
             }
 
-            yAxis.Maximum = YAxisMaximum.IsChecked ? YAxisMaximum.Value : new double?();
-            yAxis.Interval = YAxisInterval.IsChecked ? YAxisInterval.Value : new double?();
+            yAxis.AxisMaximum = YAxisMaximum.IsChecked ? YAxisMaximum.Value : new double?();
+            if (YAxisInterval.IsChecked)
+            {
+              yAxis.Interval = YAxisInterval.Value;
+            }
+            else
+            {
+              yAxis.Interval = double.NaN;
+            }
           }
         }
       }
@@ -420,37 +485,69 @@ namespace VianaNET
       if (e.Source is RadioButton)
       {
         RadioButton checkedRadioButton = e.Source as RadioButton;
-        this.DataChart.Series.Clear();
-        this.AxisControls.Visibility = Visibility.Visible;
-        this.xAxisContentGrid.Visibility = Visibility.Visible;
-        if (checkedRadioButton.Name.Contains("Scatter"))
-        {
-          this.DataChart.Series.Add(this.scatterSeries);
-        }
-        else if (checkedRadioButton.Name.Contains("Line"))
-        {
-          this.DataChart.Series.Add(this.lineSeries);
-        }
-        else if (checkedRadioButton.Name.Contains("Pie"))
-        {
-          this.DataChart.Series.Add(this.pieSeries);
-          this.AxisControls.Visibility = Visibility.Hidden;
-          this.xAxisContentGrid.Visibility = Visibility.Hidden;
-        }
-        else if (checkedRadioButton.Name.Contains("Column"))
-        {
-          this.DataChart.Series.Add(this.columnSeries);
-        }
-        else if (checkedRadioButton.Name.Contains("Bubble"))
-        {
-          this.DataChart.Series.Add(this.bubbleSeries);
-        }
-        else if (checkedRadioButton.Name.Contains("Area"))
-        {
-          this.DataChart.Series.Add(this.areaSeries);
-        }
-
+        UpdateChartStyle(checkedRadioButton);
         this.RefreshSeries();
+      }
+    }
+
+    private void UpdateChartStyle(RadioButton checkedRadioButton)
+    {
+      this.AxisControls.Visibility = Visibility.Visible;
+      this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
+      //this.InterpolationLineCheckBox.Visibility = Visibility.Visible;
+
+      if (checkedRadioButton.Name.Contains("Scatter"))
+      {
+        this.DefaultSeries.RenderAs = RenderAs.Point;
+        this.InterpolationSeries.RenderAs = RenderAs.Spline;
+      }
+      else if (checkedRadioButton.Name.Contains("Line"))
+      {
+        if (Interpolation.Instance.IsInterpolatingData)
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Point;
+          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+        }
+        else
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Spline;
+        }
+      }
+      else if (checkedRadioButton.Name.Contains("Pie"))
+      {
+        Interpolation.Instance.IsInterpolatingData = false;
+        this.DefaultSeries.RenderAs = RenderAs.Pie;
+        this.AxisControls.Visibility = Visibility.Hidden;
+        this.OtherContentGrid.RowDefinitions[0].Height = new GridLength(0);
+      }
+      else if (checkedRadioButton.Name.Contains("Column"))
+      {
+        if (Interpolation.Instance.IsInterpolatingData)
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Column;
+          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+        }
+        else
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Column;
+        }
+      }
+      else if (checkedRadioButton.Name.Contains("Bubble"))
+      {
+        this.DefaultSeries.RenderAs = RenderAs.Bubble;
+        this.InterpolationSeries.RenderAs = RenderAs.Spline;
+      }
+      else if (checkedRadioButton.Name.Contains("Area"))
+      {
+        if (Interpolation.Instance.IsInterpolatingData)
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Area;
+          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+        }
+        else
+        {
+          this.DefaultSeries.RenderAs = RenderAs.Area;
+        }
       }
     }
 
@@ -459,6 +556,59 @@ namespace VianaNET
       UpdateSeriesWithXAxis();
       UpdateSeriesWithYAxis();
       UpdateChartProperties();
+    }
+
+    private void InterpolationLineCheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+      if (!this.isInitialized)
+      {
+        return;
+      }
+
+      this.InterpolationSeries.Enabled = Interpolation.Instance.IsInterpolatingData;
+
+      // Update static property
+      //Interpolation.Instance.IsInterpolatingData = this.InterpolationLineCheckBox.IsChecked.Value;
+
+      if (this.RadioChartStyleScatter.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStyleScatter);
+      }
+      else if (this.RadioChartStyleLine.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStyleLine);
+      }
+      else if (this.RadioChartStyleArea.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStyleArea);
+      }
+      else if (this.RadioChartStyleColumn.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStyleColumn);
+      }
+      else if (this.RadioChartStyleBubble.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStyleBubble);
+      }
+      else if (this.RadioChartStylePie.IsChecked.Value)
+      {
+        this.UpdateChartStyle(this.RadioChartStylePie);
+      }
+    }
+
+    private void AxesExpander_Collapsed(object sender, RoutedEventArgs e)
+    {
+      SetDefaultDiagramm();
+    }
+
+    private void InterpolationOptionsButton_Click(object sender, RoutedEventArgs e)
+    {
+      Interpolation.ShowInterpolationOptionsDialog();
+    }
+
+    private void ChartContentTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      SetDefaultDiagramm();
     }
 
     ///////////////////////////////////////////////////////////////////////////////

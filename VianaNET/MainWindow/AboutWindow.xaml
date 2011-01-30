@@ -6,20 +6,17 @@
     lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
     Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+    Icon="/VianaNET;component/Images/VianaNET.ico"
     Title="{lex:LocText VianaNET:Labels:AboutBoxTitle}">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="66"/>
       <RowDefinition Height="80"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-      <Image Source="/VianaNET;component/Images/LogoFU.png" />
-    </StackPanel>
-    <Border Grid.Row="1" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80" Background="{StaticResource BannerBackgroundBrush}">
+    <Border Grid.Row="0" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80" Background="{StaticResource BannerBackgroundBrush}">
       <StackPanel Orientation="Horizontal">
         <Image Width="64" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
         <StackPanel Orientation="Vertical">
@@ -34,7 +31,7 @@
         </StackPanel>
       </StackPanel>
     </Border>
-    <Border Grid.Row="2" Background="{StaticResource MainBackgroundBrush}">
+    <Border Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*"/>

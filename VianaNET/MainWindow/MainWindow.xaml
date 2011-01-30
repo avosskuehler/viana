@@ -8,7 +8,6 @@
     lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
     Icon="/VianaNET;component/Images/VianaNET.ico"
-    IconVisibility="Collapsed"
     Height="700" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
     Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="RibbonWindow_Closing">
 
@@ -35,7 +34,7 @@
                          ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonSaveToolTipDescription}" 
                          SmallImageSource="/VianaNET;component/Images/Save16.png" 
                          LargeImageSource="/VianaNET;component/Images/Save32.png" />
-        
+
         <r:RibbonCommand x:Key="ButtonVideoWindow" 
                          CanExecute="VideoWindowCommand_CanExecute" 
                          Executed="VideoWindowCommand_Executed" 
@@ -256,6 +255,21 @@
                          SmallImageSource="/VianaNET;component/Images/Recalculate16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonIsInterpolatingData" 
+                         CanExecute="ButtonIsInterpolatingDataCommand_CanExecute" 
+                         Executed="ButtonIsInterpolatingDataCommand_Executed"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonIsInterpolatingDataLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonIsInterpolatingDataLabelDescription}" 
+                         LargeImageSource="/VianaNET;component/Images/InterpolateData32.png" 
+                         SmallImageSource="/VianaNET;component/Images/InterpolateData16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonIsInterpolatingDataToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonIsInterpolatingDataToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonInterpolationProperties" 
+                         Executed="ButtonInterpolationProperties_Executed"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonInterpolationPropertiesLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonInterpolationPropertiesLabelDescription}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonInterpolationPropertiesToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonInterpolationPropertiesToolTipDescription}" />
 
         <r:RibbonCommand x:Key="ButtonOtherOptions" 
                          CanExecute="ButtonOtherOptionsCommand_CanExecute" 
@@ -365,9 +379,9 @@
       <r:Ribbon.QuickAccessToolBar>
         <r:RibbonQuickAccessToolBar>
           <!--<r:RibbonButton Command="{StaticResource QATButtonSave}" />-->
-          <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
-          <r:RibbonButton Command="{StaticResource ButtonDatagridWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
-          <r:RibbonButton Command="{StaticResource ButtonChartWindow}" r:RibbonQuickAccessToolBar.Placement="InCustomizeMenuAndToolBar"/>
+          <r:RibbonButton Command="{StaticResource ButtonVideoWindow}"/>
+          <r:RibbonButton Command="{StaticResource ButtonDatagridWindow}"/>
+          <r:RibbonButton Command="{StaticResource ButtonChartWindow}"/>
         </r:RibbonQuickAccessToolBar>
       </r:Ribbon.QuickAccessToolBar>
       <r:Ribbon.ApplicationMenu>
@@ -577,6 +591,12 @@
           <r:RibbonButton Command="{StaticResource ButtonDeleteData}" />
           <r:RibbonButton Command="{StaticResource ButtonCalculateVelocity}" />
         </r:RibbonGroup>
+        <r:RibbonGroup HasDialogLauncher="True" Command="{StaticResource ButtonInterpolationProperties}">
+          <r:RibbonToggleButton 
+            Name="ButtonIsInterpolatingData"
+            IsChecked="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}}" 
+            Command="{StaticResource ButtonIsInterpolatingData}" />
+        </r:RibbonGroup>
         <r:RibbonGroup>
           <r:RibbonGroup.Command>
             <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupDatagridOptionsLabelTitle}" />
@@ -653,7 +673,7 @@
           <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ad:DockingManager x:Name="dockingManager" Grid.Row="0">
-          <ad:DockablePane x:Name="modulePane" RequestBringIntoView="modulePane_RequestBringIntoView" ShowHeader="False"/>
+          <ad:DockablePane x:Name="modulePane" RequestBringIntoView="modulePane_RequestBringIntoView" ShowHeader="False" />
         </ad:DockingManager>
         <StatusBar VerticalAlignment="Bottom" Grid.Row="1">
           <StatusBarItem>
@@ -669,6 +689,7 @@
               Source={x:Static Viana:StatusBarContent.Instance}}"/>
           </StatusBarItem>
         </StatusBar>
+
       </Grid>
     </ContentControl>
   </DockPanel>

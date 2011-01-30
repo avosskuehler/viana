@@ -104,8 +104,10 @@
     {
       this.liveVideoController.SelectDevice(
         Video.Instance.VideoCapturerElement.VideoCaptureDevice,
-        this.CompressorComboBox.SelectedValue.ToString(),
         this.VideoHost);
+
+      this.liveVideoController.VideoCompressorName =
+        this.CompressorComboBox.SelectedValue.ToString();
     }
 
     private void Record_Click(object sender, RoutedEventArgs e)
@@ -239,10 +241,7 @@
     {
       if (this.liveVideoController != null)
       {
-        this.liveVideoController.SelectDevice(
-          Video.Instance.VideoCapturerElement.VideoCaptureDevice,
-          this.CompressorComboBox.SelectedValue.ToString(),
-          this.VideoHost);
+        this.liveVideoController.VideoCompressorName = this.CompressorComboBox.SelectedValue.ToString();
       }
     }
 
@@ -252,6 +251,11 @@
     {
       this.DialogResult = true;
       this.Close();
+    }
+
+    private void CompressionOptionsButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.liveVideoController.ShowVideoCompressorOptionsDialog();
     }
 
     ///////////////////////////////////////////////////////////////////////////////

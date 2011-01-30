@@ -112,6 +112,8 @@ namespace VianaNET
       VideoData.Instance.Reset();
       Video.Instance.ImageProcessing.Reset();
       this.BlobsControl.UpdateDataPoints();
+      this.timelineSlider.ResetSelection();
+
       ShowOrHideCalibration(Visibility.Hidden);
       ShowOrHideClipRegion(Visibility.Hidden);
 
@@ -377,7 +379,23 @@ namespace VianaNET
 
     private void btnRecord_Click(object sender, RoutedEventArgs e)
     {
-      //Video.Instance.Record();
+      bool wasCapturing = false;
+      if (Video.Instance.VideoMode == VideoMode.Capture)
+      {
+        wasCapturing = true;
+        this.SetVideoMode(VideoMode.None);
+      }
+
+      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
+      if (saveVideoDialog.ShowDialog().Value)
+      {
+        this.SetVideoMode(VideoMode.File);
+        this.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+      }
+      else if (wasCapturing)
+      {
+        this.SetVideoMode(VideoMode.Capture);
+      }
     }
 
     private void btnStart_Click(object sender, RoutedEventArgs e)

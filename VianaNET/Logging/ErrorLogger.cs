@@ -3,6 +3,7 @@
   using System;
   using System.IO;
   using System.Windows;
+  using System.Text;
 
   /// <summary>
   /// This class is used to log errors and exceptions into a file that can 
@@ -121,15 +122,17 @@
       message = ex.Message;
       Exception innerException = ex;
 
+      WriteLine("------------------------------------");
+
       // Loop inner exceptions.
       while (innerException.InnerException != null)
       {
         innerException = innerException.InnerException;
-        message = innerException.Message + Environment.NewLine + message;
+        WriteLine(GetLogEntryForException(innerException));
       }
 
-      WriteLine("Error in: " + ex.TargetSite.ToString());
-      WriteLine("Message: " + message);
+      message = GetLogEntryForException(innerException);
+      WriteLine(message);
       //if (showMessageBox)
       {
         MessageBox.Show(message);
@@ -173,6 +176,23 @@
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
     #region PRIVATEMETHODS
+
+    /// <summary>
+    /// Returns a human readable string for the exception
+    /// </summary>
+    /// <param name="e">An <see cref="Exception"/> to be processed</param>
+    /// <returns>A human readable <see cref="String"/> for the exception</returns>
+    private static string GetLogEntryForException(Exception e)
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.AppendLine("Message: " + e.Message);
+      sb.AppendLine("Source: " + e.Source);
+      sb.AppendLine("TargetSite: " + e.TargetSite.ToString());
+      sb.AppendLine("StackTrace: " + e.StackTrace);
+
+      return sb.ToString();
+    }
+
     #endregion //PRIVATEMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////

@@ -81,7 +81,10 @@ namespace VianaNET
 
         MediaInfo videoHeader = new MediaInfo();
         videoHeader.Open(fileName);
-
+        //string parameters=videoHeader.Option("Info_Parameters"); 
+        string informString = videoHeader.Inform();
+        ErrorLogger.WriteLine("###################### LOAD VIDEO ##########################");
+        ErrorLogger.WriteLine(informString);
         NumberFormatInfo nfi = new NumberFormatInfo();
         nfi.NumberDecimalSeparator = ".";
         string frameRateString = videoHeader.Get(StreamKind.Video, 0, "FrameRate");
@@ -106,8 +109,8 @@ namespace VianaNET
       }
       catch (Exception ex)
       {
-        this.Dispose();
         ErrorLogger.ProcessException(ex, false);
+        this.Dispose();
       }
 
       return true;
@@ -122,9 +125,9 @@ namespace VianaNET
 
       this.filterGraph = (IFilterGraph2)new FilterGraph();
 
-#if DEBUG
+      //#if DEBUG
       this.rotEntry = new DsROTEntry(this.filterGraph);
-#endif
+      //#endif
 
       //IFileSourceFilter urlSourceFilter = new URLReader() as IFileSourceFilter;
       //IBaseFilter sourceFilter = urlSourceFilter as IBaseFilter;
@@ -322,7 +325,10 @@ namespace VianaNET
         // Release the thread (if the thread was started)
         if (manualResetEvent != null)
         {
-          manualResetEvent.Set();
+          if (!manualResetEvent.SafeWaitHandle.IsClosed)
+          {
+            manualResetEvent.Set();
+          }
         }
       }
       catch (Exception ex)
@@ -331,7 +337,13 @@ namespace VianaNET
       }
       finally
       {
-        manualResetEvent = null;
+        if (manualResetEvent != null)
+        {
+          if (!manualResetEvent.SafeWaitHandle.IsClosed)
+          {
+            manualResetEvent.Close();
+          }
+        }
       }
     }
 
@@ -485,8 +497,8 @@ namespace VianaNET
                 hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 0)
                 )
             {
-              // Write the event name to the debug window
-              Debug.WriteLine(ec.ToString());
+              //// Write the event name to the debug window
+              //Debug.WriteLine(ec.ToString());
 
               // If the clip is finished playing
               if (ec == EventCode.Complete)
@@ -700,7 +712,6 @@ namespace VianaNET
       {
         if (this.mediaSeeking == null)
         {
-          ErrorLogger.WriteLine("MediaSeekingInterface not implemented");
           return 0;
         }
 

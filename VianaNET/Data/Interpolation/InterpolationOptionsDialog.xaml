@@ -1,0 +1,46 @@
+﻿<Window x:Class="VianaNET.InterpolationOptionsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Viana="clr-namespace:VianaNET"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    lex:LocalizeDictionary.DesignCulture="de"
+        Name="window"
+   ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Icon="/VianaNET;component/Images/VianaNET.ico" 
+    Height="350" Width="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:LocText VianaNET:Labels:InterpolationDialogTopTitle}"
+        Closing="Dialog_Closing">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Viana:TopFrame x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:InterpolationDialogTitle}"/>
+    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+          <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+              <Label Content="{lex:LocText VianaNET:Labels:InterpolationDialogInterpolationType}"/>
+              <ComboBox 
+                Name="InterpolationFilterCombo" 
+                ItemsSource="{Binding Path=Values, Source={x:Static Viana:Interpolation.Filter}}"
+                DisplayMemberPath="FilterType" 
+                SelectionChanged="InterpolationFilterCombo_SelectionChanged"/>
+            </StackPanel>
+            <Grid Margin="5"  Name="InterpolationFilterPropertyGrid"/>
+          </StackPanel>
+        </Grid>
+        <Button Name="OK"  Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,110,0" Height="23" Width="80" IsDefault="True" Content="{lex:LocText VianaNET:Labels:OK}" Click="OK_Click" />
+        <Button Name="Cancel" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,0" Height="23" Width="80" IsDefault="False" Content="{lex:LocText VianaNET:Labels:Cancel}" Click="Cancel_Click" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

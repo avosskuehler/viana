@@ -41,7 +41,6 @@ namespace VianaNET
 
       this.ProcessedImageControl.Effect = this.thresholdEffect;
       this.OverlayImageControl.Effect = this.backgroundEffect;
-
       Video.Instance.ImageProcessing.PropertyChanged += new PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
       Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(Calibration_PropertyChanged);
       VideoData.Instance.PropertyChanged += new PropertyChangedEventHandler(VideoData_PropertyChanged);

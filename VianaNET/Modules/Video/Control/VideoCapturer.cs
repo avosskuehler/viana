@@ -335,9 +335,9 @@
           ErrorLogger.WriteLine("Error in capGraph.SetFiltergraph. Could not build graph. Message: " + DsError.GetErrorText(hr));
         }
 
-#if DEBUG
+//#if DEBUG
         this.rotEntry = new DsROTEntry(this.filterGraph);
-#endif
+//#endif
 
         // Add the video device
         hr = this.filterGraph.AddSourceFilterForMoniker(dev.Mon, null, "Video input", out this.captureFilter);

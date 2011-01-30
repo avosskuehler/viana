@@ -86,34 +86,40 @@ namespace VianaNET
         Point calibratedPoint = CalibrateSample(this.Samples[i]);
         this.Samples[i].DistanceX = calibratedPoint.X;
         this.Samples[i].DistanceY = calibratedPoint.Y;
+        this.Samples[i].Length = 0d;
+        this.Samples[i].LengthX = 0d;
+        this.Samples[i].LengthY = 0d;
 
         if (i == 0)
         {
           continue;
         }
 
-        if (i == 1)
-        {
-          this.Samples[1].Distance = GetDistance(this.Samples[1], this.Samples[0]);
-          this.Samples[1].Velocity = GetVelocity(this.Samples[1], this.Samples[0]);
-          this.Samples[1].VelocityX = GetXVelocity(this.Samples[1], this.Samples[0]);
-          this.Samples[1].VelocityY = GetYVelocity(this.Samples[1], this.Samples[0]);
-
-          continue;
-        }
-
         DataSample previousSample = this.Samples[i - 1];
+
         this.Samples[i].Distance = GetDistance(this.Samples[i], previousSample);
+        this.Samples[i].Length = GetLength(this.Samples[i], previousSample);
+        this.Samples[i].LengthX = GetXLength(this.Samples[i], previousSample);
+        this.Samples[i].LengthY = GetYLength(this.Samples[i], previousSample);
         this.Samples[i].Velocity = GetVelocity(this.Samples[i], previousSample);
         this.Samples[i].VelocityX = GetXVelocity(this.Samples[i], previousSample);
         this.Samples[i].VelocityY = GetYVelocity(this.Samples[i], previousSample);
+
+        if (i == 1)
+        {
+          continue;
+        }
+
         this.Samples[i].Acceleration = GetAcceleration(this.Samples[i], previousSample);
         this.Samples[i].AccelerationX = GetXAcceleration(this.Samples[i], previousSample);
         this.Samples[i].AccelerationY = GetYAcceleration(this.Samples[i], previousSample);
       }
 
+      Interpolation.Instance.CurrentInterpolationFilter.CalculateInterpolatedValues(this.Samples);
+
       // Refresh DataBinding to DataGrid.
       this.OnPropertyChanged("Samples");
+      this.OnPropertyChanged("Interpolation");
     }
 
     public void AddPoint(Point newSamplePosition)
@@ -158,17 +164,17 @@ namespace VianaNET
 
     private static double GetYAcceleration(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.VelocityY - previousSample.VelocityY) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.VelocityY.Value - previousSample.VelocityY.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
     }
 
     private static double GetXAcceleration(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.VelocityX - previousSample.VelocityX) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.VelocityX.Value - previousSample.VelocityX.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
     }
 
     private static double GetAcceleration(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.Velocity - previousSample.Velocity) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.Velocity.Value - previousSample.Velocity.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
     }
 
     private static double GetYVelocity(DataSample newSample, DataSample previousSample)
@@ -183,12 +189,32 @@ namespace VianaNET
 
     private static double GetVelocity(DataSample newSample, DataSample previousSample)
     {
-      return (newSample.Distance / (newSample.Timestamp - previousSample.Timestamp) * 1000);
+      double velocity = newSample.Distance / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return velocity;
     }
 
     private static double GetDistance(DataSample newSample, DataSample previousSample)
     {
-      return Math.Sqrt(Math.Pow(newSample.DistanceX - previousSample.DistanceY, 2) + Math.Pow(newSample.DistanceX - previousSample.DistanceX, 2));
+      double distance = Math.Sqrt(Math.Pow(newSample.DistanceY - previousSample.DistanceY, 2) + Math.Pow(newSample.DistanceX - previousSample.DistanceX, 2));
+      return distance;
+    }
+
+    private static double GetLength(DataSample newSample, DataSample previousSample)
+    {
+      double length = previousSample.Length + newSample.Distance;
+      return length;
+    }
+
+    private static double GetXLength(DataSample newSample, DataSample previousSample)
+    {
+      double lengthX = previousSample.LengthX + newSample.DistanceX;
+      return lengthX;
+    }
+
+    private static double GetYLength(DataSample newSample, DataSample previousSample)
+    {
+      double lengthY = previousSample.LengthY + newSample.DistanceY;
+      return lengthY;
     }
 
     public bool RemovePoint(long timeStamp)

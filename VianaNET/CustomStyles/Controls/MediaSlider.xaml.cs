@@ -197,6 +197,17 @@ namespace VianaNET
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
     #region PUBLICMETHODS
+
+    /// <summary>
+    /// Resets the selection range to 0 .. Maximum.
+    /// Selecting the whole data range.
+    /// </summary>
+    public void ResetSelection()
+    {
+      this.SelectionStart = 0;
+      this.SelectionEnd = this.Maximum;
+    }
+
     #endregion //PUBLICMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////

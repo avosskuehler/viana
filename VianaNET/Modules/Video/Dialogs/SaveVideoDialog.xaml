@@ -41,6 +41,7 @@
       <Button Name="RunAnalysisButton" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="2" Content="{lex:LocText VianaNET:Labels:SaveVideoDialogStartAnalysis}" IsEnabled="False" Click="RunAnalysisButton_Click" />
       <Label Grid.Column="2" Grid.Row="0" Width="110" Content="{lex:LocText VianaNET:Labels:SaveVideoDialogCompressorLabel}"/>
       <ComboBox Grid.Column="3" Grid.Row="0"  Name="CompressorComboBox" Margin="2" SelectionChanged="CompressorComboBox_SelectionChanged" />
+      <Viana:ImageButton Grid.Column="4" Grid.Row="0" x:Name="CompressionOptionsButton" ImageSource="/VianaNET;component/Images/Properties16.png" Margin="2" Click="CompressionOptionsButton_Click" />
       <Label Grid.Column="2" Grid.Row="1" Width="110" Content="{lex:LocText VianaNET:Labels:SaveVideoDialogFolderLabel}"/>
       <TextBox Grid.Column="3" Grid.Row="1" Name="FolderTextBox" Margin="2" IsReadOnly="True"/>
       <Label Grid.Column="2" Grid.Row="2" Width="110" Content="{lex:LocText VianaNET:Labels:SaveVideoDialogFilenameLabel}"/>

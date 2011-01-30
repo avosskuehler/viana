@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  	  xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
     xmlns:Viana="clr-namespace:VianaNET"
-    xmlns:WPFToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
     xmlns:lex="http://schemas.root-project.org/xaml/presentation"
     xmlns:sys="clr-namespace:System;assembly=mscorlib" 
     lex:LocalizeDictionary.DesignCulture="de"
@@ -18,13 +17,16 @@
     <Image Source="..\..\Images\Datagrid16.png" Height="16" Width="16"/>
   </ad:DockableContent.Icon>
   <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <WPFToolkit:DataGrid 
+    <DataGrid 
     AutoGenerateColumns="False" 
     Name="dataGrid"
     Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}"
+      VirtualizingStackPanel.IsVirtualizing="True"
+      EnableRowVirtualization="True"
+      EnableColumnVirtualization="True"
     ItemsSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" RowHeaderWidth="20" AlternationCount="1" CanUserDeleteRows="False">
-      <WPFToolkit:DataGrid.Columns>
-        <WPFToolkit:DataGridTextColumn
+      <DataGrid.Columns>
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridFramenumber}" 
                    Binding="{Binding Framenumber, StringFormat=N0}"    
                    HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
@@ -33,7 +35,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="Framenumber"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridTimestamp}" 
                    Binding="{Binding 
         Path=Timestamp, 
@@ -45,7 +47,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="Timestamp"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridXCoordinate}" 
                     Binding="{Binding 
         Path=CoordinateX, 
@@ -57,7 +59,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="CoordinateX"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridYCoordinate}" 
                     Binding="{Binding 
         Path=CoordinateY, 
@@ -69,7 +71,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="CoordinateY"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridDistance}" 
                    Binding="{Binding 
         Path=Distance, 
@@ -81,7 +83,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="Distance"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridXDistance}" 
                    Binding="{Binding 
         Path=DistanceX, 
@@ -93,7 +95,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="DistanceX"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridYDistance}" 
                    Binding="{Binding 
         Path=DistanceY, 
@@ -105,7 +107,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="DistanceY"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridVelocity}" 
                    Binding="{Binding 
         Path=Velocity, 
@@ -117,7 +119,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="Velocity"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridXVelocity}" 
                    Binding="{Binding 
         Path=VelocityX, 
@@ -129,7 +131,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="VelocityX"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridYVelocity}" 
                    Binding="{Binding 
         Path=VelocityY, 
@@ -141,7 +143,46 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="VelocityY"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
+          Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                   Header="{lex:LocText VianaNET:Labels:DataGridVelocityInterpolated}" 
+                   Binding="{Binding 
+        Path=VelocityI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource VelocityMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="VelocityI"/>
+        <DataGridTextColumn
+         Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                   Header="{lex:LocText VianaNET:Labels:DataGridXVelocityInterpolated}" 
+                   Binding="{Binding 
+        Path=VelocityXI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource VelocityMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="VelocityXI"/>
+        <DataGridTextColumn
+          Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                  Header="{lex:LocText VianaNET:Labels:DataGridYVelocityInterpolated}" 
+                   Binding="{Binding 
+        Path=VelocityYI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource VelocityMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="VelocityYI"/>
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridAcceleration}" 
                    Binding="{Binding 
         Path=Acceleration, 
@@ -153,7 +194,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="Acceleration"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridXAcceleration}" 
                    Binding="{Binding 
         Path=AccelerationX, 
@@ -165,7 +206,7 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="AccelerationX"/>
-        <WPFToolkit:DataGridTextColumn
+        <DataGridTextColumn
                    Header="{lex:LocText VianaNET:Labels:DataGridYAcceleration}" 
                    Binding="{Binding 
         Path=AccelerationY, 
@@ -177,7 +218,46 @@
                    IsReadOnly="True"
                    CanUserSort="True"
                    SortMemberPath="AccelerationY"/>
-      </WPFToolkit:DataGrid.Columns>
-    </WPFToolkit:DataGrid>
+        <DataGridTextColumn
+          Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                  Header="{lex:LocText VianaNET:Labels:DataGridAccelerationInterpolated}" 
+                   Binding="{Binding 
+        Path=AccelerationI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource AccelerationMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="AccelerationI"/>
+        <DataGridTextColumn
+          Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                  Header="{lex:LocText VianaNET:Labels:DataGridXAccelerationInterpolated}" 
+                   Binding="{Binding 
+        Path=AccelerationXI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource AccelerationMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="AccelerationXI"/>
+        <DataGridTextColumn
+          Visibility="{Binding Path=IsInterpolatingData, Source={x:Static Viana:Interpolation.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                  Header="{lex:LocText VianaNET:Labels:DataGridYAccelerationInterpolated}" 
+                   Binding="{Binding 
+        Path=AccelerationYI, 
+        Converter={StaticResource UnitDoubleStringConverter}, 
+        ConverterParameter={StaticResource AccelerationMeasurement}}"
+                   HeaderStyle="{StaticResource CenterAlignedColumnHeaderStyle}"
+                   CellStyle="{StaticResource RightAlignedCellStyle}"
+                   CanUserReorder="True"
+                   IsReadOnly="True"
+                   CanUserSort="True"
+                   SortMemberPath="AccelerationYI"/>
+      </DataGrid.Columns>
+    </DataGrid>
   </ScrollViewer>
 </ad:DockableContent>

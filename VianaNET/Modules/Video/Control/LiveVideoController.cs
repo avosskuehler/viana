@@ -76,8 +76,32 @@ namespace VianaNET
       get { return m_DeviceSelected; }
     }
 
+    public string VideoCompressorName
+    {
+      get
+      {
+        return this.videoCompressorFilterName;
+      }
+
+      set
+      {
+        if (this.videoCompressorFilter != null)
+        {
+          Marshal.ReleaseComObject(videoCompressorFilter);
+          videoCompressorFilter = null;
+        }
+
+        this.videoCompressorFilterName = value;
+
+        // Create the filter for the selected video compressor
+        this.videoCompressorFilter = DShowUtils.CreateFilter(
+          FilterCategory.VideoCompressorCategory,
+          this.videoCompressorFilterName);
+      }
+    }
+
     // Specify a device, and a window to draw the preview in
-    public void SelectDevice(DsDevice videoInputDevice, string videoCompressorName, System.Windows.Forms.Panel panel)
+    public void SelectDevice(DsDevice videoInputDevice, System.Windows.Forms.Panel panel)
     {
       int hr;
       IBaseFilter inputDeviceFilter = null;
@@ -87,7 +111,6 @@ namespace VianaNET
 
       this.videoPanel = panel;
       this.videoPanel.Resize += new EventHandler(videoPanel_Resize);
-      this.videoCompressorFilterName = videoCompressorName;
 
       // release any leftovers
 
@@ -146,10 +169,10 @@ namespace VianaNET
         // If we made it here, the device is selected
         m_DeviceSelected = true;
       }
-      catch
+      catch (Exception ex)
       {
+        ErrorLogger.ProcessException(ex, true);
         ReleaseSelectMembers();
-        throw;
       }
       finally
       {
@@ -252,17 +275,12 @@ namespace VianaNET
             hr = captureGraphBuilder.SetOutputFileName(MediaSubType.Avi, localFilename, out muxFilter, out fileSinkFilter);
             DsError.ThrowExceptionForHR(hr);
 
-            if (this.videoCompressorFilter == null)
+            // Add video compressor filter
+            if (this.videoCompressorFilter != null)
             {
-              // Get the video compressor and add it to the filter graph
-              // Create the filter for the selected video compressor
-              this.videoCompressorFilter = DShowUtils.CreateFilter(
-                FilterCategory.VideoCompressorCategory,
-                this.videoCompressorFilterName);
+              hr = filterGraph.AddFilter(this.videoCompressorFilter, "Video Compressor");
+              DsError.ThrowExceptionForHR(hr);
             }
-
-            hr = filterGraph.AddFilter(this.videoCompressorFilter, "Video Compressor");
-            DsError.ThrowExceptionForHR(hr);
 
             // render source output to mux
             hr = captureGraphBuilder.RenderStream(null, null, captureGraphSourceFilter, this.videoCompressorFilter, muxFilter);
@@ -435,6 +453,14 @@ namespace VianaNET
 
       ReleaseFilenameMembers();
       ReleaseSelectMembers();
+    }
+
+    public void ShowVideoCompressorOptionsDialog()
+    {
+      if (this.videoCompressorFilter != null)
+      {
+        DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.videoCompressorFilter);
+      }
     }
   }
 }

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutBoxDescription" xml:space="preserve">
     <value>@AboutBoxDescription</value>
@@ -1013,5 +1013,185 @@
   </data>
   <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
     <value>@SaveVideoDialogStartAnalysis</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelDescription" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataLabelDescription</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelTitle" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataLabelTitle</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataToolTipDescription</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataToolTipTitle</value>
+  </data>
+  <data name="InterpolationDescriptionTitle" xml:space="preserve">
+    <value>@InterpolationDescriptionTitle</value>
+  </data>
+  <data name="InterpolationDialogNumberOfSamplesToUse" xml:space="preserve">
+    <value>@InterpolationDialogNumberOfSamplesToUse</value>
+  </data>
+  <data name="InterpolationDialogTitle" xml:space="preserve">
+    <value>@InterpolationDialogTitle</value>
+  </data>
+  <data name="InterpolationDialogTopTitle" xml:space="preserve">
+    <value>@InterpolationDialogTopTitle</value>
+  </data>
+  <data name="InterpolationMovingAverageDescription" xml:space="preserve">
+    <value>@InterpolationMovingAverageDescription</value>
+  </data>
+  <data name="InterpolationPropertiesTitle" xml:space="preserve">
+    <value>@InterpolationPropertiesTitle</value>
+  </data>
+  <data name="MovingAverageDialogTitle" xml:space="preserve">
+    <value>@MovingAverageDialogTitle</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelDescription" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesLabelDescription</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelTitle" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesLabelTitle</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipDescription" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesToolTipDescription</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipTitle" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesToolTipTitle</value>
+  </data>
+  <data name="InterpolationDialogInterpolationType" xml:space="preserve">
+    <value>@InterpolationDialogInterpolationType</value>
+  </data>
+  <data name="AxisAccelerationInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationInterpolated</value>
+  </data>
+  <data name="AxisAccelerationXDirectionInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationXDirectionInterpolated</value>
+  </data>
+  <data name="AxisAccelerationYDirectionInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationYDirectionInterpolated</value>
+  </data>
+  <data name="AxisVelocityInterpolated" xml:space="preserve">
+    <value>@AxisVelocityInterpolated</value>
+  </data>
+  <data name="AxisVelocityXDirectionInterpolated" xml:space="preserve">
+    <value>@AxisVelocityXDirectionInterpolated</value>
+  </data>
+  <data name="AxisVelocityYDirectionInterpolated" xml:space="preserve">
+    <value>@AxisVelocityYDirectionInterpolated</value>
+  </data>
+  <data name="DataGridAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridVelocityInterpolated</value>
+  </data>
+  <data name="DataGridXAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridXAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridXVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridXVelocityInterpolated</value>
+  </data>
+  <data name="DataGridYAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridYAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridYVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridYVelocityInterpolated</value>
+  </data>
+  <data name="AxisAoverT" xml:space="preserve">
+    <value>@AxisAoverT</value>
+  </data>
+  <data name="AxisAXoverT" xml:space="preserve">
+    <value>@AxisAXoverT</value>
+  </data>
+  <data name="AxisAYoverT" xml:space="preserve">
+    <value>@AxisAYoverT</value>
+  </data>
+  <data name="AxisVoverT" xml:space="preserve">
+    <value>@AxisVoverT</value>
+  </data>
+  <data name="AxisVXoverT" xml:space="preserve">
+    <value>@AxisVXoverT</value>
+  </data>
+  <data name="AxisVYoverT" xml:space="preserve">
+    <value>@AxisVYoverT</value>
+  </data>
+  <data name="AxisXoverT" xml:space="preserve">
+    <value>@AxisXoverT</value>
+  </data>
+  <data name="AxisYoverT" xml:space="preserve">
+    <value>@AxisYoverT</value>
+  </data>
+  <data name="AxisYoverX" xml:space="preserve">
+    <value>@AxisYoverX</value>
+  </data>
+  <data name="ChartWindowCustomAxisHeader" xml:space="preserve">
+    <value>@ChartWindowCustomAxisHeader</value>
+  </data>
+  <data name="ChartWindowCustomDiagrammTypes" xml:space="preserve">
+    <value>@ChartWindowCustomDiagrammTypes</value>
+  </data>
+  <data name="ChartWindowInterpolationLineLabel" xml:space="preserve">
+    <value>@ChartWindowInterpolationLineLabel</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleColored" xml:space="preserve">
+    <value>@ChartWindowScatterPointStyleColored</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleSingleColored" xml:space="preserve">
+    <value>@ChartWindowScatterPointStyleSingleColored</value>
+  </data>
+  <data name="AxisDoverV" xml:space="preserve">
+    <value>@AxisDoverV</value>
+  </data>
+  <data name="AxisDXoverVX" xml:space="preserve">
+    <value>@AxisDXoverVX</value>
+  </data>
+  <data name="AxisDYoverVY" xml:space="preserve">
+    <value>@AxisDYoverVY</value>
+  </data>
+  <data name="AxisLength" xml:space="preserve">
+    <value>@AxisLength</value>
+  </data>
+  <data name="AxisLengthX" xml:space="preserve">
+    <value>@AxisLengthX</value>
+  </data>
+  <data name="AxisLengthY" xml:space="preserve">
+    <value>@AxisLengthY</value>
+  </data>
+  <data name="AxisSoverT" xml:space="preserve">
+    <value>@AxisSoverT</value>
+  </data>
+  <data name="AxisSoverV" xml:space="preserve">
+    <value>@AxisSoverV</value>
+  </data>
+  <data name="AxisSXoverVX" xml:space="preserve">
+    <value>@AxisSXoverVX</value>
+  </data>
+  <data name="AxisSYoverVY" xml:space="preserve">
+    <value>@AxisSYoverVY</value>
+  </data>
+  <data name="AxisVoverA" xml:space="preserve">
+    <value>@AxisVoverA</value>
+  </data>
+  <data name="AxisVXoverAX" xml:space="preserve">
+    <value>@AxisVXoverAX</value>
+  </data>
+  <data name="AxisVYoverAY" xml:space="preserve">
+    <value>@AxisVYoverAY</value>
+  </data>
+  <data name="ChartWindowChartProperties" xml:space="preserve">
+    <value>@ChartWindowChartProperties</value>
+  </data>
+  <data name="ChartWindowInterpolationHeader" xml:space="preserve">
+    <value>@ChartWindowInterpolationHeader</value>
+  </data>
+  <data name="ChartWindowInterpolationOptions" xml:space="preserve">
+    <value>@ChartWindowInterpolationOptions</value>
+  </data>
+  <data name="ChartWindowOrtsraumHeader" xml:space="preserve">
+    <value>@ChartWindowOrtsraumHeader</value>
+  </data>
+  <data name="ChartWindowPhasenraumHeader" xml:space="preserve">
+    <value>@ChartWindowPhasenraumHeader</value>
   </data>
 </root>

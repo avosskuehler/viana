@@ -4,19 +4,14 @@ using System.Windows;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using Visifire.Charts;
 
 namespace VianaNET
 {
   public class ExportChart
   {
 
-
-
-
-
-
-
-    public static void ToClipboard(VianaChart chart)
+    public static void ToClipboard(Chart chart)
     {
       int margin = 20;
       int width = (int)((chart.ActualWidth + margin) * 300 / 96);
@@ -43,7 +38,7 @@ namespace VianaNET
       Clipboard.SetImage(rtb);
     }
 
-    public static void ToWord(VianaChart chart)
+    public static void ToWord(Chart chart)
     {
       ToClipboard(chart);
 
@@ -59,7 +54,7 @@ namespace VianaNET
       word.Selection.Paste();
     }
 
-    public static void ToFile(VianaChart chart)
+    public static void ToFile(Chart chart)
     {
       SaveFileDialog sfd = new SaveFileDialog();
       sfd.CheckFileExists = false;

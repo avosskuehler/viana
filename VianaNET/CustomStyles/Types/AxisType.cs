@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Data;
-using System.ComponentModel;
-using System.Windows;
-using WPFLocalizeExtension.Extensions;
-using System.Collections.ObjectModel;
-
+﻿
 namespace VianaNET
 {
   public enum AxisType
@@ -19,11 +10,39 @@ namespace VianaNET
     D,
     DX,
     DY,
+    S,
+    SX,
+    SY,
     V,
     VX,
     VY,
+    VI,
+    VXI,
+    VYI,
     A,
     AX,
-    AY
+    AY,
+    AI,
+    AXI,
+    AYI,
+    YoverX,
+    XoverT,
+    SoverT,
+    YoverT,
+    VoverT,
+    VXoverT,
+    VYoverT,
+    AoverT,
+    AXoverT,
+    AYoverT,
+    VoverD,
+    VXoverDX,
+    VYoverDY,
+    VoverS,
+    VXoverSX,
+    VYoverSY,
+    AoverV,
+    AXoverVX,
+    AYoverVY
   }
 }

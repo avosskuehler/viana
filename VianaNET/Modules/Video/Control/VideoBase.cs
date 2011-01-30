@@ -84,12 +84,12 @@
     /// </summary>
     protected ISampleGrabber sampleGrabber;
 
-#if DEBUG
+    //#if DEBUG
     /// <summary>
     /// Helps showing capture graph in GraphBuilder
     /// </summary>
     protected DsROTEntry rotEntry;
-#endif
+    //#endif
 
     /// <summary>
     /// This indicates if the frames of the capture callback should be skipped.
@@ -296,7 +296,7 @@
 
         if (hr != 0)
         {
-          ErrorLogger.WriteLine("Error while starting camera. Message: " + DsError.GetErrorText(hr));
+          ErrorLogger.WriteLine("Error while starting to play. Message: " + DsError.GetErrorText(hr));
         }
         else
         {
@@ -344,7 +344,7 @@
           int hr = this.mediaControl.Stop();
           if (hr != 0)
           {
-            ErrorLogger.WriteLine("Error while stopping camera. Message: " + DsError.GetErrorText(hr));
+            ErrorLogger.WriteLine("Error while stopping. Message: " + DsError.GetErrorText(hr));
           }
           else
           {
@@ -371,16 +371,16 @@
     /// </summary>
     public virtual void Dispose()
     {
-      
+
       this.Stop();
 
-#if DEBUG
+      //#if DEBUG
       if (this.rotEntry != null)
       {
         this.rotEntry.Dispose();
         this.rotEntry = null;
       }
-#endif
+      //#endif
 
       lock (this)
       {
@@ -431,12 +431,12 @@
         }
       }
 
-#if DEBUG
+      //#if DEBUG
       // Double check to make sure we aren't releasing something
       // important.
       GC.Collect();
-      GC.WaitForPendingFinalizers();
-#endif
+      //GC.WaitForPendingFinalizers();
+      //#endif
     }
 
     public void RefreshProcessingMap()
@@ -493,32 +493,31 @@
         // We skip the processing in the Tracker class if it is not fast enough
         if (!this.skipFrameMode)
         {
-          // Check mapping if it is not already released and the buffer is running
-          if (this.originalMapping != IntPtr.Zero)
+          try
           {
-            // This is fast and lasts less than 1 millisecond.
-            CopyMemory(this.originalMapping, buffer, bufferLength);
-            CopyMemory(this.ProcessingMapping, buffer, bufferLength);
-
-            try
+            // Check mapping if it is not already released and the buffer is running
+            if (this.originalMapping != IntPtr.Zero)
             {
+              // This is fast and lasts less than 1 millisecond.
+              CopyMemory(this.originalMapping, buffer, bufferLength);
+              CopyMemory(this.ProcessingMapping, buffer, bufferLength);
+
               Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, (SendOrPostCallback)delegate
-              {
-                ((InteropBitmap)this.ImageSource).Invalidate();
+             {
+               ((InteropBitmap)this.ImageSource).Invalidate();
 
-                // Send new image to processing thread
-                this.OnVideoFrameChanged();
-              }, null);
-
+               // Send new image to processing thread
+               this.OnVideoFrameChanged();
+             }, null);
             }
-            catch (ThreadInterruptedException e)
-            {
-              ErrorLogger.ProcessException(e, false);
-            }
-            catch (Exception we)
-            {
-              ErrorLogger.ProcessException(we, false);
-            }
+          }
+          catch (ThreadInterruptedException e)
+          {
+            ErrorLogger.ProcessException(e, false);
+          }
+          catch (Exception we)
+          {
+            ErrorLogger.ProcessException(we, false);
           }
         }
       }
