@@ -9,7 +9,7 @@
     Icon="/VianaNET;component/Images/VianaNET.ico"
     Title="{lex:LocText VianaNET:Labels:AboutBoxTitle}">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

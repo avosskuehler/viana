@@ -62,34 +62,38 @@ namespace VianaNET
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        Ellipse dataPoint = new Ellipse();
-        dataPoint.Stroke = Brushes.Red;
-        dataPoint.StrokeThickness = 2;
-        dataPoint.Width = 15;
-        dataPoint.Height = 15;
-        Point location = VideoData.Instance.LastPoint;
-        this.CanvasDataPoints.Children.Add(dataPoint);
-        Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
-        Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        {
+          Ellipse dataPoint = new Ellipse();
+          dataPoint.Stroke = Calibration.TrackObjectColors[i];
+          dataPoint.StrokeThickness = 2;
+          dataPoint.Width = 15;
+          dataPoint.Height = 15;
+          Point location = VideoData.Instance.LastPoint[i];
+          this.CanvasDataPoints.Children.Add(dataPoint);
+          Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
+          Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+        }
       }
-
-      //this.CanvasDataPoints.Children.Clear();
     }
 
     public void UpdateDataPoints()
     {
       this.CanvasDataPoints.Children.Clear();
-      foreach (DataSample sample in VideoData.Instance.Samples)
+      foreach (TimeSample sample in VideoData.Instance.Samples)
       {
-        Ellipse dataPoint = new Ellipse();
-        dataPoint.Stroke = Brushes.Red;
-        dataPoint.StrokeThickness = 2;
-        dataPoint.Width = 15;
-        dataPoint.Height = 15;
-        Point location = new Point(sample.CoordinateX, sample.CoordinateY);
-        this.CanvasDataPoints.Children.Add(dataPoint);
-        Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
-        Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        {
+          Ellipse dataPoint = new Ellipse();
+          dataPoint.Stroke = Calibration.TrackObjectColors[i];
+          dataPoint.StrokeThickness = 2;
+          dataPoint.Width = 15;
+          dataPoint.Height = 15;
+          Point location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
+          this.CanvasDataPoints.Children.Add(dataPoint);
+          Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
+          Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+        }
       }
     }
 

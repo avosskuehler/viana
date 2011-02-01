@@ -14,7 +14,7 @@
   <r:RibbonWindow.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+        <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
         <ResourceDictionary	Source="/RibbonControlsLibrary;component/Themes/Office2007Blue.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
@@ -219,6 +219,16 @@
                          SmallImageSource="/VianaNET;component/Images/ManualDataAquisition16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}" />
+        <r:RibbonCommand x:Key="ButtonSelectNumberOfObjects" 
+                         CanExecute="ButtonSelectNumberOfObjectsCommand_CanExecute" 
+                         Executed="ButtonSelectNumberOfObjectsCommand_Executed"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsLabelDescription}" 
+                         LargeImageSource="/VianaNET;component/Images/SelectColor32.png" 
+                         SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipDescription}" />
+
         <r:RibbonCommand x:Key="ButtonAutomaticDataAquisition" 
                          CanExecute="AutomaticDataAquisitionCommand_CanExecute" 
                          Executed="AutomaticDataAquisitionCommand_Executed" 
@@ -442,10 +452,13 @@
               <r:RibbonGroupSizeDefinition>
                 <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
                 <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
+                <r:RibbonControlSizeDefinition ImageSize="Large" IsLabelVisible="True" />
               </r:RibbonGroupSizeDefinition>
             </r:RibbonGroupSizeDefinitionCollection>
           </r:RibbonGroup.GroupSizeDefinitions>
           <r:RibbonButton Command="{StaticResource ButtonCalibrateVideo}" />
+          <r:RibbonButton Name="ButtonSelectNumberOfObjects" Command="{StaticResource ButtonSelectNumberOfObjects}" />
           <r:RibbonButton Command="{StaticResource ButtonManualDataAquisition}" />
           <r:RibbonButton Command="{StaticResource ButtonChooseAutomaticAnalysis}" />
         </r:RibbonGroup>

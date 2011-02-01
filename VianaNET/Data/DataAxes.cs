@@ -67,12 +67,20 @@ namespace VianaNET
       LocTextExtension loctAxis = new LocTextExtension("VianaNET:Labels:AxisTime");
       loctAxis.SetBinding(tAxis, DataAxis.DescriptionProperty);
 
+      DataAxis xAxis = new DataAxis(AxisType.X);
+      LocTextExtension locxAxis = new LocTextExtension("VianaNET:Labels:AxisPixelX");
+      locxAxis.SetBinding(xAxis, DataAxis.DescriptionProperty);
+
+      DataAxis yAxis = new DataAxis(AxisType.Y);
+      LocTextExtension locyAxis = new LocTextExtension("VianaNET:Labels:AxisPixelY");
+      locyAxis.SetBinding(yAxis, DataAxis.DescriptionProperty);
+
       DataAxis pxAxis = new DataAxis(AxisType.PX);
-      LocTextExtension locpxAxis = new LocTextExtension("VianaNET:Labels:AxisCoordinateX");
+      LocTextExtension locpxAxis = new LocTextExtension("VianaNET:Labels:AxisPositionX");
       locpxAxis.SetBinding(pxAxis, DataAxis.DescriptionProperty);
 
       DataAxis pyAxis = new DataAxis(AxisType.PY);
-      LocTextExtension locpyAxis = new LocTextExtension("VianaNET:Labels:AxisCoordinateY");
+      LocTextExtension locpyAxis = new LocTextExtension("VianaNET:Labels:AxisPositionY");
       locpyAxis.SetBinding(pyAxis, DataAxis.DescriptionProperty);
 
       DataAxis dAxis = new DataAxis(AxisType.D);
@@ -150,6 +158,8 @@ namespace VianaNET
       DataAxes = new List<DataAxis>();
       DataAxes.Add(iAxis);
       DataAxes.Add(tAxis);
+      DataAxes.Add(xAxis);
+      DataAxes.Add(yAxis);
       DataAxes.Add(pxAxis);
       DataAxes.Add(pyAxis);
       DataAxes.Add(dAxis);

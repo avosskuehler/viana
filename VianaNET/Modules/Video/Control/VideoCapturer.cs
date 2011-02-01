@@ -3,13 +3,8 @@
   using System;
   using System.Diagnostics;
   using System.Runtime.InteropServices;
-  using System.Threading;
-  using System.Windows.Forms;
-  using DirectShowLib;
   using System.Windows;
-  using System.Windows.Media;
-  using System.Windows.Interop;
-  using System.IO;
+  using DirectShowLib;
 
   /// <summary>
   /// This is the main class for the DirectShow interop.

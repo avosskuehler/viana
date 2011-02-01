@@ -11,7 +11,7 @@
     Title="{lex:LocText VianaNET:Labels:InterpolationDialogTopTitle}"
         Closing="Dialog_Closing">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

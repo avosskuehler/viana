@@ -339,11 +339,11 @@
   <data name="DatagridWindowTitle" xml:space="preserve">
     <value>@DatagridWindowTitle</value>
   </data>
-  <data name="DataGridXCoordinate" xml:space="preserve">
-    <value>@DataGridXCoordinate</value>
+  <data name="DataGridXPosition" xml:space="preserve">
+    <value>@DataGridXPosition</value>
   </data>
-  <data name="DataGridYCoordinate" xml:space="preserve">
-    <value>@DataGridYCoordinate</value>
+  <data name="DataGridYPosition" xml:space="preserve">
+    <value>@DataGridYPosition</value>
   </data>
   <data name="DirectShowErrorPreface" xml:space="preserve">
     <value>@DirectShowErrorPreface</value>
@@ -447,11 +447,11 @@
   <data name="AxisVelocityYDirection" xml:space="preserve">
     <value>@AxisVelocityYDirection</value>
   </data>
-  <data name="AxisCoordinateX" xml:space="preserve">
-    <value>@AxisCoordinateX</value>
+  <data name="AxisPositionX" xml:space="preserve">
+    <value>@AxisPositionX</value>
   </data>
-  <data name="AxisCoordinateY" xml:space="preserve">
-    <value>@AxisCoordinateY</value>
+  <data name="AxisPositionY" xml:space="preserve">
+    <value>@AxisPositionY</value>
   </data>
   <data name="ChartWindowAxesHeader" xml:space="preserve">
     <value>@ChartWindowAxesHeader</value>
@@ -1193,5 +1193,50 @@
   </data>
   <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
     <value>@ChartWindowPhaseSpaceHeader</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelDescription" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelDescription</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelTitle</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle2" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelTitle2</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsToolTipTitle</value>
+  </data>
+  <data name="DataGridLength" xml:space="preserve">
+    <value>@DataGridLength</value>
+  </data>
+  <data name="DataGridObjectPrefix" xml:space="preserve">
+    <value>@DataGridObjectPrefix</value>
+  </data>
+  <data name="DataGridXLength" xml:space="preserve">
+    <value>@DataGridXLength</value>
+  </data>
+  <data name="DataGridYLength" xml:space="preserve">
+    <value>@DataGridYLength</value>
+  </data>
+  <data name="AxisPixelX" xml:space="preserve">
+    <value>@AxisPixelX</value>
+  </data>
+  <data name="AxisPixelY" xml:space="preserve">
+    <value>@AxisPixelY</value>
+  </data>
+  <data name="DataGridXPixel" xml:space="preserve">
+    <value>@DataGridXPixel</value>
+  </data>
+  <data name="DataGridYPixel" xml:space="preserve">
+    <value>@DataGridYPixel</value>
+  </data>
+  <data name="ChartWindowObjectSelectionLabel" xml:space="preserve">
+    <value>@ChartWindowObjectSelectionLabel</value>
+  </data>
+  <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
+    <value>@ManualDataAcquisitionTrackItemNumberHeader</value>
   </data>
 </root>

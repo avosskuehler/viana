@@ -10,7 +10,7 @@
     Height="436" Title="{lex:LocText VianaNET:Labels:VideoWindowTitle}" 
   DockableStyle="Dockable" HideOnClose="False">
   <ad:DockableContent.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </ad:DockableContent.Resources>
   <ad:DockableContent.Icon>
     <Image Source="..\..\Images\Video16.png" Height="16" Width="16"/>

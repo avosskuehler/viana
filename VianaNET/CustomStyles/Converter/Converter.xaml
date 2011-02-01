@@ -12,7 +12,8 @@
   <Viana:DSTimeToMillisecondsConverter x:Key="DSTimeToMillisecondsConverter"/>
   <Viana:RulerUnitStringConverter x:Key="RulerUnitStringConverter"/>
   <Viana:PercentToDoubleConverter x:Key="PercentToDoubleConverter"/>
-
+  <Viana:NumberOfObjectsToVisibilityConverter x:Key="NumberOfObjectsToVisibilityConverter"/>
+  
   <Viana:MeasurementType x:Key="TimeMeasurement">Time</Viana:MeasurementType>
   <Viana:MeasurementType x:Key="PixelMeasurement">Pixel</Viana:MeasurementType>
   <Viana:MeasurementType x:Key="PositionMeasurement">Position</Viana:MeasurementType>

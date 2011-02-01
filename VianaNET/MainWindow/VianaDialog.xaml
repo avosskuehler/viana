@@ -8,7 +8,7 @@
     Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
     Title="{lex:LocText VianaNET:Labels:VianaDialogTitle}">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

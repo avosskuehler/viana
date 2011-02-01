@@ -30,7 +30,7 @@ namespace VianaNET
 
     private int visualDataPointRingBufferSize = 5;
     private int visualDataPointRadius = 5;
-    private List<Ellipse> visualDataPoints;
+    private List<Ellipse>[] visualDataPoints;
     private int indexOfVisualDataPointRingBuffer;
     private Point mouseDownLocation;
     private DispatcherTimer timesliderUpdateTimer;
@@ -46,6 +46,10 @@ namespace VianaNET
     public ManualDataAquisitionWindow()
     {
       InitializeComponent();
+
+      this.ObjectIndexPanel.DataContext = this;
+      this.windowCanvas.DataContext = this;
+
       this.indexOfVisualDataPointRingBuffer = 0;
       CreateVisualDataPoints(7);
 
@@ -94,6 +98,43 @@ namespace VianaNET
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
+
+    /// <summary>
+    /// Gets or sets the index of the currently tracked object
+    /// </summary>
+    public int IndexOfTrackedObject
+    {
+      get { return (int)this.GetValue(IndexOfTrackedObjectProperty); }
+      set { this.SetValue(IndexOfTrackedObjectProperty, value); }
+    }
+
+    /// <summary>
+    /// The <see cref="DependencyProperty"/> for the property <see cref="IndexOfTrackedObject"/>.
+    /// </summary>
+    public static readonly DependencyProperty IndexOfTrackedObjectProperty = DependencyProperty.Register(
+      "IndexOfTrackedObject",
+      typeof(int),
+      typeof(ManualDataAquisitionWindow),
+      new FrameworkPropertyMetadata(1, new PropertyChangedCallback(OnPropertyChanged)));
+
+    /// <summary>
+    /// Gets or sets the index of the currently tracked object
+    /// </summary>
+    public SolidColorBrush BrushOfCossHair
+    {
+      get { return (SolidColorBrush)this.GetValue(BrushOfCossHairProperty); }
+      set { this.SetValue(BrushOfCossHairProperty, value); }
+    }
+
+    /// <summary>
+    /// The <see cref="DependencyProperty"/> for the property <see cref="BrushOfCossHair"/>.
+    /// </summary>
+    public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
+      "BrushOfCossHair",
+      typeof(SolidColorBrush),
+      typeof(ManualDataAquisitionWindow),
+      new FrameworkPropertyMetadata(Calibration.TrackObjectColors[0], new PropertyChangedCallback(OnPropertyChanged)));
+
     #endregion //PROPERTIES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -106,6 +147,29 @@ namespace VianaNET
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region OVERRIDES
+
+    /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="obj">The source of the event. This.</param>
+    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
+    /// the event data.</param>
+    private static void OnPropertyChanged(
+      DependencyObject obj,
+      DependencyPropertyChangedEventArgs args)
+    {
+      ManualDataAquisitionWindow window = obj as ManualDataAquisitionWindow;
+
+      // Reset index if appropriate
+      if (window.IndexOfTrackedObject > Calibration.Instance.NumberOfTrackedObjects)
+      {
+        window.IndexOfTrackedObject = 1;
+      }
+
+      // Update crosshair brush
+      window.BrushOfCossHair = Calibration.TrackObjectColors[window.IndexOfTrackedObject-1];
+    }
+
     #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -156,9 +220,12 @@ namespace VianaNET
         double originalX = factorX * (scaledX - spaceX);
         double originalY = factorY * (scaledY - spaceY);
 
-        VideoData.Instance.AddPoint(new Point(originalX, originalY));
+        VideoData.Instance.AddPoint(this.IndexOfTrackedObject-1, new Point(originalX, originalY));
 
-        this.StepOneFrameForward();
+        if (this.IndexOfTrackedObject == Calibration.Instance.NumberOfTrackedObjects)
+        {
+          this.StepOneFrameForward();
+        }
 
         double canvasPosX = e.GetPosition(this.windowCanvas).X;
         double canvasPosY = e.GetPosition(this.windowCanvas).Y;
@@ -166,11 +233,11 @@ namespace VianaNET
         if (this.visualDataPointRingBufferSize > 0)
         {
           Canvas.SetTop(
-            this.visualDataPoints[this.indexOfVisualDataPointRingBuffer],
+            this.visualDataPoints[this.IndexOfTrackedObject-1][this.indexOfVisualDataPointRingBuffer],
             canvasPosY - visualDataPointRadius);
 
           Canvas.SetLeft(
-            this.visualDataPoints[this.indexOfVisualDataPointRingBuffer],
+            this.visualDataPoints[this.IndexOfTrackedObject-1][this.indexOfVisualDataPointRingBuffer],
             canvasPosX - visualDataPointRadius);
 
           this.indexOfVisualDataPointRingBuffer++;
@@ -179,10 +246,13 @@ namespace VianaNET
             this.indexOfVisualDataPointRingBuffer = 0;
           }
         }
+
+        this.IndexOfTrackedObject++;
       }
       else if (e.ChangedButton == MouseButton.Right)
       {
         this.StepOneFrameBackward();
+        this.IndexOfTrackedObject = 1;
       }
     }
 
@@ -333,35 +403,44 @@ namespace VianaNET
     {
       this.visualDataPointRingBufferSize = count;
 
+      // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        foreach (Ellipse item in this.visualDataPoints)
+        for (int j = 0; j < Calibration.Instance.NumberOfTrackedObjects; j++)
         {
-          if (this.windowCanvas.Children.Contains(item))
+          foreach (Ellipse item in this.visualDataPoints[j])
           {
-            this.windowCanvas.Children.Remove(item);
+            if (this.windowCanvas.Children.Contains(item))
+            {
+              this.windowCanvas.Children.Remove(item);
+            }
           }
-        }
 
-        this.visualDataPoints.Clear();
+          this.visualDataPoints[j].Clear();
+        }
       }
 
       this.indexOfVisualDataPointRingBuffer = 0;
 
+      // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>(count);
-        for (int i = 0; i < count; i++)
+        this.visualDataPoints = new List<Ellipse>[Calibration.Instance.NumberOfTrackedObjects];
+        for (int j = 0; j < Calibration.Instance.NumberOfTrackedObjects; j++)
         {
-          Ellipse visualDataPoint = new Ellipse();
-          visualDataPoint.Width = 2 * visualDataPointRadius;
-          visualDataPoint.Height = 2 * visualDataPointRadius;
-          visualDataPoint.Stroke = Brushes.Red;
-          visualDataPoint.IsEnabled = false;
-          visualDataPoint.IsHitTestVisible = false;
+          this.visualDataPoints[j] = new List<Ellipse>(count);
+          for (int i = 0; i < count; i++)
+          {
+            Ellipse visualDataPoint = new Ellipse();
+            visualDataPoint.Width = 2 * visualDataPointRadius;
+            visualDataPoint.Height = 2 * visualDataPointRadius;
+            visualDataPoint.Stroke = Calibration.TrackObjectColors[j];
+            visualDataPoint.IsEnabled = false;
+            visualDataPoint.IsHitTestVisible = false;
 
-          this.windowCanvas.Children.Add(visualDataPoint);
-          this.visualDataPoints.Add(visualDataPoint);
+            this.windowCanvas.Children.Add(visualDataPoint);
+            this.visualDataPoints[j].Add(visualDataPoint);
+          }
         }
       }
     }

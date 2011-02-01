@@ -99,7 +99,8 @@ namespace VianaNET
 
       // <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="3" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
       writer.WriteStartElement("Table");
-      writer.WriteAttributeString("ss", "ExpandedColumnCount", null, "13");
+      int columnCount = Calibration.Instance.NumberOfTrackedObjects * 14 + 2;
+      writer.WriteAttributeString("ss", "ExpandedColumnCount", null, columnCount.ToString());
       writer.WriteAttributeString("ss", "ExpandedRowCount", null, dataSource.Count.ToString());
       writer.WriteAttributeString("x", "FullColumns", null, "1");
       writer.WriteAttributeString("x", "FullRows", null, "1");
@@ -111,23 +112,31 @@ namespace VianaNET
       // Alle Zellen der aktuellen Zeile durchlaufen
       WriteCellValue(writer, "String", Localization.Labels.DataGridFramenumber);
       WriteCellValue(writer, "String", Localization.Labels.DataGridTimestamp);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridXCoordinate);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridYCoordinate);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridDistance);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridXDistance);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridYDistance);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridVelocity);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridXVelocity);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridYVelocity);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridAcceleration);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridXAcceleration);
-      WriteCellValue(writer, "String", Localization.Labels.DataGridYAcceleration);
+
+      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      {
+        string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXPosition);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYPosition);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridDistance);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXDistance);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYDistance);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridLength);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXLength);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYLength);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridVelocity);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXVelocity);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYVelocity);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridAcceleration);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXAcceleration);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYAcceleration);
+      }
 
       // </Row>
       writer.WriteEndElement();
 
       // Alle Zeilen der Datenquelle durchlaufen
-      foreach (DataSample row in dataSource)
+      foreach (TimeSample row in dataSource)
       {
         // <Row>
         writer.WriteStartElement("Row");
@@ -135,18 +144,23 @@ namespace VianaNET
         // Alle Zellen der aktuellen Zeile durchlaufen
         WriteCellValue(writer, "Number", row.Framenumber);
         WriteCellValue(writer, "Number", row.Timestamp);
-        WriteCellValue(writer, "Number", row.CoordinateX);
-        WriteCellValue(writer, "Number", row.CoordinateY);
-        WriteCellValue(writer, "Number", row.Distance);
-        WriteCellValue(writer, "Number", row.DistanceX);
-        WriteCellValue(writer, "Number", row.DistanceY);
-        WriteCellValue(writer, "Number", row.Velocity);
-        WriteCellValue(writer, "Number", row.VelocityX);
-        WriteCellValue(writer, "Number", row.VelocityY);
-        WriteCellValue(writer, "Number", row.Acceleration);
-        WriteCellValue(writer, "Number", row.AccelerationX);
-        WriteCellValue(writer, "Number", row.AccelerationY);
-
+        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        {
+          WriteCellValue(writer, "Number", row.Object[i].PositionX);
+          WriteCellValue(writer, "Number", row.Object[i].PositionY);
+          WriteCellValue(writer, "Number", row.Object[i].Distance);
+          WriteCellValue(writer, "Number", row.Object[i].DistanceX);
+          WriteCellValue(writer, "Number", row.Object[i].DistanceY);
+          WriteCellValue(writer, "Number", row.Object[i].Length);
+          WriteCellValue(writer, "Number", row.Object[i].LengthX);
+          WriteCellValue(writer, "Number", row.Object[i].LengthY);
+          WriteCellValue(writer, "Number", row.Object[i].Velocity);
+          WriteCellValue(writer, "Number", row.Object[i].VelocityX);
+          WriteCellValue(writer, "Number", row.Object[i].VelocityY);
+          WriteCellValue(writer, "Number", row.Object[i].Acceleration);
+          WriteCellValue(writer, "Number", row.Object[i].AccelerationX);
+          WriteCellValue(writer, "Number", row.Object[i].AccelerationY);
+        }
         // </Row>
         writer.WriteEndElement();
       }
@@ -245,161 +259,141 @@ namespace VianaNET
       int row = 1;
       ws.Cells[row, 1] = Localization.Labels.DataGridFramenumber;
       ws.Cells[row, 2] = Localization.Labels.DataGridTimestamp;
-      ws.Cells[row, 3] = Localization.Labels.DataGridXCoordinate;
-      ws.Cells[row, 4] = Localization.Labels.DataGridYCoordinate;
-      ws.Cells[row, 5] = Localization.Labels.DataGridDistance;
-      ws.Cells[row, 6] = Localization.Labels.DataGridXDistance;
-      ws.Cells[row, 7] = Localization.Labels.DataGridYDistance;
-      ws.Cells[row, 8] = Localization.Labels.DataGridVelocity;
-      ws.Cells[row, 9] = Localization.Labels.DataGridXVelocity;
-      ws.Cells[row, 10] = Localization.Labels.DataGridYVelocity;
-      ws.Cells[row, 11] = Localization.Labels.DataGridAcceleration;
-      ws.Cells[row, 12] = Localization.Labels.DataGridXAcceleration;
-      ws.Cells[row, 13] = Localization.Labels.DataGridYAcceleration;
+      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      {
+        string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
+        ws.Cells[row, 3 + i] = title + Localization.Labels.DataGridXPosition;
+        ws.Cells[row, 4 + i] = title + Localization.Labels.DataGridYPosition;
+        ws.Cells[row, 5 + i] = title + Localization.Labels.DataGridDistance;
+        ws.Cells[row, 6 + i] = title + Localization.Labels.DataGridXDistance;
+        ws.Cells[row, 7 + i] = title + Localization.Labels.DataGridYDistance;
+        ws.Cells[row, 8 + i] = title + Localization.Labels.DataGridLength;
+        ws.Cells[row, 9 + i] = title + Localization.Labels.DataGridXLength;
+        ws.Cells[row, 10 + i] = title + Localization.Labels.DataGridYLength;
+        ws.Cells[row, 11 + i] = title + Localization.Labels.DataGridVelocity;
+        ws.Cells[row, 12 + i] = title + Localization.Labels.DataGridXVelocity;
+        ws.Cells[row, 13 + i] = title + Localization.Labels.DataGridYVelocity;
+        ws.Cells[row, 14 + i] = title + Localization.Labels.DataGridAcceleration;
+        ws.Cells[row, 15 + i] = title + Localization.Labels.DataGridXAcceleration;
+        ws.Cells[row, 16 + i] = title + Localization.Labels.DataGridYAcceleration;
+      }
 
-      foreach (DataSample sample in dataSource)
+      foreach (TimeSample sample in dataSource)
       {
         row++;
         ws.Cells[row, 1] = sample.Framenumber;
         ws.Cells[row, 2] = sample.Timestamp;
-        ws.Cells[row, 3] = sample.CoordinateX;
-        ws.Cells[row, 4] = sample.CoordinateY;
-        ws.Cells[row, 5] = sample.Distance;
-        ws.Cells[row, 6] = sample.DistanceX;
-        ws.Cells[row, 7] = sample.DistanceY;
-        ws.Cells[row, 8] = sample.Velocity;
-        ws.Cells[row, 9] = sample.VelocityX;
-        ws.Cells[row, 10] = sample.VelocityY;
-        ws.Cells[row, 11] = sample.Acceleration;
-        ws.Cells[row, 12] = sample.AccelerationX;
-        ws.Cells[row, 13] = sample.AccelerationY;
+        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        {
+          ws.Cells[row, 3] = sample.Object[i].PositionX;
+          ws.Cells[row, 4] = sample.Object[i].PositionY;
+          ws.Cells[row, 5] = sample.Object[i].Distance;
+          ws.Cells[row, 6] = sample.Object[i].DistanceX;
+          ws.Cells[row, 7] = sample.Object[i].DistanceY;
+          ws.Cells[row, 8] = sample.Object[i].Length;
+          ws.Cells[row, 9] = sample.Object[i].LengthX;
+          ws.Cells[row, 10] = sample.Object[i].LengthY;
+          ws.Cells[row, 11] = sample.Object[i].Velocity;
+          ws.Cells[row, 12] = sample.Object[i].VelocityX;
+          ws.Cells[row, 13] = sample.Object[i].VelocityY;
+          ws.Cells[row, 14] = sample.Object[i].Acceleration;
+          ws.Cells[row, 15] = sample.Object[i].AccelerationX;
+          ws.Cells[row, 16] = sample.Object[i].AccelerationY;
+        }
       }
     }
 
     public static void ToCsv(DataCollection dataSource, string fileName)
     {
-      using (StreamWriter sw = new StreamWriter(fileName))
-      {
-        sw.Write(Localization.Labels.DataGridFramenumber);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridTimestamp);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridXCoordinate);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridYCoordinate);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridDistance);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridXDistance);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridYDistance);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridVelocity);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridXVelocity);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridYVelocity);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridAcceleration);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridXAcceleration);
-        sw.Write(";");
-        sw.Write(Localization.Labels.DataGridYAcceleration);
-        sw.WriteLine();
-
-        foreach (DataSample sample in dataSource)
-        {
-          sw.Write(sample.Framenumber);
-          sw.Write(";");
-          sw.Write(sample.Timestamp);
-          sw.Write(";");
-          sw.Write(sample.CoordinateX);
-          sw.Write(";");
-          sw.Write(sample.CoordinateY);
-          sw.Write(";");
-          sw.Write(sample.Distance);
-          sw.Write(";");
-          sw.Write(sample.DistanceX);
-          sw.Write(";");
-          sw.Write(sample.DistanceY);
-          sw.Write(";");
-          sw.Write(sample.Velocity);
-          sw.Write(";");
-          sw.Write(sample.VelocityX);
-          sw.Write(";");
-          sw.Write(sample.VelocityY);
-          sw.Write(";");
-          sw.Write(sample.Acceleration);
-          sw.Write(";");
-          sw.Write(sample.AccelerationX);
-          sw.Write(";");
-          sw.Write(sample.AccelerationY);
-          sw.WriteLine();
-        }
-      }
+      WriteToFileWithSeparator(dataSource, fileName, ";");
     }
 
     public static void ToTxt(DataCollection dataSource, string fileName)
     {
+      WriteToFileWithSeparator(dataSource, fileName, "\t");
+    }
+
+    private static void WriteToFileWithSeparator(DataCollection dataSource, string fileName, string separator)
+    {
       using (StreamWriter sw = new StreamWriter(fileName))
       {
         sw.Write(Localization.Labels.DataGridFramenumber);
-        sw.Write("\t");
+        sw.Write(separator);
         sw.Write(Localization.Labels.DataGridTimestamp);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridXCoordinate);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridYCoordinate);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridDistance);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridXDistance);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridYDistance);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridVelocity);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridXVelocity);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridYVelocity);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridAcceleration);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridXAcceleration);
-        sw.Write("\t");
-        sw.Write(Localization.Labels.DataGridYAcceleration);
-        sw.WriteLine();
+        sw.Write(separator);
+        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        {
+          string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
+          sw.Write(title + Localization.Labels.DataGridXPosition);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYPosition);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridDistance);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXDistance);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYDistance);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridLength);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXLength);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYLength);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridVelocity);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXVelocity);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYVelocity);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridAcceleration);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXAcceleration);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYAcceleration);
+          sw.WriteLine();
+        }
 
-        foreach (DataSample sample in dataSource)
+        foreach (TimeSample sample in dataSource)
         {
           sw.Write(sample.Framenumber);
-          sw.Write("\t");
+          sw.Write(separator);
           sw.Write(sample.Timestamp);
-          sw.Write("\t");
-          sw.Write(sample.CoordinateX);
-          sw.Write("\t");
-          sw.Write(sample.CoordinateY);
-          sw.Write("\t");
-          sw.Write(sample.Distance);
-          sw.Write("\t");
-          sw.Write(sample.DistanceX);
-          sw.Write("\t");
-          sw.Write(sample.DistanceY);
-          sw.Write("\t");
-          sw.Write(sample.Velocity);
-          sw.Write("\t");
-          sw.Write(sample.VelocityX);
-          sw.Write("\t");
-          sw.Write(sample.VelocityY);
-          sw.Write("\t");
-          sw.Write(sample.Acceleration);
-          sw.Write("\t");
-          sw.Write(sample.AccelerationX);
-          sw.Write("\t");
-          sw.Write(sample.AccelerationY);
-          sw.WriteLine();
+          sw.Write(separator);
+          for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+          {
+            sw.Write(sample.Object[i].PositionX);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].PositionY);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].Distance);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].DistanceX);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].DistanceY);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].Length);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].LengthX);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].LengthY);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].Velocity);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].VelocityX);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].VelocityY);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].Acceleration);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].AccelerationX);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].AccelerationY);
+            sw.WriteLine();
+          }
         }
       }
     }
+
   }
 }

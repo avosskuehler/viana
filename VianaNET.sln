@@ -10,21 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VianaNETShaderEffectLibrary", "VianaNETShaderEffectLibrary\VianaNETShaderEffectLibrary.csproj", "{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs02.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Assergs.Windows\\Assergs.Windows.csproj
-		SccProjectName1 = Assergs.Windows
-		SccLocalPath1 = Assergs.Windows
-		SccProjectUniqueName2 = Test\\AppTest.csproj
-		SccProjectName2 = Test
-		SccLocalPath2 = Test
-		SccProjectUniqueName3 = Tests\\Tests.csproj
-		SccProjectName3 = Tests
-		SccLocalPath3 = Tests
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86

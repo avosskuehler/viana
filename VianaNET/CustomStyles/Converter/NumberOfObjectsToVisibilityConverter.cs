@@ -5,13 +5,13 @@ using System.Windows.Data;
 
 namespace VianaNET
 {
-  [ValueConversion(typeof(bool), typeof(Visibility))]
-  public class InverseBooleanToVisibilityConverter : IValueConverter
+  [ValueConversion(typeof(int), typeof(Visibility))]
+  public class NumberOfObjectsToVisibilityConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      bool valueToConvert = (bool)value;
-      return valueToConvert ? Visibility.Collapsed : Visibility.Visible;
+      int valueToConvert = (int)value;
+      return valueToConvert > 1 ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -19,11 +19,11 @@ namespace VianaNET
       Visibility valueToConvertBack = (Visibility)value;
       if (valueToConvertBack == Visibility.Visible)
       {
-        return false;
+        return 3;
       }
       else
       {
-        return true;
+        return 1;
       }
     }
   }

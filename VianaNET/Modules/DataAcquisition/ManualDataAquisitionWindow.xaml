@@ -12,7 +12,7 @@
   Loaded="Window_Loaded" 
   PreviewKeyDown="Window_PreviewKeyDown">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid Name="playerContainerGrid" RenderTransformOrigin="0.5,0.5">
     <Grid.RenderTransform>
@@ -20,11 +20,43 @@
     </Grid.RenderTransform>
     <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" MouseDown="player_MouseDown" MouseMove="player_MouseMove" />
     <Canvas Name="windowCanvas" MouseMove="windowCanvas_MouseMove" PreviewMouseMove="windowCanvas_MouseMove">
-      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="Red"></Line>
-      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="Red"></Line>
-      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="Red"></Line>
-      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="Red"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="Red" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Border Name="ObjectIndexPanel" 
+              Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Calibration.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              RenderTransformOrigin="0.5,0.5"
+              Canvas.Top="{Binding ElementName=windowCanvas,Path=ActualHeight}"
+              Background="{StaticResource BannerBackgroundBrush}" 
+              Canvas.Left="{Binding ElementName=windowCanvas,Path=ActualWidth}"
+              CornerRadius="10" Height="80" Width="80">
+        <Border.RenderTransform>
+          <TransformGroup>
+            <TranslateTransform 
+              X="-90" 
+              Y="90"/>
+            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          </TransformGroup>
+        </Border.RenderTransform>
+        <StackPanel>
+          <TextBox 
+            TextWrapping="Wrap" 
+            Background="Transparent"
+            Text="{lex:LocText VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
+            BorderThickness="0"
+            Padding="0 4 0 0"
+            TextAlignment="Center"/>
+          <Label 
+            Content="{Binding IndexOfTrackedObject, StringFormat=N0}" 
+            FontSize="38" 
+            Margin="0"
+            Padding="0"
+            HorizontalAlignment="Center"
+            Foreground="White"/>
+        </StackPanel>
+      </Border>
       <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>

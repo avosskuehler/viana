@@ -10,7 +10,7 @@
     DockableStyle="Dockable" 
 	Height="418" Width="600">
   <ad:DockableContent.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </ad:DockableContent.Resources>
   <ad:DockableContent.Icon>
     <Image Source="..\..\Images\Chart16.png" Height="16" Width="16"/>
@@ -72,6 +72,21 @@
         <StackPanel Margin="5">
           <ContentControl Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" 
                             Style="{StaticResource HeaderStyle}"/>
+          <Grid Name="ObjectSelectionGrid" 
+                Margin="5"
+                Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Calibration.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="100"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
+            <ComboBox 
+              Name="ObjectSelectionCombo"
+              Grid.Column="1" 
+              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem.Content}"
+              ItemsSource="{Binding ObjectDescriptions}"
+              SelectionChanged="ObjectSelectionCombo_SelectionChanged" />
+          </Grid>
           <TabControl Name="ChartContentTab" SelectionChanged="ChartContentTab_SelectionChanged">
             <TabItem Name="TabPositionSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPositionSpaceHeader}">
               <Grid Name="PositionSpaceGrid">
@@ -260,7 +275,7 @@
           <Viana:LabeledTextBox x:Name="LegendTitle" Text="{lex:LocText VianaNET:Labels:ChartWindowChartLegend}"  Label="{lex:LocText VianaNET:Labels:ChartWindowLegendHeader}" IsChecked="False" TextChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
           <Viana:LabeledTextBox
             x:Name="SeriesTitle" 
-            Text="{lex:LocText VianaNET:Labels:AxisCoordinateY}"  
+            Text="{lex:LocText VianaNET:Labels:AxisPositionY}"  
             Label="{lex:LocText VianaNET:Labels:ChartWindowSeriesHeader}" 
             IsChecked="False" 
             TextChanged="ValueChanged_UpdateChart" 

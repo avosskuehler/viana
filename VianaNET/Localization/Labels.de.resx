@@ -331,11 +331,11 @@ Wir freuen uns über Feedback -&gt;</value>
   <data name="DatagridWindowTitle" xml:space="preserve">
     <value>Datentabelle</value>
   </data>
-  <data name="DataGridXCoordinate" xml:space="preserve">
-    <value>X Koordinate</value>
+  <data name="DataGridXPosition" xml:space="preserve">
+    <value>X Position</value>
   </data>
-  <data name="DataGridYCoordinate" xml:space="preserve">
-    <value>Y Koordinate</value>
+  <data name="DataGridYPosition" xml:space="preserve">
+    <value>Y Position</value>
   </data>
   <data name="DirectShowErrorPreface" xml:space="preserve">
     <value>Der folgende Fehler ist während der Bearbeitung des Videos durch DirectShow aufgetreten: </value>
@@ -438,11 +438,11 @@ Wir freuen uns über Feedback -&gt;</value>
   <data name="AxisVelocityYDirection" xml:space="preserve">
     <value>Geschwindigkeit in y-Richtung</value>
   </data>
-  <data name="AxisCoordinateX" xml:space="preserve">
-    <value>X Koordinate</value>
+  <data name="AxisPositionX" xml:space="preserve">
+    <value>X Position</value>
   </data>
-  <data name="AxisCoordinateY" xml:space="preserve">
-    <value>Y Koordinate</value>
+  <data name="AxisPositionY" xml:space="preserve">
+    <value>Y Position</value>
   </data>
   <data name="ChartWindowAxesHeader" xml:space="preserve">
     <value>Diagramm</value>
@@ -637,10 +637,10 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>OK</value>
   </data>
   <data name="DataGridXDistance" xml:space="preserve">
-    <value>Position (X)</value>
+    <value>Abstand (X)</value>
   </data>
   <data name="DataGridYDistance" xml:space="preserve">
-    <value>Position (Y)</value>
+    <value>Abstand (Y)</value>
   </data>
   <data name="AxisDistanceX" xml:space="preserve">
     <value>Position in x-Richtung</value>
@@ -1188,5 +1188,50 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
     <value>Phasenraum</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelDescription" xml:space="preserve">
+    <value>Legt die Anzahl der zu verfolgenden Objekte fest.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle" xml:space="preserve">
+    <value>Objekt verfolgen</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle2" xml:space="preserve">
+    <value>Objekte verfolgen</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipDescription" xml:space="preserve">
+    <value>Hier wird die Anzahl der verfolgten Objekte festgelegt.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipTitle" xml:space="preserve">
+    <value>Anzahl bewegter Objekte</value>
+  </data>
+  <data name="DataGridLength" xml:space="preserve">
+    <value>Strecke</value>
+  </data>
+  <data name="DataGridObjectPrefix" xml:space="preserve">
+    <value>Objekt</value>
+  </data>
+  <data name="DataGridXLength" xml:space="preserve">
+    <value>Strecke (X)</value>
+  </data>
+  <data name="DataGridYLength" xml:space="preserve">
+    <value>Strecke (Y)</value>
+  </data>
+  <data name="AxisPixelX" xml:space="preserve">
+    <value>Videopixel (X)</value>
+  </data>
+  <data name="AxisPixelY" xml:space="preserve">
+    <value>Videopixel (Y)</value>
+  </data>
+  <data name="DataGridXPixel" xml:space="preserve">
+    <value>Pixel (X)</value>
+  </data>
+  <data name="DataGridYPixel" xml:space="preserve">
+    <value>Pixel (Y)</value>
+  </data>
+  <data name="ChartWindowObjectSelectionLabel" xml:space="preserve">
+    <value>Objekt wählen</value>
+  </data>
+  <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
+    <value>Erfasse Objekt:</value>
   </data>
 </root>

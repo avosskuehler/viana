@@ -178,24 +178,6 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @AxisCoordinateX.
-        /// </summary>
-        internal static string AxisCoordinateX {
-            get {
-                return ResourceManager.GetString("AxisCoordinateX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @AxisCoordinateY.
-        /// </summary>
-        internal static string AxisCoordinateY {
-            get {
-                return ResourceManager.GetString("AxisCoordinateY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @AxisDistance.
         /// </summary>
         internal static string AxisDistance {
@@ -282,6 +264,42 @@ namespace VianaNET.Localization {
         internal static string AxisLengthY {
             get {
                 return ResourceManager.GetString("AxisLengthY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AxisPixelX.
+        /// </summary>
+        internal static string AxisPixelX {
+            get {
+                return ResourceManager.GetString("AxisPixelX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AxisPixelY.
+        /// </summary>
+        internal static string AxisPixelY {
+            get {
+                return ResourceManager.GetString("AxisPixelY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AxisPositionX.
+        /// </summary>
+        internal static string AxisPositionX {
+            get {
+                return ResourceManager.GetString("AxisPositionX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AxisPositionY.
+        /// </summary>
+        internal static string AxisPositionY {
+            get {
+                return ResourceManager.GetString("AxisPositionY", resourceCulture);
             }
         }
         
@@ -1762,6 +1780,51 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectNumberOfObjectsLabelDescription.
+        /// </summary>
+        internal static string ButtonSelectNumberOfObjectsLabelDescription {
+            get {
+                return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectNumberOfObjectsLabelTitle.
+        /// </summary>
+        internal static string ButtonSelectNumberOfObjectsLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectNumberOfObjectsLabelTitle2.
+        /// </summary>
+        internal static string ButtonSelectNumberOfObjectsLabelTitle2 {
+            get {
+                return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectNumberOfObjectsToolTipDescription.
+        /// </summary>
+        internal static string ButtonSelectNumberOfObjectsToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonSelectNumberOfObjectsToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectNumberOfObjectsToolTipTitle.
+        /// </summary>
+        internal static string ButtonSelectNumberOfObjectsToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectNumberOfObjectsToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonVideoCaptureDevicePropertiesLabelDescription.
         /// </summary>
         internal static string ButtonVideoCaptureDevicePropertiesLabelDescription {
@@ -2122,6 +2185,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowObjectSelectionLabel.
+        /// </summary>
+        internal static string ChartWindowObjectSelectionLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowObjectSelectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowPhaseSpaceHeader.
         /// </summary>
         internal static string ChartWindowPhaseSpaceHeader {
@@ -2374,6 +2446,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @DataGridLength.
+        /// </summary>
+        internal static string DataGridLength {
+            get {
+                return ResourceManager.GetString("DataGridLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridObjectPrefix.
+        /// </summary>
+        internal static string DataGridObjectPrefix {
+            get {
+                return ResourceManager.GetString("DataGridObjectPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @DataGridTimestamp.
         /// </summary>
         internal static string DataGridTimestamp {
@@ -2428,20 +2518,38 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @DataGridXCoordinate.
-        /// </summary>
-        internal static string DataGridXCoordinate {
-            get {
-                return ResourceManager.GetString("DataGridXCoordinate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @DataGridXDistance.
         /// </summary>
         internal static string DataGridXDistance {
             get {
                 return ResourceManager.GetString("DataGridXDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridXLength.
+        /// </summary>
+        internal static string DataGridXLength {
+            get {
+                return ResourceManager.GetString("DataGridXLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridXPixel.
+        /// </summary>
+        internal static string DataGridXPixel {
+            get {
+                return ResourceManager.GetString("DataGridXPixel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridXPosition.
+        /// </summary>
+        internal static string DataGridXPosition {
+            get {
+                return ResourceManager.GetString("DataGridXPosition", resourceCulture);
             }
         }
         
@@ -2482,20 +2590,38 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @DataGridYCoordinate.
-        /// </summary>
-        internal static string DataGridYCoordinate {
-            get {
-                return ResourceManager.GetString("DataGridYCoordinate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @DataGridYDistance.
         /// </summary>
         internal static string DataGridYDistance {
             get {
                 return ResourceManager.GetString("DataGridYDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridYLength.
+        /// </summary>
+        internal static string DataGridYLength {
+            get {
+                return ResourceManager.GetString("DataGridYLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridYPixel.
+        /// </summary>
+        internal static string DataGridYPixel {
+            get {
+                return ResourceManager.GetString("DataGridYPixel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DataGridYPosition.
+        /// </summary>
+        internal static string DataGridYPosition {
+            get {
+                return ResourceManager.GetString("DataGridYPosition", resourceCulture);
             }
         }
         
@@ -2712,6 +2838,15 @@ namespace VianaNET.Localization {
         internal static string ManualDataAcquisitionRecentPointCount {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionRecentPointCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ManualDataAcquisitionTrackItemNumberHeader.
+        /// </summary>
+        internal static string ManualDataAcquisitionTrackItemNumberHeader {
+            get {
+                return ResourceManager.GetString("ManualDataAcquisitionTrackItemNumberHeader", resourceCulture);
             }
         }
         

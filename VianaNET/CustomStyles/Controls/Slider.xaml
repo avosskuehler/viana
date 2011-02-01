@@ -5,7 +5,7 @@
 	>
   
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="SliderStyles.xaml"/>
+    <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
 

@@ -5,6 +5,8 @@ namespace VianaNET
   {
     I,
     T,
+    X,
+    Y,
     PX,
     PY,
     D,

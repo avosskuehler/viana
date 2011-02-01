@@ -3,7 +3,7 @@
           xmlns:nud="clr-namespace:VianaNET"  
           >
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="SliderStyles.xaml"/>
+    <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
   <Style TargetType="{x:Type nud:NumericUpDown}">

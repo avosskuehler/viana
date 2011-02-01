@@ -8,7 +8,7 @@
     Height="185" Width="250" WindowStyle="ThreeDBorderWindow"
     Title="{lex:LocText VianaNET:Labels:LengthDialogTitle}" SizeToContent="WidthAndHeight" ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico" Topmost="True">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Border Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
     <Grid>

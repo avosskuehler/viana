@@ -115,6 +115,7 @@ namespace VianaNET
       // Initializes color scheme
       this.themeCounter = 0;
       SetColorScheme();
+      CreateImageSourceForNumberOfObjects();
 
       this.Show();
     }
@@ -224,6 +225,10 @@ namespace VianaNET
       e.CanExecute = Video.Instance.VideoElement.HasVideo;
     }
 
+    private void ButtonSelectNumberOfObjectsCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+      e.CanExecute = Video.Instance.VideoElement.HasVideo;
+    }
 
     private void CalibrateVideoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
@@ -526,6 +531,47 @@ namespace VianaNET
         Video.Instance.ImageProcessing.IsTargetColorSet = true;
         //this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
         //Video.Instance.UpdateNativeBitmap();
+      }
+    }
+
+    private void CreateImageSourceForNumberOfObjects()
+    {
+      DrawingVisual drawingVisual = new DrawingVisual();
+      DrawingContext drawingContext = drawingVisual.RenderOpen();
+      drawingContext.DrawRoundedRectangle(
+        Brushes.Transparent,
+        null,
+        new Rect(0, 0, 32, 32),
+        5,
+        5);
+      //drawingContext.DrawRoundedRectangle((Brush)this.Resources["DefaultOfficeBackgroundBrush"],
+      //  new Pen(Brushes.White, 2f),
+      //  new Rect(2, 2, 28, 28),
+      //  5,
+      //  5);
+      FormattedText text = new FormattedText(
+        Calibration.Instance.NumberOfTrackedObjects.ToString("N0"),
+        LocalizeDictionary.Instance.Culture,
+        FlowDirection.LeftToRight,
+        new Typeface("Verdana"),
+        24d,
+        Brushes.Black);
+
+      drawingContext.DrawText(text, new Point(8, 1));
+
+      drawingContext.Close();
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      bmp.Render(drawingVisual);
+      ((RibbonCommand)this.ButtonSelectNumberOfObjects.Command).LargeImageSource = bmp;
+      if (Calibration.Instance.NumberOfTrackedObjects > 1)
+      {
+        ((RibbonCommand)this.ButtonSelectNumberOfObjects.Command).LabelTitle =
+          Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle2;
+      }
+      else
+      {
+        ((RibbonCommand)this.ButtonSelectNumberOfObjects.Command).LabelTitle =
+         Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle;
       }
     }
 
@@ -943,6 +989,25 @@ namespace VianaNET
     private void RibbonWindow_Closing(object sender, CancelEventArgs e)
     {
       Video.Instance.Cleanup();
+    }
+
+    private void ButtonSelectNumberOfObjectsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      // Increase number of objects, shrink to maximal 3.
+      if (Calibration.Instance.NumberOfTrackedObjects == 3)
+      {
+        Calibration.Instance.NumberOfTrackedObjects = 1;
+      }
+      else
+      {
+        Calibration.Instance.NumberOfTrackedObjects++;
+      }
+
+      // Clear all data to correctly recreate data arrays.
+      VideoData.Instance.Reset();
+
+      // Update button image source
+      this.CreateImageSourceForNumberOfObjects();
     }
 
     ///////////////////////////////////////////////////////////////////////////////

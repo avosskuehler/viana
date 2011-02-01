@@ -343,11 +343,11 @@ We would like to have some feedback -&gt;</value>
   <data name="DatagridWindowTitle" xml:space="preserve">
     <value>Datagrid</value>
   </data>
-  <data name="DataGridXCoordinate" xml:space="preserve">
-    <value>X Coordinate</value>
+  <data name="DataGridXPosition" xml:space="preserve">
+    <value>X Position</value>
   </data>
-  <data name="DataGridYCoordinate" xml:space="preserve">
-    <value>Y Coordinate</value>
+  <data name="DataGridYPosition" xml:space="preserve">
+    <value>Y Position</value>
   </data>
   <data name="DirectShowErrorPreface" xml:space="preserve">
     <value>This error occured during processing your request: </value>
@@ -456,11 +456,11 @@ We would like to have some feedback -&gt;</value>
   <data name="AxisVelocityYDirection" xml:space="preserve">
     <value>Velocity in y-direction</value>
   </data>
-  <data name="AxisCoordinateX" xml:space="preserve">
-    <value>X coordinate</value>
+  <data name="AxisPositionX" xml:space="preserve">
+    <value>X position</value>
   </data>
-  <data name="AxisCoordinateY" xml:space="preserve">
-    <value>Y coordinate</value>
+  <data name="AxisPositionY" xml:space="preserve">
+    <value>Y position</value>
   </data>
   <data name="ChartWindowAxesHeader" xml:space="preserve">
     <value>Chart</value>
@@ -1203,5 +1203,50 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
     <value>Phase space</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelDescription" xml:space="preserve">
+    <value>Specifies the number of tracker objects in the video.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle" xml:space="preserve">
+    <value>tracked objects</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle2" xml:space="preserve">
+    <value>tracked object</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipDescription" xml:space="preserve">
+    <value>This is the number of tracked objects.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipTitle" xml:space="preserve">
+    <value>Number of tracked objects</value>
+  </data>
+  <data name="DataGridLength" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="DataGridObjectPrefix" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="DataGridXLength" xml:space="preserve">
+    <value>Length (X)</value>
+  </data>
+  <data name="DataGridYLength" xml:space="preserve">
+    <value>Length (Y)</value>
+  </data>
+  <data name="AxisPixelX" xml:space="preserve">
+    <value>Video pixel (X)</value>
+  </data>
+  <data name="AxisPixelY" xml:space="preserve">
+    <value>Video pixel (Y)</value>
+  </data>
+  <data name="DataGridXPixel" xml:space="preserve">
+    <value>Pixel (X)</value>
+  </data>
+  <data name="DataGridYPixel" xml:space="preserve">
+    <value>Pixel (Y)</value>
+  </data>
+  <data name="ChartWindowObjectSelectionLabel" xml:space="preserve">
+    <value>Select object</value>
+  </data>
+  <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
+    <value>Measure object:</value>
   </data>
 </root>

@@ -294,7 +294,7 @@ namespace VianaNET
 
         if (Video.Instance.IsDataAcquisitionRunning)
         {
-          VideoData.Instance.AddPoint(this.CurrentBlobCenter.Value);
+          VideoData.Instance.AddPoint(0, this.CurrentBlobCenter.Value);
         }
 
         StatusBarContent.Instance.MessagesLabel = Localization.Labels.BlobsObjectsFound;

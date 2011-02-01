@@ -11,7 +11,7 @@
     ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico"
         Background="{DynamicResource MainBackgroundBrush}" Loaded="Window_Loaded" Closing="Window_Closing">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

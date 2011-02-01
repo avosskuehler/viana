@@ -6,6 +6,7 @@ using AvalonDock;
 using System.Windows.Data;
 using WPFLocalizeExtension.Extensions;
 using Visifire.Charts;
+using System.Collections.Generic;
 
 namespace VianaNET
 {
@@ -34,11 +35,35 @@ namespace VianaNET
     public ChartWindow()
     {
       InitializeComponent();
+      this.ObjectSelectionCombo.DataContext = this;
+      this.PopulateObjectCombo();
       VideoData.Instance.PropertyChanged +=
         new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
       CreateDataSeries();
       this.isInitialized = true;
       UpdateChartProperties();
+    }
+
+    public struct TrackedObjectDescription
+    {
+      public string Description;
+      public int Index;
+    }
+
+    private void PopulateObjectCombo()
+    {
+      // Erase old entries
+      this.ObjectDescriptions.Clear();
+
+      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      {
+        this.ObjectDescriptions.Add(Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString());
+      }
+
+      this.ObjectSelectionCombo.ItemsSource = null;
+      this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
+      this.ObjectSelectionCombo.SelectedIndex = 0;
     }
 
     private void CreateDataSeries()
@@ -59,7 +84,10 @@ namespace VianaNET
       {
         this.Refresh();
       }
-
+      else if (e.PropertyName == "NumberOfTrackedObjects")
+      {
+        this.PopulateObjectCombo();
+      }
       //ScatterSeries data = ((ScatterSeries)this.DataChart.Series[0]);
       //BindingExpression be = data.GetBindingExpression(ScatterSeries.ItemsSourceProperty);
       //be.UpdateTarget();
@@ -79,6 +107,43 @@ namespace VianaNET
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
+
+    /// <summary>
+    /// Gets or sets the index of the currently tracked object
+    /// </summary>
+    public int IndexOfObject
+    {
+      get { return (int)this.GetValue(IndexOfObjectProperty); }
+      set { this.SetValue(IndexOfObjectProperty, value); }
+    }
+
+    /// <summary>
+    /// The <see cref="DependencyProperty"/> for the property <see cref="IndexOfObject"/>.
+    /// </summary>
+    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
+      "IndexOfObject",
+      typeof(int),
+      typeof(ChartWindow),
+      new FrameworkPropertyMetadata(0, new PropertyChangedCallback(OnPropertyChanged)));
+
+    /// <summary>
+    /// Gets or sets the index of the currently tracked object
+    /// </summary>
+    public List<string> ObjectDescriptions
+    {
+      get { return (List<string>)this.GetValue(ObjectDescriptionsProperty); }
+      set { this.SetValue(ObjectDescriptionsProperty, value); }
+    }
+
+    /// <summary>
+    /// The <see cref="DependencyProperty"/> for the property <see cref="ObjectDescriptions"/>.
+    /// </summary>
+    public static readonly DependencyProperty ObjectDescriptionsProperty = DependencyProperty.Register(
+      "ObjectDescriptions",
+      typeof(List<string>),
+      typeof(ChartWindow),
+      new FrameworkPropertyMetadata(new List<string>(), new PropertyChangedCallback(OnPropertyChanged)));
+
     #endregion //PROPERTIES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -104,6 +169,20 @@ namespace VianaNET
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
     #region EVENTHANDLER
+
+    /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="obj">The source of the event. This.</param>
+    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
+    /// the event data.</param>
+    private static void OnPropertyChanged(
+      DependencyObject obj,
+      DependencyPropertyChangedEventArgs args)
+    {
+      ChartWindow window = obj as ChartWindow;
+      window.RefreshSeries();
+    }
 
     private void ValueChanged_UpdateChart(object sender, EventArgs e)
     {
@@ -261,8 +340,9 @@ namespace VianaNET
       RefreshChartDataPoints();
     }
 
-    private static void UpdateAxisMappings(DataAxis axis, DataMapping map, DataMapping map2)
+    private void UpdateAxisMappings(DataAxis axis, DataMapping map, DataMapping map2)
     {
+      string prefix = "Object[" + this.IndexOfObject.ToString() + "].";
       switch (axis.Axis)
       {
         case AxisType.I:
@@ -274,12 +354,12 @@ namespace VianaNET
           map2.Path = "Timestamp";
           break;
         case AxisType.PX:
-          map.Path = "CoordinateX";
-          map2.Path = "CoordinateX";
+          map.Path = "PositionX";
+          map2.Path = "PositionX";
           break;
         case AxisType.PY:
-          map.Path = "CoordinateY";
-          map2.Path = "CoordinateY";
+          map.Path = "PositionY";
+          map2.Path = "PositionY";
           break;
         case AxisType.D:
           map.Path = "Distance";
@@ -342,6 +422,9 @@ namespace VianaNET
           map2.Path = "AccelerationYI";
           break;
       }
+
+      map.Path = prefix + map.Path;
+      map2.Path = prefix + map2.Path;
     }
 
     private void RefreshChartDataPoints()
@@ -609,6 +692,15 @@ namespace VianaNET
     private void ChartContentTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       SetDefaultDiagramm();
+    }
+
+    private void ObjectSelectionCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      if (this.ObjectSelectionCombo.SelectedItem != null)
+      {
+        string entry = (string)this.ObjectSelectionCombo.SelectedItem;
+        this.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1))-1;
+      }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
