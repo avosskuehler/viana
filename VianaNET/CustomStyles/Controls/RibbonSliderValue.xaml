@@ -40,6 +40,39 @@
       </Setter.Value>
     </Setter>
   </Style>
+  
+  <Style x:Key="VerticalRibbonSliderValueThumbStyle" TargetType="{x:Type Thumb}">
+    <Setter Property="SnapsToDevicePixels" Value="true"/>
+    <Setter Property="OverridesDefaultStyle" Value="true"/>
+    <Setter Property="Height" Value="16"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Thumb}">
+          <Border
+                        Name="border" 
+                        CornerRadius="2,2,2,2"
+                        BorderThickness="1"
+                        Background="{StaticResource ThumbBackgroundBrush}"
+                        BorderBrush="{StaticResource NormalBorderBrush}">
+            <Label FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="1,0,1,1" Padding="0" 
+                            Content="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type Viana:RibbonSliderValue}}}"/>
+          </Border>
+
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="border" Property="Background" Value="{StaticResource SideButtonsLightBackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsDragging" Value="True">
+              <Setter TargetName="border" Property="Background" Value="{StaticResource SideButtonsPlusLightBackgroundBrush}" />
+            </Trigger>
+            <!--<Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource DisabledBackgroundBrush}"/>
+                        </Trigger>-->
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
   <ControlTemplate x:Key="RibbonSliderValueHorizontalSlider" TargetType="{x:Type Viana:RibbonSliderValue}">
 
@@ -178,7 +211,7 @@
                       Command="Slider.DecreaseLarge" />
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb Style="{StaticResource VerticalSliderValueThumbStyle}"/>
+          <Thumb Style="{StaticResource VerticalRibbonSliderValueThumbStyle}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton

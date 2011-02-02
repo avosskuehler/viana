@@ -124,6 +124,9 @@
     </Page>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
     <Compile Include="Data\Calibration.cs" />
+    <Compile Include="Data\Interpolation\ExponentialSmoothControl.xaml.cs">
+      <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\TimeSample.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothFilter.cs" />
     <Compile Include="Data\Interpolation\Interpolation.cs" />
@@ -299,6 +302,10 @@
     </Page>
     <Page Include="CustomStyles\Converter\Converter.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Data\Interpolation\ExponentialSmoothControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

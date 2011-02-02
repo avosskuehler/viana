@@ -643,10 +643,10 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Abstand (Y)</value>
   </data>
   <data name="AxisDistanceX" xml:space="preserve">
-    <value>Position in x-Richtung</value>
+    <value>Abstand in x-Richtung</value>
   </data>
   <data name="AxisDistanceY" xml:space="preserve">
-    <value>Position in y-Richtung</value>
+    <value>Abstand in y-Richtung</value>
   </data>
   <data name="RibbonGroupVideoAutoDetectionOptionsLabelTitle" xml:space="preserve">
     <value>Detektionsoptionen</value>
@@ -1217,10 +1217,10 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Strecke (Y)</value>
   </data>
   <data name="AxisPixelX" xml:space="preserve">
-    <value>Videopixel (X)</value>
+    <value>Pixel (X)</value>
   </data>
   <data name="AxisPixelY" xml:space="preserve">
-    <value>Videopixel (Y)</value>
+    <value>Pixel (Y)</value>
   </data>
   <data name="DataGridXPixel" xml:space="preserve">
     <value>Pixel (X)</value>
@@ -1233,5 +1233,14 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
     <value>Erfasse Objekt:</value>
+  </data>
+  <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
+    <value>Glättungsfaktor der bestimmt wie stark der momentane Wert gewichtet wird.</value>
+  </data>
+  <data name="ExponentialSmoothDialogTitle" xml:space="preserve">
+    <value>Exponentielle Glättung</value>
+  </data>
+  <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
+    <value>Die exponentielle Glättung wichtet den momentanen Wert mit dem Glättungsfaktor und addiert dazu den vorhergehenden geglätteten Wert multipliziert mit (1-Glättungsfaktor).</value>
   </data>
 </root>

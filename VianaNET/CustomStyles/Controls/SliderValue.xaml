@@ -120,7 +120,7 @@
           <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge"/>
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb Name="HorizontalThumb" Style="{StaticResource HorizontalSliderThumbStyle}"/>
+          <Thumb Name="HorizontalThumb" Style="{StaticResource HorizontalSliderValueThumbStyle}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge"/>
@@ -239,7 +239,7 @@
                       Command="Slider.DecreaseLarge" />
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb Style="{StaticResource VerticalSliderThumbStyle}"/>
+          <Thumb Style="{StaticResource VerticalRibbonSliderValueThumbStyle}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton

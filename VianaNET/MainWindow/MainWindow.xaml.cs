@@ -85,7 +85,6 @@ namespace VianaNET
 
       this.mainRibbon.DataContext = this;
 
-
       this.videoWindow = new VideoWindow();
       this.modulePane.Items.Add(this.videoWindow);
       this.datagridWindow = new DataGridWindow();

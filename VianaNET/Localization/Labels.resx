@@ -1239,4 +1239,13 @@
   <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
     <value>@ManualDataAcquisitionTrackItemNumberHeader</value>
   </data>
+  <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
+    <value>@ExponentialSmoothDialogSmoothingFactorLabel</value>
+  </data>
+  <data name="ExponentialSmoothDialogTitle" xml:space="preserve">
+    <value>@ExponentialSmoothDialogTitle</value>
+  </data>
+  <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
+    <value>@InterpolationExponentialSmoothDescription</value>
+  </data>
 </root>

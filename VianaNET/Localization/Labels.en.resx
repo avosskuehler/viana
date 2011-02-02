@@ -1249,4 +1249,13 @@ Click OK or press Enter, when ready.</value>
   <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
     <value>Measure object:</value>
   </data>
+  <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
+    <value>Smoothing factor, determines the weighting of the interpolated data point.</value>
+  </data>
+  <data name="ExponentialSmoothDialogTitle" xml:space="preserve">
+    <value>Exponential smoothing</value>
+  </data>
+  <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
+    <value>Exponential smoothing weights the current value with the smoothing factor and adds the interpolated foregoing data sample weighted with (1-smoothing factor).</value>
+  </data>
 </root>

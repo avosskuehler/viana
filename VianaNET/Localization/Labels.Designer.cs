@@ -2662,6 +2662,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ExponentialSmoothDialogSmoothingFactorLabel.
+        /// </summary>
+        internal static string ExponentialSmoothDialogSmoothingFactorLabel {
+            get {
+                return ResourceManager.GetString("ExponentialSmoothDialogSmoothingFactorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExponentialSmoothDialogTitle.
+        /// </summary>
+        internal static string ExponentialSmoothDialogTitle {
+            get {
+                return ResourceManager.GetString("ExponentialSmoothDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ExportWhereToSaveFile.
         /// </summary>
         internal static string ExportWhereToSaveFile {
@@ -2730,6 +2748,15 @@ namespace VianaNET.Localization {
         internal static string InterpolationDialogTopTitle {
             get {
                 return ResourceManager.GetString("InterpolationDialogTopTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @InterpolationExponentialSmoothDescription.
+        /// </summary>
+        internal static string InterpolationExponentialSmoothDescription {
+            get {
+                return ResourceManager.GetString("InterpolationExponentialSmoothDescription", resourceCulture);
             }
         }
         

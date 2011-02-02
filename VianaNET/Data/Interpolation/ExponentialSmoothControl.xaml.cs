@@ -5,7 +5,7 @@
   using System.Windows.Media;
   using System.Windows.Controls;
 
-  public partial class InterpolationOptionsDialog : Window
+  public partial class ExponentialSmoothControl : UserControl
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -17,9 +17,6 @@
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
     #region FIELDS
-
-    public InterpolationBase currentInterpolationFilter;
-
     #endregion //FIELDS
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -28,12 +25,13 @@
     #region CONSTRUCTION
 
     /// <summary>
-    /// Initializes a new instance of the InterpolationOptionsDialog class.
+    /// Initializes a new instance of the ExponentialSmoothControl class.
     /// </summary>
-    public InterpolationOptionsDialog()
+    public ExponentialSmoothControl(ExponentialSmoothFilter filter)
     {
       InitializeComponent();
-      UpdateUIWithFilter();
+      this.Filter = filter;
+      this.SmoothingFactorNumeric.Value = (decimal)this.Filter.SmoothingFactor;
     }
 
     #endregion //CONSTRUCTION
@@ -49,19 +47,7 @@
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
 
-    public InterpolationBase ChoosenInterpolationFilter
-    {
-      get
-      {
-        return this.currentInterpolationFilter;
-      }
-
-      set
-      {
-        this.currentInterpolationFilter = value;
-        UpdateUIWithFilter();
-      }
-    }
+    public ExponentialSmoothFilter Filter { get; private set; }
 
     #endregion //PROPERTIES
 
@@ -82,33 +68,9 @@
     ///////////////////////////////////////////////////////////////////////////////
     #region EVENTHANDLER
 
-    private void OK_Click(object sender, RoutedEventArgs e)
+    private void SmoothingFactorNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
     {
-      this.DialogResult = true;
-      this.Close();
-    }
-
-    private void Cancel_Click(object sender, RoutedEventArgs e)
-    {
-      this.Close();
-    }
-
-    private void InterpolationFilterCombo_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-    {
-      InterpolationBase filter = (InterpolationBase)this.InterpolationFilterCombo.SelectedItem;
-
-      this.currentInterpolationFilter = filter;
-
-      // Remove old property sets.
-      this.InterpolationFilterPropertyGrid.Children.Clear();
-
-      // Add custom property control
-      this.InterpolationFilterPropertyGrid.Children.Add(filter.CustomUserControl);
-    }
-
-    private void Dialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-      this.InterpolationFilterPropertyGrid.Children.Clear();
+      this.Filter.SmoothingFactor = (float)this.SmoothingFactorNumeric.Value;
     }
 
     #endregion //EVENTHANDLER
@@ -123,20 +85,9 @@
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
     #region PRIVATEMETHODS
-
-    private void UpdateUIWithFilter()
-    {
-      if (this.currentInterpolationFilter == null)
-      {
-        this.currentInterpolationFilter = Interpolation.Filter[Interpolation.FilterTypes.MovingAverage];
-      }
-
-      this.InterpolationFilterCombo.SelectedItem = this.currentInterpolationFilter;
-    }
-
     #endregion //PRIVATEMETHODS
 
-     ///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
     #region HELPER

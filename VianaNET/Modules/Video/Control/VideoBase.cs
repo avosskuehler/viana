@@ -7,6 +7,7 @@
   using System.Windows.Interop;
   using System.Windows.Media;
   using DirectShowLib;
+  using System.Windows.Threading;
 
   /// <summary>
   /// This is the main class for the DirectShow interop.
@@ -109,11 +110,16 @@
     /// </summary>
     public VideoBase()
     {
+      Console.WriteLine("VideoBase Created");
     }
 
     ~VideoBase()
     {
+      Console.WriteLine("VideoBase Destructor");
+
       Dispose();
+
+      Console.WriteLine("VideoBase Finished");
     }
 
     #endregion //CONSTRUCTION
@@ -369,7 +375,6 @@
     /// </summary>
     public virtual void Dispose()
     {
-
       this.Stop();
 
       //#if DEBUG
@@ -382,13 +387,12 @@
 
       lock (this)
       {
-        Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
         {
           this.HasVideo = false;
           this.CurrentState = PlayState.Init;
           this.frameCounter = 0;
         }, null);
-
 
         if (this.originalMapping != IntPtr.Zero)
         {
@@ -422,7 +426,7 @@
 
         if (this.filterGraph != null)
         {
-          Marshal.ReleaseComObject(this.filterGraph);
+          Marshal.FinalReleaseComObject(this.filterGraph);
           this.filterGraph = null;
           this.mediaControl = null;
           this.HasVideo = false;

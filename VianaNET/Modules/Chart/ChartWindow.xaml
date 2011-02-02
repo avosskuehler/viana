@@ -83,7 +83,7 @@
             <ComboBox 
               Name="ObjectSelectionCombo"
               Grid.Column="1" 
-              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem.Content}"
+              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
               ItemsSource="{Binding ObjectDescriptions}"
               SelectionChanged="ObjectSelectionCombo_SelectionChanged" />
           </Grid>
@@ -292,7 +292,7 @@
                 <CheckBox x:Name="XAxisShowGridLines" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" Checked="ValueChanged_UpdateChart" Unchecked="ValueChanged_UpdateChart"/>
                 <Viana:LabeledSlider x:Name="XAxisMinimum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}" Minimum="-1000" Maximum="1000" Value="0" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
                 <Viana:LabeledSlider x:Name="XAxisMaximum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}" Minimum="-1000" Maximum="1000" Value="5" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
-                <Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
+                <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
               </StackPanel>
             </Expander>
             <Expander ExpandDirection="Down" IsExpanded="False" Header="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}">
@@ -301,7 +301,7 @@
                 <CheckBox x:Name="YAxisShowGridLines" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" Checked="ValueChanged_UpdateChart" Unchecked="ValueChanged_UpdateChart"/>
                 <Viana:LabeledSlider x:Name="YAxisMinimum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}" Minimum="-1000" Maximum="1000" Value="0" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
                 <Viana:LabeledSlider x:Name="YAxisMaximum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}" Minimum="-1000" Maximum="1000" Value="5" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
-                <Viana:LabeledSlider x:Name="YAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>
+                <!--<Viana:LabeledSlider x:Name="YAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
               </StackPanel>
             </Expander>
           </StackPanel>

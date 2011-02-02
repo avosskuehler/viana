@@ -232,8 +232,8 @@ namespace VianaNET
       switch (chartType)
       {
         case AxisType.YoverX:
-          xAxisContent.SelectedValue = AxisType.DX;
-          yAxisContent.SelectedValue = AxisType.DY;
+          xAxisContent.SelectedValue = AxisType.PX;
+          yAxisContent.SelectedValue = AxisType.PY;
           break;
         case AxisType.XoverT:
           xAxisContent.SelectedValue = AxisType.T;
@@ -373,6 +373,18 @@ namespace VianaNET
           map.Path = "DistanceY";
           map2.Path = "DistanceY";
           break;
+        case AxisType.S:
+          map.Path = "Length";
+          map2.Path = "Length";
+          break;
+        case AxisType.SX:
+          map.Path = "LengthX";
+          map2.Path = "LengthX";
+          break;
+        case AxisType.SY:
+          map.Path = "LengthY";
+          map2.Path = "LengthY";
+          break;
         case AxisType.V:
           map.Path = "Velocity";
           map2.Path = "VelocityI";
@@ -511,14 +523,14 @@ namespace VianaNET
             }
 
             xAxis.AxisMaximum = XAxisMaximum.IsChecked ? XAxisMaximum.Value : new double?();
-            if (XAxisInterval.IsChecked)
-            {
-              xAxis.Interval = XAxisInterval.Value;
-            }
-            else
-            {
-              xAxis.Interval = double.NaN;
-            }
+            //if (XAxisInterval.IsChecked)
+            //{
+            //  xAxis.Interval = XAxisInterval.Value;
+            //}
+            //else
+            //{
+            //  xAxis.Interval = double.NaN;
+            //}
           }
         }
 
@@ -543,14 +555,14 @@ namespace VianaNET
             }
 
             yAxis.AxisMaximum = YAxisMaximum.IsChecked ? YAxisMaximum.Value : new double?();
-            if (YAxisInterval.IsChecked)
-            {
-              yAxis.Interval = YAxisInterval.Value;
-            }
-            else
-            {
-              yAxis.Interval = double.NaN;
-            }
+            //if (YAxisInterval.IsChecked)
+            //{
+            //  yAxis.Interval = YAxisInterval.Value;
+            //}
+            //else
+            //{
+            //  yAxis.Interval = double.NaN;
+            //}
           }
         }
       }

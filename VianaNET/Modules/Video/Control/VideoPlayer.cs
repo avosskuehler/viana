@@ -23,7 +23,7 @@ namespace VianaNET
     private const int WMGraphNotify = 0x0400 + 13;
     private const int VolumeFull = 0;
     private const int VolumeSilence = -10000;
-
+    private Thread eventThread;
     //private IMediaEventEx mediaEventEx = null;
     private IVideoWindow videoWindow;
     private IBasicAudio basicAudio;
@@ -38,8 +38,6 @@ namespace VianaNET
 
     private volatile bool shouldExitEventLoop;
 
-    // Event used by Media Event thread
-    private ManualResetEvent manualResetEvent;
     private bool isFrameTimeCapable;
 
     public event EventHandler StepComplete;
@@ -140,7 +138,6 @@ namespace VianaNET
       IBaseFilter sourceFilter;
       this.filterGraph.AddSourceFilter(this.filename, "File Source", out sourceFilter);
 
-
       // Create the SampleGrabber interface
       this.sampleGrabber = (ISampleGrabber)new SampleGrabber();
       IBaseFilter baseGrabFlt = (IBaseFilter)this.sampleGrabber;
@@ -226,14 +223,10 @@ namespace VianaNET
       // Reset event loop exit flag
       this.shouldExitEventLoop = false;
 
-      // Wrap the graph event with a ManualResetEvent
-      manualResetEvent = new ManualResetEvent(false);
-      manualResetEvent.SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(hEvent, true);
-
       // Create a new thread to wait for events
-      Thread t = new Thread(new ThreadStart(this.EventWait));
-      t.Name = "Media Event Thread";
-      t.Start();
+      eventThread = new Thread(new ThreadStart(this.EventWait));
+      eventThread.Name = "Media Event Thread";
+      eventThread.Start();
 
       GetFrameStepInterface();
 
@@ -288,63 +281,43 @@ namespace VianaNET
     {
       this.ReleaseEventThread();
 
+      this.eventThread.Join(500);
+
+      //// Release and zero DirectShow interfaces
+      if (this.mediaSeeking != null)
+        this.mediaSeeking = null;
+      if (this.mediaPosition != null)
+        this.mediaPosition = null;
+      if (this.mediaControl != null)
+        this.mediaControl = null;
+      if (this.basicAudio != null)
+        this.basicAudio = null;
+      if (this.basicVideo != null)
+        this.basicVideo = null;
+      if (this.mediaEvent != null)
+      {
+        this.mediaEvent = null;
+      }
+      if (this.videoWindow != null)
+      {
+        this.videoWindow = null;
+      }
+
+      if (this.frameStep != null)
+        this.frameStep = null;
+
+
       // Release DirectShow interfaces
       base.Dispose();
 
-      lock (this)
-      {
-
-        //// Release and zero DirectShow interfaces
-        if (this.mediaSeeking != null)
-          this.mediaSeeking = null;
-        if (this.mediaPosition != null)
-          this.mediaPosition = null;
-        if (this.mediaControl != null)
-          this.mediaControl = null;
-        if (this.basicAudio != null)
-          this.basicAudio = null;
-        if (this.basicVideo != null)
-          this.basicVideo = null;
-        //if (this.videoWindow != null)
-        //  this.videoWindow = null;
-        if (this.frameStep != null)
-          this.frameStep = null;
-
-        // Clear file name to allow selection of new file with open dialog
-        this.filename = string.Empty;
-      }
+      // Clear file name to allow selection of new file with open dialog
+      this.filename = string.Empty;
     }
 
     private void ReleaseEventThread()
     {
       // Shut down event loop
       this.shouldExitEventLoop = true;
-
-      try
-      {
-        // Release the thread (if the thread was started)
-        if (manualResetEvent != null)
-        {
-          if (!manualResetEvent.SafeWaitHandle.IsClosed)
-          {
-            manualResetEvent.Set();
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        ErrorLogger.ProcessException(ex, false);
-      }
-      finally
-      {
-        if (manualResetEvent != null)
-        {
-          if (!manualResetEvent.SafeWaitHandle.IsClosed)
-          {
-            manualResetEvent.Close();
-          }
-        }
-      }
     }
 
     public override void Stop()
@@ -465,18 +438,14 @@ namespace VianaNET
       IntPtr p1, p2;
       EventCode ec;
 
+      Console.WriteLine("LoopStarted");
+
       do
       {
         // If we are shutting down
         if (this.shouldExitEventLoop)
         {
           break;
-        }
-
-        if (this.manualResetEvent != null)
-        {
-          // Wait for an event
-          this.manualResetEvent.WaitOne(-1, true);
         }
 
         // Make sure that we don't access the media event interface
@@ -497,6 +466,7 @@ namespace VianaNET
                 hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 0)
                 )
             {
+              //Console.WriteLine("InLoop");
               //// Write the event name to the debug window
               //Debug.WriteLine(ec.ToString());
 
@@ -539,6 +509,8 @@ namespace VianaNET
           }
         }
       } while (true);
+
+      //Console.WriteLine("LoopExited");
     }
 
     //private void HandleGraphEvent()

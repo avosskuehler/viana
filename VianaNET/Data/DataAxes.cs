@@ -234,7 +234,7 @@ namespace VianaNET
       DataAxis VYoverDY = new DataAxis(AxisType.VYoverDY);
       LocTextExtension locDYoverVY = new LocTextExtension("VianaNET:Labels:AxisDYoverVY");
       locDYoverVY.SetBinding(VYoverDY, DataAxis.DescriptionProperty);
-      DataAxis VoverS = new DataAxis(AxisType.AYoverT);
+      DataAxis VoverS = new DataAxis(AxisType.VoverS);
       LocTextExtension locSoverV = new LocTextExtension("VianaNET:Labels:AxisSoverV");
       locSoverV.SetBinding(VoverS, DataAxis.DescriptionProperty);
       DataAxis VXoverSX = new DataAxis(AxisType.VXoverSX);
@@ -242,11 +242,11 @@ namespace VianaNET
       locSXoverVX.SetBinding(VXoverSX, DataAxis.DescriptionProperty);
       DataAxis VYoverSY = new DataAxis(AxisType.VYoverSY);
       LocTextExtension locSYoverVY = new LocTextExtension("VianaNET:Labels:AxisSYoverVY");
-      locSYoverVY.SetBinding(AYoverT, DataAxis.DescriptionProperty);
+      locSYoverVY.SetBinding(VYoverSY, DataAxis.DescriptionProperty);
       DataAxis AoverV = new DataAxis(AxisType.AoverV);
       LocTextExtension locVoverA = new LocTextExtension("VianaNET:Labels:AxisVoverA");
       locVoverA.SetBinding(AoverV, DataAxis.DescriptionProperty);
-      DataAxis AXoverVX = new DataAxis(AxisType.AYoverT);
+      DataAxis AXoverVX = new DataAxis(AxisType.AXoverVX);
       LocTextExtension locVXoverAX = new LocTextExtension("VianaNET:Labels:AxisVXoverAX");
       locVXoverAX.SetBinding(AXoverVX, DataAxis.DescriptionProperty);
       DataAxis AYoverVY = new DataAxis(AxisType.AYoverVY);
