@@ -150,8 +150,8 @@ namespace VianaNET
       {
         case VideoMode.File:
         case VideoMode.None:
-          this.videoCaptureElement.Stop();
-          //this.videoCaptureElement.Dispose();
+          //this.videoCaptureElement.Stop();
+          this.videoCaptureElement.Dispose();
           this.videoElement = this.videoPlayerElement;
           break;
         case VideoMode.Capture:

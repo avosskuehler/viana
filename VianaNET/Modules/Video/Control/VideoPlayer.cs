@@ -438,7 +438,7 @@ namespace VianaNET
       IntPtr p1, p2;
       EventCode ec;
 
-      Console.WriteLine("LoopStarted");
+      //Console.WriteLine("LoopStarted");
 
       do
       {
@@ -461,9 +461,9 @@ namespace VianaNET
           {
             // Read the event
             for (
-                hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 0);
+                hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 100);
                 hr >= 0;
-                hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 0)
+                hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 100)
                 )
             {
               //Console.WriteLine("InLoop");

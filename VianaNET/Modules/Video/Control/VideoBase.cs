@@ -110,16 +110,16 @@
     /// </summary>
     public VideoBase()
     {
-      Console.WriteLine("VideoBase Created");
+      //Console.WriteLine("VideoBase Created");
     }
 
     ~VideoBase()
     {
-      Console.WriteLine("VideoBase Destructor");
+      //Console.WriteLine("VideoBase Destructor");
 
       Dispose();
 
-      Console.WriteLine("VideoBase Finished");
+      //Console.WriteLine("VideoBase Finished");
     }
 
     #endregion //CONSTRUCTION
