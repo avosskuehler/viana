@@ -19,26 +19,20 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     float gMax = targetColor.g + threshold;
     float bMin = targetColor.b - threshold;
     float bMax = targetColor.b + threshold;
-    
+	  
 	if (uv.x < minX || uv.x > maxX || uv.y < minY || uv.y > maxY)
 	{
-		c = cropColor;
+		return cropColor;
 	}
-	else
-	{
-		float4 Color= tex2D(input , uv);
+
+	float4 Color= tex2D(input , uv);
 		
-		if ((Color.r < rMin || Color.r > rMax) || 
-		    (Color.g < gMin || Color.g > gMax) || 
-		    (Color.b < bMin || Color.b > bMax))
-		{
-			c = blankColor;
-		}
-		else
-		{
-		    c = Color;
-		}
+	if ((Color.r < rMin || Color.r > rMax) || 
+	    (Color.g < gMin || Color.g > gMax) || 
+	    (Color.b < bMin || Color.b > bMax))
+	{
+		return blankColor;
 	}
 	
-    return c;
+    return Color;
 }

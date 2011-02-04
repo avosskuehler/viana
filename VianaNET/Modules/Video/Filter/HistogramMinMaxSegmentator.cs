@@ -34,6 +34,9 @@ namespace VianaNET
 
     public Histogram Histogram { get; set; }
     public VectorInt ThresholdLuminance { get; set; }
+    public double MaxDiameter { get; set; }
+    public double MinDiameter { get; set; }
+
     //public int JitteringCountThreshold { get; set; }
     //public int JitteringAmountThreshold
     //{
@@ -87,8 +90,7 @@ namespace VianaNET
           segment.Max.Y = GetIndexBelowThreshold(y0, 1, hy, ThresholdLuminance.Y);
 
           // Filter segments by diameter
-          if (segment.Diagonal > Video.Instance.ImageProcessing.BlobMinDiameter
-            && segment.Diagonal < Video.Instance.ImageProcessing.BlobMaxDiameter)
+          if (segment.Diagonal > this.MinDiameter && segment.Diagonal < this.MaxDiameter)
           {
             segments.Add(segment);
           }
@@ -182,7 +184,7 @@ namespace VianaNET
     //public void Reset()
     //{
     //  //jitteringCount = 0;
-      //lastSegment = new Segment(-100, -100, -200, -200);
+    //lastSegment = new Segment(-100, -100, -200, -200);
     //}
   }
 }

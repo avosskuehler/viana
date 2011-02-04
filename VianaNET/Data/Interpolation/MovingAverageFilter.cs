@@ -21,90 +21,75 @@ namespace VianaNET
 
     public override void CalculateInterpolatedValues(DataCollection samples)
     {
+      int[] validSamples = new int[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+
       int startIndex = (int)(this.NumberOfSamplesToInterpolate / 2f);
+      //int end = Math.Min(startIndex, samples.Count);
 
-      int end = Math.Min(startIndex, samples.Count);
-
-      for (int z = 0; z < Calibration.Instance.NumberOfTrackedObjects; z++)
+      // Reset all interpolated values
+      for (int i = 0; i < samples.Count; i++)
       {
-        for (int i = 0; i < end; i++)
+        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
         {
-          if (samples[i].Object[z] == null)
+          DataSample currentSample = samples[i].Object[j];
+          if (currentSample == null)
           {
             continue;
           }
 
-          samples[i].Object[z].VelocityI = null;
-          samples[i].Object[z].VelocityXI = null;
-          samples[i].Object[z].VelocityYI = null;
-          samples[i].Object[z].AccelerationI = null;
-          samples[i].Object[z].AccelerationXI = null;
-          samples[i].Object[z].AccelerationYI = null;
+          currentSample.VelocityI = null;
+          currentSample.VelocityXI = null;
+          currentSample.VelocityYI = null;
+          currentSample.AccelerationI = null;
+          currentSample.AccelerationXI = null;
+          currentSample.AccelerationYI = null;
         }
+      }
 
-        for (int i = samples.Count - 1; (i >= samples.Count - startIndex) && (i >= 0); i--)
+      // Calculate interpolation
+      for (int i = startIndex; i < samples.Count - startIndex; i++)
+      {
+        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
         {
-          if (samples[i].Object[z] == null)
+          DataSample currentSample = samples[i].Object[j];
+
+          if (currentSample == null)
           {
             continue;
           }
 
-          samples[i].Object[z].VelocityI = null;
-          samples[i].Object[z].VelocityXI = null;
-          samples[i].Object[z].VelocityYI = null;
-          samples[i].Object[z].AccelerationI = null;
-          samples[i].Object[z].AccelerationXI = null;
-          samples[i].Object[z].AccelerationYI = null;
-        }
-
-        for (int i = startIndex; i < samples.Count - startIndex; i++)
-        {
-          DataCollection samplesForInterpolation = samples.GetRangeAtPosition(i - startIndex, this.NumberOfSamplesToInterpolate);
+          List<DataSample>[] samplesForInterpolation =
+            samples.GetRangeAtPosition(i - startIndex, this.NumberOfSamplesToInterpolate, j);
 
           double velocityInterpolated = 0d;
           double velocityXInterpolated = 0d;
           double velocityYInterpolated = 0d;
 
-          if (i - startIndex == 0)
+          foreach (DataSample item in samplesForInterpolation[0])
           {
-            continue;
+            velocityInterpolated += item.Velocity.Value;
+            velocityXInterpolated += item.VelocityX.Value;
+            velocityYInterpolated += item.VelocityY.Value;
           }
 
-          if (samples[i].Object[z] == null)
-          {
-            continue;
-          }
-          
-          foreach (TimeSample item in samplesForInterpolation)
-          {
-            velocityInterpolated += item.Object[z].Velocity.Value;
-            velocityXInterpolated += item.Object[z].VelocityX.Value;
-            velocityYInterpolated += item.Object[z].VelocityY.Value;
-          }
-
-          samples[i].Object[z].VelocityI = velocityInterpolated / this.NumberOfSamplesToInterpolate;
-          samples[i].Object[z].VelocityXI = velocityXInterpolated / this.NumberOfSamplesToInterpolate;
-          samples[i].Object[z].VelocityYI = velocityYInterpolated / this.NumberOfSamplesToInterpolate;
-
-          if (i - startIndex == 1)
-          {
-            continue;
-          }
+          currentSample.VelocityI = velocityInterpolated / samplesForInterpolation[0].Count;
+          currentSample.VelocityXI = velocityXInterpolated / samplesForInterpolation[0].Count;
+          currentSample.VelocityYI = velocityYInterpolated / samplesForInterpolation[0].Count;
 
           double accelerationInterpolated = 0d;
           double accelerationXInterpolated = 0d;
           double accelerationYInterpolated = 0d;
 
-          foreach (TimeSample item in samplesForInterpolation)
+          foreach (DataSample item in samplesForInterpolation[1])
           {
-            accelerationInterpolated += item.Object[z].Acceleration.Value;
-            accelerationXInterpolated += item.Object[z].AccelerationX.Value;
-            accelerationYInterpolated += item.Object[z].AccelerationY.Value;
+            accelerationInterpolated += item.Acceleration.Value;
+            accelerationXInterpolated += item.AccelerationX.Value;
+            accelerationYInterpolated += item.AccelerationY.Value;
           }
 
-          samples[i].Object[z].AccelerationI = accelerationInterpolated / this.NumberOfSamplesToInterpolate;
-          samples[i].Object[z].AccelerationXI = accelerationXInterpolated / this.NumberOfSamplesToInterpolate;
-          samples[i].Object[z].AccelerationYI = accelerationYInterpolated / this.NumberOfSamplesToInterpolate;
+          currentSample.AccelerationI = accelerationInterpolated / samplesForInterpolation[1].Count;
+          currentSample.AccelerationXI = accelerationXInterpolated / samplesForInterpolation[1].Count;
+          currentSample.AccelerationYI = accelerationYInterpolated / samplesForInterpolation[1].Count;
         }
       }
     }

@@ -16,15 +16,21 @@
   <ad:DockableContent.Icon>
     <Image Source="..\..\Images\Datagrid16.png" Height="16" Width="16"/>
   </ad:DockableContent.Icon>
-  <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+  <!--<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">-->
     <DataGrid 
     AutoGenerateColumns="False" 
     Name="dataGrid"
     Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}"
-      VirtualizingStackPanel.IsVirtualizing="True"
+    ItemsSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}" 
+      HorizontalGridLinesBrush="Gray" 
+      VerticalGridLinesBrush="Gray" 
+      RowHeaderWidth="20" 
+      AlternationCount="1" 
+      CanUserDeleteRows="False"
+      CanUserResizeColumns="True">
+      <!--VirtualizingStackPanel.IsVirtualizing="True"
       EnableRowVirtualization="True"
-      EnableColumnVirtualization="True"
-    ItemsSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" RowHeaderWidth="20" AlternationCount="1" CanUserDeleteRows="False">
+      EnableColumnVirtualization="True"-->    
     </DataGrid>
-  </ScrollViewer>
+  <!--</ScrollViewer>-->
 </ad:DockableContent>

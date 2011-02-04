@@ -11,11 +11,31 @@
   </UserControl.Resources>
   <UniformGrid MinWidth="50" Rows="3" IsItemsHost="False">
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlProcessedImageHeader}">
-      <Image Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center">
-        <Image.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
-        </Image.RenderTransform>
-      </Image>
+      <!--<Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Name="ObjectSelectionGrid" Margin="0,0,0,3"
+              Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance.ImageProcessing}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
+          <ComboBox 
+              Name="ObjectSelectionCombo"
+              Grid.Column="1" 
+              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
+              ItemsSource="{Binding ObjectDescriptions}"
+              SelectionChanged="ObjectSelectionCombo_SelectionChanged" />
+        </Grid>-->
+        <Image Grid.Row="1" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}" HorizontalAlignment="Center">
+          <Image.RenderTransform>
+            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          </Image.RenderTransform>
+        </Image>
+      <!--</Grid>-->
     </GroupBox>
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlFoundBlobsHeader}">
       <Grid RenderTransformOrigin="0.5,0.5" >
@@ -31,7 +51,7 @@
       </Grid>
     </GroupBox>
     <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
-              <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
+      <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
       <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>

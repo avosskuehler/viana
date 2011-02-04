@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Viana="clr-namespace:VianaNET"
 	>
-  
+
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
                         Background="{StaticResource ThumbBackgroundBrush}"
                         BorderBrush="{StaticResource NormalBorderBrush}">
             <Label FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="1,0,1,1" Padding="0" 
-                            Content="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type Viana:RibbonSliderValue}}}"/>
+                            Content="{Binding Path=Value,StringFormat=Now {0:N}, RelativeSource={RelativeSource AncestorType={x:Type Viana:RibbonSliderValue}}}"/>
           </Border>
 
           <ControlTemplate.Triggers>
@@ -40,7 +40,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="VerticalRibbonSliderValueThumbStyle" TargetType="{x:Type Thumb}">
     <Setter Property="SnapsToDevicePixels" Value="true"/>
     <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -55,7 +55,7 @@
                         Background="{StaticResource ThumbBackgroundBrush}"
                         BorderBrush="{StaticResource NormalBorderBrush}">
             <Label FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="1,0,1,1" Padding="0" 
-                            Content="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type Viana:RibbonSliderValue}}}"/>
+                            Content="{Binding Path=Value, StringFormat=Now {N0}, RelativeSource={RelativeSource AncestorType={x:Type Viana:RibbonSliderValue}}}"/>
           </Border>
 
           <ControlTemplate.Triggers>
@@ -90,7 +90,7 @@
       <Label 
                 Grid.Column="0"
                 Content="{TemplateBinding Viana:RibbonSliderValue.SliderDescription}"/>
-      
+
       <Border
                 Name="TrackBackground"
                 Margin="0"

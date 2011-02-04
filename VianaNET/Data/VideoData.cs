@@ -26,7 +26,16 @@ namespace VianaNET
     private VideoData()
     {
       this.Samples = new DataCollection();
-      this.LastPoint = new Point[Calibration.Instance.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      Interpolation.Instance.PropertyChanged += new PropertyChangedEventHandler(Interpolation_PropertyChanged);
+    }
+
+    void Interpolation_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "IsInterpolatingData" || e.PropertyName == "CurrentInterpolationFilter")
+      {
+        this.RefreshDistanceVelocityAcceleration();
+      }
     }
 
     /// <summary>
@@ -82,62 +91,70 @@ namespace VianaNET
 
     public void RefreshDistanceVelocityAcceleration()
     {
-      for (int j = 0; j < Calibration.Instance.NumberOfTrackedObjects; j++)
+      TimeSample[] previousSamples = new TimeSample[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      int[] validSamples = new int[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+
+      for (int i = 0; i < this.Samples.Count; i++)
       {
-        TimeSample previousSample=null;
-
-        for (int i = 0; i < this.Samples.Count; i++)
+        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
         {
-          if (this.Samples[i].Object[j] == null)
+          DataSample currentSample = this.Samples[i].Object[j];
+          if (currentSample == null)
           {
             continue;
           }
 
-          Point calibratedPoint = CalibrateSample(this.Samples[i].Object[j]);
-          this.Samples[i].Object[j].PositionX = calibratedPoint.X;
-          this.Samples[i].Object[j].PositionY = calibratedPoint.Y;
+          validSamples[j]++;
 
-          if (i == 0)
+          Point calibratedPoint = CalibrateSample(currentSample);
+          currentSample.PositionX = calibratedPoint.X;
+          currentSample.PositionY = calibratedPoint.Y;
+
+          if (validSamples[j] == 1)
           {
-            this.Samples[i].Object[j].Distance = 0d;
-            this.Samples[i].Object[j].DistanceX = 0d;
-            this.Samples[i].Object[j].DistanceY = 0d;
-            this.Samples[i].Object[j].Length = 0d;
-            this.Samples[i].Object[j].LengthX = 0d;
-            this.Samples[i].Object[j].LengthY = 0d;
-            previousSample = this.Samples[i];
+            currentSample.Distance = 0d;
+            currentSample.DistanceX = 0d;
+            currentSample.DistanceY = 0d;
+            currentSample.Length = 0d;
+            currentSample.LengthX = 0d;
+            currentSample.LengthY = 0d;
+            previousSamples[j] = this.Samples[i];
+            continue;
+          }
+          DataSample previousSample = previousSamples[j].Object[j];
+          long timeTifference = this.Samples[i].Timestamp - previousSamples[j].Timestamp;
+          currentSample.Distance = GetDistance(j, currentSample, previousSample);
+          currentSample.DistanceX = GetXDistance(j, currentSample, previousSample);
+          currentSample.DistanceY = GetYDistance(j, currentSample, previousSample);
+          currentSample.Length = GetLength(j, currentSample, previousSample);
+          currentSample.LengthX = GetXLength(j, currentSample, previousSample);
+          currentSample.LengthY = GetYLength(j, currentSample, previousSample);
+          currentSample.Velocity = GetVelocity(j, currentSample, timeTifference);
+          currentSample.VelocityX = GetXVelocity(j, currentSample, previousSample, timeTifference);
+          currentSample.VelocityY = GetYVelocity(j, currentSample, previousSample, timeTifference);
+
+          if (validSamples[j] == 2)
+          {
+            previousSamples[j] = this.Samples[i];
             continue;
           }
 
-          this.Samples[i].Object[j].Distance = GetDistance(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].DistanceX = GetXDistance(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].DistanceY = GetYDistance(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].Length = GetLength(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].LengthX = GetXLength(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].LengthY = GetYLength(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].Velocity = GetVelocity(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].VelocityX = GetXVelocity(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].VelocityY = GetYVelocity(j, this.Samples[i], previousSample);
+          currentSample.Acceleration = GetAcceleration(j, currentSample, previousSample, timeTifference);
+          currentSample.AccelerationX = GetXAcceleration(j, currentSample, previousSample, timeTifference);
+          currentSample.AccelerationY = GetYAcceleration(j, currentSample, previousSample, timeTifference);
 
-          if (i == 1)
-          {
-            previousSample = this.Samples[i];
-            continue;
-          }
-
-          this.Samples[i].Object[j].Acceleration = GetAcceleration(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].AccelerationX = GetXAcceleration(j, this.Samples[i], previousSample);
-          this.Samples[i].Object[j].AccelerationY = GetYAcceleration(j, this.Samples[i], previousSample);
-
-          previousSample = this.Samples[i];
+          previousSamples[j] = this.Samples[i];
         }
       }
 
-      Interpolation.Instance.CurrentInterpolationFilter.CalculateInterpolatedValues(this.Samples);
+      if (Interpolation.Instance.IsInterpolatingData)
+      {
+        Interpolation.Instance.CurrentInterpolationFilter.CalculateInterpolatedValues(this.Samples);
+        this.OnPropertyChanged("Interpolation");
+      }
 
       // Refresh DataBinding to DataGrid.
       this.OnPropertyChanged("Samples");
-      this.OnPropertyChanged("Interpolation");
     }
 
     public void AddPoint(int objectIndex, Point newSamplePosition)
@@ -182,71 +199,73 @@ namespace VianaNET
       return calibratedPoint;
     }
 
-    private static double GetDistance(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetDistance(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double distance = Math.Sqrt(Math.Pow(newSample.Object[objectIndex].PositionY - previousSample.Object[objectIndex].PositionY, 2) + Math.Pow(newSample.Object[objectIndex].PositionX - previousSample.Object[objectIndex].PositionX, 2));
+      double distance = Math.Sqrt(Math.Pow(newSample.PositionY - previousSample.PositionY, 2) + Math.Pow(newSample.PositionX - previousSample.PositionX, 2));
       return distance;
     }
 
-    private static double GetXDistance(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetXDistance(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double distance = Math.Abs(newSample.Object[objectIndex].PositionX - previousSample.Object[objectIndex].PositionX);
+      double distance = Math.Abs(newSample.PositionX - previousSample.PositionX);
       return distance;
     }
 
-    private static double GetYDistance(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetYDistance(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double distance = Math.Abs(newSample.Object[objectIndex].PositionY - previousSample.Object[objectIndex].PositionY);
+      double distance = Math.Abs(newSample.PositionY - previousSample.PositionY);
       return distance;
     }
 
-    private static double GetLength(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetLength(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double length = previousSample.Object[objectIndex].Length + newSample.Object[objectIndex].Distance;
+      double length = previousSample.Length + newSample.Distance;
       return length;
     }
 
-    private static double GetXLength(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetXLength(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double lengthX = previousSample.Object[objectIndex].LengthX + newSample.Object[objectIndex].DistanceX;
+      double lengthX = previousSample.LengthX + newSample.DistanceX;
       return lengthX;
     }
 
-    private static double GetYLength(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetYLength(int objectIndex, DataSample newSample, DataSample previousSample)
     {
-      double lengthY = previousSample.Object[objectIndex].LengthY + newSample.Object[objectIndex].DistanceY;
+      double lengthY = previousSample.LengthY + newSample.DistanceY;
       return lengthY;
     }
 
-    private static double GetVelocity(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetVelocity(int objectIndex, DataSample newSample, long timedifference)
     {
-      double velocity = newSample.Object[objectIndex].Distance / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      double velocity = newSample.Distance / timedifference * 1000;
       return velocity;
     }
 
-    private static double GetXVelocity(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetXVelocity(int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.Object[objectIndex].PositionX - previousSample.Object[objectIndex].PositionX) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      double xvelocity = (newSample.PositionX - previousSample.PositionX) / timedifference * 1000;
+      return xvelocity;
     }
 
-    private static double GetYVelocity(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetYVelocity(int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.Object[objectIndex].PositionY - previousSample.Object[objectIndex].PositionY) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.PositionY - previousSample.PositionY) / timedifference * 1000;
     }
 
-    private static double GetAcceleration(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetAcceleration(int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.Object[objectIndex].Velocity.Value - previousSample.Object[objectIndex].Velocity.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      double value = (newSample.Velocity.Value - previousSample.Velocity.Value) / timedifference * 1000;
+      return value;
     }
 
-    private static double GetXAcceleration(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetXAcceleration(int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.Object[objectIndex].VelocityX.Value - previousSample.Object[objectIndex].VelocityX.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.VelocityX.Value - previousSample.VelocityX.Value) / timedifference * 1000;
     }
 
-    private static double GetYAcceleration(int objectIndex, TimeSample newSample, TimeSample previousSample)
+    private static double GetYAcceleration(int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.Object[objectIndex].VelocityY.Value - previousSample.Object[objectIndex].VelocityY.Value) / (newSample.Timestamp - previousSample.Timestamp) * 1000;
+      return (newSample.VelocityY.Value - previousSample.VelocityY.Value) / timedifference * 1000;
     }
 
 
@@ -260,7 +279,7 @@ namespace VianaNET
     public void Reset()
     {
       this.Samples.Clear();
-      this.LastPoint = new Point[Calibration.Instance.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
   }

@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="VianaNET.WindowWithHelp"
+    x:Class="VianaNET.SelectColorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  	  xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
@@ -8,8 +8,9 @@
     lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
+  Title="{lex:LocText VianaNET:Labels:SelectColorWindowTitle}"
   Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}"
-  PreviewKeyDown="Window_PreviewKeyDown" Topmost="True">
+  PreviewKeyDown="Window_PreviewKeyDown" Topmost="True" Cursor="Pen">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -26,6 +27,7 @@
       <Canvas.Height>
         <Binding ElementName="VideoImage" Path="ActualHeight" />
       </Canvas.Height>
+    
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
@@ -46,7 +48,7 @@
             Name="ObjectIndexHeader"
             TextWrapping="Wrap" 
             Background="Transparent"
-            Text="{lex:LocText VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
+            Text="{lex:LocText VianaNET:Labels:SelectColorWindowObjectIndexHeader}"
             BorderThickness="0"
             Padding="0 4 0 0"
             TextAlignment="Center"/>
@@ -61,7 +63,7 @@
         </StackPanel>
       </Border>
 
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="300" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Border.RenderTransform>
@@ -72,13 +74,13 @@
               <ColumnDefinition Width="20"/>
               <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" x:Name="LabelTitle" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol">Control Panel Title</Label>
+            <Label Grid.Column="0" x:Name="LabelTitle" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol" Content="{lex:LocText VianaNET:Labels:SelectColorWindowHelpControlTitle}"/>
             <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
             <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
           </Grid>
           <Separator/>
-          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description"/>
-          <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap"/>
+          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="{lex:LocText VianaNET:Labels:SelectColorWindowDescriptionTitle}"/>
+          <TextBlock Name="DescriptionMessage" Padding="5" Text="{lex:LocText VianaNET:Labels:SelectColorWindowDescriptionMessage}" TextWrapping="Wrap"/>
           <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:LocText VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
         </StackPanel>
       </Border>

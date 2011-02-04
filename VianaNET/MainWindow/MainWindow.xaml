@@ -228,7 +228,16 @@
                          SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipDescription}" />
-
+        <r:RibbonCommand x:Key="ButtonSelectObject" 
+                         CanExecute="ButtonSelectObjectCommand_CanExecute" 
+                         Executed="ButtonSelectObjectCommand_Executed"
+                         LabelTitle="{lex:LocText VianaNET:Labels:ButtonSelectObjectLabelTitle}" 
+                         LabelDescription="{lex:LocText VianaNET:Labels:ButtonSelectObjectLabelDescription}" 
+                         LargeImageSource="/VianaNET;component/Images/SelectObject32.png" 
+                         SmallImageSource="/VianaNET;component/Images/SelectObject16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipDescription}" />
+        
         <r:RibbonCommand x:Key="ButtonAutomaticDataAquisition" 
                          CanExecute="AutomaticDataAquisitionCommand_CanExecute" 
                          Executed="AutomaticDataAquisitionCommand_Executed" 
@@ -519,39 +528,42 @@
           <r:RibbonGroup.Command>
             <r:RibbonCommand LabelTitle="{lex:LocText VianaNET:Labels:RibbonGroupVideoAutoDetectionOptionsLabelTitle}" />
           </r:RibbonGroup.Command>
+          <r:RibbonButton  
+            Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+                           Name="ButtonSelectObject" Command="{StaticResource ButtonSelectObject}" />
           <Viana:RibbonSliderValue 
-                                   Style="{StaticResource RibbonSliderValue}"
-                                   MinWidth="100"
-                                   Height="20"
-                                   Minimum="0"
-                                   Maximum="100"
-                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
-                                   Value="{
-            Binding Path=ImageProcessing.ColorThreshold, 
-            Source={x:Static Viana:Video.Instance},
-            Converter={StaticResource PercentToDoubleConverter}}" 
-                                   SmallChange="1" 
-                                   LargeChange="1" TickFrequency="1" IsSnapToTickEnabled="True" />
+            x:Name="SliderThreshold"
+            Style="{StaticResource RibbonSliderValue}"
+            MinWidth="100"
+            Height="20"                      
+            Minimum="0"
+            Maximum="255"
+            SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
+            SmallChange="1" 
+            LargeChange="1" 
+            TickFrequency="1" 
+            
+            IsSnapToTickEnabled="True" />
           <Viana:RibbonSliderValue 
-                                   Style="{StaticResource RibbonSliderValue}"
-                                   Height="20"
-                                   MinWidth="100"
-                                   Minimum="1"
-                                   Maximum="500"
-                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
-                                   Value="{Binding Path=ImageProcessing.BlobMinDiameter, Source={x:Static Viana:Video.Instance}}"
-                                   SmallChange="1" 
-                                   IsSnapToTickEnabled="True" />
+            x:Name="SliderMinDiameter"
+            Style="{StaticResource RibbonSliderValue}"
+            Height="20"
+            MinWidth="100"
+            Minimum="1"
+            Maximum="500"
+            SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
+            SmallChange="1" 
+            IsSnapToTickEnabled="True" />
           <Viana:RibbonSliderValue 
-                                   Style="{StaticResource RibbonSliderValue}"
-                                    Height="20"
-                                  MinWidth="100"
-                                   Minimum="1"
-                                   Maximum="500"
-                                   SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
-                                   Value="{Binding Path=ImageProcessing.BlobMaxDiameter, Source={x:Static Viana:Video.Instance}}"
-                                   SmallChange="1" 
-                                   IsSnapToTickEnabled="True" />
+            x:Name="SliderMaxDiameter"
+            Style="{StaticResource RibbonSliderValue}"
+            Height="20"
+            MinWidth="100"
+            Minimum="1"             
+            Maximum="500"
+            SliderDescription="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
+            SmallChange="1" 
+            IsSnapToTickEnabled="True" />
         </r:RibbonGroup>
 
       </r:RibbonTab>
@@ -563,14 +575,11 @@
           </r:RibbonGroup.Command>
           <r:RibbonButton Command="{StaticResource ButtonVideoWindow}" />
         </r:RibbonGroup>
-        <r:RibbonGroup Name="VideoCaptureRibbonGroup" HasDialogLauncher="True" Command="{StaticResource ButtonVideoCaptureDeviceProperties}">
+        <r:RibbonGroup Name="VideoCaptureRibbonGroup"
+                       HasDialogLauncher="True" 
+                       Command="{StaticResource ButtonVideoCaptureDeviceProperties}">
           <r:RibbonLabel Content="{lex:LocText VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
           <Viana:RibbonComboBoxSimple x:Name="VideoInputDeviceCombo" IsEditable="False" IsReadOnly="False" />
-          <!--ItemsSource="{Binding Source={x:Static WPFMediaKit:MultimediaUtil.VideoInputDevices}}"
-            SelectedItem="{Binding Mode=OneWayToSource, Path=VideoCapturerElement.VideoCaptureDevice ,Source={x:Static Viana:Video.Instance}}"
-            DisplayMemberPath="Name"
-            SelectedIndex="0"/>-->
-
           <r:RibbonButton Margin="20,0,0,0" Command="{StaticResource ButtonVideoCaptureDeviceProperties}" />
         </r:RibbonGroup>
         <r:RibbonGroup>

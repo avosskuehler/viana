@@ -21,7 +21,8 @@
       <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
     <Grid Grid.Column="0" x:Name="ChartDisplayPanel"/>
-    <vc:Chart x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False">
+    <vc:Chart x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False"
+              AnimatedUpdate="False">
       <vc:Chart.Titles>
         <vc:Title Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}"/>
       </vc:Chart.Titles>
@@ -49,8 +50,8 @@
           LegendText="{Binding ElementName=yAxisContent, Path=Text}"
           DataSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}">
           <vc:DataSeries.DataMappings>
-            <vc:DataMapping MemberName="XValue" Path="DistanceX"></vc:DataMapping>
-            <vc:DataMapping MemberName="YValue" Path="DistanceY"></vc:DataMapping>
+            <vc:DataMapping MemberName="XValue" Path="Object[0].DistanceX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="Object[0].DistanceY"></vc:DataMapping>
           </vc:DataSeries.DataMappings>
         </vc:DataSeries>
         <vc:DataSeries 
@@ -61,8 +62,8 @@
           LegendText="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}"
           DataSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}">
           <vc:DataSeries.DataMappings>
-            <vc:DataMapping MemberName="XValue" Path="DistanceX"></vc:DataMapping>
-            <vc:DataMapping MemberName="YValue" Path="DistanceY"></vc:DataMapping>
+            <vc:DataMapping MemberName="XValue" Path="Object[0].DistanceX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="Object[0].DistanceY"></vc:DataMapping>
           </vc:DataSeries.DataMappings>
         </vc:DataSeries>
       </vc:Chart.Series>
@@ -74,7 +75,7 @@
                             Style="{StaticResource HeaderStyle}"/>
           <Grid Name="ObjectSelectionGrid" 
                 Margin="5"
-                Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Calibration.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+                Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="100"/>
               <ColumnDefinition Width="*"/>

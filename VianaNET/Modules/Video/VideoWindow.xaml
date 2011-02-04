@@ -59,8 +59,8 @@
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
-          <Line Name="BlobHorizontalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="0" X2="{Binding ElementName=VideoImage, Path=ActualWidth}" Y1="100" Y2="100"/>
-          <Line Name="BlobVerticalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="350" X2="350" Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"/>
+          <!--<Line Name="BlobHorizontalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="0" X2="{Binding ElementName=VideoImage, Path=ActualWidth}" Y1="100" Y2="100"/>
+          <Line Name="BlobVerticalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="350" X2="350" Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"/>-->
           <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseMove="Line_MouseMove" MouseLeftButtonUp="Line_MouseLeftButtonUp" />
           <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
           <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />

@@ -184,6 +184,9 @@
     <Compile Include="Modules\Video\Dialogs\SaveVideoDialog.xaml.cs">
       <DependentUpon>SaveVideoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Dialogs\SelectColorWindow.xaml.cs">
+      <DependentUpon>SelectColorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterRGB.cs" />
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
     <Compile Include="Modules\Video\Filter\FilterBase.cs" />
@@ -199,7 +202,6 @@
     <Compile Include="Modules\Video\Filter\Segment.cs" />
     <Compile Include="Modules\Video\Filter\VectorInt.cs" />
     <Compile Include="Modules\Video\Filter\YCbCrColor.cs" />
-    <Compile Include="Modules\Video\Dialogs\SelectColorWindow.cs" />
     <Compile Include="CustomStyles\Types\VideoMode.cs" />
     <Compile Include="Modules\Base\WindowWithHelp.xaml.cs">
       <DependentUpon>WindowWithHelp.xaml</DependentUpon>
@@ -398,6 +400,10 @@
     </Page>
     <Page Include="Modules\Video\Dialogs\LengthDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\Dialogs\SelectColorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -695,6 +701,8 @@
     <Resource Include="Images\StopControl48.png" />
     <Resource Include="Images\InterpolateData16.png" />
     <Resource Include="Images\InterpolateData32.png" />
+    <Resource Include="Images\SelectObject16.png" />
+    <Resource Include="Images\SelectObject32.png" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -25,6 +25,7 @@ namespace VianaNET
       this.PopulateDataGridWithColumns();
       Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(DataPropertyChanged);
       VideoData.Instance.PropertyChanged += new PropertyChangedEventHandler(DataPropertyChanged);
+      Video.Instance.ImageProcessing.PropertyChanged += new PropertyChangedEventHandler(DataPropertyChanged);
     }
 
     private void DataPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -57,8 +58,8 @@ namespace VianaNET
       newColumn.CellStyle = (Style)this.Resources[cellstyles[1]];
       newColumn.CanUserReorder = true;
       newColumn.IsReadOnly = true;
-      newColumn.CanUserSort = true;
-      newColumn.SortMemberPath = path;
+      newColumn.CanUserSort = false;
+      //newColumn.SortMemberPath = path;
       Binding valueBinding = new Binding(path);
       valueBinding.Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"];
       valueBinding.ConverterParameter = this.Resources[measurement];
@@ -91,8 +92,8 @@ namespace VianaNET
       frameColumn.CellStyle = (Style)this.Resources["DataGridCellStyle"];
       frameColumn.CanUserReorder = false;
       frameColumn.IsReadOnly = true;
-      frameColumn.CanUserSort = true;
-      frameColumn.SortMemberPath = "Framenumber";
+      frameColumn.CanUserSort = false;
+      //frameColumn.SortMemberPath = "Framenumber";
       Binding valueBinding = new Binding("Framenumber");
       valueBinding.StringFormat = "N0";
       frameColumn.Binding = valueBinding;
@@ -105,8 +106,8 @@ namespace VianaNET
       timeColumn.CellStyle = (Style)this.Resources["DataGridCellStyle"];
       timeColumn.CanUserReorder = false;
       timeColumn.IsReadOnly = true;
-      timeColumn.CanUserSort = true;
-      timeColumn.SortMemberPath = "Timestamp";
+      timeColumn.CanUserSort = false;
+      //timeColumn.SortMemberPath = "Timestamp";
       Binding valueBindingTime = new Binding("Timestamp");
       valueBindingTime.Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"];
       valueBindingTime.ConverterParameter = this.Resources["TimeMeasurement"];
@@ -114,9 +115,9 @@ namespace VianaNET
       this.dataGrid.Columns.Add(timeColumn);
 
       // For each tracked object create the whole bunch of columns
-      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
-        string prefix = Calibration.Instance.NumberOfTrackedObjects > 1 ? "Nr." + (i + 1).ToString() + " " : string.Empty;
+        string prefix = Video.Instance.ImageProcessing.NumberOfTrackedObjects > 1 ? "Nr." + (i + 1).ToString() + " " : string.Empty;
         string obj = "Object[" + i.ToString() + "].";
         CreateColumn(
           obj + "PixelX",

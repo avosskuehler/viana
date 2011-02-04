@@ -575,6 +575,7 @@
       // Set the media type to Video/RBG24
       media = new AMMediaType();
       media.majorType = MediaType.Video;
+      //media.subType=MediaSubType.UYVY;
       media.subType = MediaSubType.RGB32;
       media.formatType = FormatType.VideoInfo;
 

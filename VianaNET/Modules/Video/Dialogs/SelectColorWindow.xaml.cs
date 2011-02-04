@@ -11,7 +11,7 @@ using System.Windows.Controls.Primitives;
 
 namespace VianaNET
 {
-  public partial class WindowWithHelp : Window
+  public partial class SelectColorWindow : Window
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -33,9 +33,10 @@ namespace VianaNET
     ///////////////////////////////////////////////////////////////////////////////
     #region CONSTRUCTION
 
-    public WindowWithHelp()
+    public SelectColorWindow()
     {
       InitializeComponent();
+      this.ObjectIndexPanel.DataContext = this;
     }
 
     #endregion //CONSTRUCTION
@@ -66,7 +67,7 @@ namespace VianaNET
     public static readonly DependencyProperty IndexOfTrackedObjectProperty = DependencyProperty.Register(
       "IndexOfTrackedObject",
       typeof(int),
-      typeof(WindowWithHelp),
+      typeof(SelectColorWindow),
       new FrameworkPropertyMetadata(1, new PropertyChangedCallback(OnPropertyChanged)));
 
     #endregion //PROPERTIES
@@ -81,6 +82,54 @@ namespace VianaNET
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region OVERRIDES
+
+    protected void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+      if (this.ControlPanel.IsMouseOver)
+      {
+        return;
+      }
+
+      try
+      {
+        double scaledX = e.GetPosition(this.VideoImage).X;
+        double scaledY = e.GetPosition(this.VideoImage).Y;
+        double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+        double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+        double originalX = factorX * scaledX;
+        double originalY = factorY * scaledY;
+        Int32Rect rect = new Int32Rect((int)originalX, (int)originalY, 1, 1);
+
+        System.Drawing.Bitmap frame = Video.Instance.CreateBitmapFromCurrentImageSource();
+        if (frame == null)
+        {
+          throw new ArgumentNullException("Native Bitmap is null.");
+        }
+
+        System.Drawing.Color color = frame.GetPixel((int)originalX, (int)originalY);
+        Color selectedColor = Color.FromArgb(255, color.R, color.G, color.B);
+        Video.Instance.ImageProcessing.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
+        ImageProcessing.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
+      }
+      catch (Exception)
+      {
+        VianaDialog error = new VianaDialog(
+          "Error",
+          "No Color selected",
+          "Could not detect the color at the given position");
+        error.ShowDialog();
+      }
+
+      if (this.IndexOfTrackedObject == Video.Instance.ImageProcessing.NumberOfTrackedObjects)
+      {
+        this.DialogResult = true;
+        this.Close();
+      }
+
+      this.IndexOfTrackedObject++;
+      this.ObjectIndexLabel.Content = this.IndexOfTrackedObject.ToString();
+    }
+
     #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -98,7 +147,7 @@ namespace VianaNET
       DependencyObject obj,
       DependencyPropertyChangedEventArgs args)
     {
-      WindowWithHelp window = obj as WindowWithHelp;
+      SelectColorWindow window = obj as SelectColorWindow;
 
       // Reset index if appropriate
       if (window.IndexOfTrackedObject > Video.Instance.ImageProcessing.NumberOfTrackedObjects)
@@ -107,17 +156,12 @@ namespace VianaNET
       }
     }
 
-    protected virtual void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    protected void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
 
     }
 
-    protected virtual void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-
-    }
-
-    protected virtual void Container_MouseMove(object sender, MouseEventArgs e)
+    protected void Container_MouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.windowCanvas);
 

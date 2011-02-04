@@ -1248,4 +1248,16 @@
   <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
     <value>@InterpolationExponentialSmoothDescription</value>
   </data>
+  <data name="ButtonSelectObjectLabelDescription" xml:space="preserve">
+    <value>@ButtonSelectObjectLabelDescription</value>
+  </data>
+  <data name="ButtonSelectObjectLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectObjectLabelTitle</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectObjectToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectObjectToolTipTitle</value>
+  </data>
 </root>

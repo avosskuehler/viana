@@ -14,7 +14,7 @@ namespace VianaNET
 
     public TimeSample()
     {
-      this.Object = new DataSample[Calibration.Instance.NumberOfTrackedObjects];
+      this.Object = new DataSample[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
     }
 
     public class TimeComparer : IComparer<TimeSample>

@@ -1243,4 +1243,19 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
     <value>Die exponentielle Glättung wichtet den momentanen Wert mit dem Glättungsfaktor und addiert dazu den vorhergehenden geglätteten Wert multipliziert mit (1-Glättungsfaktor).</value>
   </data>
+  <data name="SelectColorWindowObjectIndexHeader" xml:space="preserve">
+    <value>Farbe für Objekt</value>
+  </data>
+  <data name="ButtonSelectObjectLabelDescription" xml:space="preserve">
+    <value>Bestimmt das Objekt, für welches die Parameter eingestellt werden sollen.</value>
+  </data>
+  <data name="ButtonSelectObjectLabelTitle" xml:space="preserve">
+    <value>Objekt wählen</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipDescription" xml:space="preserve">
+    <value>Hier klicken um das Objekt auszuwählen, für das die nebenstehenden Parameter eingestellt werden sollen.</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
+    <value>Select object</value>
+  </data>
 </root>

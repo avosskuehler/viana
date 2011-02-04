@@ -281,8 +281,6 @@ namespace VianaNET
     {
       this.ReleaseEventThread();
 
-      this.eventThread.Join(500);
-
       //// Release and zero DirectShow interfaces
       if (this.mediaSeeking != null)
         this.mediaSeeking = null;
@@ -318,6 +316,12 @@ namespace VianaNET
     {
       // Shut down event loop
       this.shouldExitEventLoop = true;
+
+      // Wait for shutdown
+      if (this.eventThread != null)
+      {
+        this.eventThread.Join(500);
+      }
     }
 
     public override void Stop()
@@ -340,9 +344,13 @@ namespace VianaNET
 
       int hr = 0;
       DsLong zeroPosition = new DsLong((long)(this.SelectionStart / NanoSecsToMilliSecs));
-      if (zeroPosition <= 0)
+      //if (zeroPosition <= 0)
+      //{
+      //  zeroPosition = 1000;
+      //}
+      if (zeroPosition < 0)
       {
-        zeroPosition = 1000;
+        zeroPosition = 0;
       }
 
       if ((this.mediaControl == null) || (this.mediaSeeking == null))
@@ -420,7 +428,8 @@ namespace VianaNET
     public void UpdateFrameIndex()
     {
       //long currentTime = this.MediaPositionInNanoSeconds;
-      this.MediaPositionFrameIndex = (int)(this.MediaPositionInNanoSeconds / (double)this.FrameTimeInNanoSeconds);
+      double index = this.MediaPositionInNanoSeconds / (double)this.FrameTimeInNanoSeconds;
+      this.MediaPositionFrameIndex = (int)(Math.Round(index));
     }
 
     // Wait for events to happen.  This approach uses waiting on an event handle.
@@ -689,7 +698,8 @@ namespace VianaNET
 
         long currentPosition;
         long stopPosition;
-        int hr = this.mediaSeeking.GetPositions(out currentPosition, out stopPosition);
+        int hr = this.mediaSeeking.GetCurrentPosition(out currentPosition);
+        hr = this.mediaSeeking.GetPositions(out currentPosition, out stopPosition);
         DsError.ThrowExceptionForHR(hr);
 
         long milliSeconds = currentPosition;
@@ -713,7 +723,7 @@ namespace VianaNET
         long currentPosition = value;
         if (currentPosition < 0)
         {
-          currentPosition = 1000;
+          currentPosition = 0;
         }
 
         int hr = this.mediaSeeking.SetPositions(

@@ -1,31 +1,21 @@
-﻿# region Using Directives
-
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Diagnostics;
-
-using System.Windows.Threading;
-using System.Threading;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using AvalonDock;
-using System.Windows.Documents;
-using System.IO;
-using System.Reflection;
-using Microsoft.Windows.Controls.Ribbon;
-using System.ComponentModel;
-using System.Collections.Generic;
-using Microsoft.Win32;
-using System.Globalization;
-using WPFLocalizeExtension.Engine;
-using System.Windows.Data;
-# endregion
-
-namespace VianaNET
+﻿namespace VianaNET
 {
+  using System;
+  using System.Collections.Generic;
+  using System.ComponentModel;
+  using System.Globalization;
+  using System.IO;
+  using System.Windows;
+  using System.Windows.Controls;
+  using System.Windows.Data;
+  using System.Windows.Input;
+  using System.Windows.Media;
+  using System.Windows.Media.Imaging;
+  using AvalonDock;
+  using Microsoft.Win32;
+  using Microsoft.Windows.Controls.Ribbon;
+  using WPFLocalizeExtension.Engine;
+
   public partial class MainWindow : RibbonWindow
   {
     ///////////////////////////////////////////////////////////////////////////////
@@ -111,12 +101,23 @@ namespace VianaNET
         this.VideoInputDeviceCombo.SelectedIndex = 0;
       }
 
+      Video.Instance.ImageProcessing.PropertyChanged += new PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
+
       // Initializes color scheme
       this.themeCounter = 0;
       SetColorScheme();
       CreateImageSourceForNumberOfObjects();
+      UpdateSelectObjectImage();
 
       this.Show();
+    }
+
+    void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "IndexOfObject"||e.PropertyName=="NumberOfTrackedObjects")
+      {
+        UpdateSelectObjectImage();
+      }
     }
 
     #endregion //CONSTRUCTION
@@ -230,6 +231,11 @@ namespace VianaNET
     }
 
     private void CalibrateVideoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+      e.CanExecute = Video.Instance.VideoElement.HasVideo;
+    }
+
+    private void ButtonSelectObjectCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
       e.CanExecute = Video.Instance.VideoElement.HasVideo;
     }
@@ -490,6 +496,7 @@ namespace VianaNET
       this.ResetColorButton();
       this.videoWindow.SetVideoMode(VideoMode.File);
       this.videoWindow.LoadVideo(string.Empty);
+      this.UpdateSelectObjectImage();
     }
 
     public void ResetColorButton()
@@ -516,8 +523,17 @@ namespace VianaNET
           new Rect(0, 0, 32, 32),
           5,
           5);
+        int count = Video.Instance.ImageProcessing.NumberOfTrackedObjects;
+        float bandwidth = 26f / count;
+        for (int i = 0; i < count; i++)
+        {
+          drawingContext.DrawRectangle(
+            new SolidColorBrush(Video.Instance.ImageProcessing.TargetColor[i]),
+            null,
+            new Rect(3 + i * bandwidth, 3, bandwidth, 27));
+        }
         drawingContext.DrawRoundedRectangle(
-          new SolidColorBrush(Video.Instance.ImageProcessing.TargetColor),
+          Brushes.Transparent,
           new Pen(Brushes.White, 2f),
           new Rect(2, 2, 28, 28),
           5,
@@ -527,6 +543,7 @@ namespace VianaNET
         RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
         bmp.Render(drawingVisual);
         ((RibbonCommand)this.selectColorRibbonButton.Command).LargeImageSource = bmp;
+        Video.Instance.ImageProcessing.IsTargetColorSet = false;
         Video.Instance.ImageProcessing.IsTargetColorSet = true;
         //this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
         //Video.Instance.UpdateNativeBitmap();
@@ -549,7 +566,7 @@ namespace VianaNET
       //  5,
       //  5);
       FormattedText text = new FormattedText(
-        Calibration.Instance.NumberOfTrackedObjects.ToString("N0"),
+        Video.Instance.ImageProcessing.NumberOfTrackedObjects.ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -562,7 +579,7 @@ namespace VianaNET
       RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
       ((RibbonCommand)this.ButtonSelectNumberOfObjects.Command).LargeImageSource = bmp;
-      if (Calibration.Instance.NumberOfTrackedObjects > 1)
+      if (Video.Instance.ImageProcessing.NumberOfTrackedObjects > 1)
       {
         ((RibbonCommand)this.ButtonSelectNumberOfObjects.Command).LabelTitle =
           Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle2;
@@ -573,6 +590,53 @@ namespace VianaNET
          Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle;
       }
     }
+
+    private void ButtonSelectObjectCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      Video.Instance.ImageProcessing.IndexOfObject++;
+    }
+
+    private void UpdateSelectObjectImage()
+    {
+      BitmapImage icon = new BitmapImage(new Uri("pack://application:,,,/VianaNET;component/Images/SelectObject32.png"));
+
+      DrawingVisual drawingVisual = new DrawingVisual();
+      DrawingContext drawingContext = drawingVisual.RenderOpen();
+      drawingContext.DrawImage(icon, new Rect(0, 0, 32, 32));
+      FormattedText text = new FormattedText(
+       (Video.Instance.ImageProcessing.IndexOfObject + 1).ToString("N0"),
+       LocalizeDictionary.Instance.Culture,
+       FlowDirection.LeftToRight,
+       new Typeface("Verdana"),
+       18d,
+       Brushes.Black);
+
+      drawingContext.DrawText(text, new Point(10, 3));
+
+      drawingContext.Close();
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      bmp.Render(drawingVisual);
+      ((RibbonCommand)this.ButtonSelectObject.Command).LargeImageSource = bmp;
+
+      this.UpdateSelectObjectBindings();
+    }
+
+    private void UpdateSelectObjectBindings()
+    {
+      Binding thresholdBinding = new Binding("ImageProcessing.ColorThreshold[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
+      thresholdBinding.Source = Video.Instance;
+      //thresholdBinding.Converter = (IValueConverter)this.Resources["PercentToDoubleConverter"];
+      this.SliderThreshold.SetBinding(RibbonSliderValue.ValueProperty, thresholdBinding);
+
+      Binding minDiameterBinding = new Binding("ImageProcessing.BlobMinDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
+      minDiameterBinding.Source = Video.Instance;
+      this.SliderMinDiameter.SetBinding(RibbonSliderValue.ValueProperty, minDiameterBinding);
+
+      Binding maxDiameterBinding = new Binding("ImageProcessing.BlobMaxDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
+      maxDiameterBinding.Source = Video.Instance;
+      this.SliderMaxDiameter.SetBinding(RibbonSliderValue.ValueProperty, maxDiameterBinding);
+    }
+
 
     private void CalibrateVideoCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
@@ -958,7 +1022,9 @@ namespace VianaNET
 
     private void ButtonCalculateVelocityCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
+      this.Cursor = Cursors.Wait;
       VideoData.Instance.RefreshDistanceVelocityAcceleration();
+      this.Cursor = Cursors.Arrow;
     }
 
     private void ButtonVideoCaptureDevicePropertiesCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -992,22 +1058,23 @@ namespace VianaNET
 
     private void ButtonSelectNumberOfObjectsCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
+      // Clear all data to correctly recreate data arrays.
+      VideoData.Instance.Reset();
+
       // Increase number of objects, shrink to maximal 3.
-      if (Calibration.Instance.NumberOfTrackedObjects == 3)
+      if (Video.Instance.ImageProcessing.NumberOfTrackedObjects == 3)
       {
-        Calibration.Instance.NumberOfTrackedObjects = 1;
+        Video.Instance.ImageProcessing.NumberOfTrackedObjects = 1;
       }
       else
       {
-        Calibration.Instance.NumberOfTrackedObjects++;
+        Video.Instance.ImageProcessing.NumberOfTrackedObjects++;
       }
-
-      // Clear all data to correctly recreate data arrays.
-      VideoData.Instance.Reset();
 
       // Update button image source
       this.CreateImageSourceForNumberOfObjects();
     }
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

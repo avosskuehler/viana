@@ -24,7 +24,7 @@ namespace VianaNET
 
     public override void CalculateInterpolatedValues(DataCollection samples)
     {
-      for (int z = 0; z < Calibration.Instance.NumberOfTrackedObjects; z++)
+      for (int z = 0; z < Video.Instance.ImageProcessing.NumberOfTrackedObjects; z++)
       {
         // Sanity check
         int j = 0;

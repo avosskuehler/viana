@@ -76,16 +76,6 @@ namespace VianaNET
       InitFields();
     }
 
-    static Calibration()
-    {
-      TrackObjectColors = new List<SolidColorBrush>();
-      TrackObjectColors.Add(Brushes.Red);
-      TrackObjectColors.Add(Brushes.Green);
-      TrackObjectColors.Add(Brushes.Blue);
-      TrackObjectColors.Add(Brushes.Yellow);
-      TrackObjectColors.Add(Brushes.Magenta);
-    }
-
     #endregion //CONSTRUCTION
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -124,11 +114,6 @@ namespace VianaNET
         return instance;
       }
     }
-
-    /// <summary>
-    /// Gets or sets  a list of brushes for the different tracked objects
-    /// </summary>
-    public static List<SolidColorBrush> TrackObjectColors { get; set; }
 
     /// <summary>
     /// Gets or sets <see cref="Double"/> containing the scale factor to
@@ -203,27 +188,6 @@ namespace VianaNET
         }
       }
     }
-
-    /// <summary>
-    /// Gets or sets the number of tracked objects
-    /// </summary>
-    public int NumberOfTrackedObjects
-    {
-      get { return (int)this.GetValue(NumberOfTrackedObjectsProperty); }
-      set { this.SetValue(NumberOfTrackedObjectsProperty, value); }
-    }
-
-    /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="NumberOfTrackedObjects"/>.
-    /// </summary>
-    public static readonly DependencyProperty NumberOfTrackedObjectsProperty = DependencyProperty.Register(
-      "NumberOfTrackedObjects",
-      typeof(int),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(
-        1,
-        FrameworkPropertyMetadataOptions.AffectsRender,
-        new PropertyChangedCallback(OnPropertyChanged)));
 
     /// <summary>
     /// Gets or sets a value indicating whether to display or hide the units for

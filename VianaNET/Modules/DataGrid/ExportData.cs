@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Windows.Input;
 
 namespace VianaNET
 {
@@ -99,7 +100,7 @@ namespace VianaNET
 
       // <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="3" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
       writer.WriteStartElement("Table");
-      int columnCount = Calibration.Instance.NumberOfTrackedObjects * 14 + 2;
+      int columnCount = Video.Instance.ImageProcessing.NumberOfTrackedObjects * 20 + 2;
       writer.WriteAttributeString("ss", "ExpandedColumnCount", null, columnCount.ToString());
       writer.WriteAttributeString("ss", "ExpandedRowCount", null, dataSource.Count.ToString());
       writer.WriteAttributeString("x", "FullColumns", null, "1");
@@ -113,7 +114,7 @@ namespace VianaNET
       WriteCellValue(writer, "String", Localization.Labels.DataGridFramenumber);
       WriteCellValue(writer, "String", Localization.Labels.DataGridTimestamp);
 
-      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
         string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridXPosition);
@@ -127,9 +128,15 @@ namespace VianaNET
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridVelocity);
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridXVelocity);
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridYVelocity);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridVelocityInterpolated);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXVelocityInterpolated);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYVelocityInterpolated);
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridAcceleration);
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridXAcceleration);
         WriteCellValue(writer, "String", title + Localization.Labels.DataGridYAcceleration);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridAccelerationInterpolated);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridXAccelerationInterpolated);
+        WriteCellValue(writer, "String", title + Localization.Labels.DataGridYAccelerationInterpolated);
       }
 
       // </Row>
@@ -144,7 +151,7 @@ namespace VianaNET
         // Alle Zellen der aktuellen Zeile durchlaufen
         WriteCellValue(writer, "Number", row.Framenumber);
         WriteCellValue(writer, "Number", row.Timestamp);
-        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
         {
           WriteCellValue(writer, "Number", row.Object[i].PositionX);
           WriteCellValue(writer, "Number", row.Object[i].PositionY);
@@ -157,9 +164,15 @@ namespace VianaNET
           WriteCellValue(writer, "Number", row.Object[i].Velocity);
           WriteCellValue(writer, "Number", row.Object[i].VelocityX);
           WriteCellValue(writer, "Number", row.Object[i].VelocityY);
+          WriteCellValue(writer, "Number", row.Object[i].VelocityI);
+          WriteCellValue(writer, "Number", row.Object[i].VelocityXI);
+          WriteCellValue(writer, "Number", row.Object[i].VelocityYI);
           WriteCellValue(writer, "Number", row.Object[i].Acceleration);
           WriteCellValue(writer, "Number", row.Object[i].AccelerationX);
           WriteCellValue(writer, "Number", row.Object[i].AccelerationY);
+          WriteCellValue(writer, "Number", row.Object[i].AccelerationI);
+          WriteCellValue(writer, "Number", row.Object[i].AccelerationXI);
+          WriteCellValue(writer, "Number", row.Object[i].AccelerationYI);
         }
         // </Row>
         writer.WriteEndElement();
@@ -248,58 +261,88 @@ namespace VianaNET
 
     public static void ToXls(DataCollection dataSource)
     {
-      Microsoft.Office.Interop.Excel.Application xla = new Microsoft.Office.Interop.Excel.Application();
-
-      xla.Visible = true;
-      Microsoft.Office.Interop.Excel.Workbook wb =
-        xla.Workbooks.Add(Microsoft.Office.Interop.Excel.XlSheetType.xlWorksheet);
-
-      Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xla.ActiveSheet;
-
-      int row = 1;
-      ws.Cells[row, 1] = Localization.Labels.DataGridFramenumber;
-      ws.Cells[row, 2] = Localization.Labels.DataGridTimestamp;
-      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      VianaNETApplication.Current.MainWindow.Cursor = Cursors.Wait;
+      try
       {
-        string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
-        ws.Cells[row, 3 + i] = title + Localization.Labels.DataGridXPosition;
-        ws.Cells[row, 4 + i] = title + Localization.Labels.DataGridYPosition;
-        ws.Cells[row, 5 + i] = title + Localization.Labels.DataGridDistance;
-        ws.Cells[row, 6 + i] = title + Localization.Labels.DataGridXDistance;
-        ws.Cells[row, 7 + i] = title + Localization.Labels.DataGridYDistance;
-        ws.Cells[row, 8 + i] = title + Localization.Labels.DataGridLength;
-        ws.Cells[row, 9 + i] = title + Localization.Labels.DataGridXLength;
-        ws.Cells[row, 10 + i] = title + Localization.Labels.DataGridYLength;
-        ws.Cells[row, 11 + i] = title + Localization.Labels.DataGridVelocity;
-        ws.Cells[row, 12 + i] = title + Localization.Labels.DataGridXVelocity;
-        ws.Cells[row, 13 + i] = title + Localization.Labels.DataGridYVelocity;
-        ws.Cells[row, 14 + i] = title + Localization.Labels.DataGridAcceleration;
-        ws.Cells[row, 15 + i] = title + Localization.Labels.DataGridXAcceleration;
-        ws.Cells[row, 16 + i] = title + Localization.Labels.DataGridYAcceleration;
-      }
 
-      foreach (TimeSample sample in dataSource)
-      {
-        row++;
-        ws.Cells[row, 1] = sample.Framenumber;
-        ws.Cells[row, 2] = sample.Timestamp;
-        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        Microsoft.Office.Interop.Excel.Application xla = new Microsoft.Office.Interop.Excel.Application();
+
+        xla.Visible = true;
+        Microsoft.Office.Interop.Excel.Workbook wb =
+          xla.Workbooks.Add(Microsoft.Office.Interop.Excel.XlSheetType.xlWorksheet);
+
+        Microsoft.Office.Interop.Excel.Worksheet ws = (Microsoft.Office.Interop.Excel.Worksheet)xla.ActiveSheet;
+
+        int row = 1;
+        ws.Cells[row, 1] = Localization.Labels.DataGridFramenumber;
+        ws.Cells[row, 2] = Localization.Labels.DataGridTimestamp;
+        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
         {
-          ws.Cells[row, 3] = sample.Object[i].PositionX;
-          ws.Cells[row, 4] = sample.Object[i].PositionY;
-          ws.Cells[row, 5] = sample.Object[i].Distance;
-          ws.Cells[row, 6] = sample.Object[i].DistanceX;
-          ws.Cells[row, 7] = sample.Object[i].DistanceY;
-          ws.Cells[row, 8] = sample.Object[i].Length;
-          ws.Cells[row, 9] = sample.Object[i].LengthX;
-          ws.Cells[row, 10] = sample.Object[i].LengthY;
-          ws.Cells[row, 11] = sample.Object[i].Velocity;
-          ws.Cells[row, 12] = sample.Object[i].VelocityX;
-          ws.Cells[row, 13] = sample.Object[i].VelocityY;
-          ws.Cells[row, 14] = sample.Object[i].Acceleration;
-          ws.Cells[row, 15] = sample.Object[i].AccelerationX;
-          ws.Cells[row, 16] = sample.Object[i].AccelerationY;
+          string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
+          ws.Cells[row, 3 + i * 20] = title + Localization.Labels.DataGridXPosition;
+          ws.Cells[row, 4 + i * 20] = title + Localization.Labels.DataGridYPosition;
+          ws.Cells[row, 5 + i * 20] = title + Localization.Labels.DataGridDistance;
+          ws.Cells[row, 6 + i * 20] = title + Localization.Labels.DataGridXDistance;
+          ws.Cells[row, 7 + i * 20] = title + Localization.Labels.DataGridYDistance;
+          ws.Cells[row, 8 + i * 20] = title + Localization.Labels.DataGridLength;
+          ws.Cells[row, 9 + i * 20] = title + Localization.Labels.DataGridXLength;
+          ws.Cells[row, 10 + i * 20] = title + Localization.Labels.DataGridYLength;
+          ws.Cells[row, 11 + i * 20] = title + Localization.Labels.DataGridVelocity;
+          ws.Cells[row, 12 + i * 20] = title + Localization.Labels.DataGridXVelocity;
+          ws.Cells[row, 13 + i * 20] = title + Localization.Labels.DataGridYVelocity;
+          ws.Cells[row, 14 + i * 20] = title + Localization.Labels.DataGridVelocityInterpolated;
+          ws.Cells[row, 15 + i * 20] = title + Localization.Labels.DataGridXVelocityInterpolated;
+          ws.Cells[row, 16 + i * 20] = title + Localization.Labels.DataGridYVelocityInterpolated;
+          ws.Cells[row, 17 + i * 20] = title + Localization.Labels.DataGridAcceleration;
+          ws.Cells[row, 18 + i * 20] = title + Localization.Labels.DataGridXAcceleration;
+          ws.Cells[row, 19 + i * 20] = title + Localization.Labels.DataGridYAcceleration;
+          ws.Cells[row, 20 + i * 20] = title + Localization.Labels.DataGridAccelerationInterpolated;
+          ws.Cells[row, 21 + i * 20] = title + Localization.Labels.DataGridXAccelerationInterpolated;
+          ws.Cells[row, 22 + i * 20] = title + Localization.Labels.DataGridYAccelerationInterpolated;
         }
+
+        foreach (TimeSample sample in dataSource)
+        {
+          row++;
+          ws.Cells[row, 1] = sample.Framenumber;
+          ws.Cells[row, 2] = sample.Timestamp;
+          for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+          {
+            if (sample.Object[i] == null)
+            {
+              continue;
+            }
+
+            ws.Cells[row, 3 + i * 20] = sample.Object[i].PositionX;
+            ws.Cells[row, 4 + i * 20] = sample.Object[i].PositionY;
+            ws.Cells[row, 5 + i * 20] = sample.Object[i].Distance;
+            ws.Cells[row, 6 + i * 20] = sample.Object[i].DistanceX;
+            ws.Cells[row, 7 + i * 20] = sample.Object[i].DistanceY;
+            ws.Cells[row, 8 + i * 20] = sample.Object[i].Length;
+            ws.Cells[row, 9 + i * 20] = sample.Object[i].LengthX;
+            ws.Cells[row, 10 + i * 20] = sample.Object[i].LengthY;
+            ws.Cells[row, 11 + i * 20] = sample.Object[i].Velocity;
+            ws.Cells[row, 12 + i * 20] = sample.Object[i].VelocityX;
+            ws.Cells[row, 13 + i * 20] = sample.Object[i].VelocityY;
+            ws.Cells[row, 14 + i * 20] = sample.Object[i].VelocityI;
+            ws.Cells[row, 15 + i * 20] = sample.Object[i].VelocityXI;
+            ws.Cells[row, 16 + i * 20] = sample.Object[i].VelocityYI;
+            ws.Cells[row, 17 + i * 20] = sample.Object[i].Acceleration;
+            ws.Cells[row, 18 + i * 20] = sample.Object[i].AccelerationX;
+            ws.Cells[row, 19 + i * 20] = sample.Object[i].AccelerationY;
+            ws.Cells[row, 20 + i * 20] = sample.Object[i].AccelerationI;
+            ws.Cells[row, 21 + i * 20] = sample.Object[i].AccelerationXI;
+            ws.Cells[row, 22 + i * 20] = sample.Object[i].AccelerationYI;
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, true);
+      }
+      finally
+      {
+        VianaNETApplication.Current.MainWindow.Cursor = Cursors.Arrow;
       }
     }
 
@@ -321,7 +364,7 @@ namespace VianaNET
         sw.Write(separator);
         sw.Write(Localization.Labels.DataGridTimestamp);
         sw.Write(separator);
-        for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
         {
           string title = Localization.Labels.DataGridObjectPrefix + i.ToString() + " ";
           sw.Write(title + Localization.Labels.DataGridXPosition);
@@ -346,11 +389,23 @@ namespace VianaNET
           sw.Write(separator);
           sw.Write(title + Localization.Labels.DataGridYVelocity);
           sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridVelocityInterpolated);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXVelocityInterpolated);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYVelocityInterpolated);
+          sw.Write(separator);
           sw.Write(title + Localization.Labels.DataGridAcceleration);
           sw.Write(separator);
           sw.Write(title + Localization.Labels.DataGridXAcceleration);
           sw.Write(separator);
           sw.Write(title + Localization.Labels.DataGridYAcceleration);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridAccelerationInterpolated);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridXAccelerationInterpolated);
+          sw.Write(separator);
+          sw.Write(title + Localization.Labels.DataGridYAccelerationInterpolated);
           sw.WriteLine();
         }
 
@@ -360,7 +415,7 @@ namespace VianaNET
           sw.Write(separator);
           sw.Write(sample.Timestamp);
           sw.Write(separator);
-          for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
           {
             sw.Write(sample.Object[i].PositionX);
             sw.Write(separator);
@@ -384,11 +439,23 @@ namespace VianaNET
             sw.Write(separator);
             sw.Write(sample.Object[i].VelocityY);
             sw.Write(separator);
+            sw.Write(sample.Object[i].VelocityI);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].VelocityXI);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].VelocityYI);
+            sw.Write(separator);
             sw.Write(sample.Object[i].Acceleration);
             sw.Write(separator);
             sw.Write(sample.Object[i].AccelerationX);
             sw.Write(separator);
             sw.Write(sample.Object[i].AccelerationY);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].AccelerationI);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].AccelerationXI);
+            sw.Write(separator);
+            sw.Write(sample.Object[i].AccelerationYI);
             sw.WriteLine();
           }
         }

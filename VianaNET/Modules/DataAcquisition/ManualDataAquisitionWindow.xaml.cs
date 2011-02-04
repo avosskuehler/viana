@@ -133,7 +133,7 @@ namespace VianaNET
       "BrushOfCossHair",
       typeof(SolidColorBrush),
       typeof(ManualDataAquisitionWindow),
-      new FrameworkPropertyMetadata(Calibration.TrackObjectColors[0], new PropertyChangedCallback(OnPropertyChanged)));
+      new FrameworkPropertyMetadata(ImageProcessing.TrackObjectColors[0], new PropertyChangedCallback(OnPropertyChanged)));
 
     #endregion //PROPERTIES
 
@@ -161,13 +161,13 @@ namespace VianaNET
       ManualDataAquisitionWindow window = obj as ManualDataAquisitionWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Calibration.Instance.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Video.Instance.ImageProcessing.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }
 
       // Update crosshair brush
-      window.BrushOfCossHair = Calibration.TrackObjectColors[window.IndexOfTrackedObject-1];
+      window.BrushOfCossHair = ImageProcessing.TrackObjectColors[window.IndexOfTrackedObject-1];
     }
 
     #endregion //OVERRIDES
@@ -222,7 +222,7 @@ namespace VianaNET
 
         VideoData.Instance.AddPoint(this.IndexOfTrackedObject-1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Calibration.Instance.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == Video.Instance.ImageProcessing.NumberOfTrackedObjects)
         {
           this.StepOneFrameForward();
         }
@@ -406,7 +406,7 @@ namespace VianaNET
       // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        for (int j = 0; j < Calibration.Instance.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
         {
           foreach (Ellipse item in this.visualDataPoints[j])
           {
@@ -425,8 +425,8 @@ namespace VianaNET
       // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>[Calibration.Instance.NumberOfTrackedObjects];
-        for (int j = 0; j < Calibration.Instance.NumberOfTrackedObjects; j++)
+        this.visualDataPoints = new List<Ellipse>[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
         {
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
@@ -434,7 +434,7 @@ namespace VianaNET
             Ellipse visualDataPoint = new Ellipse();
             visualDataPoint.Width = 2 * visualDataPointRadius;
             visualDataPoint.Height = 2 * visualDataPointRadius;
-            visualDataPoint.Stroke = Calibration.TrackObjectColors[j];
+            visualDataPoint.Stroke = ImageProcessing.TrackObjectColors[j];
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 

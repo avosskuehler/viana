@@ -239,7 +239,7 @@
                       Command="Slider.DecreaseLarge" />
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb Style="{StaticResource VerticalRibbonSliderValueThumbStyle}"/>
+          <Thumb Style="{StaticResource VerticalSliderValueThumbStyle}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton

@@ -1825,6 +1825,42 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectObjectLabelDescription.
+        /// </summary>
+        internal static string ButtonSelectObjectLabelDescription {
+            get {
+                return ResourceManager.GetString("ButtonSelectObjectLabelDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectObjectLabelTitle.
+        /// </summary>
+        internal static string ButtonSelectObjectLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectObjectLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectObjectToolTipDescription.
+        /// </summary>
+        internal static string ButtonSelectObjectToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonSelectObjectToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSelectObjectToolTipTitle.
+        /// </summary>
+        internal static string ButtonSelectObjectToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectObjectToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonVideoCaptureDevicePropertiesLabelDescription.
         /// </summary>
         internal static string ButtonVideoCaptureDevicePropertiesLabelDescription {

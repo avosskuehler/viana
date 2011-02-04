@@ -135,7 +135,9 @@
       WriteLine(message);
       //if (showMessageBox)
       {
-        MessageBox.Show(message);
+        VianaDialog dlg = new VianaDialog("Exception occured", ex.Message,
+          message);
+        dlg.ShowDialog();
       }
     }
 

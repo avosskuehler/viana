@@ -37,33 +37,51 @@ namespace VianaNET
       InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
-      VideoData.Instance.PropertyChanged +=
-        new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
-      Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      //VideoData.Instance.PropertyChanged +=
+      //  new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      //Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      Video.Instance.ImageProcessing.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
       CreateDataSeries();
       this.isInitialized = true;
       UpdateChartProperties();
     }
 
-    public struct TrackedObjectDescription
+    private void ImageProcessing_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-      public string Description;
-      public int Index;
+      if (e.PropertyName == "NumberOfTrackedObjects")
+      {
+        this.PopulateObjectCombo();
+      }
+      else if (e.PropertyName == "IndexOfObject")
+      {
+        this.Refresh();
+      }
     }
+
+    //void VideoData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    //{
+    //  if (e.PropertyName == "Interpolation")
+    //  {
+    //    this.Refresh();
+    //  }
+    //}
 
     private void PopulateObjectCombo()
     {
       // Erase old entries
       this.ObjectDescriptions.Clear();
 
-      for (int i = 0; i < Calibration.Instance.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
         this.ObjectDescriptions.Add(Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString());
       }
 
-      this.ObjectSelectionCombo.ItemsSource = null;
+      //this.ObjectSelectionCombo.ItemsSource = null;
       this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
-      this.ObjectSelectionCombo.SelectedIndex = 0;
+      Binding indexBinding = new Binding("ImageProcessing.IndexOfObject");
+      indexBinding.Source = Video.Instance;
+      this.ObjectSelectionCombo.SetBinding(ComboBox.SelectedIndexProperty, indexBinding);
+      Video.Instance.ImageProcessing.IndexOfObject++;
     }
 
     private void CreateDataSeries()
@@ -78,23 +96,6 @@ namespace VianaNET
       this.DefaultSeries.RenderAs = RenderAs.Point;
     }
 
-    void VideoData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "Interpolation")
-      {
-        this.Refresh();
-      }
-      else if (e.PropertyName == "NumberOfTrackedObjects")
-      {
-        this.PopulateObjectCombo();
-      }
-      //ScatterSeries data = ((ScatterSeries)this.DataChart.Series[0]);
-      //BindingExpression be = data.GetBindingExpression(ScatterSeries.ItemsSourceProperty);
-      //be.UpdateTarget();
-      //be.UpdateSource();
-      //data.Refresh();
-    }
-
     #endregion //CONSTRUCTION
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -107,24 +108,6 @@ namespace VianaNET
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region PROPERTIES
-
-    /// <summary>
-    /// Gets or sets the index of the currently tracked object
-    /// </summary>
-    public int IndexOfObject
-    {
-      get { return (int)this.GetValue(IndexOfObjectProperty); }
-      set { this.SetValue(IndexOfObjectProperty, value); }
-    }
-
-    /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="IndexOfObject"/>.
-    /// </summary>
-    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
-      "IndexOfObject",
-      typeof(int),
-      typeof(ChartWindow),
-      new FrameworkPropertyMetadata(0, new PropertyChangedCallback(OnPropertyChanged)));
 
     /// <summary>
     /// Gets or sets the index of the currently tracked object
@@ -342,7 +325,7 @@ namespace VianaNET
 
     private void UpdateAxisMappings(DataAxis axis, DataMapping map, DataMapping map2)
     {
-      string prefix = "Object[" + this.IndexOfObject.ToString() + "].";
+      string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString() + "].";
       switch (axis.Axis)
       {
         case AxisType.I:
@@ -711,7 +694,7 @@ namespace VianaNET
       if (this.ObjectSelectionCombo.SelectedItem != null)
       {
         string entry = (string)this.ObjectSelectionCombo.SelectedItem;
-        this.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1))-1;
+        Video.Instance.ImageProcessing.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
       }
     }
 

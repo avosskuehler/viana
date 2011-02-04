@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using AvalonDock;
 using VianaNETShaderEffectLibrary;
 using System.Threading;
+using System.Windows.Data;
 
 namespace VianaNET
 {
@@ -33,7 +34,8 @@ namespace VianaNET
     private bool cancelCalculation;
 
     private DispatcherTimer timesliderUpdateTimer;
-    //private ThresholdEffect thresholdEffect;
+    private Line[] blobHorizontalLines;
+    private Line[] blobVerticalLines;
 
     #endregion //FIELDS
 
@@ -46,7 +48,7 @@ namespace VianaNET
     {
       InitializeComponent();
       this.SetVideoMode(VideoMode.File);
-
+      this.CreateCrossHairLines();
       this.timesliderUpdateTimer = new DispatcherTimer();
       this.timesliderUpdateTimer.Interval = TimeSpan.FromMilliseconds(200);
       this.timesliderUpdateTimer.Tick += new EventHandler(timesliderUpdateTimer_Tick);
@@ -68,11 +70,73 @@ namespace VianaNET
 
       Video.Instance.ImageProcessing.PropertyChanged +=
         new System.ComponentModel.PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
-
+      Video.Instance.ImageProcessing.FrameProcessed += new EventHandler(ImageProcessing_FrameProcessed);
       this.timelineSlider.SelectionEndReached +=
         new EventHandler(timelineSlider_SelectionEndReached);
       this.timelineSlider.SelectionAndValueChanged +=
         new EventHandler(timelineSlider_SelectionAndValueChanged);
+    }
+
+    private void CreateCrossHairLines()
+    {
+      if (this.blobHorizontalLines != null)
+      {
+        foreach (Line item in this.blobHorizontalLines)
+        {
+          this.OverlayCanvas.Children.Remove(item);
+        }
+      }
+
+      if (this.blobVerticalLines != null)
+      {
+        foreach (Line item in this.blobVerticalLines)
+        {
+          this.OverlayCanvas.Children.Remove(item);
+        }
+      }
+
+      this.blobHorizontalLines = new Line[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      this.blobVerticalLines = new Line[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+
+      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+      {
+        Binding widthBinding = new Binding("ActualWidth");
+        widthBinding.ElementName = "VideoImage";
+        Line newHorizontalLine = new Line();
+        newHorizontalLine.Visibility = Visibility.Hidden;
+        newHorizontalLine.Stroke = ImageProcessing.TrackObjectColors[i];
+        newHorizontalLine.StrokeThickness = 2;
+        newHorizontalLine.X1 = 0;
+        newHorizontalLine.X2 = 0;
+        newHorizontalLine.Y1 = 0;
+        newHorizontalLine.Y2 = 0;
+        newHorizontalLine.SetBinding(Line.X2Property, widthBinding);
+        this.blobHorizontalLines[i] = newHorizontalLine;
+        this.OverlayCanvas.Children.Add(newHorizontalLine);
+
+        Binding heightBinding = new Binding("ActualHeight");
+        heightBinding.ElementName = "VideoImage";
+        Line newVerticalLine = new Line();
+        newVerticalLine.Visibility = Visibility.Hidden;
+        newVerticalLine.Stroke = ImageProcessing.TrackObjectColors[i];
+        newVerticalLine.StrokeThickness = 2;
+        newVerticalLine.X1 = 0;
+        newVerticalLine.X2 = 0;
+        newVerticalLine.Y1 = 0;
+        newVerticalLine.Y2 = 0;
+        newVerticalLine.SetBinding(Line.Y2Property, heightBinding);
+        this.blobVerticalLines[i] = newVerticalLine;
+        this.OverlayCanvas.Children.Add(newVerticalLine);
+      }
+    }
+
+    private void UpdateCrossHairColors()
+    {
+      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+      {
+        this.blobHorizontalLines[i].Stroke = ImageProcessing.TrackObjectColors[i];
+        this.blobVerticalLines[i].Stroke = ImageProcessing.TrackObjectColors[i];
+      }
     }
 
     #endregion //CONSTRUCTION
@@ -113,6 +177,7 @@ namespace VianaNET
       Video.Instance.ImageProcessing.Reset();
       this.BlobsControl.UpdateDataPoints();
       this.timelineSlider.ResetSelection();
+      this.CreateCrossHairLines();
 
       ShowOrHideCalibration(Visibility.Hidden);
       ShowOrHideClipRegion(Visibility.Hidden);
@@ -219,6 +284,10 @@ namespace VianaNET
 
     void VideoPlayerElement_StepComplete(object sender, EventArgs e)
     {
+      // Do Events
+      this.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
+
+      // Run next sample
       Dispatcher.Invoke((ThreadStart)delegate
       {
         if (Video.Instance.IsDataAcquisitionRunning)
@@ -253,46 +322,56 @@ namespace VianaNET
     ///////////////////////////////////////////////////////////////////////////////
     #region EVENTHANDLER
 
-    void ImageProcessing_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    void ImageProcessing_FrameProcessed(object sender, EventArgs e)
     {
-      if (e.PropertyName == "CurrentBlobCenter")
-      {
-        double scaleX;
-        double scaleY;
+      double scaleX;
+      double scaleY;
 
-        if (GetScales(out scaleX, out scaleY))
+      if (GetScales(out scaleX, out scaleY))
+      {
+        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
         {
-          Point? blobCenter = Video.Instance.ImageProcessing.CurrentBlobCenter;
+          Point? blobCenter = Video.Instance.ImageProcessing.CurrentBlobCenter[i];
           if (blobCenter.HasValue)
           {
-            this.BlobHorizontalLine.Visibility = Visibility.Visible;
-            this.BlobVerticalLine.Visibility = Visibility.Visible;
-            this.BlobHorizontalLine.Y1 = blobCenter.Value.Y * scaleY;
-            this.BlobHorizontalLine.Y2 = blobCenter.Value.Y * scaleY;
-            this.BlobVerticalLine.X1 = blobCenter.Value.X * scaleX;
-            this.BlobVerticalLine.X2 = blobCenter.Value.X * scaleX;
+            this.blobHorizontalLines[i].Visibility = Visibility.Visible;
+            this.blobVerticalLines[i].Visibility = Visibility.Visible;
+            this.blobHorizontalLines[i].Y1 = blobCenter.Value.Y * scaleY;
+            this.blobHorizontalLines[i].Y2 = blobCenter.Value.Y * scaleY;
+            this.blobVerticalLines[i].X1 = blobCenter.Value.X * scaleX;
+            this.blobVerticalLines[i].X2 = blobCenter.Value.X * scaleX;
           }
           else
           {
-            this.BlobHorizontalLine.Visibility = Visibility.Collapsed;
-            this.BlobVerticalLine.Visibility = Visibility.Collapsed;
+            this.blobHorizontalLines[i].Visibility = Visibility.Collapsed;
+            this.blobVerticalLines[i].Visibility = Visibility.Collapsed;
           }
         }
       }
-      else if (e.PropertyName == "TargetColor" ||
-        e.PropertyName == "ColorThreshold")
+    }
+
+    void ImageProcessing_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "TargetColor")
       {
-        //thresholdEffect.Threshold = Video.Instance.ImageProcessing.ColorThreshold;
-        //thresholdEffect.TargetColor = Video.Instance.ImageProcessing.TargetColor;
-        //thresholdEffect.BlankColor = Colors.Black;
+        this.UpdateCrossHairColors();
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
         if (Video.Instance.ImageProcessing.IsTargetColorSet)
         {
-          this.BlobVerticalLine.Visibility = Visibility.Visible;
-          this.BlobHorizontalLine.Visibility = Visibility.Visible;
+          this.UpdateCrossHairColors();
+
+          for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+          {
+            this.blobVerticalLines[i].Visibility = Visibility.Visible;
+            this.blobHorizontalLines[i].Visibility = Visibility.Visible;
+          }
         }
+      }
+      else if (e.PropertyName == "NumberOfTrackedObjects")
+      {
+        this.CreateCrossHairLines();
       }
     }
 

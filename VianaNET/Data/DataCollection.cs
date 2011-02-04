@@ -31,12 +31,60 @@ namespace VianaNET
       return false;
     }
 
-    public DataCollection GetRangeAtPosition(int startIndex, int numberOfSamplesToReturn)
+    public List<DataSample>[] GetRangeAtPosition(
+      int startIndex,
+      int numberOfSamplesToReturn,
+      int objectIndex)
     {
-      DataCollection returnCollection = new DataCollection();
-      for (int i = startIndex; i < startIndex + numberOfSamplesToReturn; i++)
+      List<DataSample>[] returnCollection = new List<DataSample>[2];
+
+      List<DataSample> velocityCollection = new List<DataSample>(numberOfSamplesToReturn);
+      List<DataSample> accelerationCollection = new List<DataSample>(numberOfSamplesToReturn);
+      returnCollection[0] = velocityCollection;
+      returnCollection[1] = accelerationCollection;
+
+      int counter = numberOfSamplesToReturn;
+
+      for (int i = startIndex; i < startIndex + counter; i++)
       {
-        returnCollection.Add(this[i]);
+        if (this[i].Object[objectIndex] == null)
+        {
+          counter++;
+          if (startIndex + counter >= this.Count)
+          {
+            break;
+          }
+          continue;
+        }
+        else if (this[i].Object[objectIndex].Velocity == null)
+        {
+          counter++;
+          if (startIndex + counter >= this.Count)
+          {
+            break;
+          }
+          continue;
+        }
+        else
+        {
+          if (velocityCollection.Count < numberOfSamplesToReturn)
+          {
+            velocityCollection.Add(this[i].Object[objectIndex]);
+          }
+          if (this[i].Object[objectIndex].Acceleration == null)
+          {
+            counter++;
+            if (startIndex + counter >= this.Count)
+            {
+              break;
+            }
+            continue;
+          }
+          else
+          {
+            accelerationCollection.Add(this[i].Object[objectIndex]);
+          }
+        }
       }
 
       return returnCollection;
