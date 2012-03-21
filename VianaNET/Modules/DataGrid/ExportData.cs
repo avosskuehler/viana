@@ -98,11 +98,8 @@ namespace VianaNET
       writer.WriteStartElement("Worksheet");
       writer.WriteAttributeString("ss", "Name", null, "VianaNET Data");
 
-      // <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="3" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
+      // <Table x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
       writer.WriteStartElement("Table");
-      int columnCount = Video.Instance.ImageProcessing.NumberOfTrackedObjects * 20 + 2;
-      writer.WriteAttributeString("ss", "ExpandedColumnCount", null, columnCount.ToString());
-      writer.WriteAttributeString("ss", "ExpandedRowCount", null, dataSource.Count.ToString());
       writer.WriteAttributeString("x", "FullColumns", null, "1");
       writer.WriteAttributeString("x", "FullRows", null, "1");
       writer.WriteAttributeString("ss", "DefaultColumnWidth", null, "60");
@@ -249,7 +246,7 @@ namespace VianaNET
       writer.WriteAttributeString("ss", "Type", null, cellType);
 
       // Zelleninhalt schreiben
-      writer.WriteValue(cellValue);
+      writer.WriteValue(cellValue == null ? "" : cellValue);
 
       // </Data>
       writer.WriteEndElement();
