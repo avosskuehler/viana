@@ -58,7 +58,7 @@
           Name="InterpolationSeries" 
           Enabled="False" 
           MarkerEnabled="False" 
-          RenderAs="Spline"
+          RenderAs="Line"
           LegendText="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}"
           DataSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}">
           <vc:DataSeries.DataMappings>
