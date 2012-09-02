@@ -127,6 +127,15 @@
     <Compile Include="Data\Interpolation\ExponentialSmoothControl.xaml.cs">
       <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linefit\CalculatorAndFktEditor.xaml.cs">
+      <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\cMatrixLib.cs" />
+    <Compile Include="Data\Linefit\Linefit.cs" />
+    <Compile Include="Data\Linefit\LinefittingDialog.xaml.cs">
+      <DependentUpon>LinefittingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\Parser.cs" />
     <Compile Include="Data\TimeSample.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothFilter.cs" />
     <Compile Include="Data\Interpolation\Interpolation.cs" />
@@ -319,6 +328,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Data\Linefit\CalculatorAndFktEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Data\Linefit\LinefittingDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Base\WindowWithHelp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -501,6 +518,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -529,10 +547,13 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -703,6 +724,24 @@
     <Resource Include="Images\InterpolateData32.png" />
     <Resource Include="Images\SelectObject16.png" />
     <Resource Include="Images\SelectObject32.png" />
+    <Resource Include="Images\LineFit_Exponential1_32.png" />
+    <Resource Include="Images\LineFit_Exponential2_32.png" />
+    <Resource Include="Images\LineFit_Linear_16.png" />
+    <Resource Include="Images\LineFit_Linear_32.png" />
+    <Resource Include="Images\LineFit_Logarithmus_32.png" />
+    <Resource Include="Images\LineFit_Potentiell_32.png" />
+    <Resource Include="Images\LineFit_Quadratisch_32.png" />
+    <Resource Include="Images\LineFit_Resonanz_32.png" />
+    <Resource Include="Images\LineFit_SinusExponential_32.png" />
+    <Resource Include="Images\LineFit_Sinus_32.png" />
+    <Resource Include="Images\LineFit_Logarithmus_16.png" />
+    <Resource Include="Images\LineFit_Exponential1_16.png" />
+    <Resource Include="Images\LineFit_Exponential2_16.png" />
+    <Resource Include="Images\LineFit_Potentiell_16.png" />
+    <Resource Include="Images\LineFit_Quadratisch_16.png" />
+    <Resource Include="Images\LineFit_Resonanz_16.png" />
+    <Resource Include="Images\LineFit_SinusExponential_16.png" />
+    <Resource Include="Images\LineFit_Sinus_16.png" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

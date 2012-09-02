@@ -1260,4 +1260,43 @@
   <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
     <value>@ButtonSelectObjectToolTipTitle</value>
   </data>
+  <data name="LineFitDialogTitle" xml:space="preserve">
+    <value>@LineFitDialogTitle</value>
+  </data>
+  <data name="LineFitDialogTopTitle" xml:space="preserve">
+    <value>@LineFitDialogTopTitle</value>
+  </data>
+  <data name="LineFitExp" xml:space="preserve">
+    <value>@LineFitExp</value>
+  </data>
+  <data name="LineFitExpo" xml:space="preserve">
+    <value>@LineFitExpo</value>
+  </data>
+  <data name="LineFitFunctionLabel" xml:space="preserve">
+    <value>@LineFitFunctionLabel</value>
+  </data>
+  <data name="LineFitLinear" xml:space="preserve">
+    <value>@LineFitLinear</value>
+  </data>
+  <data name="LineFitLineLabel" xml:space="preserve">
+    <value>@LineFitLineLabel</value>
+  </data>
+  <data name="LineFitLog" xml:space="preserve">
+    <value>@LineFitLog</value>
+  </data>
+  <data name="LineFitPot" xml:space="preserve">
+    <value>@LineFitPot</value>
+  </data>
+  <data name="LineFitQuad" xml:space="preserve">
+    <value>@LineFitQuad</value>
+  </data>
+  <data name="LineFitResonanz" xml:space="preserve">
+    <value>@LineFitResonanz</value>
+  </data>
+  <data name="LineFitSin" xml:space="preserve">
+    <value>@LineFitSin</value>
+  </data>
+  <data name="LineFitSinExp" xml:space="preserve">
+    <value>@LineFitSinExp</value>
+  </data>
 </root>

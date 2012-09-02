@@ -1,0 +1,52 @@
+﻿<Window x:Class="VianaNET.Data.Linefit.LinefittingDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" xmlns:my="clr-namespace:VianaNET" xmlns:lex="http://schemas.root-project.org/xaml/presentation" Title="Ausgleichsfunktion auswählen" d:DesignHeight="516" d:DesignWidth="305" SizeToContent="WidthAndHeight">
+    <Grid Width="284" Height="476">
+        
+        <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        <my:TopFrame DataContext="{Binding}" x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:LineFitDialogTitle}" Margin="-2,0,4,0" />
+            <Border Grid.Row="1" Name="DescriptionArea">
+                <Grid Height="394" Width="280" Background="#FF628EC8">             
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="0,0,2,8">               
+                    <Image HorizontalAlignment="Left" Margin="11,10,0,0" Name="image1" Source="/VianaNET;component/Images/LineFit_Linear_32.png" Height="32" Width="32" VerticalAlignment="Top" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitLinear}" Height="29" HorizontalAlignment="Left" IsChecked="True" Margin="50,20,0,0" Name="radioButtonLin" Tag="1" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,50,0,0" Name="image2" Source="/VianaNET;component/Images/LineFit_Exponential1_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitExp}" Height="29" HorizontalAlignment="Left" Margin="50,58,0,0" Name="radioButtonExpSpez" Tag="2" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,86,0,0" Name="image3" Source="/VianaNET;component/Images/LineFit_Logarithmus_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitLog}" Height="29" HorizontalAlignment="Left" IsChecked="False" Margin="50,96,0,0" Name="radioButtonLog" Tag="3" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,124,0,0" Name="image4" Source="/VianaNET;component/Images/LineFit_Potentiell_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitPot}" Height="29" HorizontalAlignment="Left" Margin="50,134,0,0" Name="radioButtonPot" Tag="4" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,162,0,0" Name="image5" Source="/VianaNET;component/Images/LineFit_Quadratisch_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitQuad}" Height="29" HorizontalAlignment="Left" Margin="50,172,0,0" Name="radioButtonQuad" Tag="5" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,200,0,0" Name="image6" Source="/VianaNET;component/Images/LineFit_Exponential2_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitExpo}" Height="29" HorizontalAlignment="Left" Margin="50,208,0,0" Name="radioButtonExp" Tag="6" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,238,0,0" Name="image7" Source="/VianaNET;component/Images/LineFit_Sinus_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitSin}" Height="29" HorizontalAlignment="Left" Margin="50,248,0,0" Name="radioButtonSin" Tag="7" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="12,276,0,0" Name="image8" Source="/VianaNET;component/Images/LineFit_SinusExponential_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitSinExp}" Height="29" HorizontalAlignment="Left" Margin="51,288,0,0" Name="radioButtonSinExp" Tag="8" VerticalAlignment="Top" Width="235" />
+                    <Image Height="32" HorizontalAlignment="Left" Margin="11,314,0,0" Name="image9" Source="/VianaNET;component/Images/LineFit_Resonanz_32.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+                    <RadioButton Checked="buttonRegressAuswahl_checked" Content="{lex:LocText VianaNET:Labels:LineFitResonanz}" Height="29" HorizontalAlignment="Left" Margin="50,322,0,0" Name="radioButtonResonanz" Tag="9" VerticalAlignment="Top" Width="235" />
+                    <Grid.Background>
+                        <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                            <GradientStop Color="#2DDCE6EB" Offset="0.5" />
+                            <GradientStop Color="#FF85B6EB" Offset="0" />
+                            <GradientStop Color="#FFABD0E2" Offset="1" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                </Grid>
+                    <Button Click="OK_Click" Content="{lex:LocText VianaNET:Labels:OK}" Grid.Row="1" Height="23" HorizontalAlignment="Right" IsDefault="True" Margin="0,3,128,3" Name="OK" Width="80" Background="#FFA9CBE0" />
+                    <Button Click="Cancel_Click" Content="{lex:LocText VianaNET:Labels:Cancel}" Grid.Row="1" Height="23" HorizontalAlignment="Right" IsDefault="False" Margin="0,3,37,3" Name="Cancel" Width="80" Background="#FFA9CBE0" />
+                </Grid>
+            </Border>
+    </Grid>
+</Window>
