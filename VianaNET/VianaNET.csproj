@@ -180,6 +180,7 @@
     <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
       <DependentUpon>DataGridWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Control\VideoPlayerCV.cs" />
     <Compile Include="Modules\Video\Control\LiveVideoController.cs" />
     <Compile Include="Modules\Video\Dialogs\SaveVideoDialog.xaml.cs">
       <DependentUpon>SaveVideoDialog.xaml</DependentUpon>
@@ -501,6 +502,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\..\..\..\..\Program Files\Emgu2.4\bin\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\..\..\..\..\Program Files\Emgu2.4\bin\Emgu.Util.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -734,4 +741,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>if $(PlatformName) == x64 (
+  xcopy "$(SolutionDir)Libs\Native\x64\*.*" "$(TargetDir)" /E /Y /s /f
+) ELSE (
+  xcopy "$(SolutionDir)Libs\Native\x86\*.*" "$(TargetDir)" /E /Y /s /f
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

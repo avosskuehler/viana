@@ -39,6 +39,7 @@ namespace VianaNET
     private VideoBase videoElement;
     private VideoCapturer videoCaptureElement;
     private VideoPlayer videoPlayerElement;
+    private VideoPlayerCV videoPlayerCVElement;
 
     public ImageProcessing ImageProcessing { get; set; }
 
@@ -109,8 +110,8 @@ namespace VianaNET
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
       this.videoCaptureElement = new VideoCapturer();
-      this.videoCaptureElement.VideoAvailable +=
-        new EventHandler(videoCaptureElement_VideoAvailable);
+      //this.videoPlayerCVElement = new VideoPlayerCV();
+      this.videoCaptureElement.VideoAvailable += this.videoCaptureElement_VideoAvailable;
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
     }
@@ -153,6 +154,7 @@ namespace VianaNET
           //this.videoCaptureElement.Stop();
           this.videoCaptureElement.Dispose();
           this.videoElement = this.videoPlayerElement;
+          //this.videoElement = this.videoPlayerCVElement;
           break;
         case VideoMode.Capture:
           List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
@@ -166,7 +168,7 @@ namespace VianaNET
           break;
       }
 
-      this.videoElement.VideoFrameChanged += new EventHandler(videoElement_VideoFrameChanged);
+      this.videoElement.VideoFrameChanged += this.videoElement_VideoFrameChanged;
       this.VideoSource = this.videoElement.ImageSource;
     }
 
@@ -231,7 +233,7 @@ namespace VianaNET
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
-      RenderTargetBitmap rtp = new RenderTargetBitmap(
+      var rtp = new RenderTargetBitmap(
         (int)this.videoElement.NaturalVideoWidth,
         (int)this.videoElement.NaturalVideoHeight,
         96d,
