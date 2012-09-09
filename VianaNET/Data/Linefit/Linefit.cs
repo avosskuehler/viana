@@ -11,7 +11,9 @@ using Parser;
 using MatrixLibrary;
 using VianaNET.Data.Linefit;
 
-//  letzte Änderung: 2.9.2012
+using System.Collections;
+
+//  letzte Änderung: 9.9.2012
 
 namespace VianaNET
 {
@@ -20,6 +22,7 @@ namespace VianaNET
     {
         public string LineFitFktStr;
         public double LineFitAbweichung;
+        public DataCollection LineFitPoints;
         int regTyp, anzahl;
         // Tabelle physikTab;
         static int maxIteration = 50;
@@ -35,6 +38,8 @@ namespace VianaNET
         private Parser.TFktTerm userFkt;
         int xNr, yNr;
 
+        private double startX, endX, startPixelX, endPixelX;
+
         public LineFitClass(DataCollection aktSamples, int aktxNr, int aktyNr)
         {     
             regTyp = 1;
@@ -47,10 +52,13 @@ namespace VianaNET
             wertX = new List<double>();
             wertY = new List<double>();
             aktualisiereTab(NumberOfObject, aktxNr, aktyNr);
+            LineFitPoints = null;
         }
 
         private void aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr)
         {
+            DataSample aktDataSample;
+            int firstPossibleValueNr;
             if (wertX != null)
             {
                 wertX.Clear();
@@ -59,31 +67,44 @@ namespace VianaNET
             anzahl = 0;
             if ((aktxNr == 2) & (aktyNr == 3))
             {
+             
                 foreach (TimeSample sample in samples)
                 {
-                    wertX.Add(sample.Object[aktObjectNr].PositionX);
-                    wertY.Add(sample.Object[aktObjectNr].PositionY);
+                    aktDataSample = sample.Object[aktObjectNr];
+                    if (anzahl == 0) { startPixelX = aktDataSample.PixelX; }
+                    wertX.Add(aktDataSample.PositionX);
+                    wertY.Add(aktDataSample.PositionY);
+                    endPixelX = aktDataSample.PixelX;
                     anzahl++;
                 }
             }
             else
             {
+                if (aktyNr >= 7) { firstPossibleValueNr = 2; }
+                else { if (aktyNr >= 4) { firstPossibleValueNr = 1; } else { firstPossibleValueNr = 0; } }
                 foreach (TimeSample sample in samples)
                 {
-                    wertX.Add(sample.Timestamp);
-                    switch (aktyNr)
+                    if (anzahl >= firstPossibleValueNr)
                     {
-                        case 3: wertY.Add(sample.Object[aktObjectNr].PositionY); break;
-                        case 4: wertY.Add(sample.Object[aktObjectNr].Velocity.Value); break;
-                        case 5: wertY.Add(sample.Object[aktObjectNr].VelocityX.Value); break;
-                        case 6: wertY.Add(sample.Object[aktObjectNr].VelocityY.Value); break;
-                        case 7: wertY.Add(sample.Object[aktObjectNr].Acceleration.Value); break;
-                        case 8: wertY.Add(sample.Object[aktObjectNr].AccelerationX.Value); break;
-                        case 9: wertY.Add(sample.Object[aktObjectNr].AccelerationY.Value); break;                       
-                    }                 
-                    anzahl++;
+                        aktDataSample = sample.Object[aktObjectNr];
+                        if (anzahl == firstPossibleValueNr) { startPixelX = aktDataSample.PixelX; }
+                        wertX.Add(sample.Timestamp);
+                        endPixelX = aktDataSample.PixelX;
+                        switch (aktyNr)
+                        {
+                            case 3: wertY.Add(aktDataSample.PositionY); break;
+                            case 4: wertY.Add(aktDataSample.Velocity.Value); break;
+                            case 5: wertY.Add(aktDataSample.VelocityX.Value); break;
+                            case 6: wertY.Add(aktDataSample.VelocityY.Value); break;
+                            case 7: wertY.Add(aktDataSample.Acceleration.Value); break;
+                            case 8: wertY.Add(aktDataSample.AccelerationX.Value); break;
+                            case 9: wertY.Add(aktDataSample.AccelerationY.Value);  break;
+                        }
+                        anzahl++;
+                    }
                 }
             }
+            startX = wertX[0]; endX = wertX[anzahl - 1];
         }
 
         public void getMinMax(List<double> werte, int anzahl, out double Min, out double Max)
@@ -187,6 +208,14 @@ namespace VianaNET
                     break;
                 default: fktStr = " - "; aktFunc = NullFkt; break;
             }
+            if (aktFunc != NullFkt)    // Berechnung der Ausgleichsfunktion erfolgreich?
+            {
+                if (LineFitPoints == null)
+                {
+                    LineFitPoints =new DataCollection();
+                }
+                CalculateLineFitSeries(LineFitPoints);  // Punkte mit Ausgleichsfunktion bestimmen
+            }
             mittlererFehler = fehler;
             if (fehler < -1.5) { mittlererFehler = -2; }
             else
@@ -204,18 +233,69 @@ namespace VianaNET
             }
         }
 
-   /*     private void FuelleSpalte()
+
+        private void CalculateLineFitSeries( DataCollection samples)
         {
-            int k;
-            double y;
-            for (k = 0; k < anzahl; k++)
-            {
-                y = aktFunc(wertX[k]);
-                listBoxAusgl.Items.Add(y.ToString());
+            int k, anzahl;
+            double x, deltaX, px ;
+            DataSample hilf;
+            TimeSample timeHilf;
+
+            samples.Clear();
+            if (aktFunc==null)
+            { 
+                return;
+            }
+            // endPixelX und startPixelX
+            // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
+            anzahl = (int)Math.Abs(endPixelX - startPixelX);  //Anzahl der Pixel im betrachtenen Bereich
+            if (endX > startX) { x = endX; endX = startX; startX = x; }
+            deltaX = (endX - startX) / anzahl;
+            x = startX; px = startPixelX;
+            
+            for (k = 0; k < anzahl; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+            {          
+                timeHilf = new TimeSample();
+                timeHilf.Framenumber=k;
+                timeHilf.Object[0]=new DataSample();
+                hilf = timeHilf.Object[0];
+                hilf.PixelX = px;
+                hilf.PositionX = x;
+                hilf.PositionY = aktFunc(x);
+                samples.Add(timeHilf);
+                   
+                x = x + deltaX;
+                px = px + 1;
             }
         }
 
-  */
+        void CalculateLineFitTheorieSeries(List<Point> valuePairs, TFktTerm fx)
+        {
+            int k, anzahl;
+            double x, deltaX;
+            Point p = new Point();
+            Parse tempParser = new Parse();
+            
+            valuePairs.Clear();
+            if (fx==null)
+            { 
+                return;
+            }
+            // endPixelX und startPixelX
+            // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
+            anzahl = (int)Math.Abs(endPixelX - startPixelX);
+            if (endX > startX) { x = endX; endX = startX; startX = x; }
+            deltaX = (endX - startX) / anzahl;
+            x = startX;
+            for (k = 0; k < anzahl; k++)   //Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
+            {
+                p.X=x;
+                p.Y = tempParser.FreierFktWert(fx, x);
+                valuePairs.Add(p);
+                x = x + deltaX;
+            }
+        }
+
 
         private double _AbschaetzungFuerB()
         {

@@ -47,6 +47,7 @@
       InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
+      activeLineFitClass = null;
       //VideoData.Instance.PropertyChanged +=
       //  new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
       //Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
@@ -331,6 +332,7 @@
       var mapInterpolationFit = this.InterpolationSeries.DataMappings[0];
       var mapLineFit = this.LineFitSeries.DataMappings[0];
 
+      
       UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit);
 
       RefreshChartDataPoints();
@@ -343,119 +345,122 @@
       {
         case AxisType.I:
           mapPoints.Path = "Framenumber";
-          mapInterpolationFit.Path = "Framenumber";
-          mapLineFit.Path = "Framenumber";
+      //    mapInterpolationFit.Path = "Framenumber";
+      //    mapLineFit.Path = "Framenumber";
           break;
         case AxisType.T:
           mapPoints.Path = "Timestamp";
-          mapInterpolationFit.Path = "Timestamp";
-          mapLineFit.Path = "Timestamp";
+      //    mapInterpolationFit.Path = "Timestamp";
+      //    mapLineFit.Path = "Timestamp";
           break;
         case AxisType.PX:
           mapPoints.Path = "PositionX";
-          mapInterpolationFit.Path = "PositionX";
-          mapLineFit.Path = "PositionX";
+      //   mapInterpolationFit.Path = "PositionX";
+      //   mapLineFit.Path = "PositionX";
           break;
         case AxisType.PY:
           mapPoints.Path = "PositionY";
-          mapInterpolationFit.Path = "PositionY";
-          mapLineFit.Path = "PositionY";
+      //    mapInterpolationFit.Path = "PositionY";
+      //    mapLineFit.Path = "PositionY";
           break;
         case AxisType.D:
           mapPoints.Path = "Distance";
-          mapInterpolationFit.Path = "Distance";
-          mapLineFit.Path = "Distance";
+       //   mapInterpolationFit.Path = "Distance";
+       //   mapLineFit.Path = "Distance";
           break;
         case AxisType.DX:
           mapPoints.Path = "DistanceX";
-          mapInterpolationFit.Path = "DistanceX";
-          mapLineFit.Path = "DistanceX";
+       //   mapInterpolationFit.Path = "DistanceX";
+       //   mapLineFit.Path = "DistanceX";
           break;
         case AxisType.DY:
           mapPoints.Path = "DistanceY";
-          mapInterpolationFit.Path = "DistanceY";
-          mapLineFit.Path = "DistanceY";
+       //   mapInterpolationFit.Path = "DistanceY";
+       //   mapLineFit.Path = "DistanceY";
           break;
         case AxisType.S:
           mapPoints.Path = "Length";
-          mapInterpolationFit.Path = "Length";
-          mapLineFit.Path = "Length";
+       //   mapInterpolationFit.Path = "Length";
+       //   mapLineFit.Path = "Length";
           break;
         case AxisType.SX:
           mapPoints.Path = "LengthX";
-          mapInterpolationFit.Path = "LengthX";
-          mapLineFit.Path = "LengthX";
+       //   mapInterpolationFit.Path = "LengthX";
+       //   mapLineFit.Path = "LengthX";
           break;
         case AxisType.SY:
           mapPoints.Path = "LengthY";
-          mapInterpolationFit.Path = "LengthY";
-          mapLineFit.Path = "LengthY";
+       //   mapInterpolationFit.Path = "LengthY";
+       //   mapLineFit.Path = "LengthY";
           break;
         case AxisType.V:
           mapPoints.Path = "Velocity";
-          mapInterpolationFit.Path = "VelocityI";
-          mapLineFit.Path = "VelocityI";
+       //   mapInterpolationFit.Path = "VelocityI";
+       //   mapLineFit.Path = "VelocityI";
           break;
         case AxisType.VX:
           mapPoints.Path = "VelocityX";
-          mapInterpolationFit.Path = "VelocityXI";
-          mapLineFit.Path = "VelocityXI";
+       //   mapInterpolationFit.Path = "VelocityXI";
+       //   mapLineFit.Path = "VelocityXI";
           break;
         case AxisType.VY:
           mapPoints.Path = "VelocityY";
-          mapInterpolationFit.Path = "VelocityYI";
-          mapLineFit.Path = "VelocityYI";
+        //  mapInterpolationFit.Path = "VelocityYI";
+        //  mapLineFit.Path = "VelocityYI";
           break;
         case AxisType.VI:
           mapPoints.Path = "VelocityI";
-          mapInterpolationFit.Path = "VelocityI";
-          mapLineFit.Path = "VelocityI";
+        //  mapInterpolationFit.Path = "VelocityI";
+        //  mapLineFit.Path = "VelocityI";
           break;
         case AxisType.VXI:
           mapPoints.Path = "VelocityXI";
-          mapInterpolationFit.Path = "VelocityXI";
-          mapLineFit.Path = "VelocityXI";
+       //   mapInterpolationFit.Path = "VelocityXI";
+       //   mapLineFit.Path = "VelocityXI";
           break;
         case AxisType.VYI:
           mapPoints.Path = "VelocityYI";
-          mapInterpolationFit.Path = "VelocityYI";
-          mapLineFit.Path = "VelocityYI";
+       //   mapInterpolationFit.Path = "VelocityYI";
+       //   mapLineFit.Path = "VelocityYI";
           break;
         case AxisType.A:
           mapPoints.Path = "Acceleration";
-          mapInterpolationFit.Path = "AccelerationI";
-          mapLineFit.Path = "AccelerationI";
+        //  mapInterpolationFit.Path = "AccelerationI";
+        //  mapLineFit.Path = "AccelerationI";
           break;
         case AxisType.AX:
           mapPoints.Path = "AccelerationX";
-          mapInterpolationFit.Path = "AccelerationXI";
-          mapLineFit.Path = "AccelerationXI";
+        //  mapInterpolationFit.Path = "AccelerationXI";
+        //  mapLineFit.Path = "AccelerationXI";
           break;
         case AxisType.AY:
           mapPoints.Path = "AccelerationY";
-          mapInterpolationFit.Path = "AccelerationYI";
-          mapLineFit.Path = "AccelerationYI";
+        //  mapInterpolationFit.Path = "AccelerationYI";
+        //  mapLineFit.Path = "AccelerationYI";
           break;
         case AxisType.AI:
           mapPoints.Path = "AccelerationI";
-          mapInterpolationFit.Path = "AccelerationI";
-          mapLineFit.Path = "AccelerationI";
+        //  mapInterpolationFit.Path = "AccelerationI";
+        //  mapLineFit.Path = "AccelerationI";
           break;
         case AxisType.AXI:
           mapPoints.Path = "AccelerationXI";
-          mapInterpolationFit.Path = "AccelerationXI";
-          mapLineFit.Path = "AccelerationXI";
+        //  mapInterpolationFit.Path = "AccelerationXI";
+        //  mapLineFit.Path = "AccelerationXI";
           break;
         case AxisType.AYI:
           mapPoints.Path = "AccelerationYI";
-          mapInterpolationFit.Path = "AccelerationYI";
-          mapLineFit.Path = "AccelerationYI";
+        //  mapInterpolationFit.Path = "AccelerationYI";
+        //  mapLineFit.Path = "AccelerationYI";
           break;
       }
-
+      
       mapPoints.Path = prefix + mapPoints.Path;
-      mapInterpolationFit.Path = prefix + mapInterpolationFit.Path;
-      mapLineFit.Path = prefix + mapLineFit.Path;
+     // mapInterpolationFit.Path = prefix + mapInterpolationFit.Path;
+     // mapLineFit.Path = prefix + mapLineFit.Path;
+
+      if (mapInterpolationFit != null) { mapInterpolationFit.Path = mapPoints.Path; }
+      if (mapLineFit != null) { mapLineFit.Path = mapPoints.Path; }
     }
 
     private void RefreshChartDataPoints()
@@ -465,7 +470,12 @@
       this.InterpolationSeries.DataSource = null;
       this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
       this.LineFitSeries.DataSource = null;
-      this.LineFitSeries.DataSource = VideoData.Instance.Samples;
+      if ((activeLineFitClass != null) && (activeLineFitClass.LineFitPoints != null) && (activeLineFitClass.LineFitPoints.Count > 0))
+      {
+          this.LineFitSeries.LineThickness = 1;
+          this.LineFitSeries.DataSource = activeLineFitClass.LineFitPoints;
+      }
+   //   this.LineFitSeries.DataSource = VideoData.Instance.Samples;
     }
 
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -752,31 +762,7 @@
     }
 
 
-    /*  private void LineFitPaintCurve()
-      {
-          int px0, py0, px1, py1, startPx, endPx;
-          double posX, posY, factorX, offsetX, factorY, offsetY;
-            
-          System.Drawing.Pen myPen = new System.Drawing.Pen(System.Drawing.Color.Black);
-          Graphics myMap = new this.ChartDisplayPanel.BitmapEffectInput.CreateGraphics();
-          startPx=0; endPx=400;
-          factorX = 1; offsetX = 0;
-          factorY = 1; offsetY = 0; 
-          px0=startPx;
-          posX = px0 * factorX + offsetX;
-          posY = aktLineFit.aktFunc(posX);
-          py0 = (int)(posY / factorY - offsetY);
-          for (px1 = startPx+1; px1 < endPx; px1++)
-          {
-              posX = px1 * factorX + offsetX;
-              posY = aktLineFit.aktFunc(posX);
-              py1 = (int)(posY / factorY - offsetY);
-              myMap.DrawLine(myPen, px0, py0, px1, py1);
-              px0=px1;
-              py0=py1;
-          }
-      }
-  */
+    
 
     private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
     {
