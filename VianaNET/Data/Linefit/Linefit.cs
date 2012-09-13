@@ -13,62 +13,74 @@ using VianaNET.Data.Linefit;
 
 using System.Collections;
 
-//  letzte Änderung: 9.9.2012
+//  letzte Änderung: 13.9.2012
 
 namespace VianaNET
 {
     
     public class LineFitClass
     {
-        public string LineFitFktStr;
-        public double LineFitAbweichung;
-        public DataCollection LineFitPoints;
-        int regTyp, anzahl;
-        // Tabelle physikTab;
-        static int maxIteration = 50;
+        public string LineFitFktStr;           // Ausgabestring für die Ausgleichsfunktion
+        public double LineFitAbweichung;       // Wert der mittleren Abweichung der Messpunkte von der Ausgleichsfunktion
+        public DataCollection LineFitPoints;   // mit der Ausgleichsfunktion berechnete Punkte, die sich in der x-Koordinate um einen Pixelabstand unterscheiden
+        public DataCollection TheoriePoints;   // analog für theoretische Funktion
+        int regTyp,                            // Kennzahl für den Typ der Ausgleichsfunktion
+            anzahl;                            // Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
+        int xNr, yNr, NumberOfObject;          // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrchteten Objekts
+
+        static int maxIteration = 50;          // Begrenzungswerte für die internen Berechnungen
         static double startAbw = 1E150;
         static double genauigkeit = 1E-10;
         static double minStep = 1E-6;
-        static double[] param;
+        static double[] param;                                             // Parameter einer Ausgleichsfunktionen
         static MatrixLibrary.Matrix p = new MatrixLibrary.Matrix(10, 6);   // Parameter der Ausgleichsfunktion
-        DataCollection samples;
-      //  List<DataSample>[]
-        public List<double> wertX, wertY;
-        public delegate double AusgleichFunction(double x);
-        private Parser.TFktTerm userFkt;
-        int xNr, yNr;
+        DataCollection orgDataSamples;                                     // orginale Videodaten, wie sie bei Daten angezeigt werden
+     
+        public List<double> wertX, wertY;                           // aus den Videodaten herausgelesene Messpaare - auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
+        public delegate double AusgleichFunction(double x);         // Berechnet zu einem Wert den Funktionswert mit Hilfe der Ausgleichsfunktion
+     //   private Parser.TFktTerm userFkt;
 
-        private double startX, endX, startPixelX, endPixelX;
+        private long startTime;                                     // erster Zeitwert der Daten (in ms)
+        private double startX, endX, startPixelX, endPixelX, stepX; 
 
-        public LineFitClass(DataCollection aktSamples, int aktxNr, int aktyNr)
+        public LineFitClass(DataCollection aktSamples, int aktObjectNr, int aktxNr, int aktyNr)
         {     
-            regTyp = 1;
-            int NumberOfObject = 0;
-            param = new double[3];
-            samples = aktSamples;
-            xNr = aktxNr;
-            yNr = aktyNr;
-
+            regTyp = Constants.linReg;
+            orgDataSamples = null;
+            param = new double[3];           
             wertX = new List<double>();
             wertY = new List<double>();
-            aktualisiereTab(NumberOfObject, aktxNr, aktyNr);
+            ExtractDataColumnsFromVideoSamples(aktSamples, NumberOfObject, aktxNr, aktyNr);
             LineFitPoints = null;
         }
 
-        private void aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr)
+        public void ExtractDataColumnsFromVideoSamples(DataCollection aktSamples, int aktObjectNr, int aktxNr, int aktyNr)
+        {
+            if ((orgDataSamples != aktSamples) | (NumberOfObject != aktObjectNr) | (xNr != aktxNr) | (yNr != aktyNr) | (wertX.Count == 0))
+            {
+                orgDataSamples = aktSamples;
+                NumberOfObject = aktObjectNr;
+                xNr = aktxNr;
+                yNr = aktyNr;
+                CopySampleColumnsToArrays(aktObjectNr, aktxNr, aktyNr);
+            }
+        }
+
+        private void CopySampleColumnsToArrays(int aktObjectNr,int aktxNr, int aktyNr)
         {
             DataSample aktDataSample;
-            int firstPossibleValueNr;
+            int firstPossibleValueNr = 0;
+          //  long startTime;
+
             if (wertX != null)
             {
                 wertX.Clear();
                 wertY.Clear();
             }
-            anzahl = 0;
-            if ((aktxNr == 2) & (aktyNr == 3))
+            anzahl = 0;           
+            if ((aktxNr == 2) & (aktyNr == 3))     // x-y-Diagramm
             {
-             
-                foreach (TimeSample sample in samples)
+                foreach (TimeSample sample in orgDataSamples)
                 {
                     aktDataSample = sample.Object[aktObjectNr];
                     if (anzahl == 0) { startPixelX = aktDataSample.PixelX; }
@@ -77,21 +89,30 @@ namespace VianaNET
                     endPixelX = aktDataSample.PixelX;
                     anzahl++;
                 }
+                startX = wertX[firstPossibleValueNr]; endX = wertX[anzahl - 1];
             }
-            else
+            else                               // t-?-Diagramm
             {
-                if (aktyNr >= 7) { firstPossibleValueNr = 2; }
-                else { if (aktyNr >= 4) { firstPossibleValueNr = 1; } else { firstPossibleValueNr = 0; } }
-                foreach (TimeSample sample in samples)
+                if (aktyNr >= 7)               // t-a-Diagramm,                                               
+                { firstPossibleValueNr = 2; }  // erst der dritte Wert für die Beschleunigung ist definiert - Zählung startet bei 0
+                else
+                {
+                    if (aktyNr >= 4) { firstPossibleValueNr = 1; }  // t-v-Diagramm, erst der zweite Wert für die Beschleunigung ist definiert
+                }
+              
+                startTime = 0;                 // sonst meckert der Compiler
+                foreach (TimeSample sample in orgDataSamples)
                 {
                     if (anzahl >= firstPossibleValueNr)
                     {
                         aktDataSample = sample.Object[aktObjectNr];
-                        if (anzahl == firstPossibleValueNr) { startPixelX = aktDataSample.PixelX; }
-                        wertX.Add(sample.Timestamp);
+                        if (anzahl == firstPossibleValueNr) { startPixelX = aktDataSample.PixelX; startTime = sample.Timestamp - 40; }
+               //im Diagramm ist die kleinste Zeit bei 1 und ändert sich in 1er-Schritten, (realer) zeitlicher Abstand beträgt 40 ms
+                        wertX.Add((sample.Timestamp-startTime));                         
                         endPixelX = aktDataSample.PixelX;
                         switch (aktyNr)
                         {
+                            case 2: wertY.Add(aktDataSample.PositionX); break;
                             case 3: wertY.Add(aktDataSample.PositionY); break;
                             case 4: wertY.Add(aktDataSample.Velocity.Value); break;
                             case 5: wertY.Add(aktDataSample.VelocityX.Value); break;
@@ -103,9 +124,70 @@ namespace VianaNET
                         anzahl++;
                     }
                 }
+                startX = wertX[firstPossibleValueNr]; 
+                endX = wertX[anzahl - 1];
             }
-            startX = wertX[0]; endX = wertX[anzahl - 1];
+           
+            if (startPixelX > endPixelX)
+            {
+                startX = wertX[anzahl - 1]; endX = wertX[firstPossibleValueNr];
+                double hilf = startPixelX; startPixelX = endPixelX; endPixelX = hilf;
+            }
+            stepX = (endX - startX) / (endPixelX - startPixelX);  // Schrittweite zum Ausfüllen der Zwischenräume ( in x-Achsen-Richtung )
         }
+
+
+        private void CreateSampleFromCalculatedPoints(int aktObjectNr, int aktxNr, int aktyNr, List<Point> pointList, DataCollection samples)
+        {
+            DataSample aktDataSample;
+            TimeSample timeHilf;
+            Point p;
+            int k,j;
+
+            if ((aktxNr == 2) & (aktyNr == 3))  // Ausgleichskurve für x-y-Diagramm vorbereiten
+            {
+                for (k = 0; k < pointList.Count() - 1; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+                {
+                    timeHilf = new TimeSample();
+                    timeHilf.Framenumber = k;
+                    for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+                    { timeHilf.Object[j] = new DataSample(); }
+                    aktDataSample = timeHilf.Object[aktObjectNr];
+                    p = pointList[k];
+                    aktDataSample.PositionX = p.X;
+                    aktDataSample.PositionY = p.Y;
+                    samples.Add(timeHilf);               
+                } 
+           }
+            else                   // Ausgleichskurve für t-?-Diagramm vorbereiten
+            {              
+                for (k = 0; k < pointList.Count() - 1; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+                {
+                    timeHilf = new TimeSample();
+                    for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+                    { 
+                        timeHilf.Object[j] = new DataSample(); 
+                    }
+                    aktDataSample = timeHilf.Object[aktObjectNr];
+                    p = pointList[k];
+                    timeHilf.Timestamp = (long)(p.X + startTime);                   
+                    switch (aktyNr)
+                        {
+                            case 2: aktDataSample.PositionX=p.Y; break;
+                            case 3: aktDataSample.PositionY=p.Y; break;
+                            case 4: aktDataSample.VelocityI=p.Y; break;
+                            case 5: aktDataSample.VelocityXI=p.Y; break;
+                            case 6: aktDataSample.VelocityYI=p.Y; break;
+                            case 7: aktDataSample.AccelerationI=p.Y; break;
+                            case 8: aktDataSample.AccelerationXI=p.Y; break;
+                            case 9: aktDataSample.AccelerationYI=p.Y; break;
+                        }
+                    samples.Add(timeHilf);
+                    }
+                } 
+        }
+           
+      
 
         public void getMinMax(List<double> werte, int anzahl, out double Min, out double Max)
         {
@@ -157,12 +239,13 @@ namespace VianaNET
         public static double NullFkt(double x) { return 0; }
 
         public AusgleichFunction aktFunc;
-        private int aktAuswahl;
+      //  private int aktAuswahl;
 
         private void Info_und_Test(int regTyp, double fehler, out string fktStr, out double mittlererFehler)
         {
             double yi;
             int k;
+            string myG = "G4";   //Genauigkeitsangabe - 4 Stellen
             double a = p[regTyp, 0];
             double b = p[regTyp, 1];
             double c = p[regTyp, 2];
@@ -171,39 +254,39 @@ namespace VianaNET
             switch (regTyp)
             {
                 case Constants.linReg:
-                    fktStr = string.Concat(a.ToString(), "*x + ", b.ToString());
+                    fktStr = string.Concat(a.ToString(myG), "*x + ", b.ToString(myG));
                     aktFunc = AusgleichsGerade;
                     break;
                 case Constants.expSpezReg:
-                    fktStr = string.Concat(a.ToString(), "*exp(", b.ToString(), "*x)");
+                    fktStr = string.Concat(a.ToString(myG), "*exp(", b.ToString(myG), "*x)");
                     aktFunc = AusgleichsExpSpez;
                     break;
                 case Constants.logReg:
-                    fktStr = string.Concat(a.ToString(), "*ln(", b.ToString(), "*x)");
+                    fktStr = string.Concat(a.ToString(myG), "*ln(", b.ToString(myG), "*x)");
                     aktFunc = AusgleichsLog;
                     break;
                 case Constants.potReg:
-                    fktStr = string.Concat(a.ToString(), "*x^", b.ToString());
+                    fktStr = string.Concat(a.ToString(myG), "*x^", b.ToString(myG));
                     aktFunc = AusgleichsPot;
                     break;
                 case Constants.quadReg:
-                    fktStr = string.Concat(a.ToString(), "x² + ", b.ToString(), "x + ", c.ToString());
+                    fktStr = string.Concat(a.ToString(myG), "x² + ", b.ToString(myG), "x + ", c.ToString(myG));
                     aktFunc = AusgleichsParabel;
                     break;
                 case Constants.expReg:
-                    fktStr = string.Concat(a.ToString(), "*exp(", b.ToString(), "*x) + ", c.ToString());
+                    fktStr = string.Concat(a.ToString(myG), "*exp(", b.ToString(myG), "*x) + ", c.ToString(myG));
                     aktFunc = AusgleichsExp;
                     break;
                 case Constants.sinReg:
-                    fktStr = string.Concat(a.ToString(), "*Sin(", b.ToString(), "*x + ", c.ToString(), ") + ", d.ToString());
+                    fktStr = string.Concat(a.ToString(myG), "*Sin(", b.ToString(myG), "*x + ", c.ToString(myG), ") + ", d.ToString(myG));
                     aktFunc = AusgleichsSin;
                     break;
                 case Constants.sinExpReg:
-                    fktStr = string.Concat(a.ToString(), "*Sin(", b.ToString(), "*x )*exp( ", c.ToString(), "*x)");
+                    fktStr = string.Concat(a.ToString(myG), "*Sin(", b.ToString(myG), "*x )*exp( ", c.ToString(myG), "*x)");
                     aktFunc = AusgleichsSinExp;
                     break;
                 case Constants.resoReg:
-                    fktStr = string.Concat(a.ToString(), "/Sqrt( 1 +", b.ToString(), "*( x - ", c.ToString(), "/x)² )");
+                    fktStr = string.Concat(a.ToString(myG), "/Sqrt( 1 +", b.ToString(myG), "*( x - ", c.ToString(myG), "/x)² )");
                     aktFunc = AusgleichsReso;
                     break;
                 default: fktStr = " - "; aktFunc = NullFkt; break;
@@ -234,45 +317,40 @@ namespace VianaNET
         }
 
 
-        private void CalculateLineFitSeries( DataCollection samples)
+        private void CalculateLineFitSeries( DataCollection lineFitSamples)
         {
-            int k, anzahl;
-            double x, deltaX, px ;
-            DataSample hilf;
-            TimeSample timeHilf;
+            int k, anzahlPixel;
+            double x;
+            Point p;
+            List<Point> lineFitPoints;
 
-            samples.Clear();
+            lineFitSamples.Clear();
+            
             if (aktFunc==null)
             { 
                 return;
             }
             // endPixelX und startPixelX
-            // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-            anzahl = (int)Math.Abs(endPixelX - startPixelX);  //Anzahl der Pixel im betrachtenen Bereich
-            if (endX > startX) { x = endX; endX = startX; startX = x; }
-            deltaX = (endX - startX) / anzahl;
-            x = startX; px = startPixelX;
-            
-            for (k = 0; k < anzahl; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+            // startX,endX und stepX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
+            anzahlPixel = (int)(endPixelX - startPixelX);  //Anzahl der Pixel im betrachtenen Bereich
+            x = startX;
+          //  if (xNr == 1) { anzahlPixel = 2 * samples.Count; stepX = 40 / 2; }
+            lineFitPoints = new List<Point>();
+            for (k = 0; k < anzahlPixel; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
             {          
-                timeHilf = new TimeSample();
-                timeHilf.Framenumber=k;
-                timeHilf.Object[0]=new DataSample();
-                hilf = timeHilf.Object[0];
-                hilf.PixelX = px;
-                hilf.PositionX = x;
-                hilf.PositionY = aktFunc(x);
-                samples.Add(timeHilf);
-                   
-                x = x + deltaX;
-                px = px + 1;
+                p = new Point(x,aktFunc(x));
+                lineFitPoints.Add(p);
+                x = x + stepX;
             }
+            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, lineFitPoints, lineFitSamples);
+            lineFitPoints.Clear();
+       
         }
 
         void CalculateLineFitTheorieSeries(List<Point> valuePairs, TFktTerm fx)
         {
-            int k, anzahl;
-            double x, deltaX;
+            int k, anzahlPixel;
+            double x;
             Point p = new Point();
             Parse tempParser = new Parse();
             
@@ -283,17 +361,16 @@ namespace VianaNET
             }
             // endPixelX und startPixelX
             // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-            anzahl = (int)Math.Abs(endPixelX - startPixelX);
-            if (endX > startX) { x = endX; endX = startX; startX = x; }
-            deltaX = (endX - startX) / anzahl;
+            anzahlPixel = (int)(endPixelX - startPixelX);
             x = startX;
-            for (k = 0; k < anzahl; k++)   //Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
+            for (k = 0; k < anzahlPixel; k++)   //Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
             {
-                p.X=x;
-                p.Y = tempParser.FreierFktWert(fx, x);
+                p = new Point(x,tempParser.FreierFktWert(fx, x));
                 valuePairs.Add(p);
-                x = x + deltaX;
+                x = x + stepX;
             }
+            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, valuePairs, TheoriePoints);
+            valuePairs.Clear();
         }
 
 
@@ -861,7 +938,7 @@ namespace VianaNET
             string fktStr;
             double mFehler;
 
-            aktualisiereTab(0, xNr, yNr);
+            if (wertX.Count == 0) { CopySampleColumnsToArrays(0, xNr, yNr); }
             if (anzahl > 2)
             {
                 switch (regTyp)
@@ -899,7 +976,6 @@ namespace VianaNET
                 LineFitFktStr = fktStr;
                 LineFitAbweichung = mFehler;
                 // labelFktStr.Content = string.Concat(fktStr, "    mittleres Fehlerquadrat: ", mFehler.ToString());
-                // FuelleSpalte();
             }
             
         }

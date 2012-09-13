@@ -15,6 +15,7 @@
   using VianaNET.Data.Linefit;
   using Parser;
 
+    //letzte Änderung: 9.9.2012
 
   public partial class ChartWindow : DockableContent
   {
@@ -192,6 +193,8 @@
 
     private void AxesContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+      if ( (LineFitCheckBox != null) && (LineFitCheckBox.IsChecked.GetValueOrDefault(false)) )
+        { NewCalculationForLineFitting(); }
       SetDefaultDiagramm();
     }
 
@@ -748,49 +751,64 @@
     // Methods for doing LineFitting                                             //
     ///////////////////////////////////////////////////////////////////////////////
 
-    private void LineFitVorbereiten(out int tempXNr, out int tempYNr)
+    private void MakePreparationsForLineFit()
     {
-      if (AxesContentPositionSpace.SelectedIndex == 0)
+      int columnNrFirstValue, columnNrSecondValue;
+      int selIndex = AxesContentPositionSpace.SelectedIndex;
+
+      if (selIndex == 0)
       {
-        tempXNr = 2; tempYNr = 3;
+          columnNrFirstValue = 2; columnNrSecondValue = 3;
       }
       else
       {
-        tempXNr = 1;
-        tempYNr = AxesContentPositionSpace.SelectedIndex + 1;
+          if (selIndex <= 9)
+          {
+              columnNrFirstValue = 1;
+              columnNrSecondValue = selIndex + 1;
+          }
+          else
+          { columnNrFirstValue = 0; columnNrSecondValue = 0; }
+      }
+      
+      if (this.activeLineFitClass == null)
+      {
+          this.activeLineFitClass = new LineFitClass(VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue);
+      }
+      else 
+      {
+          this.activeLineFitClass.ExtractDataColumnsFromVideoSamples(VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue); 
       }
     }
 
 
-    
+    private void NewCalculationForLineFitting()
+    {
+        MakePreparationsForLineFit();
+        
+        if (this.activeRegressionType == 0)
+        {
+            this.activeRegressionType = 1;
+        }
+        this.activeLineFitClass.TesteAusgleich(this.activeRegressionType);
+        LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+    }
 
     private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
     {
-      int tempXNr, tempYNr;
       if (!this.isInitialized)
       {
         return;
       }
 
-      LineFitVorbereiten(out tempXNr, out tempYNr);
-      if (this.activeLineFitClass == null)
-      {
-        this.activeLineFitClass = new LineFitClass(VideoData.Instance.Samples, tempXNr, tempYNr);
-      }
-
-      if (this.activeRegressionType == 0)
-      {
-        this.activeRegressionType = 1;
-      }
-
       if (LineFitCheckBox.IsChecked.GetValueOrDefault(false))
       {
-        this.activeLineFitClass.TesteAusgleich(this.activeRegressionType);
-        LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+          NewCalculationForLineFitting();
       }
       else
       {
-        LabelLineFitFkt.Content = "";
+          this.activeLineFitClass.LineFitPoints.Clear();
+          LabelLineFitFkt.Content = "";
       }
 
       RefreshSeries();
@@ -799,11 +817,10 @@
 
     private void LineFitOptionsButtonClick(object sender, RoutedEventArgs e)
     {
-      int tempXNr, tempYNr;
       double minX, minY, hilf;
 
-      LineFitVorbereiten(out tempXNr, out tempYNr);
-      if (this.activeLineFitClass == null) { this.activeLineFitClass = new LineFitClass(VideoData.Instance.Samples, tempXNr, tempYNr); }
+      MakePreparationsForLineFit();
+      
       this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertX, this.activeLineFitClass.wertX.Count, out minX, out hilf);
       this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertY, this.activeLineFitClass.wertY.Count, out minY, out hilf);
       var auswahlDialog = new LinefittingDialog(minX < 0, minY < 0, this.activeRegressionType);
