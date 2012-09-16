@@ -4,15 +4,15 @@ using System.Collections;
 
 public class Constants
 {
-    public const int MaxListSize = Int32.MaxValue / 16;
-    public const int _fixed_Rows = 2;
-    public const double _max_Real = 1.7e38;
-    public const int _Ln_max_Real = 88;
+  //  public const int MaxListSize = Int32.MaxValue / 16;
+  //  public const int _fixed_Rows = 2;
+  //  public const double _max_Real = 1.7e38;
+  //  public const int _Ln_max_Real = 88;
     public const double fehlerZahl = -1.0E32;
-    public const int is_FehlerZahl = 2;
+  //  public const int is_FehlerZahl = 2;
     public const double leerFeld = -1.1E32;
-    public const int is_LeerFeld = 1;
-    public const int is_RealZahl = 0;
+  //  public const int is_LeerFeld = 1;
+  //  public const int is_RealZahl = 0;
 
     public const int linReg = 1;
     public const int expSpezReg = 2;
@@ -26,26 +26,26 @@ public class Constants
 
 
     public const char _hoch = '\'';
-    public const int do_hoch = 1;
+ //   public const int do_hoch = 1;
     public const char _tief = '_';
-    public const int do_Tief = 2;
+ //   public const int do_Tief = 2;
     public const char _symAn = '#';
-    public const int do_Sym = 3;
+ //   public const int do_Sym = 3;
     public const char _symAus = '§';
-    public const int undo_Sym = 4;
+ //   public const int undo_Sym = 4;
     public const char _formAus = '!';
-    public const int undo_HochTief = 5;
+//    public const int undo_HochTief = 5;
     public const char _normal = '\"';
-    public const int do_normal = 6;
-    public const int do_beenden = 7;
-    public static readonly string _alle = string.Concat(_hoch, _tief, _symAn, _symAus, _formAus, _normal, '\0');
-    public const int ss_ohne = 0;
-    public const int ss_hochEin = 1;
-    public const int ss_tiefEin = 2;
-    public const int ss_symEin = 4;
-    public static string formatZeichen = _alle;
-    public const int max_FEdit_Len = 80;
-    public const int hochTiefEin = ss_hochEin + ss_tiefEin;
+//    public const int do_normal = 6;
+//    public const int do_beenden = 7;
+//    public static readonly string _alle = string.Concat(_hoch, _tief, _symAn, _symAus, _formAus, _normal, '\0');
+//    public const int ss_ohne = 0;
+//    public const int ss_hochEin = 1;
+//    public const int ss_tiefEin = 2;
+//    public const int ss_symEin = 4;
+//    public static string formatZeichen = _alle;
+//    public const int max_FEdit_Len = 80;
+//    public const int hochTiefEin = ss_hochEin + ss_tiefEin;
 
     public struct KonstRec
     {
@@ -67,7 +67,7 @@ public class Constants
          new KonstRec(){titel="Gravitationskonstante", bez="#g§", wert=6.67259E-11} , 
          new KonstRec(){titel="Compton-Wellenlänge", bez="#l§_c!", wert=2.43E-12} 
       };
-
+/*
     public const int lin_regress = 1;
     public const int log_regress = 2;
     public const int exp_regress = 4;
@@ -106,7 +106,7 @@ public class Constants
     public const int maxSpaltTitelLen = maxBezeichnungLen + maxDimensionLen + 4;  // SpaltenTitel
     public const int maxFktStrLen = 80;        // Funktionen
     public const int maxTabTitelLen = 40;
-
+*/
     public const double eulerZahl = 2.1782818;
     public static string[] fnam = { "(", ")", "+", "-", "*", "/", "^", "SIN", "COS", "TAN", "COTAN", "EXP", "LN", "WURZEL", "SIGN", "ABS", "DELTA", "?" };
 
@@ -146,12 +146,13 @@ namespace Parser
    //     public TZahlenSpalte vwert;
     } // end TFktTerm
 
+    /*
     public enum TTabArt
     {
         physikTab,
         matheTab
     } // end TTabArt
-
+    */
     public enum TRechnerArt
     {
         formelRechner,

@@ -165,28 +165,29 @@
                                Click="InterpolationOptionsButtonClick" 
                                Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}"/>
                 </UniformGrid>
-                <Label Grid.Column="0" Grid.Row="2" Content="Ausgleich"/>
+                 <Viana:ImageButton x:Name="LineFitOptionsButton" Grid.Column="0" Grid.Row="2"
+                               HorizontalAlignment="Left" Click="LineFitOptionsButtonClick" Content="Ausgleich" ImageSource="/VianaNET;component/Images/LineFit_Linear_16.png" />
+
                 <UniformGrid Grid.Column="1" Grid.Row="2" Rows="1" Grid.ColumnSpan="2">
                   <CheckBox 
-                     Grid.Column="0"
-                      Margin="5"
-                      Name="LineFitCheckBox" 
-                      Checked="LineFitCheckBoxChecked"
-                      Unchecked="LineFitCheckBoxChecked"
-                    IsChecked="False"
-                       Content="{lex:LocText VianaNET:Labels:LineFitLineLabel}" VerticalContentAlignment="Center" HorizontalAlignment="Left" />
-                  <Viana:ImageButton x:Name="LineFitOptionsButton" 
-                               Margin="1" 
-                               Grid.Column="1"
-                               HorizontalAlignment="Right" Click="LineFitOptionsButtonClick" Content="Auswahl " ImageSource="/VianaNET;component/Images/LineFit_Linear_16.png" />
-
+                     Grid.Column="0"  Margin="5"
+                     Name="LineFitCheckBox" Checked="LineFitCheckBoxChecked" Unchecked="LineFitCheckBoxChecked"  IsChecked="False"
+                     Content="{lex:LocText VianaNET:Labels:LineFitLineLabel}" VerticalContentAlignment="Center" HorizontalAlignment="Left" 
+                   />
+                   <Viana:ImageButton Content="Rechner" HorizontalAlignment="Right" ImageSource="/VianaNET;component/Images/Recalculate16.png" 
+                                    x:Name="TaschenRechnerButton" Grid.Column="2" Grid.Row="4" Width="72" Grid.RowSpan="2" Click="RechnerButtonClick"
+                   />
                 </UniformGrid>
                 <Label Grid.Row="3" Content="{lex:LocText VianaNET:Labels:LineFitFunctionLabel}" VerticalAlignment="Top" />
-                <Label Grid.Column="1" Grid.Row="3" Content="Function" Name="LabelLineFitFkt" Grid.ColumnSpan="2" />
+                                <Label Grid.Column="1" Grid.Row="3" Content="Function" Name="LabelLineFitFkt" Grid.ColumnSpan="2" />
+                  
                 <Viana:ImageButton x:Name="LineFitTheorieButton" Grid.Row="4" HorizontalAlignment="Left" Click="LineFitTheorieButtonClick" Content="Theorie " ImageSource="/VianaNET;component/Images/LineFit_Linear_16.png" Width="78" />
-                <Label Grid.Column="1" Grid.Row="4" Content="Theorie" Name="LabelLineFitTheorieFkt" Margin="0,0,0,3" />
-                <Viana:ImageButton Content="Rechner" HorizontalAlignment="Right" ImageSource="/VianaNET;component/Images/Recalculate16.png" Margin="0,1,-1,-4" x:Name="TaschenRechnerButton" Grid.Column="2" Grid.Row="4" Width="72" Grid.RowSpan="2" Click="RechnerButtonClick" />
-              </Grid>
+                                <UniformGrid Grid.Column="1" Grid.Row="4" Rows="1" Grid.ColumnSpan="2">
+                                    <CheckBox Content="Theorie" Height="17" HorizontalAlignment="Left" Name="checkBoxShowTheorie" Width="16" VerticalAlignment="Center" MaxWidth="16" 
+                                              Margin="4" Checked="checkBoxShowTheorie_Checked" Unchecked="checkBoxShowTheorie_Checked" />
+                                    <Label Content="Theorie" Name="LabelLineFitTheorieFkt" Padding="5" Margin="-80,0,0,0" HorizontalAlignment="Stretch" />
+                                </UniformGrid>
+                            </Grid>
             </TabItem>
             <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">
               <Grid Name="PhaseSpaceGrid">

@@ -13,21 +13,21 @@ using VianaNET.Data.Linefit;
 
 using System.Collections;
 
-//  letzte Änderung: 13.9.2012
+//  letzte Änderung: 14.9.2012
 
 namespace VianaNET
 {
     
     public class LineFitClass
     {
-        public string LineFitFktStr;           // Ausgabestring für die Ausgleichsfunktion
-        public double LineFitAbweichung;       // Wert der mittleren Abweichung der Messpunkte von der Ausgleichsfunktion
-        public DataCollection LineFitPoints;   // mit der Ausgleichsfunktion berechnete Punkte, die sich in der x-Koordinate um einen Pixelabstand unterscheiden
-        public DataCollection TheoriePoints;   // analog für theoretische Funktion
-        int regTyp,                            // Kennzahl für den Typ der Ausgleichsfunktion
-            anzahl;                            // Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
-        int xNr, yNr, NumberOfObject;          // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrchteten Objekts
-
+        public string LineFitFktStr;                  // Ausgabestring für die Ausgleichsfunktion
+        public double LineFitAbweichung;              // Wert der mittleren Abweichung der Messpunkte von der Ausgleichsfunktion
+        public DataCollection LineFitDisplaySample;   // mit der Ausgleichsfunktion berechnete Punkte, die sich in der x-Koordinate um einen Pixelabstand unterscheiden
+        public DataCollection TheorieDisplaySample;   // analog für theoretische Funktion
+        int regTyp,                                   // Kennzahl für den Typ der Ausgleichsfunktion
+            anzahl;                                   // Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
+        int xNr, yNr, NumberOfObject;                 // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+      
         static int maxIteration = 50;          // Begrenzungswerte für die internen Berechnungen
         static double startAbw = 1E150;
         static double genauigkeit = 1E-10;
@@ -51,7 +51,8 @@ namespace VianaNET
             wertX = new List<double>();
             wertY = new List<double>();
             ExtractDataColumnsFromVideoSamples(aktSamples, NumberOfObject, aktxNr, aktyNr);
-            LineFitPoints = null;
+            LineFitDisplaySample = null;
+            TheorieDisplaySample = null;
         }
 
         public void ExtractDataColumnsFromVideoSamples(DataCollection aktSamples, int aktObjectNr, int aktxNr, int aktyNr)
@@ -70,7 +71,6 @@ namespace VianaNET
         {
             DataSample aktDataSample;
             int firstPossibleValueNr = 0;
-          //  long startTime;
 
             if (wertX != null)
             {
@@ -121,10 +121,11 @@ namespace VianaNET
                             case 8: wertY.Add(aktDataSample.AccelerationX.Value); break;
                             case 9: wertY.Add(aktDataSample.AccelerationY.Value);  break;
                         }
-                        anzahl++;
                     }
+                    anzahl++;
                 }
-                startX = wertX[firstPossibleValueNr]; 
+                anzahl = wertX.Count;
+                startX = wertX[0]; 
                 endX = wertX[anzahl - 1];
             }
            
@@ -144,9 +145,11 @@ namespace VianaNET
             Point p;
             int k,j;
 
+            samples.Clear();
+            
             if ((aktxNr == 2) & (aktyNr == 3))  // Ausgleichskurve für x-y-Diagramm vorbereiten
             {
-                for (k = 0; k < pointList.Count() - 1; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+                for (k = 0; k < pointList.Count(); k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
                 {
                     timeHilf = new TimeSample();
                     timeHilf.Framenumber = k;
@@ -161,7 +164,7 @@ namespace VianaNET
            }
             else                   // Ausgleichskurve für t-?-Diagramm vorbereiten
             {              
-                for (k = 0; k < pointList.Count() - 1; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+                for (k = 0; k < pointList.Count(); k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
                 {
                     timeHilf = new TimeSample();
                     for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
@@ -184,10 +187,10 @@ namespace VianaNET
                         }
                     samples.Add(timeHilf);
                     }
+                
                 } 
         }
-           
-      
+               
 
         public void getMinMax(List<double> werte, int anzahl, out double Min, out double Max)
         {
@@ -293,11 +296,11 @@ namespace VianaNET
             }
             if (aktFunc != NullFkt)    // Berechnung der Ausgleichsfunktion erfolgreich?
             {
-                if (LineFitPoints == null)
+                if (LineFitDisplaySample == null)
                 {
-                    LineFitPoints =new DataCollection();
+                    LineFitDisplaySample = new DataCollection();
                 }
-                CalculateLineFitSeries(LineFitPoints);  // Punkte mit Ausgleichsfunktion bestimmen
+                CalculateLineFitSeries(LineFitDisplaySample);  // Punkte mit Ausgleichsfunktion bestimmen
             }
             mittlererFehler = fehler;
             if (fehler < -1.5) { mittlererFehler = -2; }
@@ -316,45 +319,64 @@ namespace VianaNET
             }
         }
 
-
         private void CalculateLineFitSeries( DataCollection lineFitSamples)
         {
             int k, anzahlPixel;
             double x;
             Point p;
-            List<Point> lineFitPoints;
-
-            lineFitSamples.Clear();
-            
+            List<Point> tempLineFitPoints;
+           
             if (aktFunc==null)
             { 
                 return;
             }
-            // endPixelX und startPixelX
-            // startX,endX und stepX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-            anzahlPixel = (int)(endPixelX - startPixelX);  //Anzahl der Pixel im betrachtenen Bereich
-            x = startX;
-          //  if (xNr == 1) { anzahlPixel = 2 * samples.Count; stepX = 40 / 2; }
-            lineFitPoints = new List<Point>();
-            for (k = 0; k < anzahlPixel; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
-            {          
-                p = new Point(x,aktFunc(x));
-                lineFitPoints.Add(p);
-                x = x + stepX;
+            tempLineFitPoints = new List<Point>();
+            if ( regTyp == Constants.linReg )  //Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
+            {                                  // da Chart selbst Geraden zeichnen kann. 
+                if (xNr == 2)
+                {                              // zwei Punkte genügen bei x-y-Diagramm
+                    x = wertX[0];              // wertX[] - originale x-Werte der Wertepaare 
+                    p = new Point(x, aktFunc(x));
+                    tempLineFitPoints.Add(p);
+                    x = wertX[anzahl - 1];
+                    p = new Point(x, aktFunc(x));
+                    tempLineFitPoints.Add(p);
+                }
+                else
+                {                              // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
+                    for (k = 0; k < anzahl; k++)
+                    {
+                        x = wertX[k];
+                        p = new Point(x, aktFunc(x));
+                        tempLineFitPoints.Add(p);
+                    }
+                }
             }
-            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, lineFitPoints, lineFitSamples);
-            lineFitPoints.Clear();
-       
+            else
+            {
+                // endPixelX und startPixelX
+                // startX,endX und stepX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
+                anzahlPixel = (int)(endPixelX - startPixelX);  //Anzahl der Pixel im betrachtenen Bereich
+                x = startX;
+                for (k = 0; k < anzahlPixel; k++)  //Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+                {                                  //führt bei t-?-Diagrammen zu falschen Darstellungen !!   
+                    p = new Point(x, aktFunc(x));
+                    tempLineFitPoints.Add(p);
+                    x = x + stepX;
+                }
+            }
+            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, tempLineFitPoints, lineFitSamples);
+            tempLineFitPoints.Clear();      
         }
 
-        void CalculateLineFitTheorieSeries(List<Point> valuePairs, TFktTerm fx)
+        public void CalculateLineFitTheorieSeries(DataCollection TheorieSamples, TFktTerm fx)
         {
             int k, anzahlPixel;
             double x;
             Point p = new Point();
+            List<Point> tempTheoriePoints;
             Parse tempParser = new Parse();
-            
-            valuePairs.Clear();
+                        
             if (fx==null)
             { 
                 return;
@@ -363,14 +385,15 @@ namespace VianaNET
             // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
             anzahlPixel = (int)(endPixelX - startPixelX);
             x = startX;
+            tempTheoriePoints = new List<Point>();
             for (k = 0; k < anzahlPixel; k++)   //Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
-            {
+            {                                   //führt bei t-?-Diagrammen zu falschen Darstellungen !!
                 p = new Point(x,tempParser.FreierFktWert(fx, x));
-                valuePairs.Add(p);
+                tempTheoriePoints.Add(p);
                 x = x + stepX;
             }
-            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, valuePairs, TheoriePoints);
-            valuePairs.Clear();
+            CreateSampleFromCalculatedPoints(NumberOfObject, xNr, yNr, tempTheoriePoints, TheorieSamples);
+            tempTheoriePoints.Clear();
         }
 
 
@@ -658,7 +681,8 @@ namespace VianaNET
                 iter++;
 
             } while (weiter && (iter < maxIteration));
-            p[Constants.expReg, 0] = bestA; p[Constants.expReg, 1] = bestB; p[Constants.expReg, 2] = bestC; p[Constants.expReg, 5] = abw / anzahl;
+            p[Constants.expReg, 0] = bestA; p[Constants.expReg, 1] = bestB; p[Constants.expReg, 2] = bestC; 
+            p[Constants.expReg, 5] = abw / anzahl;
         }
 
         private void BestimmeSinFkt()
@@ -753,7 +777,8 @@ namespace VianaNET
                 }
             }  //Ende While-Schleife
             if (bestA < 0) { bestA = -bestA; bestC = bestC + Math.PI; }
-            p[Constants.sinReg, 0] = bestA; p[Constants.sinReg, 1] = bestB; p[Constants.sinReg, 2] = bestC; p[Constants.sinReg, 3] = bestD; p[Constants.sinReg, 5] = abw / anzahl;
+            p[Constants.sinReg, 0] = bestA; p[Constants.sinReg, 1] = bestB; p[Constants.sinReg, 2] = bestC; p[Constants.sinReg, 3] = bestD;
+            p[Constants.sinReg, 5] = abw / anzahl;
         }
 
         private void BestimmeSinExpFkt()
@@ -929,19 +954,21 @@ namespace VianaNET
                 }
             }
 
-            p[Constants.resoReg, 0] = bestA; p[Constants.resoReg, 1] = bestB; p[Constants.resoReg, 2] = bestC; p[Constants.resoReg, 5] = abw / anzahl;
+            p[Constants.resoReg, 0] = bestA; p[Constants.resoReg, 1] = bestB; p[Constants.resoReg, 2] = bestC;
+            p[Constants.resoReg, 5] = abw / anzahl;
         }
 
         
-        public void TesteAusgleich(int regTyp)
+        public void CalculateLineFitFunction(int regressionTyp)
         {
             string fktStr;
             double mFehler;
 
             if (wertX.Count == 0) { CopySampleColumnsToArrays(0, xNr, yNr); }
+            regTyp = regressionTyp;
             if (anzahl > 2)
             {
-                switch (regTyp)
+                switch (regressionTyp)
                 {
                     case Constants.linReg:
                         BestimmeLinFkt();
@@ -972,12 +999,11 @@ namespace VianaNET
                         break;
                     default: BestimmeLinFkt(); break;
                 }
-                Info_und_Test(regTyp, -1, out fktStr, out mFehler);
+                Info_und_Test(regressionTyp, -1, out fktStr, out mFehler);
                 LineFitFktStr = fktStr;
                 LineFitAbweichung = mFehler;
                 // labelFktStr.Content = string.Concat(fktStr, "    mittleres Fehlerquadrat: ", mFehler.ToString());
-            }
-            
+            }           
         }
 
         private void RegressAuswahl()
@@ -991,35 +1017,15 @@ namespace VianaNET
             if ((bool)RegAuswahlDlg.DialogResult)
             {
                 regTyp = (int)RegAuswahlDlg.GetAuswahl();
-               // buttonCalcFkt.IsEnabled = true;
             }
         }
 
+    /*
         private void buttonCalcFkt_Click(object sender, RoutedEventArgs e)
         {
-            TesteAusgleich(regTyp);
+            CalculateLineFitFunction(regTyp);
         }
-        
-        
-        /*
-                private void buttonBerechneTheorie_Click(object sender, RoutedEventArgs e)
-                {
-                    int k;
-                    double y;
-                    Parse tempParser = new Parse();
-                    for (k = 0; k < anzahl; k++)
-                    {
-                        y = tempParser.FreierFktWert(userFkt, wertX[k]);
-                        listBoxTheorie.Items.Add(y.ToString());
-                    }
-                }
-
-                private void buttonTaschenrechner_Click(object sender, RoutedEventArgs e)
-                {
-                    Window2 Taschenrechner = new Window2(TRechnerArt.rechner);
-                    Taschenrechner.ShowDialog();
-                }
-       */
-
+    */
+   
     }
 }

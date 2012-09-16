@@ -334,14 +334,14 @@
       var map = this.DefaultSeries.DataMappings[0];
       var mapInterpolationFit = this.InterpolationSeries.DataMappings[0];
       var mapLineFit = this.LineFitSeries.DataMappings[0];
+      var mapTheorieFit = this.TheorieSeries.DataMappings[0];
 
-      
-      UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit);
+      UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
 
       RefreshChartDataPoints();
     }
 
-    private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints, DataMapping mapInterpolationFit, DataMapping mapLineFit)
+    private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints, DataMapping mapInterpolationFit, DataMapping mapLineFit, DataMapping mapTheorieFit)
     {
       var prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture) + "].";
       switch (axis.Axis)
@@ -464,6 +464,7 @@
 
       if (mapInterpolationFit != null) { mapInterpolationFit.Path = mapPoints.Path; }
       if (mapLineFit != null) { mapLineFit.Path = mapPoints.Path; }
+      if (mapTheorieFit != null) { mapTheorieFit.Path = mapPoints.Path; }
     }
 
     private void RefreshChartDataPoints()
@@ -471,14 +472,22 @@
       this.DefaultSeries.DataSource = null;
       this.DefaultSeries.DataSource = VideoData.Instance.Samples;
       this.InterpolationSeries.DataSource = null;
-      this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
+      this.InterpolationSeries.DataSource = VideoData.Instance.Samples; 
       this.LineFitSeries.DataSource = null;
-      if ((activeLineFitClass != null) && (activeLineFitClass.LineFitPoints != null) && (activeLineFitClass.LineFitPoints.Count > 0))
+      this.TheorieSeries.DataSource = null;
+      if (activeLineFitClass != null)
       {
-          this.LineFitSeries.LineThickness = 1;
-          this.LineFitSeries.DataSource = activeLineFitClass.LineFitPoints;
+          if ((activeLineFitClass.LineFitDisplaySample != null) && (activeLineFitClass.LineFitDisplaySample.Count > 0))
+          {
+              this.LineFitSeries.LineThickness = 1;
+              this.LineFitSeries.DataSource = activeLineFitClass.LineFitDisplaySample;
+          }
+          if ((activeLineFitClass.TheorieDisplaySample != null) && (activeLineFitClass.TheorieDisplaySample.Count > 0))
+          {
+              this.TheorieSeries.LineThickness = 1;
+              this.TheorieSeries.DataSource = activeLineFitClass.TheorieDisplaySample;
+          }
       }
-   //   this.LineFitSeries.DataSource = VideoData.Instance.Samples;
     }
 
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -510,7 +519,8 @@
       var map = this.DefaultSeries.DataMappings[1];
       var mapInterpolationFit = this.InterpolationSeries.DataMappings[1];
       var mapLineFit = this.LineFitSeries.DataMappings[1];
-      UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit);
+      var mapTheorieFit = this.TheorieSeries.DataMappings[1];
+      UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
 
       RefreshChartDataPoints();
     }
@@ -620,6 +630,7 @@
       this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
 
       this.LineFitSeries.RenderAs = RenderAs.Line;
+      this.TheorieSeries.RenderAs = RenderAs.Line;
 
       if (checkedRadioButton.Name.Contains("Scatter"))
       {
@@ -751,10 +762,10 @@
     // Methods for doing LineFitting                                             //
     ///////////////////////////////////////////////////////////////////////////////
 
-    private void MakePreparationsForLineFit()
+    private void MakePreparationsForLineFit()                   
     {
       int columnNrFirstValue, columnNrSecondValue;
-      int selIndex = AxesContentPositionSpace.SelectedIndex;
+      int selIndex = AxesContentPositionSpace.SelectedIndex;   // Ermittele die Spaltennummern der gewünschten Daten
 
       if (selIndex == 0)
       {
@@ -771,7 +782,7 @@
           { columnNrFirstValue = 0; columnNrSecondValue = 0; }
       }
       
-      if (this.activeLineFitClass == null)
+      if (this.activeLineFitClass == null)                   // übernehme die Daten in die Arrays wertX und wertY
       {
           this.activeLineFitClass = new LineFitClass(VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue);
       }
@@ -782,6 +793,16 @@
     }
 
 
+    private void MakePreparationsForTheorieFit()
+    {
+        MakePreparationsForLineFit();
+        if (activeLineFitClass.TheorieDisplaySample == null)
+        {
+            activeLineFitClass.TheorieDisplaySample = new DataCollection();
+        }
+
+    }
+
     private void NewCalculationForLineFitting()
     {
         MakePreparationsForLineFit();
@@ -790,7 +811,7 @@
         {
             this.activeRegressionType = 1;
         }
-        this.activeLineFitClass.TesteAusgleich(this.activeRegressionType);
+        this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
         LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
     }
 
@@ -807,7 +828,7 @@
       }
       else
       {
-          this.activeLineFitClass.LineFitPoints.Clear();
+          this.activeLineFitClass.LineFitDisplaySample.Clear();
           LabelLineFitFkt.Content = "";
       }
 
@@ -846,8 +867,8 @@
 
         if (LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
-          this.activeLineFitClass.TesteAusgleich(this.activeRegressionType);
-          LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+            this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
+            LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
         }
       }
     }
@@ -866,12 +887,54 @@
       if (fktEditor.DialogResult.GetValueOrDefault(false))
       {
         this.lineFitTheorieFunction = fktEditor.GetFunktion();
-        this.LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction != null ? this.lineFitTheorieFunction.name : "keine Funktion angegeben oder erkannt";
+        if (this.lineFitTheorieFunction != null)
+        {
+            LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction.name;
+            MakePreparationsForTheorieFit();
+            this.activeLineFitClass.CalculateLineFitTheorieSeries(activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);
+        }
+        else
+        {
+            this.LabelLineFitTheorieFkt.Content = " -- ";
+            if ((this.activeLineFitClass != null) & (this.activeLineFitClass.TheorieDisplaySample != null))
+            {
+                activeLineFitClass.TheorieDisplaySample.Clear();
+            }
+        }
+        if (checkBoxShowTheorie.IsChecked()) { RefreshSeries(); }
       }
-      //     else 
-      //    {
-      //        LabelLineFitTheorieFkt.Content = "Dialog abgebrochen"; 
-      //    }
+     
+    }
+
+
+    private void checkBoxShowTheorie_Checked(object sender, RoutedEventArgs e)
+    {
+        if ((!this.isInitialized) | (this.lineFitTheorieFunction == null) | (this.activeLineFitClass == null))
+        {
+            return;
+        }
+
+        if (checkBoxShowTheorie.IsChecked.GetValueOrDefault(false))
+        {
+            this.LabelLineFitTheorieFkt.IsEnabled = true;
+            LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction.name;
+            if ((this.activeLineFitClass.TheorieDisplaySample == null) | (this.activeLineFitClass.TheorieDisplaySample.Count == 0))
+            {
+                MakePreparationsForTheorieFit();
+                this.activeLineFitClass.CalculateLineFitTheorieSeries(activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);         
+            }
+            RefreshSeries();
+        }
+        else
+        {
+            this.LabelLineFitTheorieFkt.IsEnabled = false;
+            if ((this.activeLineFitClass.TheorieDisplaySample != null) & (this.activeLineFitClass.TheorieDisplaySample.Count != 0))
+            {
+                activeLineFitClass.TheorieDisplaySample.Clear();
+                RefreshSeries();
+            }
+        }
+
     }
 
     private void RechnerButtonClick(object sender, RoutedEventArgs e)
@@ -879,6 +942,8 @@
       var calculator = new CalculatorAndFktEditor(TRechnerArt.rechner);
       calculator.ShowDialog();
     }
+
+   
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
