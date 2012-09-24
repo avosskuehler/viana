@@ -1297,4 +1297,13 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="LineFitLineLabel" xml:space="preserve">
     <value>Ausgleichskurve</value>
   </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>Einstellen der Liniendicke der Ausgleichskurve/ theoretischen Kurve und der Stellenzahl bei Ausgabe von Dezimalwerten. </value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>Anpassen der Darstellungen</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>Taschenrechner oder Eingabe von Funktionstermen (theoretische Funktion)</value>
+  </data>
 </root>

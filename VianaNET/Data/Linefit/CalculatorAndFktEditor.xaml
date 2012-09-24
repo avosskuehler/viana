@@ -3,9 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Title="Rechner" d:DesignHeight="471" d:DesignWidth="447" SizeToContent="WidthAndHeight" Icon="/VianaNET;component/Images/Recalculate16.png">
-    <Grid Height="423" Width="400" OpacityMask="Black">
-
+        xmlns:Viana="clr-namespace:VianaNET"
+        xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+          lex:LocalizeDictionary.DesignCulture="de"
+             mc:Ignorable="d" Title="Rechner" d:DesignHeight="543" d:DesignWidth="420" SizeToContent="WidthAndHeight" 
+        Icon="/VianaNET;component/Images/Recalculate16.png" WindowStartupLocation="CenterScreen">
+     <Window.Resources>
+        <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    </Window.Resources>
+    <Grid Height="500" Width="400" Background="{StaticResource MainBackgroundBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <Viana:TopFrame x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:LineFitCalculatorDialogTitle}" />
+        <Grid Grid.Row="1">
         <TextBox Height="24" HorizontalAlignment="Left" Margin="10,42,0,0" Name="textBoxErgebnis" VerticalAlignment="Top" Width="378" />
         <Button Content="1" Height="28" HorizontalAlignment="Left" Margin="94,205,0,0" Name="button1" VerticalAlignment="Top" Width="28" UseLayoutRounding="True" FontSize="14" FontWeight="Bold" Click="buttonZiffer_Click" />
         <Button Content="2" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,205,244,0" Name="button2" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="buttonZiffer_Click" />
@@ -23,7 +36,7 @@
         <Button Content="x" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,103,0,0" Name="buttonX" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Visibility="Hidden" Background="#FFF5E432" Click="buttonZiffer_Click" />
         <Button Content="Entf" FontSize="10" Height="28" HorizontalAlignment="Left" Margin="162,239,0,0" Name="buttonEntf" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Background="#FFF2C9C9" Tag="0" Click="buttonBack_Click" />
         <Button Content="Bk" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,239,88,0" Name="buttonBack" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Background="#FFF2C9C9" Tag="1" Click="buttonBack_Click" />
-        <Button Content="/" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,0,168,156" Name="buttonDurch" UseLayoutRounding="True" VerticalAlignment="Bottom" Width="28" Click="buttonZiffer_Click" />
+        <Button Content="/" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,239,0,0" Name="buttonDurch" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="buttonZiffer_Click" />
         <Button Content="*" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,205,0,0" Name="buttonMal" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="buttonZiffer_Click" />
         <Button Content="-" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,171,0,0" Name="buttonMinus" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="buttonZiffer_Click" />
         <Button Content="+" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,137,0,0" Name="buttonPlus" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="buttonZiffer_Click" />
@@ -37,17 +50,14 @@
         <ComboBox Height="26" HorizontalAlignment="Left" Margin="21,310,0,0" Name="comboBox1" VerticalAlignment="Top" Width="248" />
         <Label Content="physikalische Konstanten:" Height="27" HorizontalAlignment="Left" Margin="20,283,0,0" Name="label1" VerticalAlignment="Top" Width="190" />
         <Button Content="einfügen" FontSize="12" Height="28" HorizontalAlignment="Left" Margin="275,310,0,0" Name="buttonTakeKonst" UseLayoutRounding="True" VerticalAlignment="Top" Width="80" Click="buttonTakeKonst_Click" OpacityMask="#80000000" FontWeight="Bold" />
-        <Button Content="abbrechen" Height="38" HorizontalAlignment="Left" Margin="26,371,0,0" Name="buttonESC" VerticalAlignment="Top" Width="149" IsCancel="True" Click="buttonESC_Click" FontWeight="Bold" FontSize="13" Background="#FFEFCACA" />
-        <Button Content="beenden" Height="38" HorizontalAlignment="Right" Margin="0,0,30,14" Name="buttonFertig" VerticalAlignment="Bottom" Width="149" IsDefault="True" Click="buttonFertig_Click" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />
         <Button Content="Pos 1" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,111,0,0" Name="buttonPos1" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="buttonPos1_Click" />
         <Button Content="&lt;--" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="246,145,0,0" Name="buttonLeft" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="buttonLeft_Click" />
         <Button Content="--&gt;" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="324,145,0,0" Name="buttonRight" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="buttonRight_Click" />
         <Button Content="Ende" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,179,0,0" Name="buttonEnd" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="buttonEnd_Click" />
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-                <GradientStop Color="#FF509CDE" Offset="0" />
-                <GradientStop Color="#FF98FFFF" Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
+        </Grid>
+        <Button Content="abbrechen" Height="38" Grid.Row="2" HorizontalAlignment="Left" Margin="26,0,0,0" Name="buttonESC" VerticalAlignment="Center" Width="149" IsCancel="True" Click="buttonESC_Click" FontWeight="Bold" FontSize="13" Background="#FFEFCACA" />
+        <Button Content="beenden" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,30,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="buttonFertig_Click" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />
+
+       
     </Grid>
 </Window>

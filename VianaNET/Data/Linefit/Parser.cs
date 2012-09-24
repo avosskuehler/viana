@@ -1,3 +1,7 @@
+// Autor: H. Niemeyer
+// letzte Änderung: 24.09.2012
+
+
 using System;
 using System.Collections;
 
@@ -5,13 +9,13 @@ using System.Collections;
 public class Constants
 {
   //  public const int MaxListSize = Int32.MaxValue / 16;
-  //  public const int _fixed_Rows = 2;
+
   //  public const double _max_Real = 1.7e38;
   //  public const int _Ln_max_Real = 88;
     public const double fehlerZahl = -1.0E32;
   //  public const int is_FehlerZahl = 2;
     public const double leerFeld = -1.1E32;
-  //  public const int is_LeerFeld = 1;
+ 
   //  public const int is_RealZahl = 0;
 
     public const int linReg = 1;
@@ -23,6 +27,8 @@ public class Constants
     public const int sinReg = 7;
     public const int sinExpReg = 8;
     public const int resoReg = 9;
+    public const int minRegWert = linReg;
+    public const int maxRegWert = resoReg;
 
 
     public const char _hoch = '\'';
@@ -67,46 +73,7 @@ public class Constants
          new KonstRec(){titel="Gravitationskonstante", bez="#g§", wert=6.67259E-11} , 
          new KonstRec(){titel="Compton-Wellenlänge", bez="#l§_c!", wert=2.43E-12} 
       };
-/*
-    public const int lin_regress = 1;
-    public const int log_regress = 2;
-    public const int exp_regress = 4;
-    public const int pot_regress = 8;
-    public const int wachs_regress = 16;
-    public const int sinus_regress = 32;
-    public const int expSin_regress = 64;
-    public const int resonanz_regress = 128;
-    public const int best_regress = lin_regress + log_regress + exp_regress + pot_regress + wachs_regress + sinus_regress + expSin_regress + resonanz_regress;
 
-    public const int max_Anzahl_Spalten = 8;
-    public const int max_Regress_Param = 3;   // 0 = guete; 1 = m; 2 = c; rest frei
-
-    public const int ZaS_formel = 1;
-    public const int ZaS_geaendert = 2;
-    public const int ZaS_gesichert = 4;
-    public const int ZaS_Scanned = 8;
-    public const int ZaS_berechnet = 16;
-    public const int ZaS_fehler = 32;
-    public const int ZaS_upDate = 64;
-    public const int ZaS_Zeile = 128;
-    public const int ZaS_TempNeu = 256;
-
-    public const int SpErr_noMem = 1;        // Spalte konnte nicht erzeugt werden
-    public const int SpErr_fTerm = 2;        // fehlerhafter Funktionsterm
-    public const int SpErr_noFkt = 3;        // Funktionsterm fehlt
-    public const int SpErr_noBez = 4;        // doppelte oder fehlende Bezeichnung einer Größe
-    public const int SpErr_Verweis = 5;      // Spalte konnte nicht gelöscht werden, da ein Verweis vorliegt
-
-    public const int ZaST_normal = 0;        // z.B.: s in cm
-    public const int ZaST_bruch = 1;         // z.B.: s/cm
-    public const int ZaST_klammer = 2;       // z.B.: s[cm]
-
-    public const int maxBezeichnungLen = 6;     // Bezeichnung
-    public const int maxDimensionLen = 12;      // Dimension
-    public const int maxSpaltTitelLen = maxBezeichnungLen + maxDimensionLen + 4;  // SpaltenTitel
-    public const int maxFktStrLen = 80;        // Funktionen
-    public const int maxTabTitelLen = 40;
-*/
     public const double eulerZahl = 2.1782818;
     public static string[] fnam = { "(", ")", "+", "-", "*", "/", "^", "SIN", "COS", "TAN", "COTAN", "EXP", "LN", "WURZEL", "SIGN", "ABS", "DELTA", "?" };
 
@@ -118,14 +85,15 @@ public class Constants
 
 namespace Parser
 {
+    /*
     public struct KonstRec
     {
         public string titel;
         public string bez;
         public double wert;
     } // end KonstRec
-
-    public struct TSpaltDefBuf
+*/
+ /*   public struct TSpaltDefBuf
     {
         public string be;        // Bezeichnung
         public string di;        // Dimension
@@ -134,7 +102,7 @@ namespace Parser
         public int br;
         public int nk;
     } // end TSpaltDefBuf
-
+*/
     public class TFktTerm
     {
         public TFktTerm li;
@@ -976,30 +944,33 @@ namespace Parser
             return result;
         }
 
-     /*   public bool Verweis_auf_Spalte(TFktTerm fx, ushort nr)
+        private bool doesContainNoVar(TFktTerm fx)
         {
-            bool result;
-            result = false;
-            if (fx == null)
-            {
-                return result;
+            if ( (fx==null) || (fx.cwert<=symTyp.istKonst)) { return true; }
+            else
+            { 
+                if (fx.cwert==symTyp.ident)
+                {return false;}
+                else {return doesContainNoVar(fx.li) && doesContainNoVar(fx.re);} 
             }
-            //@ Unsupported property or method(C): 'cwert'
-            switch(fx.cwert)
-            {
-                case symTyp.istZahl:
-                case symTyp.istKonst:
-                    break;
-                case symTyp.ident:
-                    result = (fx.vwert == this.fAnker[nr]);
-                    break;
-                default:
-                    result = Verweis_auf_Spalte(fx.re, nr) || Verweis_auf_Spalte(fx.li, nr);
-                    break;
-            }
-            return result;
         }
-  */
+
+        public bool isLinearFunction(TFktTerm fx)
+        {
+            if ((fx == null) || (fx.cwert <= symTyp.istKonst)) { return true; }
+            if (fx.cwert > symTyp.pot) { return doesContainNoVar(fx.re); }
+            switch (fx.cwert)
+              {
+                 case symTyp.ident: return true; 
+                 case symTyp.pot: return doesContainNoVar(fx.li) && doesContainNoVar(fx.re); 
+                 case symTyp.plus: return isLinearFunction(fx.li) && isLinearFunction(fx.re); 
+                 case symTyp.minus: return isLinearFunction(fx.li) && isLinearFunction(fx.re); 
+                 case symTyp.mal: return (doesContainNoVar(fx.li) && isLinearFunction(fx.re)) || (isLinearFunction(fx.li) && doesContainNoVar(fx.re)); 
+                 case symTyp.durch: return isLinearFunction(fx.li) && doesContainNoVar(fx.re); 
+                 default: return false;
+               }
+        }
+
 
     }
 }

@@ -1299,4 +1299,13 @@
   <data name="LineFitSinExp" xml:space="preserve">
     <value>@LineFitSinExp</value>
   </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTitle</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTopTitle</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>@LineFitCalculatorDialogTitle</value>
+  </data>
 </root>

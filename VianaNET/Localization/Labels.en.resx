@@ -1312,4 +1312,13 @@ Click OK or press Enter, when ready.</value>
   <data name="LineFitLineLabel" xml:space="preserve">
     <value>linefitting curve</value>
   </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>Select line thickness of curves and number of digits when showing decimals.</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>some options for display</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>Calculator or input for functionterms (theoretical Funktion)</value>
+  </data>
 </root>

@@ -174,10 +174,8 @@
                      Name="LineFitCheckBox" Checked="LineFitCheckBoxChecked" Unchecked="LineFitCheckBoxChecked"  IsChecked="False"
                      Content="{lex:LocText VianaNET:Labels:LineFitLineLabel}" VerticalContentAlignment="Center" HorizontalAlignment="Left" 
                    />
-                   <Viana:ImageButton Content="Rechner" HorizontalAlignment="Right" ImageSource="/VianaNET;component/Images/Recalculate16.png" 
-                                    x:Name="TaschenRechnerButton" Grid.Column="2" Grid.Row="4" Width="72" Grid.RowSpan="2" Click="RechnerButtonClick"
-                   />
-                </UniformGrid>
+                                    <Viana:ImageButton Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}" Grid.Column="1" ImageSource="/VianaNET;component/Images/InterpolateData16.png" x:Name="imageButtonRegressOptions" HorizontalAlignment="Right" Click="imageButtonRegressOptions_Click" />
+                                </UniformGrid>
                 <Label Grid.Row="3" Content="{lex:LocText VianaNET:Labels:LineFitFunctionLabel}" VerticalAlignment="Top" />
                                 <Label Grid.Column="1" Grid.Row="3" Content="Function" Name="LabelLineFitFkt" Grid.ColumnSpan="2" />
                   
@@ -187,6 +185,7 @@
                                               Margin="4" Checked="checkBoxShowTheorie_Checked" Unchecked="checkBoxShowTheorie_Checked" />
                                     <Label Content="Theorie" Name="LabelLineFitTheorieFkt" Padding="5" Margin="-80,0,0,0" HorizontalAlignment="Stretch" />
                                 </UniformGrid>
+                                <Viana:ImageButton Content="Rechner" HorizontalAlignment="Stretch" ImageSource="/VianaNET;component/Images/Recalculate16.png" x:Name="TaschenRechnerButton" Grid.Column="2" Click="RechnerButtonClick" />
                             </Grid>
             </TabItem>
             <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">

@@ -6,7 +6,8 @@
   using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
   using System.Windows.Media.Imaging;
-
+    
+  using System.Drawing;
   using AvalonDock;
   using System.Windows.Data;
   using WPFLocalizeExtension.Extensions;
@@ -14,8 +15,9 @@
   using System.Collections.Generic;
   using VianaNET.Data.Linefit;
   using Parser;
+  using System.Windows.Media;
 
-    //letzte Änderung: 9.9.2012
+    //letzte Änderung: 24.9.2012
 
   public partial class ChartWindow : DockableContent
   {
@@ -32,9 +34,15 @@
     #region FIELDS
 
     private readonly bool isInitialized;
+    private bool showingLineFitOrTheorieIsAllowed;
     private LineFitClass activeLineFitClass;
     private TFktTerm lineFitTheorieFunction;
     private int activeRegressionType;
+    private double lineFitFunctionLineThickness = 1;
+    private SolidColorBrush lineFitFunctionLineColor = System.Windows.Media.Brushes.Red;
+    private double theorieFunctionLineThickness = 1;
+    private SolidColorBrush theorieFunctionLineColor = System.Windows.Media.Brushes.Green;
+    private string stellenZahlFormatString = "G4";
 
     #endregion //FIELDS
 
@@ -49,6 +57,7 @@
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
       activeLineFitClass = null;
+      this.showingLineFitOrTheorieIsAllowed = true;
       //VideoData.Instance.PropertyChanged +=
       //  new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
       //Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
@@ -193,7 +202,7 @@
 
     private void AxesContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if ( (LineFitCheckBox != null) && (LineFitCheckBox.IsChecked.GetValueOrDefault(false)) )
+        if ((LineFitCheckBox != null) && (LineFitCheckBox.IsChecked.GetValueOrDefault(false)) && showingLineFitOrTheorieIsAllowed)
         { NewCalculationForLineFitting(); }
       SetDefaultDiagramm();
     }
@@ -475,16 +484,18 @@
       this.InterpolationSeries.DataSource = VideoData.Instance.Samples; 
       this.LineFitSeries.DataSource = null;
       this.TheorieSeries.DataSource = null;
-      if (activeLineFitClass != null)
+      if ( (activeLineFitClass != null) & showingLineFitOrTheorieIsAllowed)
       {
           if ((activeLineFitClass.LineFitDisplaySample != null) && (activeLineFitClass.LineFitDisplaySample.Count > 0))
           {
-              this.LineFitSeries.LineThickness = 1;
+              this.LineFitSeries.LineThickness = lineFitFunctionLineThickness;
+              this.LineFitSeries.Color=lineFitFunctionLineColor;
               this.LineFitSeries.DataSource = activeLineFitClass.LineFitDisplaySample;
           }
           if ((activeLineFitClass.TheorieDisplaySample != null) && (activeLineFitClass.TheorieDisplaySample.Count > 0))
           {
-              this.TheorieSeries.LineThickness = 1;
+              this.TheorieSeries.LineThickness = theorieFunctionLineThickness;
+              this.TheorieSeries.Color=theorieFunctionLineColor;
               this.TheorieSeries.DataSource = activeLineFitClass.TheorieDisplaySample;
           }
       }
@@ -629,6 +640,7 @@
       this.AxisControls.Visibility = Visibility.Visible;
       this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
 
+      this.showingLineFitOrTheorieIsAllowed = false;
       this.LineFitSeries.RenderAs = RenderAs.Line;
       this.TheorieSeries.RenderAs = RenderAs.Line;
 
@@ -636,6 +648,7 @@
       {
         this.DefaultSeries.RenderAs = RenderAs.Point;
         this.InterpolationSeries.RenderAs = RenderAs.Line;
+        this.showingLineFitOrTheorieIsAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Line"))
       {
@@ -648,6 +661,7 @@
         {
           this.DefaultSeries.RenderAs = RenderAs.Line;
         }
+        this.showingLineFitOrTheorieIsAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Pie"))
       {
@@ -785,6 +799,7 @@
       if (this.activeLineFitClass == null)                   // übernehme die Daten in die Arrays wertX und wertY
       {
           this.activeLineFitClass = new LineFitClass(VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue);
+          this.activeLineFitClass.gueltigeStellenFormatString = this.stellenZahlFormatString;
       }
       else 
       {
@@ -842,8 +857,8 @@
 
       MakePreparationsForLineFit();
       
-      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertX, this.activeLineFitClass.wertX.Count, out minX, out hilf);
-      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertY, this.activeLineFitClass.wertY.Count, out minY, out hilf);
+      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertX,  out minX, out hilf);
+      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertY,  out minY, out hilf);
       var auswahlDialog = new LinefittingDialog(minX < 0, minY < 0, this.activeRegressionType);
       if (auswahlDialog.ShowDialog().GetValueOrDefault((false)))
       {
@@ -896,7 +911,7 @@
         else
         {
             this.LabelLineFitTheorieFkt.Content = " -- ";
-            if ((this.activeLineFitClass != null) & (this.activeLineFitClass.TheorieDisplaySample != null))
+            if ((this.activeLineFitClass != null) && (this.activeLineFitClass.TheorieDisplaySample != null))
             {
                 activeLineFitClass.TheorieDisplaySample.Clear();
             }
@@ -909,7 +924,7 @@
 
     private void checkBoxShowTheorie_Checked(object sender, RoutedEventArgs e)
     {
-        if ((!this.isInitialized) | (this.lineFitTheorieFunction == null) | (this.activeLineFitClass == null))
+        if ((!this.isInitialized) || (this.lineFitTheorieFunction == null) || (this.activeLineFitClass == null))
         {
             return;
         }
@@ -918,7 +933,7 @@
         {
             this.LabelLineFitTheorieFkt.IsEnabled = true;
             LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction.name;
-            if ((this.activeLineFitClass.TheorieDisplaySample == null) | (this.activeLineFitClass.TheorieDisplaySample.Count == 0))
+            if ((this.activeLineFitClass.TheorieDisplaySample == null) || (this.activeLineFitClass.TheorieDisplaySample.Count == 0))
             {
                 MakePreparationsForTheorieFit();
                 this.activeLineFitClass.CalculateLineFitTheorieSeries(activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);         
@@ -928,7 +943,7 @@
         else
         {
             this.LabelLineFitTheorieFkt.IsEnabled = false;
-            if ((this.activeLineFitClass.TheorieDisplaySample != null) & (this.activeLineFitClass.TheorieDisplaySample.Count != 0))
+            if ((this.activeLineFitClass.TheorieDisplaySample != null) && (this.activeLineFitClass.TheorieDisplaySample.Count != 0))
             {
                 activeLineFitClass.TheorieDisplaySample.Clear();
                 RefreshSeries();
@@ -941,6 +956,31 @@
     {
       var calculator = new CalculatorAndFktEditor(TRechnerArt.rechner);
       calculator.ShowDialog();
+    }
+
+    private void imageButtonRegressOptions_Click(object sender, RoutedEventArgs e)
+    {
+        int k = Convert.ToInt16(stellenZahlFormatString.Substring(1));
+        var myOptionsDialog = new LineOptionsDialog(lineFitFunctionLineThickness, lineFitFunctionLineColor, theorieFunctionLineThickness,theorieFunctionLineColor, k);
+        myOptionsDialog.ShowDialog();
+        if (myOptionsDialog.DialogResult==true)
+        {
+            lineFitFunctionLineThickness = myOptionsDialog.lineThicknessRegress;
+            theorieFunctionLineThickness = myOptionsDialog.lineThicknessTheorie;
+            lineFitFunctionLineColor = myOptionsDialog.lineColorRegress;
+            theorieFunctionLineColor = myOptionsDialog.lineColorTheorie;
+            stellenZahlFormatString = "G" + myOptionsDialog.stellenZahl.ToString();         
+            if (activeLineFitClass != null)
+            {
+                activeLineFitClass.gueltigeStellenFormatString = stellenZahlFormatString;             
+                LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+                if ( ( (activeLineFitClass.LineFitDisplaySample!=null)&&(activeLineFitClass.LineFitDisplaySample.Count > 0) ) || 
+                     ( (activeLineFitClass.TheorieDisplaySample!=null)&&(activeLineFitClass.TheorieDisplaySample.Count > 0) ) )
+                {
+                    RefreshChartDataPoints();
+                }
+            }
+        }
     }
 
    
