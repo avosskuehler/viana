@@ -46,6 +46,10 @@ namespace VianaNET
       lineColorRegress = regressLineColor;
       lineColorTheorie = theorieLineColor;
       stellenZahl = stellenAnzahl;
+    //  regressLine.StrokeThickness = breiteRegress;
+   //   regressLine.Stroke = regressLineColor;
+    //  theorieLine.StrokeThickness = breiteTheorie;
+   //   theorieLine.Stroke = theorieLineColor;
     }
 
     #endregion //CONSTRUCTION
@@ -67,6 +71,7 @@ namespace VianaNET
         set 
         {
             _lineThicknessRegress = value;
+            regressLine.StrokeThickness = value;
             if (value != sliderLinienDickeA.Value)  { sliderLinienDickeA.Value = value; }
         }
     }
@@ -77,6 +82,7 @@ namespace VianaNET
         set
         {
             _lineThicknessTheorie = value;
+            theorieLine.StrokeThickness = value;
             if (value != sliderLinienDickeT.Value) { sliderLinienDickeT.Value = value; }
         }
     }
@@ -87,6 +93,7 @@ namespace VianaNET
         set
         {
             _lineColorRegress = value;
+            regressLine.Stroke = value;
             ShowSelectedRegressColor(value);
         }
     }
@@ -97,6 +104,7 @@ namespace VianaNET
         set
         {
             _lineColorTheorie = value;
+            theorieLine.Stroke = value;
             ShowSelectedTheorieColor(value);
         }
     }
@@ -154,11 +162,13 @@ namespace VianaNET
         private void sliderLinienDickeT_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _lineThicknessTheorie = sliderLinienDickeT.Value;
+            if (theorieLine != null) { theorieLine.StrokeThickness = _lineThicknessTheorie; }
         }
 
         private void sliderLinienDickeA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _lineThicknessRegress = sliderLinienDickeA.Value;
+            if (regressLine != null) { regressLine.StrokeThickness = _lineThicknessRegress; }
         }
 
         private void borderR_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

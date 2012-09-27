@@ -98,8 +98,8 @@
       </vc:Chart.Series>
     </vc:Chart>
     <Expander Grid.Column="1" ExpandDirection="Left" IsExpanded="True" Name="PropertiesExpander" BorderThickness="0" Grid.RowSpan="3" Margin="0,2,0,0">
-      <ScrollViewer VerticalScrollBarVisibility="Auto" Height="469">
-        <StackPanel Margin="5" Height="449">
+      <ScrollViewer Height="469" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+        <StackPanel Margin="5" Height="466">
           <ContentControl Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" 
                             Style="{StaticResource HeaderStyle}"/>
           <Grid Name="ObjectSelectionGrid" 

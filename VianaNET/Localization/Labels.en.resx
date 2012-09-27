@@ -1313,12 +1313,30 @@ Click OK or press Enter, when ready.</value>
     <value>linefitting curve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
-    <value>Select line thickness of curves and number of digits when showing decimals.</value>
+    <value>Select parameters of curves and number of digits when showing decimals.</value>
   </data>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>some options for display</value>
   </data>
   <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
     <value>Calculator or input for functionterms (theoretical Funktion)</value>
+  </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>Color linefit</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>Color theorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>linefitting curve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>Linethickness</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>number of digits</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>theoretical curve</value>
   </data>
 </root>

@@ -1308,4 +1308,22 @@
   <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
     <value>@LineFitCalculatorDialogTitle</value>
   </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>@LineFitColorRegress</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>@LineFitColorTheorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>@LineFitCurve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>@LineFitLineThickness</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>@LineFitNumberDigits</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>@LineFitTheorie</value>
+  </data>
 </root>

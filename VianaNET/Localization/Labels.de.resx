@@ -1298,12 +1298,30 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Ausgleichskurve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
-    <value>Einstellen der Liniendicke der Ausgleichskurve/ theoretischen Kurve und der Stellenzahl bei Ausgabe von Dezimalwerten. </value>
+    <value>Einstellen von Parametern der Ausgleichskurve/ theoretischen Kurve und der Stellenzahl bei Ausgabe von Dezimalwerten. </value>
   </data>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>Anpassen der Darstellungen</value>
   </data>
   <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
     <value>Taschenrechner oder Eingabe von Funktionstermen (theoretische Funktion)</value>
+  </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>Farbe Regress</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>Farbe Theorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>Ausgleichskurve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>Liniendicke</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>gültige Stellen</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>theoret. Kurve</value>
   </data>
 </root>

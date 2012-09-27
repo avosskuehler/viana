@@ -2851,6 +2851,33 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitColorRegress ähnelt.
+        /// </summary>
+        internal static string LineFitColorRegress {
+            get {
+                return ResourceManager.GetString("LineFitColorRegress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitColorTheorie ähnelt.
+        /// </summary>
+        internal static string LineFitColorTheorie {
+            get {
+                return ResourceManager.GetString("LineFitColorTheorie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitCurve ähnelt.
+        /// </summary>
+        internal static string LineFitCurve {
+            get {
+                return ResourceManager.GetString("LineFitCurve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitDialogTitle ähnelt.
         /// </summary>
         internal static string LineFitDialogTitle {
@@ -2914,11 +2941,29 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLineThickness ähnelt.
+        /// </summary>
+        internal static string LineFitLineThickness {
+            get {
+                return ResourceManager.GetString("LineFitLineThickness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLog ähnelt.
         /// </summary>
         internal static string LineFitLog {
             get {
                 return ResourceManager.GetString("LineFitLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitNumberDigits ähnelt.
+        /// </summary>
+        internal static string LineFitNumberDigits {
+            get {
+                return ResourceManager.GetString("LineFitNumberDigits", resourceCulture);
             }
         }
         
@@ -2964,6 +3009,15 @@ namespace VianaNET.Localization {
         internal static string LineFitSinExp {
             get {
                 return ResourceManager.GetString("LineFitSinExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitTheorie ähnelt.
+        /// </summary>
+        internal static string LineFitTheorie {
+            get {
+                return ResourceManager.GetString("LineFitTheorie", resourceCulture);
             }
         }
         

@@ -6,37 +6,43 @@
     lex:LocalizeDictionary.DesignCulture="de"
     Name="lineOptionsDialog" WindowStartupLocation="CenterScreen"
     Icon="/VianaNET;component/Images/VianaNET.ico" 
-    Height="304" Width="336" MinWidth="0" WindowStyle="ThreeDBorderWindow"
+    Height="330" Width="336" MinWidth="0" WindowStyle="ThreeDBorderWindow"
     Title="{lex:LocText VianaNET:Labels:LineOptionsDialogTopTitle}" >
     <Window.Resources>
         <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
     </Window.Resources>
    
-        <Grid Background="{StaticResource MainBackgroundBrush}">
+        <Grid Background="{StaticResource MainBackgroundBrush}" Height="289">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>              
             </Grid.RowDefinitions>
             <Viana:TopFrame x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:LineOptionsDialogTitle}"/>
 
-        <TabControl Grid.Row="1" Name="tabControl1" Height="100" Background="{StaticResource MainBackgroundBrush}">
-                <TabItem Header="Ausgleichskurve" Name="tabItem1" IsSelected="True">
+        <TabControl Grid.Row="1" Name="tabControl1" Background="{StaticResource MainBackgroundBrush}" Margin="0,0,0,0">
+            <TabItem Header="{lex:LocText VianaNET:Labels:LineFitCurve}" Name="tabItem1" IsSelected="True">
                 <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="223" />
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label  Grid.Row="0" Name="labelA2" Content="Liniendicke" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <Slider Grid.Column="1" HorizontalAlignment="Stretch" Name="sliderLinienDickeA" VerticalAlignment="Center" TickPlacement="Both" Value="1" Margin="8,4" 
-                            ValueChanged="sliderLinienDickeA_ValueChanged" TickFrequency="0.2" Maximum="5" SmallChange="0.2" IsSnapToTickEnabled="True" />
-                    <Label  Grid.Row="1" Name="labelFarbeA" Content="Farbe Regress" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <Grid Grid.Row="1" Grid.Column="1" Height="30" Width="220">
+                    <Label Name="labelA2" Content="{lex:LocText VianaNET:Labels:LineFitLineThickness}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,7" />
+                    <Slider HorizontalAlignment="Stretch" Name="sliderLinienDickeA" VerticalAlignment="Center" TickPlacement="Both" Value="1" Margin="8,4" 
+                            ValueChanged="sliderLinienDickeA_ValueChanged" TickFrequency="0.2" Maximum="5" SmallChange="0.2" IsSnapToTickEnabled="True" Grid.Column="1" />
+
+                    <Canvas Grid.Row="1" Height="15" Name="canvas1" Margin="6" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                        <Line X1="0" Stroke="Green" StrokeThickness="5" Grid.Row="1" VerticalAlignment="Center" Y1="5" Y2="5" X2="290" Name="regressLine" />
+                    </Canvas>
+
+                    <Label  Grid.Row="2" Name="labelFarbeA" Content="{lex:LocText VianaNET:Labels:LineFitColorRegress}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3" />
+                    <Grid Grid.Row="2" Height="30" Width="220" Margin="2,0,1,0" Grid.Column="1">
                         <Border Name="borderR1" Height="22" Width="10" Margin="4,0"   Background="Black"   BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderR_MouseDown"/>
                         <Border Name="borderR2" Height="22" Width="10" Margin="24,0"  Background="Gray"    BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderR_MouseDown"/>
                         <Border Name="borderR3" Height="22" Width="10" Margin="44,0"  Background="Silver"  BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderR_MouseDown"/>
@@ -49,25 +55,31 @@
                         <Border Name="borderR10" Height="22" Width="10" Margin="24,0" Background="Yellow"  BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" MouseDown="borderR_MouseDown"/>
                         <Border Name="borderR11" Height="22" Width="10" Margin="4,0" Background="BlueViolet" BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Center" MouseDown="borderR_MouseDown"/>
                     </Grid>
+                    
                 </Grid>
             </TabItem>
-            
-            <TabItem Header="Theorie Graph" Name="tabItem2">
+
+            <TabItem Header="{lex:LocText VianaNET:Labels:LineFitTheorie}" Name="tabItem2">
             <Grid >
                  <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="80"/>
                                 <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label  Grid.Row="0" Name="label2" Content="Liniendicke" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Label  Grid.Row="0" Name="label2" Content="{lex:LocText VianaNET:Labels:LineFitLineThickness}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Slider Grid.Column="1" HorizontalAlignment="Stretch" Name="sliderLinienDickeT" VerticalAlignment="Center" Minimum="1" TickPlacement="Both" Value="1" Margin="8,4"
                         ValueChanged="sliderLinienDickeT_ValueChanged" TickFrequency="0.2" Maximum="5" SmallChange="0.2" IsSnapToTickEnabled="True" />
-                <Label  Grid.Row="1" Name="labelFarbeT" Content="Farbe Theorie" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                   
-                <Grid Grid.Row="1" Grid.Column="1" Height="30" Width="220">
+
+                <Canvas Grid.Row="1" Height="15" Name="canvas2" Margin="6" VerticalAlignment="Center" Grid.ColumnSpan="2">
+                        <Line X1="0" Stroke="Green" StrokeThickness="5" Grid.Row="1" VerticalAlignment="Center" Y1="5" Y2="5" X2="290" Name="theorieLine" />
+                </Canvas>
+
+                    <Label  Grid.Row="2" Name="labelFarbeT" Content="{lex:LocText VianaNET:Labels:LineFitColorTheorie}" HorizontalAlignment="Center" VerticalAlignment="Center" />   
+                <Grid Grid.Row="2" Grid.Column="1" Height="30" Width="220">
                     <Border Name="borderT1" Height="22" Width="10" Margin="4,0"   Background="Black"   BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderT_MouseDown"/>
                     <Border Name="borderT2" Height="22" Width="10" Margin="24,0"  Background="Gray"    BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderT_MouseDown"/>
                     <Border Name="borderT3" Height="22" Width="10" Margin="44,0"  Background="Silver"  BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="borderT_MouseDown"/>
@@ -83,7 +95,7 @@
                 </Grid>
             </TabItem> 
         </TabControl>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -92,11 +104,12 @@
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="gültige Stellen" Grid.Row="0" HorizontalAlignment="Left" Name="label4" VerticalAlignment="Center" Margin="4" Padding="1" />
+            <Label Content="{lex:LocText VianaNET:Labels:LineFitNumberDigits}" Grid.Row="0" HorizontalAlignment="Left" Name="label4" VerticalAlignment="Center" Margin="4" Padding="1" />
                 <Label Content="0,01234567890" Grid.Row="1" HorizontalAlignment="Left" Name="labelBeispiel" VerticalAlignment="Center" Margin="4" Padding="1" />
                 <Slider Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="8,0,8,0" Name="sliderGenauigkeit" VerticalAlignment="Center" ValueChanged="sliderGenauigkeit_ValueChanged" SmallChange="1" TickPlacement="Both" IsSnapToTickEnabled="True" Value="4" />
             </Grid>
             <Button Name="OK"  Grid.Row="3" HorizontalAlignment="Left" Margin="124,0,0,0" Height="23" Width="80" IsDefault="True" Content="{lex:LocText VianaNET:Labels:OK}" Click="OK_Click" />
             <Button Name="Cancel" Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,20,0" Height="23" Width="80" IsDefault="False" Content="{lex:LocText VianaNET:Labels:Cancel}" Click="Cancel_Click" />
-       </Grid>
+       
+    </Grid>
 </Window>
