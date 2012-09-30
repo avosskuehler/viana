@@ -12,8 +12,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Parser;
+using System.Globalization;
+using System.Resources;
+using System.Threading;
+using System.Reflection;
 
-//  letzte Änderung: 2.9.2012
+
+//  letzte Änderung: 30.9.2012
 
 namespace VianaNET.Data.Linefit
 {
@@ -30,25 +35,29 @@ namespace VianaNET.Data.Linefit
         {
             int k;
             InitializeComponent();
+            ResourceManager resMgr = new ResourceManager("VianaNET.Localization.Labels", Assembly.GetExecutingAssembly());
             textBox1.Text = "";
             ergebnis = "";
             art = modus;
             buttonTakeKonst.IsEnabled = true;
             if (modus == TRechnerArt.rechner)
             {
-                this.Title = "Rechner";
+                this.Title = resMgr.GetString("CalculatorDialogTitleCalc");   
                 buttonX.Visibility = Visibility.Hidden;
-                buttonFertig.Content = "beenden";
+                buttonFertig.Content = resMgr.GetString("CalculatorDialogButtonDoneCalc");  
             }
             else
             {
-                this.Title = "Funktionseditor";
-                buttonX.Visibility = Visibility.Visible; 
-                buttonFertig.Content = "übernehmen";
+                this.Title = resMgr.GetString("CalculatorDialogTitleFunctionEditor"); 
+                buttonX.Visibility = Visibility.Visible;
+                buttonFertig.Content = resMgr.GetString("CalculatorDialogButtonDoneFktEdit"); 
             }
+
+            String s;
             for (k = 0; k < Constants.max_Anz_Konst; k++)
             {
-                comboBox1.Items.Add(Constants.konstante[k].titel);
+              s = resMgr.GetString(Constants.konstante[k].titel);
+              comboBox1.Items.Add(s);
             }
             textBox1.Focus();
         }

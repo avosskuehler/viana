@@ -1,5 +1,5 @@
 ﻿// Autor: H. Niemeyer
-// letzte Änderung: 24.09.2012
+// letzte Änderung: 30.09.2012
 
 namespace VianaNET
 {

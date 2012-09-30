@@ -1339,4 +1339,49 @@ Click OK or press Enter, when ready.</value>
   <data name="LineFitTheorie" xml:space="preserve">
     <value>theoretical curve</value>
   </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>insert</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>physical constants</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>Function editor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>speed of light in vacuum</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>elementary charge</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>electric constant</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>Newtonian constant of gravitation</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>standard acceleration of gravity</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>Planck constant</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>Compton wavelength</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>electron mass</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>magnetic constant</value>
+  </data>
 </root>

@@ -1933,6 +1933,60 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogButtonDoneCalc ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogButtonDoneCalc {
+            get {
+                return ResourceManager.GetString("CalculatorDialogButtonDoneCalc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogButtonDoneFktEdit ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogButtonDoneFktEdit {
+            get {
+                return ResourceManager.GetString("CalculatorDialogButtonDoneFktEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogInsert ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogInsert {
+            get {
+                return ResourceManager.GetString("CalculatorDialogInsert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogPhysicalKonst ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogPhysicalKonst {
+            get {
+                return ResourceManager.GetString("CalculatorDialogPhysicalKonst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogTitleCalc ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogTitleCalc {
+            get {
+                return ResourceManager.GetString("CalculatorDialogTitleCalc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogTitleFunctionEditor ähnelt.
+        /// </summary>
+        internal static string CalculatorDialogTitleFunctionEditor {
+            get {
+                return ResourceManager.GetString("CalculatorDialogTitleFunctionEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateVideoWindowTitle ähnelt.
         /// </summary>
         internal static string CalibrateVideoWindowTitle {
@@ -3126,6 +3180,87 @@ namespace VianaNET.Localization {
         internal static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_c ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_c {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_c", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_e ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_e {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_e", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_epsilon ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_epsilon {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_epsilon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_f ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_f {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_f", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_g ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_g {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_g", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_h ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_h {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_h", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_Lambda0 ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_Lambda0 {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_Lambda0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_me ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_me {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_mu ähnelt.
+        /// </summary>
+        internal static string PhysikKonstant_mu {
+            get {
+                return ResourceManager.GetString("PhysikKonstant_mu", resourceCulture);
             }
         }
         

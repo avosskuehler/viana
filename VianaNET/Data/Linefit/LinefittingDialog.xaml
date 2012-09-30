@@ -55,8 +55,8 @@
                      </Grid>
         </Border>
         <Grid Grid.Row="2">
-            <Button Click="OK_Click" Content="{lex:LocText VianaNET:Labels:OK}" Height="23" HorizontalAlignment="Right" IsDefault="True" Margin="0,3,128,3" Name="OK" Width="80" Background="#FFA9CBE0" />
-            <Button Click="Cancel_Click" Content="{lex:LocText VianaNET:Labels:Cancel}" Height="23" HorizontalAlignment="Right" IsDefault="False" Margin="0,3,20,3" Name="Cancel" Width="80" Background="#FFA9CBE0" />
+            <Button Click="OK_Click" Content="{lex:LocText VianaNET:Labels:OK}" Height="23" HorizontalAlignment="Left" IsDefault="True" Margin="76,3,0,3" Name="OK" Width="80" />
+            <Button Click="Cancel_Click" Content="{lex:LocText VianaNET:Labels:Cancel}" Height="23" HorizontalAlignment="Right" IsDefault="False" Margin="0,3,20,3" Name="Cancel" Width="80" />
         </Grid>
 
         

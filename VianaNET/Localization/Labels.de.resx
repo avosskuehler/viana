@@ -1324,4 +1324,50 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="LineFitTheorie" xml:space="preserve">
     <value>theoret. Kurve</value>
   </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>einfügen</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>physikalische Konstanten</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Rechner</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>
+Übernehmen</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>Funktionseditor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>Lichtgeschwindigkeit</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>Elementarladung</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>elektr. Feldkonstante</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>Gravitationskonstante</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>Erdbeschleunigung</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>Planck'sches Wirkungsquantum</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>Comptonwellenlänge</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>Ruhemasse Elektron</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>magn. Feldkonstante</value>
+  </data>
 </root>
