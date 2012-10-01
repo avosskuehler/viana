@@ -1094,28 +1094,28 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Geschwindigkeit (Y) (geglättet)</value>
   </data>
   <data name="AxisAoverT" xml:space="preserve">
-    <value>a-t</value>
+    <value>t-a</value>
   </data>
   <data name="AxisAXoverT" xml:space="preserve">
-    <value>ax-t</value>
+    <value>t-ax</value>
   </data>
   <data name="AxisAYoverT" xml:space="preserve">
-    <value>ay-t</value>
+    <value>t-ay</value>
   </data>
   <data name="AxisVoverT" xml:space="preserve">
-    <value>v-t</value>
+    <value>t-v</value>
   </data>
   <data name="AxisVXoverT" xml:space="preserve">
-    <value>vx-t</value>
+    <value>t-vx</value>
   </data>
   <data name="AxisVYoverT" xml:space="preserve">
-    <value>vy-t</value>
+    <value>t-vy</value>
   </data>
   <data name="AxisXoverT" xml:space="preserve">
-    <value>x-t</value>
+    <value>t-x</value>
   </data>
   <data name="AxisYoverT" xml:space="preserve">
-    <value>y-t</value>
+    <value>t-y</value>
   </data>
   <data name="AxisYoverX" xml:space="preserve">
     <value>x-y</value>
@@ -1136,13 +1136,13 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Einfarbig</value>
   </data>
   <data name="AxisDoverV" xml:space="preserve">
-    <value>d-v</value>
+    <value>v-d</value>
   </data>
   <data name="AxisDXoverVX" xml:space="preserve">
-    <value>dx-vx</value>
+    <value>vx-dx</value>
   </data>
   <data name="AxisDYoverVY" xml:space="preserve">
-    <value>dy-vy</value>
+    <value>vy-dy</value>
   </data>
   <data name="AxisLength" xml:space="preserve">
     <value>Strecke</value>
@@ -1154,25 +1154,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Strecke in y-Richtung</value>
   </data>
   <data name="AxisSoverT" xml:space="preserve">
-    <value>s-t</value>
+    <value>t-s</value>
   </data>
   <data name="AxisSoverV" xml:space="preserve">
-    <value>s-v</value>
+    <value>v-s</value>
   </data>
   <data name="AxisSXoverVX" xml:space="preserve">
-    <value>sx-vx</value>
+    <value>vx-sx</value>
   </data>
   <data name="AxisSYoverVY" xml:space="preserve">
-    <value>sy-vy</value>
+    <value>vy-sy</value>
   </data>
   <data name="AxisVoverA" xml:space="preserve">
-    <value>v-a</value>
+    <value>a-v</value>
   </data>
   <data name="AxisVXoverAX" xml:space="preserve">
-    <value>vx-ax</value>
+    <value>ax-vx</value>
   </data>
   <data name="AxisVYoverAY" xml:space="preserve">
-    <value>vy-ay</value>
+    <value>ay-vy</value>
   </data>
   <data name="ChartWindowChartProperties" xml:space="preserve">
     <value>Eigenschaften</value>
