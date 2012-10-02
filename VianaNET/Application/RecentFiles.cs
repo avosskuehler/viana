@@ -57,12 +57,12 @@ namespace VianaNET.Application
     ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
-    /// <summary>
-    ///   Represents the <see cref="DependencyProperty" /> for the
-    ///   <see cref="RibbonList" />
-    /// </summary>
-    public static readonly DependencyProperty RibbonListProperty = DependencyProperty.Register(
-      "RibbonList", typeof(RibbonHighlightingListItem[]), typeof(RecentFiles), new UIPropertyMetadata());
+    ///// <summary>
+    /////   Represents the <see cref="DependencyProperty" /> for the
+    /////   <see cref="RibbonList" />
+    ///// </summary>
+    //public static readonly DependencyProperty RibbonListProperty = DependencyProperty.Register(
+    //  "RibbonList", typeof(RibbonHighlightingListItem[]), typeof(RecentFiles), new UIPropertyMetadata());
 
     /// <summary>
     ///   Maximum number of items in recent files list.
@@ -149,22 +149,22 @@ namespace VianaNET.Application
       }
     }
 
-    /// <summary>
-    ///   Gets or sets the <see cref="RibbonHighlightingListItem" /> array
-    ///   which contains the recent files list for the ribbon.
-    /// </summary>
-    public RibbonHighlightingListItem[] RibbonList
-    {
-      get
-      {
-        return (RibbonHighlightingListItem[])this.GetValue(RibbonListProperty);
-      }
+    ///// <summary>
+    /////   Gets or sets the <see cref="RibbonHighlightingListItem" /> array
+    /////   which contains the recent files list for the ribbon.
+    ///// </summary>
+    //public RibbonHighlightingListItem[] RibbonList
+    //{
+    //  get
+    //  {
+    //    return (RibbonHighlightingListItem[])this.GetValue(RibbonListProperty);
+    //  }
 
-      set
-      {
-        this.SetValue(RibbonListProperty, value);
-      }
-    }
+    //  set
+    //  {
+    //    this.SetValue(RibbonListProperty, value);
+    //  }
+    //}
 
     #endregion
 
@@ -200,7 +200,7 @@ namespace VianaNET.Application
 
       this.Save();
 
-      this.RebuildRibbonList();
+      //this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ namespace VianaNET.Application
       this.appSettings.RecentFileList = string.Empty;
       this.appSettings.Save();
       this.fileCollection.Clear();
-      this.RebuildRibbonList();
+      //this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ namespace VianaNET.Application
       }
 
       this.Save();
-      this.RebuildRibbonList();
+      //this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -371,34 +371,34 @@ namespace VianaNET.Application
         }
       }
 
-      this.RebuildRibbonList();
+      //this.RebuildRibbonList();
     }
 
-    /// <summary>
-    ///   This method creates a list of <see cref="RibbonHighlightingListItem" />
-    ///   to display the recent files in the ribbon of the application.
-    /// </summary>
-    private void RebuildRibbonList()
-    {
-      var items = new List<RibbonHighlightingListItem>((int)maxNumItems);
-      foreach (string item in this.fileCollection)
-      {
-        if (!File.Exists(item))
-        {
-          continue;
-        }
+    ///// <summary>
+    /////   This method creates a list of <see cref="RibbonHighlightingListItem" />
+    /////   to display the recent files in the ribbon of the application.
+    ///// </summary>
+    //private void RebuildRibbonList()
+    //{
+    //  var items = new List<RibbonHighlightingListItem>((int)maxNumItems);
+    //  foreach (string item in this.fileCollection)
+    //  {
+    //    if (!File.Exists(item))
+    //    {
+    //      continue;
+    //    }
 
-        var ribbonItem = new RibbonHighlightingListItem();
-        ribbonItem.Content = Path.GetFileName(item);
-        var itemToolTip = new ToolTip();
-        itemToolTip.Content = item;
-        ribbonItem.ToolTip = itemToolTip;
-        items.Add(ribbonItem);
-      }
+    //    var ribbonItem = new RibbonHighlightingListItem();
+    //    ribbonItem.Content = Path.GetFileName(item);
+    //    var itemToolTip = new ToolTip();
+    //    itemToolTip.Content = item;
+    //    ribbonItem.ToolTip = itemToolTip;
+    //    items.Add(ribbonItem);
+    //  }
 
-      this.RibbonList = items.ToArray();
-      this.OnPropertyChanged("RibbonList");
-    }
+    //  this.RibbonList = items.ToArray();
+    //  this.OnPropertyChanged("RibbonList");
+    //}
 
     #endregion
 

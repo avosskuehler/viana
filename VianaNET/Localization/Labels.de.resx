@@ -1370,4 +1370,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="PhysikKonstant_mu" xml:space="preserve">
     <value>magn. Feldkonstante</value>
   </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>Diagramm exportieren</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>Exportiert das momentane Diagramm in die Zwischenablage oder verschiedene Dateiformate.</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>Das angezeigte Diagramm exportieren</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>Daten exportieren</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>Ermöglicht den Export der aufgezeichneten Daten in verschiedene Formate wie txt, csv, xml und xls</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>Die aufgezeichneten Daten exportieren</value>
+  </data>
 </root>

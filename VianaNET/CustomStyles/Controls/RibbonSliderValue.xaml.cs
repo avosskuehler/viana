@@ -33,7 +33,7 @@ namespace VianaNET.CustomStyles.Controls
   /// <summary>
   ///   Interaction logic for RibbonSliderValue.xaml
   /// </summary>
-  public class RibbonSliderValue : Slider, IRibbonControl
+  public class RibbonSliderValue : Slider//, IRibbonControl
   {
     #region Static Fields
 

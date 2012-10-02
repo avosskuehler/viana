@@ -257,6 +257,29 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    /// <summary>
+    /// Gets the video input devices.
+    /// </summary>
+    public List<DsDevice> VideoInputDevices
+    {
+      get
+      {
+        return DShowUtils.GetVideoInputDevices();
+      }
+    }
+
+    /// <summary>
+    /// Gets a valaue indicating whether there are video input devices
+    /// available on the system
+    /// </summary>
+    public bool HasVideoInputDevices
+    {
+      get
+      {
+        return this.VideoInputDevices.Count > 0;
+      }
+    }
+
     #endregion
 
     #region Public Methods and Operators
@@ -285,15 +308,15 @@ namespace VianaNET.Modules.Video.Control
       var visual = new DrawingVisual();
       DrawingContext dc = visual.RenderOpen();
       dc.DrawImage(
-        this.videoElement.ImageSource, 
+        this.videoElement.ImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
       var rtp = new RenderTargetBitmap(
-        (int)this.videoElement.NaturalVideoWidth, 
-        (int)this.videoElement.NaturalVideoHeight, 
-        96d, 
-        96d, 
+        (int)this.videoElement.NaturalVideoWidth,
+        (int)this.videoElement.NaturalVideoHeight,
+        96d,
+        96d,
         PixelFormats.Default);
       rtp.Render(visual);
 

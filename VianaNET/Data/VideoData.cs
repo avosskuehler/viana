@@ -146,6 +146,17 @@ namespace VianaNET.Data
       }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether there is at least one data sample
+    /// </summary>
+    public bool HasSamples
+    {
+      get
+      {
+        return this.Count > 0;
+      }
+    }
+
     #endregion
 
     #region Public Methods and Operators

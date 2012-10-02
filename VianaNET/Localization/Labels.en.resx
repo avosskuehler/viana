@@ -1384,4 +1384,25 @@ Click OK or press Enter, when ready.</value>
   <data name="PhysikKonstant_mu" xml:space="preserve">
     <value>magnetic constant</value>
   </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>Export chart</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>Exports the displayed diagram into clipboard or different file formats.</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>Exports the current diagram</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>Enables data export to different file formats like txt, csv, xml and xls</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>Export the recorded data</value>
+  </data>
 </root>

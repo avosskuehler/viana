@@ -62,9 +62,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public static readonly DependencyProperty VideoCaptureDeviceProperty =
       DependencyProperty.Register(
-        "VideoCaptureDevice", 
-        typeof(DsDevice), 
-        typeof(VideoCapturer), 
+        "VideoCaptureDevice",
+        typeof(DsDevice),
+        typeof(VideoCapturer),
         new PropertyMetadata(OnVideoCaptureDevicePropertyChanged));
 
     #endregion
@@ -202,6 +202,16 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether this capturer is in the PlayState.Running state.
+    /// </summary>
+    public bool IsRunning
+    {
+      get
+      {
+        return this.CurrentState == PlayState.Running;
+      }
+    }
     #endregion
 
     #region Public Methods and Operators

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="VianaNET.CustomStyles.Controls.MediaSliderControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls"
+             xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls"
              xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" Height="Auto" Width="300">
   <UserControl.Resources>
     <ResourceDictionary Source="../Styles/VianaStyle.xaml"/>

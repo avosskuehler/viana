@@ -5,19 +5,19 @@
 	>
 
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Controls/CheckBox.xaml"/>
-    <ResourceDictionary Source="../Controls/ComboBox.xaml"/>
-    <ResourceDictionary Source="../Controls/ImageButton.xaml"/>
-    <ResourceDictionary Source="../Controls/RadioButton.xaml"/>
-    <ResourceDictionary Source="../Controls/ScrollBar.xaml"/>
-    <ResourceDictionary Source="../Controls/ScrollViewer.xaml"/>
-    <ResourceDictionary Source="../Controls/Slider.xaml"/>
-    <ResourceDictionary Source="../Controls/SliderValue.xaml"/>
-    <ResourceDictionary Source="../Controls/RibbonSliderValue.xaml"/>
-    <ResourceDictionary Source="../Controls/MediaSlider.xaml"/>
-    <ResourceDictionary Source="../Controls/NumericUpDown.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/CheckBox.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ComboBox.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ImageButton.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RadioButton.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollBar.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollViewer.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/Slider.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/SliderValue.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RibbonSliderValue.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/MediaSlider.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/NumericUpDown.xaml"/>
     <!--<ResourceDictionary Source="DataGridStyles.xaml"/>-->
-    <ResourceDictionary Source="../Converter/Converter.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Converter/Converter.xaml"/>
     <ResourceDictionary Source="BackgroundStyles.xaml"/>
     <ResourceDictionary Source="GeometryItems.xaml"/>
     <ResourceDictionary Source="DataGridStyle.xaml"/>

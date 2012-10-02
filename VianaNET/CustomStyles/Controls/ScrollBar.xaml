@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls">
+                    xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls">
 
     <SolidColorBrush x:Key="ScrollBarNormalBorderBrush" Color="{x:Static Controls:ScrollBarPallet.ScrollBarNormalBorderBrush}"></SolidColorBrush>
 

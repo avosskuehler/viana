@@ -1,7 +1,5 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-    >
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   
   <!--Geometry items used in CalibrateVideoWindow-->
   <Path x:Key="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">

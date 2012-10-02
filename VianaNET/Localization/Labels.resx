@@ -1371,4 +1371,25 @@
   <data name="PhysikKonstant_mu" xml:space="preserve">
     <value>@PhysikKonstant_mu</value>
   </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridInterpolationTitle</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToolTipTitle</value>
+  </data>
 </root>

@@ -534,18 +534,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
-    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>DLL\Office.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\RibbonControlsLibrary.dll</HintPath>
-    </Reference>
+    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -743,6 +735,9 @@
     <Resource Include="Images\LineFit_Resonanz_16.png" />
     <Resource Include="Images\LineFit_SinusExponential_16.png" />
     <Resource Include="Images\LineFit_Sinus_16.png" />
+    <Resource Include="Images\RecordVideo16.png" />
+    <Resource Include="Images\ExportChart32.png" />
+    <Resource Include="Images\ExportData32.png" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
