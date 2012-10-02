@@ -1,98 +1,97 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-    >
+    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls">
 
-    <SolidColorBrush x:Key="ScrollBarNormalBorderBrush" Color="{x:Static Viana:ScrollBarPallet.ScrollBarNormalBorderBrush}"></SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBarNormalBorderBrush" Color="{x:Static Controls:ScrollBarPallet.ScrollBarNormalBorderBrush}"></SolidColorBrush>
 
     <!-- ScrollBarBackGround Vertical -->
 
     <LinearGradientBrush x:Key="VScrollBarBg" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg2}" Offset="0.3"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg2}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg2}" Offset="0.3"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg2}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="VScrollBarBtnBgMouseOver" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver2}" Offset="0.49"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver3}" Offset="0.5"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver4}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver2}" Offset="0.49"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver3}" Offset="0.5"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver4}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="VScrollBarBtnBgPressed" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <!-- ScrollBarThumb Vertical -->
 
     <LinearGradientBrush x:Key="VScrollBarThumbBackground" StartPoint="0,0.5" EndPoint="1,0.5">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground2}" Offset="0.4"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground3}" Offset="0.4"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground4}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground2}" Offset="0.4"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground3}" Offset="0.4"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground4}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="VScrollBarThumbOverBrush" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="VScrollBarThumbPressedBrush" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <!-- ScrollBarBackGround Horizontal -->
 
     <LinearGradientBrush x:Key="HScrollBarBg" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg2}" Offset="0.3"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBg2}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg2}" Offset="0.3"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBg2}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="HScrollBarBtnBgMouseOver" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver2}" Offset="0.49"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver3}" Offset="0.5"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgMouseOver4}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver2}" Offset="0.49"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver3}" Offset="0.5"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgMouseOver4}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="HScrollBarBtnBgPressed" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarBtnBgPressed4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarBtnBgPressed4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <!-- ScrollBarThumb Horizontal -->
 
     <LinearGradientBrush x:Key="HScrollBarThumbBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground1}" Offset="0"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground2}" Offset="0.4"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground3}" Offset="0.4"/>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbBackground4}" Offset="1"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground1}" Offset="0"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground2}" Offset="0.4"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground3}" Offset="0.4"/>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbBackground4}" Offset="1"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="HScrollBarThumbOverBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbOverBrush4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbOverBrush4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="HScrollBarThumbPressedBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush1}" Offset="0"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush2}" Offset="0.49"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush3}" Offset="0.5"></GradientStop>
-        <GradientStop Color="{x:Static Viana:ScrollBarPallet.ScrollBarThumbPressedBrush4}" Offset="1"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush1}" Offset="0"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush2}" Offset="0.49"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush3}" Offset="0.5"></GradientStop>
+        <GradientStop Color="{x:Static Controls:ScrollBarPallet.ScrollBarThumbPressedBrush4}" Offset="1"></GradientStop>
     </LinearGradientBrush>
 
     <!-- ScrollBarLineButton -->

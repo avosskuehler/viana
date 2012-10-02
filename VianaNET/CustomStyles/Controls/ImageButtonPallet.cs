@@ -1,58 +1,168 @@
-﻿#region Using
-
-using System;
-using System.Windows.Media;
-
-#endregion
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageButtonPallet.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The image button default style pallet.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.CustomStyles.Controls
 {
+  using System.Windows.Media;
+
+  using VianaNET.CustomStyles.Colors;
+
   #region ImageButtonDefaultStylePallet
 
+  /// <summary>
+  ///   The image button default style pallet.
+  /// </summary>
   public static class ImageButtonDefaultStylePallet
   {
-    #region Declare
+    #region Static Fields
 
-    public static Color ForegroundColor;
-    public static Color NormalBorder;
-    public static Color LightBorder;
-    public static Color PlusLightBorder;
-    public static Color DisabledBorder;
-    public static Color DisabledForeground;
-
-    public static Color NormalBackGround1;
-    public static Color NormalBackGround2;
-    public static Color NormalBackGround3;
-    public static Color NormalBackGround4;
-
+    /// <summary>
+    ///   The default control mouse over 1.
+    /// </summary>
     public static Color DefaultControlMouseOver1;
+
+    /// <summary>
+    ///   The default control mouse over 2.
+    /// </summary>
     public static Color DefaultControlMouseOver2;
+
+    /// <summary>
+    ///   The default control mouse over 3.
+    /// </summary>
     public static Color DefaultControlMouseOver3;
+
+    /// <summary>
+    ///   The default control mouse over 4.
+    /// </summary>
     public static Color DefaultControlMouseOver4;
 
+    /// <summary>
+    ///   The default control pressed 1.
+    /// </summary>
     public static Color DefaultControlPressed1;
+
+    /// <summary>
+    ///   The default control pressed 2.
+    /// </summary>
     public static Color DefaultControlPressed2;
+
+    /// <summary>
+    ///   The default control pressed 3.
+    /// </summary>
     public static Color DefaultControlPressed3;
+
+    /// <summary>
+    ///   The default control pressed 4.
+    /// </summary>
     public static Color DefaultControlPressed4;
+
+    /// <summary>
+    ///   The default control pressed 5.
+    /// </summary>
     public static Color DefaultControlPressed5;
 
+    /// <summary>
+    ///   The disable back ground 1.
+    /// </summary>
     public static Color DisableBackGround1;
+
+    /// <summary>
+    ///   The disable back ground 2.
+    /// </summary>
     public static Color DisableBackGround2;
+
+    /// <summary>
+    ///   The disabled border.
+    /// </summary>
+    public static Color DisabledBorder;
+
+    /// <summary>
+    ///   The disabled foreground.
+    /// </summary>
+    public static Color DisabledForeground;
+
+    /// <summary>
+    ///   The foreground color.
+    /// </summary>
+    public static Color ForegroundColor;
+
+    /// <summary>
+    ///   The light border.
+    /// </summary>
+    public static Color LightBorder;
+
+    /// <summary>
+    ///   The normal back ground 1.
+    /// </summary>
+    public static Color NormalBackGround1;
+
+    /// <summary>
+    ///   The normal back ground 2.
+    /// </summary>
+    public static Color NormalBackGround2;
+
+    /// <summary>
+    ///   The normal back ground 3.
+    /// </summary>
+    public static Color NormalBackGround3;
+
+    /// <summary>
+    ///   The normal back ground 4.
+    /// </summary>
+    public static Color NormalBackGround4;
+
+    /// <summary>
+    ///   The normal border.
+    /// </summary>
+    public static Color NormalBorder;
+
+    /// <summary>
+    ///   The plus light border.
+    /// </summary>
+    public static Color PlusLightBorder;
 
     #endregion
 
-    #region Constructor
+    #region Constructors and Destructors
 
+    /// <summary>
+    ///   Initializes static members of the <see cref="ImageButtonDefaultStylePallet" /> class.
+    /// </summary>
     static ImageButtonDefaultStylePallet()
     {
-      ImageButtonDefaultStylePallet.Reset();
+      Reset();
       OfficeColors.RegistersTypes.Add(typeof(ImageButtonDefaultStylePallet));
     }
 
     #endregion
 
-    #region Reset
+    #region Public Methods and Operators
 
+    /// <summary>
+    ///   The reset.
+    /// </summary>
     public static void Reset()
     {
       ForegroundColor = OfficeColors.Foreground.OfficeColor1;

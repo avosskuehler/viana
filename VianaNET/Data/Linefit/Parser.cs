@@ -1,91 +1,225 @@
-// Autor: H. Niemeyer
-// letzte Änderung: 24.09.2012
-
-
-using System;
-using System.Collections;
-
-
-public class Constants
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Parser.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Herwig Niemeyer</author>
+// <email>hn_muenster@web.de</email>
+// <summary>
+//   The constants.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Data.Linefit
 {
-  //  public const int MaxListSize = Int32.MaxValue / 16;
+  using System;
 
-  //  public const double _max_Real = 1.7e38;
-  //  public const int _Ln_max_Real = 88;
-    public const double fehlerZahl = -1.0E32;
-  //  public const int is_FehlerZahl = 2;
-    public const double leerFeld = -1.1E32;
- 
-  //  public const int is_RealZahl = 0;
+  /// <summary>
+  ///   The constants.
+  /// </summary>
+  public class Constants
+  {
+    // public const int MaxListSize = Int32.MaxValue / 16;
 
-    public const int linReg = 1;
-    public const int expSpezReg = 2;
-    public const int logReg = 3;
-    public const int potReg = 4;
-    public const int quadReg = 5;
+    // public const double _max_Real = 1.7e38;
+    // public const int _Ln_max_Real = 88;
+    #region Constants
+
+    /// <summary>
+    ///   The s list capacity error.
+    /// </summary>
+    public const string SListCapacityError = "Die Kapazität der Liste ist erschöpft (%d)";
+
+    /// <summary>
+    ///   The s list count error.
+    /// </summary>
+    public const string SListCountError = "Zu viele Einträge in der Liste (%d)";
+
+    /// <summary>
+    ///   The s list index error.
+    /// </summary>
+    public const string SListIndexError = "Der Index der Liste überschreitet das Maximum (%d)";
+
+    /// <summary>
+    ///   The _form aus.
+    /// </summary>
+    public const char _formAus = '!';
+
+    /// <summary>
+    ///   The _hoch.
+    /// </summary>
+    public const char _hoch = '\'';
+
+    /// <summary>
+    ///   The _normal.
+    /// </summary>
+    public const char _normal = '\"';
+
+    /// <summary>
+    ///   The _sym an.
+    /// </summary>
+    public const char _symAn = '#';
+
+    // public const int do_Sym = 3;
+    /// <summary>
+    ///   The _sym aus.
+    /// </summary>
+    public const char _symAus = '§';
+
+    /// <summary>
+    ///   The _tief.
+    /// </summary>
+    public const char _tief = '_';
+
+    /// <summary>
+    ///   The euler zahl.
+    /// </summary>
+    public const double eulerZahl = 2.1782818;
+
+    /// <summary>
+    ///   The exp reg.
+    /// </summary>
     public const int expReg = 6;
-    public const int sinReg = 7;
-    public const int sinExpReg = 8;
-    public const int resoReg = 9;
-    public const int minRegWert = linReg;
+
+    /// <summary>
+    ///   The exp spez reg.
+    /// </summary>
+    public const int expSpezReg = 2;
+
+    /// <summary>
+    ///   The fehler zahl.
+    /// </summary>
+    public const double fehlerZahl = -1.0E32;
+
+    // public const int is_FehlerZahl = 2;
+    /// <summary>
+    ///   The leer feld.
+    /// </summary>
+    public const double leerFeld = -1.1E32;
+
+    // public const int is_RealZahl = 0;
+
+    /// <summary>
+    ///   The lin reg.
+    /// </summary>
+    public const int linReg = 1;
+
+    /// <summary>
+    ///   The log reg.
+    /// </summary>
+    public const int logReg = 3;
+
+    /// <summary>
+    ///   The max reg wert.
+    /// </summary>
     public const int maxRegWert = resoReg;
 
-
-    public const char _hoch = '\'';
- //   public const int do_hoch = 1;
-    public const char _tief = '_';
- //   public const int do_Tief = 2;
-    public const char _symAn = '#';
- //   public const int do_Sym = 3;
-    public const char _symAus = '§';
- //   public const int undo_Sym = 4;
-    public const char _formAus = '!';
-//    public const int undo_HochTief = 5;
-    public const char _normal = '\"';
-//    public const int do_normal = 6;
-//    public const int do_beenden = 7;
-//    public static readonly string _alle = string.Concat(_hoch, _tief, _symAn, _symAus, _formAus, _normal, '\0');
-//    public const int ss_ohne = 0;
-//    public const int ss_hochEin = 1;
-//    public const int ss_tiefEin = 2;
-//    public const int ss_symEin = 4;
-//    public static string formatZeichen = _alle;
-//    public const int max_FEdit_Len = 80;
-//    public const int hochTiefEin = ss_hochEin + ss_tiefEin;
-
-    public struct KonstRec
-    {
-        public string titel;
-        public string bez;
-        public double wert;
-    } // end KonstRec
-
+    /// <summary>
+    ///   The max_ anz_ konst.
+    /// </summary>
     public const int max_Anz_Konst = 8;
-    public static readonly KonstRec[] konstante = new KonstRec[]
+
+    /// <summary>
+    ///   The min reg wert.
+    /// </summary>
+    public const int minRegWert = linReg;
+
+    /// <summary>
+    ///   The pot reg.
+    /// </summary>
+    public const int potReg = 4;
+
+    /// <summary>
+    ///   The quad reg.
+    /// </summary>
+    public const int quadReg = 5;
+
+    /// <summary>
+    ///   The reso reg.
+    /// </summary>
+    public const int resoReg = 9;
+
+    /// <summary>
+    ///   The sin exp reg.
+    /// </summary>
+    public const int sinExpReg = 8;
+
+    /// <summary>
+    ///   The sin reg.
+    /// </summary>
+    public const int sinReg = 7;
+
+    #endregion
+
+    #region Static Fields
+
+    /// <summary>
+    ///   The konstante.
+    /// </summary>
+    public static readonly KonstRec[] konstante = new[]
       {
-         new KonstRec(){titel="PhysikKonstant_e", bez="e§", wert=1.6021E-19},
-         new KonstRec(){titel="PhysikKonstant_epsilon",bez="#e§_0!",wert=8.85419E-12} , 
-         new KonstRec(){titel="PhysikKonstant_c", bez="c§", wert=2.99792458E8} , 
-         new KonstRec(){titel="PhysikKonstant_mu", bez="#m§_0!", wert=1.256637E-6} , 
-         new KonstRec(){titel="PhysikKonstant_g", bez="g§", wert=9.80665} , 
-         new KonstRec(){titel="PhysikKonstant_h", bez="h§", wert=6.6256E-34} , 
-         new KonstRec(){titel="PhysikKonstant_me", bez="m_#e§", wert=9.1093897E-31} , 
-         new KonstRec(){titel="PhysikKonstant_f", bez="#g§", wert=6.67259E-11} , 
-         new KonstRec(){titel="PhysikKonstant_Lambda0", bez="#l§_c!", wert=2.43E-12} 
+        new KonstRec { titel = "PhysikKonstant_e", bez = "e§", wert = 1.6021E-19 }, 
+        new KonstRec { titel = "PhysikKonstant_epsilon", bez = "#e§_0!", wert = 8.85419E-12 }, 
+        new KonstRec { titel = "PhysikKonstant_c", bez = "c§", wert = 2.99792458E8 }, 
+        new KonstRec { titel = "PhysikKonstant_mu", bez = "#m§_0!", wert = 1.256637E-6 }, 
+        new KonstRec { titel = "PhysikKonstant_g", bez = "g§", wert = 9.80665 }, 
+        new KonstRec { titel = "PhysikKonstant_h", bez = "h§", wert = 6.6256E-34 }, 
+        new KonstRec { titel = "PhysikKonstant_me", bez = "m_#e§", wert = 9.1093897E-31 }, 
+        new KonstRec { titel = "PhysikKonstant_f", bez = "#g§", wert = 6.67259E-11 }, 
+        new KonstRec { titel = "PhysikKonstant_Lambda0", bez = "#l§_c!", wert = 2.43E-12 }
       };
 
-    public const double eulerZahl = 2.1782818;
-    public static string[] fnam = { "(", ")", "+", "-", "*", "/", "^", "SIN", "COS", "TAN", "COTAN", "EXP", "LN", "WURZEL", "SIGN", "ABS", "DELTA", "?" };
+    /// <summary>
+    ///   The fnam.
+    /// </summary>
+    public static string[] fnam =
+      {
+        "(", ")", "+", "-", "*", "/", "^", "SIN", "COS", "TAN", "COTAN", "EXP", "LN", 
+        "WURZEL", "SIGN", "ABS", "DELTA", "?"
+      };
 
-    public const string SListIndexError = "Der Index der Liste überschreitet das Maximum (%d)";
-    public const string SListCapacityError = "Die Kapazität der Liste ist erschöpft (%d)";
-    public const string SListCountError = "Zu viele Einträge in der Liste (%d)";
-}
+    #endregion
 
+    /// <summary>
+    ///   The konst rec.
+    /// </summary>
+    public struct KonstRec
+    {
+      #region Fields
 
-namespace Parser
-{
-    /*
+      /// <summary>
+      ///   The bez.
+      /// </summary>
+      public string bez;
+
+      /// <summary>
+      ///   The titel.
+      /// </summary>
+      public string titel;
+
+      /// <summary>
+      ///   The wert.
+      /// </summary>
+      public double wert;
+
+      #endregion
+    }
+  }
+
+  /*
     public struct KonstRec
     {
         public string titel;
@@ -93,7 +227,7 @@ namespace Parser
         public double wert;
     } // end KonstRec
 */
- /*   public struct TSpaltDefBuf
+  /*   public struct TSpaltDefBuf
     {
         public string be;        // Bezeichnung
         public string di;        // Dimension
@@ -103,224 +237,1126 @@ namespace Parser
         public int nk;
     } // end TSpaltDefBuf
 */
-    public class TFktTerm
-    {
-        public TFktTerm li;
-        public TFktTerm re;
-        public symTyp cwert;
-        public double zwert;
-        public string name;
-        public ushort nr;
-   //     public TZahlenSpalte vwert;
-    } // end TFktTerm
 
-    /*
+  /// <summary>
+  ///   The t fkt term.
+  /// </summary>
+  public class TFktTerm
+  {
+    #region Fields
+
+    /// <summary>
+    ///   The cwert.
+    /// </summary>
+    public symTyp cwert;
+
+    /// <summary>
+    ///   The li.
+    /// </summary>
+    public TFktTerm li;
+
+    /// <summary>
+    ///   The name.
+    /// </summary>
+    public string name;
+
+    /// <summary>
+    ///   The nr.
+    /// </summary>
+    public ushort nr;
+
+    /// <summary>
+    ///   The re.
+    /// </summary>
+    public TFktTerm re;
+
+    /// <summary>
+    ///   The zwert.
+    /// </summary>
+    public double zwert;
+
+    #endregion
+
+    // public TZahlenSpalte vwert;
+  }
+
+  // end TFktTerm
+
+  /*
     public enum TTabArt
     {
         physikTab,
         matheTab
     } // end TTabArt
     */
-    public enum TRechnerArt
+
+  /// <summary>
+  ///   The t rechner art.
+  /// </summary>
+  public enum TRechnerArt
+  {
+    /// <summary>
+    ///   The formel rechner.
+    /// </summary>
+    formelRechner, 
+
+    /// <summary>
+    ///   The rechner.
+    /// </summary>
+    rechner
+  }
+
+  // end TRechnerArt
+
+  /// <summary>
+  ///   The sym typ.
+  /// </summary>
+  public enum symTyp
+  {
+    /// <summary>
+    ///   The udef.
+    /// </summary>
+    udef, 
+
+    /// <summary>
+    ///   The oldfx.
+    /// </summary>
+    oldfx, 
+
+    /// <summary>
+    ///   The ist zahl.
+    /// </summary>
+    istZahl, 
+
+    /// <summary>
+    ///   The ist konst.
+    /// </summary>
+    istKonst, 
+
+    /// <summary>
+    ///   The ident.
+    /// </summary>
+    ident, 
+
+    /// <summary>
+    ///   The lklammer.
+    /// </summary>
+    lklammer, 
+
+    /// <summary>
+    ///   The rklammer.
+    /// </summary>
+    rklammer, 
+
+    /// <summary>
+    ///   The plus.
+    /// </summary>
+    plus, 
+
+    /// <summary>
+    ///   The minus.
+    /// </summary>
+    minus, 
+
+    /// <summary>
+    ///   The mal.
+    /// </summary>
+    mal, 
+
+    /// <summary>
+    ///   The durch.
+    /// </summary>
+    durch, 
+
+    /// <summary>
+    ///   The pot.
+    /// </summary>
+    pot, 
+
+    /// <summary>
+    ///   The sinf.
+    /// </summary>
+    sinf, 
+
+    /// <summary>
+    ///   The cosf.
+    /// </summary>
+    cosf, 
+
+    /// <summary>
+    ///   The tanf.
+    /// </summary>
+    tanf, 
+
+    /// <summary>
+    ///   The ctgf.
+    /// </summary>
+    ctgf, 
+
+    /// <summary>
+    ///   The expf.
+    /// </summary>
+    expf, 
+
+    /// <summary>
+    ///   The lnf.
+    /// </summary>
+    lnf, 
+
+    /// <summary>
+    ///   The wurzf.
+    /// </summary>
+    wurzf, 
+
+    /// <summary>
+    ///   The sigf.
+    /// </summary>
+    sigf, 
+
+    /// <summary>
+    ///   The absf.
+    /// </summary>
+    absf, 
+
+    /// <summary>
+    ///   The deltaf.
+    /// </summary>
+    deltaf, 
+
+    /// <summary>
+    ///   The ffmax.
+    /// </summary>
+    ffmax, 
+
+    /// <summary>
+    ///   The fstr end.
+    /// </summary>
+    fstrEnd
+  }
+
+  // end symTyp
+
+  /// <summary>
+  ///   The parse.
+  /// </summary>
+  public class Parse
+  {
+    #region Fields
+
+    /// <summary>
+    ///   The fkt term.
+    /// </summary>
+    public TFktTerm fktTerm = new TFktTerm();
+
+    /// <summary>
+    ///   The fx.
+    /// </summary>
+    public TFktTerm fx;
+
+    /// <summary>
+    ///   The last err nr.
+    /// </summary>
+    public byte lastErrNr = 0;
+
+    /// <summary>
+    ///   The last err pos.
+    /// </summary>
+    public int lastErrPos = 0;
+
+    /// <summary>
+    ///   The calc err.
+    /// </summary>
+    private bool calcErr;
+
+    /// <summary>
+    ///   The ch.
+    /// </summary>
+    private char ch = ' ';
+
+    /// <summary>
+    ///   The ch pos.
+    /// </summary>
+    private short chPos = -1;
+
+    /// <summary>
+    ///   The ch_.
+    /// </summary>
+    private char ch_;
+
+    /// <summary>
+    ///   The erg 1.
+    /// </summary>
+    private double erg1;
+
+    /// <summary>
+    ///   The err nr.
+    /// </summary>
+    private int errNr;
+
+    /// <summary>
+    ///   The err pos.
+    /// </summary>
+    private int errPos;
+
+    /// <summary>
+    ///   The f formel.
+    /// </summary>
+    private string fFormel = string.Empty;
+
+    /// <summary>
+    ///   The fehler.
+    /// </summary>
+    private bool fehler;
+
+    /// <summary>
+    ///   The fkt wert error.
+    /// </summary>
+    private bool fktWertError;
+
+    /// <summary>
+    ///   The func str.
+    /// </summary>
+    private string funcStr;
+
+    /// <summary>
+    ///   The h str.
+    /// </summary>
+    private string hStr;
+
+    /// <summary>
+    ///   The k var.
+    /// </summary>
+    private TFktTerm kVar;
+
+    /// <summary>
+    ///   The max lang.
+    /// </summary>
+    private byte maxLang;
+
+    /// <summary>
+    ///   The no up case.
+    /// </summary>
+    private bool noUpCase = false;
+
+    /// <summary>
+    ///   The old ch pos.
+    /// </summary>
+    private short oldChPos = -1;
+
+    /// <summary>
+    ///   The result.
+    /// </summary>
+    private double result;
+
+    /// <summary>
+    ///   The sym.
+    /// </summary>
+    private symTyp sym;
+
+    /// <summary>
+    ///   The var xwert.
+    /// </summary>
+    private double varXwert;
+
+    /// <summary>
+    ///   The wert.
+    /// </summary>
+    private double wert;
+
+    /// <summary>
+    ///   The x var.
+    /// </summary>
+    private TFktTerm xVar;
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    /// The err msg.
+    /// </summary>
+    /// <param name="nr">
+    /// The nr. 
+    /// </param>
+    /// <param name="s">
+    /// The s. 
+    /// </param>
+    public void ErrMsg(byte nr, ref string s)
     {
-        formelRechner,
-        rechner
-    } // end TRechnerArt
+      switch (nr)
+      {
+        case 1:
+          s = "( erwartet";
+          break;
+        case 2:
+          s = ") erwartet";
+          break;
+        case 3:
+          s = "Operator erwartet";
+          break;
+        case 4:
+          s = "( oder Zahl oder Bezeichner erwartet";
+          break;
+        case 5:
+          s = "unzulässiges Zeichen";
+          break;
+        case 6:
+          s = "keine Formel definiert";
+          break;
+      }
+    }
 
-    public enum symTyp
+    /// <summary>
+    /// The fkt wert.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    /// <param name="nr">
+    /// The nr. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> . 
+    /// </returns>
+    public double FktWert(TFktTerm fx, int nr)
     {
-        udef,
-        oldfx,
-        istZahl,
-        istKonst,
-        ident,
-        lklammer,
-        rklammer,
-        plus,
-        minus,
-        mal,
-        durch,
-        pot,
-        sinf,
-        cosf,
-        tanf,
-        ctgf,
-        expf,
-        lnf,
-        wurzf,
-        sigf,
-        absf,
-        deltaf,
-        ffmax,
-        fstrEnd
-    } // end symTyp
+      double result;
 
-          
+      // bool fktWertError;
+      if (fx != null)
+      {
+        this.calcErr = false;
+        this.fktWertError = false;
+        result = this.FktWert_Berechne(fx, nr);
+        if (this.fktWertError)
+        {
+          if (this.calcErr)
+          {
+            result = Constants.fehlerZahl;
+          }
+          else
+          {
+            result = Constants.leerFeld;
+          }
+        }
+      }
+      else
+      {
+        result = Constants.fehlerZahl;
+        this.calcErr = true;
+      }
 
-    public class Parse
+      return result;
+    }
+
+    /// <summary>
+    /// The fkt wert_ berechne.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    /// <param name="nr">
+    /// The nr. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> . 
+    /// </returns>
+    public double FktWert_Berechne(TFktTerm fx, int nr)
     {
-        private string fFormel = String.Empty;
-        public TFktTerm fktTerm = new TFktTerm();
-        private bool noUpCase = false;
-        private bool calcErr = false;
-        public byte lastErrNr = 0;
-        public int lastErrPos = 0;
-        private string funcStr;
-        public TFktTerm fx;
+      // double result;
+      // double erg1;
+      double erg2;
+      if (this.fktWertError)
+      {
+        this.result = Constants.fehlerZahl;
+        return this.result;
+      }
 
-        short chPos = -1;
-        short oldChPos = -1;
-        char ch = ' ';
-        char ch_;
-        symTyp sym;
-        double wert;
-        byte maxLang;
-        TFktTerm xVar;
-        TFktTerm kVar;
-        bool fehler = false;
-        int errPos = 0;
-        int errNr = 0;
+      switch (fx.cwert)
+      {
+        case symTyp.istZahl:
+          this.result = fx.zwert;
+          break;
+        case symTyp.istKonst:
+          this.result = fx.zwert; // Constants.konstante[fx.nr].wert;
+          break;
+        case symTyp.ident:
 
-         
+          /*      if (nr >= 0)
+                    {
+                        switch (fx.vwert.WertAtOk((ushort)nr,ref erg1))
+                        {
+                            case Constants.is_FehlerZahl:
+                                fktWertError = true;
+                                calcErr = true;
+                                break;
+                            case Constants.is_LeerFeld:
+                                fktWertError = true;
+                                break;
+                        }
+                        result = erg1;
+                    }
+                    else
+                    { */
+          this.result = this.varXwert;
 
-        public void ErrMsg(byte nr, ref string s)
-        {
-            switch(nr)
+          // }
+          break;
+        default:
+          erg2 = this.FktWert_Berechne(fx.re, nr);
+          if (this.fktWertError)
+          {
+            this.result = erg2;
+            return this.result;
+          }
+
+          if (fx.cwert <= symTyp.pot)
+          {
+            this.erg1 = this.FktWert_Berechne(fx.li, nr);
+            if (this.fktWertError)
             {
-                case 1:
-                    s = "( erwartet";
-                    break;
-                case 2:
-                    s = ") erwartet";
-                    break;
-                case 3:
-                    s = "Operator erwartet";
-                    break;
-                case 4:
-                    s = "( oder Zahl oder Bezeichner erwartet";
-                    break;
-                case 5:
-                    s = "unzulässiges Zeichen";
-                    break;
-                case 6:
-                    s = "keine Formel definiert";
-                    break;
+              this.result = this.erg1;
+              return this.result;
             }
-        }
 
-        public byte GetScanResult()
-        {
-            byte result;
-            result = lastErrNr;
-            lastErrNr = 0;
-            return result;
-        }
-
-        public void Loesch(ref TFktTerm fx)
-        {
-            if ((fx != null))
+            switch (fx.cwert)
             {
-                Loesch(ref fx.li);
-                Loesch(ref fx.re);
-                //fx.free           
-                fx = null;
-              //  this.SpStat =(ushort)((this.SpStat & ~PhysTab.Constants.ZaS_berechnet) | PhysTab.Constants.ZaS_geaendert);
-            }
-        }
-
-             
-
-        public TFktTerm ScanFkt_MakeNode(TFktTerm op1, symTyp code, TFktTerm op2)
-        {
-            TFktTerm result;
-            result = new TFktTerm();
-            result.cwert = code;
-            result.li = op1;
-            result.re = op2;
-            return result;
-        }
-
-        public TFktTerm ScanFkt_Zahl(double r)
-        {
-            TFktTerm result;
-            result = ScanFkt_MakeNode(null, symTyp.istZahl, null);
-            result.zwert = r;
-            return result;
-        }
-
-        public void ScanFkt_Err(byte nr)
-        {
-            if (fehler)
-            {
-                return;
-            }
-            errPos = oldChPos;
-            errNr = nr;
-            fehler = true;
-            chPos = 255;
-            ch = '\0';
-            sym = symTyp.fstrEnd;
-            Loesch(ref fx);
-        }
-
-        public void ScanFkt_GetCh()
-        {
-            if (chPos < maxLang-1)
-            {
-                chPos ++;
-                ch_ = funcStr[chPos];
-                ch = Char.ToUpper(ch_);
-            }
-            else
-            {
-                ch = '\0';
-                chPos = 255;
-            }
-        }
-
-        public void ScanFkt_Identifier()
-        {
-            string buf;
-            string buf1;
-            string Spezi = string.Concat(Constants._hoch, Constants._tief, Constants._symAn, Constants._symAus, Constants._formAus, Constants._normal);
-            ushort i;
-          //  TZahlenSpalte sp;
-            buf = "";
-            buf1 = "";
-            do
-            {
-                buf = buf + ch;
-                buf1 = buf1 + ch_;
-                ScanFkt_GetCh();
-            } while (!(((ch < '0') || ((ch > '9') && (ch < 'A')) || (ch > 'Z')) && (Spezi.IndexOf(ch) == -1)));
-            if (buf == "PI")
-            {
-                sym = symTyp.istZahl;
-                wert = Math.PI;
-                return;
-            }
-            if (buf == "E")
-            {
-                if (ch == '^')
+              case symTyp.plus:
+                this.erg1 = this.erg1 + erg2;
+                break;
+              case symTyp.minus:
+                this.erg1 = this.erg1 - erg2;
+                break;
+              case symTyp.mal:
+                this.erg1 = this.erg1 * erg2;
+                break;
+              case symTyp.durch:
+                if (erg2 != 0)
                 {
-                    sym = symTyp.expf;
-                    ScanFkt_GetCh();
-                    return;
+                  this.erg1 = this.erg1 / erg2;
                 }
                 else
                 {
-                    sym = symTyp.istZahl;
-                    wert = Constants.eulerZahl;
-                    return;
+                  this.FktWert_Berechne_Fehler();
                 }
+
+                break;
+              case symTyp.pot:
+                if (Convert.ToInt16(erg2) == erg2)
+                {
+                  this.erg1 = this.FktWert_WertIntPot(this.erg1, Convert.ToInt16(erg2));
+                }
+                else if (this.erg1 > 0)
+                {
+                  this.erg1 = Math.Exp(erg2 * Math.Log(this.erg1));
+                }
+                else if (this.erg1 < 0)
+                {
+                  this.FktWert_Berechne_Fehler();
+                }
+
+                break;
+              default:
+                this.FktWert_Berechne_Fehler();
+                break;
             }
-            sym = symTyp.sinf;
-            while ((sym < symTyp.ffmax) && (buf != Constants.fnam[(int)sym - 5]))
+          }
+          else
+          {
+            switch (fx.cwert)
             {
-                sym ++;
+              case symTyp.sinf:
+                this.erg1 = Math.Sin(erg2);
+                break;
+              case symTyp.cosf:
+                this.erg1 = Math.Cos(erg2);
+                break;
+              case symTyp.tanf:
+                this.erg1 = Math.Cos(erg2);
+                if (this.erg1 != 0)
+                {
+                  this.erg1 = Math.Sin(erg2) / this.erg1;
+                }
+                else
+                {
+                  this.FktWert_Berechne_Fehler();
+                }
+
+                break;
+              case symTyp.ctgf:
+                this.erg1 = Math.Sin(erg2);
+                if (this.erg1 != 0)
+                {
+                  this.erg1 = Math.Cos(erg2) / this.erg1;
+                }
+                else
+                {
+                  this.FktWert_Berechne_Fehler();
+                }
+
+                break;
+              case symTyp.expf:
+                this.erg1 = Math.Exp(erg2);
+                break;
+              case symTyp.lnf:
+                if (erg2 > 0)
+                {
+                  this.erg1 = Math.Log(erg2);
+                }
+                else
+                {
+                  this.FktWert_Berechne_Fehler();
+                }
+
+                break;
+              case symTyp.wurzf:
+                if (erg2 >= 0)
+                {
+                  this.erg1 = Math.Sqrt(erg2);
+                }
+                else
+                {
+                  this.FktWert_Berechne_Fehler();
+                }
+
+                break;
+              case symTyp.sigf:
+                if (erg2 > 0)
+                {
+                  this.erg1 = 1;
+                }
+                else if (erg2 < 0)
+                {
+                  this.erg1 = -1;
+                }
+                else
+                {
+                  this.erg1 = 0;
+                }
+
+                break;
+              case symTyp.absf:
+                this.erg1 = Math.Abs(erg2);
+                break;
+              case symTyp.deltaf:
+                if (nr == 0)
+                {
+                  this.erg1 = Constants.leerFeld;
+                }
+                else
+                {
+                  this.erg1 = this.FktWert_Berechne(fx.re, nr - 1);
+                  if (this.fktWertError)
+                  {
+                    this.result = this.erg1;
+                    return this.result;
+                  }
+
+                  this.erg1 = erg2 - this.erg1;
+                }
+
+                break;
+              default:
+                this.FktWert_Berechne_Fehler();
+                break;
             }
-            
-       /* 
+          }
+
+          this.result = this.erg1;
+          break;
+      }
+
+      return this.result;
+    }
+
+    /// <summary>
+    ///   The fkt wert_ berechne_ fehler.
+    /// </summary>
+    public void FktWert_Berechne_Fehler()
+    {
+      this.fktWertError = true;
+      this.calcErr = true;
+      this.result = Constants.fehlerZahl;
+      this.erg1 = Constants.fehlerZahl;
+    }
+
+    /// <summary>
+    /// The fkt wert_ wert int pot.
+    /// </summary>
+    /// <param name="bas">
+    /// The bas. 
+    /// </param>
+    /// <param name="ex">
+    /// The ex. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> . 
+    /// </returns>
+    public double FktWert_WertIntPot(double bas, int ex)
+    {
+      double result;
+      int i;
+      double r;
+      r = 1.0;
+      for (i = 1; i <= Math.Abs(ex); i ++)
+      {
+        r = r * bas;
+      }
+
+      if (ex < 0)
+      {
+        if (r != 0)
+        {
+          r = 1 / r;
+        }
+        else
+        {
+          r = Constants.fehlerZahl;
+          this.fktWertError = true;
+        }
+      }
+
+      result = r;
+      return result;
+    }
+
+    /// <summary>
+    /// The freier fkt wert.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    /// <param name="x">
+    /// The x. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> . 
+    /// </returns>
+    public double FreierFktWert(TFktTerm fx, double x)
+    {
+      double result;
+      this.varXwert = x;
+      result = this.FktWert(fx, -1);
+      return result;
+    }
+
+    /// <summary>
+    ///   The get scan result.
+    /// </summary>
+    /// <returns> The <see cref="byte" /> . </returns>
+    public byte GetScanResult()
+    {
+      byte result;
+      result = this.lastErrNr;
+      this.lastErrNr = 0;
+      return result;
+    }
+
+    /// <summary>
+    /// The loesch.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    public void Loesch(ref TFktTerm fx)
+    {
+      if (fx != null)
+      {
+        this.Loesch(ref fx.li);
+        this.Loesch(ref fx.re);
+
+        // fx.free           
+        fx = null;
+
+        // this.SpStat =(ushort)((this.SpStat & ~PhysTab.Constants.ZaS_berechnet) | PhysTab.Constants.ZaS_geaendert);
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt.
+    /// </summary>
+    /// <param name="fx0">
+    /// The fx 0. 
+    /// </param>
+    /// <param name="funcStr0">
+    /// The func str 0. 
+    /// </param>
+    public void ScanFkt(ref TFktTerm fx0, string funcStr0)
+    {
+      if (funcStr0 != string.Empty)
+      {
+        this.maxLang = (byte)funcStr0.Length;
+        funcStr0.Replace(',', '.');
+        this.funcStr = funcStr0;
+        this.fx = fx0;
+
+        // while (funcStr.IndexOf(',') > 0)
+        // {
+        // funcStr[funcStr.IndexOf(',')] = '.';
+        // }
+        this.fFormel = string.Empty;
+        this.chPos = -1;
+        this.oldChPos = -1;
+        this.ch = ' ';
+        this.fehler = false;
+        this.errPos = 0;
+        this.errNr = 0;
+        this.ScanFkt_GetSym();
+        this.ScanFkt_Expression(ref this.fx);
+      }
+      else
+      {
+        this.errNr = 6;
+      }
+
+      /*      if ((errNr == 0))
+            {
+                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_Scanned);
+            }
+            else
+            {
+                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_fehler);
+            }
+       */
+      this.lastErrNr = (byte)this.errNr;
+      this.lastErrPos = this.errPos;
+      if (this.errNr == 0)
+      {
+        fx0 = this.fx;
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt_ err.
+    /// </summary>
+    /// <param name="nr">
+    /// The nr. 
+    /// </param>
+    public void ScanFkt_Err(byte nr)
+    {
+      if (this.fehler)
+      {
+        return;
+      }
+
+      this.errPos = this.oldChPos;
+      this.errNr = nr;
+      this.fehler = true;
+      this.chPos = 255;
+      this.ch = '\0';
+      this.sym = symTyp.fstrEnd;
+      this.Loesch(ref this.fx);
+    }
+
+    /// <summary>
+    /// The scan fkt_ expression.
+    /// </summary>
+    /// <param name="expr">
+    /// The expr. 
+    /// </param>
+    public void ScanFkt_Expression(ref TFktTerm expr)
+    {
+      symTyp addop;
+      TFktTerm temp = null;
+      if ((this.sym == symTyp.plus) || (this.sym == symTyp.minus))
+      {
+        addop = this.sym;
+        this.ScanFkt_GetSym();
+      }
+      else
+      {
+        addop = symTyp.plus;
+      }
+
+      this.ScanFkt_Expression_Term(ref expr);
+      if (addop == symTyp.minus)
+      {
+        if ((expr != null) && (expr.cwert == symTyp.istZahl))
+        {
+          expr = this.ScanFkt_Zahl(-expr.zwert);
+        }
+        else
+        {
+          expr = this.ScanFkt_MakeNode(this.ScanFkt_Zahl(-1), symTyp.mal, expr);
+        }
+      }
+
+      while ((this.sym == symTyp.plus) || (this.sym == symTyp.minus))
+      {
+        do
+        {
+          addop = this.sym;
+          this.ScanFkt_GetSym();
+          if (this.sym == symTyp.plus)
+          {
+            this.sym = addop;
+          }
+          else if ((this.sym == symTyp.minus) && (addop == symTyp.minus))
+          {
+            this.sym = symTyp.plus;
+          }
+        }
+        while (!((this.sym != symTyp.plus) && (this.sym != symTyp.minus)));
+        this.ScanFkt_Expression_Term(ref temp);
+        if (!this.fehler)
+        {
+          expr = this.ScanFkt_MakeNode(expr, addop, temp);
+        }
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt_ expression_ term.
+    /// </summary>
+    /// <param name="prod">
+    /// The prod. 
+    /// </param>
+    public void ScanFkt_Expression_Term(ref TFktTerm prod)
+    {
+      symTyp pSym;
+      TFktTerm temp = null;
+      this.ScanFkt_Expression_Term_FuncTerm(ref prod);
+      while ((this.sym == symTyp.mal) || (this.sym == symTyp.durch))
+      {
+        pSym = this.sym;
+        this.ScanFkt_GetSym();
+        this.ScanFkt_Expression_Term_FuncTerm(ref temp);
+        if (!this.fehler)
+        {
+          prod = this.ScanFkt_MakeNode(prod, pSym, temp);
+        }
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt_ expression_ term_ func term.
+    /// </summary>
+    /// <param name="fterm">
+    /// The fterm. 
+    /// </param>
+    public void ScanFkt_Expression_Term_FuncTerm(ref TFktTerm fterm)
+    {
+      symTyp fsym;
+      TFktTerm temp = null;
+      if (this.sym < symTyp.sinf)
+      {
+        this.ScanFkt_Expression_Term_FuncTerm_Faktor(ref fterm);
+      }
+      else if (this.sym == symTyp.fstrEnd)
+      {
+        this.ScanFkt_Err(4);
+      }
+      else
+      {
+        fterm = null;
+      }
+
+      while ((symTyp.pot <= this.sym) && (this.sym < symTyp.ffmax))
+      {
+        fsym = this.sym;
+        this.ScanFkt_GetSym();
+        if (fsym > symTyp.pot)
+        {
+          if (this.sym != symTyp.lklammer)
+          {
+            this.ScanFkt_Err(1);
+            return;
+          }
+        }
+
+        if (this.sym < symTyp.sinf)
+        {
+          this.ScanFkt_Expression_Term_FuncTerm_Faktor(ref temp);
+        }
+        else
+        {
+          this.ScanFkt_Expression_Term_FuncTerm(ref temp);
+        }
+
+        if (!this.fehler)
+        {
+          fterm = this.ScanFkt_MakeNode(fterm, fsym, temp);
+        }
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt_ expression_ term_ func term_ faktor.
+    /// </summary>
+    /// <param name="fakt">
+    /// The fakt. 
+    /// </param>
+    public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref TFktTerm fakt)
+    {
+      if (this.fehler)
+      {
+        return;
+      }
+
+      switch (this.sym)
+      {
+        case symTyp.ident:
+          fakt = this.xVar;
+          break;
+        case symTyp.istKonst:
+          fakt = this.kVar;
+          break;
+        case symTyp.istZahl:
+          fakt = this.ScanFkt_Zahl(this.wert);
+          break;
+        case symTyp.lklammer:
+          this.ScanFkt_GetSym();
+          this.ScanFkt_Expression(ref fakt);
+          if (this.sym != symTyp.rklammer)
+          {
+            this.ScanFkt_Err(2);
+            return;
+          }
+
+          break;
+        default:
+          this.ScanFkt_Err(4);
+          return;
+
+          // break;
+      }
+
+      this.ScanFkt_GetSym();
+      if (this.sym < symTyp.lklammer)
+      {
+        this.ScanFkt_Err(3);
+      }
+    }
+
+    /// <summary>
+    ///   The scan fkt_ get ch.
+    /// </summary>
+    public void ScanFkt_GetCh()
+    {
+      if (this.chPos < this.maxLang - 1)
+      {
+        this.chPos ++;
+        this.ch_ = this.funcStr[this.chPos];
+        this.ch = char.ToUpper(this.ch_);
+      }
+      else
+      {
+        this.ch = '\0';
+        this.chPos = 255;
+      }
+    }
+
+    /// <summary>
+    ///   The scan fkt_ get sym.
+    /// </summary>
+    public void ScanFkt_GetSym()
+    {
+      if (this.fehler)
+      {
+        return;
+      }
+
+      while (this.ch == ' ')
+      {
+        this.ScanFkt_GetCh();
+      }
+
+      this.oldChPos = this.chPos;
+      if ((('A' <= this.ch) && (this.ch <= 'Z')) || (this.ch == '#'))
+      {
+        this.ScanFkt_Identifier();
+      }
+      else if (('0' <= this.ch) && (this.ch <= '9'))
+      {
+        this.ScanFkt_Number();
+      }
+      else
+      {
+        switch (this.ch)
+        {
+          case '(':
+            this.ScanFkt_MakeSym(symTyp.lklammer);
+            break;
+          case ')':
+            this.ScanFkt_MakeSym(symTyp.rklammer);
+            break;
+          case '*':
+            this.ScanFkt_MakeSym(symTyp.mal);
+            break;
+          case '+':
+            this.ScanFkt_MakeSym(symTyp.plus);
+            break;
+          case '-':
+            this.ScanFkt_MakeSym(symTyp.minus);
+            break;
+          case '/':
+            this.ScanFkt_MakeSym(symTyp.durch);
+            break;
+          case '^':
+            this.ScanFkt_MakeSym(symTyp.pot);
+            break;
+          case '\0':
+            this.sym = symTyp.fstrEnd;
+            break;
+          default:
+            this.ScanFkt_Err(5);
+            break;
+        }
+      }
+    }
+
+    /// <summary>
+    ///   The scan fkt_ identifier.
+    /// </summary>
+    public void ScanFkt_Identifier()
+    {
+      string buf;
+      string buf1;
+      string Spezi = string.Concat(
+        Constants._hoch, Constants._tief, Constants._symAn, Constants._symAus, Constants._formAus, Constants._normal);
+      ushort i;
+
+      // TZahlenSpalte sp;
+      buf = string.Empty;
+      buf1 = string.Empty;
+      do
+      {
+        buf = buf + this.ch;
+        buf1 = buf1 + this.ch_;
+        this.ScanFkt_GetCh();
+      }
+      while (
+        !(((this.ch < '0') || ((this.ch > '9') && (this.ch < 'A')) || (this.ch > 'Z')) && (Spezi.IndexOf(this.ch) == -1)));
+      if (buf == "PI")
+      {
+        this.sym = symTyp.istZahl;
+        this.wert = Math.PI;
+        return;
+      }
+
+      if (buf == "E")
+      {
+        if (this.ch == '^')
+        {
+          this.sym = symTyp.expf;
+          this.ScanFkt_GetCh();
+          return;
+        }
+        else
+        {
+          this.sym = symTyp.istZahl;
+          this.wert = Constants.eulerZahl;
+          return;
+        }
+      }
+
+      this.sym = symTyp.sinf;
+      while ((this.sym < symTyp.ffmax) && (buf != Constants.fnam[(int)this.sym - 5]))
+      {
+        this.sym ++;
+      }
+
+      /* 
             if ((sym == symTyp.ffmax))
             {
                 i = 1;
@@ -349,628 +1385,225 @@ namespace Parser
                         }
                     } while (!((i > PhysTab.Constants.max_Anzahl_Spalten)));
                 }
-        */ 
-                if (sym != symTyp.ident)
-                {
-                    i = 0;
-                    do
-                    {
-                        if (((Constants.konstante[i].bez).ToLower().CompareTo((buf).ToLower()) == 0) && (!noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
-                        {
-                            sym = symTyp.istKonst;
-                            kVar = ScanFkt_MakeNode(null, symTyp.istKonst, null);
-                            kVar.name = Constants.konstante[i].bez;
-                            kVar.nr = i;
-                            kVar.zwert = Constants.konstante[i].wert;
-                            return;
-                        }
-                        else
-                        {
-                            i ++;
-                        }
-                    } while (!(i > Constants.max_Anz_Konst));
-                }
-            if ((sym == symTyp.ffmax))
-            {
-                sym = symTyp.ident;
-                if (xVar==null)
-                {
-                    xVar = ScanFkt_MakeNode(null, symTyp.ident, null);
-                    xVar.zwert=0;
-                    xVar.name=buf1;
-                }
-               // ScanFkt_Err(5);
-            }
-        }
-
-        private string hStr;
-        private void ScanFkt_ReadInt()
+        */
+      if (this.sym != symTyp.ident)
+      {
+        i = 0;
+        do
         {
-            while ((ch >= '0') && (ch <= '9'))
-            {
-                hStr = hStr + ch;
-                ScanFkt_GetCh();
-            }
+          if ((Constants.konstante[i].bez.ToLower().CompareTo(buf.ToLower()) == 0)
+              && (!this.noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
+          {
+            this.sym = symTyp.istKonst;
+            this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
+            this.kVar.name = Constants.konstante[i].bez;
+            this.kVar.nr = i;
+            this.kVar.zwert = Constants.konstante[i].wert;
+            return;
+          }
+          else
+          {
+            i ++;
+          }
         }
+        while (!(i > Constants.max_Anz_Konst));
+      }
 
-        public void ScanFkt_Number()
+      if (this.sym == symTyp.ffmax)
+      {
+        this.sym = symTyp.ident;
+        if (this.xVar == null)
         {
-            hStr=string.Empty;
-            sym = symTyp.istZahl;
-            ScanFkt_ReadInt();
-            if ((ch == '.') || (ch == ','))
-            {
-                hStr = hStr + ch;
-                ScanFkt_GetCh();
-                ScanFkt_ReadInt();
-            }
-            if (ch == 'E')
-            {
-                hStr = hStr + ch;
-                ScanFkt_GetCh();
-                if ((ch == '+') || (ch == '-'))
-                {
-                    hStr = hStr + ch;
-                    ScanFkt_GetCh();
-                }
-                ScanFkt_ReadInt();
-            }
-            try
-            {
-                wert = Convert.ToDouble(hStr);
-            }
-            catch { ScanFkt_Err(4); }
-            finally {}
+          this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
+          this.xVar.zwert = 0;
+          this.xVar.name = buf1;
         }
 
-        // Number
-        public void ScanFkt_MakeSym(symTyp s)
-        {
-            sym = s;
-            ScanFkt_GetCh();
-        }
-
-        public void ScanFkt_GetSym()
-        {
-            if (fehler)
-            {
-                return;
-            }
-            while (ch == ' ')
-            {
-                ScanFkt_GetCh();
-            }
-            oldChPos = chPos;
-            if ((('A' <= ch) && (ch <= 'Z')) || (ch == '#'))
-            {
-                ScanFkt_Identifier();
-            }
-            else if (('0' <= ch) && (ch <= '9'))
-            {
-                ScanFkt_Number();
-            }
-            else
-            {
-                switch(ch)
-                {
-                    case '(':
-                        ScanFkt_MakeSym(symTyp.lklammer);
-                        break;
-                    case ')':
-                        ScanFkt_MakeSym(symTyp.rklammer);
-                        break;
-                    case '*':
-                        ScanFkt_MakeSym(symTyp.mal);
-                        break;
-                    case '+':
-                        ScanFkt_MakeSym(symTyp.plus);
-                        break;
-                    case '-':
-                        ScanFkt_MakeSym(symTyp.minus);
-                        break;
-                    case '/':
-                        ScanFkt_MakeSym(symTyp.durch);
-                        break;
-                    case '^':
-                        ScanFkt_MakeSym(symTyp.pot);
-                        break;
-                    case '\0':
-                        sym = symTyp.fstrEnd;
-                        break;
-                    default:
-                        ScanFkt_Err(5);
-                        break;
-                }
-            }
-        }
-        
-
-        public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref TFktTerm fakt)
-        {
-            if (fehler)
-            {
-                return;
-            }
-            switch(sym)
-            {
-                case symTyp.ident:
-                    fakt = xVar;
-                    break;
-                case symTyp.istKonst:
-                    fakt = kVar;
-                    break;
-                case symTyp.istZahl:
-                    fakt = ScanFkt_Zahl(wert);
-                    break;
-                case symTyp.lklammer:
-                    ScanFkt_GetSym();
-                    ScanFkt_Expression(ref fakt);
-                    if (sym != symTyp.rklammer)
-                    {
-                        ScanFkt_Err(2);
-                        return;
-                    }
-                    break;
-                default:
-                    ScanFkt_Err(4);
-                    return;
-                  //  break;
-            }
-            ScanFkt_GetSym();
-            if (sym < symTyp.lklammer)
-            {
-                ScanFkt_Err(3);
-            }
-        }
-
-        public void ScanFkt_Expression_Term_FuncTerm(ref TFktTerm fterm)
-        {
-            symTyp fsym;
-            TFktTerm temp = null;
-            if (sym < symTyp.sinf)
-            {
-                ScanFkt_Expression_Term_FuncTerm_Faktor(ref fterm);
-            }
-            else if (sym == symTyp.fstrEnd)
-            {
-                ScanFkt_Err(4);
-            }
-            else
-            {
-                fterm = null;
-            }
-            while ((symTyp.pot <= sym) && (sym < symTyp.ffmax))
-            {
-                fsym = sym;
-                ScanFkt_GetSym();
-                if (fsym > symTyp.pot)
-                {
-                    if (sym != symTyp.lklammer)
-                    {
-                        ScanFkt_Err(1);
-                        return;
-                    }
-                }
-                if (sym < symTyp.sinf)
-                {
-                    ScanFkt_Expression_Term_FuncTerm_Faktor(ref temp);
-                }
-                else
-                {
-                    ScanFkt_Expression_Term_FuncTerm(ref temp);
-                }
-                if (!fehler)
-                {
-                    fterm = ScanFkt_MakeNode(fterm, fsym, temp);
-                }
-            }
-        }
-
-        public void ScanFkt_Expression_Term(ref TFktTerm prod)
-        {
-            symTyp pSym;
-            TFktTerm temp = null;
-            ScanFkt_Expression_Term_FuncTerm(ref prod);
-            while ((sym == symTyp.mal) || (sym == symTyp.durch))
-            {
-                pSym = sym;
-                ScanFkt_GetSym();
-                ScanFkt_Expression_Term_FuncTerm(ref temp);
-                if (!fehler)
-                {
-                    prod = ScanFkt_MakeNode(prod, pSym, temp);
-                }
-            }
-        }
-
-        public void ScanFkt_Expression(ref TFktTerm expr)
-        {
-            symTyp addop;
-            TFktTerm temp = null;
-            if ((sym == symTyp.plus) || (sym == symTyp.minus))
-            {
-                addop = sym;
-                ScanFkt_GetSym();
-            }
-            else
-            {
-                addop = symTyp.plus;
-            }
-            ScanFkt_Expression_Term(ref expr);
-            if (addop == symTyp.minus)
-            {
-                if ((expr!=null)&&(expr.cwert == symTyp.istZahl))
-                {
-                    expr = ScanFkt_Zahl( -expr.zwert);
-                }
-                else
-                {
-                    expr = ScanFkt_MakeNode(ScanFkt_Zahl( -1), symTyp.mal, expr);
-                }
-            }
-            while ((sym == symTyp.plus) || (sym == symTyp.minus))
-            {
-                do
-                {
-                    addop = sym;
-                    ScanFkt_GetSym();
-                    if ((sym == symTyp.plus))
-                    {
-                        sym = addop;
-                    }
-                    else if ((sym == symTyp.minus) && (addop == symTyp.minus))
-                    {
-                        sym = symTyp.plus;
-                    }
-                } while (!((sym != symTyp.plus) && (sym != symTyp.minus)));
-                ScanFkt_Expression_Term(ref temp);
-                if (!fehler)
-                {
-                    expr = ScanFkt_MakeNode(expr, addop, temp);
-                }
-            }
-        }
-
-        public void ScanFkt(ref TFktTerm fx0, string funcStr0)
-        {
-            if ((funcStr0 != ""))
-            {
-                maxLang = (byte)funcStr0.Length;
-                funcStr0.Replace(',', '.');
-                funcStr = funcStr0;
-                fx = fx0;
-            //   while (funcStr.IndexOf(',') > 0)
-            //    {
-            //        funcStr[funcStr.IndexOf(',')] = '.';
-            //    }
-                fFormel = String.Empty;
-                chPos = -1;
-                oldChPos = -1;
-                ch = ' ';
-                fehler = false;
-                errPos = 0;
-                errNr = 0;
-                ScanFkt_GetSym();
-                ScanFkt_Expression(ref fx);
-                
-            }
-            else
-            {
-                errNr = 6;
-            }
-      /*      if ((errNr == 0))
-            {
-                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_Scanned);
-            }
-            else
-            {
-                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_fehler);
-            }
-       */
-            lastErrNr = (byte)(errNr);
-            lastErrPos = errPos;
-            if ((errNr == 0))
-            {
-                fx0=fx;
-            }
-        }
-
-        bool fktWertError=false;
-        double varXwert;
-        public double FktWert_WertIntPot(double bas, int ex)
-        {
-            double result;
-            int i;
-            double r;
-            r = 1.0;
-            for (i = 1; i <= Math.Abs(ex); i ++ )
-            {
-                r = r * bas;
-            }
-            if ((ex < 0))
-            {
-                if ((r != 0))
-                {
-                    r = 1 / r;
-                }
-                else
-                {
-                    r = Constants.fehlerZahl;
-                    fktWertError = true;
-                }
-            }
-            result = r;
-            return result;
-        }
-
-        double result;
-        double erg1;
-        public void FktWert_Berechne_Fehler()
-        {
-            fktWertError = true;
-            calcErr = true;
-            result = Constants.fehlerZahl;
-            erg1 = Constants.fehlerZahl;
-        }
-
-        public double FktWert_Berechne(TFktTerm fx, int nr)
-        {
-          //  double result;
-          //  double erg1;
-            double erg2;
-            if (fktWertError)
-            {
-                result = Constants.fehlerZahl;
-                return result;
-            }
-            switch(fx.cwert)
-            {
-                case symTyp.istZahl:
-                    result = fx.zwert;
-                    break;
-                case symTyp.istKonst:
-                    result =fx.zwert;  // Constants.konstante[fx.nr].wert;
-                    break; 
-                case symTyp.ident:
-              /*      if (nr >= 0)
-                    {
-                        switch (fx.vwert.WertAtOk((ushort)nr,ref erg1))
-                        {
-                            case Constants.is_FehlerZahl:
-                                fktWertError = true;
-                                calcErr = true;
-                                break;
-                            case Constants.is_LeerFeld:
-                                fktWertError = true;
-                                break;
-                        }
-                        result = erg1;
-                    }
-                    else
-                    { */
-                        result = varXwert;
-                   // }
-                    break;
-                default:
-                    erg2 = FktWert_Berechne(fx.re, nr);
-                    if (fktWertError)
-                    {
-                        result = erg2;
-                        return result;
-                    }
-                   
-                    if (fx.cwert <= symTyp.pot)
-                    {
-                        erg1 = FktWert_Berechne(fx.li, nr);
-                        if (fktWertError)
-                        {
-                            result = erg1;
-                            return result;
-                        }
-                        
-                        switch(fx.cwert)
-                        {
-                            case symTyp.plus:
-                                erg1 = erg1 + erg2;
-                                break;
-                            case symTyp.minus:
-                                erg1 = erg1 - erg2;
-                                break;
-                            case symTyp.mal:
-                                erg1 = erg1 * erg2;
-                                break;
-                            case symTyp.durch:
-                                if (erg2 != 0)
-                                {
-                                    erg1 = erg1 / erg2;
-                                }
-                                else
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            case symTyp.pot:
-                                if (Convert.ToInt16(erg2) == erg2)
-                                {
-                                    erg1 = FktWert_WertIntPot(erg1, Convert.ToInt16(erg2));
-                                }
-                                else if (erg1 > 0)
-                                {
-                                    erg1 = Math.Exp(erg2 * Math.Log(erg1));
-                                }
-                                else if (erg1 < 0)
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            default:
-                                FktWert_Berechne_Fehler();
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        switch(fx.cwert)
-                        {
-                            case symTyp.sinf:
-                                erg1 = Math.Sin(erg2);
-                                break;
-                            case symTyp.cosf:
-                                erg1 = Math.Cos(erg2);
-                                break;
-                            case symTyp.tanf:
-                                erg1 = Math.Cos(erg2);
-                                if (erg1 != 0)
-                                {
-                                    erg1 = Math.Sin(erg2) / erg1;
-                                }
-                                else
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            case symTyp.ctgf:
-                                erg1 = Math.Sin(erg2);
-                                if (erg1 != 0)
-                                {
-                                    erg1 = Math.Cos(erg2) / erg1;
-                                }
-                                else
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            case symTyp.expf:
-                                erg1 = Math.Exp(erg2);
-                                break;
-                            case symTyp.lnf:
-                                if (erg2 > 0)
-                                {
-                                    erg1 = Math.Log(erg2);
-                                }
-                                else
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            case symTyp.wurzf:
-                                if (erg2 >= 0)
-                                {
-                                    erg1 = Math.Sqrt(erg2);
-                                }
-                                else
-                                {
-                                    FktWert_Berechne_Fehler();
-                                }
-                                break;
-                            case symTyp.sigf:
-                                if (erg2 > 0)
-                                {
-                                    erg1 = 1;
-                                }
-                                else if (erg2 < 0)
-                                {
-                                    erg1 =  -1;
-                                }
-                                else
-                                {
-                                    erg1 = 0;
-                                }
-                                break;
-                            case symTyp.absf:
-                                erg1 = Math.Abs(erg2);
-                                break;
-                            case symTyp.deltaf:
-                                if (nr == 0)
-                                {
-                                    erg1 = Constants.leerFeld;
-                                }
-                                else
-                                {
-                                    erg1 = FktWert_Berechne(fx.re, nr - 1);
-                                    if (fktWertError)
-                                    {
-                                        result = erg1;
-                                        return result;
-                                    }
-                                    erg1 = erg2 - erg1;
-                                }
-                                break;
-                            default:
-                                FktWert_Berechne_Fehler();
-                                break;
-                        }
-                    }
-                    result = erg1;
-                    break;
-            }
-            return result;
-        }
-
-        public double FktWert(TFktTerm fx, int nr)
-        {
-            double result;
-          //  bool fktWertError;
-            if (fx != null)
-            {
-                calcErr = false;
-                fktWertError = false;
-                result = FktWert_Berechne(fx, nr);
-                if (fktWertError)
-                {
-                    if (calcErr)
-                    {
-                        result = Constants.fehlerZahl;
-                    }
-                    else
-                    {
-                        result = Constants.leerFeld;
-                    }
-                }
-            }
-            else
-            {
-                result = Constants.fehlerZahl;
-                calcErr = true;
-            }
-            return result;
-        }
-
-        public double FreierFktWert(TFktTerm fx, double x)
-        {
-            double result;
-            varXwert = x;
-            result = FktWert(fx,  -1);
-            return result;
-        }
-
-        private bool doesContainNoVar(TFktTerm fx)
-        {
-            if ( (fx==null) || (fx.cwert<=symTyp.istKonst)) { return true; }
-            else
-            { 
-                if (fx.cwert==symTyp.ident)
-                {return false;}
-                else {return doesContainNoVar(fx.li) && doesContainNoVar(fx.re);} 
-            }
-        }
-
-        public bool isLinearFunction(TFktTerm fx)
-        {
-            if ((fx == null) || (fx.cwert <= symTyp.istKonst)) { return true; }
-            if (fx.cwert > symTyp.pot) { return doesContainNoVar(fx.re); }
-            switch (fx.cwert)
-              {
-                 case symTyp.ident: return true; 
-                 case symTyp.pot: return doesContainNoVar(fx.li) && doesContainNoVar(fx.re); 
-                 case symTyp.plus: return isLinearFunction(fx.li) && isLinearFunction(fx.re); 
-                 case symTyp.minus: return isLinearFunction(fx.li) && isLinearFunction(fx.re); 
-                 case symTyp.mal: return (doesContainNoVar(fx.li) && isLinearFunction(fx.re)) || (isLinearFunction(fx.li) && doesContainNoVar(fx.re)); 
-                 case symTyp.durch: return isLinearFunction(fx.li) && doesContainNoVar(fx.re); 
-                 default: return false;
-               }
-        }
-
-
+        // ScanFkt_Err(5);
+      }
     }
+
+    /// <summary>
+    /// The scan fkt_ make node.
+    /// </summary>
+    /// <param name="op1">
+    /// The op 1. 
+    /// </param>
+    /// <param name="code">
+    /// The code. 
+    /// </param>
+    /// <param name="op2">
+    /// The op 2. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="TFktTerm"/> . 
+    /// </returns>
+    public TFktTerm ScanFkt_MakeNode(TFktTerm op1, symTyp code, TFktTerm op2)
+    {
+      TFktTerm result;
+      result = new TFktTerm();
+      result.cwert = code;
+      result.li = op1;
+      result.re = op2;
+      return result;
+    }
+
+    // Number
+    /// <summary>
+    /// The scan fkt_ make sym.
+    /// </summary>
+    /// <param name="s">
+    /// The s. 
+    /// </param>
+    public void ScanFkt_MakeSym(symTyp s)
+    {
+      this.sym = s;
+      this.ScanFkt_GetCh();
+    }
+
+    /// <summary>
+    ///   The scan fkt_ number.
+    /// </summary>
+    public void ScanFkt_Number()
+    {
+      this.hStr = string.Empty;
+      this.sym = symTyp.istZahl;
+      this.ScanFkt_ReadInt();
+      if ((this.ch == '.') || (this.ch == ','))
+      {
+        this.hStr = this.hStr + this.ch;
+        this.ScanFkt_GetCh();
+        this.ScanFkt_ReadInt();
+      }
+
+      if (this.ch == 'E')
+      {
+        this.hStr = this.hStr + this.ch;
+        this.ScanFkt_GetCh();
+        if ((this.ch == '+') || (this.ch == '-'))
+        {
+          this.hStr = this.hStr + this.ch;
+          this.ScanFkt_GetCh();
+        }
+
+        this.ScanFkt_ReadInt();
+      }
+
+      try
+      {
+        this.wert = Convert.ToDouble(this.hStr);
+      }
+      catch
+      {
+        this.ScanFkt_Err(4);
+      }
+      finally
+      {
+      }
+    }
+
+    /// <summary>
+    /// The scan fkt_ zahl.
+    /// </summary>
+    /// <param name="r">
+    /// The r. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="TFktTerm"/> . 
+    /// </returns>
+    public TFktTerm ScanFkt_Zahl(double r)
+    {
+      TFktTerm result;
+      result = this.ScanFkt_MakeNode(null, symTyp.istZahl, null);
+      result.zwert = r;
+      return result;
+    }
+
+    /// <summary>
+    /// The is linear function.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/> . 
+    /// </returns>
+    public bool isLinearFunction(TFktTerm fx)
+    {
+      if ((fx == null) || (fx.cwert <= symTyp.istKonst))
+      {
+        return true;
+      }
+
+      if (fx.cwert > symTyp.pot)
+      {
+        return this.doesContainNoVar(fx.re);
+      }
+
+      switch (fx.cwert)
+      {
+        case symTyp.ident:
+          return true;
+        case symTyp.pot:
+          return this.doesContainNoVar(fx.li) && this.doesContainNoVar(fx.re);
+        case symTyp.plus:
+          return this.isLinearFunction(fx.li) && this.isLinearFunction(fx.re);
+        case symTyp.minus:
+          return this.isLinearFunction(fx.li) && this.isLinearFunction(fx.re);
+        case symTyp.mal:
+          return (this.doesContainNoVar(fx.li) && this.isLinearFunction(fx.re))
+                 || (this.isLinearFunction(fx.li) && this.doesContainNoVar(fx.re));
+        case symTyp.durch:
+          return this.isLinearFunction(fx.li) && this.doesContainNoVar(fx.re);
+        default:
+          return false;
+      }
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    ///   The scan fkt_ read int.
+    /// </summary>
+    private void ScanFkt_ReadInt()
+    {
+      while ((this.ch >= '0') && (this.ch <= '9'))
+      {
+        this.hStr = this.hStr + this.ch;
+        this.ScanFkt_GetCh();
+      }
+    }
+
+    /// <summary>
+    /// The does contain no var.
+    /// </summary>
+    /// <param name="fx">
+    /// The fx. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/> . 
+    /// </returns>
+    private bool doesContainNoVar(TFktTerm fx)
+    {
+      if ((fx == null) || (fx.cwert <= symTyp.istKonst))
+      {
+        return true;
+      }
+      else
+      {
+        if (fx.cwert == symTyp.ident)
+        {
+          return false;
+        }
+        else
+        {
+          return this.doesContainNoVar(fx.li) && this.doesContainNoVar(fx.re);
+        }
+      }
+    }
+
+    #endregion
+  }
 }

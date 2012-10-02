@@ -1,22 +1,21 @@
 <ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:Viana="clr-namespace:VianaNET"
-  xmlns:sys="clr-namespace:System;assembly=mscorlib" 
-	>
-  <Viana:DoubleToStringConverter x:Key="DoubleToStringConverter" />
-  <Viana:PlusOneConverter x:Key="PlusOneConverter" />
-  <Viana:UnitDoubleStringConverter x:Key="UnitDoubleStringConverter" />
-  <Viana:InverseBooleanToVisibilityConverter x:Key="BoolVisibleConverterInverse" />
+  xmlns:Viana="clr-namespace:VianaNET" xmlns:Converter="clr-namespace:VianaNET.CustomStyles.Converter"
+	xmlns:Types="clr-namespace:VianaNET.CustomStyles.Types">
+  <Converter:DoubleToStringConverter x:Key="DoubleToStringConverter" />
+  <Converter:PlusOneConverter x:Key="PlusOneConverter" />
+  <Converter:UnitDoubleStringConverter x:Key="UnitDoubleStringConverter" />
+  <Converter:InverseBooleanToVisibilityConverter x:Key="BoolVisibleConverterInverse" />
   <BooleanToVisibilityConverter x:Key="BoolVisibleConverter" />
-  <Viana:DSTimeToMillisecondsConverter x:Key="DSTimeToMillisecondsConverter"/>
-  <Viana:RulerUnitStringConverter x:Key="RulerUnitStringConverter"/>
-  <Viana:PercentToDoubleConverter x:Key="PercentToDoubleConverter"/>
-  <Viana:NumberOfObjectsToVisibilityConverter x:Key="NumberOfObjectsToVisibilityConverter"/>
+  <Converter:DSTimeToMillisecondsConverter x:Key="DSTimeToMillisecondsConverter"/>
+  <Converter:RulerUnitStringConverter x:Key="RulerUnitStringConverter"/>
+  <Converter:PercentToDoubleConverter x:Key="PercentToDoubleConverter"/>
+  <Converter:NumberOfObjectsToVisibilityConverter x:Key="NumberOfObjectsToVisibilityConverter"/>
   
-  <Viana:MeasurementType x:Key="TimeMeasurement">Time</Viana:MeasurementType>
-  <Viana:MeasurementType x:Key="PixelMeasurement">Pixel</Viana:MeasurementType>
-  <Viana:MeasurementType x:Key="PositionMeasurement">Position</Viana:MeasurementType>
-  <Viana:MeasurementType x:Key="VelocityMeasurement">Velocity</Viana:MeasurementType>
-  <Viana:MeasurementType x:Key="AccelerationMeasurement">Acceleration</Viana:MeasurementType>
+  <Types:MeasurementType x:Key="TimeMeasurement">Time</Types:MeasurementType>
+  <Types:MeasurementType x:Key="PixelMeasurement">Pixel</Types:MeasurementType>
+  <Types:MeasurementType x:Key="PositionMeasurement">Position</Types:MeasurementType>
+  <Types:MeasurementType x:Key="VelocityMeasurement">Velocity</Types:MeasurementType>
+  <Types:MeasurementType x:Key="AccelerationMeasurement">Acceleration</Types:MeasurementType>
 </ResourceDictionary>

@@ -1,69 +1,87 @@
-﻿// <copyright file="Calibration.cs" company="FU Berlin">
-// ************************************************************************
-// Viana.NET - video analysis for physics education
-// Copyright (C) 2010 Dr. Adrian Voßkühler  
-// ------------------------------------------------------------------------
-// This program is free software; you can redistribute it and/or modify it 
-// under the terms of the GNU General Public License as published by the 
-// Free Software Foundation; either version 2 of the License, or 
-// (at your option) any later version.
-// This program is distributed in the hope that it will be useful, 
-// but WITHOUT ANY WARRANTY; without even the implied warranty of 
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-// See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License 
-// along with this program; if not, write to the Free Software Foundation, 
-// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-// ************************************************************************
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Interpolation.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
-// <email>adrian.vosskuehler@fu-berlin.de</email>
-
-namespace VianaNET
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   This singleton class provides static access to the properties
+//   used to measure lenght in the video, if the user has provided
+//   a calibration point and length.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Data.Interpolation
 {
-  using System;
   using System.Collections.Generic;
-  using System.Linq;
-  using System.Text;
-  using System.Windows.Data;
   using System.ComponentModel;
   using System.Windows;
-  using WPFLocalizeExtension.Extensions;
-  using System.Collections.ObjectModel;
-  using System.Windows.Media;
 
   /// <summary>
-  /// This singleton class provides static access to the properties
-  /// used to measure lenght in the video, if the user has provided
-  /// a calibration point and length.
+  ///   This singleton class provides static access to the properties
+  ///   used to measure lenght in the video, if the user has provided
+  ///   a calibration point and length.
   /// </summary>
   public class Interpolation : DependencyObject, INotifyPropertyChanged
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
+    #region Static Fields
 
     /// <summary>
-    /// Holds the instance of singleton
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="CurrentInterpolationFilter" />.
+    /// </summary>
+    public static readonly DependencyProperty CurrentInterpolationFilterProperty =
+      DependencyProperty.Register(
+        "CurrentInterpolationFilter", 
+        typeof(InterpolationBase), 
+        typeof(Calibration), 
+        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsInterpolatingData" />.
+    /// </summary>
+    public static readonly DependencyProperty IsInterpolatingDataProperty =
+      DependencyProperty.Register(
+        "IsInterpolatingData", 
+        typeof(bool), 
+        typeof(Calibration), 
+        new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   Holds the instance of singleton
     /// </summary>
     private static Interpolation instance;
 
-    #endregion //FIELDS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes an instance of the Interpolation class.
+    ///   Initializes static members of the <see cref="Interpolation" /> class. 
+    ///   Initializes an instance of the Interpolation class.
     /// </summary>
     static Interpolation()
     {
@@ -73,50 +91,62 @@ namespace VianaNET
       Filter.Add(FilterTypes.ExponentialSmooth, new ExponentialSmoothFilter());
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="Interpolation" /> class.
+    /// </summary>
     public Interpolation()
     {
       this.InitFields();
     }
 
-    #endregion //CONSTRUCTION
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
+    #region Public Events
 
     /// <summary>
-    /// Occurs when a property value changes.
+    ///   Occurs when a property value changes.
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
+    #endregion
+
+    #region Enums
+
     /// <summary>
-    /// Enumerates the available interpolation filter types
+    ///   Enumerates the available interpolation filter types
     /// </summary>
     public enum FilterTypes
     {
       /// <summary>
-      /// Describes the moving average filter which averages 
-      /// a specific amount of surrounding sample values.
+      ///   Describes the moving average filter which averages 
+      ///   a specific amount of surrounding sample values.
       /// </summary>
-      MovingAverage = 1,
+      MovingAverage = 1, 
 
       /// <summary>
-      /// Describes the exponential smoothing algorithm.
+      ///   Describes the exponential smoothing algorithm.
       /// </summary>
       ExponentialSmooth = 2
     }
 
-    #endregion EVENTS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
+    #region Public Properties
 
     /// <summary>
-    /// Gets the <see cref="Interpolation"/> singleton.
-    /// If the underlying instance is null, a instance will be created.
+    ///   Gets or sets the List of available interpolation filters.
+    /// </summary>
+    public static Dictionary<FilterTypes, InterpolationBase> Filter { get; private set; }
+
+    /// <summary>
+    ///   Gets the <see cref="Interpolation" /> singleton.
+    ///   If the underlying instance is null, a instance will be created.
     /// </summary>
     public static Interpolation Instance
     {
@@ -135,112 +165,86 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// Gets or sets the List of available interpolation filters.
-    /// </summary>
-    public static Dictionary<FilterTypes, InterpolationBase> Filter { get; private set; }
-
-    /// <summary>
-    /// Gets or sets a the interpolation filter to use for
-    /// smoothing data.
+    ///   Gets or sets a the interpolation filter to use for
+    ///   smoothing data.
     /// </summary>
     public InterpolationBase CurrentInterpolationFilter
     {
-      get { return (InterpolationBase)this.GetValue(CurrentInterpolationFilterProperty); }
-      set { this.SetValue(CurrentInterpolationFilterProperty, value); }
+      get
+      {
+        return (InterpolationBase)this.GetValue(CurrentInterpolationFilterProperty);
+      }
+
+      set
+      {
+        this.SetValue(CurrentInterpolationFilterProperty, value);
+      }
     }
 
     /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="CurrentInterpolationFilter"/>.
-    /// </summary>
-    public static readonly DependencyProperty CurrentInterpolationFilterProperty = DependencyProperty.Register(
-      "CurrentInterpolationFilter",
-      typeof(InterpolationBase),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(
-        null,
-        FrameworkPropertyMetadataOptions.AffectsRender,
-        new PropertyChangedCallback(OnPropertyChanged)));
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to interpolate
-    /// velocity and acceleration values.
+    ///   Gets or sets a value indicating whether to interpolate
+    ///   velocity and acceleration values.
     /// </summary>
     public bool IsInterpolatingData
     {
-      get { return (bool)this.GetValue(IsInterpolatingDataProperty); }
-      set { this.SetValue(IsInterpolatingDataProperty, value); }
+      get
+      {
+        return (bool)this.GetValue(IsInterpolatingDataProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsInterpolatingDataProperty, value);
+      }
     }
 
-    /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="IsInterpolatingData"/>.
-    /// </summary>
-    public static readonly DependencyProperty IsInterpolatingDataProperty = DependencyProperty.Register(
-      "IsInterpolatingData",
-      typeof(bool),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(
-        false,
-        FrameworkPropertyMetadataOptions.AffectsRender,
-        new PropertyChangedCallback(OnPropertyChanged)));
-
-    #endregion //PROPERTIES
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
+    #region Public Methods and Operators
 
+    /// <summary>
+    ///   The show interpolation options dialog.
+    /// </summary>
     public static void ShowInterpolationOptionsDialog()
     {
-      InterpolationOptionsDialog dlg = new InterpolationOptionsDialog();
-      dlg.ChoosenInterpolationFilter = Interpolation.Instance.CurrentInterpolationFilter;
+      var dlg = new InterpolationOptionsDialog();
+      dlg.ChoosenInterpolationFilter = Instance.CurrentInterpolationFilter;
 
       if (dlg.ShowDialog().GetValueOrDefault())
       {
-        Interpolation.Instance.CurrentInterpolationFilter = dlg.ChoosenInterpolationFilter;
+        Instance.CurrentInterpolationFilter = dlg.ChoosenInterpolationFilter;
         VideoData.Instance.RefreshDistanceVelocityAcceleration();
       }
     }
 
     /// <summary>
-    /// Resets the properties to their default values.
+    ///   Resets the properties to their default values.
     /// </summary>
     public void Reset()
     {
       this.InitFields();
     }
 
-    #endregion //PUBLICMETHODS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
-    #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
+    #region Methods
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
-    /// <param name="obj">The source of the event. This.</param>
-    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
-    /// the event data.</param>
-    private static void OnPropertyChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
-    {
-      (obj as Interpolation).OnPropertyChanged(args);
-    }
-
-    /// <summary>
-    /// Raises the <see cref="PropertyChanged"/> event.
-    /// </summary>
-    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
-    /// the event data.</param>
+    /// <param name="args">
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
       if (this.PropertyChanged != null)
@@ -249,34 +253,41 @@ namespace VianaNET
       }
     }
 
-    #endregion //EVENTHANDLER
+    /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="obj">
+    /// The source of the event. This. 
+    /// </param>
+    /// <param name="args">
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// </param>
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+      (obj as Interpolation).OnPropertyChanged(args);
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
 
     /// <summary>
-    /// Initially set the properties default values.
+    ///   Initially set the properties default values.
     /// </summary>
     private void InitFields()
     {
       this.IsInterpolatingData = false;
-      this.CurrentInterpolationFilter = Interpolation.Filter[FilterTypes.MovingAverage];
+      this.CurrentInterpolationFilter = Filter[FilterTypes.MovingAverage];
     }
 
-    #endregion //PRIVATEMETHODS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-    #endregion //HELPER
   }
 }

@@ -1,159 +1,182 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Data;
-using System.ComponentModel;
-using System.Windows;
-using WPFLocalizeExtension.Extensions;
-using System.Collections.ObjectModel;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="DataAxes.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The data axis.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Data
 {
+  using System.Collections.Generic;
+  using System.Windows;
+
+  using VianaNET.CustomStyles.Types;
+
+  using WPFLocalizeExtension.Extensions;
+
+  /// <summary>
+  ///   The data axis.
+  /// </summary>
   public class DataAxis : DependencyObject
   {
-    public static List<DataAxis> DataAxes;
-    public static List<DataAxis> PredefinedChartAxesPositionSpace;
-    public static List<DataAxis> PredefinedChartAxesPhaseSpace;
+    #region Static Fields
 
-    public AxisType Axis
-    {
-      get { return (AxisType)GetValue(AxisProperty); }
-      set { SetValue(AxisProperty, value); }
-    }
-
-    public static readonly DependencyProperty AxisProperty =
-      DependencyProperty.Register(
-      "Axis",
-      typeof(AxisType),
-      typeof(DataAxis),
+    /// <summary>
+    ///   The axis property.
+    /// </summary>
+    public static readonly DependencyProperty AxisProperty = DependencyProperty.Register(
+      "Axis", 
+      typeof(AxisType), 
+      typeof(DataAxis), 
       new FrameworkPropertyMetadata(default(AxisType), FrameworkPropertyMetadataOptions.AffectsRender));
 
-    public string Description
-    {
-      get { return (string)GetValue(DescriptionProperty); }
-      set { SetValue(DescriptionProperty, value); }
-    }
-
-    public static readonly DependencyProperty DescriptionProperty =
-      DependencyProperty.Register(
-      "Description",
-      typeof(string),
-      typeof(DataAxis),
+    /// <summary>
+    ///   The description property.
+    /// </summary>
+    public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
+      "Description", 
+      typeof(string), 
+      typeof(DataAxis), 
       new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.AffectsRender));
 
-    public DataAxis()
-    {
-    }
+    /// <summary>
+    ///   The data axes.
+    /// </summary>
+    public static List<DataAxis> DataAxes;
 
-    public DataAxis(AxisType axis)
-    {
-      this.Axis = axis;
-    }
+    /// <summary>
+    ///   The predefined chart axes phase space.
+    /// </summary>
+    public static List<DataAxis> PredefinedChartAxesPhaseSpace;
 
-    public override string ToString()
-    {
-      return this.Description;
-    }
+    /// <summary>
+    ///   The predefined chart axes position space.
+    /// </summary>
+    public static List<DataAxis> PredefinedChartAxesPositionSpace;
 
+    #endregion
+
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Initializes static members of the <see cref="DataAxis" /> class.
+    /// </summary>
     static DataAxis()
     {
       // Single axis data
-      DataAxis iAxis = new DataAxis(AxisType.I);
-      LocTextExtension lociAxis = new LocTextExtension("VianaNET:Labels:AxisFrame");
-      lociAxis.SetBinding(iAxis, DataAxis.DescriptionProperty);
+      var iAxis = new DataAxis(AxisType.I);
+      var lociAxis = new LocTextExtension("VianaNET:Labels:AxisFrame");
+      lociAxis.SetBinding(iAxis, DescriptionProperty);
 
-      DataAxis tAxis = new DataAxis(AxisType.T);
-      LocTextExtension loctAxis = new LocTextExtension("VianaNET:Labels:AxisTime");
-      loctAxis.SetBinding(tAxis, DataAxis.DescriptionProperty);
+      var tAxis = new DataAxis(AxisType.T);
+      var loctAxis = new LocTextExtension("VianaNET:Labels:AxisTime");
+      loctAxis.SetBinding(tAxis, DescriptionProperty);
 
-      DataAxis xAxis = new DataAxis(AxisType.X);
-      LocTextExtension locxAxis = new LocTextExtension("VianaNET:Labels:AxisPixelX");
-      locxAxis.SetBinding(xAxis, DataAxis.DescriptionProperty);
+      var xAxis = new DataAxis(AxisType.X);
+      var locxAxis = new LocTextExtension("VianaNET:Labels:AxisPixelX");
+      locxAxis.SetBinding(xAxis, DescriptionProperty);
 
-      DataAxis yAxis = new DataAxis(AxisType.Y);
-      LocTextExtension locyAxis = new LocTextExtension("VianaNET:Labels:AxisPixelY");
-      locyAxis.SetBinding(yAxis, DataAxis.DescriptionProperty);
+      var yAxis = new DataAxis(AxisType.Y);
+      var locyAxis = new LocTextExtension("VianaNET:Labels:AxisPixelY");
+      locyAxis.SetBinding(yAxis, DescriptionProperty);
 
-      DataAxis pxAxis = new DataAxis(AxisType.PX);
-      LocTextExtension locpxAxis = new LocTextExtension("VianaNET:Labels:AxisPositionX");
-      locpxAxis.SetBinding(pxAxis, DataAxis.DescriptionProperty);
+      var pxAxis = new DataAxis(AxisType.PX);
+      var locpxAxis = new LocTextExtension("VianaNET:Labels:AxisPositionX");
+      locpxAxis.SetBinding(pxAxis, DescriptionProperty);
 
-      DataAxis pyAxis = new DataAxis(AxisType.PY);
-      LocTextExtension locpyAxis = new LocTextExtension("VianaNET:Labels:AxisPositionY");
-      locpyAxis.SetBinding(pyAxis, DataAxis.DescriptionProperty);
+      var pyAxis = new DataAxis(AxisType.PY);
+      var locpyAxis = new LocTextExtension("VianaNET:Labels:AxisPositionY");
+      locpyAxis.SetBinding(pyAxis, DescriptionProperty);
 
-      DataAxis dAxis = new DataAxis(AxisType.D);
-      LocTextExtension locdAxis = new LocTextExtension("VianaNET:Labels:AxisDistance");
-      locdAxis.SetBinding(dAxis, DataAxis.DescriptionProperty);
+      var dAxis = new DataAxis(AxisType.D);
+      var locdAxis = new LocTextExtension("VianaNET:Labels:AxisDistance");
+      locdAxis.SetBinding(dAxis, DescriptionProperty);
 
-      DataAxis dxAxis = new DataAxis(AxisType.DX);
-      LocTextExtension locdxAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceX");
-      locdxAxis.SetBinding(dxAxis, DataAxis.DescriptionProperty);
+      var dxAxis = new DataAxis(AxisType.DX);
+      var locdxAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceX");
+      locdxAxis.SetBinding(dxAxis, DescriptionProperty);
 
-      DataAxis dyAxis = new DataAxis(AxisType.DY);
-      LocTextExtension locdyAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceY");
-      locdyAxis.SetBinding(dyAxis, DataAxis.DescriptionProperty);
+      var dyAxis = new DataAxis(AxisType.DY);
+      var locdyAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceY");
+      locdyAxis.SetBinding(dyAxis, DescriptionProperty);
 
-      DataAxis sAxis = new DataAxis(AxisType.S);
-      LocTextExtension locsAxis = new LocTextExtension("VianaNET:Labels:AxisLength");
-      locsAxis.SetBinding(sAxis, DataAxis.DescriptionProperty);
+      var sAxis = new DataAxis(AxisType.S);
+      var locsAxis = new LocTextExtension("VianaNET:Labels:AxisLength");
+      locsAxis.SetBinding(sAxis, DescriptionProperty);
 
-      DataAxis sxAxis = new DataAxis(AxisType.SX);
-      LocTextExtension locsxAxis = new LocTextExtension("VianaNET:Labels:AxisLengthX");
-      locsxAxis.SetBinding(sxAxis, DataAxis.DescriptionProperty);
+      var sxAxis = new DataAxis(AxisType.SX);
+      var locsxAxis = new LocTextExtension("VianaNET:Labels:AxisLengthX");
+      locsxAxis.SetBinding(sxAxis, DescriptionProperty);
 
-      DataAxis syAxis = new DataAxis(AxisType.SY);
-      LocTextExtension locsyAxis = new LocTextExtension("VianaNET:Labels:AxisLengthY");
-      locsyAxis.SetBinding(syAxis, DataAxis.DescriptionProperty);
+      var syAxis = new DataAxis(AxisType.SY);
+      var locsyAxis = new LocTextExtension("VianaNET:Labels:AxisLengthY");
+      locsyAxis.SetBinding(syAxis, DescriptionProperty);
 
-      DataAxis vAxis = new DataAxis(AxisType.V);
-      LocTextExtension locvAxis = new LocTextExtension("VianaNET:Labels:AxisVelocity");
-      locvAxis.SetBinding(vAxis, DataAxis.DescriptionProperty);
+      var vAxis = new DataAxis(AxisType.V);
+      var locvAxis = new LocTextExtension("VianaNET:Labels:AxisVelocity");
+      locvAxis.SetBinding(vAxis, DescriptionProperty);
 
-      DataAxis vxAxis = new DataAxis(AxisType.VX);
-      LocTextExtension locvxAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirection");
-      locvxAxis.SetBinding(vxAxis, DataAxis.DescriptionProperty);
+      var vxAxis = new DataAxis(AxisType.VX);
+      var locvxAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirection");
+      locvxAxis.SetBinding(vxAxis, DescriptionProperty);
 
-      DataAxis vyAxis = new DataAxis(AxisType.VY);
-      LocTextExtension locvyAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirection");
-      locvyAxis.SetBinding(vyAxis, DataAxis.DescriptionProperty);
+      var vyAxis = new DataAxis(AxisType.VY);
+      var locvyAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirection");
+      locvyAxis.SetBinding(vyAxis, DescriptionProperty);
 
-      DataAxis viAxis = new DataAxis(AxisType.VI);
-      LocTextExtension locviAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityInterpolated");
-      locviAxis.SetBinding(viAxis, DataAxis.DescriptionProperty);
+      var viAxis = new DataAxis(AxisType.VI);
+      var locviAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityInterpolated");
+      locviAxis.SetBinding(viAxis, DescriptionProperty);
 
-      DataAxis vxiAxis = new DataAxis(AxisType.VXI);
-      LocTextExtension locvxiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirectionInterpolated");
-      locvxiAxis.SetBinding(vxiAxis, DataAxis.DescriptionProperty);
+      var vxiAxis = new DataAxis(AxisType.VXI);
+      var locvxiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirectionInterpolated");
+      locvxiAxis.SetBinding(vxiAxis, DescriptionProperty);
 
-      DataAxis vyiAxis = new DataAxis(AxisType.VYI);
-      LocTextExtension locvyiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirectionInterpolated");
-      locvyiAxis.SetBinding(vyiAxis, DataAxis.DescriptionProperty);
+      var vyiAxis = new DataAxis(AxisType.VYI);
+      var locvyiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirectionInterpolated");
+      locvyiAxis.SetBinding(vyiAxis, DescriptionProperty);
 
-      DataAxis aAxis = new DataAxis(AxisType.A);
-      LocTextExtension locaAxis = new LocTextExtension("VianaNET:Labels:AxisAcceleration");
-      locaAxis.SetBinding(aAxis, DataAxis.DescriptionProperty);
+      var aAxis = new DataAxis(AxisType.A);
+      var locaAxis = new LocTextExtension("VianaNET:Labels:AxisAcceleration");
+      locaAxis.SetBinding(aAxis, DescriptionProperty);
 
-      DataAxis axAxis = new DataAxis(AxisType.AX);
-      LocTextExtension locaxAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirection");
-      locaxAxis.SetBinding(axAxis, DataAxis.DescriptionProperty);
+      var axAxis = new DataAxis(AxisType.AX);
+      var locaxAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirection");
+      locaxAxis.SetBinding(axAxis, DescriptionProperty);
 
-      DataAxis ayAxis = new DataAxis(AxisType.AY);
-      LocTextExtension locayAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirection");
-      locayAxis.SetBinding(ayAxis, DataAxis.DescriptionProperty);
+      var ayAxis = new DataAxis(AxisType.AY);
+      var locayAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirection");
+      locayAxis.SetBinding(ayAxis, DescriptionProperty);
 
-      DataAxis aiAxis = new DataAxis(AxisType.AI);
-      LocTextExtension locaiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationInterpolated");
-      locaiAxis.SetBinding(aiAxis, DataAxis.DescriptionProperty);
+      var aiAxis = new DataAxis(AxisType.AI);
+      var locaiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationInterpolated");
+      locaiAxis.SetBinding(aiAxis, DescriptionProperty);
 
-      DataAxis axiAxis = new DataAxis(AxisType.AXI);
-      LocTextExtension locaxiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirectionInterpolated");
-      locaxiAxis.SetBinding(axiAxis, DataAxis.DescriptionProperty);
+      var axiAxis = new DataAxis(AxisType.AXI);
+      var locaxiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirectionInterpolated");
+      locaxiAxis.SetBinding(axiAxis, DescriptionProperty);
 
-      DataAxis ayiAxis = new DataAxis(AxisType.AYI);
-      LocTextExtension locayiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirectionInterpolated");
-      locayiAxis.SetBinding(ayiAxis, DataAxis.DescriptionProperty);
+      var ayiAxis = new DataAxis(AxisType.AYI);
+      var locayiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirectionInterpolated");
+      locayiAxis.SetBinding(ayiAxis, DescriptionProperty);
 
       DataAxes = new List<DataAxis>();
       DataAxes.Add(iAxis);
@@ -182,36 +205,36 @@ namespace VianaNET
       DataAxes.Add(ayiAxis);
 
       // Double axis data position space
-      DataAxis YoverX = new DataAxis(AxisType.YoverX);
-      LocTextExtension locYoverX = new LocTextExtension("VianaNET:Labels:AxisYoverX");
-      locYoverX.SetBinding(YoverX, DataAxis.DescriptionProperty);
-      DataAxis XoverT = new DataAxis(AxisType.XoverT);
-      LocTextExtension locXoverT = new LocTextExtension("VianaNET:Labels:AxisXoverT");
-      locXoverT.SetBinding(XoverT, DataAxis.DescriptionProperty);
-      DataAxis YoverT = new DataAxis(AxisType.YoverT);
-      LocTextExtension locYoverT = new LocTextExtension("VianaNET:Labels:AxisYoverT");
-      locYoverT.SetBinding(YoverT, DataAxis.DescriptionProperty);
-      DataAxis SoverT = new DataAxis(AxisType.SoverT);
-      LocTextExtension locSoverT = new LocTextExtension("VianaNET:Labels:AxisSoverT");
-      locSoverT.SetBinding(SoverT, DataAxis.DescriptionProperty);
-      DataAxis VoverT = new DataAxis(AxisType.VoverT);
-      LocTextExtension locVoverT = new LocTextExtension("VianaNET:Labels:AxisVoverT");
-      locVoverT.SetBinding(VoverT, DataAxis.DescriptionProperty);
-      DataAxis VXoverT = new DataAxis(AxisType.VXoverT);
-      LocTextExtension locVXoverT = new LocTextExtension("VianaNET:Labels:AxisVXoverT");
-      locVXoverT.SetBinding(VXoverT, DataAxis.DescriptionProperty);
-      DataAxis VYoverT = new DataAxis(AxisType.VYoverT);
-      LocTextExtension locVYoverT = new LocTextExtension("VianaNET:Labels:AxisVYoverT");
-      locVYoverT.SetBinding(VYoverT, DataAxis.DescriptionProperty);
-      DataAxis AoverT = new DataAxis(AxisType.AoverT);
-      LocTextExtension locAoverT = new LocTextExtension("VianaNET:Labels:AxisAoverT");
-      locAoverT.SetBinding(AoverT, DataAxis.DescriptionProperty);
-      DataAxis AXoverT = new DataAxis(AxisType.AXoverT);
-      LocTextExtension locAXoverT = new LocTextExtension("VianaNET:Labels:AxisAXoverT");
-      locAXoverT.SetBinding(AXoverT, DataAxis.DescriptionProperty);
-      DataAxis AYoverT = new DataAxis(AxisType.AYoverT);
-      LocTextExtension locAYoverT = new LocTextExtension("VianaNET:Labels:AxisAYoverT");
-      locAYoverT.SetBinding(AYoverT, DataAxis.DescriptionProperty);
+      var YoverX = new DataAxis(AxisType.YoverX);
+      var locYoverX = new LocTextExtension("VianaNET:Labels:AxisYoverX");
+      locYoverX.SetBinding(YoverX, DescriptionProperty);
+      var XoverT = new DataAxis(AxisType.XoverT);
+      var locXoverT = new LocTextExtension("VianaNET:Labels:AxisXoverT");
+      locXoverT.SetBinding(XoverT, DescriptionProperty);
+      var YoverT = new DataAxis(AxisType.YoverT);
+      var locYoverT = new LocTextExtension("VianaNET:Labels:AxisYoverT");
+      locYoverT.SetBinding(YoverT, DescriptionProperty);
+      var SoverT = new DataAxis(AxisType.SoverT);
+      var locSoverT = new LocTextExtension("VianaNET:Labels:AxisSoverT");
+      locSoverT.SetBinding(SoverT, DescriptionProperty);
+      var VoverT = new DataAxis(AxisType.VoverT);
+      var locVoverT = new LocTextExtension("VianaNET:Labels:AxisVoverT");
+      locVoverT.SetBinding(VoverT, DescriptionProperty);
+      var VXoverT = new DataAxis(AxisType.VXoverT);
+      var locVXoverT = new LocTextExtension("VianaNET:Labels:AxisVXoverT");
+      locVXoverT.SetBinding(VXoverT, DescriptionProperty);
+      var VYoverT = new DataAxis(AxisType.VYoverT);
+      var locVYoverT = new LocTextExtension("VianaNET:Labels:AxisVYoverT");
+      locVYoverT.SetBinding(VYoverT, DescriptionProperty);
+      var AoverT = new DataAxis(AxisType.AoverT);
+      var locAoverT = new LocTextExtension("VianaNET:Labels:AxisAoverT");
+      locAoverT.SetBinding(AoverT, DescriptionProperty);
+      var AXoverT = new DataAxis(AxisType.AXoverT);
+      var locAXoverT = new LocTextExtension("VianaNET:Labels:AxisAXoverT");
+      locAXoverT.SetBinding(AXoverT, DescriptionProperty);
+      var AYoverT = new DataAxis(AxisType.AYoverT);
+      var locAYoverT = new LocTextExtension("VianaNET:Labels:AxisAYoverT");
+      locAYoverT.SetBinding(AYoverT, DescriptionProperty);
 
       PredefinedChartAxesPositionSpace = new List<DataAxis>();
       PredefinedChartAxesPositionSpace.Add(YoverX);
@@ -225,33 +248,33 @@ namespace VianaNET
       PredefinedChartAxesPositionSpace.Add(AYoverT);
 
       // Double axis data phase space
-      DataAxis VoverD = new DataAxis(AxisType.VoverD);
-      LocTextExtension locDoverV = new LocTextExtension("VianaNET:Labels:AxisDoverV");
-      locDoverV.SetBinding(VoverD, DataAxis.DescriptionProperty);
-      DataAxis VXoverDX = new DataAxis(AxisType.VXoverDX);
-      LocTextExtension locDXoverVX = new LocTextExtension("VianaNET:Labels:AxisDXoverVX");
-      locDXoverVX.SetBinding(VXoverDX, DataAxis.DescriptionProperty);
-      DataAxis VYoverDY = new DataAxis(AxisType.VYoverDY);
-      LocTextExtension locDYoverVY = new LocTextExtension("VianaNET:Labels:AxisDYoverVY");
-      locDYoverVY.SetBinding(VYoverDY, DataAxis.DescriptionProperty);
-      DataAxis VoverS = new DataAxis(AxisType.VoverS);
-      LocTextExtension locSoverV = new LocTextExtension("VianaNET:Labels:AxisSoverV");
-      locSoverV.SetBinding(VoverS, DataAxis.DescriptionProperty);
-      DataAxis VXoverSX = new DataAxis(AxisType.VXoverSX);
-      LocTextExtension locSXoverVX = new LocTextExtension("VianaNET:Labels:AxisSXoverVX");
-      locSXoverVX.SetBinding(VXoverSX, DataAxis.DescriptionProperty);
-      DataAxis VYoverSY = new DataAxis(AxisType.VYoverSY);
-      LocTextExtension locSYoverVY = new LocTextExtension("VianaNET:Labels:AxisSYoverVY");
-      locSYoverVY.SetBinding(VYoverSY, DataAxis.DescriptionProperty);
-      DataAxis AoverV = new DataAxis(AxisType.AoverV);
-      LocTextExtension locVoverA = new LocTextExtension("VianaNET:Labels:AxisVoverA");
-      locVoverA.SetBinding(AoverV, DataAxis.DescriptionProperty);
-      DataAxis AXoverVX = new DataAxis(AxisType.AXoverVX);
-      LocTextExtension locVXoverAX = new LocTextExtension("VianaNET:Labels:AxisVXoverAX");
-      locVXoverAX.SetBinding(AXoverVX, DataAxis.DescriptionProperty);
-      DataAxis AYoverVY = new DataAxis(AxisType.AYoverVY);
-      LocTextExtension locVYoverAY = new LocTextExtension("VianaNET:Labels:AxisVYoverAY");
-      locVYoverAY.SetBinding(AYoverVY, DataAxis.DescriptionProperty);
+      var VoverD = new DataAxis(AxisType.VoverD);
+      var locDoverV = new LocTextExtension("VianaNET:Labels:AxisDoverV");
+      locDoverV.SetBinding(VoverD, DescriptionProperty);
+      var VXoverDX = new DataAxis(AxisType.VXoverDX);
+      var locDXoverVX = new LocTextExtension("VianaNET:Labels:AxisDXoverVX");
+      locDXoverVX.SetBinding(VXoverDX, DescriptionProperty);
+      var VYoverDY = new DataAxis(AxisType.VYoverDY);
+      var locDYoverVY = new LocTextExtension("VianaNET:Labels:AxisDYoverVY");
+      locDYoverVY.SetBinding(VYoverDY, DescriptionProperty);
+      var VoverS = new DataAxis(AxisType.VoverS);
+      var locSoverV = new LocTextExtension("VianaNET:Labels:AxisSoverV");
+      locSoverV.SetBinding(VoverS, DescriptionProperty);
+      var VXoverSX = new DataAxis(AxisType.VXoverSX);
+      var locSXoverVX = new LocTextExtension("VianaNET:Labels:AxisSXoverVX");
+      locSXoverVX.SetBinding(VXoverSX, DescriptionProperty);
+      var VYoverSY = new DataAxis(AxisType.VYoverSY);
+      var locSYoverVY = new LocTextExtension("VianaNET:Labels:AxisSYoverVY");
+      locSYoverVY.SetBinding(VYoverSY, DescriptionProperty);
+      var AoverV = new DataAxis(AxisType.AoverV);
+      var locVoverA = new LocTextExtension("VianaNET:Labels:AxisVoverA");
+      locVoverA.SetBinding(AoverV, DescriptionProperty);
+      var AXoverVX = new DataAxis(AxisType.AXoverVX);
+      var locVXoverAX = new LocTextExtension("VianaNET:Labels:AxisVXoverAX");
+      locVXoverAX.SetBinding(AXoverVX, DescriptionProperty);
+      var AYoverVY = new DataAxis(AxisType.AYoverVY);
+      var locVYoverAY = new LocTextExtension("VianaNET:Labels:AxisVYoverAY");
+      locVYoverAY.SetBinding(AYoverVY, DescriptionProperty);
 
       PredefinedChartAxesPhaseSpace = new List<DataAxis>();
       PredefinedChartAxesPhaseSpace.Add(VoverD);
@@ -264,5 +287,74 @@ namespace VianaNET
       PredefinedChartAxesPhaseSpace.Add(AXoverVX);
       PredefinedChartAxesPhaseSpace.Add(AYoverVY);
     }
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="DataAxis" /> class.
+    /// </summary>
+    public DataAxis()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataAxis"/> class.
+    /// </summary>
+    /// <param name="axis">
+    /// The axis. 
+    /// </param>
+    public DataAxis(AxisType axis)
+    {
+      this.Axis = axis;
+    }
+
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>
+    ///   Gets or sets the axis.
+    /// </summary>
+    public AxisType Axis
+    {
+      get
+      {
+        return (AxisType)this.GetValue(AxisProperty);
+      }
+
+      set
+      {
+        this.SetValue(AxisProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the description.
+    /// </summary>
+    public string Description
+    {
+      get
+      {
+        return (string)this.GetValue(DescriptionProperty);
+      }
+
+      set
+      {
+        this.SetValue(DescriptionProperty, value);
+      }
+    }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    ///   The to string.
+    /// </summary>
+    /// <returns> The <see cref="string" /> . </returns>
+    public override string ToString()
+    {
+      return this.Description;
+    }
+
+    #endregion
   }
 }

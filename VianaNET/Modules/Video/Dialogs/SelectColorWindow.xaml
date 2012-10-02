@@ -1,15 +1,15 @@
 ﻿<Window
-    x:Class="VianaNET.SelectColorWindow"
+    x:Class="VianaNET.Modules.Video.Dialogs.SelectColorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
  	  xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
     xmlns:Viana="clr-namespace:VianaNET"
-    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
-    lex:LocalizeDictionary.DesignCulture="de"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation" xmlns:Data="clr-namespace:VianaNET.Data"
+    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Title="{lex:LocText VianaNET:Labels:SelectColorWindowTitle}"
-  Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}"
+  Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}"
   PreviewKeyDown="Window_PreviewKeyDown" Topmost="True" Cursor="Pen">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -19,7 +19,7 @@
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
 
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}"/>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static Control:Video.Instance}}"/>
     <Canvas Name="windowCanvas">
       <Canvas.Width>
         <Binding ElementName="VideoImage" Path="ActualWidth" />
@@ -29,7 +29,7 @@
       </Canvas.Height>
     
       <Border Name="ObjectIndexPanel" 
-              Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=VideoImage,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 

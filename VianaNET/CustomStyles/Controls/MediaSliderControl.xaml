@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="VianaNET.MediaSliderControl"
+﻿<UserControl x:Class="VianaNET.CustomStyles.Controls.MediaSliderControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-    Height="Auto" Width="300">
+    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls"
+             xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" Height="Auto" Width="300">
   <UserControl.Resources>
     <ResourceDictionary Source="../Styles/VianaStyle.xaml"/>
   </UserControl.Resources>
-  <Viana:MediaSlider x:Name="SliderControl"   
-        FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static Viana:Video.Instance}}"
-        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Viana:Video.Instance}}" 
+  <Controls:MediaSlider x:Name="SliderControl"   
+        FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static Control:Video.Instance}}"
+        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Control:Video.Instance}}" 
         SmallChange="1" 
         SelectionStart="10" 
         TickPlacement="BottomRight" 

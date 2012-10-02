@@ -1,11 +1,13 @@
 ﻿<ad:DockableContent
-	x:Class="VianaNET.VideoWindow"
+	x:Class="VianaNET.Modules.Video.VideoWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Viana="clr-namespace:VianaNET"
     xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
     xmlns:lex="http://schemas.root-project.org/xaml/presentation"
-    lex:LocalizeDictionary.DesignCulture="de"
+	xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls" xmlns:Data="clr-namespace:VianaNET.Data"
+	xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
+	xmlns:BlobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" lex:LocalizeDictionary.DesignCulture="de"
     Width="630"
     Height="436" Title="{lex:LocText VianaNET:Labels:VideoWindowTitle}" 
   DockableStyle="Dockable" HideOnClose="False">
@@ -20,7 +22,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Viana:Calibration.Instance}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -32,7 +34,7 @@
 
         <Image Name="VideoImage" 
                HorizontalAlignment="Center" 
-               Source="{Binding Path=VideoSource, Source={x:Static Viana:Video.Instance}}"
+               Source="{Binding Path=VideoSource, Source={x:Static Control:Video.Instance}}"
                >
         </Image>
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvas_SizeChanged"
@@ -55,7 +57,7 @@
             </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=RulerValueInRulerUnits,
-              Source={x:Static Viana:Calibration.Instance},
+              Source={x:Static Data:Calibration.Instance},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
@@ -79,9 +81,9 @@
           </Path>
         </Canvas>
       </Grid>
-      <Viana:BlobsControl Width="Auto" 
+      <BlobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ImageProcessing.IsTargetColorSet, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ImageProcessing.IsTargetColorSet, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -91,22 +93,22 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10,0,10,0" >
-        <Viana:ImageButton x:Name="btnRecord" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Record16.png" Click="btnRecord_Click" />
-        <Viana:ImageButton x:Name="btnStart" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Start16.png" Click="btnStart_Click" />
-        <Viana:ImageButton x:Name="btnPause" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Pause16.png" Click="btnPause_Click" Visibility="Collapsed"/>
-        <Viana:ImageButton x:Name="btnStop" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Stop16.png" Click="btnStop_Click" />
-        <Viana:ImageButton x:Name="btnRevert" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Revert16.png" Click="btnRevert_Click"/>
+        <Controls:ImageButton x:Name="btnRecord" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Record16.png" Click="btnRecord_Click" />
+        <Controls:ImageButton x:Name="btnStart" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Start16.png" Click="btnStart_Click" />
+        <Controls:ImageButton x:Name="btnPause" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Pause16.png" Click="btnPause_Click" Visibility="Collapsed"/>
+        <Controls:ImageButton x:Name="btnStop" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Stop16.png" Click="btnStop_Click" />
+        <Controls:ImageButton x:Name="btnRevert" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Revert16.png" Click="btnRevert_Click"/>
       </StackPanel>
-      <Viana:MediaSlider
+      <Controls:MediaSlider
         Grid.Column="1" 
         x:Name="timelineSlider" 
         IsSelectionRangeEnabled="True" 
         TickDownClicked="timelineSlider_TickDownClicked"
         TickUpClicked="timelineSlider_TickUpClicked"
-        FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static Viana:Video.Instance}}"
-        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Viana:Video.Instance}}"
-        SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Viana:Video.Instance}}"
-        SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Viana:Video.Instance}}"
+        FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static Control:Video.Instance}}"
+        Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Control:Video.Instance}}"
+        SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Control:Video.Instance}}"
+        SelectionEnd="{Binding Path=VideoPlayerElement.SelectionEnd, Source={x:Static Control:Video.Instance}}"
         SmallChange="1" 
         TickPlacement="BottomRight" 
         Interval="1" 

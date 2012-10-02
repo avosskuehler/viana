@@ -1,13 +1,12 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-	>
+    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="NumericUpDown.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
-  <Style x:Key="RibbonNumericUpDown" TargetType="{x:Type Viana:NumericUpDown}">
+  <Style x:Key="RibbonNumericUpDown" TargetType="{x:Type Controls:NumericUpDown}">
     <Setter Property="Style" Value="{StaticResource Viana:NumericUpDown}" />
   </Style>
 

@@ -1,139 +1,191 @@
-﻿# region Using Directives
-
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-
-# endregion
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageButton.xaml.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The image button.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.CustomStyles.Controls
 {
+  using System.Windows;
+  using System.Windows.Controls;
+  using System.Windows.Media;
+
+  /// <summary>
+  ///   The image button.
+  /// </summary>
   public class ImageButton : Button
   {
-    # region Declarations
+    #region Static Fields
 
-    public static readonly DependencyProperty OrientationProperty;
-
-    public static readonly DependencyProperty ImageSourceProperty;
-
-    public static readonly DependencyProperty IsToolStyleProperty;
-
+    /// <summary>
+    ///   The content horizontal alignment property.
+    /// </summary>
     public static readonly DependencyProperty ContentHorizontalAlignmentProperty;
 
+    /// <summary>
+    ///   The content vertical alignment property.
+    /// </summary>
     public static readonly DependencyProperty ContentVerticalAlignmentProperty;
 
-    # endregion
+    /// <summary>
+    ///   The image source property.
+    /// </summary>
+    public static readonly DependencyProperty ImageSourceProperty;
 
-    # region Static Constructor
+    /// <summary>
+    ///   The is tool style property.
+    /// </summary>
+    public static readonly DependencyProperty IsToolStyleProperty;
 
+    /// <summary>
+    ///   The orientation property.
+    /// </summary>
+    public static readonly DependencyProperty OrientationProperty;
+
+    #endregion
+
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Initializes static members of the <see cref="ImageButton" /> class.
+    /// </summary>
     static ImageButton()
     {
-      DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageButton),
-        new FrameworkPropertyMetadata(typeof(ImageButton)));
+      DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageButton), new FrameworkPropertyMetadata(typeof(ImageButton)));
 
-      ImageButton.OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation),
-        typeof(ImageButton), new FrameworkPropertyMetadata(Orientation.Horizontal,
-        FrameworkPropertyMetadataOptions.AffectsMeasure));
+      OrientationProperty = DependencyProperty.Register(
+        "Orientation", 
+        typeof(Orientation), 
+        typeof(ImageButton), 
+        new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-      ImageButton.ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(ImageButton),
-        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender |
-        FrameworkPropertyMetadataOptions.AffectsMeasure));
+      ImageSourceProperty = DependencyProperty.Register(
+        "ImageSource", 
+        typeof(ImageSource), 
+        typeof(ImageButton), 
+        new FrameworkPropertyMetadata(
+          null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-      ImageButton.IsToolStyleProperty = DependencyProperty.Register("IsToolStyle", typeof(bool), typeof(ImageButton),
-        new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender
-        | FrameworkPropertyMetadataOptions.AffectsArrange));
+      IsToolStyleProperty = DependencyProperty.Register(
+        "IsToolStyle", 
+        typeof(bool), 
+        typeof(ImageButton), 
+        new FrameworkPropertyMetadata(
+          false, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-      ImageButton.ContentHorizontalAlignmentProperty = DependencyProperty.Register(
-        "ContentHorizontalAlignment", typeof(HorizontalAlignment),
-        typeof(ImageButton), new FrameworkPropertyMetadata(HorizontalAlignment.Center,
-        FrameworkPropertyMetadataOptions.AffectsRender));
+      ContentHorizontalAlignmentProperty = DependencyProperty.Register(
+        "ContentHorizontalAlignment", 
+        typeof(HorizontalAlignment), 
+        typeof(ImageButton), 
+        new FrameworkPropertyMetadata(HorizontalAlignment.Center, FrameworkPropertyMetadataOptions.AffectsRender));
 
-      ImageButton.ContentVerticalAlignmentProperty = DependencyProperty.Register(
-        "ContentVerticalAlignment", typeof(VerticalAlignment),
-        typeof(ImageButton), new FrameworkPropertyMetadata(VerticalAlignment.Center,
-        FrameworkPropertyMetadataOptions.AffectsRender));
-
+      ContentVerticalAlignmentProperty = DependencyProperty.Register(
+        "ContentVerticalAlignment", 
+        typeof(VerticalAlignment), 
+        typeof(ImageButton), 
+        new FrameworkPropertyMetadata(VerticalAlignment.Center, FrameworkPropertyMetadataOptions.AffectsRender));
     }
 
-    # endregion
+    #endregion
 
-    # region ContentHorizontalAlignment
+    #region Public Properties
 
+    /// <summary>
+    ///   Gets or sets the content horizontal alignment.
+    /// </summary>
     public HorizontalAlignment ContentHorizontalAlignment
     {
       get
       {
-        return (HorizontalAlignment)this.GetValue(ImageButton.ContentHorizontalAlignmentProperty);
+        return (HorizontalAlignment)this.GetValue(ContentHorizontalAlignmentProperty);
       }
+
       set
       {
-        this.SetValue(ImageButton.ContentHorizontalAlignmentProperty, value);
+        this.SetValue(ContentHorizontalAlignmentProperty, value);
       }
     }
 
-    # endregion
-
-    # region ContentVerticalAlignment
-
+    /// <summary>
+    ///   Gets or sets the content vertical alignment.
+    /// </summary>
     public VerticalAlignment ContentVerticalAlignment
     {
       get
       {
-        return (VerticalAlignment)this.GetValue(ImageButton.ContentVerticalAlignmentProperty);
+        return (VerticalAlignment)this.GetValue(ContentVerticalAlignmentProperty);
       }
+
       set
       {
-        this.SetValue(ImageButton.ContentVerticalAlignmentProperty, value);
+        this.SetValue(ContentVerticalAlignmentProperty, value);
       }
     }
 
-    # endregion
-
-    # region Orientation
-
-    public Orientation Orientation
-    {
-      get
-      {
-        return (Orientation)this.GetValue(ImageButton.OrientationProperty);
-      }
-      set
-      {
-        this.SetValue(ImageButton.OrientationProperty, value);
-      }
-    }
-
-    # endregion
-
-    # region ImageSource
-
+    /// <summary>
+    ///   Gets or sets the image source.
+    /// </summary>
     public ImageSource ImageSource
     {
       get
       {
-        return (ImageSource)this.GetValue(ImageButton.ImageSourceProperty);
+        return (ImageSource)this.GetValue(ImageSourceProperty);
       }
+
       set
       {
-        this.SetValue(ImageButton.ImageSourceProperty, value);
+        this.SetValue(ImageSourceProperty, value);
       }
     }
 
-    # endregion
-
-    #region IsToolStyle
-
+    /// <summary>
+    ///   Gets or sets a value indicating whether is tool style.
+    /// </summary>
     public bool IsToolStyle
     {
       get
       {
-        return (bool)GetValue(IsToolStyleProperty);
+        return (bool)this.GetValue(IsToolStyleProperty);
       }
+
       set
       {
-        SetValue(IsToolStyleProperty, value);
+        this.SetValue(IsToolStyleProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the orientation.
+    /// </summary>
+    public Orientation Orientation
+    {
+      get
+      {
+        return (Orientation)this.GetValue(OrientationProperty);
+      }
+
+      set
+      {
+        this.SetValue(OrientationProperty, value);
       }
     }
 

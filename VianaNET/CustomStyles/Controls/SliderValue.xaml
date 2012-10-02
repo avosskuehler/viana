@@ -1,8 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-	>
+    xmlns:Viana="clr-namespace:VianaNET" xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
@@ -22,7 +21,7 @@
                         Background="{StaticResource ThumbBackgroundBrush}"
                         BorderBrush="{StaticResource NormalBorderBrush}">
             <Label FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="1,0,1,1" Padding="0" 
-                            Content="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type Viana:SliderValue}}}"/>
+                            Content="{Binding Path=Value,RelativeSource={RelativeSource AncestorType={x:Type Controls:SliderValue}}}"/>
           </Border>
 
           <ControlTemplate.Triggers>
@@ -71,7 +70,7 @@
     </Setter>
   </Style>
 
-  <ControlTemplate x:Key="SliderValueHorizontalSlider" TargetType="{x:Type Viana:SliderValue}">
+  <ControlTemplate x:Key="SliderValueHorizontalSlider" TargetType="{x:Type Controls:SliderValue}">
 
     <Grid>
       <Grid.ColumnDefinitions>
@@ -172,7 +171,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <ControlTemplate x:Key="SliderValueVerticalSlider" TargetType="{x:Type Viana:SliderValue}">
+  <ControlTemplate x:Key="SliderValueVerticalSlider" TargetType="{x:Type Controls:SliderValue}">
     <Grid>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto"/>
@@ -289,7 +288,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="{x:Type Viana:SliderValue}" TargetType="{x:Type Viana:SliderValue}">
+  <Style x:Key="{x:Type Controls:SliderValue}" TargetType="{x:Type Controls:SliderValue}">
     <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">
