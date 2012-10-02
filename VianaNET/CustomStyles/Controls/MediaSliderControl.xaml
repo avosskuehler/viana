@@ -4,7 +4,7 @@
              xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls"
              xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" Height="Auto" Width="300">
   <UserControl.Resources>
-    <ResourceDictionary Source="../Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </UserControl.Resources>
   <Controls:MediaSlider x:Name="SliderControl"   
         FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static Control:Video.Instance}}"

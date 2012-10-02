@@ -37,8 +37,6 @@ namespace VianaNET.Modules.Video
   using System.Windows.Shapes;
   using System.Windows.Threading;
 
-  using AvalonDock;
-
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data;
   using VianaNET.Localization;
@@ -49,7 +47,7 @@ namespace VianaNET.Modules.Video
   /// <summary>
   ///   The video window.
   /// </summary>
-  public partial class VideoWindow : DockableContent
+  public partial class VideoWindow
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -123,8 +121,7 @@ namespace VianaNET.Modules.Video
       this.InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.CreateCrossHairLines();
-      this.timesliderUpdateTimer = new DispatcherTimer();
-      this.timesliderUpdateTimer.Interval = TimeSpan.FromMilliseconds(200);
+      this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
       this.timesliderUpdateTimer.Tick += this.timesliderUpdateTimer_Tick;
 
       // this.thresholdEffect = new ThresholdEffect();

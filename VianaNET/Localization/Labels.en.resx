@@ -1405,4 +1405,13 @@ Click OK or press Enter, when ready.</value>
   <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
     <value>Export the recorded data</value>
   </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>Smooth &amp; Fit</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>fit</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
 </root>

@@ -31,8 +31,6 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows.Controls;
   using System.Windows.Data;
 
-  using AvalonDock;
-
   using VianaNET.Data;
   using VianaNET.Data.Interpolation;
   using VianaNET.Localization;
@@ -41,7 +39,7 @@ namespace VianaNET.Modules.DataGrid
   /// <summary>
   ///   The data grid window.
   /// </summary>
-  public partial class DataGridWindow : DockableContent
+  public partial class DataGridWindow
   {
     #region Constructors and Destructors
 

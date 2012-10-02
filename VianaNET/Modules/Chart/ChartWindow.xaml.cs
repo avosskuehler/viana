@@ -36,8 +36,6 @@ namespace VianaNET.Modules.Chart
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
-  using AvalonDock;
-
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data;
@@ -55,7 +53,7 @@ namespace VianaNET.Modules.Chart
   /// <summary>
   ///   The chart window.
   /// </summary>
-  public partial class ChartWindow : DockableContent
+  public partial class ChartWindow
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -396,7 +394,7 @@ namespace VianaNET.Modules.Chart
       else
       {
         this.activeLineFitClass.LineFitDisplaySample.Clear();
-        this.LabelLineFitFkt.Content = string.Empty;
+        this.LinefitFunctionLabel.Content = string.Empty;
       }
 
       this.RefreshSeries();
@@ -461,7 +459,7 @@ namespace VianaNET.Modules.Chart
         if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
           this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
-          this.LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+          this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
         }
       }
     }
@@ -491,14 +489,14 @@ namespace VianaNET.Modules.Chart
         this.lineFitTheorieFunction = fktEditor.GetFunktion();
         if (this.lineFitTheorieFunction != null)
         {
-          this.LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction.name;
+          this.TheoreticalFunctionLabel.Content = this.lineFitTheorieFunction.name;
           this.MakePreparationsForTheorieFit();
           this.activeLineFitClass.CalculateLineFitTheorieSeries(
             this.activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);
         }
         else
         {
-          this.LabelLineFitTheorieFkt.Content = " -- ";
+          this.TheoreticalFunctionLabel.Content = " -- ";
           if ((this.activeLineFitClass != null) && (this.activeLineFitClass.TheorieDisplaySample != null))
           {
             this.activeLineFitClass.TheorieDisplaySample.Clear();
@@ -578,7 +576,7 @@ namespace VianaNET.Modules.Chart
       }
 
       this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
-      this.LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+      this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
     }
 
     /// <summary>
@@ -1272,8 +1270,8 @@ namespace VianaNET.Modules.Chart
 
       if (this.checkBoxShowTheorie.IsChecked.GetValueOrDefault(false))
       {
-        this.LabelLineFitTheorieFkt.IsEnabled = true;
-        this.LabelLineFitTheorieFkt.Content = this.lineFitTheorieFunction.name;
+        this.TheoreticalFunctionLabel.IsEnabled = true;
+        this.TheoreticalFunctionLabel.Content = this.lineFitTheorieFunction.name;
         if ((this.activeLineFitClass.TheorieDisplaySample == null)
             || (this.activeLineFitClass.TheorieDisplaySample.Count == 0))
         {
@@ -1286,7 +1284,7 @@ namespace VianaNET.Modules.Chart
       }
       else
       {
-        this.LabelLineFitTheorieFkt.IsEnabled = false;
+        this.TheoreticalFunctionLabel.IsEnabled = false;
         if ((this.activeLineFitClass.TheorieDisplaySample != null)
             && (this.activeLineFitClass.TheorieDisplaySample.Count != 0))
         {
@@ -1325,7 +1323,7 @@ namespace VianaNET.Modules.Chart
         if (this.activeLineFitClass != null)
         {
           this.activeLineFitClass.gueltigeStellenFormatString = this.stellenZahlFormatString;
-          this.LabelLineFitFkt.Content = this.activeLineFitClass.LineFitFktStr;
+          this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
           if (((this.activeLineFitClass.LineFitDisplaySample != null)
                && (this.activeLineFitClass.LineFitDisplaySample.Count > 0))
               ||

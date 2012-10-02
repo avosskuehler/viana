@@ -1,20 +1,20 @@
-﻿<ad:DockableContent
+﻿<UserControl
 	x:Class="VianaNET.Modules.Video.VideoWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
-    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
-	xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls" xmlns:Data="clr-namespace:VianaNET.Data"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+	xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls" 
+  xmlns:Data="clr-namespace:VianaNET.Data"
 	xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
-	xmlns:BlobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" lex:LocalizeDictionary.DesignCulture="de"
-    Width="630"
-    Height="436" Title="{lex:LocText VianaNET:Labels:VideoWindowTitle}" 
-  DockableStyle="Dockable" HideOnClose="False">
-  <ad:DockableContent.Resources>
+	xmlns:BlobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  lex:LocalizeDictionary.DesignCulture="de"
+  d:DesignHeight="300" d:DesignWidth="400">
+  <UserControl.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
-  </ad:DockableContent.Resources>
-  <ad:DockableContent.Icon>
-    <Image Source="..\..\Images\Video16.png" Height="16" Width="16"/>
-  </ad:DockableContent.Icon>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
@@ -85,21 +85,32 @@
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
-    <Grid Background="{StaticResource PropertiesBackgroundBrush}" Height="40" Grid.RowSpan="2" VerticalAlignment="Bottom">
+    <Grid Grid.Row="1" Background="{StaticResource PropertiesBackgroundBrush}" VerticalAlignment="Bottom">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" MinWidth="100" />
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10,0,10,0" >
-        <Controls:ImageButton x:Name="btnRecord" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Record16.png" Click="btnRecord_Click" />
-        <Controls:ImageButton x:Name="btnStart" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Start16.png" Click="btnStart_Click" />
-        <Controls:ImageButton x:Name="btnPause" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Pause16.png" Click="btnPause_Click" Visibility="Collapsed"/>
-        <Controls:ImageButton x:Name="btnStop" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Stop16.png" Click="btnStop_Click" />
-        <Controls:ImageButton x:Name="btnRevert" Height="25" Width="25" ImageSource="/VianaNET;component/Images/Revert16.png" Click="btnRevert_Click"/>
+        <Button x:Name="btnRecord" Click="btnRecord_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Image Source="/VianaNET;component/Images/Record16.png" Width="16"/>
+        </Button>
+        <Button x:Name="btnStart" Click="btnStart_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Image Source="/VianaNET;component/Images/Start16.png" Width="16"/>
+        </Button>
+        <Button x:Name="btnPause" Click="btnPause_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Image Source="/VianaNET;component/Images/Pause16.png" Width="16"/>
+        </Button>
+        <Button x:Name="btnStop" Click="btnStop_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
+        </Button>
+        <Button x:Name="btnRevert" Click="btnRevert_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Image Source="/VianaNET;component/Images/Revert16.png" Width="16"/>
+        </Button>
       </StackPanel>
       <Controls:MediaSlider
         Grid.Column="1" 
         x:Name="timelineSlider" 
+        Style="{StaticResource MediaSliderStyle}"
         IsSelectionRangeEnabled="True" 
         TickDownClicked="timelineSlider_TickDownClicked"
         TickUpClicked="timelineSlider_TickUpClicked"
@@ -116,4 +127,4 @@
         Thumb.DragDelta="timelineSlider_DragDelta"/>
     </Grid>
   </Grid>
-</ad:DockableContent>
+</UserControl>

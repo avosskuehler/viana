@@ -1391,4 +1391,13 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
     <value>Die aufgezeichneten Daten exportieren</value>
   </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>Glätten &amp; Fitten</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>Fitten</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>Theorie</value>
+  </data>
 </root>

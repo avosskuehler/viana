@@ -1392,4 +1392,13 @@
   <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
     <value>@ButtonExportDataToolTipTitle</value>
   </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>@ChartWindowChartFitAndSmooth</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>@ChartWindowLinefitHeader</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>@ChartWindowTheorieLabel</value>
+  </data>
 </root>

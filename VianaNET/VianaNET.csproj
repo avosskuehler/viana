@@ -517,10 +517,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AvalonDock, Version=1.2.2691.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\AvalonDock.dll</HintPath>
-    </Reference>
     <Reference Include="DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>

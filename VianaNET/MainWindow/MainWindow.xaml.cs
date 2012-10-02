@@ -26,19 +26,14 @@
 namespace VianaNET.MainWindow
 {
   using System;
-  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
-  using System.IO;
   using System.Windows;
-  using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
   using System.Windows.Data;
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
-
-  using AvalonDock;
 
   using Microsoft.Win32;
   using Microsoft.Windows.Controls.Ribbon;
@@ -51,7 +46,6 @@ namespace VianaNET.MainWindow
   using VianaNET.Modules.Chart;
   using VianaNET.Modules.DataAcquisition;
   using VianaNET.Modules.DataGrid;
-  using VianaNET.Modules.Video;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
 
@@ -60,35 +54,9 @@ namespace VianaNET.MainWindow
   /// <summary>
   ///   The main window.
   /// </summary>
-  public partial class MainWindow : RibbonWindow
+  public partial class MainWindow
   {
     #region Fields
-
-    /// <summary>
-    ///   Saves the chart window of the application
-    /// </summary>
-    private readonly ChartWindow chartWindow;
-
-    /// <summary>
-    ///   Saves the data grid window of the application
-    /// </summary>
-    private readonly DataGridWindow datagridWindow;
-
-    /// <summary>
-    ///   Saves the xaml ribbon theme dictionary list.
-    /// </summary>
-    private readonly List<string> ribbonThemes;
-
-    /// <summary>
-    ///   Saves the video window of the application
-    /// </summary>
-    private readonly VideoWindow videoWindow;
-
-    /// <summary>
-    ///   Saves the index of the current theme
-    /// </summary>
-    private int themeCounter;
-
     #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -103,25 +71,8 @@ namespace VianaNET.MainWindow
     {
       this.InitializeComponent();
 
-      this.ribbonThemes = new List<string>(3);
-      this.ribbonThemes.Add("/RibbonControlsLibrary;component/Themes/Office2007Blue.xaml");
-      this.ribbonThemes.Add("/RibbonControlsLibrary;component/Themes/Office2007Silver.xaml");
-      this.ribbonThemes.Add("/RibbonControlsLibrary;component/Themes/Office2007Black.xaml");
-
       this.mainRibbon.DataContext = this;
-
-      this.videoWindow = new VideoWindow();
-      this.modulePane.Items.Add(this.videoWindow);
-      this.datagridWindow = new DataGridWindow();
-      this.modulePane.Items.Add(this.datagridWindow);
-      this.chartWindow = new ChartWindow();
-      this.modulePane.Items.Add(this.chartWindow);
-
       Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessingPropertyChanged;
-
-      // Initializes color scheme
-      this.themeCounter = 0;
-      this.SetColorScheme();
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
 
@@ -174,7 +125,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void AutomaticDataAquisitionButtonClick(object sender, RoutedEventArgs e)
     {
-      this.videoWindow.RunAutomaticDataAquisition();
+      this.VideoWindow.RunAutomaticDataAquisition();
     }
 
     /// <summary>
@@ -188,7 +139,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void AutomaticDataAquisitionStopButtonClick(object sender, RoutedEventArgs e)
     {
-      this.videoWindow.StopAutomaticDataAquisition();
+      this.VideoWindow.StopAutomaticDataAquisition();
     }
 
     /// <summary>
@@ -207,7 +158,6 @@ namespace VianaNET.MainWindow
       this.Cursor = Cursors.Arrow;
     }
 
-
     /// <summary>
     /// The button capture video command_ executed.
     /// </summary>
@@ -219,7 +169,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void CaptureVideoButtonClick(object sender, RoutedEventArgs e)
     {
-      this.videoWindow.SetVideoMode(VideoMode.Capture);
+      this.VideoWindow.SetVideoMode(VideoMode.Capture);
     }
 
     /// <summary>
@@ -262,7 +212,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ExportChartToClipboardButtonClick(object sender, RoutedEventArgs e)
     {
-      ExportChart.ToClipboard(this.chartWindow.DataChart);
+      ExportChart.ToClipboard(this.ChartWindow.DataChart);
     }
 
     /// <summary>
@@ -276,7 +226,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ExportChartToFileButtonClick(object sender, RoutedEventArgs e)
     {
-      ExportChart.ToFile(this.chartWindow.DataChart);
+      ExportChart.ToFile(this.ChartWindow.DataChart);
     }
 
     /// <summary>
@@ -290,7 +240,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ExportChartToWordButtonClick(object sender, RoutedEventArgs e)
     {
-      ExportChart.ToWord(this.chartWindow.DataChart);
+      ExportChart.ToWord(this.ChartWindow.DataChart);
     }
 
     /// <summary>
@@ -420,20 +370,6 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The button is interpolating data command_ can execute.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void IsInterpolatingDataCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-    {
-      e.CanExecute = VideoData.Instance.Count > 1;
-    }
-
-    /// <summary>
     /// The button is interpolating data command_ executed.
     /// </summary>
     /// <param name="sender">
@@ -462,18 +398,19 @@ namespace VianaNET.MainWindow
       if (Video.Instance.VideoMode == VideoMode.Capture)
       {
         wasCapturing = true;
-        this.videoWindow.SetVideoMode(VideoMode.None);
+        this.VideoWindow.SetVideoMode(VideoMode.None);
       }
 
       var saveVideoDialog = new SaveVideoDialog();
-      if (saveVideoDialog.ShowDialog().Value)
+      var showDialog = saveVideoDialog.ShowDialog();
+      if (showDialog != null && showDialog.Value)
       {
-        this.videoWindow.SetVideoMode(VideoMode.File);
-        this.videoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+        this.VideoWindow.SetVideoMode(VideoMode.File);
+        this.VideoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
       }
       else if (wasCapturing)
       {
-        this.videoWindow.SetVideoMode(VideoMode.Capture);
+        this.VideoWindow.SetVideoMode(VideoMode.Capture);
       }
     }
 
@@ -547,7 +484,7 @@ namespace VianaNET.MainWindow
       var calibrateWindow = new CalibrateVideoWindow();
       if (calibrateWindow.ShowDialog().GetValueOrDefault())
       {
-        this.videoWindow.UpdateCalibration();
+        this.VideoWindow.UpdateCalibration();
       }
 
       this.Refresh();
@@ -564,7 +501,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void CalibrationOptionsShowCalibrationButtonClick(object sender, RoutedEventArgs e)
     {
-      this.videoWindow.ShowCalibration(this.ShowCalibrationCheckbox.IsChecked());
+      this.VideoWindow.ShowCalibration(this.ShowCalibrationCheckbox.IsChecked());
     }
 
     /// <summary>
@@ -578,21 +515,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void CalibrationOptionsShowClipRegionButtonClick(object sender, RoutedEventArgs e)
     {
-      this.videoWindow.ShowClipRegion(this.ShowClipRegionCheckbox.IsChecked());
-    }
-
-    /// <summary>
-    /// The change color command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void ChangeColorButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.SetColorScheme();
+      this.VideoWindow.ShowClipRegion(this.ShowClipRegionCheckbox.IsChecked());
     }
 
     /// <summary>
@@ -628,7 +551,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ChartDisplayOptionsButtonClick(object sender, RoutedEventArgs e)
     {
-      this.chartWindow.PropertiesExpander.IsExpanded = true;
+      this.ChartWindow.PropertiesExpander.IsExpanded = true;
     }
 
     /// <summary>
@@ -642,7 +565,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ChartWindowButtonClick(object sender, RoutedEventArgs e)
     {
-      this.ShowWindow(this.chartWindow, DockableContentState.Docked);
+      this.ChartTab.IsSelected = true;
     }
 
     /// <summary>
@@ -658,7 +581,7 @@ namespace VianaNET.MainWindow
     {
       var clipWindow = new ClipVideoWindow();
       clipWindow.ShowDialog();
-      this.videoWindow.UpdateClippingRegion();
+      this.VideoWindow.UpdateClippingRegion();
     }
 
     /// <summary>
@@ -738,7 +661,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void DatagridWindowButtonClick(object sender, RoutedEventArgs e)
     {
-      this.ShowWindow(this.datagridWindow, DockableContentState.Docked);
+      this.DatagridTab.IsSelected = true;
     }
 
     /// <summary>
@@ -770,8 +693,8 @@ namespace VianaNET.MainWindow
     private void LoadVideoButtonClick(object sender, RoutedEventArgs e)
     {
       this.ResetColorButton();
-      this.videoWindow.SetVideoMode(VideoMode.File);
-      this.videoWindow.LoadVideo(string.Empty);
+      this.VideoWindow.SetVideoMode(VideoMode.File);
+      this.VideoWindow.LoadVideo(string.Empty);
       this.UpdateSelectObjectImage();
     }
 
@@ -794,31 +717,8 @@ namespace VianaNET.MainWindow
       this.Refresh();
 
       // Switch to datagrid window
-      this.ShowWindow(this.datagridWindow, DockableContentState.Docked);
+      this.DatagridTab.IsSelected = true;
     }
-
-    ///// <summary>
-    ///// The recent items list_ most recent file selected.
-    ///// </summary>
-    ///// <param name="sender">
-    ///// The sender. 
-    ///// </param>
-    ///// <param name="e">
-    ///// The e. 
-    ///// </param>
-    //private void RecentItemsList_MostRecentFileSelected(object sender, MostRecentFileSelectedEventArgs e)
-    //{
-    //  var list = e.Source as RibbonHighlightingList;
-    //  foreach (RibbonHighlightingListItem item in list.Items)
-    //  {
-    //    if (item.Content.ToString() == e.SelectedItem.ToString())
-    //    {
-    //      var tooltip = item.ToolTip as ToolTip;
-    //      Video.Instance.VideoPlayerElement.LoadMovie(tooltip.Content.ToString());
-    //      break;
-    //    }
-    //  }
-    //}
 
     /// <summary>
     ///   The refresh.
@@ -831,102 +731,10 @@ namespace VianaNET.MainWindow
       // Update BlobsControl Dataview if visible
       if (Video.Instance.ImageProcessing.IsTargetColorSet)
       {
-        this.videoWindow.BlobsControl.UpdateDataPoints();
+        this.VideoWindow.BlobsControl.UpdateDataPoints();
       }
 
       // this.datagridWindow.Refresh();
-    }
-
-    /// <summary>
-    /// The reset color command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void ResetColorButtonClick(object sender, RoutedEventArgs e)
-    {
-      ColorFactory.ResetColors();
-      this.themeCounter = 0;
-      this.SetColorScheme();
-    }
-
-    /// <summary>
-    /// The save layout command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void SaveLayoutButtonClick(object sender, RoutedEventArgs e)
-    {
-      var sfd = new SaveFileDialog();
-      sfd.CheckFileExists = false;
-      sfd.CheckPathExists = true;
-      sfd.DefaultExt = ".xml";
-      sfd.AddExtension = true;
-      sfd.Filter = "XML Layout files (*.xml)|*.xml|All Files (*.*)|*.*";
-      sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      sfd.Title = "Please select a data file ...";
-      if (sfd.ShowDialog().Value)
-      {
-        this.dockingManager.SaveLayout(sfd.FileName);
-      }
-    }
-
-    /// <summary>
-    /// The restore layout command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void RestoreLayoutButtonClick(object sender, RoutedEventArgs e)
-    {
-      var ofd = new OpenFileDialog();
-      ofd.CheckFileExists = true;
-      ofd.CheckPathExists = true;
-      ofd.DefaultExt = ".xml";
-      ofd.Filter = "All Files|*.*|XML Layout files|*.xml";
-      ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      ofd.Multiselect = false;
-      ofd.Title = "Please select a data file ...";
-
-      if (ofd.ShowDialog().Value)
-      {
-        this.modulePane.Items.Clear();
-
-        // this.videoPane.Items.Clear();
-        // this.chartPane.Items.Clear();
-        // this.datagridPane.Items.Clear();
-        this.dockingManager.DeserializationCallback = (s, e_args) =>
-          {
-            if (e_args.Name == "_contentDummy")
-            {
-              e_args.Content = new DockableContent();
-              e_args.Content.Title = "Dummy Content";
-              e_args.Content.Content = new TextBlock { Text = "Content Loaded On Demand!" };
-            }
-          };
-
-        var fs = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read);
-        this.dockingManager.RestoreLayout(fs);
-
-        // this.videoPane.Items.Add(videoWindow);
-        // this.datagridPane.Items.Add(datagridWindow);
-        // this.chartPane.Items.Add(this.chartWindow);
-        this.modulePane.Items.Add(this.videoWindow);
-        this.modulePane.Items.Add(this.datagridWindow);
-        this.modulePane.Items.Add(this.chartWindow);
-
-        fs.Close();
-      }
     }
 
     /// <summary>
@@ -944,46 +752,6 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The save video window image as command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void SaveVideoWindowImageAsButtonClick(object sender, RoutedEventArgs e)
-    {
-    }
-
-    /// <summary>
-    /// The save video window image command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void SaveVideoWindowImageButtonClick(object sender, RoutedEventArgs e)
-    {
-    }
-
-    /// <summary>
-    /// The select color command_ can execute.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void SelectColorCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-    {
-      e.CanExecute = Video.Instance.VideoElement.HasVideo;
-    }
-
-    /// <summary>
     /// The select color command_ executed.
     /// </summary>
     /// <param name="sender">
@@ -997,7 +765,7 @@ namespace VianaNET.MainWindow
       var fullScreenVideoWindow = new SelectColorWindow();
       if (fullScreenVideoWindow.ShowDialog().GetValueOrDefault())
       {
-        //((RibbonCommand)this.selectColorRibbonButton.Command).LabelTitle = Labels.ButtonSelectedColorLabelTitle;
+        this.SelectColorRibbonButton.Label = Labels.ButtonSelectedColorLabelTitle;
 
         var drawingVisual = new DrawingVisual();
         DrawingContext drawingContext = drawingVisual.RenderOpen();
@@ -1018,141 +786,13 @@ namespace VianaNET.MainWindow
         drawingContext.Close();
         var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
         bmp.Render(drawingVisual);
-        //((RibbonCommand)this.selectColorRibbonButton.Command).LargeImageSource = bmp;
+        this.SelectColorRibbonButton.LargeImageSource = bmp;
         Video.Instance.ImageProcessing.IsTargetColorSet = false;
         Video.Instance.ImageProcessing.IsTargetColorSet = true;
 
-        // this.videoWindow.BlobsControl.Visibility = Visibility.Visible;
+        // this.VideoWindow.BlobsControl.Visibility = Visibility.Visible;
         // Video.Instance.UpdateNativeBitmap();
       }
-    }
-
-    /// <summary>
-    ///   The set color scheme.
-    /// </summary>
-    private void SetColorScheme()
-    {
-      foreach (ResourceDictionary dictionary in this.Resources.MergedDictionaries)
-      {
-        if (dictionary.Source.ToString().Contains("Office"))
-        {
-          dictionary.Source = new Uri(this.ribbonThemes[this.themeCounter], UriKind.RelativeOrAbsolute);
-
-          foreach (object identifier in dictionary.Keys)
-          {
-            if (identifier is ComponentResourceKey)
-            {
-              var resource = identifier as ComponentResourceKey;
-              if (resource.ResourceId.ToString() == "RibbonBackgroundBrush")
-              {
-                SolidColorBrush ribbonBackgroundBrush = ((SolidColorBrush)dictionary[identifier]).Clone();
-                this.Background = ribbonBackgroundBrush;
-                this.dockingManager.Background = ribbonBackgroundBrush;
-              }
-
-              if (resource.ResourceId.ToString() == "GroupHostBorderBrush")
-              {
-                SolidColorBrush ribbonBorderBackgroundBrush = ((SolidColorBrush)dictionary[identifier]).Clone();
-                ColorFactory.ChangeColors(ribbonBorderBackgroundBrush.Color);
-              }
-
-              if (resource.ResourceId.ToString() == "GroupHostBackgroundBrush")
-              {
-                LinearGradientBrush groupHostBackgroundBrush = ((LinearGradientBrush)dictionary[identifier]).Clone();
-                Calibration.Instance.GradientBackground = groupHostBackgroundBrush;
-              }
-            }
-          }
-        }
-      }
-
-      this.themeCounter++;
-      if (this.themeCounter >= 3)
-      {
-        this.themeCounter = 0;
-      }
-    }
-
-    /// <summary>
-    /// The show ribbon tabs.
-    /// </summary>
-    /// <param name="window">
-    /// The window. 
-    /// </param>
-    private void ShowRibbonTabs(DockableContent window)
-    {
-      if (window is VideoWindow)
-      {
-        // this.RibbonTabVideo.IsEnabled = true;
-        //this.RibbonTabAnalysis.IsSelected = true;
-
-        // this.RibbonTabDatagrid.IsEnabled = false;
-        // this.RibbonTabChart.IsEnabled = false;
-      }
-
-      if (window is DataGridWindow)
-      {
-        // this.RibbonTabVideo.IsEnabled = false;
-        // this.RibbonTabDatagrid.IsEnabled = true;
-        //this.RibbonTabDatagrid.IsSelected = true;
-
-        // this.RibbonTabChart.IsEnabled = false;
-      }
-
-      if (window is ChartWindow)
-      {
-        // this.RibbonTabVideo.IsEnabled = false;
-        // this.RibbonTabDatagrid.IsEnabled = false;
-        // this.RibbonTabChart.IsEnabled = true;
-        //this.RibbonTabChart.IsSelected = true;
-      }
-    }
-
-    /// <summary>
-    /// The show window.
-    /// </summary>
-    /// <param name="contentToShow">
-    /// The content to show. 
-    /// </param>
-    /// <param name="desideredState">
-    /// The desidered state. 
-    /// </param>
-    private void ShowWindow(DockableContent contentToShow, DockableContentState desideredState)
-    {
-      if (desideredState == DockableContentState.AutoHide || desideredState == DockableContentState.FloatingWindow)
-      {
-        this.dockingManager.Show(contentToShow, desideredState);
-      }
-      else
-      {
-        this.dockingManager.Show(contentToShow);
-      }
-    }
-
-    /// <summary>
-    /// The start command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void StartButtonClick(object sender, RoutedEventArgs e)
-    {
-    }
-
-    /// <summary>
-    /// The stop command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void StopButtonClick(object sender, RoutedEventArgs e)
-    {
     }
 
     /// <summary>
@@ -1160,22 +800,14 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectBindings()
     {
-      var thresholdBinding =
-        new Binding("ImageProcessing.ColorThreshold[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
-      thresholdBinding.Source = Video.Instance;
+      var thresholdBinding = new Binding("ImageProcessing.ColorThreshold[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
 
-      //// thresholdBinding.Converter = (IValueConverter)this.Resources["PercentToDoubleConverter"];
-      //this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
+      var minDiameterBinding = new Binding("ImageProcessing.BlobMinDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
 
-      //var minDiameterBinding =
-      //  new Binding("ImageProcessing.BlobMinDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
-      //minDiameterBinding.Source = Video.Instance;
-      //this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
-
-      //var maxDiameterBinding =
-      //  new Binding("ImageProcessing.BlobMaxDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]");
-      //maxDiameterBinding.Source = Video.Instance;
-      //this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
+      var maxDiameterBinding = new Binding("ImageProcessing.BlobMaxDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
     }
 
     /// <summary>
@@ -1201,25 +833,9 @@ namespace VianaNET.MainWindow
       drawingContext.Close();
       var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
-      //((RibbonCommand)this.ButtonSelectObject.Command).LargeImageSource = bmp;
+      this.ButtonSelectObject.LargeImageSource = bmp;
 
       this.UpdateSelectObjectBindings();
-    }
-
-    /// <summary>
-    /// Occurs when the command associated with this 
-    ///   CommandBinding initiates a check to determine whether 
-    ///   the command can be executed on the command target.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event 
-    /// </param>
-    /// <param name="e">
-    /// A <see cref="CanExecuteRoutedEventArgs"/> with the event data. 
-    /// </param>
-    private void VideoWindowCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-    {
-      e.CanExecute = true;
     }
 
     /// <summary>
@@ -1233,31 +849,9 @@ namespace VianaNET.MainWindow
     /// </param>
     private void VideoWindowButtonClick(object sender, RoutedEventArgs e)
     {
-      this.ShowWindow(this.videoWindow, DockableContentState.Docked);
-    }
-
-    /// <summary>
-    /// The module pane_ request bring into view.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void modulePane_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
-    {
-      if (e.TargetObject is DockableContent)
-      {
-        this.ShowRibbonTabs((DockableContent)e.TargetObject);
-      }
+      this.VideoTab.IsSelected = true;
     }
 
     #endregion
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }
