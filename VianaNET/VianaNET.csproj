@@ -103,11 +103,13 @@
     <Compile Include="CustomStyles\Colors\Coloration.cs" />
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
     <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColor.cs" />
     <Compile Include="CustomStyles\Colors\HSXColor.cs" />
-    <Compile Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml.cs" />
-    <Compile Include="CustomStyles\Controls\RibbonNumericUpDown.xaml.cs">
-      <DependentUpon>RibbonNumericUpDown.xaml</DependentUpon>
+    <Compile Include="CustomStyles\Colors\OfficeColor.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
+    <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
+      <DependentUpon>LineStyleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
@@ -115,30 +117,43 @@
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
-    <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Page Include="CustomStyles\Styles\OfficeColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Controls\LineStyleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomStyles\Styles\DataGridStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\ChartType.cs" />
     <Compile Include="Data\Calibration.cs" />
+    <Compile Include="Data\DataCharts.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothControl.xaml.cs">
       <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Linefit\CalculatorAndFktEditor.xaml.cs">
       <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linefit\CalculatorFunctionTerm.cs" />
+    <Compile Include="Data\Linefit\XYSample.cs" />
+    <Compile Include="Data\Linefit\NumericalPrecisionDialog.xaml.cs">
+      <DependentUpon>NumericalPrecisionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\Linefit\LineOptionsDialog.xaml.cs">
       <DependentUpon>LineOptionsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Linefit\MatrixLibrary.cs" />
-    <Compile Include="Data\Linefit\Linefit.cs" />
+    <Compile Include="Data\Linefit\LineFit.cs" />
     <Compile Include="Data\Linefit\LinefittingDialog.xaml.cs">
       <DependentUpon>LinefittingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Linefit\Parser.cs" />
+    <Compile Include="Data\Linefit\Regression.cs" />
     <Compile Include="Data\TimeSample.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothFilter.cs" />
     <Compile Include="Data\Interpolation\Interpolation.cs" />
@@ -151,6 +166,7 @@
     <Compile Include="Data\Interpolation\MovingAverageControl.xaml.cs">
       <DependentUpon>MovingAverageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linefit\FittedData.cs" />
     <Compile Include="Modules\DataGrid\ExportData.cs" />
     <Compile Include="MainWindow\StatusBarContent.cs" />
     <Compile Include="CustomStyles\Types\MeasurementType.cs" />
@@ -255,11 +271,7 @@
     <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
       <DependentUpon>MediaSliderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Controls\RibbonSliderValue.xaml.cs">
-      <DependentUpon>RibbonSliderValue.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
-    <Compile Include="CustomStyles\Controls\ComboBoxPallet.cs" />
     <Compile Include="CustomStyles\Controls\DualTextBox.xaml.cs">
       <DependentUpon>DualTextBox.xaml</DependentUpon>
     </Compile>
@@ -299,16 +311,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\RibbonNumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="CustomStyles\Styles\GeometryItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -334,6 +336,10 @@
     <Page Include="Data\Linefit\CalculatorAndFktEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Data\Linefit\NumericalPrecisionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Data\Linefit\LinefittingDialog.xaml">
       <SubType>Designer</SubType>
@@ -364,12 +370,6 @@
     <Page Include="CustomStyles\Controls\MediaSliderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\RibbonSliderValue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -553,6 +553,9 @@
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>DLL\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="WPFVisifire.Charts, Version=3.1.5.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\WPFVisifire.Charts.dll</HintPath>
@@ -734,6 +737,8 @@
     <Resource Include="Images\RecordVideo16.png" />
     <Resource Include="Images\ExportChart32.png" />
     <Resource Include="Images\ExportData32.png" />
+    <Resource Include="Images\LineColor16.png" />
+    <Resource Include="Images\LineColor32.png" />
     <Content Include="MediaInfo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -765,4 +770,5 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
 </Project>

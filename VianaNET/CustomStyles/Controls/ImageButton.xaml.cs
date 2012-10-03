@@ -23,7 +23,7 @@
 //   The image button.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System.Windows;
   using System.Windows.Controls;

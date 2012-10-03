@@ -1332,8 +1332,8 @@
   <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
     <value>@CalculatorDialogPhysicalKonst</value>
   </data>
-  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
-    <value>@CalculatorDialogTitleCalc</value>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>@ChartWindowCalculatorHeader</value>
   </data>
   <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
     <value>@CalculatorDialogButtonDoneCalc</value>
@@ -1395,10 +1395,55 @@
   <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
     <value>@ChartWindowChartFitAndSmooth</value>
   </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>@ChartWindowDisplayCurveLabel</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>@ChartWindowLineColorLabel</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowLineFitChooseTypeLabel</value>
+  </data>
   <data name="ChartWindowLinefitHeader" xml:space="preserve">
     <value>@ChartWindowLinefitHeader</value>
   </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowTheoreticalFunctionChooseTypeLabel</value>
+  </data>
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>@ChartWindowTheorieLabel</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>@LineFitDialogHeader</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>@CalculatorDialogTitleCalc</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowDataSeriesLabel</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowInterpolationSeriesLabel</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowRegressionSeriesLabel</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>@ChartWindowSeriesStyleHeader</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>@ChartWindowTheorySeriesLabel</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>@ChartWindowPrecisionLabel</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>@ChartWindowRegressionLineLegend</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>@ChartWindowTheoryLineLegend</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>@LineStyleOptionsDialogTitle</value>
   </data>
 </root>

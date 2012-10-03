@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="ChartType.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -20,72 +20,109 @@
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for MediaSliderControl.xaml
+//   The axis type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET
+namespace VianaNET.CustomStyles.Types
 {
-  using System.Windows.Controls;
-  using System.Windows.Input;
-
   /// <summary>
-  ///   Interaction logic for MediaSliderControl.xaml
+  ///   The chart type.
   /// </summary>
-  public partial class MediaSliderControl
+  public enum ChartType
   {
-    #region Constructors and Destructors
+    /// <summary>
+    ///   The yover x.
+    /// </summary>
+    YoverX, 
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
+    ///   The xover t.
     /// </summary>
-    public MediaSliderControl()
-    {
-      this.InitializeComponent();
-    }
-
-    #endregion
-
-    #region Methods
+    XoverT, 
 
     /// <summary>
-    /// The media slider_ mouse left button down.
+    ///   The sover t.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-    }
+    SoverT, 
 
     /// <summary>
-    /// The media slider_ mouse left button up.
+    ///   The yover t.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-    }
+    YoverT, 
 
     /// <summary>
-    /// The media slider_ mouse move.
+    ///   The vover t.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
-    {
-    }
+    VoverT, 
 
-    #endregion
+    /// <summary>
+    ///   The v xover t.
+    /// </summary>
+    VXoverT, 
+
+    /// <summary>
+    ///   The v yover t.
+    /// </summary>
+    VYoverT, 
+
+    /// <summary>
+    ///   The aover t.
+    /// </summary>
+    AoverT, 
+
+    /// <summary>
+    ///   The a xover t.
+    /// </summary>
+    AXoverT, 
+
+    /// <summary>
+    ///   The a yover t.
+    /// </summary>
+    AYoverT, 
+
+    /// <summary>
+    ///   The vover d.
+    /// </summary>
+    VoverD, 
+
+    /// <summary>
+    ///   The v xover dx.
+    /// </summary>
+    VXoverDX, 
+
+    /// <summary>
+    ///   The v yover dy.
+    /// </summary>
+    VYoverDY, 
+
+    /// <summary>
+    ///   The vover s.
+    /// </summary>
+    VoverS, 
+
+    /// <summary>
+    ///   The v xover sx.
+    /// </summary>
+    VXoverSX, 
+
+    /// <summary>
+    ///   The v yover sy.
+    /// </summary>
+    VYoverSY, 
+
+    /// <summary>
+    ///   The aover v.
+    /// </summary>
+    AoverV, 
+
+    /// <summary>
+    ///   The a xover vx.
+    /// </summary>
+    AXoverVX, 
+
+    /// <summary>
+    ///   The a yover vy.
+    /// </summary>
+    AYoverVY
   }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RibbonSliderValue.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="XYSample.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -20,50 +20,55 @@
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for RibbonSliderValue.xaml
+//   The data sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
-{
-  using System.Windows;
-  using System.Windows.Controls;
 
-  using Microsoft.Windows.Controls.Ribbon;
+namespace VianaNET.Data.Linefit
+{
+  using System;
 
   /// <summary>
-  ///   Interaction logic for RibbonSliderValue.xaml
+  ///   The data sample.
   /// </summary>
-  public class RibbonSliderValue : Slider//, IRibbonControl
+  public class XYSample : IComparable
   {
-    #region Static Fields
-
     /// <summary>
-    ///   The slider description property.
+    /// Initializes a new instance of the <see cref="XYSample"/> class.
     /// </summary>
-    public static readonly DependencyProperty SliderDescriptionProperty =
-      DependencyProperty.Register(
-        "SliderDescription", typeof(string), typeof(RibbonSliderValue), new UIPropertyMetadata("Description"));
-
-    #endregion
-
-    #region Public Properties
-
-    /// <summary>
-    ///   Gets or sets the slider description.
-    /// </summary>
-    public string SliderDescription
+    /// <param name="valueX"> The value x. </param>
+    /// <param name="valueY">The value y.</param>
+    public XYSample(double valueX, double valueY)
     {
-      get
-      {
-        return (string)this.GetValue(SliderDescriptionProperty);
-      }
-
-      set
-      {
-        this.SetValue(SliderDescriptionProperty, value);
-      }
+      this.ValueX = valueX;
+      this.ValueY = valueY;
     }
 
-    #endregion
+    /// <summary>
+    ///   Gets or sets the x value for this data sample.
+    /// </summary>
+    public double ValueX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the y value for this data sample.
+    /// </summary>
+    public double ValueY { get; set; }
+
+    /// <summary>
+    /// Compares the current object with another object of the same type.
+    /// </summary>
+    /// <param name="obj">An object to compare with this object.</param>
+    /// <returns>A value that indicates the relative order of the objects being compared. </returns>
+    public int CompareTo(object obj)
+    {
+      var otherSample = obj as XYSample;
+      if (otherSample != null)
+      {
+        return otherSample.ValueX.CompareTo(this.ValueX);
+      }
+
+      throw new ArgumentException("Object is not a XYSample");
+    }
+
   }
 }

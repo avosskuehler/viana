@@ -37,7 +37,6 @@ namespace VianaNET.Modules.Video.Control
   using Microsoft.Win32;
 
   using VianaNET.Application;
-  using VianaNET.CustomStyles.Controls;
   using VianaNET.Localization;
   using VianaNET.Logging;
   using VianaNET.Modules.Video.MediaInfo;

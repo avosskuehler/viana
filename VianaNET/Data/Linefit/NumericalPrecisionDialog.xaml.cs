@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="NumericalPrecisionDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -17,38 +17,38 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <author>Dr. Adrian Voßkühler</author>
-// <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for MediaSliderControl.xaml
+//   The interpolation options dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET
+
+namespace VianaNET.Data.Linefit
 {
-  using System.Windows.Controls;
-  using System.Windows.Input;
+  using System.Windows;
 
   /// <summary>
-  ///   Interaction logic for MediaSliderControl.xaml
+  ///   The interpolation options dialog.
   /// </summary>
-  public partial class MediaSliderControl
+  public partial class NumericalPrecisionDialog
   {
-    #region Constructors and Destructors
-
     /// <summary>
-    ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
+    /// Initializes a new instance of the <see cref="NumericalPrecisionDialog"/> class. 
     /// </summary>
-    public MediaSliderControl()
+    public NumericalPrecisionDialog()
     {
       this.InitializeComponent();
+      this.DataContext = this;
     }
 
-    #endregion
+    /// <summary>
+    /// Gets or sets the number of digits.
+    /// </summary>
+    public int NumberOfDigits { get; set; }
 
     #region Methods
 
     /// <summary>
-    /// The media slider_ mouse left button down.
+    /// Closes the dialog.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -56,12 +56,13 @@ namespace VianaNET
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void CancelClick(object sender, RoutedEventArgs e)
     {
+      this.Close();
     }
 
     /// <summary>
-    /// The media slider_ mouse left button up.
+    /// Closes the dialog with DialogResult.Ok
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -69,21 +70,10 @@ namespace VianaNET
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    private void OkClick(object sender, RoutedEventArgs e)
     {
-    }
-
-    /// <summary>
-    /// The media slider_ mouse move.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
-    {
+      this.DialogResult = true;
+      this.Close();
     }
 
     #endregion

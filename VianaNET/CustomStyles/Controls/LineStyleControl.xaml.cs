@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="LineStyleControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -17,75 +17,40 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <author>Dr. Adrian Voßkühler</author>
-// <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for MediaSliderControl.xaml
+//   Interaction logic for LineStyleControl.xaml
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET
 {
-  using System.Windows.Controls;
-  using System.Windows.Input;
+  using System.Windows.Media;
 
   /// <summary>
-  ///   Interaction logic for MediaSliderControl.xaml
+  /// Interaction logic for LineStyleControl.xaml
   /// </summary>
-  public partial class MediaSliderControl
+  public partial class LineStyleControl
   {
-    #region Constructors and Destructors
-
     /// <summary>
-    ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
+    /// Initializes a new instance of the <see cref="LineStyleControl"/> class.
     /// </summary>
-    public MediaSliderControl()
+    public LineStyleControl()
     {
-      this.InitializeComponent();
+      InitializeComponent();
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
-    /// The media slider_ mouse left button down.
+    /// The color picker selected color changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
-    private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void ColorPickerSelectedColorChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<Color> e)
     {
+      this.theorieLine.Stroke = new SolidColorBrush(this.ColorPicker.SelectedColor);
     }
-
-    /// <summary>
-    /// The media slider_ mouse left button up.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-    }
-
-    /// <summary>
-    /// The media slider_ mouse move.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
-    {
-    }
-
-    #endregion
   }
 }

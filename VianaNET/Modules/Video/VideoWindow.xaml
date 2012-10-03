@@ -3,13 +3,11 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:lex="http://schemas.root-project.org/xaml/presentation"
-	xmlns:Controls="clr-namespace:VianaNET.CustomStyles.Controls" 
   xmlns:Data="clr-namespace:VianaNET.Data"
 	xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
 	xmlns:BlobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  mc:Ignorable="d"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:VianaNET="clr-namespace:VianaNET" mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">
   <UserControl.Resources>
@@ -59,8 +57,6 @@
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
-          <!--<Line Name="BlobHorizontalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="0" X2="{Binding ElementName=VideoImage, Path=ActualWidth}" Y1="100" Y2="100"/>
-          <Line Name="BlobVerticalLine" Visibility="Hidden" Stroke="Red" StrokeThickness="2" X1="350" X2="350" Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"/>-->
           <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseMove="Line_MouseMove" MouseLeftButtonUp="Line_MouseLeftButtonUp" />
           <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
           <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
@@ -107,7 +103,7 @@
           <Image Source="/VianaNET;component/Images/Revert16.png" Width="16"/>
         </Button>
       </StackPanel>
-      <Controls:MediaSlider
+      <VianaNET:MediaSlider
         Grid.Column="1" 
         x:Name="timelineSlider" 
         Style="{StaticResource MediaSliderStyle}"

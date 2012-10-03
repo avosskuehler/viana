@@ -23,7 +23,7 @@
 //   The scroll bar pallet.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System.Windows.Media;
 

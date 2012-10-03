@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="CalculatorFunctionTerm.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -17,75 +17,48 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <author>Dr. Adrian Voßkühler</author>
-// <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for MediaSliderControl.xaml
+//   The calculator function term.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET
+
+namespace VianaNET.Data.Linefit
 {
-  using System.Windows.Controls;
-  using System.Windows.Input;
-
   /// <summary>
-  ///   Interaction logic for MediaSliderControl.xaml
+  /// The calculator function term.
   /// </summary>
-  public partial class MediaSliderControl
+  public class CalculatorFunctionTerm
   {
-    #region Constructors and Destructors
+    /// <summary>
+    /// Gets or sets the li.
+    /// </summary>
+    public CalculatorFunctionTerm Li;
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
+    /// Gets or sets the re.
     /// </summary>
-    public MediaSliderControl()
-    {
-      this.InitializeComponent();
-    }
-
-    #endregion
-
-    #region Methods
+    public CalculatorFunctionTerm Re;
 
     /// <summary>
-    /// The media slider_ mouse left button down.
+    /// Gets or sets the cwert.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-    }
+    public symTyp Cwert { get; set; }
 
     /// <summary>
-    /// The media slider_ mouse left button up.
+    /// Gets or sets the name.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-    }
+    public string Name { get; set; }
 
     /// <summary>
-    /// The media slider_ mouse move.
+    /// Gets or sets the nr.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
-    {
-    }
+    public ushort Nr { get; set; }
 
-    #endregion
+
+
+    /// <summary>
+    /// Gets or sets the zwert.
+    /// </summary>
+    public double Zwert { get; set; }
   }
 }

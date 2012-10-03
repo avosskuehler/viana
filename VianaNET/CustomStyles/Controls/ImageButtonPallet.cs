@@ -23,7 +23,7 @@
 //   The image button default style pallet.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System.Windows.Media;
 

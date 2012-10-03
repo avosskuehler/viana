@@ -30,15 +30,9 @@ namespace VianaNET.Data.Linefit
   /// <summary>
   ///   Interaktionslogik für LinefittingDialog.xaml
   /// </summary>
-  public partial class LinefittingDialog : Window
+  public partial class LinefittingDialog
   {
     #region Fields
-
-    /// <summary>
-    ///   The auswahl.
-    /// </summary>
-    private int auswahl;
-
     #endregion
 
     #region Constructors and Destructors
@@ -46,72 +40,66 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// Initializes a new instance of the <see cref="LinefittingDialog"/> class.
     /// </summary>
-    /// <param name="xNeg">
+    /// <param name="negativeX">
     /// The x neg. 
     /// </param>
-    /// <param name="yNeg">
+    /// <param name="negativeY">
     /// The y neg. 
     /// </param>
-    /// <param name="startWahl">
+    /// <param name="initialRegression">
     /// The start wahl. 
     /// </param>
-    public LinefittingDialog(bool xNeg, bool yNeg, int startWahl)
+    public LinefittingDialog(bool negativeX, bool negativeY, Regression initialRegression)
     {
       this.InitializeComponent();
-      if (startWahl == 0)
+
+      this.SelectedRegressionType = initialRegression;
+
+      this.radioButtonPot.IsEnabled = (!negativeX) & (!negativeY);
+      if ((!this.radioButtonPot.IsEnabled) & (this.SelectedRegressionType == Regression.Potenz))
       {
-        this.auswahl = Constants.linReg;
-      }
-      else
-      {
-        this.auswahl = startWahl;
+        this.SelectedRegressionType = Regression.Linear;
       }
 
-      this.radioButtonPot.IsEnabled = (!xNeg) & (!yNeg);
-      if ((!this.radioButtonPot.IsEnabled) & (this.auswahl == Constants.potReg))
+      this.radioButtonLog.IsEnabled = !negativeX;
+      if ((!this.radioButtonLog.IsEnabled) & (this.SelectedRegressionType == Regression.Logarithmisch))
       {
-        this.auswahl = Constants.linReg;
+        this.SelectedRegressionType = Regression.Linear;
       }
 
-      this.radioButtonLog.IsEnabled = !xNeg;
-      if ((!this.radioButtonLog.IsEnabled) & (this.auswahl == Constants.logReg))
+      this.radioButtonExp.IsEnabled = !negativeY;
+      if ((!this.radioButtonExp.IsEnabled) & (this.SelectedRegressionType == Regression.Exponentiell))
       {
-        this.auswahl = Constants.linReg;
+        this.SelectedRegressionType = Regression.ExponentiellMitKonstante;
       }
 
-      this.radioButtonExp.IsEnabled = !yNeg;
-      if ((!this.radioButtonExp.IsEnabled) & (this.auswahl == Constants.expReg))
+      switch (this.SelectedRegressionType)
       {
-        this.auswahl = Constants.expSpezReg;
-      }
-
-      switch (this.auswahl)
-      {
-        case Constants.linReg:
+        case Regression.Linear:
           this.radioButtonLin.IsChecked = true;
           break;
-        case Constants.expSpezReg:
+        case Regression.ExponentiellMitKonstante:
           this.radioButtonExpSpez.IsChecked = true;
           break;
-        case Constants.logReg:
+        case Regression.Logarithmisch:
           this.radioButtonLog.IsChecked = true;
           break;
-        case Constants.potReg:
+        case Regression.Potenz:
           this.radioButtonPot.IsChecked = true;
           break;
-        case Constants.quadReg:
+        case Regression.Quadratisch:
           this.radioButtonQuad.IsChecked = true;
           break;
-        case Constants.expReg:
+        case Regression.Exponentiell:
           this.radioButtonExp.IsChecked = true;
           break;
-        case Constants.sinReg:
+        case Regression.Sinus:
           this.radioButtonSin.IsChecked = true;
           break;
-        case Constants.sinExpReg:
+        case Regression.SinusGedämpft:
           this.radioButtonSinExp.IsChecked = true;
           break;
-        case Constants.resoReg:
+        case Regression.Resonanz:
           this.radioButtonResonanz.IsChecked = true;
           break;
       }
@@ -119,18 +107,10 @@ namespace VianaNET.Data.Linefit
 
     #endregion
 
-    #region Public Methods and Operators
-
     /// <summary>
-    ///   The get auswahl.
+    /// Gets or sets the selected regression type.
     /// </summary>
-    /// <returns> The <see cref="int" /> . </returns>
-    public int GetAuswahl()
-    {
-      return this.auswahl;
-    }
-
-    #endregion
+    public Regression SelectedRegressionType { get; set; }
 
     #region Methods
 
@@ -143,7 +123,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Cancel_Click(object sender, RoutedEventArgs e)
+    private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
@@ -157,7 +137,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void OK_Click(object sender, RoutedEventArgs e)
+    private void OkClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
       this.Close();
@@ -172,47 +152,47 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonRegressAuswahl_checked(object sender, RoutedEventArgs e)
+    private void ButtonRegressAuswahlChecked(object sender, RoutedEventArgs e)
     {
       if (sender == this.radioButtonLin)
       {
-        this.auswahl = Constants.linReg;
+        this.SelectedRegressionType = Regression.Linear;
       }
       else if (sender == this.radioButtonExpSpez)
       {
-        this.auswahl = Constants.expSpezReg;
+        this.SelectedRegressionType = Regression.ExponentiellMitKonstante;
       }
       else if (sender == this.radioButtonLog)
       {
-        this.auswahl = Constants.logReg;
+        this.SelectedRegressionType = Regression.Logarithmisch;
       }
       else if (sender == this.radioButtonPot)
       {
-        this.auswahl = Constants.potReg;
+        this.SelectedRegressionType = Regression.Potenz;
       }
       else if (sender == this.radioButtonQuad)
       {
-        this.auswahl = Constants.quadReg;
+        this.SelectedRegressionType = Regression.Quadratisch;
       }
       else if (sender == this.radioButtonExp)
       {
-        this.auswahl = Constants.expReg;
+        this.SelectedRegressionType = Regression.Exponentiell;
       }
       else if (sender == this.radioButtonSin)
       {
-        this.auswahl = Constants.sinReg;
+        this.SelectedRegressionType = Regression.Sinus;
       }
       else if (sender == this.radioButtonSinExp)
       {
-        this.auswahl = Constants.sinExpReg;
+        this.SelectedRegressionType = Regression.SinusGedämpft;
       }
       else if (sender == this.radioButtonResonanz)
       {
-        this.auswahl = Constants.resoReg;
+        this.SelectedRegressionType = Regression.Resonanz;
       }
       else
       {
-        this.auswahl = Constants.linReg;
+        this.SelectedRegressionType = Regression.Linear;
       }
     }
 

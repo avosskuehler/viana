@@ -23,7 +23,7 @@
 //   Interaction logic for MediaSlider.xaml
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System.Globalization;
   using System.Windows;

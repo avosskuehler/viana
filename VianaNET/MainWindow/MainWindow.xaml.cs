@@ -39,6 +39,7 @@ namespace VianaNET.MainWindow
   using Microsoft.Windows.Controls.Ribbon;
 
   using VianaNET.Application;
+  using VianaNET.CustomStyles.Styles;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data;
   using VianaNET.Data.Interpolation;

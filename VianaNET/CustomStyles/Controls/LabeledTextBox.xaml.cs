@@ -23,7 +23,7 @@
 //   The labeled text box.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System;
   using System.Windows;

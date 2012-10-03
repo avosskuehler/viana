@@ -2212,6 +2212,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowCalculatorHeader.
+        /// </summary>
+        internal static string ChartWindowCalculatorHeader {
+            get {
+                return ResourceManager.GetString("ChartWindowCalculatorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowChartFitAndSmooth.
         /// </summary>
         internal static string ChartWindowChartFitAndSmooth {
@@ -2293,6 +2302,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowDataSeriesLabel.
+        /// </summary>
+        internal static string ChartWindowDataSeriesLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowDataSeriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowDisplayCurveLabel.
+        /// </summary>
+        internal static string ChartWindowDisplayCurveLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowDisplayCurveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowInterpolationHeader.
         /// </summary>
         internal static string ChartWindowInterpolationHeader {
@@ -2320,6 +2347,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowInterpolationSeriesLabel.
+        /// </summary>
+        internal static string ChartWindowInterpolationSeriesLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowInterpolationSeriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowLegendHeader.
         /// </summary>
         internal static string ChartWindowLegendHeader {
@@ -2334,6 +2370,24 @@ namespace VianaNET.Localization {
         internal static string ChartWindowLegendTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowLegendTitleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowLineColorLabel.
+        /// </summary>
+        internal static string ChartWindowLineColorLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowLineColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowLineFitChooseTypeLabel.
+        /// </summary>
+        internal static string ChartWindowLineFitChooseTypeLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowLineFitChooseTypeLabel", resourceCulture);
             }
         }
         
@@ -2374,6 +2428,33 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowPrecisionLabel.
+        /// </summary>
+        internal static string ChartWindowPrecisionLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowPrecisionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowRegressionLineLegend.
+        /// </summary>
+        internal static string ChartWindowRegressionLineLegend {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionLineLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowRegressionSeriesLabel.
+        /// </summary>
+        internal static string ChartWindowRegressionSeriesLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionSeriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowScatterPointStyleColored.
         /// </summary>
         internal static string ChartWindowScatterPointStyleColored {
@@ -2410,6 +2491,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowSeriesStyleHeader.
+        /// </summary>
+        internal static string ChartWindowSeriesStyleHeader {
+            get {
+                return ResourceManager.GetString("ChartWindowSeriesStyleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowSeriesTitleHeader.
         /// </summary>
         internal static string ChartWindowSeriesTitleHeader {
@@ -2437,11 +2527,38 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowTheoreticalFunctionChooseTypeLabel.
+        /// </summary>
+        internal static string ChartWindowTheoreticalFunctionChooseTypeLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowTheoreticalFunctionChooseTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowTheorieLabel.
         /// </summary>
         internal static string ChartWindowTheorieLabel {
             get {
                 return ResourceManager.GetString("ChartWindowTheorieLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowTheoryLineLegend.
+        /// </summary>
+        internal static string ChartWindowTheoryLineLegend {
+            get {
+                return ResourceManager.GetString("ChartWindowTheoryLineLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowTheorySeriesLabel.
+        /// </summary>
+        internal static string ChartWindowTheorySeriesLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowTheorySeriesLabel", resourceCulture);
             }
         }
         
@@ -3013,6 +3130,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @LineFitDialogHeader.
+        /// </summary>
+        internal static string LineFitDialogHeader {
+            get {
+                return ResourceManager.GetString("LineFitDialogHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @LineFitDialogTitle.
         /// </summary>
         internal static string LineFitDialogTitle {
@@ -3171,6 +3297,15 @@ namespace VianaNET.Localization {
         internal static string LineOptionsDialogTopTitle {
             get {
                 return ResourceManager.GetString("LineOptionsDialogTopTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @LineStyleOptionsDialogTitle.
+        /// </summary>
+        internal static string LineStyleOptionsDialogTitle {
+            get {
+                return ResourceManager.GetString("LineStyleOptionsDialogTitle", resourceCulture);
             }
         }
         

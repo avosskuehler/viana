@@ -57,27 +57,27 @@ namespace VianaNET.Data
     ///   The blob max diameter property.
     /// </summary>
     public static readonly DependencyProperty BlobMaxDiameterProperty = DependencyProperty.Register(
-      "BlobMaxDiameter", 
-      typeof(ObservableCollection<double>), 
-      typeof(ImageProcessing), 
+      "BlobMaxDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(new ObservableCollection<double>()));
 
     /// <summary>
     ///   The blob min diameter property.
     /// </summary>
     public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
-      "BlobMinDiameter", 
-      typeof(ObservableCollection<double>), 
-      typeof(ImageProcessing), 
+      "BlobMinDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(new ObservableCollection<double>()));
 
     /// <summary>
     ///   The color threshold property.
     /// </summary>
     public static readonly DependencyProperty ColorThresholdProperty = DependencyProperty.Register(
-      "ColorThreshold", 
-      typeof(ObservableCollection<int>), 
-      typeof(ImageProcessing), 
+      "ColorThreshold",
+      typeof(ObservableCollection<int>),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(new ObservableCollection<int>()));
 
     /// <summary>
@@ -85,18 +85,18 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty CurrentBlobCenterProperty =
       DependencyProperty.Register(
-        "CurrentBlobCenter", 
-        typeof(ObservableCollection<Point?>), 
-        typeof(ImageProcessing), 
+        "CurrentBlobCenter",
+        typeof(ObservableCollection<Point?>),
+        typeof(ImageProcessing),
         new FrameworkPropertyMetadata(new ObservableCollection<Point?>()));
 
     /// <summary>
     ///   The detected blobs property.
     /// </summary>
     public static readonly DependencyProperty DetectedBlobsProperty = DependencyProperty.Register(
-      "DetectedBlob", 
-      typeof(ObservableCollection<Segment>), 
-      typeof(ImageProcessing), 
+      "DetectedBlob",
+      typeof(ObservableCollection<Segment>),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(new ObservableCollection<Segment>()));
 
     /// <summary>
@@ -109,9 +109,9 @@ namespace VianaNET.Data
     ///   The is target color set property.
     /// </summary>
     public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
-      "IsTargetColorSet", 
-      typeof(Boolean), 
-      typeof(ImageProcessing), 
+      "IsTargetColorSet",
+      typeof(Boolean),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(false, OnPropertyChanged));
 
     /// <summary>
@@ -119,18 +119,18 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty NumberOfTrackedObjectsProperty =
       DependencyProperty.Register(
-        "NumberOfTrackedObjects", 
-        typeof(int), 
-        typeof(Calibration), 
+        "NumberOfTrackedObjects",
+        typeof(int),
+        typeof(Calibration),
         new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The target color property.
     /// </summary>
     public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
-      "TargetColor", 
-      typeof(ObservableCollection<Color>), 
-      typeof(ImageProcessing), 
+      "TargetColor",
+      typeof(ObservableCollection<Color>),
+      typeof(ImageProcessing),
       new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
 
     #endregion
@@ -207,6 +207,9 @@ namespace VianaNET.Data
     /// </summary>
     public ImageProcessing()
     {
+      this.ColorThreshold = new ObservableCollection<int>();
+      this.BlobMinDiameter = new ObservableCollection<double>();
+      this.BlobMaxDiameter = new ObservableCollection<double>();
       this.ResetProcessing(1);
       this.colorAndCropFilter = new ColorAndCropFilterRGB();
       this.colorRangeFilter = new ColorAndCropFilterYCbCr();

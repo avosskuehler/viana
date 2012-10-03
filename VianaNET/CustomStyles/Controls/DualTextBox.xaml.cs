@@ -23,7 +23,7 @@
 //   The dual text box.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System;
   using System.Windows;
@@ -34,7 +34,7 @@ namespace VianaNET.CustomStyles.Controls
   /// <summary>
   ///   The dual text box.
   /// </summary>
-  public partial class DualTextBox : UserControl
+  public partial class DualTextBox
   {
     #region Fields
 

@@ -23,7 +23,7 @@
 //   The labeled slider.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System;
   using System.Diagnostics.CodeAnalysis;

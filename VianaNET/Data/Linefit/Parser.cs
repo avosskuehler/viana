@@ -90,77 +90,15 @@ namespace VianaNET.Data.Linefit
     public const double eulerZahl = 2.1782818;
 
     /// <summary>
-    ///   The exp reg.
-    /// </summary>
-    public const int expReg = 6;
-
-    /// <summary>
-    ///   The exp spez reg.
-    /// </summary>
-    public const int expSpezReg = 2;
-
-    /// <summary>
     ///   The fehler zahl.
     /// </summary>
     public const double fehlerZahl = -1.0E32;
 
-    // public const int is_FehlerZahl = 2;
     /// <summary>
     ///   The leer feld.
     /// </summary>
     public const double leerFeld = -1.1E32;
 
-    // public const int is_RealZahl = 0;
-
-    /// <summary>
-    ///   The lin reg.
-    /// </summary>
-    public const int linReg = 1;
-
-    /// <summary>
-    ///   The log reg.
-    /// </summary>
-    public const int logReg = 3;
-
-    /// <summary>
-    ///   The max reg wert.
-    /// </summary>
-    public const int maxRegWert = resoReg;
-
-    /// <summary>
-    ///   The max_ anz_ konst.
-    /// </summary>
-    public const int max_Anz_Konst = 8;
-
-    /// <summary>
-    ///   The min reg wert.
-    /// </summary>
-    public const int minRegWert = linReg;
-
-    /// <summary>
-    ///   The pot reg.
-    /// </summary>
-    public const int potReg = 4;
-
-    /// <summary>
-    ///   The quad reg.
-    /// </summary>
-    public const int quadReg = 5;
-
-    /// <summary>
-    ///   The reso reg.
-    /// </summary>
-    public const int resoReg = 9;
-
-    /// <summary>
-    ///   The sin exp reg.
-    /// </summary>
-    public const int sinExpReg = 8;
-
-    /// <summary>
-    ///   The sin reg.
-    /// </summary>
-    public const int sinReg = 7;
 
     #endregion
 
@@ -239,58 +177,6 @@ namespace VianaNET.Data.Linefit
 */
 
   /// <summary>
-  ///   The t fkt term.
-  /// </summary>
-  public class TFktTerm
-  {
-    #region Fields
-
-    /// <summary>
-    ///   The cwert.
-    /// </summary>
-    public symTyp cwert;
-
-    /// <summary>
-    ///   The li.
-    /// </summary>
-    public TFktTerm li;
-
-    /// <summary>
-    ///   The name.
-    /// </summary>
-    public string name;
-
-    /// <summary>
-    ///   The nr.
-    /// </summary>
-    public ushort nr;
-
-    /// <summary>
-    ///   The re.
-    /// </summary>
-    public TFktTerm re;
-
-    /// <summary>
-    ///   The zwert.
-    /// </summary>
-    public double zwert;
-
-    #endregion
-
-    // public TZahlenSpalte vwert;
-  }
-
-  // end TFktTerm
-
-  /*
-    public enum TTabArt
-    {
-        physikTab,
-        matheTab
-    } // end TTabArt
-    */
-
-  /// <summary>
   ///   The t rechner art.
   /// </summary>
   public enum TRechnerArt
@@ -298,7 +184,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The formel rechner.
     /// </summary>
-    formelRechner, 
+    formelRechner,
 
     /// <summary>
     ///   The rechner.
@@ -316,117 +202,117 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The udef.
     /// </summary>
-    udef, 
+    udef,
 
     /// <summary>
     ///   The oldfx.
     /// </summary>
-    oldfx, 
+    oldfx,
 
     /// <summary>
     ///   The ist zahl.
     /// </summary>
-    istZahl, 
+    istZahl,
 
     /// <summary>
     ///   The ist konst.
     /// </summary>
-    istKonst, 
+    istKonst,
 
     /// <summary>
     ///   The ident.
     /// </summary>
-    ident, 
+    ident,
 
     /// <summary>
     ///   The lklammer.
     /// </summary>
-    lklammer, 
+    lklammer,
 
     /// <summary>
     ///   The rklammer.
     /// </summary>
-    rklammer, 
+    rklammer,
 
     /// <summary>
     ///   The plus.
     /// </summary>
-    plus, 
+    plus,
 
     /// <summary>
     ///   The minus.
     /// </summary>
-    minus, 
+    minus,
 
     /// <summary>
     ///   The mal.
     /// </summary>
-    mal, 
+    mal,
 
     /// <summary>
     ///   The durch.
     /// </summary>
-    durch, 
+    durch,
 
     /// <summary>
     ///   The pot.
     /// </summary>
-    pot, 
+    pot,
 
     /// <summary>
     ///   The sinf.
     /// </summary>
-    sinf, 
+    sinf,
 
     /// <summary>
     ///   The cosf.
     /// </summary>
-    cosf, 
+    cosf,
 
     /// <summary>
     ///   The tanf.
     /// </summary>
-    tanf, 
+    tanf,
 
     /// <summary>
     ///   The ctgf.
     /// </summary>
-    ctgf, 
+    ctgf,
 
     /// <summary>
     ///   The expf.
     /// </summary>
-    expf, 
+    expf,
 
     /// <summary>
     ///   The lnf.
     /// </summary>
-    lnf, 
+    lnf,
 
     /// <summary>
     ///   The wurzf.
     /// </summary>
-    wurzf, 
+    wurzf,
 
     /// <summary>
     ///   The sigf.
     /// </summary>
-    sigf, 
+    sigf,
 
     /// <summary>
     ///   The absf.
     /// </summary>
-    absf, 
+    absf,
 
     /// <summary>
     ///   The deltaf.
     /// </summary>
-    deltaf, 
+    deltaf,
 
     /// <summary>
     ///   The ffmax.
     /// </summary>
-    ffmax, 
+    ffmax,
 
     /// <summary>
     ///   The fstr end.
@@ -446,12 +332,12 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The fkt term.
     /// </summary>
-    public TFktTerm fktTerm = new TFktTerm();
+    public CalculatorFunctionTerm CalculatorFunctionTerm = new CalculatorFunctionTerm();
 
     /// <summary>
     ///   The fx.
     /// </summary>
-    public TFktTerm fx;
+    public CalculatorFunctionTerm fx;
 
     /// <summary>
     ///   The last err nr.
@@ -526,7 +412,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The k var.
     /// </summary>
-    private TFktTerm kVar;
+    private CalculatorFunctionTerm kVar;
 
     /// <summary>
     ///   The max lang.
@@ -566,7 +452,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The x var.
     /// </summary>
-    private TFktTerm xVar;
+    private CalculatorFunctionTerm xVar;
 
     #endregion
 
@@ -618,7 +504,7 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="double"/> . 
     /// </returns>
-    public double FktWert(TFktTerm fx, int nr)
+    public double FktWert(CalculatorFunctionTerm fx, int nr)
     {
       double result;
 
@@ -661,7 +547,7 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="double"/> . 
     /// </returns>
-    public double FktWert_Berechne(TFktTerm fx, int nr)
+    public double FktWert_Berechne(CalculatorFunctionTerm fx, int nr)
     {
       // double result;
       // double erg1;
@@ -672,13 +558,13 @@ namespace VianaNET.Data.Linefit
         return this.result;
       }
 
-      switch (fx.cwert)
+      switch (fx.Cwert)
       {
         case symTyp.istZahl:
-          this.result = fx.zwert;
+          this.result = fx.Zwert;
           break;
         case symTyp.istKonst:
-          this.result = fx.zwert; // Constants.konstante[fx.nr].wert;
+          this.result = fx.Zwert; // Constants.konstante[fx.nr].wert;
           break;
         case symTyp.ident:
 
@@ -703,23 +589,23 @@ namespace VianaNET.Data.Linefit
           // }
           break;
         default:
-          erg2 = this.FktWert_Berechne(fx.re, nr);
+          erg2 = this.FktWert_Berechne(fx.Re, nr);
           if (this.fktWertError)
           {
             this.result = erg2;
             return this.result;
           }
 
-          if (fx.cwert <= symTyp.pot)
+          if (fx.Cwert <= symTyp.pot)
           {
-            this.erg1 = this.FktWert_Berechne(fx.li, nr);
+            this.erg1 = this.FktWert_Berechne(fx.Li, nr);
             if (this.fktWertError)
             {
               this.result = this.erg1;
               return this.result;
             }
 
-            switch (fx.cwert)
+            switch (fx.Cwert)
             {
               case symTyp.plus:
                 this.erg1 = this.erg1 + erg2;
@@ -763,7 +649,7 @@ namespace VianaNET.Data.Linefit
           }
           else
           {
-            switch (fx.cwert)
+            switch (fx.Cwert)
             {
               case symTyp.sinf:
                 this.erg1 = Math.Sin(erg2);
@@ -845,7 +731,7 @@ namespace VianaNET.Data.Linefit
                 }
                 else
                 {
-                  this.erg1 = this.FktWert_Berechne(fx.re, nr - 1);
+                  this.erg1 = this.FktWert_Berechne(fx.Re, nr - 1);
                   if (this.fktWertError)
                   {
                     this.result = this.erg1;
@@ -898,7 +784,7 @@ namespace VianaNET.Data.Linefit
       int i;
       double r;
       r = 1.0;
-      for (i = 1; i <= Math.Abs(ex); i ++)
+      for (i = 1; i <= Math.Abs(ex); i++)
       {
         r = r * bas;
       }
@@ -932,7 +818,7 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="double"/> . 
     /// </returns>
-    public double FreierFktWert(TFktTerm fx, double x)
+    public double FreierFktWert(CalculatorFunctionTerm fx, double x)
     {
       double result;
       this.varXwert = x;
@@ -958,12 +844,12 @@ namespace VianaNET.Data.Linefit
     /// <param name="fx">
     /// The fx. 
     /// </param>
-    public void Loesch(ref TFktTerm fx)
+    public void Loesch(ref CalculatorFunctionTerm fx)
     {
       if (fx != null)
       {
-        this.Loesch(ref fx.li);
-        this.Loesch(ref fx.re);
+        this.Loesch(ref fx.Li);
+        this.Loesch(ref fx.Re);
 
         // fx.free           
         fx = null;
@@ -981,7 +867,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="funcStr0">
     /// The func str 0. 
     /// </param>
-    public void ScanFkt(ref TFktTerm fx0, string funcStr0)
+    public void ScanFkt(ref CalculatorFunctionTerm fx0, string funcStr0)
     {
       if (funcStr0 != string.Empty)
       {
@@ -1054,10 +940,10 @@ namespace VianaNET.Data.Linefit
     /// <param name="expr">
     /// The expr. 
     /// </param>
-    public void ScanFkt_Expression(ref TFktTerm expr)
+    public void ScanFkt_Expression(ref CalculatorFunctionTerm expr)
     {
       symTyp addop;
-      TFktTerm temp = null;
+      CalculatorFunctionTerm temp = null;
       if ((this.sym == symTyp.plus) || (this.sym == symTyp.minus))
       {
         addop = this.sym;
@@ -1071,9 +957,9 @@ namespace VianaNET.Data.Linefit
       this.ScanFkt_Expression_Term(ref expr);
       if (addop == symTyp.minus)
       {
-        if ((expr != null) && (expr.cwert == symTyp.istZahl))
+        if ((expr != null) && (expr.Cwert == symTyp.istZahl))
         {
-          expr = this.ScanFkt_Zahl(-expr.zwert);
+          expr = this.ScanFkt_Zahl(-expr.Zwert);
         }
         else
         {
@@ -1111,10 +997,10 @@ namespace VianaNET.Data.Linefit
     /// <param name="prod">
     /// The prod. 
     /// </param>
-    public void ScanFkt_Expression_Term(ref TFktTerm prod)
+    public void ScanFkt_Expression_Term(ref CalculatorFunctionTerm prod)
     {
       symTyp pSym;
-      TFktTerm temp = null;
+      CalculatorFunctionTerm temp = null;
       this.ScanFkt_Expression_Term_FuncTerm(ref prod);
       while ((this.sym == symTyp.mal) || (this.sym == symTyp.durch))
       {
@@ -1134,10 +1020,10 @@ namespace VianaNET.Data.Linefit
     /// <param name="fterm">
     /// The fterm. 
     /// </param>
-    public void ScanFkt_Expression_Term_FuncTerm(ref TFktTerm fterm)
+    public void ScanFkt_Expression_Term_FuncTerm(ref CalculatorFunctionTerm fterm)
     {
       symTyp fsym;
-      TFktTerm temp = null;
+      CalculatorFunctionTerm temp = null;
       if (this.sym < symTyp.sinf)
       {
         this.ScanFkt_Expression_Term_FuncTerm_Faktor(ref fterm);
@@ -1186,7 +1072,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="fakt">
     /// The fakt. 
     /// </param>
-    public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref TFktTerm fakt)
+    public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref CalculatorFunctionTerm fakt)
     {
       if (this.fehler)
       {
@@ -1218,7 +1104,7 @@ namespace VianaNET.Data.Linefit
           this.ScanFkt_Err(4);
           return;
 
-          // break;
+        // break;
       }
 
       this.ScanFkt_GetSym();
@@ -1235,7 +1121,7 @@ namespace VianaNET.Data.Linefit
     {
       if (this.chPos < this.maxLang - 1)
       {
-        this.chPos ++;
+        this.chPos++;
         this.ch_ = this.funcStr[this.chPos];
         this.ch = char.ToUpper(this.ch_);
       }
@@ -1353,7 +1239,7 @@ namespace VianaNET.Data.Linefit
       this.sym = symTyp.sinf;
       while ((this.sym < symTyp.ffmax) && (buf != Constants.fnam[(int)this.sym - 5]))
       {
-        this.sym ++;
+        this.sym++;
       }
 
       /* 
@@ -1396,17 +1282,17 @@ namespace VianaNET.Data.Linefit
           {
             this.sym = symTyp.istKonst;
             this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
-            this.kVar.name = Constants.konstante[i].bez;
-            this.kVar.nr = i;
-            this.kVar.zwert = Constants.konstante[i].wert;
+            this.kVar.Name = Constants.konstante[i].bez;
+            this.kVar.Nr = i;
+            this.kVar.Zwert = Constants.konstante[i].wert;
             return;
           }
           else
           {
-            i ++;
+            i++;
           }
         }
-        while (!(i > Constants.max_Anz_Konst));
+        while (!(i > Constants.konstante.Length-1));
       }
 
       if (this.sym == symTyp.ffmax)
@@ -1415,8 +1301,8 @@ namespace VianaNET.Data.Linefit
         if (this.xVar == null)
         {
           this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
-          this.xVar.zwert = 0;
-          this.xVar.name = buf1;
+          this.xVar.Zwert = 0;
+          this.xVar.Name = buf1;
         }
 
         // ScanFkt_Err(5);
@@ -1436,15 +1322,15 @@ namespace VianaNET.Data.Linefit
     /// The op 2. 
     /// </param>
     /// <returns>
-    /// The <see cref="TFktTerm"/> . 
+    /// The <see cref="CalculatorFunctionTerm"/> . 
     /// </returns>
-    public TFktTerm ScanFkt_MakeNode(TFktTerm op1, symTyp code, TFktTerm op2)
+    public CalculatorFunctionTerm ScanFkt_MakeNode(CalculatorFunctionTerm op1, symTyp code, CalculatorFunctionTerm op2)
     {
-      TFktTerm result;
-      result = new TFktTerm();
-      result.cwert = code;
-      result.li = op1;
-      result.re = op2;
+      CalculatorFunctionTerm result;
+      result = new CalculatorFunctionTerm();
+      result.Cwert = code;
+      result.Li = op1;
+      result.Re = op2;
       return result;
     }
 
@@ -1509,13 +1395,13 @@ namespace VianaNET.Data.Linefit
     /// The r. 
     /// </param>
     /// <returns>
-    /// The <see cref="TFktTerm"/> . 
+    /// The <see cref="CalculatorFunctionTerm"/> . 
     /// </returns>
-    public TFktTerm ScanFkt_Zahl(double r)
+    public CalculatorFunctionTerm ScanFkt_Zahl(double r)
     {
-      TFktTerm result;
+      CalculatorFunctionTerm result;
       result = this.ScanFkt_MakeNode(null, symTyp.istZahl, null);
-      result.zwert = r;
+      result.Zwert = r;
       return result;
     }
 
@@ -1528,33 +1414,33 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="bool"/> . 
     /// </returns>
-    public bool isLinearFunction(TFktTerm fx)
+    public bool isLinearFunction(CalculatorFunctionTerm fx)
     {
-      if ((fx == null) || (fx.cwert <= symTyp.istKonst))
+      if ((fx == null) || (fx.Cwert <= symTyp.istKonst))
       {
         return true;
       }
 
-      if (fx.cwert > symTyp.pot)
+      if (fx.Cwert > symTyp.pot)
       {
-        return this.doesContainNoVar(fx.re);
+        return this.doesContainNoVar(fx.Re);
       }
 
-      switch (fx.cwert)
+      switch (fx.Cwert)
       {
         case symTyp.ident:
           return true;
         case symTyp.pot:
-          return this.doesContainNoVar(fx.li) && this.doesContainNoVar(fx.re);
+          return this.doesContainNoVar(fx.Li) && this.doesContainNoVar(fx.Re);
         case symTyp.plus:
-          return this.isLinearFunction(fx.li) && this.isLinearFunction(fx.re);
+          return this.isLinearFunction(fx.Li) && this.isLinearFunction(fx.Re);
         case symTyp.minus:
-          return this.isLinearFunction(fx.li) && this.isLinearFunction(fx.re);
+          return this.isLinearFunction(fx.Li) && this.isLinearFunction(fx.Re);
         case symTyp.mal:
-          return (this.doesContainNoVar(fx.li) && this.isLinearFunction(fx.re))
-                 || (this.isLinearFunction(fx.li) && this.doesContainNoVar(fx.re));
+          return (this.doesContainNoVar(fx.Li) && this.isLinearFunction(fx.Re))
+                 || (this.isLinearFunction(fx.Li) && this.doesContainNoVar(fx.Re));
         case symTyp.durch:
-          return this.isLinearFunction(fx.li) && this.doesContainNoVar(fx.re);
+          return this.isLinearFunction(fx.Li) && this.doesContainNoVar(fx.Re);
         default:
           return false;
       }
@@ -1585,21 +1471,21 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="bool"/> . 
     /// </returns>
-    private bool doesContainNoVar(TFktTerm fx)
+    private bool doesContainNoVar(CalculatorFunctionTerm fx)
     {
-      if ((fx == null) || (fx.cwert <= symTyp.istKonst))
+      if ((fx == null) || (fx.Cwert <= symTyp.istKonst))
       {
         return true;
       }
       else
       {
-        if (fx.cwert == symTyp.ident)
+        if (fx.Cwert == symTyp.ident)
         {
           return false;
         }
         else
         {
-          return this.doesContainNoVar(fx.li) && this.doesContainNoVar(fx.re);
+          return this.doesContainNoVar(fx.Li) && this.doesContainNoVar(fx.Re);
         }
       }
     }

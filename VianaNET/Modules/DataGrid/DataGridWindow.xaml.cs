@@ -27,6 +27,7 @@ namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
   using System.ComponentModel;
+  using System.Globalization;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Data;
@@ -177,9 +178,9 @@ namespace VianaNET.Modules.DataGrid
       for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
         string prefix = Video.Instance.ImageProcessing.NumberOfTrackedObjects > 1
-                          ? "Nr." + (i + 1).ToString() + " "
+                          ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
-        string obj = "Object[" + i.ToString() + "].";
+        string obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
         this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement", false);
         this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement", false);
         this.CreateColumn(

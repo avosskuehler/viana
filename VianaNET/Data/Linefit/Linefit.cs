@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Linefit.cs" company="Freie Universität Berlin">
+// <copyright file="LineFit.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -28,14 +28,13 @@ namespace VianaNET.Data.Linefit
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  using System.Windows;
 
-  using VianaNET.Modules.Video.Control;
+  using VianaNET.CustomStyles.Types;
 
   /// <summary>
-  ///   The line fit class.
+  /// The line fit class.
   /// </summary>
-  public class LineFitClass
+  public class LineFit
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -43,94 +42,48 @@ namespace VianaNET.Data.Linefit
     #region Static Fields
 
     /// <summary>
-    ///   The p.
-    /// </summary>
-    private static readonly Matrix p = new Matrix(10, 6); // Parameter der Ausgleichsfunktion
-
-    /// <summary>
     ///   The genauigkeit.
     /// </summary>
-    private static double genauigkeit = 1E-10;
+    private const double Genauigkeit = 1E-10;
 
     /// <summary>
-    ///   The max iteration.
+    /// Begrenzungswerte für die internen Berechnungen
     /// </summary>
-    private static int maxIteration = 50; // Begrenzungswerte für die internen Berechnungen
+    private const int MaxIteration = 50;
 
     /// <summary>
     ///   The min step.
     /// </summary>
-    private static double minStep = 1E-6;
-
-    /// <summary>
-    ///   The param.
-    /// </summary>
-    private static double[] param; // Parameter einer Ausgleichsfunktionen
+    private const double MinStep = 1E-6;
 
     /// <summary>
     ///   The start abw.
     /// </summary>
-    private static double startAbw = 1E150;
+    private const double StartAbw = 1E150;
+
+    /// <summary>
+    /// Parameter der Ausgleichsfunktion
+    /// </summary>
+    private static readonly Matrix FitParameterMatrix = new Matrix(10, 6);
+
+    /// <summary>
+    /// Parameter einer Ausgleichsfunktionen
+    /// </summary>
+    private static double[] param;
 
     #endregion
 
     #region Fields
 
     /// <summary>
-    ///   The line fit display sample.
+    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
     /// </summary>
-    public DataCollection LineFitDisplaySample;
-
-    // mit der Ausgleichsfunktion berechnete Punkte, die sich in der x-Koordinate um einen Pixelabstand unterscheiden
+    private int numberOfObject;
 
     /// <summary>
-    ///   The theorie display sample.
+    /// Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
     /// </summary>
-    public DataCollection TheorieDisplaySample; // analog für theoretische Funktion
-
-    /// <summary>
-    ///   The akt func.
-    /// </summary>
-    public AusgleichFunction aktFunc;
-
-    /// <summary>
-    ///   The wert x.
-    /// </summary>
-    public List<double> wertX;
-
-    // aus den Videodaten herausgelesene Messpaare - auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
-
-    /// <summary>
-    ///   The wert y.
-    /// </summary>
-    public List<double> wertY;
-
-    // aus den Videodaten herausgelesene Messpaare - auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
-
-    /// <summary>
-    ///   The number of object.
-    /// </summary>
-    private int NumberOfObject; // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
-
-    /// <summary>
-    ///   The _ line fit abweichung.
-    /// </summary>
-    private double _LineFitAbweichung; // Wert der mittleren Abweichung der Messpunkte von der Ausgleichsfunktion
-
-    /// <summary>
-    ///   The _ line fit fkt str.
-    /// </summary>
-    private string _LineFitFktStr; // Ausgabestring für die Ausgleichsfunktion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    /// <summary>
-    ///   The anzahl.
-    /// </summary>
-    private int // Kennzahl für den Typ der Ausgleichsfunktion
-      anzahl; // Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
+    private int anzahl;
 
     /// <summary>
     ///   The end pixel x.
@@ -143,29 +96,24 @@ namespace VianaNET.Data.Linefit
     private double endX;
 
     /// <summary>
-    ///   The my g.
+    /// orginale Videodaten, wie sie bei Daten angezeigt werden
     /// </summary>
-    private string myG = "G4"; // Formatstring für anzuzeigende Stellenzahl
+    private DataCollection orgDataSamples;
 
     /// <summary>
-    ///   The org data samples.
+    /// Art der Regressionsberechnung
     /// </summary>
-    private DataCollection orgDataSamples; // orginale Videodaten, wie sie bei Daten angezeigt werden
-
-    /// <summary>
-    ///   The reg typ.
-    /// </summary>
-    private int regTyp; // Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
+    private Regression regressionType;
 
     /// <summary>
     ///   The start pixel x.
     /// </summary>
     private double startPixelX;
 
-    /// <summary>
-    ///   The start time.
-    /// </summary>
-    private long startTime; // erster Zeitwert der Daten (in ms)
+    ///// <summary>
+    ///// erster Zeitwert der Daten (in ms)
+    ///// </summary>
+    //private long startTime;
 
     /// <summary>
     ///   The start x.
@@ -178,19 +126,16 @@ namespace VianaNET.Data.Linefit
     private double stepX;
 
     /// <summary>
-    ///   The x nr.
+    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
     /// </summary>
-    private int xNr; // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+    private DataAxis axisX;
 
     /// <summary>
-    ///   The y nr.
+    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
     /// </summary>
-    private int yNr; // Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+    private DataAxis axisY;
 
     #endregion
-
-    // Berechnet zu einem Wert den Funktionswert mit Hilfe der Ausgleichsfunktion
-    // private Parser.TFktTerm userFkt;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
@@ -198,30 +143,15 @@ namespace VianaNET.Data.Linefit
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LineFitClass"/> class.
+    /// Initializes a new instance of the <see cref="LineFit"/> class.
     /// </summary>
-    /// <param name="aktSamples">
-    /// The akt samples. 
-    /// </param>
-    /// <param name="aktObjectNr">
-    /// The akt object nr. 
-    /// </param>
-    /// <param name="aktxNr">
-    /// The aktx nr. 
-    /// </param>
-    /// <param name="aktyNr">
-    /// The akty nr. 
-    /// </param>
-    public LineFitClass(DataCollection aktSamples, int aktObjectNr, int aktxNr, int aktyNr)
+    public LineFit()
     {
-      this.regTyp = Constants.linReg;
+      this.regressionType = Regression.Linear;
       this.orgDataSamples = null;
       param = new double[3];
-      this.wertX = new List<double>();
-      this.wertY = new List<double>();
-      this.ExtractDataColumnsFromVideoSamples(aktSamples, this.NumberOfObject, aktxNr, aktyNr);
-      this.LineFitDisplaySample = null;
-      this.TheorieDisplaySample = null;
+      this.WertX = new List<double>();
+      this.WertY = new List<double>();
     }
 
     #endregion
@@ -232,6 +162,7 @@ namespace VianaNET.Data.Linefit
     ///   The ausgleich function.
     /// </summary>
     /// <param name="x"> The x. </param>
+    /// <returns>A double</returns>
     public delegate double AusgleichFunction(double x);
 
     #endregion
@@ -242,69 +173,55 @@ namespace VianaNET.Data.Linefit
     #region Public Properties
 
     /// <summary>
-    ///   Gets the line fit abweichung.
+    ///   Gets the mittlere Abweichung der Ausgleichsfunktion bzgl. der Messwerte; nur read-only
     /// </summary>
-    public double LineFitAbweichung
-    {
-      // mittlere Abweichung der Ausgleichsfunktion bzgl. der Messwerte; nur read-only
-      get
-      {
-        return this._LineFitAbweichung;
-      }
-    }
+    public double LineFitAbweichung { get; private set; }
 
     /// <summary>
-    ///   Gets the line fit fkt str.
+    /// Gets the Ausgabestring für die Ausgleichsfunktion
     /// </summary>
-    public string LineFitFktStr
-    {
-      // Ausgabestring für die Ausgleichsfunktion; nur read-only
-      get
-      {
-        return this._LineFitFktStr;
-      }
-    }
+    public string LineFitFktStr { get; private set; }
 
     /// <summary>
-    ///   Gets or sets the gueltige stellen format string.
+    /// Gets or sets the ausgleichs funktion.
     /// </summary>
-    public string gueltigeStellenFormatString
-    {
-      get
-      {
-        return this.myG;
-      }
+    public AusgleichFunction AusgleichsFunktion { get; set; }
 
-      set
-      {
-        this.myG = value;
-        if (this.aktFunc != null)
-        {
-          this._LineFitFktStr = this.GetRegressionFunctionString(this.regTyp);
-        }
-      }
-    }
+    /// <summary>
+    /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
+    /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
+    /// </summary>
+    public List<double> WertX { get; set; }
+
+    /// <summary>
+    /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
+    /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
+    /// </summary>
+    public List<double> WertY { get; set; }
 
     /// <summary>
     ///   Gets or sets the regression typ.
     /// </summary>
-    public int regressionTyp
+    public Regression RegressionTyp
     {
       get
       {
-        return this.regTyp;
+        return this.regressionType;
       }
 
       set
       {
-        if ((this.regTyp != value) && (value >= Constants.minRegWert) && (value <= Constants.maxRegWert))
+        if (this.regressionType == value)
         {
-          this.regTyp = value;
-          if (this.wertX.Count > 0)
-          {
-            // sind Datenreihen ausgewählt ?
-            this.CalculateLineFitFunction(value); // neu berechnen !
-          }
+          return;
+        }
+
+        this.regressionType = value;
+        if (this.WertX.Count > 0)
+        {
+          // sind Datenreihen ausgewählt ?
+          // neu berechnen !
+          this.CalculateLineFitFunction(value);
         }
       }
     }
@@ -324,7 +241,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsExp(double x)
     {
-      return p[Constants.expReg, 0] * Math.Exp(x * p[Constants.expReg, 1]) + p[Constants.expReg, 2];
+      return FitParameterMatrix[(int)Regression.Exponentiell, 0] * Math.Exp(x * FitParameterMatrix[(int)Regression.Exponentiell, 1]) + FitParameterMatrix[(int)Regression.Exponentiell, 2];
     }
 
     /// <summary>
@@ -338,7 +255,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsExpSpez(double x)
     {
-      return p[Constants.expSpezReg, 0] * Math.Exp(x * p[Constants.expSpezReg, 1]);
+      return FitParameterMatrix[(int)Regression.ExponentiellMitKonstante, 0] * Math.Exp(x * FitParameterMatrix[(int)Regression.ExponentiellMitKonstante, 1]);
     }
 
     /// <summary>
@@ -352,7 +269,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsGerade(double x)
     {
-      return p[Constants.linReg, 0] * x + p[Constants.linReg, 1];
+      return FitParameterMatrix[(int)Regression.Linear, 0] * x + FitParameterMatrix[(int)Regression.Linear, 1];
     }
 
     /// <summary>
@@ -366,7 +283,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsLog(double x)
     {
-      return p[Constants.logReg, 0] * Math.Log(x * p[Constants.logReg, 1]);
+      return FitParameterMatrix[(int)Regression.Logarithmisch, 0] * Math.Log(x * FitParameterMatrix[(int)Regression.Logarithmisch, 1]);
     }
 
     /// <summary>
@@ -380,7 +297,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsParabel(double x)
     {
-      return (p[Constants.quadReg, 0] * x + p[Constants.quadReg, 1]) * x + p[Constants.quadReg, 2];
+      return (FitParameterMatrix[(int)Regression.Quadratisch, 0] * x + FitParameterMatrix[(int)Regression.Quadratisch, 1]) * x + FitParameterMatrix[(int)Regression.Quadratisch, 2];
     }
 
     /// <summary>
@@ -394,7 +311,7 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsPot(double x)
     {
-      return p[Constants.potReg, 0] * Math.Pow(x, p[Constants.potReg, 1]);
+      return FitParameterMatrix[(int)Regression.Potenz, 0] * Math.Pow(x, FitParameterMatrix[(int)Regression.Potenz, 1]);
     }
 
     /// <summary>
@@ -408,8 +325,8 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsReso(double x)
     {
-      return p[Constants.resoReg, 0]
-             / Math.Pow(1 + p[Constants.resoReg, 1] * Math.Pow(x - p[Constants.resoReg, 2] / x, 2), 0.5);
+      return FitParameterMatrix[(int)Regression.Resonanz, 0]
+             / Math.Pow(1 + FitParameterMatrix[(int)Regression.Resonanz, 1] * Math.Pow(x - FitParameterMatrix[(int)Regression.Resonanz, 2] / x, 2), 0.5);
     }
 
     /// <summary>
@@ -423,8 +340,8 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsSin(double x)
     {
-      return p[Constants.sinReg, 0] * Math.Sin(x * p[Constants.sinReg, 1] + p[Constants.sinReg, 2])
-             + p[Constants.sinReg, 3];
+      return FitParameterMatrix[(int)Regression.Sinus, 0] * Math.Sin(x * FitParameterMatrix[(int)Regression.Sinus, 1] + FitParameterMatrix[(int)Regression.Sinus, 2])
+             + FitParameterMatrix[(int)Regression.Sinus, 3];
     }
 
     /// <summary>
@@ -438,8 +355,8 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     public static double AusgleichsSinExp(double x)
     {
-      return p[Constants.sinExpReg, 0] * Math.Sin(x * p[Constants.sinExpReg, 1])
-             * Math.Exp(x * p[Constants.sinExpReg, 2]);
+      return FitParameterMatrix[(int)Regression.SinusGedämpft, 0] * Math.Sin(x * FitParameterMatrix[(int)Regression.SinusGedämpft, 1])
+             * Math.Exp(x * FitParameterMatrix[(int)Regression.SinusGedämpft, 2]);
     }
 
     /// <summary>
@@ -462,43 +379,42 @@ namespace VianaNET.Data.Linefit
     /// <param name="regressionTyp">
     /// The regression typ. 
     /// </param>
-    public void CalculateLineFitFunction(int regressionTyp)
+    public void CalculateLineFitFunction(Regression regressionTyp)
     {
-      if (this.wertX.Count == 0)
+      if (this.WertX.Count == 0)
       {
-        this.CopySampleColumnsToArrays(0, this.xNr, this.yNr);
+        this.CopySampleColumnsToArrays(VideoData.Instance.ActiveObject);
       }
 
-      this.regTyp = regressionTyp;
       if (this.anzahl > 2)
       {
         switch (regressionTyp)
         {
-          case Constants.linReg:
+          case Regression.Linear:
             this.BestimmeLinFkt();
             break;
-          case Constants.expSpezReg:
+          case Regression.ExponentiellMitKonstante:
             this.BestimmeExpSpezFkt();
             break;
-          case Constants.logReg:
+          case Regression.Logarithmisch:
             this.BestimmeLogFkt();
             break;
-          case Constants.potReg:
+          case Regression.Potenz:
             this.BestimmePotFkt();
             break;
-          case Constants.quadReg:
+          case Regression.Quadratisch:
             this.BestimmeQuadratFkt();
             break;
-          case Constants.expReg:
+          case Regression.Exponentiell:
             this.BestimmeExpFkt();
             break;
-          case Constants.sinReg:
+          case Regression.Sinus:
             this.BestimmeSinFkt();
             break;
-          case Constants.sinExpReg:
+          case Regression.SinusGedämpft:
             this.BestimmeSinExpFkt();
             break;
-          case Constants.resoReg:
+          case Regression.Resonanz:
             this.BestimmeResonanzFkt();
             break;
           default:
@@ -511,20 +427,18 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The calculate line fit theorie series.
+    /// Calculate the theory series xySamples
     /// </summary>
-    /// <param name="TheorieSamples">
-    /// The theorie samples. 
-    /// </param>
-    /// <param name="fx">
-    /// The fx. 
-    /// </param>
-    public void CalculateLineFitTheorieSeries(DataCollection TheorieSamples, TFktTerm fx)
+    /// <param name="fx"> The fx. </param>
+    /// <param name="theorySamples"> The theory samples. </param>
+    public void CalculateLineFitTheorieSeries(CalculatorFunctionTerm fx, SortedObservableCollection<XYSample> theorySamples)
     {
-      int k, anzahlPixel;
+      // Erase old values
+      theorySamples.Clear();
+
+      int k;
       double x;
-      var p = new Point();
-      List<Point> tempTheoriePoints;
+      XYSample p;
       var tempParser = new Parse();
 
       if (fx == null)
@@ -532,27 +446,26 @@ namespace VianaNET.Data.Linefit
         return;
       }
 
-      tempTheoriePoints = new List<Point>();
       if (tempParser.isLinearFunction(fx))
       {
-        if (this.xNr == 2)
-        {
-          // zwei Punkte genügen bei x-y-Diagramm
-          x = this.wertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-          p = new Point(x, tempParser.FreierFktWert(fx, x));
-          tempTheoriePoints.Add(p);
-          x = this.wertX[this.anzahl - 1];
-          p = new Point(x, tempParser.FreierFktWert(fx, x));
-          tempTheoriePoints.Add(p);
-        }
-        else
+        //if (this.axisX == 2)
+        //{
+        //  // zwei Punkte genügen bei x-y-Diagramm
+        //  x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
+        //  p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+        //  theorySamples.Add(p);
+        //  x = this.WertX[this.anzahl - 1];
+        //  p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+        //  theorySamples.Add(p);
+        //}
+        //else
         {
           // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
           for (k = 0; k < this.anzahl; k++)
           {
-            x = this.wertX[k];
-            p = new Point(x, tempParser.FreierFktWert(fx, x));
-            tempTheoriePoints.Add(p);
+            x = this.WertX[k];
+            p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+            theorySamples.Add(p);
           }
         }
       }
@@ -560,21 +473,21 @@ namespace VianaNET.Data.Linefit
       {
         // endPixelX und startPixelX
         // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-        anzahlPixel = (int)(this.endPixelX - this.startPixelX);
+        var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
         x = this.startX;
 
         for (k = 0; k < anzahlPixel; k++)
         {
           // Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
           // führt bei t-?-Diagrammen zu falschen Darstellungen !!
-          p = new Point(x, tempParser.FreierFktWert(fx, x));
-          tempTheoriePoints.Add(p);
+          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+          theorySamples.Add(p);
           x = x + this.stepX;
         }
       }
 
-      this.CreateSampleFromCalculatedPoints(this.NumberOfObject, this.xNr, this.yNr, tempTheoriePoints, TheorieSamples);
-      tempTheoriePoints.Clear();
+      //this.CreateSampleFromCalculatedPoints(this.numberOfObject, this.xNr, this.yNr, tempTheoriePoints, theorieSamples);
+      //tempTheoriePoints.Clear();
     }
 
     /// <summary>
@@ -592,16 +505,16 @@ namespace VianaNET.Data.Linefit
     /// <param name="aktyNr">
     /// The akty nr. 
     /// </param>
-    public void ExtractDataColumnsFromVideoSamples(DataCollection aktSamples, int aktObjectNr, int aktxNr, int aktyNr)
+    public void ExtractDataColumnsFromVideoSamples(DataCollection aktSamples, int aktObjectNr, DataAxis aktxNr, DataAxis aktyNr)
     {
-      if ((this.orgDataSamples != aktSamples) || (this.NumberOfObject != aktObjectNr) || (this.xNr != aktxNr)
-          || (this.yNr != aktyNr) || (this.wertX.Count == 0))
+      //if ((this.orgDataSamples != aktSamples) || (this.numberOfObject != aktObjectNr) || (this.axisX != aktxNr)
+      //    || (this.axisY != aktyNr) || (this.WertX.Count == 0))
       {
         this.orgDataSamples = aktSamples;
-        this.NumberOfObject = aktObjectNr;
-        this.xNr = aktxNr;
-        this.yNr = aktyNr;
-        this.CopySampleColumnsToArrays(aktObjectNr, aktxNr, aktyNr);
+        this.numberOfObject = aktObjectNr;
+        this.axisX = aktxNr;
+        this.axisY = aktyNr;
+        this.CopySampleColumnsToArrays(aktObjectNr);
       }
     }
 
@@ -614,58 +527,59 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="string"/> . 
     /// </returns>
-    public string GetRegressionFunctionString(int regTyp)
+    public string GetRegressionFunctionString(Regression regTyp)
     {
-      double a = p[regTyp, 0];
-      double b = p[regTyp, 1];
-      double c = p[regTyp, 2];
-      double d = p[regTyp, 3];
+      var a = FitParameterMatrix[(int)regTyp, 0];
+      var b = FitParameterMatrix[(int)regTyp, 1];
+      var c = FitParameterMatrix[(int)regTyp, 2];
+      var d = FitParameterMatrix[(int)regTyp, 3];
       string fktStr;
-      if (this.aktFunc != null)
+
+      if (this.AusgleichsFunktion != null)
       {
         switch (regTyp)
         {
-          case Constants.linReg:
-            fktStr = string.Concat(a.ToString(this.myG), "*x + ", b.ToString(this.myG));
+          case Regression.Linear:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "*x + ", b.ToString(FittedData.Instance.NumericPrecisionString));
             break;
-          case Constants.expSpezReg:
-            fktStr = string.Concat(a.ToString(this.myG), "*exp(", b.ToString(this.myG), "*x)");
+          case Regression.ExponentiellMitKonstante:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "*exp(", b.ToString(FittedData.Instance.NumericPrecisionString), "*x)");
             break;
-          case Constants.logReg:
-            fktStr = string.Concat(a.ToString(this.myG), "*ln(", b.ToString(this.myG), "*x)");
+          case Regression.Logarithmisch:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "*ln(", b.ToString(FittedData.Instance.NumericPrecisionString), "*x)");
             break;
-          case Constants.potReg:
-            fktStr = string.Concat(a.ToString(this.myG), "*x^", b.ToString(this.myG));
+          case Regression.Potenz:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "*x^", b.ToString(FittedData.Instance.NumericPrecisionString));
             break;
-          case Constants.quadReg:
-            fktStr = string.Concat(a.ToString(this.myG), "x² + ", b.ToString(this.myG), "x + ", c.ToString(this.myG));
+          case Regression.Quadratisch:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "x² + ", b.ToString(FittedData.Instance.NumericPrecisionString), "x + ", c.ToString(FittedData.Instance.NumericPrecisionString));
             break;
-          case Constants.expReg:
-            fktStr = string.Concat(a.ToString(this.myG), "*exp(", b.ToString(this.myG), "*x) + ", c.ToString(this.myG));
+          case Regression.Exponentiell:
+            fktStr = string.Concat(a.ToString(FittedData.Instance.NumericPrecisionString), "*exp(", b.ToString(FittedData.Instance.NumericPrecisionString), "*x) + ", c.ToString(FittedData.Instance.NumericPrecisionString));
             break;
-          case Constants.sinReg:
+          case Regression.Sinus:
             fktStr = string.Concat(
-              a.ToString(this.myG), 
-              "*Sin(", 
-              b.ToString(this.myG), 
-              "*x + ", 
-              c.ToString(this.myG), 
-              ") + ", 
-              d.ToString(this.myG));
-            this.aktFunc = AusgleichsSin;
+              a.ToString(FittedData.Instance.NumericPrecisionString),
+              "*Sin(",
+              b.ToString(FittedData.Instance.NumericPrecisionString),
+              "*x + ",
+              c.ToString(FittedData.Instance.NumericPrecisionString),
+              ") + ",
+              d.ToString(FittedData.Instance.NumericPrecisionString));
+            this.AusgleichsFunktion = AusgleichsSin;
             break;
-          case Constants.sinExpReg:
+          case Regression.SinusGedämpft:
             fktStr = string.Concat(
-              a.ToString(this.myG), "*Sin(", b.ToString(this.myG), "*x )*exp( ", c.ToString(this.myG), "*x)");
-            this.aktFunc = AusgleichsSinExp;
+              a.ToString(FittedData.Instance.NumericPrecisionString), "*Sin(", b.ToString(FittedData.Instance.NumericPrecisionString), "*x )*exp( ", c.ToString(FittedData.Instance.NumericPrecisionString), "*x)");
+            this.AusgleichsFunktion = AusgleichsSinExp;
             break;
-          case Constants.resoReg:
+          case Regression.Resonanz:
             fktStr = string.Concat(
-              a.ToString(this.myG), "/Sqrt( 1 +", b.ToString(this.myG), "*( x - ", c.ToString(this.myG), "/x)² )");
+              a.ToString(FittedData.Instance.NumericPrecisionString), "/Sqrt( 1 +", b.ToString(FittedData.Instance.NumericPrecisionString), "*( x - ", c.ToString(FittedData.Instance.NumericPrecisionString), "/x)² )");
             break;
           default:
             fktStr = " - ";
-            this.aktFunc = NullFkt;
+            this.AusgleichsFunktion = NullFkt;
             break;
         }
       }
@@ -683,26 +597,26 @@ namespace VianaNET.Data.Linefit
     /// <param name="werte">
     /// The werte. 
     /// </param>
-    /// <param name="Min">
+    /// <param name="min">
     /// The min. 
     /// </param>
-    /// <param name="Max">
+    /// <param name="max">
     /// The max. 
     /// </param>
-    public void getMinMax(List<double> werte, out double Min, out double Max)
+    public void GetMinMax(List<double> werte, out double min, out double max)
     {
       // int k;
       // double hilf;
       if (werte.Count == 0)
       {
-        Min = 0;
-        Max = 0;
+        min = 0;
+        max = 0;
         return;
       }
 
       // Falls noch keine Werte vorliegen
-      Min = werte.Min();
-      Max = werte.Max();
+      min = werte.Min();
+      max = werte.Max();
 
       /*          Min = werte[0];
             Max = Min;
@@ -722,73 +636,60 @@ namespace VianaNET.Data.Linefit
     ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
-    /// <summary>
-    ///   The berechne abc.
-    /// </summary>
-    private void BerechneABC()
-    {
-      double a, b, c;
-      int k;
-      a = 0;
-      c = 0;
-      b = this._AbschaetzungFuerB();
-      for (k = 0; k < this.anzahl; k++)
-      {
-        a = a + (this.wertY[k] - this.wertY[k + 1]) / (Math.Exp(b * this.wertX[k]) - Math.Exp(b * this.wertX[k + 1]));
-      }
+    /////// <summary>
+    ///////   The berechne abc.
+    /////// </summary>
+    ////private void BerechneABC()
+    ////{
+    ////  double a, b, c;
+    ////  int k;
+    ////  a = 0;
+    ////  c = 0;
+    ////  b = this.AbschaetzungFuerB();
+    ////  for (k = 0; k < this.anzahl; k++)
+    ////  {
+    ////    a = a + (this.WertY[k] - this.WertY[k + 1]) / (Math.Exp(b * this.WertX[k]) - Math.Exp(b * this.WertX[k + 1]));
+    ////  }
 
-      a = a / this.anzahl;
-      for (k = 0; k < this.anzahl; k++)
-      {
-        c = c + this.wertY[0] - a * Math.Exp(b * this.wertX[0]);
-      }
+    ////  a = a / this.anzahl;
+    ////  for (k = 0; k < this.anzahl; k++)
+    ////  {
+    ////    c = c + this.WertY[0] - a * Math.Exp(b * this.WertX[0]);
+    ////  }
 
-      c = c / this.anzahl;
-    }
+    ////  c = c / this.anzahl;
+    ////}
 
     /// <summary>
     ///   The bestimme exp fkt.
     /// </summary>
     private void BestimmeExpFkt()
     {
-      double yMin, yMax;
-      double yi, 
-             fehler, 
-             abw, 
-             bestA, 
-             bestB, 
-             bestC, 
-             schaetzWert, 
-             schaetzStep, 
-             steigungAmAnfang, 
-             steigungAmEnde, 
-             fehlergrenze;
-      int k, iter, sign, z;
-      List<double> tempWertY;
-      bool weiter;
+      double minY, maxY;
+      int k;
 
       // Schätzwert für Verschiebung in y-Richtung; 
-      this.getMinMax(this.wertY, out yMin, out yMax);
-      schaetzWert = 0;
-      schaetzStep = 1;
-      sign = 1;
+      this.GetMinMax(this.WertY, out minY, out maxY);
+      double schaetzWert;
+      double schaetzStep;
+      int sign;
 
-      steigungAmAnfang = (this.wertY[0] - this.wertY[1]) / (this.wertX[0] - this.wertX[1]);
-      steigungAmEnde = (this.wertY[this.anzahl - 1] - this.wertY[this.anzahl - 2])
-                       / (this.wertX[this.anzahl - 1] - this.wertX[this.anzahl - 2]);
+      double steigungAmAnfang = (this.WertY[0] - this.WertY[1]) / (this.WertX[0] - this.WertX[1]);
+      double steigungAmEnde = (this.WertY[this.anzahl - 1] - this.WertY[this.anzahl - 2])
+                              / (this.WertX[this.anzahl - 1] - this.WertX[this.anzahl - 2]);
       if (((steigungAmAnfang < 0) && (steigungAmAnfang > -0.2)) || ((steigungAmEnde > 0) && (steigungAmEnde < 0.2)))
       {
         // Asymptote oben
-        if (yMax < 0)
+        if (maxY < 0)
         {
-          schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-yMax)));
+          schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-maxY)));
           schaetzWert = 0;
         }
         else
         {
-          if (yMax > 0)
+          if (maxY > 0)
           {
-            schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(yMax)));
+            schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(maxY)));
             schaetzWert = schaetzStep * 10;
           }
           else
@@ -805,17 +706,17 @@ namespace VianaNET.Data.Linefit
         if (((steigungAmAnfang > 0) && (steigungAmAnfang < 0.2)) || ((steigungAmEnde < 0) && (steigungAmEnde > -0.2)))
         {
           // Asymptote unten
-          if (yMin < 0)
+          if (minY < 0)
           {
-            schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-yMin)));
+            schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-minY)));
             schaetzWert = -schaetzStep * 10;
           }
           else
           {
-            if (yMin > 0)
+            if (minY > 0)
             {
-              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(yMin)));
-              schaetzWert = Math.Floor(yMin * schaetzStep) / schaetzStep;
+              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(minY)));
+              schaetzWert = Math.Floor(minY * schaetzStep) / schaetzStep;
             }
             else
             {
@@ -831,17 +732,17 @@ namespace VianaNET.Data.Linefit
           // keine Aymptote erkennbar
           if (steigungAmAnfang < steigungAmEnde)
           {
-            if (yMin > 0)
+            if (minY > 0)
             {
-              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(yMin)));
+              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(minY)));
               schaetzWert = -schaetzStep;
             }
             else
             {
-              if (yMin < 0)
+              if (minY < 0)
               {
-                schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-yMin)));
-                schaetzWert = Math.Floor(yMin * schaetzStep) / schaetzStep - schaetzStep;
+                schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-minY)));
+                schaetzWert = Math.Floor(minY * schaetzStep) / schaetzStep - schaetzStep;
               }
               else
               {
@@ -854,16 +755,16 @@ namespace VianaNET.Data.Linefit
           }
           else
           {
-            if (yMax > 0)
+            if (maxY > 0)
             {
-              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(yMax)));
+              schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(maxY)));
               schaetzWert = 10 * schaetzStep;
             }
             else
             {
-              if (yMax < 0)
+              if (maxY < 0)
               {
-                schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-yMax)));
+                schaetzStep = Math.Pow(10, Math.Floor(Math.Log10(-maxY)));
                 schaetzWert = 0;
               }
               else
@@ -878,40 +779,40 @@ namespace VianaNET.Data.Linefit
         }
       }
 
-      tempWertY = new List<double>();
+      var tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertY.Add(0);
       }
 
       // iterieren über c; 
-      bestA = 0;
-      bestB = 0;
-      bestC = 0;
-      abw = startAbw;
-      iter = 1;
-      weiter = true;
-      fehlergrenze = this.anzahl * genauigkeit;
-      z = 0;
+      double bestA = 0;
+      double bestB = 0;
+      double bestC = 0;
+      double abw = StartAbw;
+      int iter = 1;
+      bool weiter = true;
+      double fehlergrenze = this.anzahl * Genauigkeit;
+      int z = 0;
       do
       {
         for (k = 0; k < this.anzahl; k++)
         {
-          tempWertY[k] = Math.Log(Math.Abs(this.wertY[k] - schaetzWert));
+          tempWertY[k] = Math.Log(Math.Abs(this.WertY[k] - schaetzWert));
         }
 
-        this._doRegress(this.anzahl, this.wertX, tempWertY, param);
+        this.DoRegress(this.anzahl, this.WertX, tempWertY, param);
         param[0] = Math.Exp(param[0]);
-        if (schaetzWert > yMax)
+        if (schaetzWert > maxY)
         {
           param[0] = -param[0];
         }
 
-        fehler = 0;
+        double fehler = 0;
         for (k = 0; k < this.anzahl; k++)
         {
-          yi = param[0] * Math.Exp(param[1] * this.wertX[k]) + schaetzWert;
-          fehler = fehler + (yi - this.wertY[k]) * (yi - this.wertY[k]);
+          double yi = param[0] * Math.Exp(param[1] * this.WertX[k]) + schaetzWert;
+          fehler = fehler + (yi - this.WertY[k]) * (yi - this.WertY[k]);
         }
 
         if (abw > fehler)
@@ -920,7 +821,7 @@ namespace VianaNET.Data.Linefit
           bestA = param[0];
           bestB = param[1];
           bestC = schaetzWert;
-          if ((abw < fehlergrenze) || (schaetzStep < minStep))
+          if ((abw < fehlergrenze) || (schaetzStep < MinStep))
           {
             weiter = false;
           }
@@ -930,7 +831,7 @@ namespace VianaNET.Data.Linefit
         {
           schaetzWert = schaetzWert + sign * schaetzStep;
           z = z + 1;
-          if (((sign == 1) && (schaetzWert > yMin)) || ((sign == -1) && (schaetzWert < yMax)))
+          if (((sign == 1) && (schaetzWert > minY)) || ((sign == -1) && (schaetzWert < maxY)))
           {
             z = 10;
           }
@@ -938,7 +839,7 @@ namespace VianaNET.Data.Linefit
 
         if (z >= 9)
         {
-          if (schaetzStep > minStep)
+          if (schaetzStep > MinStep)
           {
             schaetzWert = bestC - sign * 0.9 * schaetzStep;
             schaetzStep = schaetzStep * 0.1;
@@ -953,11 +854,11 @@ namespace VianaNET.Data.Linefit
 
         iter++;
       }
-      while (weiter && (iter < maxIteration));
-      p[Constants.expReg, 0] = bestA;
-      p[Constants.expReg, 1] = bestB;
-      p[Constants.expReg, 2] = bestC;
-      p[Constants.expReg, 5] = abw / this.anzahl;
+      while (weiter && (iter < MaxIteration));
+      FitParameterMatrix[(int)Regression.Exponentiell, 0] = bestA;
+      FitParameterMatrix[(int)Regression.Exponentiell, 1] = bestB;
+      FitParameterMatrix[(int)Regression.Exponentiell, 2] = bestC;
+      FitParameterMatrix[(int)Regression.Exponentiell, 5] = abw / this.anzahl;
     }
 
     /// <summary>
@@ -969,13 +870,13 @@ namespace VianaNET.Data.Linefit
       var tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
-        tempWertY.Add(Math.Log(this.wertY[k]));
+        tempWertY.Add(Math.Log(this.WertY[k]));
       }
 
-      this._doRegress(this.anzahl, this.wertX, tempWertY, param);
+      this.DoRegress(this.anzahl, this.WertX, tempWertY, param);
       param[0] = Math.Exp(param[0]);
-      p[Constants.expSpezReg, 0] = param[0];
-      p[Constants.expSpezReg, 1] = param[1];
+      FitParameterMatrix[(int)Regression.ExponentiellMitKonstante, 0] = param[0];
+      FitParameterMatrix[(int)Regression.ExponentiellMitKonstante, 1] = param[1];
     }
 
     /// <summary>
@@ -983,9 +884,9 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void BestimmeLinFkt()
     {
-      this._doRegress(this.anzahl, this.wertX, this.wertY, param);
-      p[Constants.linReg, 0] = param[1];
-      p[Constants.linReg, 1] = param[0];
+      this.DoRegress(this.anzahl, this.WertX, this.WertY, param);
+      FitParameterMatrix[(int)Regression.Linear, 0] = param[1];
+      FitParameterMatrix[(int)Regression.Linear, 1] = param[0];
     }
 
     /// <summary>
@@ -994,20 +895,19 @@ namespace VianaNET.Data.Linefit
     private void BestimmeLogFkt()
     {
       int k;
-      double hilf;
       var tempWertX = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
-        tempWertX.Add(Math.Log(this.wertX[k]));
+        tempWertX.Add(Math.Log(this.WertX[k]));
       }
 
-      this._doRegress(this.anzahl, tempWertX, this.wertY, param);
+      this.DoRegress(this.anzahl, tempWertX, this.WertY, param);
 
-      hilf = param[1];
+      double hilf = param[1];
       param[1] = Math.Exp(param[0] / hilf);
       param[0] = hilf;
-      p[Constants.logReg, 0] = param[0];
-      p[Constants.logReg, 1] = param[1];
+      FitParameterMatrix[(int)Regression.Logarithmisch, 0] = param[0];
+      FitParameterMatrix[(int)Regression.Logarithmisch, 1] = param[1];
     }
 
     /// <summary>
@@ -1019,7 +919,7 @@ namespace VianaNET.Data.Linefit
       var tempWertX = new List<double>();
       var tempWertY = new List<double>();
 
-      if ((this.wertX[0] <= 0) || (this.wertY[0] <= 0))
+      if ((this.WertX[0] <= 0) || (this.WertY[0] <= 0))
       {
         start = 1;
       }
@@ -1030,14 +930,14 @@ namespace VianaNET.Data.Linefit
 
       for (k = start; k < this.anzahl; k++)
       {
-        tempWertX.Add(Math.Log(this.wertX[k]));
-        tempWertY.Add(Math.Log(this.wertY[k]));
+        tempWertX.Add(Math.Log(this.WertX[k]));
+        tempWertY.Add(Math.Log(this.WertY[k]));
       }
 
-      this._doRegress(this.anzahl - start, tempWertX, tempWertY, param);
+      this.DoRegress(this.anzahl - start, tempWertX, tempWertY, param);
       param[0] = Math.Exp(param[0]);
-      p[Constants.potReg, 0] = param[0];
-      p[Constants.potReg, 1] = param[1];
+      FitParameterMatrix[(int)Regression.Potenz, 0] = param[0];
+      FitParameterMatrix[(int)Regression.Potenz, 1] = param[1];
     }
 
     /// <summary>
@@ -1046,28 +946,26 @@ namespace VianaNET.Data.Linefit
     private void BestimmeQuadratFkt()
     {
       int k;
-      double sumX4, sumX3, sumX2, sumX, sumXY, sumX2Y, sumY, xi, yi, a, b, c;
-      Matrix M, v, lsg;
 
-      sumX4 = 0;
-      sumX3 = 0;
-      sumX2 = 0;
-      sumX = 0;
-      sumXY = 0;
-      sumX2Y = 0;
-      sumY = 0;
+      double sumX4 = 0;
+      double sumX3 = 0;
+      double sumX2 = 0;
+      double sumX = 0;
+      double sumXY = 0;
+      double sumX2Y = 0;
+      double sumY = 0;
 
       for (k = 0; k < this.anzahl; k++)
       {
-        xi = this.wertX[k];
-        yi = this.wertY[k];
+        double xi = this.WertX[k];
+        double yi = this.WertY[k];
         sumX = sumX + xi;
         sumY = sumY + yi;
         sumXY = sumXY + yi * xi;
         xi = xi * xi;
         sumX2 = sumX2 + xi;
         sumX2Y = sumX2Y + xi * yi;
-        sumX3 = sumX3 + xi * this.wertX[k];
+        sumX3 = sumX3 + xi * this.WertX[k];
         sumX4 = sumX4 + xi * xi;
       }
 
@@ -1075,28 +973,27 @@ namespace VianaNET.Data.Linefit
       // a*sumX4 + b*sumX3 +c*sumX2 = sumX2Y
       // a*sumX3 + b*sumX2 +c*sumX  = sumXY
       // a*sumX2 + b*sumX  +c*k     = sumY
-      M = new Matrix(3, 3);
-      v = new Matrix(3, 1);
-      lsg = new Matrix(3, 1);
-      M[0, 0] = sumX4;
-      M[0, 1] = sumX3;
-      M[0, 2] = sumX2;
+      var m = new Matrix(3, 3);
+      var v = new Matrix(3, 1);
+      m[0, 0] = sumX4;
+      m[0, 1] = sumX3;
+      m[0, 2] = sumX2;
       v[0, 0] = sumX2Y;
-      M[1, 0] = sumX3;
-      M[1, 1] = sumX2;
-      M[1, 2] = sumX;
+      m[1, 0] = sumX3;
+      m[1, 1] = sumX2;
+      m[1, 2] = sumX;
       v[1, 0] = sumXY;
-      M[2, 0] = sumX2;
-      M[2, 1] = sumX;
-      M[2, 2] = this.anzahl;
+      m[2, 0] = sumX2;
+      m[2, 1] = sumX;
+      m[2, 2] = this.anzahl;
       v[2, 0] = sumY;
-      lsg = Matrix.SolveLinear(M, v);
-      a = lsg[0, 0];
-      b = lsg[1, 0];
-      c = lsg[2, 0];
-      p[Constants.quadReg, 0] = a;
-      p[Constants.quadReg, 1] = b;
-      p[Constants.quadReg, 2] = c;
+      var lsg = Matrix.SolveLinear(m, v);
+      var a = lsg[0, 0];
+      var b = lsg[1, 0];
+      var c = lsg[2, 0];
+      FitParameterMatrix[(int)Regression.Quadratisch, 0] = a;
+      FitParameterMatrix[(int)Regression.Quadratisch, 1] = b;
+      FitParameterMatrix[(int)Regression.Quadratisch, 2] = c;
     }
 
     /*mechanische Schwingungen:
@@ -1121,11 +1018,8 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void BestimmeResonanzFkt()
     {
-      double maxSchaetz, schaetzWert, schaetzStep, hilf, maxY, offset, grenze;
-      double xi, yi, hilfX, a, b, c, abw, fehler;
-      double bestA, bestB, bestC;
-      int anz, k, z, iter, maxPos;
-      bool weiter;
+      double yi;
+      int k;
       var tempWertX = new List<double>();
       var tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
@@ -1134,20 +1028,16 @@ namespace VianaNET.Data.Linefit
         tempWertY.Add(0);
       }
 
-      bestA = 0;
-      bestB = 0;
-      bestC = 0;
-      maxSchaetz = 0;
-      schaetzWert = 0;
-      schaetzStep = 0;
+      double bestA = 0;
+      double bestB = 0;
+      double bestC = 0;
 
       // Parameter abschätzen
-      maxPos = -1;
-      k = 0;
-      maxY = -1E150;
+      int maxPos = -1;
+      double maxY = -1E150;
       for (k = 0; k < this.anzahl; k++)
       {
-        yi = this.wertY[k];
+        yi = this.WertY[k];
         if (yi > maxY)
         {
           maxY = yi;
@@ -1155,40 +1045,25 @@ namespace VianaNET.Data.Linefit
         }
       }
 
-      offset = 10000000000.0;
+      var offset = 10000000000.0;
       while (offset > maxY / 100)
       {
         offset = offset * 0.1;
       }
 
       // Quadrat des x-Wertes der ResonanzStelle ist ungefähr der Schaetzwert
-      if (maxPos > 0)
-      {
-        schaetzWert = this.wertX[maxPos - 1];
-      }
-      else
-      {
-        schaetzWert = this.wertX[maxPos];
-      }
-
-      if (maxPos < this.anzahl - 11)
-      {
-        maxSchaetz = this.wertX[maxPos + 1];
-      }
-      else
-      {
-        maxSchaetz = this.wertX[maxPos];
-      }
+      double schaetzWert = maxPos > 0 ? this.WertX[maxPos - 1] : this.WertX[maxPos];
+      double maxSchaetz = maxPos < this.anzahl - 11 ? this.WertX[maxPos + 1] : this.WertX[maxPos];
 
       maxSchaetz = maxSchaetz * maxSchaetz;
       schaetzWert = schaetzWert * schaetzWert;
-      grenze = 1;
+      double grenze = 1;
       while (grenze > (maxSchaetz - schaetzWert) / 1000)
       {
         grenze = grenze * 0.1;
       }
 
-      schaetzStep = grenze * 1000;
+      double schaetzStep = grenze * 1000;
       schaetzWert = Math.Floor(schaetzWert);
 
       if (maxPos == 0)
@@ -1196,20 +1071,21 @@ namespace VianaNET.Data.Linefit
         schaetzWert = schaetzWert - 2 * schaetzStep;
       }
 
-      weiter = true;
-      z = 9 - (int)Math.Floor((maxSchaetz - schaetzWert) / schaetzStep);
+      var z = 9 - (int)Math.Floor((maxSchaetz - schaetzWert) / schaetzStep);
 
-      abw = startAbw;
-      iter = 0;
-      while (weiter && (iter < maxIteration))
+      var abw = StartAbw;
+      int iter = 0;
+      while (iter < MaxIteration)
       {
         // Iteration über c
         // lin. Reg vorbereiten    1/y^2 = 1/a^2 + b/a^2 * (x - c/x) = a' + b' * hilfX
-        anz = 0;
+        int anz = 0;
+        double xi;
+        double hilfX;
         for (k = 0; k < this.anzahl; k++)
         {
-          xi = this.wertX[k];
-          yi = this.wertY[k];
+          xi = this.WertX[k];
+          yi = this.WertY[k];
           if (yi != 0)
           {
             hilfX = xi - schaetzWert / xi;
@@ -1219,17 +1095,17 @@ namespace VianaNET.Data.Linefit
           }
         }
 
-        this._doRegress(anz, tempWertX, tempWertY, param);
-        a = param[0]; // a' 
-        b = param[1] / a; // b'/a'
+        this.DoRegress(anz, tempWertX, tempWertY, param);
+        var a = param[0];
+        var b = param[1] / a;
         a = Math.Pow(a, -0.5);
-        c = schaetzWert;
-        fehler = 0;
+        var c = schaetzWert;
+        double fehler = 0;
         for (k = 0; k < this.anzahl; k++)
         {
-          xi = this.wertX[k];
+          xi = this.WertX[k];
           hilfX = xi - c / xi;
-          hilf = a / Math.Pow(1 + b * hilfX * hilfX, 0.5) - this.wertY[k];
+          var hilf = a / Math.Pow(1 + b * hilfX * hilfX, 0.5) - this.WertY[k];
           fehler = fehler + hilf * hilf;
         }
 
@@ -1255,10 +1131,10 @@ namespace VianaNET.Data.Linefit
         }
       }
 
-      p[Constants.resoReg, 0] = bestA;
-      p[Constants.resoReg, 1] = bestB;
-      p[Constants.resoReg, 2] = bestC;
-      p[Constants.resoReg, 5] = abw / this.anzahl;
+      FitParameterMatrix[(int)Regression.Resonanz, 0] = bestA;
+      FitParameterMatrix[(int)Regression.Resonanz, 1] = bestB;
+      FitParameterMatrix[(int)Regression.Resonanz, 2] = bestC;
+      FitParameterMatrix[(int)Regression.Resonanz, 5] = abw / this.anzahl;
     }
 
     /// <summary>
@@ -1266,44 +1142,40 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void BestimmeSinExpFkt()
     {
-      double maxSchaetz, schaetzWert, schaetzStep, hilf;
-      double xi, sinbxi, a, b, c, abw, fehler;
-      double bestA, bestB, bestC;
-      int anz, k, z, iter;
-      bool weiter;
-      List<double> tempWertX, tempWertY;
+      double maxSchaetz, schaetzWert, schaetzStep;
+      int k;
 
       // Schätzwert für b ermitteln:  y=a*sin(b*x)*exp(c*x);
-      this._getPeriode(this.wertX, this.wertY, out schaetzWert, out maxSchaetz, out schaetzStep);
+      this.GetPeriode(this.WertX, this.WertY, out schaetzWert, out maxSchaetz, out schaetzStep);
 
-      weiter = true;
-      z = 0;
-      iter = 0;
-      abw = startAbw;
-      a = 0;
-      b = schaetzWert;
-      c = 0;
-      bestA = 0;
-      bestB = b;
-      bestC = 0;
-      tempWertX = new List<double>();
-      tempWertY = new List<double>();
+      var weiter = true;
+      int z = 0;
+      int iter = 0;
+      double abw = StartAbw;
+      double b = schaetzWert;
+      double bestA = 0;
+      double bestB = b;
+      double bestC = 0;
+      var tempWertX = new List<double>();
+      var tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertX.Add(0);
         tempWertY.Add(0);
       }
 
-      while (weiter && (iter < maxIteration))
+      while (weiter && (iter < MaxIteration))
       {
-        anz = 0;
+        int anz = 0;
+        double hilf;
+        double xi;
         for (k = 0; k < this.anzahl; k++)
         {
-          xi = this.wertX[k];
-          sinbxi = Math.Sin(schaetzWert * xi);
+          xi = this.WertX[k];
+          double sinbxi = Math.Sin(schaetzWert * xi);
           if (sinbxi != 0)
           {
-            hilf = this.wertY[k] / sinbxi;
+            hilf = this.WertY[k] / sinbxi;
             if (hilf > 0)
             {
               tempWertX[anz] = xi;
@@ -1317,14 +1189,14 @@ namespace VianaNET.Data.Linefit
         if (anz >= 0.8 * this.anzahl)
         {
           // mehr als 80% der Wertepaare können bei dieser Schätzung für b berücksichtigt werden
-          this._doRegress(anz, tempWertX, tempWertY, param);
-          a = Math.Exp(param[0]);
-          c = param[1];
-          fehler = 0;
+          this.DoRegress(anz, tempWertX, tempWertY, param);
+          double a = Math.Exp(param[0]);
+          double c = param[1];
+          double fehler = 0;
           for (k = 0; k < this.anzahl; k++)
           {
-            xi = this.wertX[k];
-            hilf = a * Math.Sin(schaetzWert * xi) * Math.Exp(c * xi) - this.wertY[k];
+            xi = this.WertX[k];
+            hilf = a * Math.Sin(schaetzWert * xi) * Math.Exp(c * xi) - this.WertY[k];
             fehler = fehler + hilf * hilf;
           }
 
@@ -1349,7 +1221,7 @@ namespace VianaNET.Data.Linefit
         }
         else
         {
-          if (schaetzStep > minStep)
+          if (schaetzStep > MinStep)
           {
             schaetzWert = bestB - 0.9 * schaetzStep;
             z = -10;
@@ -1363,10 +1235,10 @@ namespace VianaNET.Data.Linefit
       }
 
       // while weiter
-      p[Constants.sinExpReg, 0] = bestA;
-      p[Constants.sinExpReg, 1] = bestB;
-      p[Constants.sinExpReg, 2] = bestC;
-      p[Constants.sinExpReg, 5] = abw / this.anzahl;
+      FitParameterMatrix[(int)Regression.SinusGedämpft, 0] = bestA;
+      FitParameterMatrix[(int)Regression.SinusGedämpft, 1] = bestB;
+      FitParameterMatrix[(int)Regression.SinusGedämpft, 2] = bestC;
+      FitParameterMatrix[(int)Regression.SinusGedämpft, 5] = abw / this.anzahl;
     }
 
     /// <summary>
@@ -1374,80 +1246,56 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void BestimmeSinFkt()
     {
-      int n, k, iter, z;
-      double yMin = 0;
-      double yMax = 0;
+      int k;
+      double minY;
+      double maxY;
       double maxSchaetz, schaetzWert, schaetzStep;
-      double sumSin, 
-             sumSin2, 
-             sumSinY, 
-             sumCosY, 
-             sumSinCos, 
-             sumCos, 
-             sumCos2, 
-             sumY, 
-             xi, 
-             xci, 
-             yi, 
-             fehler, 
-             a1, 
-             c1, 
-             a, 
-             b, 
-             c, 
-             d, 
-             abw;
-      List<double> tempWertY;
-      Matrix M, v, lsg;
-      double bestA, bestB, bestC, bestD;
-      bool weiter;
 
-      bestA = 0;
-      bestB = 0;
-      bestC = 0;
-      bestD = 0;
-      this.getMinMax(this.wertY, out yMin, out yMax);
+      double bestA = 0;
+      double bestB = 0;
+      double bestC = 0;
+      double bestD = 0;
+      this.GetMinMax(this.WertY, out minY, out maxY);
 
       // Amplitude a:
-      a = (yMax - yMin) * 1.02 / 2;
+      var a = (maxY - minY) * 1.02 / 2;
 
       // y-Verschiebung d:
-      d = (yMax + yMin) / 2;
+      var d = (maxY + minY) / 2;
 
       // Periodenlänge:
-      tempWertY = new List<double>();
+      var tempWertY = new List<double>();
 
       for (k = 0; k < this.anzahl; k++)
       {
-        tempWertY.Add(this.wertY[k] - d);
+        tempWertY.Add(this.WertY[k] - d);
       }
 
-      this._getPeriode(this.wertX, tempWertY, out schaetzWert, out maxSchaetz, out schaetzStep);
+      this.GetPeriode(this.WertX, tempWertY, out schaetzWert, out maxSchaetz, out schaetzStep);
 
       // a*sin(b*x+c)+d = a*cos(c)*sin(b*x) + a*sin(c)*cos(b*x)+d = a1*sin(b*x) + c1*cos(b*x) + d;
       // iteration über b:
-      weiter = true;
-      iter = 0;
-      abw = startAbw;
-      c = 0;
-      b = schaetzWert;
-      z = 0;
-      while (weiter && (iter < maxIteration))
+      var weiter = true;
+      int iter = 0;
+      var abw = StartAbw;
+      int z = 0;
+      while (weiter && (iter < MaxIteration))
       {
-        sumSin = 0;
-        sumSin2 = 0;
-        sumSinY = 0;
-        sumSinCos = 0;
-        sumCos = 0;
-        sumCos2 = 0;
-        sumCosY = 0;
-        sumY = 0;
-        fehler = 0;
+        double sumSin = 0;
+        double sumSin2 = 0;
+        double sumSinY = 0;
+        double sumSinCos = 0;
+        double sumCos = 0;
+        double sumCos2 = 0;
+        double sumCosY = 0;
+        double sumY = 0;
+        double yi;
+        int n;
         for (n = 0; n < this.anzahl; n++)
         {
-          xi = this.wertX[n];
-          yi = this.wertY[n];
-          xci = Math.Cos(schaetzWert * xi);
+          double xi = this.WertX[n];
+          yi = this.WertY[n];
+          double xci = Math.Cos(schaetzWert * xi);
           xi = Math.Sin(schaetzWert * xi);
           sumSin = sumSin + xi;
           sumY = sumY + yi;
@@ -1464,38 +1312,37 @@ namespace VianaNET.Data.Linefit
         // a1*sumSin2   + c1*sumSinCos + d*sumSin  = sumSinY
         // a1*sumSinCos + c1*sumCos2   + d*sumCos  = sumCosY
         // a1*sumSin    + c1*sumCos    + d*k       = sumY
-        M = new Matrix(3, 3);
-        v = new Matrix(3, 1);
-        lsg = new Matrix(3, 1);
-        M[0, 0] = sumSin2;
-        M[0, 1] = sumSinCos;
-        M[0, 2] = sumSin;
+        var m = new Matrix(3, 3);
+        var v = new Matrix(3, 1);
+        m[0, 0] = sumSin2;
+        m[0, 1] = sumSinCos;
+        m[0, 2] = sumSin;
         v[0, 0] = sumSinY;
-        M[1, 0] = sumSinCos;
-        M[1, 1] = sumCos2;
-        M[1, 2] = sumCos;
+        m[1, 0] = sumSinCos;
+        m[1, 1] = sumCos2;
+        m[1, 2] = sumCos;
         v[1, 0] = sumCosY;
-        M[2, 0] = sumSin;
-        M[2, 1] = sumCos;
-        M[2, 2] = this.anzahl;
+        m[2, 0] = sumSin;
+        m[2, 1] = sumCos;
+        m[2, 2] = this.anzahl;
         v[2, 0] = sumY;
-        lsg = Matrix.SolveLinear(M, v);
-        a1 = lsg[0, 0];
-        c1 = lsg[1, 0];
+        var lsg = Matrix.SolveLinear(m, v);
+        var a1 = lsg[0, 0];
+        var c1 = lsg[1, 0];
         a = Math.Sqrt(a1 * a1 + c1 * c1);
         if (a1 < 0)
         {
           a = -a;
         }
 
-        b = schaetzWert;
-        c = Math.Asin(c1 / a);
+        double b = schaetzWert;
+        var c = Math.Asin(c1 / a);
         d = lsg[2, 0];
 
-        fehler = 0;
+        double fehler = 0;
         for (n = 0; n < this.anzahl; n++)
         {
-          yi = a * Math.Sin(b * this.wertX[n] + c) + d - this.wertY[n];
+          yi = a * Math.Sin(b * this.WertX[n] + c) + d - this.WertY[n];
           fehler = fehler + yi * yi;
         }
 
@@ -1517,7 +1364,7 @@ namespace VianaNET.Data.Linefit
         }
         else
         {
-          if (schaetzStep > minStep)
+          if (schaetzStep > MinStep)
           {
             schaetzWert = bestB - 0.9 * schaetzStep;
             z = -10;
@@ -1537,11 +1384,11 @@ namespace VianaNET.Data.Linefit
         bestC = bestC + Math.PI;
       }
 
-      p[Constants.sinReg, 0] = bestA;
-      p[Constants.sinReg, 1] = bestB;
-      p[Constants.sinReg, 2] = bestC;
-      p[Constants.sinReg, 3] = bestD;
-      p[Constants.sinReg, 5] = abw / this.anzahl;
+      FitParameterMatrix[(int)Regression.Sinus, 0] = bestA;
+      FitParameterMatrix[(int)Regression.Sinus, 1] = bestB;
+      FitParameterMatrix[(int)Regression.Sinus, 2] = bestC;
+      FitParameterMatrix[(int)Regression.Sinus, 3] = bestD;
+      FitParameterMatrix[(int)Regression.Sinus, 5] = abw / this.anzahl;
     }
 
     /// <summary>
@@ -1550,41 +1397,42 @@ namespace VianaNET.Data.Linefit
     /// <param name="lineFitSamples">
     /// The line fit samples. 
     /// </param>
-    private void CalculateLineFitSeries(DataCollection lineFitSamples)
+    private void CalculateLineFitSeries(SortedObservableCollection<XYSample> lineFitSamples)
     {
-      int k, anzahlPixel;
-      double x;
-      Point p;
-      List<Point> tempLineFitPoints;
+      // erase old values
+      lineFitSamples.Clear();
 
-      if (this.aktFunc == null)
+      int k;
+      double x;
+      XYSample p;
+
+      if (this.AusgleichsFunktion == null)
       {
         return;
       }
 
-      tempLineFitPoints = new List<Point>();
-      if (this.regTyp == Constants.linReg)
+      if (this.regressionType == Regression.Linear)
       {
-        // Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
-        // da Chart selbst Geraden zeichnen kann. 
-        if (this.xNr == 2)
-        {
-          // zwei Punkte genügen bei x-y-Diagramm
-          x = this.wertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-          p = new Point(x, this.aktFunc(x));
-          tempLineFitPoints.Add(p);
-          x = this.wertX[this.anzahl - 1];
-          p = new Point(x, this.aktFunc(x));
-          tempLineFitPoints.Add(p);
-        }
-        else
+        //// Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
+        //// da Chart selbst Geraden zeichnen kann. 
+        //if (this.axisX == 2)
+        //{
+        //  // zwei Punkte genügen bei x-y-Diagramm
+        //  x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
+        //  p = new XYSample(x, this.AusgleichsFunktion(x));
+        //  lineFitSamples.Add(p);
+        //  x = this.WertX[this.anzahl - 1];
+        //  p = new XYSample(x, this.AusgleichsFunktion(x));
+        //  lineFitSamples.Add(p);
+        //}
+        //else
         {
           // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
           for (k = 0; k < this.anzahl; k++)
           {
-            x = this.wertX[k];
-            p = new Point(x, this.aktFunc(x));
-            tempLineFitPoints.Add(p);
+            x = this.WertX[k];
+            p = new XYSample(x, this.AusgleichsFunktion(x));
+            lineFitSamples.Add(p);
           }
         }
       }
@@ -1592,14 +1440,14 @@ namespace VianaNET.Data.Linefit
       {
         // endPixelX und startPixelX
         // startX,endX und stepX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-        anzahlPixel = (int)(this.endPixelX - this.startPixelX); // Anzahl der Pixel im betrachtenen Bereich
+        var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
         x = this.startX;
         for (k = 0; k < anzahlPixel; k++)
         {
           // Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
           // führt bei t-?-Diagrammen zu falschen Darstellungen !!   
-          p = new Point(x, this.aktFunc(x));
-          tempLineFitPoints.Add(p);
+          p = new XYSample(x, this.AusgleichsFunktion(x));
+          lineFitSamples.Add(p);
           x = x + this.stepX;
         }
 
@@ -1643,8 +1491,7 @@ namespace VianaNET.Data.Linefit
         */
       }
 
-      this.CreateSampleFromCalculatedPoints(this.NumberOfObject, this.xNr, this.yNr, tempLineFitPoints, lineFitSamples);
-      tempLineFitPoints.Clear();
+      //this.CreateSampleFromCalculatedPoints(this.numberOfObject, this.xNr, this.yNr, tempLineFitPoints, lineFitSamples);
     }
 
     /// <summary>
@@ -1653,241 +1500,232 @@ namespace VianaNET.Data.Linefit
     /// <param name="aktObjectNr">
     /// The akt object nr. 
     /// </param>
-    /// <param name="aktxNr">
+    /// <param name="axisX">
     /// The aktx nr. 
     /// </param>
-    /// <param name="aktyNr">
+    /// <param name="axisY">
     /// The akty nr. 
     /// </param>
-    private void CopySampleColumnsToArrays(int aktObjectNr, int aktxNr, int aktyNr)
+    private void CopySampleColumnsToArrays(int aktObjectNr)
     {
-      DataSample aktDataSample;
-      int firstPossibleValueNr = 0;
+      //DataSample aktDataSample;
+      //int firstPossibleValueNr = 0;
 
-      if (this.wertX != null)
+      if (this.WertX == null)
       {
-        this.wertX.Clear();
-        this.wertY.Clear();
+        return;
       }
 
+      this.WertX.Clear();
+      this.WertY.Clear();
       this.anzahl = 0;
-      if ((aktxNr == 2) & (aktyNr == 3))
+
+      foreach (TimeSample sample in this.orgDataSamples)
       {
-        // x-y-Diagramm
-        foreach (TimeSample sample in this.orgDataSamples)
+        var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
+        var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
+
+        if (valueX.HasValue && valueY.HasValue)
         {
-          aktDataSample = sample.Object[aktObjectNr];
           if (this.anzahl == 0)
           {
-            this.startPixelX = aktDataSample.PixelX;
+            this.startPixelX = sample.Object[aktObjectNr].PixelX;
           }
 
-          this.wertX.Add(aktDataSample.PositionX);
-          this.wertY.Add(aktDataSample.PositionY);
-          this.endPixelX = aktDataSample.PixelX;
+          this.WertX.Add(valueX.Value);
+          this.WertY.Add(valueY.Value);
+          this.endPixelX = sample.Object[aktObjectNr].PixelX;
           this.anzahl++;
         }
+      }
 
-        if (this.anzahl > 0)
-        {
-          this.startX = this.wertX[firstPossibleValueNr];
-          this.endX = this.wertX[this.anzahl - 1];
-        }
-        else
-        {
-          this.startX = 0;
-          this.endX = 0;
-        }
+      if (this.anzahl > 0)
+      {
+        this.startX = this.WertX[0];
+        this.endX = this.WertX[this.anzahl - 1];
       }
       else
       {
-        // t-?-Diagramm
-        if (aktyNr >= 7)
-        {
-          // t-a-Diagramm,                                               
-          firstPossibleValueNr = 2;
-        }
-          
-          // erst der dritte Wert für die Beschleunigung ist definiert - Zählung startet bei 0
-        else
-        {
-          if (aktyNr >= 4)
-          {
-            firstPossibleValueNr = 1;
-          }
-
-          // t-v-Diagramm, erst der zweite Wert für die Beschleunigung ist definiert
-        }
-
-        this.startTime = 0; // sonst meckert der Compiler
-        foreach (TimeSample sample in this.orgDataSamples)
-        {
-          if (this.anzahl >= firstPossibleValueNr)
-          {
-            aktDataSample = sample.Object[aktObjectNr];
-            if (this.anzahl == firstPossibleValueNr)
-            {
-              this.startPixelX = aktDataSample.PixelX;
-              this.startTime = sample.Timestamp - 40;
-            }
-
-            // im Diagramm ist die kleinste Zeit bei 1 und ändert sich in 1er-Schritten, (realer) zeitlicher Abstand beträgt 40 ms
-            this.wertX.Add(sample.Timestamp - this.startTime);
-            this.endPixelX = aktDataSample.PixelX;
-            switch (aktyNr)
-            {
-              case 2:
-                this.wertY.Add(aktDataSample.PositionX);
-                break;
-              case 3:
-                this.wertY.Add(aktDataSample.PositionY);
-                break;
-              case 4:
-                this.wertY.Add(aktDataSample.Velocity.Value);
-                break;
-              case 5:
-                this.wertY.Add(aktDataSample.VelocityX.Value);
-                break;
-              case 6:
-                this.wertY.Add(aktDataSample.VelocityY.Value);
-                break;
-              case 7:
-                this.wertY.Add(aktDataSample.Acceleration.Value);
-                break;
-              case 8:
-                this.wertY.Add(aktDataSample.AccelerationX.Value);
-                break;
-              case 9:
-                this.wertY.Add(aktDataSample.AccelerationY.Value);
-                break;
-            }
-          }
-
-          this.anzahl++;
-        }
-
-        this.anzahl = this.wertX.Count;
-        if (this.anzahl > 0)
-        {
-          this.startX = this.wertX[0];
-          this.endX = this.wertX[this.anzahl - 1];
-        }
-        else
-        {
-          this.startX = 0;
-          this.endX = 0;
-        }
+        this.startX = 0;
+        this.endX = 0;
       }
 
       if (this.startPixelX > this.endPixelX)
       {
-        this.startX = this.wertX[this.anzahl - 1];
-        this.endX = this.wertX[firstPossibleValueNr];
+        this.startX = this.WertX[this.anzahl - 1];
+        this.endX = this.WertX[0];
         double hilf = this.startPixelX;
         this.startPixelX = this.endPixelX;
         this.endPixelX = hilf;
       }
 
-      this.stepX = (this.endX - this.startX) / (this.endPixelX - this.startPixelX);
-
       // Schrittweite zum Ausfüllen der Zwischenräume ( in x-Achsen-Richtung )
+      this.stepX = (this.endX - this.startX) / (this.endPixelX - this.startPixelX);
     }
 
     /// <summary>
-    /// The create sample from calculated points.
+    /// Returns the value from the given timesample that corresponds
+    /// to the given object and axis request.
     /// </summary>
-    /// <param name="aktObjectNr">
-    /// The akt object nr. 
-    /// </param>
-    /// <param name="aktxNr">
-    /// The aktx nr. 
-    /// </param>
-    /// <param name="aktyNr">
-    /// The akty nr. 
-    /// </param>
-    /// <param name="pointList">
-    /// The point list. 
-    /// </param>
-    /// <param name="samples">
-    /// The samples. 
-    /// </param>
-    private void CreateSampleFromCalculatedPoints(
-      int aktObjectNr, int aktxNr, int aktyNr, List<Point> pointList, DataCollection samples)
+    /// <param name="isXValue">True if should use xaxis, else uses yaxis</param>
+    /// <param name="aktObjectNr">The index of the used object</param>
+    /// <param name="sample">The time sample with the raw data</param>
+    /// <returns>The nullable <see cref="double"/> with the value, if there is one found.</returns>
+    private double? GetValueFromSample(bool isXValue, int aktObjectNr, TimeSample sample)
     {
-      DataSample aktDataSample;
-      TimeSample timeHilf;
-      Point p;
-      int k, j;
-
-      samples.Clear();
-
-      if ((aktxNr == 2) & (aktyNr == 3))
+      double? value = null;
+      switch (isXValue ? this.axisX.Axis : this.axisY.Axis)
       {
-        // Ausgleichskurve für x-y-Diagramm vorbereiten
-        for (k = 0; k < pointList.Count(); k++)
-        {
-          // Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
-          timeHilf = new TimeSample();
-          timeHilf.Framenumber = k;
-          for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
-          {
-            timeHilf.Object[j] = new DataSample();
-          }
-
-          aktDataSample = timeHilf.Object[aktObjectNr];
-          p = pointList[k];
-          aktDataSample.PositionX = p.X;
-          aktDataSample.PositionY = p.Y;
-          samples.Add(timeHilf);
-        }
+        case AxisType.T:
+          value = sample.Timestamp;
+          break;
+        case AxisType.X:
+          value = sample.Object[aktObjectNr].PixelX;
+          break;
+        case AxisType.Y:
+          value = sample.Object[aktObjectNr].PixelY;
+          break;
+        case AxisType.PX:
+          value = sample.Object[aktObjectNr].PositionX;
+          break;
+        case AxisType.PY:
+          value = sample.Object[aktObjectNr].PositionY;
+          break;
+        case AxisType.D:
+          value = sample.Object[aktObjectNr].Distance;
+          break;
+        case AxisType.DX:
+          value = sample.Object[aktObjectNr].DistanceX;
+          break;
+        case AxisType.DY:
+          value = sample.Object[aktObjectNr].DistanceY;
+          break;
+        case AxisType.S:
+          value = sample.Object[aktObjectNr].Length;
+          break;
+        case AxisType.SX:
+          value = sample.Object[aktObjectNr].LengthX;
+          break;
+        case AxisType.SY:
+          value = sample.Object[aktObjectNr].LengthY;
+          break;
+        case AxisType.V:
+          value = sample.Object[aktObjectNr].Velocity;
+          break;
+        case AxisType.VX:
+          value = sample.Object[aktObjectNr].VelocityX;
+          break;
+        case AxisType.VY:
+          value = sample.Object[aktObjectNr].VelocityY;
+          break;
+        case AxisType.A:
+          value = sample.Object[aktObjectNr].Acceleration;
+          break;
+        case AxisType.AX:
+          value = sample.Object[aktObjectNr].AccelerationX;
+          break;
+        case AxisType.AY:
+          value = sample.Object[aktObjectNr].AccelerationY;
+          break;
       }
-      else
-      {
-        // Ausgleichskurve für t-?-Diagramm vorbereiten
-        for (k = 0; k < pointList.Count(); k++)
-        {
-          // Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
-          timeHilf = new TimeSample();
-          for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
-          {
-            timeHilf.Object[j] = new DataSample();
-          }
 
-          aktDataSample = timeHilf.Object[aktObjectNr];
-          p = pointList[k];
-          timeHilf.Timestamp = (long)(p.X + this.startTime);
-          switch (aktyNr)
-          {
-            case 2:
-              aktDataSample.PositionX = p.Y;
-              break;
-            case 3:
-              aktDataSample.PositionY = p.Y;
-              break;
-            case 4:
-              aktDataSample.VelocityI = p.Y;
-              break;
-            case 5:
-              aktDataSample.VelocityXI = p.Y;
-              break;
-            case 6:
-              aktDataSample.VelocityYI = p.Y;
-              break;
-            case 7:
-              aktDataSample.AccelerationI = p.Y;
-              break;
-            case 8:
-              aktDataSample.AccelerationXI = p.Y;
-              break;
-            case 9:
-              aktDataSample.AccelerationYI = p.Y;
-              break;
-          }
-
-          samples.Add(timeHilf);
-        }
-      }
+      return value;
     }
+
+    ///// <summary>
+    ///// The create sample from calculated points.
+    ///// </summary>
+    ///// <param name="aktObjectNr">
+    ///// The akt object nr. 
+    ///// </param>
+    ///// <param name="aktxNr">
+    ///// The aktx nr. 
+    ///// </param>
+    ///// <param name="aktyNr">
+    ///// The akty nr. 
+    ///// </param>
+    ///// <param name="pointList">
+    ///// The point list. 
+    ///// </param>
+    ///// <param name="samples">
+    ///// The samples. 
+    ///// </param>
+    //private void CreateSampleFromCalculatedPoints(
+    //  int aktObjectNr, int aktxNr, int aktyNr, List<Point> pointList, DataCollection samples)
+    //{
+    //  DataSample aktDataSample;
+    //  TimeSample timeHilf;
+    //  Point p;
+    //  int k, j;
+
+    //  samples.Clear();
+
+    //  if ((aktxNr == 2) & (aktyNr == 3))
+    //  {
+    //    // Ausgleichskurve für x-y-Diagramm vorbereiten
+    //    for (k = 0; k < pointList.Count(); k++)
+    //    {
+    //      // Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+    //      timeHilf = new TimeSample { Framenumber = k };
+    //      for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+    //      {
+    //        timeHilf.Object[j] = new DataSample();
+    //      }
+
+    //      aktDataSample = timeHilf.Object[aktObjectNr];
+    //      p = pointList[k];
+    //      aktDataSample.PositionX = p.X;
+    //      aktDataSample.PositionY = p.Y;
+    //      samples.Add(timeHilf);
+    //    }
+    //  }
+    //  else
+    //  {
+    //    // Ausgleichskurve für t-?-Diagramm vorbereiten
+    //    for (k = 0; k < pointList.Count(); k++)
+    //    {
+    //      // Punkte im PixelAbstand (waagerecht) werden mit der Ausgleichsfunktion bestimmt.
+    //      timeHilf = new TimeSample();
+    //      for (j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+    //      {
+    //        timeHilf.Object[j] = new DataSample();
+    //      }
+
+    //      aktDataSample = timeHilf.Object[aktObjectNr];
+    //      p = pointList[k];
+    //      timeHilf.Timestamp = (long)(p.X + this.startTime);
+    //      switch (aktyNr)
+    //      {
+    //        case 2:
+    //          aktDataSample.PositionX = p.Y;
+    //          break;
+    //        case 3:
+    //          aktDataSample.PositionY = p.Y;
+    //          break;
+    //        case 4:
+    //          aktDataSample.VelocityI = p.Y;
+    //          break;
+    //        case 5:
+    //          aktDataSample.VelocityXI = p.Y;
+    //          break;
+    //        case 6:
+    //          aktDataSample.VelocityYI = p.Y;
+    //          break;
+    //        case 7:
+    //          aktDataSample.AccelerationI = p.Y;
+    //          break;
+    //        case 8:
+    //          aktDataSample.AccelerationXI = p.Y;
+    //          break;
+    //        case 9:
+    //          aktDataSample.AccelerationYI = p.Y;
+    //          break;
+    //      }
+
+    //      samples.Add(timeHilf);
+    //    }
+    //  }
+    //}
 
     /// <summary>
     /// The get regression function string and average error.
@@ -1898,55 +1736,52 @@ namespace VianaNET.Data.Linefit
     /// <param name="fehler">
     /// The fehler. 
     /// </param>
-    private void GetRegressionFunctionStringAndAverageError(int regTyp, double fehler)
+    private void GetRegressionFunctionStringAndAverageError(Regression regTyp, double fehler)
     {
-      double yi;
-      int k;
-
       switch (regTyp)
       {
-        case Constants.linReg:
-          this.aktFunc = AusgleichsGerade;
+        case Regression.Linear:
+          this.AusgleichsFunktion = AusgleichsGerade;
           break;
-        case Constants.expSpezReg:
-          this.aktFunc = AusgleichsExpSpez;
+        case Regression.ExponentiellMitKonstante:
+          this.AusgleichsFunktion = AusgleichsExpSpez;
           break;
-        case Constants.logReg:
-          this.aktFunc = AusgleichsLog;
+        case Regression.Logarithmisch:
+          this.AusgleichsFunktion = AusgleichsLog;
           break;
-        case Constants.potReg:
-          this.aktFunc = AusgleichsPot;
+        case Regression.Potenz:
+          this.AusgleichsFunktion = AusgleichsPot;
           break;
-        case Constants.quadReg:
-          this.aktFunc = AusgleichsParabel;
+        case Regression.Quadratisch:
+          this.AusgleichsFunktion = AusgleichsParabel;
           break;
-        case Constants.expReg:
-          this.aktFunc = AusgleichsExp;
+        case Regression.Exponentiell:
+          this.AusgleichsFunktion = AusgleichsExp;
           break;
-        case Constants.sinReg:
-          this.aktFunc = AusgleichsSin;
+        case Regression.Sinus:
+          this.AusgleichsFunktion = AusgleichsSin;
           break;
-        case Constants.sinExpReg:
-          this.aktFunc = AusgleichsSinExp;
+        case Regression.SinusGedämpft:
+          this.AusgleichsFunktion = AusgleichsSinExp;
           break;
-        case Constants.resoReg:
-          this.aktFunc = AusgleichsReso;
+        case Regression.Resonanz:
+          this.AusgleichsFunktion = AusgleichsReso;
           break;
         default:
-          this.aktFunc = NullFkt;
+          this.AusgleichsFunktion = NullFkt;
           break;
       }
 
-      this._LineFitFktStr = this.GetRegressionFunctionString(regTyp);
-      if (this.aktFunc != NullFkt)
-      {
-        // Berechnung der Ausgleichsfunktion erfolgreich?
-        if (this.LineFitDisplaySample == null)
-        {
-          this.LineFitDisplaySample = new DataCollection();
-        }
+      this.LineFitFktStr = this.GetRegressionFunctionString(regTyp);
 
-        this.CalculateLineFitSeries(this.LineFitDisplaySample); // Punkte mit Ausgleichsfunktion bestimmen
+      if (this.AusgleichsFunktion != NullFkt)
+      {
+        // Berechnung der Ausgleichsfunktion war erfolgreich,
+        // also series neu füllen
+        FittedData.Instance.RegressionSeries.Clear();
+
+        // Punkte mit Ausgleichsfunktion bestimmen
+        this.CalculateLineFitSeries(FittedData.Instance.RegressionSeries);
 
         if (fehler < -1.5)
         {
@@ -1957,9 +1792,9 @@ namespace VianaNET.Data.Linefit
           if (fehler < 0)
           {
             fehler = 0;
-            for (k = 0; k < this.anzahl; k++)
+            for (var k = 0; k < this.anzahl; k++)
             {
-              yi = this.aktFunc(this.wertX[k]) - this.wertY[k];
+              double yi = this.AusgleichsFunktion(this.WertX[k]) - this.WertY[k];
               fehler = fehler + yi * yi;
             }
 
@@ -1972,28 +1807,28 @@ namespace VianaNET.Data.Linefit
         fehler = -2;
       }
 
-      this._LineFitAbweichung = fehler;
+      this.LineFitAbweichung = fehler;
     }
 
     /// <summary>
     ///   The _ abschaetzung fuer b.
     /// </summary>
     /// <returns> The <see cref="double" /> . </returns>
-    private double _AbschaetzungFuerB()
+    private double AbschaetzungFuerB()
     {
       /* für f(x)=a*exp(b*x)+c bzw. f(x)= a*sin(b*x+c)+d gilt:
              * b=f''(x)/f'(x)  (bei der Sinusfunktion ergibt sich -b !!
              * mit der Annahme (f(x3)-f(x1))/(x3-x1) ungefähr gleich f'(x2)
              * ergibt sich nachfolgende Rechnung: )
             */
-      return ((this.wertY[4] - this.wertY[2]) / (this.wertX[4] - this.wertX[2])
-              - (this.wertY[2] - this.wertY[0]) / this.wertX[0] - this.wertX[0]) / (this.wertY[3] - this.wertY[1]);
+      return ((this.WertY[4] - this.WertY[2]) / (this.WertX[4] - this.WertX[2])
+              - (this.WertY[2] - this.WertY[0]) / this.WertX[0] - this.WertX[0]) / (this.WertY[3] - this.WertY[1]);
     }
 
     /// <summary>
     /// The _do regress.
     /// </summary>
-    /// <param name="anzahl">
+    /// <param name="anzahlRegress">
     /// The anzahl. 
     /// </param>
     /// <param name="wertX">
@@ -2002,34 +1837,37 @@ namespace VianaNET.Data.Linefit
     /// <param name="wertY">
     /// The wert y. 
     /// </param>
-    /// <param name="param">
+    /// <param name="paramRegress">
     /// The param. 
     /// </param>
-    private void _doRegress(int anzahl, List<double> wertX, List<double> wertY, double[] param)
+    private void DoRegress(int anzahlRegress, List<double> wertX, List<double> wertY, double[] paramRegress)
     {
-      double sumX, sumX2, sumXY, sumY, x, y;
-      int k;
-      sumX = 0;
-      sumX2 = 0;
-      sumXY = 0;
-      sumY = 0;
-      for (k = 0; k < anzahl; k++)
+      if (wertX == null)
       {
-        x = wertX[k];
-        y = wertY[k];
+        return;
+      }
+
+      double sumX = 0;
+      double sumX2 = 0;
+      double sumXY = 0;
+      double sumY = 0;
+      for (var k = 0; k < anzahlRegress; k++)
+      {
+        var x = wertX[k];
+        var y = wertY[k];
         sumX = sumX + x;
         sumX2 = sumX2 + x * x;
         sumY = sumY + y;
         sumXY = sumXY + x * y;
       }
 
-      double nenner = anzahl * sumX2 - sumX * sumX;
+      double nenner = anzahlRegress * sumX2 - sumX * sumX;
 
       // y = param[1]*x+param[0]
       if (nenner != 0)
       {
-        param[1] = (anzahl * sumXY - sumX * sumY) / nenner; // Steigung
-        param[0] = (sumY * sumX2 - sumX * sumXY) / nenner; // y-Achsenabschnitt
+        paramRegress[1] = (anzahlRegress * sumXY - sumX * sumY) / nenner; // Steigung
+        paramRegress[0] = (sumY * sumX2 - sumX * sumXY) / nenner; // y-Achsenabschnitt
       }
     }
 
@@ -2051,15 +1889,14 @@ namespace VianaNET.Data.Linefit
     /// <param name="schaetzStep">
     /// The schaetz step. 
     /// </param>
-    private void _getPeriode(
+    private void GetPeriode(
       List<double> dataX, List<double> dataY, out double schaetzWert, out double maxSchaetz, out double schaetzStep)
     {
-      double hilf, minX, maxX;
-      int sign, anz, k;
+      double minX, maxX;
 
       // Schätzwert für b ermitteln:  y=a*sin(b*x)*exp(c*x);
-      this.getMinMax(dataX, out minX, out maxX);
-      sign = Math.Sign(dataY[0]);
+      this.GetMinMax(dataX, out minX, out maxX);
+      int sign = Math.Sign(dataY[0]);
       if (sign == 0)
       {
         if (Math.Sign(dataY[1]) >= 0)
@@ -2072,8 +1909,8 @@ namespace VianaNET.Data.Linefit
         }
       }
 
-      anz = 1;
-      for (k = 0; k < this.anzahl - 1; k++)
+      int anz = 1;
+      for (var k = 0; k < this.anzahl - 1; k++)
       {
         if (sign != Math.Sign(dataY[k + 1]))
         {
@@ -2085,7 +1922,7 @@ namespace VianaNET.Data.Linefit
       maxSchaetz = anz * Math.PI / (maxX - minX);
       schaetzWert = (anz - 1) * Math.PI / maxX;
       schaetzStep = 10000;
-      hilf = maxSchaetz - schaetzWert;
+      var hilf = maxSchaetz - schaetzWert;
       while (schaetzStep >= hilf)
       {
         schaetzStep = schaetzStep * 0.1;

@@ -23,7 +23,7 @@
 //   Interaction logic for SliderValue.xaml
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.CustomStyles.Controls
+namespace VianaNET
 {
   using System.Windows.Controls;
 

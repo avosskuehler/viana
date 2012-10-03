@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="Regression.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -17,75 +17,61 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <author>Dr. Adrian Voßkühler</author>
-// <email>adrian@vosskuehler.name</email>
 // <summary>
-//   Interaction logic for MediaSliderControl.xaml
+//   Defines the Regression type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET
+
+namespace VianaNET.Data.Linefit
 {
-  using System.Windows.Controls;
-  using System.Windows.Input;
-
   /// <summary>
-  ///   Interaction logic for MediaSliderControl.xaml
+  /// The regression enumeration
   /// </summary>
-  public partial class MediaSliderControl
+  public enum Regression
   {
-    #region Constructors and Destructors
+    /// <summary>
+    /// Lineare Regression, mx+n
+    /// </summary>
+    Linear = 1,
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
+    /// Regression mit Exponentialfunktion, a*exp(b*x)
     /// </summary>
-    public MediaSliderControl()
-    {
-      this.InitializeComponent();
-    }
-
-    #endregion
-
-    #region Methods
+    Exponentiell = 2,
 
     /// <summary>
-    /// The media slider_ mouse left button down.
+    /// Regression mit Logarithmusfunktion, a*ln(b*x)
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-    }
+    Logarithmisch = 3,
 
     /// <summary>
-    /// The media slider_ mouse left button up.
+    /// Regression mit Potenzfunktion, a*x^b
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-    }
+    Potenz = 4,
 
     /// <summary>
-    /// The media slider_ mouse move.
+    /// Regression mit quadratischer Funktion, ax²+bx+c
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
-    {
-    }
+    Quadratisch = 5,
 
-    #endregion
+    /// <summary>
+    /// Regression mit Exponentialfunktion mit Konstante, a*exp(b*x) +c
+    /// </summary>
+    ExponentiellMitKonstante = 6,
+
+    /// <summary>
+    /// Regression mit Sinusfunktion, a*sin(bx+c)+d
+    /// </summary>
+    Sinus = 7,
+
+    /// <summary>
+    /// Regression mit gedämpfter Sinusfunktion, a*sin(bx)*exp(c*x)
+    /// </summary>
+    SinusGedämpft = 8,
+
+    /// <summary>
+    /// Regression mit Resonanzfunktion, a/sqrt(1+b(x-c/x))
+    /// </summary>
+    Resonanz = 9
   }
 }

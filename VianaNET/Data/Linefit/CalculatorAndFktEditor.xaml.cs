@@ -25,6 +25,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Linefit
 {
+  using System;
+  using System.Globalization;
   using System.Reflection;
   using System.Resources;
   using System.Windows;
@@ -33,14 +35,9 @@ namespace VianaNET.Data.Linefit
   /// <summary>
   ///   Interaktionslogik für CalculatorAndFktEditor.xaml
   /// </summary>
-  public partial class CalculatorAndFktEditor : Window
+  public partial class CalculatorAndFktEditor
   {
     #region Fields
-
-    /// <summary>
-    ///   The ergebnis.
-    /// </summary>
-    public string ergebnis;
 
     /// <summary>
     ///   The art.
@@ -50,7 +47,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The scanned fkt.
     /// </summary>
-    private TFktTerm scannedFkt;
+    private CalculatorFunctionTerm scannedFkt;
 
     #endregion
 
@@ -68,7 +65,7 @@ namespace VianaNET.Data.Linefit
       this.InitializeComponent();
       var resMgr = new ResourceManager("VianaNET.Localization.Labels", Assembly.GetExecutingAssembly());
       this.textBox1.Text = string.Empty;
-      this.ergebnis = string.Empty;
+      this.Ergebnis = string.Empty;
       this.art = modus;
       this.buttonTakeKonst.IsEnabled = true;
       if (modus == TRechnerArt.rechner)
@@ -84,10 +81,9 @@ namespace VianaNET.Data.Linefit
         this.buttonFertig.Content = resMgr.GetString("CalculatorDialogButtonDoneFktEdit");
       }
 
-      string s;
-      for (k = 0; k < Constants.max_Anz_Konst; k++)
+      for (k = 0; k < Enum.GetNames(typeof(Regression)).Length; k++)
       {
-        s = resMgr.GetString(Constants.konstante[k].titel);
+        string s = resMgr.GetString(Constants.konstante[k].titel);
         this.comboBox1.Items.Add(s);
       }
 
@@ -96,18 +92,23 @@ namespace VianaNET.Data.Linefit
 
     #endregion
 
+    /// <summary>
+    /// Gets or sets the ergebnis.
+    /// </summary>
+    public string Ergebnis { get; set; }
+
     #region Public Methods and Operators
 
     /// <summary>
     ///   The get funktion.
     /// </summary>
-    /// <returns> The <see cref="TFktTerm" /> . </returns>
-    public TFktTerm GetFunktion()
+    /// <returns> The <see cref="CalculatorFunctionTerm" /> . </returns>
+    public CalculatorFunctionTerm GetFunktion()
     {
       if (this.scannedFkt != null)
       {
-        this.ergebnis = this.textBox1.Text;
-        this.scannedFkt.name = this.ergebnis;
+        this.Ergebnis = this.textBox1.Text;
+        this.scannedFkt.Name = this.Ergebnis;
       }
       else
       {
@@ -124,14 +125,13 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// The einfuegen.
     /// </summary>
-    /// <param name="zStr">
+    /// <param name="insertString">
     /// The z str. 
     /// </param>
-    private void Einfuegen(string zStr)
+    private void Einfuegen(string insertString)
     {
-      int caretPos, selLen;
-      caretPos = this.textBox1.CaretIndex;
-      selLen = this.textBox1.SelectionLength;
+      var caretPos = this.textBox1.CaretIndex;
+      var selLen = this.textBox1.SelectionLength;
       if (caretPos > this.textBox1.SelectionStart)
       {
         caretPos = this.textBox1.SelectionStart;
@@ -142,9 +142,9 @@ namespace VianaNET.Data.Linefit
         this.textBox1.Text = this.textBox1.Text.Remove(caretPos, selLen);
       }
 
-      this.textBox1.Text = this.textBox1.Text.Insert(caretPos, zStr);
+      this.textBox1.Text = this.textBox1.Text.Insert(caretPos, insertString);
       this.textBox1.Focus();
-      this.textBox1.SelectionStart = caretPos + zStr.Length;
+      this.textBox1.SelectionStart = caretPos + insertString.Length;
       this.textBox1.SelectionLength = 0;
     }
 
@@ -157,10 +157,17 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonBack_Click(object sender, RoutedEventArgs e)
+    private void ButtonBackClick(object sender, RoutedEventArgs e)
     {
-      int caretPos, selLen, offset;
-      if ((string)(sender as Button).Tag == "1")
+      int offset;
+      var button = sender as Button;
+
+      if (button == null)
+      {
+        return;
+      }
+
+      if ((string)button.Tag == "1")
       {
         offset = 0;
       }
@@ -169,31 +176,33 @@ namespace VianaNET.Data.Linefit
         offset = -1;
       }
 
-      caretPos = this.textBox1.CaretIndex + offset;
-      selLen = this.textBox1.SelectionLength;
-      if (caretPos >= 0)
+      var caretPos = this.textBox1.CaretIndex + offset;
+      var selLen = this.textBox1.SelectionLength;
+      if (caretPos < 0)
       {
-        if (selLen == 0)
-        {
-          if ((this.textBox1.CaretIndex < this.textBox1.Text.Length) | (offset == -1))
-          {
-            this.textBox1.Text = this.textBox1.Text.Remove(caretPos, 1);
-          }
-        }
-        else
-        {
-          if (caretPos > this.textBox1.SelectionStart)
-          {
-            caretPos = this.textBox1.SelectionStart + offset;
-          }
-
-          this.textBox1.Text = this.textBox1.Text.Remove(caretPos, selLen);
-        }
-
-        this.textBox1.Focus();
-        this.textBox1.SelectionStart = caretPos;
-        this.textBox1.SelectionLength = 0;
+        return;
       }
+
+      if (selLen == 0)
+      {
+        if ((this.textBox1.CaretIndex < this.textBox1.Text.Length) | (offset == -1))
+        {
+          this.textBox1.Text = this.textBox1.Text.Remove(caretPos, 1);
+        }
+      }
+      else
+      {
+        if (caretPos > this.textBox1.SelectionStart)
+        {
+          caretPos = this.textBox1.SelectionStart + offset;
+        }
+
+        this.textBox1.Text = this.textBox1.Text.Remove(caretPos, selLen);
+      }
+
+      this.textBox1.Focus();
+      this.textBox1.SelectionStart = caretPos;
+      this.textBox1.SelectionLength = 0;
     }
 
     /// <summary>
@@ -205,7 +214,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonESC_Click(object sender, RoutedEventArgs e)
+    private void ButtonEscClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = false;
     }
@@ -219,7 +228,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonEnd_Click(object sender, RoutedEventArgs e)
+    private void ButtonEndClick(object sender, RoutedEventArgs e)
     {
       this.textBox1.Focus();
       this.textBox1.SelectionStart = this.textBox1.Text.Length;
@@ -235,9 +244,9 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonFertig_Click(object sender, RoutedEventArgs e)
+    private void ButtonFertigClick(object sender, RoutedEventArgs e)
     {
-      this.ergebnis = this.textBox1.Text;
+      this.Ergebnis = this.textBox1.Text;
       this.DialogResult = true;
     }
 
@@ -250,7 +259,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonLeft_Click(object sender, RoutedEventArgs e)
+    private void ButtonLeftClick(object sender, RoutedEventArgs e)
     {
       this.textBox1.Focus();
       if (this.textBox1.SelectionStart > 0)
@@ -270,7 +279,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonPos1_Click(object sender, RoutedEventArgs e)
+    private void ButtonPos1Click(object sender, RoutedEventArgs e)
     {
       this.textBox1.Focus();
       this.textBox1.SelectionStart = 0;
@@ -286,7 +295,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonRight_Click(object sender, RoutedEventArgs e)
+    private void ButtonRightClick(object sender, RoutedEventArgs e)
     {
       this.textBox1.Focus();
       if (this.textBox1.SelectionStart < this.textBox1.Text.Length)
@@ -306,7 +315,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonTakeKonst_Click(object sender, RoutedEventArgs e)
+    private void ButtonTakeKonstClick(object sender, RoutedEventArgs e)
     {
       int k = this.comboBox1.SelectedIndex;
       if (k >= 0)
@@ -325,12 +334,18 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void buttonZiffer_Click(object sender, RoutedEventArgs e)
+    private void ButtonZifferClick(object sender, RoutedEventArgs e)
     {
-      string opStr = "^+-*/";
-      var zStr = (string)(sender as Button).Content;
-      this.Einfuegen(zStr);
-      if ((!this.buttonTakeKonst.IsEnabled) & (opStr.IndexOf(zStr) >= 0))
+      const string OpStr = "^+-*/";
+      var button = sender as Button;
+      if (button == null)
+      {
+        return;
+      }
+
+      var stringValue = (string)button.Content;
+      this.Einfuegen(stringValue);
+      if ((!this.buttonTakeKonst.IsEnabled) & (OpStr.IndexOf(stringValue, StringComparison.Ordinal) >= 0))
       {
         this.buttonTakeKonst.IsEnabled = true;
       }
@@ -345,10 +360,16 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void button_Fkt_Click(object sender, RoutedEventArgs e)
+    private void ButtonFktClick(object sender, RoutedEventArgs e)
     {
-      string zStr = (sender as Button).Content + "(";
-      this.Einfuegen(zStr);
+      var button = sender as Button;
+      if (button == null)
+      {
+        return;
+      }
+
+      string stringValue = button.Content + "(";
+      this.Einfuegen(stringValue);
     }
 
     /// <summary>
@@ -360,10 +381,9 @@ namespace VianaNET.Data.Linefit
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void textBox1_TextChanged_1(object sender, TextChangedEventArgs e)
+    private void TextBox1TextChanged1(object sender, TextChangedEventArgs e)
     {
-      string formelStr = this.textBox1.Text;
-      double wert = 0;
+      var formelStr = this.textBox1.Text;
 
       // TFktTerm fx;
       var aktParser = new Parse();
@@ -388,8 +408,8 @@ namespace VianaNET.Data.Linefit
         }
         else
         {
-          wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
-          this.textBoxErgebnis.Text = wert.ToString();
+          var wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
+          this.textBoxErgebnis.Text = wert.ToString(CultureInfo.InvariantCulture);
         }
       }
     }

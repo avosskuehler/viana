@@ -43,12 +43,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Linefit;
   using VianaNET.Localization;
   using VianaNET.Modules.Video.Control;
-
   using Visifire.Charts;
-
-  using WPFLocalizeExtension.Extensions;
-
-  // letzte Änderung: 24.9.2012
 
   /// <summary>
   ///   The chart window.
@@ -69,9 +64,9 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     public static readonly DependencyProperty ObjectDescriptionsProperty =
       DependencyProperty.Register(
-        "ObjectDescriptions", 
-        typeof(List<string>), 
-        typeof(ChartWindow), 
+        "ObjectDescriptions",
+        typeof(List<string>),
+        typeof(ChartWindow),
         new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
 
     #endregion
@@ -82,51 +77,6 @@ namespace VianaNET.Modules.Chart
     ///   The is initialized.
     /// </summary>
     private readonly bool isInitialized;
-
-    /// <summary>
-    ///   The active line fit class.
-    /// </summary>
-    private LineFitClass activeLineFitClass;
-
-    /// <summary>
-    ///   The active regression type.
-    /// </summary>
-    private int activeRegressionType;
-
-    /// <summary>
-    ///   The line fit function line color.
-    /// </summary>
-    private SolidColorBrush lineFitFunctionLineColor = Brushes.Red;
-
-    /// <summary>
-    ///   The line fit function line thickness.
-    /// </summary>
-    private double lineFitFunctionLineThickness = 1;
-
-    /// <summary>
-    ///   The line fit theorie function.
-    /// </summary>
-    private TFktTerm lineFitTheorieFunction;
-
-    /// <summary>
-    ///   The showing line fit or theorie is allowed.
-    /// </summary>
-    private bool showingLineFitOrTheorieIsAllowed;
-
-    /// <summary>
-    ///   The stellen zahl format string.
-    /// </summary>
-    private string stellenZahlFormatString = "G4";
-
-    /// <summary>
-    ///   The theorie function line color.
-    /// </summary>
-    private SolidColorBrush theorieFunctionLineColor = Brushes.Green;
-
-    /// <summary>
-    ///   The theorie function line thickness.
-    /// </summary>
-    private double theorieFunctionLineThickness = 1;
 
     #endregion
 
@@ -143,27 +93,17 @@ namespace VianaNET.Modules.Chart
       this.InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
-      this.activeLineFitClass = null;
-      this.showingLineFitOrTheorieIsAllowed = true;
 
       // VideoData.Instance.PropertyChanged +=
       // new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
       // Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
       Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessingPropertyChanged;
-      this.CreateDataSeries();
       this.isInitialized = true;
       this.UpdateChartProperties();
     }
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -184,9 +124,6 @@ namespace VianaNET.Modules.Chart
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
@@ -200,17 +137,10 @@ namespace VianaNET.Modules.Chart
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
-    /// Raises the <see cref="ManagedContent.PropertyChanged"/> event.
+    /// Raises the PropertyChanged event.
     /// </summary>
     /// <param name="obj">
     /// The source of the event. This. 
@@ -227,39 +157,6 @@ namespace VianaNET.Modules.Chart
       }
     }
 
-    /// <summary>
-    /// The axes content selection changed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void AxesContentSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      if ((this.LineFitCheckBox != null) && this.LineFitCheckBox.IsChecked.GetValueOrDefault(false)
-          && this.showingLineFitOrTheorieIsAllowed)
-      {
-        this.NewCalculationForLineFitting();
-      }
-
-      this.SetDefaultDiagramm();
-    }
-
-    /// <summary>
-    /// The axes expander collapsed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void AxesExpanderCollapsed(object sender, RoutedEventArgs e)
-    {
-      this.SetDefaultDiagramm();
-    }
 
     /// <summary>
     /// The chart content tab selection changed.
@@ -272,22 +169,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ChartContentTabSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.SetDefaultDiagramm();
-    }
-
-    /// <summary>
-    ///   The create data series.
-    /// </summary>
-    private void CreateDataSeries()
-    {
-      // Set localized Title Binding
-      var locTitle = new LocTextExtension("VianaNET:Labels:ChartWindowChartSeries");
-
-      this.DefaultSeries.MovingMarkerEnabled = true;
-      this.DefaultSeries.SelectionEnabled = true;
-      this.DefaultSeries.SelectionMode = SelectionModes.Multiple;
-      this.DefaultSeries.ShowInLegend = true;
-      this.DefaultSeries.RenderAs = RenderAs.Point;
+      this.PopulateAxesFromChartSelection();
     }
 
     /// <summary>
@@ -311,51 +193,49 @@ namespace VianaNET.Modules.Chart
       }
     }
 
-    /// <summary>
-    /// The interpolation line check box checked.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
+    ///// <summary>
+    ///// The interpolation line check box checked.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The sender. 
+    ///// </param>
+    ///// <param name="e">
+    ///// The e. 
+    ///// </param>
+    //private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)
+    //{
+    //  if (!this.isInitialized)
+    //  {
+    //    return;
+    //  }
 
-      this.InterpolationSeries.Enabled = Interpolation.Instance.IsInterpolatingData;
+    //  this.InterpolationSeries.Enabled = Interpolation.Instance.IsInterpolatingData;
 
-      // Update static property
-      // Interpolation.Instance.IsInterpolatingData = this.InterpolationLineCheckBox.IsChecked.Value;
-      if (this.RadioChartStyleScatter.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleScatter);
-      }
-      else if (this.RadioChartStyleLine.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleLine);
-      }
-      else if (this.RadioChartStyleArea.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleArea);
-      }
-      else if (this.RadioChartStyleColumn.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleColumn);
-      }
-      else if (this.RadioChartStyleBubble.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleBubble);
-      }
-      else if (this.RadioChartStylePie.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStylePie);
-      }
-    }
+    //  //if (this.RadioChartStyleScatter.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleScatter);
+    //  //}
+    //  //else if (this.RadioChartStyleLine.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleLine);
+    //  //}
+    //  //else if (this.RadioChartStyleArea.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleArea);
+    //  //}
+    //  //else if (this.RadioChartStyleColumn.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleColumn);
+    //  //}
+    //  //else if (this.RadioChartStyleBubble.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleBubble);
+    //  //}
+    //  //else if (this.RadioChartStylePie.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStylePie);
+    //  //}
+    //}
 
     /// <summary>
     /// The interpolation options button click.
@@ -371,34 +251,34 @@ namespace VianaNET.Modules.Chart
       Interpolation.ShowInterpolationOptionsDialog();
     }
 
-    /// <summary>
-    /// The line fit check box checked.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
+    ///// <summary>
+    ///// The line fit check box checked.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The sender. 
+    ///// </param>
+    ///// <param name="e">
+    ///// The e. 
+    ///// </param>
+    //private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
+    //{
+    //  if (!this.isInitialized)
+    //  {
+    //    return;
+    //  }
 
-      if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
-      {
-        this.NewCalculationForLineFitting();
-      }
-      else
-      {
-        this.activeLineFitClass.LineFitDisplaySample.Clear();
-        this.LinefitFunctionLabel.Content = string.Empty;
-      }
+    //  if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
+    //  {
+    //    this.NewCalculationForLineFitting();
+    //  }
+    //  else
+    //  {
+    //    FittedData.Instance.LineFitType.LineFitDisplaySample.Clear();
+    //    this.LinefitFunctionLabel.Content = string.Empty;
+    //  }
 
-      this.RefreshSeries();
-    }
+    //  this.RefreshSeries();
+    //}
 
     /// <summary>
     /// The line fit options button click.
@@ -411,55 +291,76 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void LineFitOptionsButtonClick(object sender, RoutedEventArgs e)
     {
+      var dlg = new NumericalPrecisionDialog { NumberOfDigits = FittedData.Instance.NumericPrecision };
+      if (dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
+      }
+    }
+
+    /// <summary>
+    /// The line fit type button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The e.
+    /// </param>
+    private void LineFitTypeButtonClick(object sender, RoutedEventArgs e)
+    {
       double minX, minY, hilf;
 
-      this.MakePreparationsForLineFit();
+      //this.PrepareLineFit();
 
-      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertX, out minX, out hilf);
-      this.activeLineFitClass.getMinMax(this.activeLineFitClass.wertY, out minY, out hilf);
-      var auswahlDialog = new LinefittingDialog(minX < 0, minY < 0, this.activeRegressionType);
-      if (auswahlDialog.ShowDialog().GetValueOrDefault(false))
+      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertX, out minX, out hilf);
+      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertY, out minY, out hilf);
+      var linefittingDialog = new LinefittingDialog(minX < 0, minY < 0, FittedData.Instance.RegressionType);
+      if (linefittingDialog.ShowDialog().GetValueOrDefault(false))
       {
-        this.activeRegressionType = auswahlDialog.GetAuswahl();
-        string bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
-        switch (this.activeRegressionType)
+        FittedData.Instance.RegressionType = linefittingDialog.SelectedRegressionType;
+        string bildsource;
+        switch (FittedData.Instance.RegressionType)
         {
-          case 1:
+          case Regression.Linear:
             bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
             break;
-          case 2:
+          case Regression.Exponentiell:
             bildsource = "/VianaNET;component/Images/LineFit_Exponential1_16.png";
             break;
-          case 3:
+          case Regression.Logarithmisch:
             bildsource = "/VianaNET;component/Images/LineFit_Logarithmus_16.png";
             break;
-          case 4:
+          case Regression.Potenz:
             bildsource = "/VianaNET;component/Images/LineFit_Potentiell_16.png";
             break;
-          case 5:
+          case Regression.Quadratisch:
             bildsource = "/VianaNET;component/Images/LineFit_Quadratisch_16.png";
             break;
-          case 6:
+          case Regression.ExponentiellMitKonstante:
             bildsource = "/VianaNET;component/Images/LineFit_Exponential2_16.png";
             break;
-          case 7:
+          case Regression.Sinus:
             bildsource = "/VianaNET;component/Images/LineFit_Sinus_16.png";
             break;
-          case 8:
+          case Regression.SinusGedämpft:
             bildsource = "/VianaNET;component/Images/LineFit_SinusExponential_16.png";
             break;
-          case 9:
+          case Regression.Resonanz:
             bildsource = "/VianaNET;component/Images/LineFit_Resonanz_16.png";
+            break;
+          default:
+            bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
             break;
         }
 
         var neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
-        this.LineFitOptionsButton.ImageSource = new BitmapImage(neuBildsource);
+        this.LineFitTypeButton.ImageSource = new BitmapImage(neuBildsource);
 
         if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
-          this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
-          this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
+          FittedData.Instance.LineFitType.CalculateLineFitFunction(FittedData.Instance.RegressionType);
+          this.LinefitFunctionLabel.Content = FittedData.Instance.LineFitType.LineFitFktStr;
         }
       }
     }
@@ -476,9 +377,9 @@ namespace VianaNET.Modules.Chart
     private void LineFitTheorieButtonClick(object sender, RoutedEventArgs e)
     {
       var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
-      if (this.lineFitTheorieFunction != null)
+      if (FittedData.Instance.TheoreticalFunction != null)
       {
-        fktEditor.textBox1.Text = this.lineFitTheorieFunction.name;
+        fktEditor.textBox1.Text = FittedData.Instance.TheoreticalFunction.Name;
         fktEditor.textBox1.SelectAll();
       }
 
@@ -486,97 +387,8 @@ namespace VianaNET.Modules.Chart
 
       if (fktEditor.DialogResult.GetValueOrDefault(false))
       {
-        this.lineFitTheorieFunction = fktEditor.GetFunktion();
-        if (this.lineFitTheorieFunction != null)
-        {
-          this.TheoreticalFunctionLabel.Content = this.lineFitTheorieFunction.name;
-          this.MakePreparationsForTheorieFit();
-          this.activeLineFitClass.CalculateLineFitTheorieSeries(
-            this.activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);
-        }
-        else
-        {
-          this.TheoreticalFunctionLabel.Content = " -- ";
-          if ((this.activeLineFitClass != null) && (this.activeLineFitClass.TheorieDisplaySample != null))
-          {
-            this.activeLineFitClass.TheorieDisplaySample.Clear();
-          }
-        }
-
-        if (this.checkBoxShowTheorie.IsChecked())
-        {
-          this.RefreshSeries();
-        }
+        FittedData.Instance.TheoreticalFunction = fktEditor.GetFunktion();
       }
-    }
-
-    /// <summary>
-    ///   The make preparations for line fit.
-    /// </summary>
-    private void MakePreparationsForLineFit()
-    {
-      int columnNrFirstValue, columnNrSecondValue;
-      int selIndex = this.AxesContentPositionSpace.SelectedIndex; // Ermittele die Spaltennummern der gewünschten Daten
-
-      if (selIndex == 0)
-      {
-        columnNrFirstValue = 2;
-        columnNrSecondValue = 3;
-      }
-      else
-      {
-        if (selIndex <= 9)
-        {
-          columnNrFirstValue = 1;
-          columnNrSecondValue = selIndex + 1;
-        }
-        else
-        {
-          columnNrFirstValue = 0;
-          columnNrSecondValue = 0;
-        }
-      }
-
-      if (this.activeLineFitClass == null)
-      {
-        // übernehme die Daten in die Arrays wertX und wertY
-        this.activeLineFitClass = new LineFitClass(
-          VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue);
-        this.activeLineFitClass.gueltigeStellenFormatString = this.stellenZahlFormatString;
-      }
-      else
-      {
-        this.activeLineFitClass.ExtractDataColumnsFromVideoSamples(
-          VideoData.Instance.Samples, 0, columnNrFirstValue, columnNrSecondValue);
-      }
-    }
-
-    /// <summary>
-    ///   The make preparations for theorie fit.
-    /// </summary>
-    private void MakePreparationsForTheorieFit()
-    {
-      this.MakePreparationsForLineFit();
-      if (this.activeLineFitClass.TheorieDisplaySample == null)
-      {
-        this.activeLineFitClass.TheorieDisplaySample = new DataCollection();
-      }
-    }
-
-    /// <summary>
-    ///   The new calculation for line fitting.
-    /// </summary>
-    private void NewCalculationForLineFitting()
-    {
-      this.MakePreparationsForLineFit();
-
-      if (this.activeRegressionType == 0)
-      {
-        this.activeRegressionType = 1;
-      }
-
-      this.activeLineFitClass.CalculateLineFitFunction(this.activeRegressionType);
-      this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
     }
 
     /// <summary>
@@ -597,6 +409,7 @@ namespace VianaNET.Modules.Chart
 
       var entry = (string)this.ObjectSelectionCombo.SelectedItem;
       Video.Instance.ImageProcessing.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+      VideoData.Instance.ActiveObject = Video.Instance.ImageProcessing.IndexOfObject;
     }
 
     /// <summary>
@@ -663,70 +476,81 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private void RefreshChartDataPoints()
     {
+      //if (FittedData.Instance.IsShowingRegressionSeries)
+      //{
+      //  this.NewCalculationForLineFitting();
+      //}
+
       this.DefaultSeries.DataSource = null;
       this.DefaultSeries.DataSource = VideoData.Instance.Samples;
-      this.InterpolationSeries.DataSource = null;
-      this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
-      this.LineFitSeries.DataSource = null;
-      this.TheorieSeries.DataSource = null;
-      if ((this.activeLineFitClass != null) & this.showingLineFitOrTheorieIsAllowed)
-      {
-        if ((this.activeLineFitClass.LineFitDisplaySample != null)
-            && (this.activeLineFitClass.LineFitDisplaySample.Count > 0))
-        {
-          this.LineFitSeries.LineThickness = this.lineFitFunctionLineThickness;
-          this.LineFitSeries.Color = this.lineFitFunctionLineColor;
-          this.LineFitSeries.DataSource = this.activeLineFitClass.LineFitDisplaySample;
-        }
 
-        if ((this.activeLineFitClass.TheorieDisplaySample != null)
-            && (this.activeLineFitClass.TheorieDisplaySample.Count > 0))
-        {
-          this.TheorieSeries.LineThickness = this.theorieFunctionLineThickness;
-          this.TheorieSeries.Color = this.theorieFunctionLineColor;
-          this.TheorieSeries.DataSource = this.activeLineFitClass.TheorieDisplaySample;
-        }
-      }
+      //this.InterpolationSeries.DataSource = null;
+      //this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
+      //this.LineFitSeries.DataSource = null;
+      //this.TheorieSeries.DataSource = null;
+      //if ((FittedData.Instance.LineFitType != null) & FittedData.Instance.IsInterpolationAllowed)
+      //{
+      //  if ((FittedData.Instance.LineFitType.LineFitDisplaySample != null)
+      //      && (FittedData.Instance.LineFitType.LineFitDisplaySample.Count > 0))
+      //  {
+      //    this.LineFitSeries.DataSource = FittedData.Instance.LineFitType.LineFitDisplaySample;
+      //  }
+
+      //  if ((FittedData.Instance.LineFitType.TheorieDisplaySample != null)
+      //      && (FittedData.Instance.LineFitType.TheorieDisplaySample.Count > 0))
+      //  {
+      //    this.TheorieSeries.DataSource = FittedData.Instance.LineFitType.TheorieDisplaySample;
+      //  }
+      //}
     }
 
     /// <summary>
-    ///   The refresh series.
+    /// This method refreshes the whole series and chart layout
     /// </summary>
     private void RefreshSeries()
     {
-      this.UpdateSeriesWithXAxis();
-      this.UpdateSeriesWithYAxis();
+      if (!this.UpdateMapping(true))
+      {
+        return;
+      }
+
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
       this.UpdateChartProperties();
     }
 
     /// <summary>
     ///   The set default diagramm.
     /// </summary>
-    private void SetDefaultDiagramm()
+    private void PopulateAxesFromChartSelection()
     {
       if (!this.IsInitialized)
       {
         return;
       }
 
-      var chartType = AxisType.YoverX;
+      var chartType = ChartType.YoverX;
 
       if (this.TabPositionSpace.IsSelected)
       {
-        var axis = (DataAxis)this.AxesContentPositionSpace.SelectedItem;
-        chartType = axis.Axis;
+        var chart = (DataCharts)this.AxesContentPositionSpace.SelectedItem;
+        chartType = chart.Chart;
       }
       else if (this.TabPhaseSpace.IsSelected)
       {
-        var axis = (DataAxis)this.AxesContentPhaseSpace.SelectedItem;
-        chartType = axis.Axis;
+        var chart = (DataCharts)this.AxesContentPhaseSpace.SelectedItem;
+        chartType = chart.Chart;
       }
       else if (this.TabOther.IsSelected)
       {
-        var xAxis = (DataAxis)this.xAxisContent.SelectedItem;
-        var yAxis = (DataAxis)this.yAxisContent.SelectedItem;
-        this.xAxisContent.SelectedValue = xAxis.Axis;
-        this.yAxisContent.SelectedValue = yAxis.Axis;
+        var axisX = (DataAxis)this.xAxisContent.SelectedItem;
+        var axisY = (DataAxis)this.yAxisContent.SelectedItem;
+        this.xAxisContent.SelectedValue = axisX.Axis;
+        this.yAxisContent.SelectedValue = axisY.Axis;
 
         // axes content already set, so return
         return;
@@ -734,79 +558,82 @@ namespace VianaNET.Modules.Chart
 
       switch (chartType)
       {
-        case AxisType.YoverX:
+        case ChartType.YoverX:
           this.xAxisContent.SelectedValue = AxisType.PX;
           this.yAxisContent.SelectedValue = AxisType.PY;
           break;
-        case AxisType.XoverT:
+        case ChartType.XoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.PX;
           break;
-        case AxisType.YoverT:
+        case ChartType.YoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.PY;
           break;
-        case AxisType.VoverT:
+        case ChartType.VoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.V;
           break;
-        case AxisType.VXoverT:
+        case ChartType.VXoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.VX;
           break;
-        case AxisType.VYoverT:
+        case ChartType.VYoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.VY;
           break;
-        case AxisType.AoverT:
+        case ChartType.AoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.A;
           break;
-        case AxisType.AXoverT:
+        case ChartType.AXoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.AX;
           break;
-        case AxisType.AYoverT:
+        case ChartType.AYoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.AY;
           break;
-        case AxisType.VoverD:
+        case ChartType.VoverD:
           this.xAxisContent.SelectedValue = AxisType.D;
           this.yAxisContent.SelectedValue = AxisType.V;
           break;
-        case AxisType.VXoverDX:
+        case ChartType.VXoverDX:
           this.xAxisContent.SelectedValue = AxisType.DX;
           this.yAxisContent.SelectedValue = AxisType.VX;
           break;
-        case AxisType.VYoverDY:
+        case ChartType.VYoverDY:
           this.xAxisContent.SelectedValue = AxisType.DY;
           this.yAxisContent.SelectedValue = AxisType.VY;
           break;
-        case AxisType.VoverS:
+        case ChartType.VoverS:
           this.xAxisContent.SelectedValue = AxisType.S;
           this.yAxisContent.SelectedValue = AxisType.V;
           break;
-        case AxisType.VXoverSX:
+        case ChartType.VXoverSX:
           this.xAxisContent.SelectedValue = AxisType.SX;
           this.yAxisContent.SelectedValue = AxisType.VX;
           break;
-        case AxisType.VYoverSY:
+        case ChartType.VYoverSY:
           this.xAxisContent.SelectedValue = AxisType.SY;
           this.yAxisContent.SelectedValue = AxisType.VY;
           break;
-        case AxisType.AoverV:
+        case ChartType.AoverV:
           this.xAxisContent.SelectedValue = AxisType.V;
           this.yAxisContent.SelectedValue = AxisType.A;
           break;
-        case AxisType.AXoverVX:
+        case ChartType.AXoverVX:
           this.xAxisContent.SelectedValue = AxisType.VX;
           this.yAxisContent.SelectedValue = AxisType.AX;
           break;
-        case AxisType.AYoverVY:
+        case ChartType.AYoverVY:
           this.xAxisContent.SelectedValue = AxisType.VY;
           this.yAxisContent.SelectedValue = AxisType.AY;
           break;
       }
+
+      FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
+      FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
     }
 
     /// <summary>
@@ -828,10 +655,10 @@ namespace VianaNET.Modules.Chart
     /// The map theorie fit. 
     /// </param>
     private void UpdateAxisMappings(
-      DataAxis axis, 
-      DataMapping mapPoints, 
-      DataMapping mapInterpolationFit, 
-      DataMapping mapLineFit, 
+      DataAxis axis,
+      DataMapping mapPoints,
+      DataMapping mapInterpolationFit,
+      DataMapping mapLineFit,
       DataMapping mapTheorieFit)
     {
       string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture)
@@ -974,22 +801,28 @@ namespace VianaNET.Modules.Chart
 
       mapPoints.Path = prefix + mapPoints.Path;
 
+      // Don´t prefix the timestamp
+      if (axis.Axis == AxisType.T)
+      {
+        mapPoints.Path = "Timestamp";
+      }
+
       // mapInterpolationFit.Path = prefix + mapInterpolationFit.Path;
       // mapLineFit.Path = prefix + mapLineFit.Path;
-      if (mapInterpolationFit != null)
-      {
-        mapInterpolationFit.Path = mapPoints.Path;
-      }
+      //if (mapInterpolationFit != null)
+      //{
+      //  mapInterpolationFit.Path = mapPoints.Path;
+      //}
 
-      if (mapLineFit != null)
-      {
-        mapLineFit.Path = mapPoints.Path;
-      }
+      //if (mapLineFit != null)
+      //{
+      //  mapLineFit.Path = mapPoints.Path;
+      //}
 
-      if (mapTheorieFit != null)
-      {
-        mapTheorieFit.Path = mapPoints.Path;
-      }
+      //if (mapTheorieFit != null)
+      //{
+      //  mapTheorieFit.Path = mapPoints.Path;
+      //}
     }
 
     /// <summary>
@@ -1006,23 +839,23 @@ namespace VianaNET.Modules.Chart
 
         if (this.DataChart.AxesX.Count > 0)
         {
-          Axis xAxis = this.DataChart.AxesX[0];
-          xAxis.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text : null;
-          xAxis.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
+          var axisX = this.DataChart.AxesX[0];
+          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text : null;
+          axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
 
           if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
           {
             this.XAxisMinimum.Value = this.XAxisMaximum.Value;
           }
 
-          xAxis.AxisMinimum = this.XAxisMinimum.IsChecked ? this.XAxisMinimum.Value : new double?();
+          axisX.AxisMinimum = this.XAxisMinimum.IsChecked ? this.XAxisMinimum.Value : new double?();
 
           if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
           {
             this.XAxisMaximum.Value = this.XAxisMinimum.Value;
           }
 
-          xAxis.AxisMaximum = this.XAxisMaximum.IsChecked ? this.XAxisMaximum.Value : new double?();
+          axisX.AxisMaximum = this.XAxisMaximum.IsChecked ? this.XAxisMaximum.Value : new double?();
 
           // if (XAxisInterval.IsChecked)
           // {
@@ -1036,23 +869,23 @@ namespace VianaNET.Modules.Chart
 
         if (this.DataChart.AxesY.Count > 0)
         {
-          Axis yAxis = this.DataChart.AxesY[0];
-          yAxis.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text : null;
-          yAxis.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
+          var axisY = this.DataChart.AxesY[0];
+          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text : null;
+          axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
 
           if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
           {
             this.YAxisMinimum.Value = this.YAxisMaximum.Value;
           }
 
-          yAxis.AxisMinimum = this.YAxisMinimum.IsChecked ? this.YAxisMinimum.Value : new double?();
+          axisY.AxisMinimum = this.YAxisMinimum.IsChecked ? this.YAxisMinimum.Value : new double?();
 
           if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
           {
             this.YAxisMaximum.Value = this.YAxisMinimum.Value;
           }
 
-          yAxis.AxisMaximum = this.YAxisMaximum.IsChecked ? this.YAxisMaximum.Value : new double?();
+          axisY.AxisMaximum = this.YAxisMaximum.IsChecked ? this.YAxisMaximum.Value : new double?();
 
           // if (YAxisInterval.IsChecked)
           // {
@@ -1077,7 +910,7 @@ namespace VianaNET.Modules.Chart
       this.AxisControls.Visibility = Visibility.Visible;
       this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
 
-      this.showingLineFitOrTheorieIsAllowed = false;
+      FittedData.Instance.IsInterpolationAllowed = false;
       this.LineFitSeries.RenderAs = RenderAs.Line;
       this.TheorieSeries.RenderAs = RenderAs.Line;
 
@@ -1085,7 +918,7 @@ namespace VianaNET.Modules.Chart
       {
         this.DefaultSeries.RenderAs = RenderAs.Point;
         this.InterpolationSeries.RenderAs = RenderAs.Line;
-        this.showingLineFitOrTheorieIsAllowed = true;
+        FittedData.Instance.IsInterpolationAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Line"))
       {
@@ -1099,7 +932,7 @@ namespace VianaNET.Modules.Chart
           this.DefaultSeries.RenderAs = RenderAs.Line;
         }
 
-        this.showingLineFitOrTheorieIsAllowed = true;
+        FittedData.Instance.IsInterpolationAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Pie"))
       {
@@ -1140,74 +973,53 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    ///   The update series with x axis.
+    /// This method updates the series mappings for the given axis.
     /// </summary>
-    private void UpdateSeriesWithXAxis()
+    /// <param name="axisX">True, if the x axis should be mapped, otherwise for y Axis false.</param>
+    /// <returns>A <see cref="bool"/> indicating success</returns>
+    private bool UpdateMapping(bool axisX)
     {
       if (!this.isInitialized)
       {
-        return;
+        return false;
       }
 
       if (this.DataChart.Series.Count == 0)
       {
-        return;
+        return false;
       }
 
       if (this.DataChart.AxesX.Count == 0)
       {
-        return;
+        return false;
       }
 
-      var axis = (DataAxis)this.xAxisContent.SelectedItem;
+      var axis = axisX ? (DataAxis)this.xAxisContent.SelectedItem : (DataAxis)this.yAxisContent.SelectedItem;
 
-      if (this.DataChart.AxesX.Count >= 1)
+      if (axisX)
       {
-        this.DataChart.AxesX[0].Title = this.XAxisTitle.IsChecked ? axis.Description : null;
-        this.XAxisTitle.Text = axis.Description;
+        if (this.DataChart.AxesX.Count >= 1)
+        {
+          this.DataChart.AxesX[0].Title = this.XAxisTitle.IsChecked ? axis.Description : null;
+          this.XAxisTitle.Text = axis.Description;
+        }
+      }
+      else
+      {
+        if (this.DataChart.AxesY.Count >= 1)
+        {
+          this.DataChart.AxesY[0].Title = this.YAxisTitle.IsChecked ? axis.Description : null;
+          this.YAxisTitle.Text = axis.Description;
+        }
       }
 
-      DataMapping map = this.DefaultSeries.DataMappings[0];
-      DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[0];
-      DataMapping mapLineFit = this.LineFitSeries.DataMappings[0];
-      DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[0];
+      DataMapping map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
 
       this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
-
-      this.RefreshChartDataPoints();
-    }
-
-    /// <summary>
-    ///   The update series with y axis.
-    /// </summary>
-    private void UpdateSeriesWithYAxis()
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
-
-      if (this.DataChart.Series.Count == 0)
-      {
-        return;
-      }
-
-      var axis = (DataAxis)this.yAxisContent.SelectedItem;
-      this.SeriesTitle.Text = axis.Description;
-
-      if (this.DataChart.AxesY.Count >= 1)
-      {
-        this.DataChart.AxesY[0].Title = this.YAxisTitle.IsChecked ? axis.Description : null;
-        this.YAxisTitle.Text = axis.Description;
-      }
-
-      DataMapping map = this.DefaultSeries.DataMappings[1];
-      DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[1];
-      DataMapping mapLineFit = this.LineFitSeries.DataMappings[1];
-      DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[1];
-      this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
-
-      this.RefreshChartDataPoints();
+      return true;
     }
 
     /// <summary>
@@ -1225,6 +1037,35 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// The chart content selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The e.
+    /// </param>
+    private void ChartContentSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      // This populates the chart combo boxes with the selected x and y Axes
+      this.PopulateAxesFromChartSelection();
+
+      // This updates the xAxis mapping for the data series
+      if (!this.UpdateMapping(true))
+      {
+        return;
+      }
+
+      // This updates the yAxis mapping for the data series
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
+    }
+
+    /// <summary>
     /// The x axis content selection changed.
     /// </summary>
     /// <param name="sender">
@@ -1235,7 +1076,12 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.UpdateSeriesWithXAxis();
+      if (!this.UpdateMapping(true))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
     }
 
     /// <summary>
@@ -1249,7 +1095,12 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.UpdateSeriesWithYAxis();
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
     }
 
     /// <summary>
@@ -1261,36 +1112,56 @@ namespace VianaNET.Modules.Chart
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void checkBoxShowTheorie_Checked(object sender, RoutedEventArgs e)
+    private void CheckBoxShowTheorieChecked(object sender, RoutedEventArgs e)
     {
-      if ((!this.isInitialized) || (this.lineFitTheorieFunction == null) || (this.activeLineFitClass == null))
-      {
-        return;
-      }
+      FittedData.Instance.IsShowingTheorySeries = true;
+    }
 
-      if (this.checkBoxShowTheorie.IsChecked.GetValueOrDefault(false))
-      {
-        this.TheoreticalFunctionLabel.IsEnabled = true;
-        this.TheoreticalFunctionLabel.Content = this.lineFitTheorieFunction.name;
-        if ((this.activeLineFitClass.TheorieDisplaySample == null)
-            || (this.activeLineFitClass.TheorieDisplaySample.Count == 0))
-        {
-          this.MakePreparationsForTheorieFit();
-          this.activeLineFitClass.CalculateLineFitTheorieSeries(
-            this.activeLineFitClass.TheorieDisplaySample, this.lineFitTheorieFunction);
-        }
+    private void CheckBoxShowTheorieUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingTheorySeries = false;
+    }
 
-        this.RefreshSeries();
-      }
-      else
+    private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingRegressionSeries = true;
+    }
+
+    private void LineFitCheckBoxUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingRegressionSeries = false;
+    }
+
+    private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingInterpolationSeries = true;
+    }
+
+    private void InterpolationLineCheckBoxUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingInterpolationSeries = false;
+    }
+
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void RegressionStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.RegressionLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.RegressionLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
       {
-        this.TheoreticalFunctionLabel.IsEnabled = false;
-        if ((this.activeLineFitClass.TheorieDisplaySample != null)
-            && (this.activeLineFitClass.TheorieDisplaySample.Count != 0))
-        {
-          this.activeLineFitClass.TheorieDisplaySample.Clear();
-          this.RefreshSeries();
-        }
+        FittedData.Instance.RegressionLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.RegressionLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
       }
     }
 
@@ -1303,43 +1174,68 @@ namespace VianaNET.Modules.Chart
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void imageButtonRegressOptions_Click(object sender, RoutedEventArgs e)
+    private void TheoryStyleButtonClick(object sender, RoutedEventArgs e)
     {
-      int k = Convert.ToInt16(this.stellenZahlFormatString.Substring(1));
-      var myOptionsDialog = new LineOptionsDialog(
-        this.lineFitFunctionLineThickness, 
-        this.lineFitFunctionLineColor, 
-        this.theorieFunctionLineThickness, 
-        this.theorieFunctionLineColor, 
-        k);
-      myOptionsDialog.ShowDialog();
-      if (myOptionsDialog.DialogResult == true)
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.TheoryLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.TheoryLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
       {
-        this.lineFitFunctionLineThickness = myOptionsDialog.lineThicknessRegress;
-        this.theorieFunctionLineThickness = myOptionsDialog.lineThicknessTheorie;
-        this.lineFitFunctionLineColor = myOptionsDialog.lineColorRegress;
-        this.theorieFunctionLineColor = myOptionsDialog.lineColorTheorie;
-        this.stellenZahlFormatString = "G" + myOptionsDialog.stellenZahl.ToString();
-        if (this.activeLineFitClass != null)
-        {
-          this.activeLineFitClass.gueltigeStellenFormatString = this.stellenZahlFormatString;
-          this.LinefitFunctionLabel.Content = this.activeLineFitClass.LineFitFktStr;
-          if (((this.activeLineFitClass.LineFitDisplaySample != null)
-               && (this.activeLineFitClass.LineFitDisplaySample.Count > 0))
-              ||
-              ((this.activeLineFitClass.TheorieDisplaySample != null)
-               && (this.activeLineFitClass.TheorieDisplaySample.Count > 0)))
-          {
-            this.RefreshChartDataPoints();
-          }
-        }
+        FittedData.Instance.TheoryLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.TheoryLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
       }
     }
 
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void DataStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.DataLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.DataLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.DataLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.DataLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
+      }
+    }
+
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void InterpolationStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.InterpolationLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.InterpolationLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.InterpolationLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.InterpolationLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
+      }
+    }
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
+
+
   }
 }

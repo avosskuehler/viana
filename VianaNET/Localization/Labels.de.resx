@@ -1298,7 +1298,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Ausgleichskurve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
-    <value>Einstellen von Parametern der Ausgleichskurve/ theoretischen Kurve und der Stellenzahl bei Ausgabe von Dezimalwerten. </value>
+    <value>Geben Sie hier an mit welcher Genauigkeit die Ausgabe von Dezimalwerten erfolgen soll.</value>
   </data>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>Anpassen der Darstellungen</value>
@@ -1330,7 +1330,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
     <value>physikalische Konstanten</value>
   </data>
-  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
     <value>Rechner</value>
   </data>
   <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
@@ -1394,10 +1394,55 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
     <value>Glätten &amp; Fitten</value>
   </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>Funktionstyp</value>
+  </data>
   <data name="ChartWindowLinefitHeader" xml:space="preserve">
     <value>Fitten</value>
   </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>Funktion</value>
+  </data>
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>Theorie</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>Ausgleichsfunktion auswählen</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Taschenrechner</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>Kurvenfarbe und -dicke</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>Theorie</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>Genauigkeit</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>Theoretische Kurve</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>Bitte geben Sie Farbe und Dicke für die Kurve an.</value>
   </data>
 </root>

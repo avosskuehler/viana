@@ -45,6 +45,12 @@ namespace VianaNET.Data
       "LastPoint", typeof(Point[]), typeof(VideoData), new UIPropertyMetadata(null));
 
     /// <summary>
+    ///   The ActiveObject property.
+    /// </summary>
+    public static readonly DependencyProperty ActiveObjectProperty = DependencyProperty.Register(
+      "ActiveObject", typeof(int), typeof(VideoData), new UIPropertyMetadata(null));
+
+    /// <summary>
     ///   The samples property.
     /// </summary>
     public static readonly DependencyProperty SamplesProperty = DependencyProperty.Register(
@@ -67,6 +73,7 @@ namespace VianaNET.Data
     {
       this.Samples = new DataCollection();
       this.LastPoint = new Point[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      this.ActiveObject = 0;
       Interpolation.Interpolation.Instance.PropertyChanged += this.Interpolation_PropertyChanged;
     }
 
@@ -127,6 +134,22 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(LastPointProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the active object. This is zero-based.
+    /// </summary>
+    public int ActiveObject
+    {
+      get
+      {
+        return (int)this.GetValue(ActiveObjectProperty);
+      }
+
+      set
+      {
+        this.SetValue(ActiveObjectProperty, value);
       }
     }
 

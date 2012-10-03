@@ -1313,7 +1313,7 @@ Click OK or press Enter, when ready.</value>
     <value>linefitting curve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
-    <value>Select parameters of curves and number of digits when showing decimals.</value>
+    <value>Specify the number of digits when showing decimals.</value>
   </data>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>some options for display</value>
@@ -1345,7 +1345,7 @@ Click OK or press Enter, when ready.</value>
   <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
     <value>physical constants</value>
   </data>
-  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
     <value>Calculator</value>
   </data>
   <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
@@ -1408,10 +1408,55 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
     <value>Smooth &amp; Fit</value>
   </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>color</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>choose type</value>
+  </data>
   <data name="ChartWindowLinefitHeader" xml:space="preserve">
     <value>fit</value>
   </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>function</value>
+  </data>
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>Theory</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>Choose regression function</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>Line series style</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>Precision</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>regression</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>theoretical function</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>Please specify color and thickness of data curve</value>
   </data>
 </root>

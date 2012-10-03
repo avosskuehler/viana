@@ -169,6 +169,16 @@ namespace VianaNET.Data.Linefit
   /// </summary>
   public class Matrix
   {
+    protected bool Equals(Matrix other)
+    {
+      return this.in_Mat == other.in_Mat;
+    }
+
+    public override int GetHashCode()
+    {
+      return (this.in_Mat != null ? this.in_Mat.GetHashCode() : 0);
+    }
+
     #region Fields
 
     /// <summary>
