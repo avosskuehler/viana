@@ -1,58 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.ComponentModel;
-using System.Windows.Data;
-using VianaNETShaderEffectLibrary;
-using System.Windows.Interop;
-using System.Diagnostics;
-using System.Windows.Media.Effects;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BlobsControl.xaml.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Interaction logic for BlobsControl.xaml
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Modules.Video.BlobDetection
 {
+  using System.ComponentModel;
+  using System.Windows;
+  using System.Windows.Controls;
+  using System.Windows.Media;
+  using System.Windows.Shapes;
+
+  using VianaNET.Data;
+  using VianaNET.Modules.Video.Control;
+  using VianaNET.Modules.Video.Filter;
+
+  using VianaNETShaderEffectLibrary;
+
   /// <summary>
-  /// Interaction logic for BlobsControl.xaml
+  ///   Interaction logic for BlobsControl.xaml
   /// </summary>
   public partial class BlobsControl : UserControl
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
+    #region Fields
 
-    private ThresholdEffect thresholdEffect;
-    private BackgroundEffect backgroundEffect;
+    /// <summary>
+    ///   The background effect.
+    /// </summary>
+    private readonly BackgroundEffect backgroundEffect;
 
-    #endregion //FIELDS
+    /// <summary>
+    ///   The threshold effect.
+    /// </summary>
+    private readonly ThresholdEffect thresholdEffect;
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="BlobsControl" /> class.
+    /// </summary>
     public BlobsControl()
     {
       this.DataContext = this;
       this.InitializeComponent();
 
       this.thresholdEffect = new ThresholdEffect();
-      thresholdEffect.MinX = 0.001d;
-      thresholdEffect.MaxX = 0.999d;
-      thresholdEffect.MinY = 0.001d;
-      thresholdEffect.MaxY = 0.999d;
+      this.thresholdEffect.MinX = 0.001d;
+      this.thresholdEffect.MaxX = 0.999d;
+      this.thresholdEffect.MinY = 0.001d;
+      this.thresholdEffect.MaxY = 0.999d;
 
       this.backgroundEffect = new BackgroundEffect();
       this.backgroundEffect.Threshold = 0.4;
@@ -60,33 +88,31 @@ namespace VianaNET
       this.ProcessedImageControl.Effect = this.thresholdEffect;
       this.OverlayImageControl.Effect = this.backgroundEffect;
 
-      //this.PopulateObjectCombo();
-
-      Video.Instance.ImageProcessing.PropertyChanged += new PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
-      Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(Calibration_PropertyChanged);
-      VideoData.Instance.PropertyChanged += new PropertyChangedEventHandler(VideoData_PropertyChanged);
-      Video.Instance.PropertyChanged += new PropertyChangedEventHandler(Video_PropertyChanged);
+      // this.PopulateObjectCombo();
+      Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessing_PropertyChanged;
+      Calibration.Instance.PropertyChanged += this.Calibration_PropertyChanged;
+      VideoData.Instance.PropertyChanged += this.VideoData_PropertyChanged;
+      Video.Instance.PropertyChanged += this.Video_PropertyChanged;
     }
 
-    #endregion //CONSTRUCTION
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
-    #endregion EVENTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
-    #endregion //PROPERTIES
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
+    #region Public Methods and Operators
 
+    /// <summary>
+    ///   The update data points.
+    /// </summary>
     public void UpdateDataPoints()
     {
       this.CanvasDataPoints.Children.Clear();
@@ -94,12 +120,12 @@ namespace VianaNET
       {
         for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
         {
-          Ellipse dataPoint = new Ellipse();
+          var dataPoint = new Ellipse();
           dataPoint.Stroke = ImageProcessing.TrackObjectColors[i];
           dataPoint.StrokeThickness = 2;
           dataPoint.Width = 15;
           dataPoint.Height = 15;
-          Point location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
+          var location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
           Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
@@ -107,149 +133,176 @@ namespace VianaNET
       }
     }
 
-    #endregion //PUBLICMETHODS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
-    #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
+    #region Methods
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
-    /// <param name="obj">The source of the event. This.</param>
-    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
-    /// the event data.</param>
-    private static void OnPropertyChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
+    /// <param name="obj">
+    /// The source of the event. This. 
+    /// </param>
+    /// <param name="args">
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// </param>
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      BlobsControl window = obj as BlobsControl;
+      var window = obj as BlobsControl;
       window.UpdateThresholdForHLSL();
     }
 
-    void Video_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// The blobs control_ is visible changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void BlobsControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
-      if (e.PropertyName == "IsDataAcquisitionRunning")
-      {
-        if (Video.Instance.IsDataAcquisitionRunning)
-        {
-          this.CanvasDataPoints.Children.Clear();
-        }
-      }
+      this.SetBlobs();
     }
 
-    void VideoData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// The calibration_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (Video.Instance.IsDataAcquisitionRunning)
-      {
-        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
-        {
-          Ellipse dataPoint = new Ellipse();
-          dataPoint.Stroke = ImageProcessing.TrackObjectColors[i];
-          dataPoint.StrokeThickness = 2;
-          dataPoint.Width = 15;
-          dataPoint.Height = 15;
-          Point location = VideoData.Instance.LastPoint[i];
-          this.CanvasDataPoints.Children.Add(dataPoint);
-          Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
-          Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
-        }
-      }
-    }
-
-    void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "HasClipRegion" ||
-        e.PropertyName == "ClipRegion")
+      if (e.PropertyName == "HasClipRegion" || e.PropertyName == "ClipRegion")
       {
         double videoWidth = Video.Instance.VideoElement.NaturalVideoWidth;
         double videoHeight = Video.Instance.VideoElement.NaturalVideoHeight;
         if (Calibration.Instance.HasClipRegion)
         {
-          thresholdEffect.MinX = Calibration.Instance.ClipRegion.Left / videoWidth;
-          thresholdEffect.MaxX = Calibration.Instance.ClipRegion.Right / videoWidth;
-          thresholdEffect.MinY = Calibration.Instance.ClipRegion.Top / videoHeight;
-          thresholdEffect.MaxY = Calibration.Instance.ClipRegion.Bottom / videoHeight;
+          this.thresholdEffect.MinX = Calibration.Instance.ClipRegion.Left / videoWidth;
+          this.thresholdEffect.MaxX = Calibration.Instance.ClipRegion.Right / videoWidth;
+          this.thresholdEffect.MinY = Calibration.Instance.ClipRegion.Top / videoHeight;
+          this.thresholdEffect.MaxY = Calibration.Instance.ClipRegion.Bottom / videoHeight;
         }
         else
         {
-          thresholdEffect.MinX = 0d;
-          thresholdEffect.MaxX = 1d;
-          thresholdEffect.MinY = 0d;
-          thresholdEffect.MaxY = 1d;
+          this.thresholdEffect.MinX = 0d;
+          this.thresholdEffect.MaxX = 1d;
+          this.thresholdEffect.MinY = 0d;
+          this.thresholdEffect.MaxY = 1d;
         }
 
         this.SetBlobs();
       }
     }
 
-    void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// The canvas data points_ size changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void CanvasDataPoints_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-      if (e.PropertyName == "TargetColor" ||
-        e.PropertyName == "HLSLParams" ||
-        e.PropertyName == "IndexOfObject")
+      var videoSizeToCanvasSize = new ScaleTransform();
+      videoSizeToCanvasSize.ScaleX = this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
+      videoSizeToCanvasSize.ScaleY = this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+      this.CanvasDataPoints.RenderTransform = videoSizeToCanvasSize;
+    }
+
+    // private void ObjectSelectionCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    // {
+    // if (this.ObjectSelectionCombo.SelectedItem != null)
+    // {
+    // string entry = (string)this.ObjectSelectionCombo.SelectedItem;
+    // this.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+    // this.thresholdEffect.TargetColor = Video.Instance.ImageProcessing.TargetColor[this.IndexOfObject];
+    // }
+    // }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    // private void PopulateObjectCombo()
+    // {
+    // // Erase old entries
+    // this.ObjectDescriptions.Clear();
+
+    // for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+    // {
+    // this.ObjectDescriptions.Add(Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString());
+    // }
+
+    // this.ObjectSelectionCombo.ItemsSource = null;
+    // this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
+    // this.ObjectSelectionCombo.SelectedIndex = 0;
+    // }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    /// <summary>
+    /// The get scales.
+    /// </summary>
+    /// <param name="scaleX">
+    /// The scale x. 
+    /// </param>
+    /// <param name="scaleY">
+    /// The scale y. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/> . 
+    /// </returns>
+    private bool GetScales(out double scaleX, out double scaleY)
+    {
+      scaleX = this.OverlayImageControl.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
+      scaleY = this.OverlayImageControl.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+
+      return !double.IsInfinity(scaleX) && !double.IsNaN(scaleX);
+    }
+
+    /// <summary>
+    /// The image processing_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "TargetColor" || e.PropertyName == "HLSLParams" || e.PropertyName == "IndexOfObject")
       {
-        UpdateThresholdForHLSL();
+        this.UpdateThresholdForHLSL();
       }
 
       this.SetBlobs();
     }
 
-    private void UpdateThresholdForHLSL()
-    {
-      thresholdEffect.Threshold =
-        Video.Instance.ImageProcessing.ColorThreshold[Video.Instance.ImageProcessing.IndexOfObject] / 255d;
-      thresholdEffect.BlankColor = Colors.Black;
-      thresholdEffect.CropColor = Colors.DarkGray;
-      thresholdEffect.TargetColor =
-        Video.Instance.ImageProcessing.TargetColor[Video.Instance.ImageProcessing.IndexOfObject];
-    }
-
-    private void BlobsControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-      this.SetBlobs();
-    }
-
-    private void CanvasDataPoints_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-      ScaleTransform videoSizeToCanvasSize = new ScaleTransform();
-      videoSizeToCanvasSize.ScaleX =
-        this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
-      videoSizeToCanvasSize.ScaleY =
-        this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
-      this.CanvasDataPoints.RenderTransform = videoSizeToCanvasSize;
-    }
-
-    //private void ObjectSelectionCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //  if (this.ObjectSelectionCombo.SelectedItem != null)
-    //  {
-    //    string entry = (string)this.ObjectSelectionCombo.SelectedItem;
-    //    this.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
-    //    this.thresholdEffect.TargetColor = Video.Instance.ImageProcessing.TargetColor[this.IndexOfObject];
-    //  }
-    //}
-
-    #endregion //EVENTHANDLER
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
-
+    /// <summary>
+    ///   The set blobs.
+    /// </summary>
     private void SetBlobs()
     {
       if (this.Visibility != Visibility.Visible)
@@ -262,65 +315,91 @@ namespace VianaNET
       double scaleX;
       double scaleY;
 
-      if (GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out scaleX, out scaleY))
       {
         for (int i = 0; i < Video.Instance.ImageProcessing.DetectedBlob.Count; i++)
         {
           Segment blob = Video.Instance.ImageProcessing.DetectedBlob[i];
 
-          if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10 &&
-              blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 &&
-              blob.Diagonal > 0)
+          if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
+              && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
           {
-            Ellipse blobEllipse = new Ellipse();
+            var blobEllipse = new Ellipse();
             blobEllipse.Fill = ImageProcessing.TrackObjectColors[i];
-            blobEllipse.Stroke=Brushes.Black;//ImageProcessing.TrackObjectColors[i];
+            blobEllipse.Stroke = Brushes.Black; // ImageProcessing.TrackObjectColors[i];
             blobEllipse.StrokeThickness = 1;
             blobEllipse.Width = blob.Width * scaleX;
             blobEllipse.Height = blob.Height * scaleY;
             this.OverlayCanvas.Children.Add(blobEllipse);
 
-            Canvas.SetLeft(
-              blobEllipse,
-              blob.Center.X * scaleX - blobEllipse.Width / 2);
-            Canvas.SetTop(
-              blobEllipse,
-              blob.Center.Y * scaleY - blobEllipse.Height / 2);
+            Canvas.SetLeft(blobEllipse, blob.Center.X * scaleX - blobEllipse.Width / 2);
+            Canvas.SetTop(blobEllipse, blob.Center.Y * scaleY - blobEllipse.Height / 2);
           }
         }
       }
     }
 
-    //private void PopulateObjectCombo()
-    //{
-    //  // Erase old entries
-    //  this.ObjectDescriptions.Clear();
-
-    //  for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
-    //  {
-    //    this.ObjectDescriptions.Add(Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString());
-    //  }
-
-    //  this.ObjectSelectionCombo.ItemsSource = null;
-    //  this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
-    //  this.ObjectSelectionCombo.SelectedIndex = 0;
-    //}
-
-    #endregion //PRIVATEMETHODS
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-
-    private bool GetScales(out double scaleX, out double scaleY)
+    /// <summary>
+    ///   The update threshold for hlsl.
+    /// </summary>
+    private void UpdateThresholdForHLSL()
     {
-      scaleX = this.OverlayImageControl.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
-      scaleY = this.OverlayImageControl.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
-
-      return (!double.IsInfinity(scaleX) && !double.IsNaN(scaleX));
+      this.thresholdEffect.Threshold =
+        Video.Instance.ImageProcessing.ColorThreshold[Video.Instance.ImageProcessing.IndexOfObject] / 255d;
+      this.thresholdEffect.BlankColor = Colors.Black;
+      this.thresholdEffect.CropColor = Colors.DarkGray;
+      this.thresholdEffect.TargetColor =
+        Video.Instance.ImageProcessing.TargetColor[Video.Instance.ImageProcessing.IndexOfObject];
     }
 
-    #endregion //HELPER
+    /// <summary>
+    /// The video data_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void VideoData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (Video.Instance.IsDataAcquisitionRunning)
+      {
+        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+        {
+          var dataPoint = new Ellipse();
+          dataPoint.Stroke = ImageProcessing.TrackObjectColors[i];
+          dataPoint.StrokeThickness = 2;
+          dataPoint.Width = 15;
+          dataPoint.Height = 15;
+          Point location = VideoData.Instance.LastPoint[i];
+          this.CanvasDataPoints.Children.Add(dataPoint);
+          Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
+          Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+        }
+      }
+    }
+
+    /// <summary>
+    /// The video_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void Video_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "IsDataAcquisitionRunning")
+      {
+        if (Video.Instance.IsDataAcquisitionRunning)
+        {
+          this.CanvasDataPoints.Children.Clear();
+        }
+      }
+    }
+
+    #endregion
   }
 }

@@ -1,52 +1,187 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using AvalonDock;
-using System.Windows.Data;
-using WPFLocalizeExtension.Extensions;
-using Visifire.Charts;
-using System.Collections.Generic;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ChartWindow.xaml.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The chart window.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Modules.Chart
 {
-  public partial class ChartWindow : DockableContent
+  using System;
+  using System.Collections.Generic;
+  using System.ComponentModel;
+  using System.Globalization;
+  using System.Windows;
+  using System.Windows.Controls;
+  using System.Windows.Controls.Primitives;
+  using System.Windows.Data;
+  using System.Windows.Media;
+  using System.Windows.Media.Imaging;
+
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.Data;
+  using VianaNET.Data.Interpolation;
+  using VianaNET.Data.Linefit;
+  using VianaNET.Localization;
+  using VianaNET.Modules.Video.Control;
+  using Visifire.Charts;
+
+  /// <summary>
+  ///   The chart window.
+  /// </summary>
+  public partial class ChartWindow
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
+    #region Static Fields
 
-    private bool isInitialized;
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="ObjectDescriptions" />.
+    /// </summary>
+    public static readonly DependencyProperty ObjectDescriptionsProperty =
+      DependencyProperty.Register(
+        "ObjectDescriptions",
+        typeof(List<string>),
+        typeof(ChartWindow),
+        new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
 
-    #endregion //FIELDS
+    #endregion
+
+    #region Fields
+
+    /// <summary>
+    ///   The is initialized.
+    /// </summary>
+    private readonly bool isInitialized;
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ChartWindow" /> class.
+    /// </summary>
     public ChartWindow()
     {
-      InitializeComponent();
+      this.InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
-      //VideoData.Instance.PropertyChanged +=
-      //  new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
-      //Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
-      Video.Instance.ImageProcessing.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
-      CreateDataSeries();
+
+      // VideoData.Instance.PropertyChanged +=
+      // new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      // Calibration.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(VideoData_PropertyChanged);
+      Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessingPropertyChanged;
       this.isInitialized = true;
-      UpdateChartProperties();
+      this.UpdateChartProperties();
     }
 
-    private void ImageProcessing_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>
+    ///   Gets or sets the index of the currently tracked object
+    /// </summary>
+    public List<string> ObjectDescriptions
+    {
+      get
+      {
+        return (List<string>)this.GetValue(ObjectDescriptionsProperty);
+      }
+
+      set
+      {
+        this.SetValue(ObjectDescriptionsProperty, value);
+      }
+    }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    ///   The refresh.
+    /// </summary>
+    public void Refresh()
+    {
+      this.UpdateChartProperties();
+      this.RefreshSeries();
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Raises the PropertyChanged event.
+    /// </summary>
+    /// <param name="obj">
+    /// The source of the event. This. 
+    /// </param>
+    /// <param name="args">
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// </param>
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+      var window = obj as ChartWindow;
+      if (window != null)
+      {
+        window.RefreshSeries();
+      }
+    }
+
+
+    /// <summary>
+    /// The chart content tab selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ChartContentTabSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      this.PopulateAxesFromChartSelection();
+    }
+
+    /// <summary>
+    /// The image processing property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ImageProcessingPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "NumberOfTrackedObjects")
       {
@@ -58,14 +193,225 @@ namespace VianaNET
       }
     }
 
-    //void VideoData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    ///// <summary>
+    ///// The interpolation line check box checked.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The sender. 
+    ///// </param>
+    ///// <param name="e">
+    ///// The e. 
+    ///// </param>
+    //private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)
     //{
-    //  if (e.PropertyName == "Interpolation")
+    //  if (!this.isInitialized)
     //  {
-    //    this.Refresh();
+    //    return;
     //  }
+
+    //  this.InterpolationSeries.Enabled = Interpolation.Instance.IsInterpolatingData;
+
+    //  //if (this.RadioChartStyleScatter.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleScatter);
+    //  //}
+    //  //else if (this.RadioChartStyleLine.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleLine);
+    //  //}
+    //  //else if (this.RadioChartStyleArea.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleArea);
+    //  //}
+    //  //else if (this.RadioChartStyleColumn.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleColumn);
+    //  //}
+    //  //else if (this.RadioChartStyleBubble.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStyleBubble);
+    //  //}
+    //  //else if (this.RadioChartStylePie.IsChecked())
+    //  //{
+    //  //  this.UpdateChartStyle(this.RadioChartStylePie);
+    //  //}
     //}
 
+    /// <summary>
+    /// The interpolation options button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void InterpolationOptionsButtonClick(object sender, RoutedEventArgs e)
+    {
+      Interpolation.ShowInterpolationOptionsDialog();
+    }
+
+    ///// <summary>
+    ///// The line fit check box checked.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The sender. 
+    ///// </param>
+    ///// <param name="e">
+    ///// The e. 
+    ///// </param>
+    //private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
+    //{
+    //  if (!this.isInitialized)
+    //  {
+    //    return;
+    //  }
+
+    //  if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
+    //  {
+    //    this.NewCalculationForLineFitting();
+    //  }
+    //  else
+    //  {
+    //    FittedData.Instance.LineFitType.LineFitDisplaySample.Clear();
+    //    this.LinefitFunctionLabel.Content = string.Empty;
+    //  }
+
+    //  this.RefreshSeries();
+    //}
+
+    /// <summary>
+    /// The line fit options button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void LinefitPrecisionButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new NumericalPrecisionDialog { NumberOfDigits = FittedData.Instance.NumericPrecision };
+      if (dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
+      }
+    }
+
+    /// <summary>
+    /// The line fit type button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The e.
+    /// </param>
+    private void LineFitTypeButtonClick(object sender, RoutedEventArgs e)
+    {
+      double minX, minY, hilf;
+
+      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertX, out minX, out hilf);
+      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertY, out minY, out hilf);
+      var linefittingDialog = new LinefittingDialog(minX < 0, minY < 0, FittedData.Instance.RegressionType);
+      if (linefittingDialog.ShowDialog().GetValueOrDefault(false))
+      {
+        FittedData.Instance.RegressionType = linefittingDialog.SelectedRegressionType;
+        string bildsource;
+        switch (FittedData.Instance.RegressionType)
+        {
+          case Regression.Linear:
+            bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
+            break;
+          case Regression.Exponentiell:
+            bildsource = "/VianaNET;component/Images/LineFit_Exponential1_16.png";
+            break;
+          case Regression.Logarithmisch:
+            bildsource = "/VianaNET;component/Images/LineFit_Logarithmus_16.png";
+            break;
+          case Regression.Potenz:
+            bildsource = "/VianaNET;component/Images/LineFit_Potentiell_16.png";
+            break;
+          case Regression.Quadratisch:
+            bildsource = "/VianaNET;component/Images/LineFit_Quadratisch_16.png";
+            break;
+          case Regression.ExponentiellMitKonstante:
+            bildsource = "/VianaNET;component/Images/LineFit_Exponential2_16.png";
+            break;
+          case Regression.Sinus:
+            bildsource = "/VianaNET;component/Images/LineFit_Sinus_16.png";
+            break;
+          case Regression.SinusGedämpft:
+            bildsource = "/VianaNET;component/Images/LineFit_SinusExponential_16.png";
+            break;
+          case Regression.Resonanz:
+            bildsource = "/VianaNET;component/Images/LineFit_Resonanz_16.png";
+            break;
+          default:
+            bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
+            break;
+        }
+
+        var neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
+        this.LineFitTypeButton.ImageSource = new BitmapImage(neuBildsource);
+
+        if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
+        {
+          FittedData.Instance.LineFitType.CalculateLineFitFunction(FittedData.Instance.RegressionType);
+        }
+      }
+    }
+
+    /// <summary>
+    /// The line fit theorie button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void LineFitTheorieButtonClick(object sender, RoutedEventArgs e)
+    {
+      var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
+      if (FittedData.Instance.TheoreticalFunction != null)
+      {
+        fktEditor.textBox1.Text = FittedData.Instance.TheoreticalFunction.Name;
+        fktEditor.textBox1.SelectAll();
+      }
+
+      fktEditor.ShowDialog();
+
+      if (fktEditor.DialogResult.GetValueOrDefault(false))
+      {
+        FittedData.Instance.TheoreticalFunction = fktEditor.GetFunktion();
+      }
+    }
+
+    /// <summary>
+    /// The object selection combo selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ObjectSelectionComboSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      if (this.ObjectSelectionCombo.SelectedItem == null)
+      {
+        return;
+      }
+
+      var entry = (string)this.ObjectSelectionCombo.SelectedItem;
+      Video.Instance.ImageProcessing.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+      VideoData.Instance.ActiveObject = Video.Instance.ImageProcessing.IndexOfObject;
+    }
+
+    /// <summary>
+    ///   The populate object combo.
+    /// </summary>
     private void PopulateObjectCombo()
     {
       // Erase old entries
@@ -73,487 +419,26 @@ namespace VianaNET
 
       for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
-        this.ObjectDescriptions.Add(Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString());
+        this.ObjectDescriptions.Add(Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
       }
 
-      //this.ObjectSelectionCombo.ItemsSource = null;
+      // this.ObjectSelectionCombo.ItemsSource = null;
       this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
-      Binding indexBinding = new Binding("ImageProcessing.IndexOfObject");
-      indexBinding.Source = Video.Instance;
-      this.ObjectSelectionCombo.SetBinding(ComboBox.SelectedIndexProperty, indexBinding);
+      var indexBinding = new Binding("ImageProcessing.IndexOfObject") { Source = Video.Instance };
+      this.ObjectSelectionCombo.SetBinding(Selector.SelectedIndexProperty, indexBinding);
       Video.Instance.ImageProcessing.IndexOfObject++;
     }
 
-    private void CreateDataSeries()
-    {
-      // Set localized Title Binding
-      LocTextExtension locTitle = new LocTextExtension("VianaNET:Labels:ChartWindowChartSeries");
-
-      this.DefaultSeries.MovingMarkerEnabled = true;
-      this.DefaultSeries.SelectionEnabled = true;
-      this.DefaultSeries.SelectionMode = SelectionModes.Multiple;
-      this.DefaultSeries.ShowInLegend = true;
-      this.DefaultSeries.RenderAs = RenderAs.Point;
-    }
-
-    #endregion //CONSTRUCTION
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
-    #endregion EVENTS
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
-
     /// <summary>
-    /// Gets or sets the index of the currently tracked object
+    /// The radio chart style checked.
     /// </summary>
-    public List<string> ObjectDescriptions
-    {
-      get { return (List<string>)this.GetValue(ObjectDescriptionsProperty); }
-      set { this.SetValue(ObjectDescriptionsProperty, value); }
-    }
-
-    /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="ObjectDescriptions"/>.
-    /// </summary>
-    public static readonly DependencyProperty ObjectDescriptionsProperty = DependencyProperty.Register(
-      "ObjectDescriptions",
-      typeof(List<string>),
-      typeof(ChartWindow),
-      new FrameworkPropertyMetadata(new List<string>(), new PropertyChangedCallback(OnPropertyChanged)));
-
-    #endregion //PROPERTIES
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
-
-    public void Refresh()
-    {
-      UpdateChartProperties();
-      RefreshSeries();
-    }
-
-    #endregion //PUBLICMETHODS
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
-    #endregion //OVERRIDES
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
-
-    /// <summary>
-    /// Raises the <see cref="PropertyChanged"/> event.
-    /// </summary>
-    /// <param name="obj">The source of the event. This.</param>
-    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> with 
-    /// the event data.</param>
-    private static void OnPropertyChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
-    {
-      ChartWindow window = obj as ChartWindow;
-      window.RefreshSeries();
-    }
-
-    private void ValueChanged_UpdateChart(object sender, EventArgs e)
-    {
-      UpdateChartProperties();
-    }
-
-    private void xAxisContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      UpdateSeriesWithXAxis();
-    }
-
-    private void AxesContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      SetDefaultDiagramm();
-    }
-
-    private void SetDefaultDiagramm()
-    {
-      if (!this.IsInitialized)
-      {
-        return;
-      }
-
-      AxisType chartType = AxisType.YoverX;
-
-      if (this.TabPositionSpace.IsSelected)
-      {
-        DataAxis axis = (DataAxis)this.AxesContentPositionSpace.SelectedItem;
-        chartType = axis.Axis;
-      }
-      else if (this.TabPhaseSpace.IsSelected)
-      {
-        DataAxis axis = (DataAxis)this.AxesContentPhaseSpace.SelectedItem;
-        chartType = axis.Axis;
-      }
-      else if (this.TabOther.IsSelected)
-      {
-        DataAxis xAxis = (DataAxis)xAxisContent.SelectedItem;
-        DataAxis yAxis = (DataAxis)yAxisContent.SelectedItem;
-        xAxisContent.SelectedValue = xAxis.Axis;
-        yAxisContent.SelectedValue = yAxis.Axis;
-
-        // axes content already set, so return
-        return;
-      }
-
-      switch (chartType)
-      {
-        case AxisType.YoverX:
-          xAxisContent.SelectedValue = AxisType.PX;
-          yAxisContent.SelectedValue = AxisType.PY;
-          break;
-        case AxisType.XoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.PX;
-          break;
-        case AxisType.YoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.PY;
-          break;
-        case AxisType.VoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.V;
-          break;
-        case AxisType.VXoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.VX;
-          break;
-        case AxisType.VYoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.VY;
-          break;
-        case AxisType.AoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.A;
-          break;
-        case AxisType.AXoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.AX;
-          break;
-        case AxisType.AYoverT:
-          xAxisContent.SelectedValue = AxisType.T;
-          yAxisContent.SelectedValue = AxisType.AY;
-          break;
-        case AxisType.VoverD:
-          xAxisContent.SelectedValue = AxisType.D;
-          yAxisContent.SelectedValue = AxisType.V;
-          break;
-        case AxisType.VXoverDX:
-          xAxisContent.SelectedValue = AxisType.DX;
-          yAxisContent.SelectedValue = AxisType.VX;
-          break;
-        case AxisType.VYoverDY:
-          xAxisContent.SelectedValue = AxisType.DY;
-          yAxisContent.SelectedValue = AxisType.VY;
-          break;
-        case AxisType.VoverS:
-          xAxisContent.SelectedValue = AxisType.S;
-          yAxisContent.SelectedValue = AxisType.V;
-          break;
-        case AxisType.VXoverSX:
-          xAxisContent.SelectedValue = AxisType.SX;
-          yAxisContent.SelectedValue = AxisType.VX;
-          break;
-        case AxisType.VYoverSY:
-          xAxisContent.SelectedValue = AxisType.SY;
-          yAxisContent.SelectedValue = AxisType.VY;
-          break;
-        case AxisType.AoverV:
-          xAxisContent.SelectedValue = AxisType.V;
-          yAxisContent.SelectedValue = AxisType.A;
-          break;
-        case AxisType.AXoverVX:
-          xAxisContent.SelectedValue = AxisType.VX;
-          yAxisContent.SelectedValue = AxisType.AX;
-          break;
-        case AxisType.AYoverVY:
-          xAxisContent.SelectedValue = AxisType.VY;
-          yAxisContent.SelectedValue = AxisType.AY;
-          break;
-      }
-    }
-
-
-    private void UpdateSeriesWithXAxis()
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
-
-      if (this.DataChart.Series.Count == 0)
-      {
-        return;
-      }
-
-      if (this.DataChart.AxesX.Count == 0)
-      {
-        return;
-      }
-
-      DataAxis axis = (DataAxis)xAxisContent.SelectedItem;
-
-      if (this.DataChart.AxesX.Count >= 1)
-      {
-        this.DataChart.AxesX[0].Title = XAxisTitle.IsChecked ? axis.Description : null;
-        XAxisTitle.Text = axis.Description;
-      }
-
-      DataMapping map = this.DefaultSeries.DataMappings[0];
-      DataMapping map2 = this.InterpolationSeries.DataMappings[0];
-
-      UpdateAxisMappings(axis, map, map2);
-
-      RefreshChartDataPoints();
-    }
-
-    private void UpdateAxisMappings(DataAxis axis, DataMapping map, DataMapping map2)
-    {
-      string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString() + "].";
-      switch (axis.Axis)
-      {
-        case AxisType.I:
-          map.Path = "Framenumber";
-          map2.Path = "Framenumber";
-          break;
-        case AxisType.T:
-          map.Path = "Timestamp";
-          map2.Path = "Timestamp";
-          break;
-        case AxisType.PX:
-          map.Path = "PositionX";
-          map2.Path = "PositionX";
-          break;
-        case AxisType.PY:
-          map.Path = "PositionY";
-          map2.Path = "PositionY";
-          break;
-        case AxisType.D:
-          map.Path = "Distance";
-          map2.Path = "Distance";
-          break;
-        case AxisType.DX:
-          map.Path = "DistanceX";
-          map2.Path = "DistanceX";
-          break;
-        case AxisType.DY:
-          map.Path = "DistanceY";
-          map2.Path = "DistanceY";
-          break;
-        case AxisType.S:
-          map.Path = "Length";
-          map2.Path = "Length";
-          break;
-        case AxisType.SX:
-          map.Path = "LengthX";
-          map2.Path = "LengthX";
-          break;
-        case AxisType.SY:
-          map.Path = "LengthY";
-          map2.Path = "LengthY";
-          break;
-        case AxisType.V:
-          map.Path = "Velocity";
-          map2.Path = "VelocityI";
-          break;
-        case AxisType.VX:
-          map.Path = "VelocityX";
-          map2.Path = "VelocityXI";
-          break;
-        case AxisType.VY:
-          map.Path = "VelocityY";
-          map2.Path = "VelocityYI";
-          break;
-        case AxisType.VI:
-          map.Path = "VelocityI";
-          map2.Path = "VelocityI";
-          break;
-        case AxisType.VXI:
-          map.Path = "VelocityXI";
-          map2.Path = "VelocityXI";
-          break;
-        case AxisType.VYI:
-          map.Path = "VelocityYI";
-          map2.Path = "VelocityYI";
-          break;
-        case AxisType.A:
-          map.Path = "Acceleration";
-          map2.Path = "AccelerationI";
-          break;
-        case AxisType.AX:
-          map.Path = "AccelerationX";
-          map2.Path = "AccelerationXI";
-          break;
-        case AxisType.AY:
-          map.Path = "AccelerationY";
-          map2.Path = "AccelerationYI";
-          break;
-        case AxisType.AI:
-          map.Path = "AccelerationI";
-          map2.Path = "AccelerationI";
-          break;
-        case AxisType.AXI:
-          map.Path = "AccelerationXI";
-          map2.Path = "AccelerationXI";
-          break;
-        case AxisType.AYI:
-          map.Path = "AccelerationYI";
-          map2.Path = "AccelerationYI";
-          break;
-      }
-
-      map.Path = prefix + map.Path;
-      map2.Path = prefix + map2.Path;
-    }
-
-    private void RefreshChartDataPoints()
-    {
-      this.DefaultSeries.DataSource = null;
-      this.DefaultSeries.DataSource = VideoData.Instance.Samples;
-      this.InterpolationSeries.DataSource = null;
-      this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
-    }
-
-    private void yAxisContent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      UpdateSeriesWithYAxis();
-    }
-
-    private void UpdateSeriesWithYAxis()
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
-
-      if (this.DataChart.Series.Count == 0)
-      {
-        return;
-      }
-
-      DataAxis axis = (DataAxis)yAxisContent.SelectedItem;
-      this.SeriesTitle.Text = axis.Description;
-
-      if (this.DataChart.AxesY.Count >= 1)
-      {
-        this.DataChart.AxesY[0].Title = YAxisTitle.IsChecked ? axis.Description : null;
-        YAxisTitle.Text = axis.Description;
-      }
-
-      DataMapping map = this.DefaultSeries.DataMappings[1];
-      DataMapping map2 = this.InterpolationSeries.DataMappings[1];
-      UpdateAxisMappings(axis, map, map2);
-
-      RefreshChartDataPoints();
-    }
-
-    #endregion //EVENTHANDLER
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
-
-    private void UpdateChartProperties()
-    {
-      if (this.isInitialized)
-      {
-        this.DataChart.Titles[0].Text = ChartTitle.IsChecked ? ChartTitle.Text : null;
-        this.DataChart.Legends[0].Title = LegendTitle.IsChecked ? LegendTitle.Text : null;
-        this.DataChart.Legends[0].Enabled = this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked ? true : false;
-        this.DefaultSeries.LegendText = SeriesTitle.IsChecked ? SeriesTitle.Text : null;
-
-        if (this.DataChart.AxesX.Count > 0)
-        {
-          Axis xAxis = this.DataChart.AxesX[0] as Axis;
-          xAxis.Title = XAxisTitle.IsChecked ? XAxisTitle.Text : null;
-          xAxis.Grids[0].Enabled = XAxisShowGridLines.IsChecked();
-
-          if (null != xAxis)
-          {
-            if (XAxisMinimum.Value > XAxisMaximum.Value)
-            {
-              XAxisMinimum.Value = XAxisMaximum.Value;
-            }
-
-            xAxis.AxisMinimum = XAxisMinimum.IsChecked ? XAxisMinimum.Value : new double?();
-
-            if (XAxisMaximum.Value < XAxisMinimum.Value)
-            {
-              XAxisMaximum.Value = XAxisMinimum.Value;
-            }
-
-            xAxis.AxisMaximum = XAxisMaximum.IsChecked ? XAxisMaximum.Value : new double?();
-            //if (XAxisInterval.IsChecked)
-            //{
-            //  xAxis.Interval = XAxisInterval.Value;
-            //}
-            //else
-            //{
-            //  xAxis.Interval = double.NaN;
-            //}
-          }
-        }
-
-        if (this.DataChart.AxesY.Count > 0)
-        {
-          Axis yAxis = this.DataChart.AxesY[0] as Axis;
-          yAxis.Title = YAxisTitle.IsChecked ? YAxisTitle.Text : null;
-          yAxis.Grids[0].Enabled = YAxisShowGridLines.IsChecked();
-
-          if (null != yAxis)
-          {
-            if (YAxisMinimum.Value > YAxisMaximum.Value)
-            {
-              YAxisMinimum.Value = YAxisMaximum.Value;
-            }
-
-            yAxis.AxisMinimum = YAxisMinimum.IsChecked ? YAxisMinimum.Value : new double?();
-
-            if (YAxisMaximum.Value < YAxisMinimum.Value)
-            {
-              YAxisMaximum.Value = YAxisMinimum.Value;
-            }
-
-            yAxis.AxisMaximum = YAxisMaximum.IsChecked ? YAxisMaximum.Value : new double?();
-            //if (YAxisInterval.IsChecked)
-            //{
-            //  yAxis.Interval = YAxisInterval.Value;
-            //}
-            //else
-            //{
-            //  yAxis.Interval = double.NaN;
-            //}
-          }
-        }
-      }
-    }
-
-    #endregion //PRIVATEMETHODS
-
-    private void RadioChartStyle_Checked(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void RadioChartStyleChecked(object sender, RoutedEventArgs e)
     {
       if (!this.isInitialized)
       {
@@ -562,34 +447,489 @@ namespace VianaNET
 
       if (e.Source is RadioButton)
       {
-        RadioButton checkedRadioButton = e.Source as RadioButton;
-        UpdateChartStyle(checkedRadioButton);
+        var checkedRadioButton = e.Source as RadioButton;
+        this.UpdateChartStyle(checkedRadioButton);
         this.RefreshSeries();
       }
     }
 
+    /// <summary>
+    /// The rechner button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void RechnerButtonClick(object sender, RoutedEventArgs e)
+    {
+      var calculator = new CalculatorAndFktEditor(TRechnerArt.rechner);
+      calculator.ShowDialog();
+    }
+
+    /// <summary>
+    ///   The refresh chart data points.
+    /// </summary>
+    private void RefreshChartDataPoints()
+    {
+      //if (FittedData.Instance.IsShowingRegressionSeries)
+      //{
+      //  this.NewCalculationForLineFitting();
+      //}
+
+      this.DefaultSeries.DataSource = null;
+      this.DefaultSeries.DataSource = VideoData.Instance.Samples;
+
+      //this.InterpolationSeries.DataSource = null;
+      //this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
+      //this.LineFitSeries.DataSource = null;
+      //this.TheorieSeries.DataSource = null;
+      //if ((FittedData.Instance.LineFitType != null) & FittedData.Instance.IsInterpolationAllowed)
+      //{
+      //  if ((FittedData.Instance.LineFitType.LineFitDisplaySample != null)
+      //      && (FittedData.Instance.LineFitType.LineFitDisplaySample.Count > 0))
+      //  {
+      //    this.LineFitSeries.DataSource = FittedData.Instance.LineFitType.LineFitDisplaySample;
+      //  }
+
+      //  if ((FittedData.Instance.LineFitType.TheorieDisplaySample != null)
+      //      && (FittedData.Instance.LineFitType.TheorieDisplaySample.Count > 0))
+      //  {
+      //    this.TheorieSeries.DataSource = FittedData.Instance.LineFitType.TheorieDisplaySample;
+      //  }
+      //}
+    }
+
+    /// <summary>
+    /// This method refreshes the whole series and chart layout
+    /// </summary>
+    private void RefreshSeries()
+    {
+      if (!this.UpdateMapping(true))
+      {
+        return;
+      }
+
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
+      this.UpdateChartProperties();
+    }
+
+    /// <summary>
+    ///   The set default diagramm.
+    /// </summary>
+    private void PopulateAxesFromChartSelection()
+    {
+      if (!this.IsInitialized)
+      {
+        return;
+      }
+
+      var chartType = ChartType.YoverX;
+
+      if (this.TabPositionSpace.IsSelected)
+      {
+        var chart = (DataCharts)this.AxesContentPositionSpace.SelectedItem;
+        chartType = chart.Chart;
+      }
+      else if (this.TabPhaseSpace.IsSelected)
+      {
+        var chart = (DataCharts)this.AxesContentPhaseSpace.SelectedItem;
+        chartType = chart.Chart;
+      }
+      else if (this.TabOther.IsSelected)
+      {
+        var axisX = (DataAxis)this.xAxisContent.SelectedItem;
+        var axisY = (DataAxis)this.yAxisContent.SelectedItem;
+        this.xAxisContent.SelectedValue = axisX.Axis;
+        this.yAxisContent.SelectedValue = axisY.Axis;
+
+        // axes content already set, so return
+        return;
+      }
+
+      switch (chartType)
+      {
+        case ChartType.YoverX:
+          this.xAxisContent.SelectedValue = AxisType.PX;
+          this.yAxisContent.SelectedValue = AxisType.PY;
+          break;
+        case ChartType.XoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.PX;
+          break;
+        case ChartType.YoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.PY;
+          break;
+        case ChartType.VoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case ChartType.VXoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case ChartType.VYoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case ChartType.AoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.A;
+          break;
+        case ChartType.AXoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.AX;
+          break;
+        case ChartType.AYoverT:
+          this.xAxisContent.SelectedValue = AxisType.T;
+          this.yAxisContent.SelectedValue = AxisType.AY;
+          break;
+        case ChartType.VoverD:
+          this.xAxisContent.SelectedValue = AxisType.D;
+          this.yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case ChartType.VXoverDX:
+          this.xAxisContent.SelectedValue = AxisType.DX;
+          this.yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case ChartType.VYoverDY:
+          this.xAxisContent.SelectedValue = AxisType.DY;
+          this.yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case ChartType.VoverS:
+          this.xAxisContent.SelectedValue = AxisType.S;
+          this.yAxisContent.SelectedValue = AxisType.V;
+          break;
+        case ChartType.VXoverSX:
+          this.xAxisContent.SelectedValue = AxisType.SX;
+          this.yAxisContent.SelectedValue = AxisType.VX;
+          break;
+        case ChartType.VYoverSY:
+          this.xAxisContent.SelectedValue = AxisType.SY;
+          this.yAxisContent.SelectedValue = AxisType.VY;
+          break;
+        case ChartType.AoverV:
+          this.xAxisContent.SelectedValue = AxisType.V;
+          this.yAxisContent.SelectedValue = AxisType.A;
+          break;
+        case ChartType.AXoverVX:
+          this.xAxisContent.SelectedValue = AxisType.VX;
+          this.yAxisContent.SelectedValue = AxisType.AX;
+          break;
+        case ChartType.AYoverVY:
+          this.xAxisContent.SelectedValue = AxisType.VY;
+          this.yAxisContent.SelectedValue = AxisType.AY;
+          break;
+      }
+
+      FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
+      FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
+    }
+
+    /// <summary>
+    /// The update axis mappings.
+    /// </summary>
+    /// <param name="axis">
+    /// The axis. 
+    /// </param>
+    /// <param name="mapPoints">
+    /// The map points. 
+    /// </param>
+    /// <param name="mapInterpolationFit">
+    /// The map interpolation fit. 
+    /// </param>
+    /// <param name="mapLineFit">
+    /// The map line fit. 
+    /// </param>
+    /// <param name="mapTheorieFit">
+    /// The map theorie fit. 
+    /// </param>
+    private void UpdateAxisMappings(
+      DataAxis axis,
+      DataMapping mapPoints,
+      DataMapping mapInterpolationFit,
+      DataMapping mapLineFit,
+      DataMapping mapTheorieFit)
+    {
+      string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture)
+                      + "].";
+      switch (axis.Axis)
+      {
+        case AxisType.I:
+          mapPoints.Path = "Framenumber";
+
+          // mapInterpolationFit.Path = "Framenumber";
+          // mapLineFit.Path = "Framenumber";
+          break;
+        case AxisType.T:
+          mapPoints.Path = "Timestamp";
+
+          // mapInterpolationFit.Path = "Timestamp";
+          // mapLineFit.Path = "Timestamp";
+          break;
+        case AxisType.PX:
+          mapPoints.Path = "PositionX";
+
+          // mapInterpolationFit.Path = "PositionX";
+          // mapLineFit.Path = "PositionX";
+          break;
+        case AxisType.PY:
+          mapPoints.Path = "PositionY";
+
+          // mapInterpolationFit.Path = "PositionY";
+          // mapLineFit.Path = "PositionY";
+          break;
+        case AxisType.D:
+          mapPoints.Path = "Distance";
+
+          // mapInterpolationFit.Path = "Distance";
+          // mapLineFit.Path = "Distance";
+          break;
+        case AxisType.DX:
+          mapPoints.Path = "DistanceX";
+
+          // mapInterpolationFit.Path = "DistanceX";
+          // mapLineFit.Path = "DistanceX";
+          break;
+        case AxisType.DY:
+          mapPoints.Path = "DistanceY";
+
+          // mapInterpolationFit.Path = "DistanceY";
+          // mapLineFit.Path = "DistanceY";
+          break;
+        case AxisType.S:
+          mapPoints.Path = "Length";
+
+          // mapInterpolationFit.Path = "Length";
+          // mapLineFit.Path = "Length";
+          break;
+        case AxisType.SX:
+          mapPoints.Path = "LengthX";
+
+          // mapInterpolationFit.Path = "LengthX";
+          // mapLineFit.Path = "LengthX";
+          break;
+        case AxisType.SY:
+          mapPoints.Path = "LengthY";
+
+          // mapInterpolationFit.Path = "LengthY";
+          // mapLineFit.Path = "LengthY";
+          break;
+        case AxisType.V:
+          mapPoints.Path = "Velocity";
+
+          // mapInterpolationFit.Path = "VelocityI";
+          // mapLineFit.Path = "VelocityI";
+          break;
+        case AxisType.VX:
+          mapPoints.Path = "VelocityX";
+
+          // mapInterpolationFit.Path = "VelocityXI";
+          // mapLineFit.Path = "VelocityXI";
+          break;
+        case AxisType.VY:
+          mapPoints.Path = "VelocityY";
+
+          // mapInterpolationFit.Path = "VelocityYI";
+          // mapLineFit.Path = "VelocityYI";
+          break;
+        case AxisType.VI:
+          mapPoints.Path = "VelocityI";
+
+          // mapInterpolationFit.Path = "VelocityI";
+          // mapLineFit.Path = "VelocityI";
+          break;
+        case AxisType.VXI:
+          mapPoints.Path = "VelocityXI";
+
+          // mapInterpolationFit.Path = "VelocityXI";
+          // mapLineFit.Path = "VelocityXI";
+          break;
+        case AxisType.VYI:
+          mapPoints.Path = "VelocityYI";
+
+          // mapInterpolationFit.Path = "VelocityYI";
+          // mapLineFit.Path = "VelocityYI";
+          break;
+        case AxisType.A:
+          mapPoints.Path = "Acceleration";
+
+          // mapInterpolationFit.Path = "AccelerationI";
+          // mapLineFit.Path = "AccelerationI";
+          break;
+        case AxisType.AX:
+          mapPoints.Path = "AccelerationX";
+
+          // mapInterpolationFit.Path = "AccelerationXI";
+          // mapLineFit.Path = "AccelerationXI";
+          break;
+        case AxisType.AY:
+          mapPoints.Path = "AccelerationY";
+
+          // mapInterpolationFit.Path = "AccelerationYI";
+          // mapLineFit.Path = "AccelerationYI";
+          break;
+        case AxisType.AI:
+          mapPoints.Path = "AccelerationI";
+
+          // mapInterpolationFit.Path = "AccelerationI";
+          // mapLineFit.Path = "AccelerationI";
+          break;
+        case AxisType.AXI:
+          mapPoints.Path = "AccelerationXI";
+
+          // mapInterpolationFit.Path = "AccelerationXI";
+          // mapLineFit.Path = "AccelerationXI";
+          break;
+        case AxisType.AYI:
+          mapPoints.Path = "AccelerationYI";
+
+          // mapInterpolationFit.Path = "AccelerationYI";
+          // mapLineFit.Path = "AccelerationYI";
+          break;
+      }
+
+      mapPoints.Path = prefix + mapPoints.Path;
+
+      // Don´t prefix the timestamp
+      if (axis.Axis == AxisType.T)
+      {
+        mapPoints.Path = "Timestamp";
+      }
+
+      // mapInterpolationFit.Path = prefix + mapInterpolationFit.Path;
+      // mapLineFit.Path = prefix + mapLineFit.Path;
+      //if (mapInterpolationFit != null)
+      //{
+      //  mapInterpolationFit.Path = mapPoints.Path;
+      //}
+
+      //if (mapLineFit != null)
+      //{
+      //  mapLineFit.Path = mapPoints.Path;
+      //}
+
+      //if (mapTheorieFit != null)
+      //{
+      //  mapTheorieFit.Path = mapPoints.Path;
+      //}
+    }
+
+    /// <summary>
+    ///   The update chart properties.
+    /// </summary>
+    private void UpdateChartProperties()
+    {
+      if (this.isInitialized)
+      {
+        this.DataChart.Titles[0].Text = this.ChartTitle.IsChecked ? this.ChartTitle.Text : null;
+        this.DataChart.Legends[0].Title = this.LegendTitle.IsChecked ? this.LegendTitle.Text : null;
+        this.DataChart.Legends[0].Enabled = this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked;
+        this.DefaultSeries.LegendText = this.SeriesTitle.IsChecked ? this.SeriesTitle.Text : null;
+
+        if (this.DataChart.AxesX.Count > 0)
+        {
+          var axisX = this.DataChart.AxesX[0];
+          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text : null;
+          axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
+
+          if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
+          {
+            this.XAxisMinimum.Value = this.XAxisMaximum.Value;
+          }
+
+          axisX.AxisMinimum = this.XAxisMinimum.IsChecked ? this.XAxisMinimum.Value : new double?();
+
+          if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
+          {
+            this.XAxisMaximum.Value = this.XAxisMinimum.Value;
+          }
+
+          axisX.AxisMaximum = this.XAxisMaximum.IsChecked ? this.XAxisMaximum.Value : new double?();
+
+          // if (XAxisInterval.IsChecked)
+          // {
+          // xAxis.Interval = XAxisInterval.Value;
+          // }
+          // else
+          // {
+          // xAxis.Interval = double.NaN;
+          // }
+        }
+
+        if (this.DataChart.AxesY.Count > 0)
+        {
+          var axisY = this.DataChart.AxesY[0];
+          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text : null;
+          axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
+
+          if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
+          {
+            this.YAxisMinimum.Value = this.YAxisMaximum.Value;
+          }
+
+          axisY.AxisMinimum = this.YAxisMinimum.IsChecked ? this.YAxisMinimum.Value : new double?();
+
+          if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
+          {
+            this.YAxisMaximum.Value = this.YAxisMinimum.Value;
+          }
+
+          axisY.AxisMaximum = this.YAxisMaximum.IsChecked ? this.YAxisMaximum.Value : new double?();
+
+          // if (YAxisInterval.IsChecked)
+          // {
+          // yAxis.Interval = YAxisInterval.Value;
+          // }
+          // else
+          // {
+          // yAxis.Interval = double.NaN;
+          // }
+        }
+      }
+    }
+
+    /// <summary>
+    /// The update chart style.
+    /// </summary>
+    /// <param name="checkedRadioButton">
+    /// The checked radio button. 
+    /// </param>
     private void UpdateChartStyle(RadioButton checkedRadioButton)
     {
       this.AxisControls.Visibility = Visibility.Visible;
       this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
-      //this.InterpolationLineCheckBox.Visibility = Visibility.Visible;
+
+      FittedData.Instance.IsInterpolationAllowed = false;
+      this.LineFitSeries.RenderAs = RenderAs.Line;
+      this.TheorieSeries.RenderAs = RenderAs.Line;
 
       if (checkedRadioButton.Name.Contains("Scatter"))
       {
         this.DefaultSeries.RenderAs = RenderAs.Point;
-        this.InterpolationSeries.RenderAs = RenderAs.Spline;
+        this.InterpolationSeries.RenderAs = RenderAs.Line;
+        FittedData.Instance.IsInterpolationAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Line"))
       {
         if (Interpolation.Instance.IsInterpolatingData)
         {
           this.DefaultSeries.RenderAs = RenderAs.Point;
-          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+          this.InterpolationSeries.RenderAs = RenderAs.Line;
         }
         else
         {
-          this.DefaultSeries.RenderAs = RenderAs.Spline;
+          this.DefaultSeries.RenderAs = RenderAs.Line;
         }
+
+        FittedData.Instance.IsInterpolationAllowed = true;
       }
       else if (checkedRadioButton.Name.Contains("Pie"))
       {
@@ -603,7 +943,7 @@ namespace VianaNET
         if (Interpolation.Instance.IsInterpolatingData)
         {
           this.DefaultSeries.RenderAs = RenderAs.Column;
-          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+          this.InterpolationSeries.RenderAs = RenderAs.Line;
         }
         else
         {
@@ -613,14 +953,14 @@ namespace VianaNET
       else if (checkedRadioButton.Name.Contains("Bubble"))
       {
         this.DefaultSeries.RenderAs = RenderAs.Bubble;
-        this.InterpolationSeries.RenderAs = RenderAs.Spline;
+        this.InterpolationSeries.RenderAs = RenderAs.Line;
       }
       else if (checkedRadioButton.Name.Contains("Area"))
       {
         if (Interpolation.Instance.IsInterpolatingData)
         {
           this.DefaultSeries.RenderAs = RenderAs.Area;
-          this.InterpolationSeries.RenderAs = RenderAs.Spline;
+          this.InterpolationSeries.RenderAs = RenderAs.Line;
         }
         else
         {
@@ -629,79 +969,270 @@ namespace VianaNET
       }
     }
 
-    private void RefreshSeries()
-    {
-      UpdateSeriesWithXAxis();
-      UpdateSeriesWithYAxis();
-      UpdateChartProperties();
-    }
-
-    private void InterpolationLineCheckBox_Checked(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// This method updates the series mappings for the given axis.
+    /// </summary>
+    /// <param name="axisX">True, if the x axis should be mapped, otherwise for y Axis false.</param>
+    /// <returns>A <see cref="bool"/> indicating success</returns>
+    private bool UpdateMapping(bool axisX)
     {
       if (!this.isInitialized)
+      {
+        return false;
+      }
+
+      if (this.DataChart.Series.Count == 0)
+      {
+        return false;
+      }
+
+      if (this.DataChart.AxesX.Count == 0)
+      {
+        return false;
+      }
+
+      var axis = axisX ? (DataAxis)this.xAxisContent.SelectedItem : (DataAxis)this.yAxisContent.SelectedItem;
+
+      if (axisX)
+      {
+        if (this.DataChart.AxesX.Count >= 1)
+        {
+          this.DataChart.AxesX[0].Title = this.XAxisTitle.IsChecked ? axis.Description : null;
+          this.XAxisTitle.Text = axis.Description;
+        }
+      }
+      else
+      {
+        if (this.DataChart.AxesY.Count >= 1)
+        {
+          this.DataChart.AxesY[0].Title = this.YAxisTitle.IsChecked ? axis.Description : null;
+          this.YAxisTitle.Text = axis.Description;
+        }
+      }
+
+      DataMapping map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
+      DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
+
+      this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
+      return true;
+    }
+
+    /// <summary>
+    /// The value changed update chart.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ValueChangedUpdateChart(object sender, EventArgs e)
+    {
+      this.UpdateChartProperties();
+    }
+
+    /// <summary>
+    /// The chart content selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The e.
+    /// </param>
+    private void ChartContentSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      // This populates the chart combo boxes with the selected x and y Axes
+      this.PopulateAxesFromChartSelection();
+
+      // This updates the xAxis mapping for the data series
+      if (!this.UpdateMapping(true))
       {
         return;
       }
 
-      this.InterpolationSeries.Enabled = Interpolation.Instance.IsInterpolatingData;
+      // This updates the yAxis mapping for the data series
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
 
-      // Update static property
-      //Interpolation.Instance.IsInterpolatingData = this.InterpolationLineCheckBox.IsChecked.Value;
-
-      if (this.RadioChartStyleScatter.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleScatter);
-      }
-      else if (this.RadioChartStyleLine.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleLine);
-      }
-      else if (this.RadioChartStyleArea.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleArea);
-      }
-      else if (this.RadioChartStyleColumn.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleColumn);
-      }
-      else if (this.RadioChartStyleBubble.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStyleBubble);
-      }
-      else if (this.RadioChartStylePie.IsChecked.Value)
-      {
-        this.UpdateChartStyle(this.RadioChartStylePie);
-      }
+      this.RefreshChartDataPoints();
     }
 
-    private void AxesExpander_Collapsed(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// The x axis content selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      SetDefaultDiagramm();
-    }
-
-    private void InterpolationOptionsButton_Click(object sender, RoutedEventArgs e)
-    {
-      Interpolation.ShowInterpolationOptionsDialog();
-    }
-
-    private void ChartContentTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      SetDefaultDiagramm();
-    }
-
-    private void ObjectSelectionCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      if (this.ObjectSelectionCombo.SelectedItem != null)
+      if (!this.UpdateMapping(true))
       {
-        string entry = (string)this.ObjectSelectionCombo.SelectedItem;
-        Video.Instance.ImageProcessing.IndexOfObject = Int32.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+        return;
+      }
+
+      this.RefreshChartDataPoints();
+    }
+
+    /// <summary>
+    /// The y axis content selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      if (!this.UpdateMapping(false))
+      {
+        return;
+      }
+
+      this.RefreshChartDataPoints();
+    }
+
+    /// <summary>
+    /// The check box show theorie_ checked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void CheckBoxShowTheorieChecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingTheorySeries = true;
+    }
+
+    private void CheckBoxShowTheorieUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingTheorySeries = false;
+    }
+
+    private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingRegressionSeries = true;
+    }
+
+    private void LineFitCheckBoxUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingRegressionSeries = false;
+    }
+
+    private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingInterpolationSeries = true;
+    }
+
+    private void InterpolationLineCheckBoxUnchecked(object sender, RoutedEventArgs e)
+    {
+      FittedData.Instance.IsShowingInterpolationSeries = false;
+    }
+
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void RegressionStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.RegressionLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.RegressionLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.RegressionLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.RegressionLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-    #endregion //HELPER
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void TheoryStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.TheoryLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.TheoryLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.TheoryLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.TheoryLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
+      }
+    }
+
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void DataStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.DataLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.DataLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.DataLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.DataLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
+      }
+    }
+
+    /// <summary>
+    /// The image button regress options_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void InterpolationStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.ThicknessSlider.Value = FittedData.Instance.InterpolationLineThickness;
+      lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor = FittedData.Instance.InterpolationLineColor.Color;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        FittedData.Instance.InterpolationLineThickness = lineOptionsDialog.LineStyleControl.ThicknessSlider.Value;
+        FittedData.Instance.InterpolationLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
+      }
+    }
+    #endregion
+
+
+
   }
 }

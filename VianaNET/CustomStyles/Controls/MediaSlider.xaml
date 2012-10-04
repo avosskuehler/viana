@@ -1,11 +1,11 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:Viana="clr-namespace:VianaNET"
-  xmlns:s="clr-namespace:System;assembly=mscorlib">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:s="clr-namespace:System;assembly=mscorlib"
+  xmlns:Viana="clr-namespace:VianaNET">
 
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/SliderStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
   <ControlTemplate x:Key="MediaSliderHorizontalSlider" TargetType="{x:Type Viana:MediaSlider}">
@@ -1013,7 +1013,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="{x:Type Viana:MediaSlider}" TargetType="{x:Type Viana:MediaSlider}">
+  <Style x:Key="MediaSliderStyle" TargetType="{x:Type Viana:MediaSlider}">
     <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">

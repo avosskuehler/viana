@@ -1,8 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Viana="clr-namespace:VianaNET"
-	>
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+  xmlns:Viana="clr-namespace:VianaNET">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="../Styles/SliderStyles.xaml"/>
@@ -289,18 +288,18 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="{x:Type Viana:SliderValue}" TargetType="{x:Type Viana:SliderValue}">
+  <Style TargetType="{x:Type Viana:SliderValue}">
     <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">
         <Setter Property="MinWidth" Value="50" />
         <Setter Property="MinHeight" Value="21" />
-        <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
+        <Setter Property="Template" Value="{StaticResource SliderValueHorizontalSlider}" />
       </Trigger>
       <Trigger Property="Slider.Orientation" Value="Vertical">
         <Setter Property="MinWidth" Value="21" />
         <Setter Property="MinHeight" Value="50" />
-        <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
+        <Setter Property="Template" Value="{StaticResource SliderValueVerticalSlider}" />
       </Trigger>
     </Style.Triggers>
   </Style>

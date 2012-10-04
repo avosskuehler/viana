@@ -30,6 +30,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -44,7 +45,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,7 +66,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Debug\</OutputPath>
+    <OutputPath>..\Debug\x86\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -75,13 +75,34 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\Release\</OutputPath>
+    <OutputPath>..\Release\x86\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Debug\x64\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\Release\x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -103,11 +124,13 @@
     <Compile Include="CustomStyles\Colors\Coloration.cs" />
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
     <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColor.cs" />
     <Compile Include="CustomStyles\Colors\HSXColor.cs" />
-    <Compile Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml.cs" />
-    <Compile Include="CustomStyles\Controls\RibbonNumericUpDown.xaml.cs">
-      <DependentUpon>RibbonNumericUpDown.xaml</DependentUpon>
+    <Compile Include="CustomStyles\Colors\OfficeColor.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
+    <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
+    <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
+      <DependentUpon>LineStyleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
@@ -115,18 +138,43 @@
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
-    <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
-    <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Page Include="CustomStyles\Styles\OfficeColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Controls\LineStyleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CustomStyles\Styles\DataGridStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\ChartType.cs" />
     <Compile Include="Data\Calibration.cs" />
+    <Compile Include="Data\DataCharts.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothControl.xaml.cs">
       <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linefit\CalculatorAndFktEditor.xaml.cs">
+      <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\CalculatorFunctionTerm.cs" />
+    <Compile Include="Data\Linefit\XYSample.cs" />
+    <Compile Include="Data\Linefit\NumericalPrecisionDialog.xaml.cs">
+      <DependentUpon>NumericalPrecisionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\LineOptionsDialog.xaml.cs">
+      <DependentUpon>LineOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\MatrixLibrary.cs" />
+    <Compile Include="Data\Linefit\LineFit.cs" />
+    <Compile Include="Data\Linefit\LinefittingDialog.xaml.cs">
+      <DependentUpon>LinefittingDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Linefit\Parser.cs" />
+    <Compile Include="Data\Linefit\Regression.cs" />
     <Compile Include="Data\TimeSample.cs" />
     <Compile Include="Data\Interpolation\ExponentialSmoothFilter.cs" />
     <Compile Include="Data\Interpolation\Interpolation.cs" />
@@ -139,6 +187,7 @@
     <Compile Include="Data\Interpolation\MovingAverageControl.xaml.cs">
       <DependentUpon>MovingAverageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Linefit\FittedData.cs" />
     <Compile Include="Modules\DataGrid\ExportData.cs" />
     <Compile Include="MainWindow\StatusBarContent.cs" />
     <Compile Include="CustomStyles\Types\MeasurementType.cs" />
@@ -243,11 +292,7 @@
     <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
       <DependentUpon>MediaSliderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Controls\RibbonSliderValue.xaml.cs">
-      <DependentUpon>RibbonSliderValue.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
-    <Compile Include="CustomStyles\Controls\ComboBoxPallet.cs" />
     <Compile Include="CustomStyles\Controls\DualTextBox.xaml.cs">
       <DependentUpon>DualTextBox.xaml</DependentUpon>
     </Compile>
@@ -287,16 +332,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyles\Controls\RibbonComboBoxSimple.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\RibbonNumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="CustomStyles\Styles\GeometryItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -316,6 +351,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Data\Interpolation\MovingAverageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Data\Linefit\CalculatorAndFktEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Data\Linefit\NumericalPrecisionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Data\Linefit\LinefittingDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Data\Linefit\LineOptionsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -340,12 +391,6 @@
     <Page Include="CustomStyles\Controls\MediaSliderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\RibbonSliderValue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -493,14 +538,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AvalonDock, Version=1.2.2691.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\AvalonDock.dll</HintPath>
-    </Reference>
     <Reference Include="DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -509,21 +551,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Vbe.Interop, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Microsoft.Vbe.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Office.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\RibbonControlsLibrary.dll</HintPath>
-    </Reference>
+    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -542,6 +573,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>DLL\WPFToolkit.Extended.dll</HintPath>
     </Reference>
     <Reference Include="WPFVisifire.Charts, Version=3.1.5.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -636,9 +670,6 @@
     <Resource Include="Images\Datagrid16.png" />
     <Resource Include="Images\Datagrid32.png" />
     <Resource Include="Images\VianaLogo64.png" />
-    <Content Include="EVRPresenter32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\Options16.png" />
     <Resource Include="Images\Options32.png" />
     <Resource Include="Images\ExportToCsv16.png" />
@@ -703,9 +734,29 @@
     <Resource Include="Images\InterpolateData32.png" />
     <Resource Include="Images\SelectObject16.png" />
     <Resource Include="Images\SelectObject32.png" />
-    <Content Include="MediaInfo.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Images\LineFit_Exponential1_32.png" />
+    <Resource Include="Images\LineFit_Exponential2_32.png" />
+    <Resource Include="Images\LineFit_Linear_16.png" />
+    <Resource Include="Images\LineFit_Linear_32.png" />
+    <Resource Include="Images\LineFit_Logarithmus_32.png" />
+    <Resource Include="Images\LineFit_Potentiell_32.png" />
+    <Resource Include="Images\LineFit_Quadratisch_32.png" />
+    <Resource Include="Images\LineFit_Resonanz_32.png" />
+    <Resource Include="Images\LineFit_SinusExponential_32.png" />
+    <Resource Include="Images\LineFit_Sinus_32.png" />
+    <Resource Include="Images\LineFit_Logarithmus_16.png" />
+    <Resource Include="Images\LineFit_Exponential1_16.png" />
+    <Resource Include="Images\LineFit_Exponential2_16.png" />
+    <Resource Include="Images\LineFit_Potentiell_16.png" />
+    <Resource Include="Images\LineFit_Quadratisch_16.png" />
+    <Resource Include="Images\LineFit_Resonanz_16.png" />
+    <Resource Include="Images\LineFit_SinusExponential_16.png" />
+    <Resource Include="Images\LineFit_Sinus_16.png" />
+    <Resource Include="Images\RecordVideo16.png" />
+    <Resource Include="Images\ExportChart32.png" />
+    <Resource Include="Images\ExportData32.png" />
+    <Resource Include="Images\LineColor16.png" />
+    <Resource Include="Images\LineColor32.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VianaNETShaderEffectLibrary\VianaNETShaderEffectLibrary.csproj">
@@ -734,4 +785,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <PostBuildEvent>if $(PlatformName) == x64 (
+  xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
+) ELSE (
+  xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

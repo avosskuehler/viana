@@ -1260,4 +1260,190 @@
   <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
     <value>@ButtonSelectObjectToolTipTitle</value>
   </data>
+  <data name="LineFitDialogTitle" xml:space="preserve">
+    <value>@LineFitDialogTitle</value>
+  </data>
+  <data name="LineFitDialogTopTitle" xml:space="preserve">
+    <value>@LineFitDialogTopTitle</value>
+  </data>
+  <data name="LineFitExp" xml:space="preserve">
+    <value>@LineFitExp</value>
+  </data>
+  <data name="LineFitExpo" xml:space="preserve">
+    <value>@LineFitExpo</value>
+  </data>
+  <data name="LineFitFunctionLabel" xml:space="preserve">
+    <value>@LineFitFunctionLabel</value>
+  </data>
+  <data name="LineFitLinear" xml:space="preserve">
+    <value>@LineFitLinear</value>
+  </data>
+  <data name="LineFitLineLabel" xml:space="preserve">
+    <value>@LineFitLineLabel</value>
+  </data>
+  <data name="LineFitLog" xml:space="preserve">
+    <value>@LineFitLog</value>
+  </data>
+  <data name="LineFitPot" xml:space="preserve">
+    <value>@LineFitPot</value>
+  </data>
+  <data name="LineFitQuad" xml:space="preserve">
+    <value>@LineFitQuad</value>
+  </data>
+  <data name="LineFitResonanz" xml:space="preserve">
+    <value>@LineFitResonanz</value>
+  </data>
+  <data name="LineFitSin" xml:space="preserve">
+    <value>@LineFitSin</value>
+  </data>
+  <data name="LineFitSinExp" xml:space="preserve">
+    <value>@LineFitSinExp</value>
+  </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTitle</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTopTitle</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>@LineFitCalculatorDialogTitle</value>
+  </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>@LineFitColorRegress</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>@LineFitColorTheorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>@LineFitCurve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>@LineFitLineThickness</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>@LineFitNumberDigits</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>@LineFitTheorie</value>
+  </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>@CalculatorDialogInsert</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>@CalculatorDialogPhysicalKonst</value>
+  </data>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>@ChartWindowCalculatorHeader</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>@CalculatorDialogButtonDoneCalc</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>@CalculatorDialogButtonDoneFktEdit</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>@CalculatorDialogTitleFunctionEditor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>@PhysikKonstant_c</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>@PhysikKonstant_e</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>@PhysikKonstant_epsilon</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>@PhysikKonstant_f</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>@PhysikKonstant_g</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>@PhysikKonstant_h</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>@PhysikKonstant_Lambda0</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>@PhysikKonstant_me</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>@PhysikKonstant_mu</value>
+  </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridInterpolationTitle</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToolTipTitle</value>
+  </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>@ChartWindowChartFitAndSmooth</value>
+  </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>@ChartWindowDisplayCurveLabel</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>@ChartWindowLineColorLabel</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowLineFitChooseTypeLabel</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>@ChartWindowLinefitHeader</value>
+  </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowTheoreticalFunctionChooseTypeLabel</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>@ChartWindowTheorieLabel</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>@LineFitDialogHeader</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>@CalculatorDialogTitleCalc</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowDataSeriesLabel</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowInterpolationSeriesLabel</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowRegressionSeriesLabel</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>@ChartWindowSeriesStyleHeader</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>@ChartWindowTheorySeriesLabel</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>@ChartWindowPrecisionLabel</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>@ChartWindowRegressionLineLegend</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>@ChartWindowTheoryLineLegend</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>@LineStyleOptionsDialogTitle</value>
+  </data>
 </root>

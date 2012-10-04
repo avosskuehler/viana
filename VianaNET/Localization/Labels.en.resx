@@ -1109,28 +1109,28 @@ Click OK or press Enter, when ready.</value>
     <value>Velocity (Y) (interpolated)</value>
   </data>
   <data name="AxisAoverT" xml:space="preserve">
-    <value>a-t</value>
+    <value>t-a</value>
   </data>
   <data name="AxisAXoverT" xml:space="preserve">
-    <value>ax-t</value>
+    <value>t-ax</value>
   </data>
   <data name="AxisAYoverT" xml:space="preserve">
-    <value>ay-t</value>
+    <value>t-ay</value>
   </data>
   <data name="AxisVoverT" xml:space="preserve">
-    <value>v-t</value>
+    <value>t-v</value>
   </data>
   <data name="AxisVXoverT" xml:space="preserve">
-    <value>vx-t</value>
+    <value>t-vx</value>
   </data>
   <data name="AxisVYoverT" xml:space="preserve">
-    <value>vy-t</value>
+    <value>t-vy</value>
   </data>
   <data name="AxisXoverT" xml:space="preserve">
-    <value>x-t</value>
+    <value>t-x</value>
   </data>
   <data name="AxisYoverT" xml:space="preserve">
-    <value>y-t</value>
+    <value>t-y</value>
   </data>
   <data name="AxisYoverX" xml:space="preserve">
     <value>x-y</value>
@@ -1151,13 +1151,13 @@ Click OK or press Enter, when ready.</value>
     <value>Single colored</value>
   </data>
   <data name="AxisDoverV" xml:space="preserve">
-    <value>d-v</value>
+    <value>v-d</value>
   </data>
   <data name="AxisDXoverVX" xml:space="preserve">
-    <value>dx-vx</value>
+    <value>vx-dx</value>
   </data>
   <data name="AxisDYoverVY" xml:space="preserve">
-    <value>dy-vy</value>
+    <value>vy-dy</value>
   </data>
   <data name="AxisLength" xml:space="preserve">
     <value>Length</value>
@@ -1169,25 +1169,25 @@ Click OK or press Enter, when ready.</value>
     <value>Length in y-Direction</value>
   </data>
   <data name="AxisSoverT" xml:space="preserve">
-    <value>s-t</value>
+    <value>t-s</value>
   </data>
   <data name="AxisSoverV" xml:space="preserve">
-    <value>s-v</value>
+    <value>v-s</value>
   </data>
   <data name="AxisSXoverVX" xml:space="preserve">
-    <value>sx-vx</value>
+    <value>vx-sx</value>
   </data>
   <data name="AxisSYoverVY" xml:space="preserve">
-    <value>sy-vy</value>
+    <value>vy-sy</value>
   </data>
   <data name="AxisVoverA" xml:space="preserve">
-    <value>v-a</value>
+    <value>a-v</value>
   </data>
   <data name="AxisVXoverAX" xml:space="preserve">
-    <value>vx-ax</value>
+    <value>ax-vx</value>
   </data>
   <data name="AxisVYoverAY" xml:space="preserve">
-    <value>vy-ay</value>
+    <value>ay-vy</value>
   </data>
   <data name="ChartWindowChartProperties" xml:space="preserve">
     <value>Properties</value>
@@ -1272,5 +1272,191 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="SelectColorWindowObjectIndexHeader" xml:space="preserve">
     <value>Color for object</value>
+  </data>
+  <data name="LineFitDialogTitle" xml:space="preserve">
+    <value>Here you can choose the type of the linefitting function</value>
+  </data>
+  <data name="LineFitDialogTopTitle" xml:space="preserve">
+    <value>choose LineFitting function</value>
+  </data>
+  <data name="LineFitExp" xml:space="preserve">
+    <value>Expontentialfunction ( a*exp(b*x) )</value>
+  </data>
+  <data name="LineFitExpo" xml:space="preserve">
+    <value>Expontentialfunction ( a*exp(b*x) + c )</value>
+  </data>
+  <data name="LineFitLinear" xml:space="preserve">
+    <value>lineare Function (m*x+n)</value>
+  </data>
+  <data name="LineFitLog" xml:space="preserve">
+    <value>logarithmische Function ( a*ln(b*x) )</value>
+  </data>
+  <data name="LineFitPot" xml:space="preserve">
+    <value>Potenzfunction ( a*x^b)</value>
+  </data>
+  <data name="LineFitQuad" xml:space="preserve">
+    <value>quadratic Function (a*x²+b*x+c)</value>
+  </data>
+  <data name="LineFitResonanz" xml:space="preserve">
+    <value>Resonanzfunction ( a/sqrt(1+b*(x-c/x) )</value>
+  </data>
+  <data name="LineFitSin" xml:space="preserve">
+    <value>Sinus-Function ( a*sin(bx+c)+d )</value>
+  </data>
+  <data name="LineFitSinExp" xml:space="preserve">
+    <value>gedämpfte Sinusfkt ( a*sin(b*x)*exp(c*x)  )</value>
+  </data>
+  <data name="LineFitFunctionLabel" xml:space="preserve">
+    <value>linefit Function</value>
+  </data>
+  <data name="LineFitLineLabel" xml:space="preserve">
+    <value>linefitting curve</value>
+  </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>Specify the number of digits when showing decimals.</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>some options for display</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>Calculator or input for functionterms (theoretical Funktion)</value>
+  </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>Color linefit</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>Color theorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>linefitting curve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>Linethickness</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>number of digits</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>theoretical curve</value>
+  </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>insert</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>physical constants</value>
+  </data>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>Function editor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>speed of light in vacuum</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>elementary charge</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>electric constant</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>Newtonian constant of gravitation</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>standard acceleration of gravity</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>Planck constant</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>Compton wavelength</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>electron mass</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>magnetic constant</value>
+  </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>Export chart</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>Exports the displayed diagram into clipboard or different file formats.</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>Exports the current diagram</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>Enables data export to different file formats like txt, csv, xml and xls</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>Export the recorded data</value>
+  </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>Smooth &amp; Fit</value>
+  </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>color</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>choose type</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>fit</value>
+  </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>function</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>Choose regression function</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>Line series style</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>Precision</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>regression</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>theoretical function</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>Please specify color and thickness of data curve</value>
   </data>
 </root>

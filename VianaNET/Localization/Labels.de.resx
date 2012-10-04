@@ -1094,28 +1094,28 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Geschwindigkeit (Y) (geglättet)</value>
   </data>
   <data name="AxisAoverT" xml:space="preserve">
-    <value>a-t</value>
+    <value>t-a</value>
   </data>
   <data name="AxisAXoverT" xml:space="preserve">
-    <value>ax-t</value>
+    <value>t-ax</value>
   </data>
   <data name="AxisAYoverT" xml:space="preserve">
-    <value>ay-t</value>
+    <value>t-ay</value>
   </data>
   <data name="AxisVoverT" xml:space="preserve">
-    <value>v-t</value>
+    <value>t-v</value>
   </data>
   <data name="AxisVXoverT" xml:space="preserve">
-    <value>vx-t</value>
+    <value>t-vx</value>
   </data>
   <data name="AxisVYoverT" xml:space="preserve">
-    <value>vy-t</value>
+    <value>t-vy</value>
   </data>
   <data name="AxisXoverT" xml:space="preserve">
-    <value>x-t</value>
+    <value>t-x</value>
   </data>
   <data name="AxisYoverT" xml:space="preserve">
-    <value>y-t</value>
+    <value>t-y</value>
   </data>
   <data name="AxisYoverX" xml:space="preserve">
     <value>x-y</value>
@@ -1136,13 +1136,13 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Einfarbig</value>
   </data>
   <data name="AxisDoverV" xml:space="preserve">
-    <value>d-v</value>
+    <value>v-d</value>
   </data>
   <data name="AxisDXoverVX" xml:space="preserve">
-    <value>dx-vx</value>
+    <value>vx-dx</value>
   </data>
   <data name="AxisDYoverVY" xml:space="preserve">
-    <value>dy-vy</value>
+    <value>vy-dy</value>
   </data>
   <data name="AxisLength" xml:space="preserve">
     <value>Strecke</value>
@@ -1154,25 +1154,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Strecke in y-Richtung</value>
   </data>
   <data name="AxisSoverT" xml:space="preserve">
-    <value>s-t</value>
+    <value>t-s</value>
   </data>
   <data name="AxisSoverV" xml:space="preserve">
-    <value>s-v</value>
+    <value>v-s</value>
   </data>
   <data name="AxisSXoverVX" xml:space="preserve">
-    <value>sx-vx</value>
+    <value>vx-sx</value>
   </data>
   <data name="AxisSYoverVY" xml:space="preserve">
-    <value>sy-vy</value>
+    <value>vy-sy</value>
   </data>
   <data name="AxisVoverA" xml:space="preserve">
-    <value>v-a</value>
+    <value>a-v</value>
   </data>
   <data name="AxisVXoverAX" xml:space="preserve">
-    <value>vx-ax</value>
+    <value>ax-vx</value>
   </data>
   <data name="AxisVYoverAY" xml:space="preserve">
-    <value>vy-ay</value>
+    <value>ay-vy</value>
   </data>
   <data name="ChartWindowChartProperties" xml:space="preserve">
     <value>Eigenschaften</value>
@@ -1257,5 +1257,192 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
     <value>Select object</value>
+  </data>
+  <data name="LineFitExpo" xml:space="preserve">
+    <value>Expontentialfunktion ( a*exp(b*x) + c )</value>
+  </data>
+  <data name="LineFitDialogTitle" xml:space="preserve">
+    <value>Hier können Sie den Typ der Ausgleichskurve auswählen</value>
+  </data>
+  <data name="LineFitDialogTopTitle" xml:space="preserve">
+    <value>Ausgleichsfunktion auswählen</value>
+  </data>
+  <data name="LineFitExp" xml:space="preserve">
+    <value>Expontentialfunktion ( a*exp(b*x) )</value>
+  </data>
+  <data name="LineFitLinear" xml:space="preserve">
+    <value>lineare Funktion (m*x+n)</value>
+  </data>
+  <data name="LineFitLog" xml:space="preserve">
+    <value>logarithmische Funktion ( a*ln(b*x) )</value>
+  </data>
+  <data name="LineFitPot" xml:space="preserve">
+    <value>Potenzfunktion ( a*x^b)</value>
+  </data>
+  <data name="LineFitQuad" xml:space="preserve">
+    <value>quadratische Funktion (a*x²+b*x+c)</value>
+  </data>
+  <data name="LineFitResonanz" xml:space="preserve">
+    <value>Resonanzfunktion ( a/sqrt(1+b*(x-c/x) )</value>
+  </data>
+  <data name="LineFitSin" xml:space="preserve">
+    <value>Sinus-Funktion ( a*sin(bx+c)+d )</value>
+  </data>
+  <data name="LineFitSinExp" xml:space="preserve">
+    <value>gedämpfte Sinusfkt ( a*sin(b*x)*exp(c*x)  )</value>
+  </data>
+  <data name="LineFitFunctionLabel" xml:space="preserve">
+    <value>AusgleichsFkt</value>
+  </data>
+  <data name="LineFitLineLabel" xml:space="preserve">
+    <value>Ausgleichskurve</value>
+  </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>Geben Sie hier an mit welcher Genauigkeit die Ausgabe von Dezimalwerten erfolgen soll.</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>Anpassen der Darstellungen</value>
+  </data>
+  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+    <value>Taschenrechner oder Eingabe von Funktionstermen (theoretische Funktion)</value>
+  </data>
+  <data name="LineFitColorRegress" xml:space="preserve">
+    <value>Farbe Regress</value>
+  </data>
+  <data name="LineFitColorTheorie" xml:space="preserve">
+    <value>Farbe Theorie</value>
+  </data>
+  <data name="LineFitCurve" xml:space="preserve">
+    <value>Ausgleichskurve</value>
+  </data>
+  <data name="LineFitLineThickness" xml:space="preserve">
+    <value>Liniendicke</value>
+  </data>
+  <data name="LineFitNumberDigits" xml:space="preserve">
+    <value>gültige Stellen</value>
+  </data>
+  <data name="LineFitTheorie" xml:space="preserve">
+    <value>theoret. Kurve</value>
+  </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>einfügen</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>physikalische Konstanten</value>
+  </data>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>Rechner</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>
+Übernehmen</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>Funktionseditor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>Lichtgeschwindigkeit</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>Elementarladung</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>elektr. Feldkonstante</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>Gravitationskonstante</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>Erdbeschleunigung</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>Planck'sches Wirkungsquantum</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>Comptonwellenlänge</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>Ruhemasse Elektron</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>magn. Feldkonstante</value>
+  </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>Diagramm exportieren</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>Exportiert das momentane Diagramm in die Zwischenablage oder verschiedene Dateiformate.</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>Das angezeigte Diagramm exportieren</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>Daten exportieren</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>Ermöglicht den Export der aufgezeichneten Daten in verschiedene Formate wie txt, csv, xml und xls</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>Die aufgezeichneten Daten exportieren</value>
+  </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>Glätten &amp; Fitten</value>
+  </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+    <value>Funktionstyp</value>
+  </data>
+  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+    <value>Fitten</value>
+  </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>Funktion</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>Theorie</value>
+  </data>
+  <data name="LineFitDialogHeader" xml:space="preserve">
+    <value>Ausgleichsfunktion auswählen</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Taschenrechner</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>Glättung</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>Kurvenfarbe und -dicke</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>Theorie</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>Genauigkeit</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>Theoretische Kurve</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>Bitte geben Sie Farbe und Dicke für die Kurve an.</value>
   </data>
 </root>

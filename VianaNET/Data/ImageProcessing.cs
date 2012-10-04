@@ -1,91 +1,197 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Data;
-using System.ComponentModel;
-using System.Windows;
-using WPFLocalizeExtension.Extensions;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Diagnostics;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ImageProcessing.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The image processing.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Data
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Collections.ObjectModel;
+  using System.Collections.Specialized;
+  using System.ComponentModel;
+  using System.Diagnostics;
+  using System.Windows;
+  using System.Windows.Media;
+
+  using VianaNET.Localization;
+  using VianaNET.MainWindow;
+  using VianaNET.Modules.Video.Control;
+  using VianaNET.Modules.Video.Filter;
+
+  /// <summary>
+  ///   The image processing.
+  /// </summary>
   public class ImageProcessing : DependencyObject, INotifyPropertyChanged
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
+    #region Static Fields
 
-    private ColorAndCropFilterRGB colorAndCropFilter;
-    private ColorAndCropFilterYCbCr colorRangeFilter;
-    private Histogram histogrammFilter;
-    private HistogramMinMaxSegmentator segmentator;
-    private bool isReady;
-    private Stopwatch watch = new Stopwatch();
+    /// <summary>
+    ///   The blob max diameter property.
+    /// </summary>
+    public static readonly DependencyProperty BlobMaxDiameterProperty = DependencyProperty.Register(
+      "BlobMaxDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(new ObservableCollection<double>()));
+
+    /// <summary>
+    ///   The blob min diameter property.
+    /// </summary>
+    public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
+      "BlobMinDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(new ObservableCollection<double>()));
+
+    /// <summary>
+    ///   The color threshold property.
+    /// </summary>
+    public static readonly DependencyProperty ColorThresholdProperty = DependencyProperty.Register(
+      "ColorThreshold",
+      typeof(ObservableCollection<int>),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(new ObservableCollection<int>()));
+
+    /// <summary>
+    ///   The current blob center property.
+    /// </summary>
+    public static readonly DependencyProperty CurrentBlobCenterProperty =
+      DependencyProperty.Register(
+        "CurrentBlobCenter",
+        typeof(ObservableCollection<Point?>),
+        typeof(ImageProcessing),
+        new FrameworkPropertyMetadata(new ObservableCollection<Point?>()));
+
+    /// <summary>
+    ///   The detected blobs property.
+    /// </summary>
+    public static readonly DependencyProperty DetectedBlobsProperty = DependencyProperty.Register(
+      "DetectedBlob",
+      typeof(ObservableCollection<Segment>),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(new ObservableCollection<Segment>()));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfObject" />.
+    /// </summary>
+    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
+      "IndexOfObject", typeof(int), typeof(ImageProcessing), new FrameworkPropertyMetadata(0, OnPropertyChanged));
+
+    /// <summary>
+    ///   The is target color set property.
+    /// </summary>
+    public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
+      "IsTargetColorSet",
+      typeof(Boolean),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(false, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="NumberOfTrackedObjects" />.
+    /// </summary>
+    public static readonly DependencyProperty NumberOfTrackedObjectsProperty =
+      DependencyProperty.Register(
+        "NumberOfTrackedObjects",
+        typeof(int),
+        typeof(Calibration),
+        new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The target color property.
+    /// </summary>
+    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
+      "TargetColor",
+      typeof(ObservableCollection<Color>),
+      typeof(ImageProcessing),
+      new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
+
+    #endregion
+
+    #region Fields
+
+    /// <summary>
+    ///   The color and crop filter.
+    /// </summary>
+    private readonly ColorAndCropFilterRGB colorAndCropFilter;
+
+    /// <summary>
+    ///   The color range filter.
+    /// </summary>
+    private readonly ColorAndCropFilterYCbCr colorRangeFilter;
+
+    /// <summary>
+    ///   The histogramm filter.
+    /// </summary>
+    private readonly Histogram histogrammFilter;
+
+    /// <summary>
+    ///   The segmentator.
+    /// </summary>
+    private readonly HistogramMinMaxSegmentator segmentator;
+
+    /// <summary>
+    ///   The watch.
+    /// </summary>
+    private readonly Stopwatch watch = new Stopwatch();
+
+    /// <summary>
+    ///   The counter.
+    /// </summary>
     private int counter;
+
+    /// <summary>
+    ///   The do not throw property changed.
+    /// </summary>
+    private bool doNotThrowPropertyChanged;
+
+    /// <summary>
+    ///   The is ready.
+    /// </summary>
+    private bool isReady;
+
+    /// <summary>
+    ///   The total processing time.
+    /// </summary>
     private long totalProcessingTime;
 
-    #endregion //FIELDS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
-    public ImageProcessing()
-    {
-      ResetProcessing(1);
-      this.colorAndCropFilter = new ColorAndCropFilterRGB();
-      this.colorRangeFilter = new ColorAndCropFilterYCbCr();
-      this.histogrammFilter = new Histogram();
-      this.segmentator = new HistogramMinMaxSegmentator();
-
-      this.TargetColor.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(TargetColor_CollectionChanged);
-      this.CurrentBlobCenter.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Blob_CollectionChanged);
-      this.DetectedBlob.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Blob_CollectionChanged);
-      this.ColorThreshold.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(HLSLParams_CollectionChanged);
-      this.BlobMinDiameter.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(HLSLParams_CollectionChanged);
-      this.BlobMaxDiameter.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(HLSLParams_CollectionChanged);
-
-      this.PropertyChanged += new PropertyChangedEventHandler(ImageProcessing_PropertyChanged);
-      Calibration.Instance.PropertyChanged += new PropertyChangedEventHandler(Calibration_PropertyChanged);
-    }
-
-    void Blob_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      if (!this.doNotThrowPropertyChanged)
-      {
-        this.OnPropertyChanged("Blob");
-      }
-    }
-
-    void HLSLParams_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      if (!this.doNotThrowPropertyChanged)
-      {
-        this.ProcessImage();
-        this.OnPropertyChanged("HLSLParams");
-      }
-    }
-
-    void TargetColor_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      if (!this.doNotThrowPropertyChanged)
-      {
-        this.ProcessImage();
-        this.OnPropertyChanged("TargetColor");
-      }
-    }
-
+    /// <summary>
+    ///   Initializes static members of the <see cref="ImageProcessing" /> class.
+    /// </summary>
     static ImageProcessing()
     {
       TrackObjectColors = new List<SolidColorBrush>();
@@ -96,199 +202,215 @@ namespace VianaNET
       TrackObjectColors.Add(Brushes.Magenta);
     }
 
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="ImageProcessing" /> class.
+    /// </summary>
+    public ImageProcessing()
+    {
+      this.ColorThreshold = new ObservableCollection<int>();
+      this.BlobMinDiameter = new ObservableCollection<double>();
+      this.BlobMaxDiameter = new ObservableCollection<double>();
+      this.ResetProcessing(1);
+      this.colorAndCropFilter = new ColorAndCropFilterRGB();
+      this.colorRangeFilter = new ColorAndCropFilterYCbCr();
+      this.histogrammFilter = new Histogram();
+      this.segmentator = new HistogramMinMaxSegmentator();
 
-    #endregion //CONSTRUCTION
+      this.TargetColor.CollectionChanged += this.TargetColor_CollectionChanged;
+      this.CurrentBlobCenter.CollectionChanged += this.Blob_CollectionChanged;
+      this.DetectedBlob.CollectionChanged += this.Blob_CollectionChanged;
+      this.ColorThreshold.CollectionChanged += this.HLSLParams_CollectionChanged;
+      this.BlobMinDiameter.CollectionChanged += this.HLSLParams_CollectionChanged;
+      this.BlobMaxDiameter.CollectionChanged += this.HLSLParams_CollectionChanged;
+
+      this.PropertyChanged += this.ImageProcessing_PropertyChanged;
+      Calibration.Instance.PropertyChanged += this.Calibration_PropertyChanged;
+    }
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
+    #region Public Events
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    /// <summary>
+    ///   The frame processed.
+    /// </summary>
     public event EventHandler FrameProcessed;
 
-    #endregion EVENTS
+    /// <summary>
+    ///   The property changed.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
+    #region Public Properties
 
     /// <summary>
-    /// Gets or sets  a list of brushes for the different tracked objects
+    ///   Gets or sets  a list of brushes for the different tracked objects
     /// </summary>
     public static List<SolidColorBrush> TrackObjectColors { get; set; }
 
     /// <summary>
-    /// Gets or sets the number of tracked objects
+    ///   Gets or sets the blob max diameter.
     /// </summary>
-    public int NumberOfTrackedObjects
+    public ObservableCollection<double> BlobMaxDiameter
     {
-      get { return (int)this.GetValue(NumberOfTrackedObjectsProperty); }
-      set { this.SetValue(NumberOfTrackedObjectsProperty, value); }
+      get
+      {
+        return (ObservableCollection<double>)this.GetValue(BlobMaxDiameterProperty);
+      }
+
+      set
+      {
+        this.SetValue(BlobMaxDiameterProperty, value);
+      }
     }
 
     /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="NumberOfTrackedObjects"/>.
+    ///   Gets or sets the blob min diameter.
     /// </summary>
-    public static readonly DependencyProperty NumberOfTrackedObjectsProperty = DependencyProperty.Register(
-      "NumberOfTrackedObjects",
-      typeof(int),
-      typeof(Calibration),
-      new FrameworkPropertyMetadata(
-        1,
-        FrameworkPropertyMetadataOptions.AffectsRender,
-        new PropertyChangedCallback(OnPropertyChanged)));
+    public ObservableCollection<double> BlobMinDiameter
+    {
+      get
+      {
+        return (ObservableCollection<double>)this.GetValue(BlobMinDiameterProperty);
+      }
+
+      set
+      {
+        this.SetValue(BlobMinDiameterProperty, value);
+      }
+    }
 
     /// <summary>
-    /// Gets or sets the index of the currently tracked object
+    ///   Gets or sets the color threshold.
+    /// </summary>
+    public ObservableCollection<int> ColorThreshold
+    {
+      get
+      {
+        return (ObservableCollection<int>)this.GetValue(ColorThresholdProperty);
+      }
+
+      set
+      {
+        this.SetValue(ColorThresholdProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the current blob center.
+    /// </summary>
+    public ObservableCollection<Point?> CurrentBlobCenter
+    {
+      get
+      {
+        return (ObservableCollection<Point?>)this.GetValue(CurrentBlobCenterProperty);
+      }
+
+      set
+      {
+        this.SetValue(CurrentBlobCenterProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the detected blob.
+    /// </summary>
+    public ObservableCollection<Segment> DetectedBlob
+    {
+      get
+      {
+        return (ObservableCollection<Segment>)this.GetValue(DetectedBlobsProperty);
+      }
+
+      set
+      {
+        this.SetValue(DetectedBlobsProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the index of the currently tracked object
     /// </summary>
     public int IndexOfObject
     {
-      get { return (int)this.GetValue(IndexOfObjectProperty); }
-      set { this.SetValue(IndexOfObjectProperty, value); }
+      get
+      {
+        return (int)this.GetValue(IndexOfObjectProperty);
+      }
+
+      set
+      {
+        this.SetValue(IndexOfObjectProperty, value);
+      }
     }
 
     /// <summary>
-    /// The <see cref="DependencyProperty"/> for the property <see cref="IndexOfObject"/>.
+    ///   Gets or sets a value indicating whether is target color set.
     /// </summary>
-    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
-      "IndexOfObject",
-      typeof(int),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(0, new PropertyChangedCallback(OnPropertyChanged)));
-
-    public ObservableCollection<int> ColorThreshold
+    public bool IsTargetColorSet
     {
-      get { return (ObservableCollection<int>)this.GetValue(ColorThresholdProperty); }
-      set { this.SetValue(ColorThresholdProperty, value); }
-    }
-
-    public static readonly DependencyProperty ColorThresholdProperty = DependencyProperty.Register(
-      "ColorThreshold",
-      typeof(ObservableCollection<int>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(
-        new ObservableCollection<int>()));
-
-    public ObservableCollection<double> BlobMinDiameter
-    {
-      get { return (ObservableCollection<double>)this.GetValue(BlobMinDiameterProperty); }
-      set { this.SetValue(BlobMinDiameterProperty, value); }
-    }
-
-    public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
-      "BlobMinDiameter",
-      typeof(ObservableCollection<double>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(
-        new ObservableCollection<double>()));
-
-    public ObservableCollection<double> BlobMaxDiameter
-    {
-      get { return (ObservableCollection<double>)this.GetValue(BlobMaxDiameterProperty); }
-      set { this.SetValue(BlobMaxDiameterProperty, value); }
-    }
-
-    public static readonly DependencyProperty BlobMaxDiameterProperty = DependencyProperty.Register(
-      "BlobMaxDiameter",
-      typeof(ObservableCollection<double>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(
-        new ObservableCollection<double>()));
-
-    public ObservableCollection<Color> TargetColor
-    {
-      get { return (ObservableCollection<Color>)this.GetValue(TargetColorProperty); }
-      set { this.SetValue(TargetColorProperty, value); }
-    }
-
-    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
-      "TargetColor",
-      typeof(ObservableCollection<Color>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(
-        new ObservableCollection<Color>()));
-
-    public Boolean IsTargetColorSet
-    {
-      get { return (Boolean)this.GetValue(IsTargetColorSetProperty); }
-      set { this.SetValue(IsTargetColorSetProperty, value); }
-    }
-
-    public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
-      "IsTargetColorSet",
-      typeof(Boolean),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(
-        false,
-        new PropertyChangedCallback(OnPropertyChanged)));
-
-    public ObservableCollection<Point?> CurrentBlobCenter
-    {
-      get { return (ObservableCollection<Point?>)this.GetValue(CurrentBlobCenterProperty); }
-      set { this.SetValue(CurrentBlobCenterProperty, value); }
-    }
-
-    public static readonly DependencyProperty CurrentBlobCenterProperty = DependencyProperty.Register(
-      "CurrentBlobCenter",
-      typeof(ObservableCollection<Point?>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(new ObservableCollection<Point?>()));
-
-    public ObservableCollection<Segment> DetectedBlob
-    {
-      get { return (ObservableCollection<Segment>)this.GetValue(DetectedBlobsProperty); }
-      set { this.SetValue(DetectedBlobsProperty, value); }
-    }
-
-    public static readonly DependencyProperty DetectedBlobsProperty = DependencyProperty.Register(
-      "DetectedBlob",
-      typeof(ObservableCollection<Segment>),
-      typeof(ImageProcessing),
-      new FrameworkPropertyMetadata(new ObservableCollection<Segment>()));
-
-    #endregion //PROPERTIES
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
-
-    public void Reset()
-    {
-      ResetProcessing(Video.Instance.ImageProcessing.NumberOfTrackedObjects);
-    }
-
-    private void ResetProcessing(int numberOfObjects)
-    {
-      this.IndexOfObject = 0;
-      this.doNotThrowPropertyChanged = true;
-      this.TargetColor.Clear();
-      this.ColorThreshold.Clear();
-      this.BlobMinDiameter.Clear();
-      this.BlobMaxDiameter.Clear();
-      this.CurrentBlobCenter.Clear();
-      this.DetectedBlob.Clear();
-      for (int i = 0; i < numberOfObjects; i++)
+      get
       {
-        this.TargetColor.Add(Colors.Red);
-        this.ColorThreshold.Add(30);
-        this.BlobMinDiameter.Add(4);
-        this.BlobMaxDiameter.Add(100);
-        this.CurrentBlobCenter.Add(null);
-        this.DetectedBlob.Add(new Segment());
+        return (Boolean)this.GetValue(IsTargetColorSetProperty);
       }
 
-      this.IsTargetColorSet = false;
-      this.isReady = true;
-      this.doNotThrowPropertyChanged = false;
+      set
+      {
+        this.SetValue(IsTargetColorSetProperty, value);
+      }
     }
 
+    /// <summary>
+    ///   Gets or sets the number of tracked objects
+    /// </summary>
+    public int NumberOfTrackedObjects
+    {
+      get
+      {
+        return (int)this.GetValue(NumberOfTrackedObjectsProperty);
+      }
+
+      set
+      {
+        this.SetValue(NumberOfTrackedObjectsProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the target color.
+    /// </summary>
+    public ObservableCollection<Color> TargetColor
+    {
+      get
+      {
+        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(TargetColorProperty, value);
+      }
+    }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    ///   The initialize image filters.
+    /// </summary>
     public void InitializeImageFilters()
     {
-      int videoWidth = (int)Video.Instance.VideoElement.NaturalVideoWidth;
-      int videoHeight = (int)Video.Instance.VideoElement.NaturalVideoHeight;
+      var videoWidth = (int)Video.Instance.VideoElement.NaturalVideoWidth;
+      var videoHeight = (int)Video.Instance.VideoElement.NaturalVideoHeight;
 
       this.colorAndCropFilter.ImageWidth = videoWidth;
       this.colorAndCropFilter.ImageHeight = videoHeight;
@@ -326,7 +448,6 @@ namespace VianaNET
 
       this.colorRangeFilter.Init();
 
-
       this.histogrammFilter.ImageWidth = videoWidth;
       this.histogrammFilter.ImageHeight = videoHeight;
       this.histogrammFilter.ImageStride = Video.Instance.VideoElement.Stride;
@@ -336,6 +457,10 @@ namespace VianaNET
       this.ProcessImage();
     }
 
+    /// <summary>
+    ///   The process image.
+    /// </summary>
+    /// <returns> The <see cref="bool" /> . </returns>
     public bool ProcessImage()
     {
       // Skip if no target color is available
@@ -353,39 +478,37 @@ namespace VianaNET
       this.isReady = false;
       bool objectsFound = false;
 
-      watch.Start();
-      var start = watch.ElapsedMilliseconds;
+      this.watch.Start();
+      long start = this.watch.ElapsedMilliseconds;
 
       for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
       {
-        //Console.Write("BeforeColorFilter: ");
-        //Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+        // Console.Write("BeforeColorFilter: ");
+        // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
         Video.Instance.RefreshProcessingMap();
         this.colorAndCropFilter.TargetColor = this.TargetColor[i];
         this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
 
         this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ProcessingMapping);
-        //this.colorRangeFilter.ProcessInPlace(Video.Instance.VideoElement.ProcessingMapping);
+
+        // this.colorRangeFilter.ProcessInPlace(Video.Instance.VideoElement.ProcessingMapping);
 
         // Segment
-        var histogram = this.histogrammFilter.FromIntPtrMap(Video.Instance.VideoElement.ProcessingMapping);
-        segmentator.Histogram = histogram;
-        segmentator.ThresholdLuminance = histogram.Max * 0.1f;
-        segmentator.MinDiameter = this.BlobMinDiameter[i];
-        segmentator.MaxDiameter = this.BlobMaxDiameter[i];
+        Histogram histogram = this.histogrammFilter.FromIntPtrMap(Video.Instance.VideoElement.ProcessingMapping);
+        this.segmentator.Histogram = histogram;
+        this.segmentator.ThresholdLuminance = histogram.Max * 0.1f;
+        this.segmentator.MinDiameter = this.BlobMinDiameter[i];
+        this.segmentator.MaxDiameter = this.BlobMaxDiameter[i];
 
-        var foundSegment = segmentator.Process();
+        Segment foundSegment = this.segmentator.Process();
         this.DetectedBlob[i] = foundSegment;
-        //Console.Write("AfterBlobDetection: ");
-        //Console.WriteLine(watch.ElapsedMilliseconds.ToString());
 
-        if (foundSegment.Diagonal != 0 &&
-          (foundSegment.Height < (this.colorAndCropFilter.ImageHeight - 10)) &&
-          (foundSegment.Width < (this.colorAndCropFilter.ImageWidth - 10)))
+        // Console.Write("AfterBlobDetection: ");
+        // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+        if (foundSegment.Diagonal != 0 && (foundSegment.Height < (this.colorAndCropFilter.ImageHeight - 10))
+            && (foundSegment.Width < (this.colorAndCropFilter.ImageWidth - 10)))
         {
-          this.CurrentBlobCenter[i] = new Point(
-            foundSegment.Center.X,
-            foundSegment.Center.Y);
+          this.CurrentBlobCenter[i] = new Point(foundSegment.Center.X, foundSegment.Center.Y);
 
           if (Video.Instance.IsDataAcquisitionRunning)
           {
@@ -402,35 +525,47 @@ namespace VianaNET
 
       this.OnFrameProcessed();
 
-      //Console.Write("Finished: ");
-      //Console.WriteLine(watch.ElapsedMilliseconds.ToString());
-      totalProcessingTime += this.watch.ElapsedMilliseconds - start;
-      counter++;
+      // Console.Write("Finished: ");
+      // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+      this.totalProcessingTime += this.watch.ElapsedMilliseconds - start;
+      this.counter++;
 
       Console.Write("AverageProcessingTime: ");
-      Console.WriteLine(totalProcessingTime / counter);
+      Console.WriteLine(this.totalProcessingTime / this.counter);
       this.isReady = true;
       if (objectsFound)
       {
-        StatusBarContent.Instance.MessagesLabel = Localization.Labels.BlobsObjectsFound;
+        StatusBarContent.Instance.MessagesLabel = Labels.BlobsObjectsFound;
         return true;
       }
       else
       {
-        StatusBarContent.Instance.MessagesLabel = Localization.Labels.BlobsNoObjectFound;
+        StatusBarContent.Instance.MessagesLabel = Labels.BlobsNoObjectFound;
         return false;
       }
     }
 
-    #endregion //PUBLICMETHODS
+    /// <summary>
+    ///   The reset.
+    /// </summary>
+    public void Reset()
+    {
+      this.ResetProcessing(Video.Instance.ImageProcessing.NumberOfTrackedObjects);
+    }
 
-    private bool doNotThrowPropertyChanged;
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
+    #region Methods
 
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="args">
+    /// The args. 
+    /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
       if (this.PropertyChanged != null && !this.doNotThrowPropertyChanged)
@@ -439,46 +574,86 @@ namespace VianaNET
       }
     }
 
-    #endregion //OVERRIDES
-
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
 
-    private static void OnPropertyChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="obj">
+    /// The obj. 
+    /// </param>
+    /// <param name="args">
+    /// The args. 
+    /// </param>
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       (obj as ImageProcessing).OnPropertyChanged(args);
     }
 
-    private void OnPropertyChanged(string propertyName)
+    /// <summary>
+    /// The blob_ collection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void Blob_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-      if (this.PropertyChanged != null && !this.doNotThrowPropertyChanged)
+      if (!this.doNotThrowPropertyChanged)
       {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        this.OnPropertyChanged("Blob");
       }
     }
 
-    private void OnFrameProcessed()
+    /// <summary>
+    /// The calibration_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (this.FrameProcessed != null)
+      if (e.PropertyName == "HasClipRegion" || e.PropertyName == "ClipRegion")
       {
-        this.FrameProcessed(this, EventArgs.Empty);
+        this.InitializeImageFilters();
       }
     }
 
-    void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// The hlsl params_ collection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void HLSLParams_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-      if (e.PropertyName == "HasClipRegion" ||
-        e.PropertyName == "ClipRegion")
+      if (!this.doNotThrowPropertyChanged)
       {
-        InitializeImageFilters();
+        this.ProcessImage();
+        this.OnPropertyChanged("HLSLParams");
       }
     }
 
-    void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <summary>
+    /// The image processing_ property changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "IndexOfObject")
       {
@@ -497,25 +672,92 @@ namespace VianaNET
       }
     }
 
+    /// <summary>
+    ///   The on frame processed.
+    /// </summary>
+    private void OnFrameProcessed()
+    {
+      if (this.FrameProcessed != null)
+      {
+        this.FrameProcessed(this, EventArgs.Empty);
+      }
+    }
 
-    #endregion //EVENTHANDLER
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The property name. 
+    /// </param>
+    private void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null && !this.doNotThrowPropertyChanged)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+
+    /// <summary>
+    /// The reset processing.
+    /// </summary>
+    /// <param name="numberOfObjects">
+    /// The number of objects. 
+    /// </param>
+    private void ResetProcessing(int numberOfObjects)
+    {
+      this.IndexOfObject = 0;
+      this.doNotThrowPropertyChanged = true;
+      this.TargetColor.Clear();
+      this.ColorThreshold.Clear();
+      this.BlobMinDiameter.Clear();
+      this.BlobMaxDiameter.Clear();
+      this.CurrentBlobCenter.Clear();
+      this.DetectedBlob.Clear();
+      for (int i = 0; i < numberOfObjects; i++)
+      {
+        this.TargetColor.Add(Colors.Red);
+        this.ColorThreshold.Add(30);
+        this.BlobMinDiameter.Add(4);
+        this.BlobMaxDiameter.Add(100);
+        this.CurrentBlobCenter.Add(null);
+        this.DetectedBlob.Add(new Segment());
+      }
+
+      this.IsTargetColorSet = false;
+      this.isReady = true;
+      this.doNotThrowPropertyChanged = false;
+    }
+
+    /// <summary>
+    /// The target color_ collection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void TargetColor_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      if (!this.doNotThrowPropertyChanged)
+      {
+        this.ProcessImage();
+        this.OnPropertyChanged("TargetColor");
+      }
+    }
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
-    #endregion //PRIVATEMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-    #endregion //HELPER
   }
 }

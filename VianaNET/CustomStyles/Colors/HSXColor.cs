@@ -1,71 +1,73 @@
-﻿// <copyright file="HSXColor.cs" company="FU Berlin">
-// ************************************************************************
-// Viana.NET - video analysis for physics education
-// Copyright (C) 2010 Dr. Adrian Voßkühler  
-// ------------------------------------------------------------------------
-// This program is free software; you can redistribute it and/or modify it 
-// under the terms of the GNU General Public License as published by the 
-// Free Software Foundation; either version 2 of the License, or 
-// (at your option) any later version.
-// This program is distributed in the hope that it will be useful, 
-// but WITHOUT ANY WARRANTY; without even the implied warranty of 
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-// See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License 
-// along with this program; if not, write to the Free Software Foundation, 
-// Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-// ************************************************************************
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="HSXColor.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
-// <email>adrian.vosskuehler@fu-berlin.de</email>
-
-namespace VianaNET
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Contains a HSL or HSV color value.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.CustomStyles.Colors
 {
-  using System;
-
   /// <summary>
-  /// Contains a HSL or HSV color value.
+  ///   Contains a HSL or HSV color value.
   /// </summary>
   public struct HSXColor
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
+    #region Fields
 
     /// <summary>
-    /// The hue value of the current HSXColor.
+    ///   The hue value of the current HSXColor.
     /// </summary>
     private float? hue;
 
     /// <summary>
-    /// The saturation value of the current HSXColor
+    ///   The saturation value of the current HSXColor
     /// </summary>
     private float saturation;
 
     /// <summary>
-    /// The X value for the current HSXColor
+    ///   The X value for the current HSXColor
     /// </summary>
     private float valueLuminanceBrightness;
 
-    #endregion //FIELDS
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
     /// <summary>
     /// Initializes a new instance of the HSXColor struct.
-    /// Clone constructor
+    ///   Clone constructor
     /// </summary>
-    /// <param name="clone">The <see cref="HSXColor"/> to clone.</param>
+    /// <param name="clone">
+    /// The <see cref="HSXColor"/> to clone. 
+    /// </param>
     public HSXColor(HSXColor clone)
       : this(clone.Hue, clone.Saturation, clone.ValueLuminanceBrightness)
     {
@@ -74,9 +76,15 @@ namespace VianaNET
     /// <summary>
     /// Initializes a new instance of the HSXColor struct.
     /// </summary>
-    /// <param name="hue">A <see cref="Single"/> hue value or null.</param>
-    /// <param name="saturation">The saturation value</param>
-    /// <param name="x">The luminance or v value for the color.</param>
+    /// <param name="hue">
+    /// A <see cref="float"/> hue value or null. 
+    /// </param>
+    /// <param name="saturation">
+    /// The saturation value 
+    /// </param>
+    /// <param name="x">
+    /// The luminance or v value for the color. 
+    /// </param>
     public HSXColor(float? hue, float saturation, float x)
     {
       this.hue = null;
@@ -88,21 +96,19 @@ namespace VianaNET
       this.ValueLuminanceBrightness = x;
     }
 
-    #endregion //CONSTRUCTION
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
-    #endregion EVENTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
+    #region Public Properties
 
     /// <summary>
-    /// Gets or sets the hue value of this HSXColor
+    ///   Gets or sets the hue value of this HSXColor
     /// </summary>
     public float? Hue
     {
@@ -139,73 +145,77 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// Gets or sets Value/Luminance/Brightness
-    /// </summary>
-    public float ValueLuminanceBrightness
-    {
-      get { return this.valueLuminanceBrightness; }
-      set { this.valueLuminanceBrightness = value; }
-    }
-
-    /// <summary>
-    /// Gets or sets the saturation of the current HSXColor.
+    ///   Gets or sets the saturation of the current HSXColor.
     /// </summary>
     public float Saturation
     {
-      get { return this.saturation; }
-      set { this.saturation = value; }
+      get
+      {
+        return this.saturation;
+      }
+
+      set
+      {
+        this.saturation = value;
+      }
     }
 
-    #endregion //PROPERTIES
+    /// <summary>
+    ///   Gets or sets Value/Luminance/Brightness
+    /// </summary>
+    public float ValueLuminanceBrightness
+    {
+      get
+      {
+        return this.valueLuminanceBrightness;
+      }
+
+      set
+      {
+        this.valueLuminanceBrightness = value;
+      }
+    }
+
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
-    #endregion //PUBLICMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
+    #region Public Methods and Operators
 
     /// <summary>
-    /// Overridden <see cref="Object.ToString()"/>.
+    ///   Overridden <see cref="object.ToString()" />.
     /// </summary>
-    /// <returns>A human readable string for this HSXColor.</returns>
+    /// <returns> A human readable string for this HSXColor. </returns>
     public override string ToString()
     {
       return string.Format(
-        "Hue: {0}, Saturation: {1:P}, X: {2:P}",
-        this.hue.HasValue ? this.hue.Value.ToString("P") : "NULL",
-        this.Saturation,
+        "Hue: {0}, Saturation: {1:P}, X: {2:P}", 
+        this.hue.HasValue ? this.hue.Value.ToString("P") : "NULL", 
+        this.Saturation, 
         this.ValueLuminanceBrightness);
     }
 
-    #endregion //OVERRIDES
+    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
-    #endregion //EVENTHANDLER
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
-    #endregion //PRIVATEMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-    #endregion //HELPER
   }
 }

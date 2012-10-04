@@ -1,103 +1,127 @@
-﻿namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AboutWindow.xaml.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The about window.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.MainWindow
 {
-using System.Windows;
+  using System.IO;
   using System.Reflection;
+  using System.Windows;
 
+  /// <summary>
+  ///   The about window.
+  /// </summary>
   public partial class AboutWindow : Window
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTANTS
-    #endregion //CONSTANTS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region FIELDS
-    #endregion //FIELDS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region CONSTRUCTION
+    #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the MainWindow class.
+    ///   Initializes a new instance of the <see cref="AboutWindow" /> class. 
+    ///   Initializes a new instance of the MainWindow class.
     /// </summary>
     public AboutWindow()
     {
-      InitializeComponent();
+      this.InitializeComponent();
     }
 
-    #endregion //CONSTRUCTION
+    #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTS
-    #endregion EVENTS
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region PROPERTIES
+    #region Public Properties
 
     /// <summary>
-    /// Gets the assemblies title.
+    ///   Gets the company string from the assembly.
     /// </summary>
-    public static string AssemblyTitle
+    public static string AssemblyCompany
     {
       get
       {
-        // Get all Title attributes on this assembly
-        object[] attributes =
-          Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+        // Get all Company attributes on this assembly
+        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
+          typeof(AssemblyCompanyAttribute), false);
 
-        // If there is at least one Title attribute
-        if (attributes.Length > 0)
+        // If there aren't any Company attributes, return an empty string
+        if (attributes.Length == 0)
         {
-          // Select the first one
-          AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-
-          // If it is not an empty string, return it
-          if (titleAttribute.Title != string.Empty)
-          {
-            return titleAttribute.Title;
-          }
+          return string.Empty;
         }
 
-        // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
-        return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+        // If there is a Company attribute, return its value
+        return ((AssemblyCompanyAttribute)attributes[0]).Company;
       }
     }
 
     /// <summary>
-    /// Gets OGAMAs current version.
+    ///   Gets the copyright property from the assembly.
     /// </summary>
-    public static string AssemblyVersionShort
+    public static string AssemblyCopyright
     {
-      get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(2); }
+      get
+      {
+        // Get all Copyright attributes on this assembly
+        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
+          typeof(AssemblyCopyrightAttribute), false);
+
+        // If there aren't any Copyright attributes, return an empty string
+        if (attributes.Length == 0)
+        {
+          return string.Empty;
+        }
+
+        // If there is a Copyright attribute, return its value
+        return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+      }
     }
 
-    /// <summary>
-    /// Gets OGAMAs current version.
-    /// </summary>
-    public static string AssemblyVersionLong
-    {
-      get { return "(" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + ")"; }
-    }
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
-    /// Gets assembly description.
+    ///   Gets assembly description.
     /// </summary>
     public static string AssemblyDescription
     {
       get
       {
         // Get all Description attributes on this assembly
-        object[] attributes =
-          Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
+          typeof(AssemblyDescriptionAttribute), false);
 
         // If there aren't any Description attributes, return an empty string
         if (attributes.Length == 0)
@@ -111,15 +135,15 @@ using System.Windows;
     }
 
     /// <summary>
-    /// Gets the product property from the assembly.
+    ///   Gets the product property from the assembly.
     /// </summary>
     public static string AssemblyProduct
     {
       get
       {
         // Get all Product attributes on this assembly
-        object[] attributes =
-          Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
+          typeof(AssemblyProductAttribute), false);
 
         // If there aren't any Product attributes, return an empty string
         if (attributes.Length == 0)
@@ -133,90 +157,97 @@ using System.Windows;
     }
 
     /// <summary>
-    /// Gets the copyright property from the assembly.
+    ///   Gets the assemblies title.
     /// </summary>
-    public static string AssemblyCopyright
+    public static string AssemblyTitle
     {
       get
       {
-        // Get all Copyright attributes on this assembly
-        object[] attributes =
-          Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+        // Get all Title attributes on this assembly
+        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
 
-        // If there aren't any Copyright attributes, return an empty string
-        if (attributes.Length == 0)
+        // If there is at least one Title attribute
+        if (attributes.Length > 0)
         {
-          return string.Empty;
+          // Select the first one
+          var titleAttribute = (AssemblyTitleAttribute)attributes[0];
+
+          // If it is not an empty string, return it
+          if (titleAttribute.Title != string.Empty)
+          {
+            return titleAttribute.Title;
+          }
         }
 
-        // If there is a Copyright attribute, return its value
-        return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+        // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
+        return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
       }
     }
 
     /// <summary>
-    /// Gets the company string from the assembly.
+    ///   Gets OGAMAs current version.
     /// </summary>
-    public static string AssemblyCompany
+    public static string AssemblyVersionLong
     {
       get
       {
-        // Get all Company attributes on this assembly
-        object[] attributes =
-          Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-
-        // If there aren't any Company attributes, return an empty string
-        if (attributes.Length == 0)
-        {
-          return string.Empty;
-        }
-
-        // If there is a Company attribute, return its value
-        return ((AssemblyCompanyAttribute)attributes[0]).Company;
+        return "(" + Assembly.GetExecutingAssembly().GetName().Version + ")";
       }
     }
 
-    #endregion //PROPERTIES
+    /// <summary>
+    ///   Gets OGAMAs current version.
+    /// </summary>
+    public static string AssemblyVersionShort
+    {
+      get
+      {
+        return Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+      }
+    }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// The button_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
 
+    #endregion
+
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PUBLICMETHODS
-    #endregion //PUBLICMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region OVERRIDES
-    #endregion //OVERRIDES
 
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region EVENTHANDLER
-    #endregion //EVENTHANDLER
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region THREAD
-    #endregion //THREAD
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region PRIVATEMETHODS
-    #endregion //PRIVATEMETHODS
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region HELPER
-    #endregion //HELPER
   }
 }

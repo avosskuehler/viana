@@ -1,82 +1,151 @@
-﻿
-using System;
-using System.Windows;
-using System.Windows.Media;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ColorAndCropFilterRGB.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The color and crop filter rgb.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Modules.Video.Filter
 {
+  using System;
+  using System.Windows;
+  using System.Windows.Media;
+
+  /// <summary>
+  ///   The color and crop filter rgb.
+  /// </summary>
   public class ColorAndCropFilterRGB : FilterBase
   {
-    public int Threshold { get; set; }
-    public Color TargetColor { get; set; }
-    public Color BlankColor { get; set; }
-    public Rect CropRectangle { get; set; }
+    #region Fields
 
-    public ColorAndCropFilterRGB()
-      : base()
-    {
-    }
-
-    private int startX;
-    private int startY;
-    private int stopX;
-    private int stopY;
+    /// <summary>
+    ///   The offset.
+    /// </summary>
     private int offset;
 
+    /// <summary>
+    ///   The start x.
+    /// </summary>
+    private int startX;
+
+    /// <summary>
+    ///   The start y.
+    /// </summary>
+    private int startY;
+
+    /// <summary>
+    ///   The stop x.
+    /// </summary>
+    private int stopX;
+
+    /// <summary>
+    ///   The stop y.
+    /// </summary>
+    private int stopY;
+
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>
+    ///   Gets or sets the blank color.
+    /// </summary>
+    public Color BlankColor { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the crop rectangle.
+    /// </summary>
+    public Rect CropRectangle { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the target color.
+    /// </summary>
+    public Color TargetColor { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the threshold.
+    /// </summary>
+    public int Threshold { get; set; }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    ///   The init.
+    /// </summary>
     public void Init()
     {
-      startX = 0;
-      startY = 0;
-      stopX = this.ImageWidth;
-      stopY = this.ImageHeight;
-      offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
+      this.startX = 0;
+      this.startY = 0;
+      this.stopX = this.ImageWidth;
+      this.stopY = this.ImageHeight;
+      this.offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
     }
-
 
     /// <summary>
     /// Process the filter on the specified image.
     /// </summary>
-    /// 
-    /// <param name="image">Source image data.</param>
-    public unsafe override void ProcessInPlace(IntPtr image)
+    /// <param name="image">
+    /// Source image data. 
+    /// </param>
+    public override unsafe void ProcessInPlace(IntPtr image)
     {
-      var t = this.Threshold;
-      var ipx = this.ImagePixelSize;
-      var target = this.TargetColor;
-      var blank = this.BlankColor;
-      var rMin = target.R - t;
-      var rMax = target.R + t;
-      var gMin = target.G - t;
-      var gMax = target.G + t;
-      var bMin = target.B - t;
-      var bMax = target.B + t;
-      var cropRect = this.CropRectangle;
-      var xMin = cropRect.Left;
-      var xMax = cropRect.Right;
-      var yMin = cropRect.Top;
-      var yMax = cropRect.Bottom;
+      int t = this.Threshold;
+      int ipx = this.ImagePixelSize;
+      Color target = this.TargetColor;
+      Color blank = this.BlankColor;
+      int rMin = target.R - t;
+      int rMax = target.R + t;
+      int gMin = target.G - t;
+      int gMax = target.G + t;
+      int bMin = target.B - t;
+      int bMax = target.B + t;
+      Rect cropRect = this.CropRectangle;
+      double xMin = cropRect.Left;
+      double xMax = cropRect.Right;
+      double yMin = cropRect.Top;
+      double yMax = cropRect.Bottom;
 
-      //int startX = 0;
-      //int startY = 0;
-      //int stopX = startX + this.ImageWidth;
-      //int stopY = startY + this.ImageHeight;
-      //int offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
+      // int startX = 0;
+      // int startY = 0;
+      // int stopX = startX + this.ImageWidth;
+      // int stopY = startY + this.ImageHeight;
+      // int offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
 
       // do the job
-      byte* ptr = (byte*)image;
+      var ptr = (byte*)image;
       byte r, g, b;
 
       // allign pointer to the first pixel to process
-      ptr += (startY * this.ImageStride + startX * ipx);
+      ptr += this.startY * this.ImageStride + this.startX * ipx;
 
       // for each row
-      for (int y = startY; y < stopY; y++)
+      for (int y = this.startY; y < this.stopY; y++)
       {
         // Blank cropped area
         if (y < yMin || y > yMax)
         {
           // Blank whole line
-          for (int x = startX; x < stopX; x++, ptr += ipx)
+          for (int x = this.startX; x < this.stopX; x++, ptr += ipx)
           {
             ptr[R] = blank.R;
             ptr[G] = blank.G;
@@ -84,12 +153,12 @@ namespace VianaNET
           }
 
           // go to next line
-          ptr += offset;
+          ptr += this.offset;
           continue;
         }
 
         // for each pixel
-        for (int x = startX; x < stopX; x++, ptr += ipx)
+        for (int x = this.startX; x < this.stopX; x++, ptr += ipx)
         {
           // blank cropped pixels
           if (x < xMin || x > xMax)
@@ -106,11 +175,7 @@ namespace VianaNET
             b = ptr[B];
 
             // check pixel
-            if (
-                (r >= rMin) && (r <= rMax) &&
-                (g >= gMin) && (g <= gMax) &&
-                (b >= bMin) && (b <= bMax)
-                )
+            if ((r >= rMin) && (r <= rMax) && (g >= gMin) && (g <= gMax) && (b >= bMin) && (b <= bMax))
             {
               continue;
             }
@@ -123,8 +188,10 @@ namespace VianaNET
           }
         }
 
-        ptr += offset;
+        ptr += this.offset;
       }
     }
+
+    #endregion
   }
 }

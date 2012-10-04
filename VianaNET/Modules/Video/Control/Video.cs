@@ -1,105 +1,100 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.IO;
-using System.Windows.Data;
-using DirectShowLib;
-using System.Windows.Controls;
-using System.ComponentModel;
-
-namespace VianaNET
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Video.cs" company="Freie Universität Berlin">
+//   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
+// </copyright>
+// <author>Dr. Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The video.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+namespace VianaNET.Modules.Video.Control
 {
+  using System;
+  using System.Collections.Generic;
+  using System.ComponentModel;
+  using System.Drawing;
+  using System.IO;
+  using System.Windows;
+  using System.Windows.Media;
+  using System.Windows.Media.Imaging;
+
+  using DirectShowLib;
+
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.Data;
+
+  /// <summary>
+  ///   The video.
+  /// </summary>
   public class Video : DependencyObject, INotifyPropertyChanged
   {
-    public event PropertyChangedEventHandler PropertyChanged;
+    #region Static Fields
 
-    private static void OnPropertyChanged(
-      DependencyObject obj,
-      DependencyPropertyChangedEventArgs args)
-    {
-      (obj as Video).OnPropertyChanged(args);
-    }
-
-    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
-    {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
-      }
-    }
-
-    public event EventHandler VideoFrameChanged;
-    private static Video instance;
-
-    private VideoMode videoMode;
-    private VideoBase videoElement;
-    private VideoCapturer videoCaptureElement;
-    private VideoPlayer videoPlayerElement;
-
-    public ImageProcessing ImageProcessing { get; set; }
-
-    public VideoMode VideoMode
-    {
-      get { return this.videoMode; }
-      set { this.SetVideoMode(value); }
-    }
-
-    public int FrameIndex
-    {
-      get { return (int)(this.videoElement.MediaPositionFrameIndex); }
-    }
-
-    public long FrameTimestampInMS
-    {
-      get { return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs); }
-      //get { return this.videoElement.MediaPositionInMilliSeconds; }
-    }
-
-    public bool IsDataAcquisitionRunning
-    {
-      get { return (bool)GetValue(IsDataAcquisitionRunningProperty); }
-      set { SetValue(IsDataAcquisitionRunningProperty, value); }
-    }
-
+    /// <summary>
+    ///   The is data acquisition running property.
+    /// </summary>
     public static readonly DependencyProperty IsDataAcquisitionRunningProperty =
       DependencyProperty.Register(
-      "IsDataAcquisitionRunning",
-      typeof(bool),
-      typeof(Video),
-      new FrameworkPropertyMetadata(
-        false,
-        new PropertyChangedCallback(OnPropertyChanged)));
+        "IsDataAcquisitionRunning", typeof(bool), typeof(Video), new FrameworkPropertyMetadata(false, OnPropertyChanged));
 
-    public ImageSource VideoSource
-    {
-      get { return (ImageSource)GetValue(VideoSourceProperty); }
-      set { SetValue(VideoSourceProperty, value); }
-    }
+    /// <summary>
+    ///   The video source property.
+    /// </summary>
+    public static readonly DependencyProperty VideoSourceProperty = DependencyProperty.Register(
+      "VideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
 
-    public static readonly DependencyProperty VideoSourceProperty =
-      DependencyProperty.Register(
-      "VideoSource",
-      typeof(ImageSource),
-      typeof(Video),
-      new UIPropertyMetadata(null));
+    /// <summary>
+    ///   The instance.
+    /// </summary>
+    private static Video instance;
 
-    //public System.Drawing.Bitmap CurrentFrameBitmap
-    //{
-    //  get { return (System.Drawing.Bitmap)GetValue(CurrentFrameBitmapProperty); }
-    //  set { SetValue(CurrentFrameBitmapProperty, value); }
-    //}
+    #endregion
 
-    //public static readonly DependencyProperty CurrentFrameBitmapProperty =
-    //  DependencyProperty.Register(
-    //  "CurrentFrameBitmap",
-    //  typeof(System.Drawing.Bitmap),
-    //  typeof(Video),
-    //  new PropertyMetadata(null));
+    #region Fields
 
+    /// <summary>
+    ///   The video capture element.
+    /// </summary>
+    private readonly VideoCapturer videoCaptureElement;
+
+    /// <summary>
+    ///   The video player element.
+    /// </summary>
+    private readonly VideoPlayer videoPlayerElement;
+
+    /// <summary>
+    ///   The video element.
+    /// </summary>
+    private VideoBase videoElement;
+
+    /// <summary>
+    ///   The video mode.
+    /// </summary>
+    private VideoMode videoMode;
+
+    #endregion
+
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Prevents a default instance of the <see cref="Video" /> class from being created.
+    /// </summary>
     private Video()
     {
       this.ImageProcessing = new ImageProcessing();
@@ -109,83 +104,32 @@ namespace VianaNET
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
       this.videoCaptureElement = new VideoCapturer();
-      this.videoCaptureElement.VideoAvailable +=
-        new EventHandler(videoCaptureElement_VideoAvailable);
+      this.videoCaptureElement.VideoAvailable += this.videoCaptureElement_VideoAvailable;
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
     }
 
-    void videoCaptureElement_VideoAvailable(object sender, EventArgs e)
-    {
-      this.VideoSource = this.videoElement.ImageSource;
-      this.videoElement.Play();
-    }
+    #endregion
 
-    public VideoBase VideoElement
-    {
-      get { return this.videoElement; }
-    }
-
-    public VideoPlayer VideoPlayerElement
-    {
-      get { return this.videoPlayerElement; }
-    }
-
-    public VideoCapturer VideoCapturerElement
-    {
-      get { return this.videoCaptureElement; }
-    }
-
-    private void SetVideoMode(VideoMode newVideoMode)
-    {
-      if (this.videoMode == newVideoMode)
-      {
-        return;
-      }
-
-      this.videoElement.VideoFrameChanged -= new EventHandler(videoElement_VideoFrameChanged);
-      this.videoMode = newVideoMode;
-
-      switch (this.videoMode)
-      {
-        case VideoMode.File:
-        case VideoMode.None:
-          //this.videoCaptureElement.Stop();
-          this.videoCaptureElement.Dispose();
-          this.videoElement = this.videoPlayerElement;
-          break;
-        case VideoMode.Capture:
-          List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
-          if (videoDevices.Count > 0)
-          {
-            this.videoElement = this.videoCaptureElement;
-            //this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 5, 320, 240);
-            this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 0, 0, 0);
-          }
-
-          break;
-      }
-
-      this.videoElement.VideoFrameChanged += new EventHandler(videoElement_VideoFrameChanged);
-      this.VideoSource = this.videoElement.ImageSource;
-    }
-
-    void videoElement_VideoFrameChanged(object sender, EventArgs e)
-    {
-      this.OnVideoFrameChanged();
-    }
-
-    private void OnVideoFrameChanged()
-    {
-      if (this.VideoFrameChanged != null)
-      {
-        this.VideoFrameChanged(this, EventArgs.Empty);
-      }
-    }
+    #region Public Events
 
     /// <summary>
-    /// Gets the <see cref="Video"/> singleton.
-    /// If the underlying instance is null, a instance will be created.
+    ///   The property changed.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    /// <summary>
+    ///   The video frame changed.
+    /// </summary>
+    public event EventHandler VideoFrameChanged;
+
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>
+    ///   Gets the <see cref="Video" /> singleton.
+    ///   If the underlying instance is null, a instance will be created.
     /// </summary>
     public static Video Instance
     {
@@ -203,35 +147,172 @@ namespace VianaNET
       }
     }
 
-    public void StepOneFrame(bool forward)
+    /// <summary>
+    ///   Gets the frame index.
+    /// </summary>
+    public int FrameIndex
     {
-      switch (this.videoMode)
+      get
       {
-        case VideoMode.File:
-          this.videoPlayerElement.StepOneFrame(forward);
-          break;
-        case VideoMode.Capture:
-          // Do nothing
-          break;
+        return this.videoElement.MediaPositionFrameIndex;
       }
     }
 
-    public System.Drawing.Bitmap CreateBitmapFromCurrentImageSource()
+    /// <summary>
+    ///   Gets the frame timestamp in ms.
+    /// </summary>
+    public long FrameTimestampInMS
+    {
+      get
+      {
+        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs);
+      }
+
+      // get { return this.videoElement.MediaPositionInMilliSeconds; }
+    }
+
+    /// <summary>
+    ///   Gets or sets the image processing.
+    /// </summary>
+    public ImageProcessing ImageProcessing { get; set; }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether is data acquisition running.
+    /// </summary>
+    public bool IsDataAcquisitionRunning
+    {
+      get
+      {
+        return (bool)this.GetValue(IsDataAcquisitionRunningProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsDataAcquisitionRunningProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets the video capturer element.
+    /// </summary>
+    public VideoCapturer VideoCapturerElement
+    {
+      get
+      {
+        return this.videoCaptureElement;
+      }
+    }
+
+    /// <summary>
+    ///   Gets the video element.
+    /// </summary>
+    public VideoBase VideoElement
+    {
+      get
+      {
+        return this.videoElement;
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the video mode.
+    /// </summary>
+    public VideoMode VideoMode
+    {
+      get
+      {
+        return this.videoMode;
+      }
+
+      set
+      {
+        this.SetVideoMode(value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets the video player element.
+    /// </summary>
+    public VideoPlayer VideoPlayerElement
+    {
+      get
+      {
+        return this.videoPlayerElement;
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the video source.
+    /// </summary>
+    public ImageSource VideoSource
+    {
+      get
+      {
+        return (ImageSource)this.GetValue(VideoSourceProperty);
+      }
+
+      set
+      {
+        this.SetValue(VideoSourceProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets the video input devices.
+    /// </summary>
+    public List<DsDevice> VideoInputDevices
+    {
+      get
+      {
+        return DShowUtils.GetVideoInputDevices();
+      }
+    }
+
+    /// <summary>
+    /// Gets a valaue indicating whether there are video input devices
+    /// available on the system
+    /// </summary>
+    public bool HasVideoInputDevices
+    {
+      get
+      {
+        return this.VideoInputDevices.Count > 0;
+      }
+    }
+
+    #endregion
+
+    #region Public Methods and Operators
+
+    /// <summary>
+    ///   The cleanup.
+    /// </summary>
+    public void Cleanup()
+    {
+      this.videoCaptureElement.Dispose();
+      this.videoPlayerElement.Dispose();
+    }
+
+    /// <summary>
+    ///   The create bitmap from current image source.
+    /// </summary>
+    /// <returns> The <see cref="Bitmap" /> . </returns>
+    public Bitmap CreateBitmapFromCurrentImageSource()
     {
       if (this.videoElement.NaturalVideoWidth <= 0)
       {
         return null;
       }
 
-      System.Drawing.Bitmap returnBitmap;
-      DrawingVisual visual = new DrawingVisual();
+      Bitmap returnBitmap;
+      var visual = new DrawingVisual();
       DrawingContext dc = visual.RenderOpen();
       dc.DrawImage(
         this.videoElement.ImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
-      RenderTargetBitmap rtp = new RenderTargetBitmap(
+      var rtp = new RenderTargetBitmap(
         (int)this.videoElement.NaturalVideoWidth,
         (int)this.videoElement.NaturalVideoHeight,
         96d,
@@ -239,50 +320,40 @@ namespace VianaNET
         PixelFormats.Default);
       rtp.Render(visual);
 
-      using (MemoryStream outStream = new MemoryStream())
+      using (var outStream = new MemoryStream())
       {
-        PngBitmapEncoder pnge = new PngBitmapEncoder();
+        var pnge = new PngBitmapEncoder();
         pnge.Frames.Add(BitmapFrame.Create(rtp));
         pnge.Save(outStream);
-        returnBitmap = new System.Drawing.Bitmap(outStream);
-        //returnBitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
+        returnBitmap = new Bitmap(outStream);
+
+        // returnBitmap.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
       }
 
       return returnBitmap;
     }
 
-    public void Play()
-    {
-      this.videoElement.Play();
-    }
+    // public void UpdateNativeBitmap()
+    // {
+    // switch (this.videoMode)
+    // {
+    // case VideoMode.File:
+    // this.videoPlayerElement.UpdateNativeBitmap();
+    // break;
+    // case VideoMode.Capture:
+    // break;
+    // }
+    // }
 
-    public void Pause()
-    {
-      this.videoElement.Pause();
-    }
-
-    public void Stop()
-    {
-      this.videoElement.Stop();
-    }
-
-    public void Revert()
-    {
-      this.videoElement.Revert();
-    }
-
-    //public void UpdateNativeBitmap()
-    //{
-    //  switch (this.videoMode)
-    //  {
-    //    case VideoMode.File:
-    //      this.videoPlayerElement.UpdateNativeBitmap();
-    //      break;
-    //    case VideoMode.Capture:
-    //      break;
-    //  }
-    //}
-
+    /// <summary>
+    /// The load movie.
+    /// </summary>
+    /// <param name="filename">
+    /// The filename. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/> . 
+    /// </returns>
     public bool LoadMovie(string filename)
     {
       bool success = true;
@@ -293,6 +364,7 @@ namespace VianaNET
           this.VideoSource = this.videoElement.ImageSource;
           break;
         case VideoMode.Capture:
+
           // Do not render, because the mapped view is already
           // populated with the video data
           break;
@@ -301,16 +373,180 @@ namespace VianaNET
       return success;
     }
 
+    /// <summary>
+    ///   The pause.
+    /// </summary>
+    public void Pause()
+    {
+      this.videoElement.Pause();
+    }
+
+    /// <summary>
+    ///   The play.
+    /// </summary>
+    public void Play()
+    {
+      this.videoElement.Play();
+    }
+
+    /// <summary>
+    ///   The refresh processing map.
+    /// </summary>
     public void RefreshProcessingMap()
     {
       this.videoElement.RefreshProcessingMap();
     }
 
-    public void Cleanup()
+    /// <summary>
+    ///   The revert.
+    /// </summary>
+    public void Revert()
     {
-      this.videoCaptureElement.Dispose();
-      this.videoPlayerElement.Dispose();
+      this.videoElement.Revert();
     }
 
+    /// <summary>
+    /// The step one frame.
+    /// </summary>
+    /// <param name="forward">
+    /// The forward. 
+    /// </param>
+    public void StepOneFrame(bool forward)
+    {
+      switch (this.videoMode)
+      {
+        case VideoMode.File:
+          this.videoPlayerElement.StepOneFrame(forward);
+          break;
+        case VideoMode.Capture:
+
+          // Do nothing
+          break;
+      }
+    }
+
+    /// <summary>
+    ///   The stop.
+    /// </summary>
+    public void Stop()
+    {
+      this.videoElement.Stop();
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="args">
+    /// The args. 
+    /// </param>
+    protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
+      }
+    }
+
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="obj">
+    /// The obj. 
+    /// </param>
+    /// <param name="args">
+    /// The args. 
+    /// </param>
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+      (obj as Video).OnPropertyChanged(args);
+    }
+
+    /// <summary>
+    ///   The on video frame changed.
+    /// </summary>
+    private void OnVideoFrameChanged()
+    {
+      if (this.VideoFrameChanged != null)
+      {
+        this.VideoFrameChanged(this, EventArgs.Empty);
+      }
+    }
+
+    /// <summary>
+    /// The set video mode.
+    /// </summary>
+    /// <param name="newVideoMode">
+    /// The new video mode. 
+    /// </param>
+    private void SetVideoMode(VideoMode newVideoMode)
+    {
+      if (this.videoMode == newVideoMode)
+      {
+        return;
+      }
+
+      this.videoElement.VideoFrameChanged -= this.videoElement_VideoFrameChanged;
+      this.videoMode = newVideoMode;
+
+      switch (this.videoMode)
+      {
+        case VideoMode.File:
+        case VideoMode.None:
+
+          // this.videoCaptureElement.Stop();
+          this.videoCaptureElement.Dispose();
+          this.videoElement = this.videoPlayerElement;
+          break;
+        case VideoMode.Capture:
+          List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
+          if (videoDevices.Count > 0)
+          {
+            this.videoElement = this.videoCaptureElement;
+
+            // this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 5, 320, 240);
+            this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 0, 0, 0);
+          }
+
+          break;
+      }
+
+      this.videoElement.VideoFrameChanged += this.videoElement_VideoFrameChanged;
+      this.VideoSource = this.videoElement.ImageSource;
+    }
+
+    /// <summary>
+    /// The video capture element_ video available.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void videoCaptureElement_VideoAvailable(object sender, EventArgs e)
+    {
+      this.VideoSource = this.videoElement.ImageSource;
+      this.videoElement.Play();
+    }
+
+    /// <summary>
+    /// The video element_ video frame changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void videoElement_VideoFrameChanged(object sender, EventArgs e)
+    {
+      this.OnVideoFrameChanged();
+    }
+
+    #endregion
   }
 }
