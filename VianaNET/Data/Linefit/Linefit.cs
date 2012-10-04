@@ -178,11 +178,6 @@ namespace VianaNET.Data.Linefit
     public double LineFitAbweichung { get; private set; }
 
     /// <summary>
-    /// Gets the Ausgabestring für die Ausgleichsfunktion
-    /// </summary>
-    public string LineFitFktStr { get; private set; }
-
-    /// <summary>
     /// Gets or sets the ausgleichs funktion.
     /// </summary>
     public AusgleichFunction AusgleichsFunktion { get; set; }
@@ -198,33 +193,6 @@ namespace VianaNET.Data.Linefit
     /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
     /// </summary>
     public List<double> WertY { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the regression typ.
-    /// </summary>
-    public Regression RegressionTyp
-    {
-      get
-      {
-        return this.regressionType;
-      }
-
-      set
-      {
-        if (this.regressionType == value)
-        {
-          return;
-        }
-
-        this.regressionType = value;
-        if (this.WertX.Count > 0)
-        {
-          // sind Datenreihen ausgewählt ?
-          // neu berechnen !
-          this.CalculateLineFitFunction(value);
-        }
-      }
-    }
 
     #endregion
 
@@ -519,6 +487,14 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
+    /// Updates the regressionFunctionString
+    /// </summary>
+    public void UpdateRegressionFunctionString()
+    {
+      FittedData.Instance.RegressionFunctionString = this.GetRegressionFunctionString(FittedData.Instance.RegressionType);
+    }
+
+    /// <summary>
     /// The get regression function string.
     /// </summary>
     /// <param name="regTyp">
@@ -527,7 +503,7 @@ namespace VianaNET.Data.Linefit
     /// <returns>
     /// The <see cref="string"/> . 
     /// </returns>
-    public string GetRegressionFunctionString(Regression regTyp)
+    private string GetRegressionFunctionString(Regression regTyp)
     {
       var a = FitParameterMatrix[(int)regTyp, 0];
       var b = FitParameterMatrix[(int)regTyp, 1];
@@ -1772,7 +1748,7 @@ namespace VianaNET.Data.Linefit
           break;
       }
 
-      this.LineFitFktStr = this.GetRegressionFunctionString(regTyp);
+      this.UpdateRegressionFunctionString();
 
       if (this.AusgleichsFunktion != NullFkt)
       {

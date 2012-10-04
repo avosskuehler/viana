@@ -289,7 +289,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void LineFitOptionsButtonClick(object sender, RoutedEventArgs e)
+    private void LinefitPrecisionButtonClick(object sender, RoutedEventArgs e)
     {
       var dlg = new NumericalPrecisionDialog { NumberOfDigits = FittedData.Instance.NumericPrecision };
       if (dlg.ShowDialog().GetValueOrDefault(false))
@@ -310,8 +310,6 @@ namespace VianaNET.Modules.Chart
     private void LineFitTypeButtonClick(object sender, RoutedEventArgs e)
     {
       double minX, minY, hilf;
-
-      //this.PrepareLineFit();
 
       FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertX, out minX, out hilf);
       FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertY, out minY, out hilf);
@@ -360,7 +358,6 @@ namespace VianaNET.Modules.Chart
         if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
           FittedData.Instance.LineFitType.CalculateLineFitFunction(FittedData.Instance.RegressionType);
-          this.LinefitFunctionLabel.Content = FittedData.Instance.LineFitType.LineFitFktStr;
         }
       }
     }

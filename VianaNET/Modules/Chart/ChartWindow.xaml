@@ -162,7 +162,7 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=LineFitType.LineFitFktStr, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel"/>
           </Grid>
         </GroupBox>
         <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
@@ -195,14 +195,12 @@
         </GroupBox>
         <StackPanel Style="{StaticResource SpacerStyle}"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <Label Content="{lex:LocText VianaNET:Labels:ChartWindowCalculatorHeader}" Style="{StaticResource HeaderStyle}"/>
-          <Button Click="RechnerButtonClick">
-            <Image Source="/VianaNET;component/Images/Recalculate16.png"/>
-          </Button>
-          <Label Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}" Style="{StaticResource HeaderStyle}"/>
-          <Button Click="LineFitOptionsButtonClick">
-            <Image Source="/VianaNET;component/Images/InterpolateData16.png"/>
-          </Button>
+          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowCalculatorHeader}"
+                              ImageSource="/VianaNET;component/Images/Recalculate16.png"
+                                Click="RechnerButtonClick"/>
+          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowPrecisionLabel}"
+                              ImageSource="/VianaNET;component/Images/InterpolateData16.png"
+                                Click="LinefitPrecisionButtonClick"/>
         </StackPanel>
       </StackPanel>
     </ScrollViewer>

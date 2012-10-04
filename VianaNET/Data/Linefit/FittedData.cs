@@ -172,6 +172,13 @@ namespace VianaNET.Data.Linefit
       "AxisY", typeof(DataAxis), typeof(FittedData), new UIPropertyMetadata(null));
 
     /// <summary>
+    /// Gets the Ausgabestring für die Ausgleichsfunktion
+    /// </summary>
+    public static readonly DependencyProperty RegressionFunctionStringProperty = DependencyProperty.Register(
+      "RegressionFunctionString", typeof(string), typeof(FittedData), new UIPropertyMetadata(null));
+
+
+    /// <summary>
     ///   The instance.
     /// </summary>
     private static FittedData instance;
@@ -185,6 +192,7 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private FittedData()
     {
+      this.NumericPrecision = 2;
       this.IsInterpolationAllowed = true;
       this.RegressionType = Regression.Linear;
       this.InterpolationSeries = new SortedObservableCollection<XYSample>();
@@ -198,6 +206,8 @@ namespace VianaNET.Data.Linefit
       this.InterpolationLineThickness = 2;
       this.RegressionLineThickness = 2;
       this.TheoryLineThickness = 2;
+      this.LineFitType = new LineFit();
+      this.RegressionFunctionString = "---";
     }
 
     #endregion
@@ -382,6 +392,12 @@ namespace VianaNET.Data.Linefit
       set
       {
         this.SetValue(RegressionTypeProperty, value);
+        if (this.LineFitType != null && this.LineFitType.WertX.Count > 0)
+        {
+          // sind Datenreihen ausgewählt ?
+          // neu berechnen !
+          this.LineFitType.CalculateLineFitFunction(value);
+        }
       }
     }
 
@@ -520,6 +536,11 @@ namespace VianaNET.Data.Linefit
       set
       {
         this.SetValue(NumericPrecisionProperty, value);
+        this.OnPropertyChanged("NumericPrecisionString");
+        if (this.LineFitType != null)
+        {
+          this.LineFitType.UpdateRegressionFunctionString();
+        }
       }
     }
 
@@ -603,6 +624,18 @@ namespace VianaNET.Data.Linefit
       }
     }
 
+    public string RegressionFunctionString
+    {
+      get
+      {
+        return (string)this.GetValue(RegressionFunctionStringProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionFunctionStringProperty, value);
+      }
+    }
     /// <summary>
     /// Gets the numeric precision string.
     /// </summary>
@@ -613,6 +646,7 @@ namespace VianaNET.Data.Linefit
         return "G" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture);
       }
     }
+
 
     #endregion
 

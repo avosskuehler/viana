@@ -5,9 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VianaNET", "VianaNET\VianaN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFLocalizeExtension", "WPFLocalizeExtension\WPFLocalizeExtension.csproj", "{E8C5B094-2CB4-4C26-87F0-351B03612179}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VianaNETSetup", "VianaNETSetup\VianaNETSetup.vdproj", "{89739709-35B9-44DD-8E63-3FA15FCE7727}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VianaNETSetupx86", "VianaNETSetupx86\VianaNETSetupx86.vdproj", "{89739709-35B9-44DD-8E63-3FA15FCE7727}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VianaNETShaderEffectLibrary", "VianaNETShaderEffectLibrary\VianaNETShaderEffectLibrary.csproj", "{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VianaNETSetupx64", "VianaNETSetupx64\VianaNETSetupx64.vdproj", "{34816A2A-D717-4775-B78D-D30796F39FBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}.Release|x64.Build.0 = Release|x64
 		{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}.Release|x86.ActiveCfg = Release|x86
 		{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}.Release|x86.Build.0 = Release|x86
+		{34816A2A-D717-4775-B78D-D30796F39FBF}.Debug|x64.ActiveCfg = Debug
+		{34816A2A-D717-4775-B78D-D30796F39FBF}.Debug|x86.ActiveCfg = Debug
+		{34816A2A-D717-4775-B78D-D30796F39FBF}.Release|x64.ActiveCfg = Release
+		{34816A2A-D717-4775-B78D-D30796F39FBF}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
