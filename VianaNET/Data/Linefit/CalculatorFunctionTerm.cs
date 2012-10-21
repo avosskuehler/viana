@@ -25,39 +25,39 @@
 namespace VianaNET.Data.Linefit
 {
   /// <summary>
-  /// The calculator function term.
+  /// calculator tree for a function term.
   /// </summary>
-  public class CalculatorFunctionTerm
+    public class FunctionCalcTree
   {
     /// <summary>
-    /// Gets or sets the li.
+    /// Gets or sets the left functionCalcTree.
     /// </summary>
-    public CalculatorFunctionTerm Li;
+    public FunctionCalcTree Li;
 
     /// <summary>
-    /// Gets or sets the re.
+    /// Gets or sets the right functionCalcTree.
     /// </summary>
-    public CalculatorFunctionTerm Re;
+    public FunctionCalcTree Re;
 
     /// <summary>
-    /// Gets or sets the cwert.
+    /// Gets or sets the symbol of operator.
     /// </summary>
     public symTyp Cwert { get; set; }
 
     /// <summary>
-    /// Gets or sets the name.
+    /// Gets or sets the string, containing the  term.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the nr.
+    /// Gets or sets the number of a variable.
     /// </summary>
     public ushort Nr { get; set; }
 
 
 
     /// <summary>
-    /// Gets or sets the zwert.
+    /// Gets or sets the value, when node contains a number or constant.
     /// </summary>
     public double Zwert { get; set; }
   }

@@ -32,60 +32,11 @@ namespace VianaNET.Data.Linefit
   /// </summary>
   public class Constants
   {
-    // public const int MaxListSize = Int32.MaxValue / 16;
-
-    // public const double _max_Real = 1.7e38;
-    // public const int _Ln_max_Real = 88;
+    
     #region Constants
 
     /// <summary>
-    ///   The s list capacity error.
-    /// </summary>
-    public const string SListCapacityError = "Die Kapazität der Liste ist erschöpft (%d)";
-
-    /// <summary>
-    ///   The s list count error.
-    /// </summary>
-    public const string SListCountError = "Zu viele Einträge in der Liste (%d)";
-
-    /// <summary>
-    ///   The s list index error.
-    /// </summary>
-    public const string SListIndexError = "Der Index der Liste überschreitet das Maximum (%d)";
-
-    /// <summary>
-    ///   The _form aus.
-    /// </summary>
-    public const char _formAus = '!';
-
-    /// <summary>
-    ///   The _hoch.
-    /// </summary>
-    public const char _hoch = '\'';
-
-    /// <summary>
-    ///   The _normal.
-    /// </summary>
-    public const char _normal = '\"';
-
-    /// <summary>
-    ///   The _sym an.
-    /// </summary>
-    public const char _symAn = '#';
-
-    // public const int do_Sym = 3;
-    /// <summary>
-    ///   The _sym aus.
-    /// </summary>
-    public const char _symAus = '§';
-
-    /// <summary>
-    ///   The _tief.
-    /// </summary>
-    public const char _tief = '_';
-
-    /// <summary>
-    ///   The euler zahl.
+    ///   The euler number.
     /// </summary>
     public const double eulerZahl = 2.1782818;
 
@@ -99,10 +50,22 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     public const double leerFeld = -1.1E32;
 
-
+    // public const double _max_Real = 1.7e38;
+    // public const int _Ln_max_Real = 88;
     #endregion
 
     #region Static Fields
+
+    /// <summary>
+    ///   spezial chars in shortnames of physical constants. originial were those chars used for formatting the string
+    ///   _formAus = '!' - end of formula
+    ///   _hoch = '\'' - move up (exponent)
+    ///   _normal = '\"' - normal
+    ///   _tief = '_' - move down (index)
+    ///   _symAn = '#' - switch to symbol font
+    ///   _symAus = '§' - switch to normal font
+    /// </summary>
+    public static readonly string spezialChars = string.Concat('\'', '\"', '!', '#', '$', '_');
 
     /// <summary>
     ///   The konstante.
@@ -121,7 +84,7 @@ namespace VianaNET.Data.Linefit
       };
 
     /// <summary>
-    ///   The fnam.
+    ///   operator- or function names.
     /// </summary>
     public static string[] fnam =
       {
@@ -132,24 +95,24 @@ namespace VianaNET.Data.Linefit
     #endregion
 
     /// <summary>
-    ///   The konst rec.
+    ///   The konst record.
     /// </summary>
     public struct KonstRec
     {
       #region Fields
 
       /// <summary>
-      ///   The bez.
+      ///   short name of constant.
       /// </summary>
       public string bez;
 
       /// <summary>
-      ///   The titel.
+      ///   long name of constant.
       /// </summary>
       public string titel;
 
       /// <summary>
-      ///   The wert.
+      ///   value of constant.
       /// </summary>
       public double wert;
 
@@ -157,37 +120,20 @@ namespace VianaNET.Data.Linefit
     }
   }
 
-  /*
-    public struct KonstRec
-    {
-        public string titel;
-        public string bez;
-        public double wert;
-    } // end KonstRec
-*/
-  /*   public struct TSpaltDefBuf
-    {
-        public string be;        // Bezeichnung
-        public string di;        // Dimension
-        public string ti;        // Titel
-        public string fs;
-        public int br;
-        public int nk;
-    } // end TSpaltDefBuf
-*/
+
 
   /// <summary>
-  ///   The t rechner art.
+  ///   Calcalator or function editor.
   /// </summary>
   public enum TRechnerArt
   {
     /// <summary>
-    ///   The formel rechner.
+    ///   function editor.
     /// </summary>
     formelRechner,
 
     /// <summary>
-    ///   The rechner.
+    ///   calculator.
     /// </summary>
     rechner
   }
@@ -195,7 +141,7 @@ namespace VianaNET.Data.Linefit
   // end TRechnerArt
 
   /// <summary>
-  ///   The sym typ.
+  ///   symbol types.
   /// </summary>
   public enum symTyp
   {
@@ -260,17 +206,17 @@ namespace VianaNET.Data.Linefit
     pot,
 
     /// <summary>
-    ///   The sinf.
+    ///   The sinus function.
     /// </summary>
     sinf,
 
     /// <summary>
-    ///   The cosf.
+    ///   The cosinus function.
     /// </summary>
     cosf,
 
     /// <summary>
-    ///   The tanf.
+    ///   The tangens function.
     /// </summary>
     tanf,
 
@@ -280,42 +226,42 @@ namespace VianaNET.Data.Linefit
     ctgf,
 
     /// <summary>
-    ///   The expf.
+    ///   The exponential function.
     /// </summary>
     expf,
 
     /// <summary>
-    ///   The lnf.
+    ///   The logarithmic function.
     /// </summary>
     lnf,
 
     /// <summary>
-    ///   The wurzf.
+    ///   The squareroot function.
     /// </summary>
     wurzf,
 
     /// <summary>
-    ///   The sigf.
+    ///   The signum function.
     /// </summary>
     sigf,
 
     /// <summary>
-    ///   The absf.
+    ///   The absolute function.
     /// </summary>
     absf,
 
     /// <summary>
-    ///   The deltaf.
+    ///   The delta function.
     /// </summary>
     deltaf,
 
     /// <summary>
-    ///   The ffmax.
+    ///   The last function symbol - dummy function.
     /// </summary>
     ffmax,
 
     /// <summary>
-    ///   The fstr end.
+    ///   The function string end.
     /// </summary>
     fstrEnd
   }
@@ -323,69 +269,69 @@ namespace VianaNET.Data.Linefit
   // end symTyp
 
   /// <summary>
-  ///   The parse.
+  ///   Parsing a string and building a function tree; calculate value of function for a given argument.
   /// </summary>
   public class Parse
   {
     #region Fields
 
     /// <summary>
-    ///   The fkt term.
+    ///   The function term/tree.
     /// </summary>
-    public CalculatorFunctionTerm CalculatorFunctionTerm = new CalculatorFunctionTerm();
+      public FunctionCalcTree CalculatorFunctionTerm = new FunctionCalcTree();
 
     /// <summary>
     ///   The fx.
     /// </summary>
-    public CalculatorFunctionTerm fx;
+      public FunctionCalcTree fx;
 
     /// <summary>
-    ///   The last err nr.
+    ///   The last error number.
     /// </summary>
     public byte lastErrNr = 0;
 
     /// <summary>
-    ///   The last err pos.
+    ///   The last error position.
     /// </summary>
     public int lastErrPos = 0;
 
     /// <summary>
-    ///   The calc err.
+    ///   The calculation error.
     /// </summary>
     private bool calcErr;
 
     /// <summary>
-    ///   The ch.
+    ///   char read in function string.
     /// </summary>
     private char ch = ' ';
 
     /// <summary>
-    ///   The ch pos.
+    ///   position of char in function string.
     /// </summary>
     private short chPos = -1;
 
     /// <summary>
-    ///   The ch_.
+    ///   The ch_ - same as ch, but is uppercase.
     /// </summary>
     private char ch_;
 
     /// <summary>
-    ///   The erg 1.
+    ///   The erg1.
     /// </summary>
     private double erg1;
 
     /// <summary>
-    ///   The err nr.
+    ///   The error number.
     /// </summary>
     private int errNr;
 
     /// <summary>
-    ///   The err pos.
+    ///   The error position.
     /// </summary>
     private int errPos;
 
     /// <summary>
-    ///   The f formel.
+    ///   The functionname string.
     /// </summary>
     private string fFormel = string.Empty;
 
@@ -405,27 +351,27 @@ namespace VianaNET.Data.Linefit
     private string funcStr;
 
     /// <summary>
-    ///   The h str.
+    ///   The help string.
     /// </summary>
     private string hStr;
 
     /// <summary>
-    ///   The k var.
+    ///   node containing a constant.
     /// </summary>
-    private CalculatorFunctionTerm kVar;
+    private FunctionCalcTree kVar;
 
     /// <summary>
-    ///   The max lang.
+    ///   The maximum length.
     /// </summary>
     private byte maxLang;
 
     /// <summary>
-    ///   The no up case.
+    ///   flag for comparing strings case sensitive.
     /// </summary>
     private bool noUpCase = false;
 
     /// <summary>
-    ///   The old ch pos.
+    ///   The old char position.
     /// </summary>
     private short oldChPos = -1;
 
@@ -435,37 +381,37 @@ namespace VianaNET.Data.Linefit
     private double result;
 
     /// <summary>
-    ///   The sym.
+    ///   symbol
     /// </summary>
     private symTyp sym;
 
     /// <summary>
-    ///   The var xwert.
+    ///   value of variable.
     /// </summary>
     private double varXwert;
 
     /// <summary>
-    ///   The wert.
+    ///   value
     /// </summary>
     private double wert;
 
     /// <summary>
-    ///   The x var.
+    ///   reference to node containing the varible.
     /// </summary>
-    private CalculatorFunctionTerm xVar;
+    private FunctionCalcTree xVar;
 
     #endregion
 
     #region Public Methods and Operators
 
     /// <summary>
-    /// The err msg.
+    /// Error message.
     /// </summary>
     /// <param name="nr">
-    /// The nr. 
+    /// error number. 
     /// </param>
     /// <param name="s">
-    /// The s. 
+    /// message string 
     /// </param>
     public void ErrMsg(byte nr, ref string s)
     {
@@ -496,19 +442,18 @@ namespace VianaNET.Data.Linefit
     /// The fkt wert.
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// function. 
     /// </param>
     /// <param name="nr">
-    /// The nr. 
+    /// number of variable - in this version unused
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// value <see cref="double"/> . 
     /// </returns>
-    public double FktWert(CalculatorFunctionTerm fx, int nr)
+    public double FktWert(FunctionCalcTree fx, int nr)
     {
       double result;
 
-      // bool fktWertError;
       if (fx != null)
       {
         this.calcErr = false;
@@ -536,18 +481,18 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The fkt wert_ berechne.
+    /// Method of FktWert: calculate value.
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// function 
     /// </param>
     /// <param name="nr">
     /// The nr. 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// value <see cref="double"/> . 
     /// </returns>
-    public double FktWert_Berechne(CalculatorFunctionTerm fx, int nr)
+    public double FktWert_Berechne(FunctionCalcTree fx, int nr)
     {
       // double result;
       // double erg1;
@@ -564,7 +509,7 @@ namespace VianaNET.Data.Linefit
           this.result = fx.Zwert;
           break;
         case symTyp.istKonst:
-          this.result = fx.Zwert; // Constants.konstante[fx.nr].wert;
+          this.result = fx.Zwert; 
           break;
         case symTyp.ident:
 
@@ -756,7 +701,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The fkt wert_ berechne_ fehler.
+    ///   Method of FktWert: set error values.
     /// </summary>
     public void FktWert_Berechne_Fehler()
     {
@@ -767,13 +712,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The fkt wert_ wert int pot.
+    /// Method of FktWert: Calculates value of a potenz.
     /// </summary>
     /// <param name="bas">
-    /// The bas. 
+    /// base 
     /// </param>
     /// <param name="ex">
-    /// The ex. 
+    /// exponent - must be an integer. 
     /// </param>
     /// <returns>
     /// The <see cref="double"/> . 
@@ -807,18 +752,18 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The freier fkt wert.
+    /// Calculates the value of a function for a given number.
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// function 
     /// </param>
     /// <param name="x">
-    /// The x. 
+    /// given number 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// calculateted value <see cref="double"/> . 
     /// </returns>
-    public double FreierFktWert(CalculatorFunctionTerm fx, double x)
+    public double FreierFktWert(FunctionCalcTree fx, double x)
     {
       double result;
       this.varXwert = x;
@@ -827,9 +772,9 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The get scan result.
+    ///   returns the scan result - 0 no error 
     /// </summary>
-    /// <returns> The <see cref="byte" /> . </returns>
+    /// <returns> error number <see cref="byte" /> . </returns>
     public byte GetScanResult()
     {
       byte result;
@@ -839,12 +784,12 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The loesch.
+    /// clears the function tree
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// function tree 
     /// </param>
-    public void Loesch(ref CalculatorFunctionTerm fx)
+    public void Loesch(ref FunctionCalcTree fx)
     {
       if (fx != null)
       {
@@ -853,21 +798,19 @@ namespace VianaNET.Data.Linefit
 
         // fx.free           
         fx = null;
-
-        // this.SpStat =(ushort)((this.SpStat & ~PhysTab.Constants.ZaS_berechnet) | PhysTab.Constants.ZaS_geaendert);
       }
     }
 
     /// <summary>
-    /// The scan fkt.
+    /// ScanFkt - scans the function string and builds a function tree when successful.
     /// </summary>
     /// <param name="fx0">
-    /// The fx 0. 
+    /// function tree
     /// </param>
     /// <param name="funcStr0">
-    /// The func str 0. 
+    /// function string to scan 
     /// </param>
-    public void ScanFkt(ref CalculatorFunctionTerm fx0, string funcStr0)
+    public void ScanFkt(ref FunctionCalcTree fx0, string funcStr0)
     {
       if (funcStr0 != string.Empty)
       {
@@ -895,15 +838,6 @@ namespace VianaNET.Data.Linefit
         this.errNr = 6;
       }
 
-      /*      if ((errNr == 0))
-            {
-                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_Scanned);
-            }
-            else
-            {
-                this.SpStat = (ushort)(PhysTab.Constants.ZaS_formel | PhysTab.Constants.ZaS_fehler);
-            }
-       */
       this.lastErrNr = (byte)this.errNr;
       this.lastErrPos = this.errPos;
       if (this.errNr == 0)
@@ -913,10 +847,10 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ err.
+    /// Method of the Scanfkt: set error number and its position in the string.
     /// </summary>
     /// <param name="nr">
-    /// The nr. 
+    /// error number 
     /// </param>
     public void ScanFkt_Err(byte nr)
     {
@@ -934,16 +868,18 @@ namespace VianaNET.Data.Linefit
       this.Loesch(ref this.fx);
     }
 
+
     /// <summary>
-    /// The scan fkt_ expression.
+    /// Method of the Scanfkt: get expression.
+    /// expression is a sum of terms or a term
     /// </summary>
     /// <param name="expr">
-    /// The expr. 
+    /// The expression 
     /// </param>
-    public void ScanFkt_Expression(ref CalculatorFunctionTerm expr)
+    public void ScanFkt_Expression(ref FunctionCalcTree expr)
     {
       symTyp addop;
-      CalculatorFunctionTerm temp = null;
+      FunctionCalcTree temp = null;
       if ((this.sym == symTyp.plus) || (this.sym == symTyp.minus))
       {
         addop = this.sym;
@@ -992,15 +928,16 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ expression_ term.
+    /// Method of the Scanfkt: get term.
+    /// a term is a product or functionterm
     /// </summary>
     /// <param name="prod">
-    /// The prod. 
+    /// prod - the term. 
     /// </param>
-    public void ScanFkt_Expression_Term(ref CalculatorFunctionTerm prod)
+    public void ScanFkt_Expression_Term(ref FunctionCalcTree prod)
     {
       symTyp pSym;
-      CalculatorFunctionTerm temp = null;
+      FunctionCalcTree temp = null;
       this.ScanFkt_Expression_Term_FuncTerm(ref prod);
       while ((this.sym == symTyp.mal) || (this.sym == symTyp.durch))
       {
@@ -1015,15 +952,16 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ expression_ term_ func term.
+    /// Method of the Scanfkt: get functionterm.
+    /// a functionterm is function or a factor
     /// </summary>
     /// <param name="fterm">
-    /// The fterm. 
+    /// fterm - the functionterm. 
     /// </param>
-    public void ScanFkt_Expression_Term_FuncTerm(ref CalculatorFunctionTerm fterm)
+    public void ScanFkt_Expression_Term_FuncTerm(ref FunctionCalcTree fterm)
     {
       symTyp fsym;
-      CalculatorFunctionTerm temp = null;
+      FunctionCalcTree temp = null;
       if (this.sym < symTyp.sinf)
       {
         this.ScanFkt_Expression_Term_FuncTerm_Faktor(ref fterm);
@@ -1067,12 +1005,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ expression_ term_ func term_ faktor.
+    ///  Method of the Scanfkt:  get factor.
+    ///  a factor is a variable, a constant, a number or an expression
     /// </summary>
     /// <param name="fakt">
-    /// The fakt. 
+    /// fakt - the factor. 
     /// </param>
-    public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref CalculatorFunctionTerm fakt)
+    public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref FunctionCalcTree fakt)
     {
       if (this.fehler)
       {
@@ -1115,7 +1054,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The scan fkt_ get ch.
+    ///   Method of the Scanfkt: get next char.
     /// </summary>
     public void ScanFkt_GetCh()
     {
@@ -1133,7 +1072,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The scan fkt_ get sym.
+    ///   Method of the Scanfkt: get next symbol.
     /// </summary>
     public void ScanFkt_GetSym()
     {
@@ -1192,17 +1131,16 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The scan fkt_ identifier.
+    ///   Method of the Scanfkt: reads an identifier.
     /// </summary>
     public void ScanFkt_Identifier()
     {
       string buf;
       string buf1;
-      string Spezi = string.Concat(
-        Constants._hoch, Constants._tief, Constants._symAn, Constants._symAus, Constants._formAus, Constants._normal);
+   //   string Spezi = string.Concat(
+   //     Constants._hoch, Constants._tief, Constants._symAn, Constants._symAus, Constants._formAus, Constants._normal);
       ushort i;
 
-      // TZahlenSpalte sp;
       buf = string.Empty;
       buf1 = string.Empty;
       do
@@ -1212,7 +1150,7 @@ namespace VianaNET.Data.Linefit
         this.ScanFkt_GetCh();
       }
       while (
-        !(((this.ch < '0') || ((this.ch > '9') && (this.ch < 'A')) || (this.ch > 'Z')) && (Spezi.IndexOf(this.ch) == -1)));
+        !(((this.ch < '0') || ((this.ch > '9') && (this.ch < 'A')) || (this.ch > 'Z')) && (Constants.spezialChars.IndexOf(this.ch) == -1)));
       if (buf == "PI")
       {
         this.sym = symTyp.istZahl;
@@ -1310,36 +1248,36 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ make node.
+    /// Makes a node in the function tree.
     /// </summary>
     /// <param name="op1">
-    /// The op 1. 
+    ///  op1 - left tree/operand 
     /// </param>
     /// <param name="code">
-    /// The code. 
+    ///  code - operator 
     /// </param>
     /// <param name="op2">
-    /// The op 2. 
+    /// op2 right tree/operand 
     /// </param>
     /// <returns>
     /// The <see cref="CalculatorFunctionTerm"/> . 
     /// </returns>
-    public CalculatorFunctionTerm ScanFkt_MakeNode(CalculatorFunctionTerm op1, symTyp code, CalculatorFunctionTerm op2)
+    public FunctionCalcTree ScanFkt_MakeNode(FunctionCalcTree op1, symTyp code, FunctionCalcTree op2)
     {
-      CalculatorFunctionTerm result;
-      result = new CalculatorFunctionTerm();
+        FunctionCalcTree result;
+        result = new FunctionCalcTree();
       result.Cwert = code;
       result.Li = op1;
       result.Re = op2;
       return result;
     }
 
-    // Number
+    
     /// <summary>
-    /// The scan fkt_ make sym.
+    /// Method of the Scanfkt: set sym and reads next char 
     /// </summary>
     /// <param name="s">
-    /// The s. 
+    /// s - symbol 
     /// </param>
     public void ScanFkt_MakeSym(symTyp s)
     {
@@ -1347,8 +1285,10 @@ namespace VianaNET.Data.Linefit
       this.ScanFkt_GetCh();
     }
 
+
+    // Number
     /// <summary>
-    ///   The scan fkt_ number.
+    ///   Method of the Scanfkt: reads a number.
     /// </summary>
     public void ScanFkt_Number()
     {
@@ -1389,32 +1329,32 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The scan fkt_ zahl.
+    /// Makes a node in the function tree, that contains a number
     /// </summary>
     /// <param name="r">
-    /// The r. 
+    /// r - value of number. 
     /// </param>
     /// <returns>
     /// The <see cref="CalculatorFunctionTerm"/> . 
     /// </returns>
-    public CalculatorFunctionTerm ScanFkt_Zahl(double r)
+    public FunctionCalcTree ScanFkt_Zahl(double r)
     {
-      CalculatorFunctionTerm result;
+        FunctionCalcTree result;
       result = this.ScanFkt_MakeNode(null, symTyp.istZahl, null);
       result.Zwert = r;
       return result;
     }
 
     /// <summary>
-    /// The is linear function.
+    /// Tests, if the given function is a linear function.
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// fx - the function term to test. 
     /// </param>
     /// <returns>
     /// The <see cref="bool"/> . 
     /// </returns>
-    public bool isLinearFunction(CalculatorFunctionTerm fx)
+    public bool isLinearFunction(FunctionCalcTree fx)
     {
       if ((fx == null) || (fx.Cwert <= symTyp.istKonst))
       {
@@ -1451,7 +1391,7 @@ namespace VianaNET.Data.Linefit
     #region Methods
 
     /// <summary>
-    ///   The scan fkt_ read int.
+    /// Method of the Scanfkt: reads an integer.
     /// </summary>
     private void ScanFkt_ReadInt()
     {
@@ -1463,15 +1403,15 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The does contain no var.
+    /// Tests, if the function term contains no vars / only numbers and constants.
     /// </summary>
     /// <param name="fx">
-    /// The fx. 
+    /// fx - the function term to test. 
     /// </param>
     /// <returns>
     /// The <see cref="bool"/> . 
     /// </returns>
-    private bool doesContainNoVar(CalculatorFunctionTerm fx)
+    private bool doesContainNoVar(FunctionCalcTree fx)
     {
       if ((fx == null) || (fx.Cwert <= symTyp.istKonst))
       {

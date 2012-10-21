@@ -45,9 +45,9 @@ namespace VianaNET.Data.Linefit
     private readonly TRechnerArt art;
 
     /// <summary>
-    ///   The scanned fkt.
+    ///   The scanned function - coded in a tree.
     /// </summary>
-    private CalculatorFunctionTerm scannedFkt;
+    private FunctionCalcTree scannedFkt;
 
     #endregion
 
@@ -103,7 +103,7 @@ namespace VianaNET.Data.Linefit
     ///   The get funktion.
     /// </summary>
     /// <returns> The <see cref="CalculatorFunctionTerm" /> . </returns>
-    public CalculatorFunctionTerm GetFunktion()
+    public FunctionCalcTree GetFunktion()
     {
       if (this.scannedFkt != null)
       {
@@ -206,7 +206,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button es c_ click.
+    /// The button ESC click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -220,7 +220,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button end_ click.
+    /// The button END  click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -236,7 +236,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button fertig_ click.
+    /// The button Done click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -251,7 +251,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button left_ click.
+    /// The button left click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -271,7 +271,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button pos 1_ click.
+    /// The button POS1 click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -287,7 +287,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button right_ click.
+    /// The button right click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -307,7 +307,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button take konst_ click.
+    /// The button take constant click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -352,7 +352,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The button_ fkt_ click.
+    /// The button insert functionstring click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -373,7 +373,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The text box 1_ text changed_1.
+    /// The textbox1 text changed_1.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -385,7 +385,6 @@ namespace VianaNET.Data.Linefit
     {
       var formelStr = this.textBox1.Text;
 
-      // TFktTerm fx;
       var aktParser = new Parse();
       this.scannedFkt = null;
       aktParser.ScanFkt(ref this.scannedFkt, formelStr);

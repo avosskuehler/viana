@@ -30,7 +30,7 @@ namespace VianaNET.Data.Linefit
   using System.Linq;
 
   using VianaNET.CustomStyles.Types;
-
+  using VianaNET.Data;
   /// <summary>
   /// The line fit class.
   /// </summary>
@@ -42,7 +42,7 @@ namespace VianaNET.Data.Linefit
     #region Static Fields
 
     /// <summary>
-    ///   The genauigkeit.
+    ///   (angestrebte) Genauigkeit der Regressionsparameter
     /// </summary>
     private const double Genauigkeit = 1E-10;
 
@@ -57,17 +57,18 @@ namespace VianaNET.Data.Linefit
     private const double MinStep = 1E-6;
 
     /// <summary>
-    ///   The start abw.
+    ///   Startabweichung / maximaler absoluter Fehler
     /// </summary>
     private const double StartAbw = 1E150;
 
     /// <summary>
-    /// Parameter der Ausgleichsfunktion
+    /// Parameter und Abweichungen der 9 Ausgleichsfunktionen; 
+    /// ein weiterer Parametersatz, wenn man die beste aller Regressionen herausfinden will. 
     /// </summary>
     private static readonly Matrix FitParameterMatrix = new Matrix(10, 6);
 
     /// <summary>
-    /// Parameter einer Ausgleichsfunktionen
+    /// Parameter (maximal 4) einer Ausgleichsfunktionen
     /// </summary>
     private static double[] param;
 
@@ -76,7 +77,7 @@ namespace VianaNET.Data.Linefit
     #region Fields
 
     /// <summary>
-    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+    /// Nummer des betrachteten Objekts
     /// </summary>
     private int numberOfObject;
 
@@ -86,12 +87,12 @@ namespace VianaNET.Data.Linefit
     private int anzahl;
 
     /// <summary>
-    ///   The end pixel x.
+    ///   maximaler pixel wert im chart für x.
     /// </summary>
     private double endPixelX;
 
     /// <summary>
-    ///   The end x.
+    ///   maximaler Wert auf der x-Achse, der bei Messdaten auftritt
     /// </summary>
     private double endX;
 
@@ -106,7 +107,7 @@ namespace VianaNET.Data.Linefit
     private Regression regressionType;
 
     /// <summary>
-    ///   The start pixel x.
+    ///   minimaler pixel wert im chart für x.
     /// </summary>
     private double startPixelX;
 
@@ -116,7 +117,7 @@ namespace VianaNET.Data.Linefit
     //private long startTime;
 
     /// <summary>
-    ///   The start x.
+    ///   minimaler Wert auf der x-Achse, der bei Messdaten auftritt.
     /// </summary>
     private double startX;
 
@@ -126,12 +127,12 @@ namespace VianaNET.Data.Linefit
     private double stepX;
 
     /// <summary>
-    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+    /// Spaltennummer des 1. Wertes des betrachteten Objekts
     /// </summary>
     private DataAxis axisX;
 
     /// <summary>
-    /// Spaltennummer des 1. bzw. 2. Wertes; Nummer des betrachteten Objekts
+    /// Spaltennummer des 2. Wertes des betrachteten Objekts
     /// </summary>
     private DataAxis axisY;
 
@@ -161,7 +162,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     ///   The ausgleich function.
     /// </summary>
-    /// <param name="x"> The x. </param>
+    /// <param name="x"> argument </param>
     /// <returns>A double</returns>
     public delegate double AusgleichFunction(double x);
 
@@ -173,7 +174,7 @@ namespace VianaNET.Data.Linefit
     #region Public Properties
 
     /// <summary>
-    ///   Gets the mittlere Abweichung der Ausgleichsfunktion bzgl. der Messwerte; nur read-only
+    ///    the mittlere Abweichung der Ausgleichsfunktion bzgl. der Messwerte; nur read-only
     /// </summary>
     public double LineFitAbweichung { get; private set; }
 
@@ -199,13 +200,13 @@ namespace VianaNET.Data.Linefit
     #region Public Methods and Operators
 
     /// <summary>
-    /// The ausgleichs exp.
+    /// Calculates the value of the linefit function at argument x, when the function is exponential.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsExp(double x)
     {
@@ -213,13 +214,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs exp spez.
+    /// Calculates the value of the linefit function at argument x, when the function is exponential.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsExpSpez(double x)
     {
@@ -227,13 +228,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs gerade.
+    /// Calculates the value of the linefit function at argument x, when the function is linear.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsGerade(double x)
     {
@@ -241,13 +242,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs log.
+    /// Calculates the value of the linefit function at argument x, when the function is logarithic.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsLog(double x)
     {
@@ -255,13 +256,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs parabel.
+    /// Calculates the value of the linefit function at argument x, when the function is quadratic.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsParabel(double x)
     {
@@ -269,13 +270,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs pot.
+    /// Calculates the value of the linefit function at argument x, when the function is potential.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsPot(double x)
     {
@@ -283,13 +284,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs reso.
+    /// Calculates the value of the linefit function at argument x, when the function is describing a resonanz.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsReso(double x)
     {
@@ -298,13 +299,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs sin.
+    /// Calculates the value of the linefit function at argument x, when the function is sinus-function.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsSin(double x)
     {
@@ -313,13 +314,13 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The ausgleichs sin exp.
+    /// Calculates the value of the linefit function at argument x, when the function is a sinus-function and its amplitude is going down.
     /// </summary>
     /// <param name="x">
-    /// The x. 
+    /// argument is x 
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The calculated value <see cref="double"/> . 
     /// </returns>
     public static double AusgleichsSinExp(double x)
     {
@@ -328,7 +329,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The null fkt.
+    /// The null function.
     /// </summary>
     /// <param name="x">
     /// The x. 
@@ -342,7 +343,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The calculate line fit function.
+    /// calculate line fit function.
     /// </summary>
     /// <param name="regressionTyp">
     /// The regression typ. 
@@ -397,9 +398,9 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// Calculate the theory series xySamples
     /// </summary>
-    /// <param name="fx"> The fx. </param>
+    /// <param name="fx"> The theoretical function. </param>
     /// <param name="theorySamples"> The theory samples. </param>
-    public void CalculateLineFitTheorieSeries(CalculatorFunctionTerm fx, SortedObservableCollection<XYSample> theorySamples)
+    public void CalculateLineFitTheorieSeries(FunctionCalcTree fx, SortedObservableCollection<XYSample> theorySamples)
     {
       // Erase old values
       theorySamples.Clear();
@@ -416,17 +417,18 @@ namespace VianaNET.Data.Linefit
 
       if (tempParser.isLinearFunction(fx))
       {
-        //if (this.axisX == 2)
-        //{
-        //  // zwei Punkte genügen bei x-y-Diagramm
-        //  x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-        //  p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-        //  theorySamples.Add(p);
-        //  x = this.WertX[this.anzahl - 1];
-        //  p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-        //  theorySamples.Add(p);
-        //}
-        //else
+          /*
+          if (this.axisX.Axis != AxisType.T)
+        {
+          // zwei Punkte genügen bei x-y-Diagramm
+          x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
+          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+          theorySamples.Add(p);
+          x = this.WertX[this.anzahl - 1];
+          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+          theorySamples.Add(p);
+        }
+        else  */
         {
           // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
           for (k = 0; k < this.anzahl; k++)
@@ -1389,20 +1391,22 @@ namespace VianaNET.Data.Linefit
 
       if (this.regressionType == Regression.Linear)
       {
-        //// Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
-        //// da Chart selbst Geraden zeichnen kann. 
-        //if (this.axisX == 2)
-        //{
-        //  // zwei Punkte genügen bei x-y-Diagramm
-        //  x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-        //  p = new XYSample(x, this.AusgleichsFunktion(x));
-        //  lineFitSamples.Add(p);
-        //  x = this.WertX[this.anzahl - 1];
-        //  p = new XYSample(x, this.AusgleichsFunktion(x));
-        //  lineFitSamples.Add(p);
-        //}
-        //else
-        {
+          /*
+        // Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
+        // da Chart selbst Geraden zeichnen kann. 
+         if (this.axisX.Axis != AxisType.T)
+          {
+          // zwei Punkte genügen bei x-y-Diagramm
+          x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
+          p = new XYSample(x, this.AusgleichsFunktion(x));
+          lineFitSamples.Add(p);
+          x = this.WertX[this.anzahl - 1];
+          p = new XYSample(x, this.AusgleichsFunktion(x));
+          lineFitSamples.Add(p);
+        }
+        else* */
+          {
+           
           // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
           for (k = 0; k < this.anzahl; k++)
           {
@@ -1787,7 +1791,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    ///   The _ abschaetzung fuer b.
+    ///   The Abschaetzung fuer Parameter b.
     /// </summary>
     /// <returns> The <see cref="double" /> . </returns>
     private double AbschaetzungFuerB()
@@ -1802,16 +1806,16 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The _do regress.
+    /// Calculate linefit parameters for those linefits, that can be done by the least square method.
     /// </summary>
     /// <param name="anzahlRegress">
     /// The anzahl. 
     /// </param>
     /// <param name="wertX">
-    /// The wert x. 
+    /// List of all x-values. 
     /// </param>
     /// <param name="wertY">
-    /// The wert y. 
+    /// List of all y-values. 
     /// </param>
     /// <param name="paramRegress">
     /// The param. 
@@ -1851,19 +1855,19 @@ namespace VianaNET.Data.Linefit
     /// The _get periode.
     /// </summary>
     /// <param name="dataX">
-    /// The data x. 
+    /// List of all x-values. 
     /// </param>
     /// <param name="dataY">
-    /// The data y. 
+    /// List of all y-values. 
     /// </param>
     /// <param name="schaetzWert">
-    /// The schaetz wert. 
+    /// assumed value of factor determing the period 
     /// </param>
     /// <param name="maxSchaetz">
-    /// The max schaetz. 
+    /// max value of factor determing the period. 
     /// </param>
     /// <param name="schaetzStep">
-    /// The schaetz step. 
+    /// start step for changing that factor. 
     /// </param>
     private void GetPeriode(
       List<double> dataX, List<double> dataY, out double schaetzWert, out double maxSchaetz, out double schaetzStep)

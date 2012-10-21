@@ -41,13 +41,13 @@ namespace VianaNET.Data.Linefit
     /// Initializes a new instance of the <see cref="LinefittingDialog"/> class.
     /// </summary>
     /// <param name="negativeX">
-    /// The x neg. 
+    /// flag showing if at least one x-value is negativ. 
     /// </param>
     /// <param name="negativeY">
-    /// The y neg. 
+    /// flag showing if at least one y-value is negativ
     /// </param>
     /// <param name="initialRegression">
-    /// The start wahl. 
+    /// regression type to start with. 
     /// </param>
     public LinefittingDialog(bool negativeX, bool negativeY, Regression initialRegression)
     {
@@ -115,7 +115,7 @@ namespace VianaNET.Data.Linefit
     #region Methods
 
     /// <summary>
-    /// The cancel_ click.
+    /// The cancel click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 
@@ -129,7 +129,7 @@ namespace VianaNET.Data.Linefit
     }
 
     /// <summary>
-    /// The o k_ click.
+    /// The ok click.
     /// </summary>
     /// <param name="sender">
     /// The sender. 

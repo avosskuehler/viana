@@ -103,7 +103,7 @@ namespace VianaNET.Data.Linefit
     /// The TheoreticalFunction property.
     /// </summary>
     public static readonly DependencyProperty TheoreticalFunctionProperty = DependencyProperty.Register(
-      "TheoreticalFunction", typeof(CalculatorFunctionTerm), typeof(FittedData), new UIPropertyMetadata(null));
+      "TheoreticalFunction", typeof(FunctionCalcTree), typeof(FittedData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The IsInterpolationAllowed property.
@@ -404,11 +404,11 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// Gets or sets the Theory line color.
     /// </summary>
-    public CalculatorFunctionTerm TheoreticalFunction
+    public FunctionCalcTree TheoreticalFunction
     {
       get
       {
-        return (CalculatorFunctionTerm)this.GetValue(TheoreticalFunctionProperty);
+          return (FunctionCalcTree)this.GetValue(TheoreticalFunctionProperty);
       }
 
       set
