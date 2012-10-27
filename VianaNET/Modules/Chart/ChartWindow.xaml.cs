@@ -273,7 +273,7 @@ namespace VianaNET.Modules.Chart
     //  }
     //  else
     //  {
-    //    FittedData.Instance.LineFitType.LineFitDisplaySample.Clear();
+    //    FittedData.Instance.LineFitObject.LineFitDisplaySample.Clear();
     //    this.LinefitFunctionLabel.Content = string.Empty;
     //  }
 
@@ -294,7 +294,11 @@ namespace VianaNET.Modules.Chart
       var dlg = new NumericalPrecisionDialog { NumberOfDigits = FittedData.Instance.NumericPrecision };
       if (dlg.ShowDialog().GetValueOrDefault(false))
       {
-        FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
+          FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
+          if (LineFitCheckBox.IsChecked())
+          {
+              LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
+          }
       }
     }
 
@@ -311,8 +315,8 @@ namespace VianaNET.Modules.Chart
     {
       double minX, minY, hilf;
 
-      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertX, out minX, out hilf);
-      FittedData.Instance.LineFitType.GetMinMax(FittedData.Instance.LineFitType.WertY, out minY, out hilf);
+      FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertX, out minX, out hilf);
+      FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertY, out minY, out hilf);
       var linefittingDialog = new LinefittingDialog(minX < 0, minY < 0, FittedData.Instance.RegressionType);
       if (linefittingDialog.ShowDialog().GetValueOrDefault(false))
       {
@@ -357,7 +361,9 @@ namespace VianaNET.Modules.Chart
 
         if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
-          FittedData.Instance.LineFitType.CalculateLineFitFunction(FittedData.Instance.RegressionType);
+          FittedData.Instance.LineFitObject.CalculateLineFitFunction(FittedData.Instance.RegressionType);
+          LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
+          LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
         }
       }
     }
@@ -485,18 +491,18 @@ namespace VianaNET.Modules.Chart
       //this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
       //this.LineFitSeries.DataSource = null;
       //this.TheorieSeries.DataSource = null;
-      //if ((FittedData.Instance.LineFitType != null) & FittedData.Instance.IsInterpolationAllowed)
+      //if ((FittedData.Instance.LineFitObject != null) & FittedData.Instance.IsInterpolationAllowed)
       //{
-      //  if ((FittedData.Instance.LineFitType.LineFitDisplaySample != null)
-      //      && (FittedData.Instance.LineFitType.LineFitDisplaySample.Count > 0))
+      //  if ((FittedData.Instance.LineFitObject.LineFitDisplaySample != null)
+      //      && (FittedData.Instance.LineFitObject.LineFitDisplaySample.Count > 0))
       //  {
-      //    this.LineFitSeries.DataSource = FittedData.Instance.LineFitType.LineFitDisplaySample;
+      //    this.LineFitSeries.DataSource = FittedData.Instance.LineFitObject.LineFitDisplaySample;
       //  }
 
-      //  if ((FittedData.Instance.LineFitType.TheorieDisplaySample != null)
-      //      && (FittedData.Instance.LineFitType.TheorieDisplaySample.Count > 0))
+      //  if ((FittedData.Instance.LineFitObject.TheorieDisplaySample != null)
+      //      && (FittedData.Instance.LineFitObject.TheorieDisplaySample.Count > 0))
       //  {
-      //    this.TheorieSeries.DataSource = FittedData.Instance.LineFitType.TheorieDisplaySample;
+      //    this.TheorieSeries.DataSource = FittedData.Instance.LineFitObject.TheorieDisplaySample;
       //  }
       //}
     }
@@ -628,9 +634,12 @@ namespace VianaNET.Modules.Chart
           this.yAxisContent.SelectedValue = AxisType.AY;
           break;
       }
-
-      FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
-      FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
+      if ((FittedData.Instance.AxisX != (DataAxis)this.xAxisContent.SelectedItem) || (FittedData.Instance.AxisY != (DataAxis)this.yAxisContent.SelectedItem))
+      {
+          FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
+          FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
+          LineFitCheckBoxUnchecked(null, null);
+      }
     }
 
     /// <summary>
@@ -651,12 +660,13 @@ namespace VianaNET.Modules.Chart
     /// <param name="mapTheorieFit">
     /// The map theorie fit. 
     /// </param>
-    private void UpdateAxisMappings(
+    private void UpdateAxisMappings( DataAxis axis, DataMapping mapPoints)
+   /* private void UpdateAxisMappings(
       DataAxis axis,
       DataMapping mapPoints,
       DataMapping mapInterpolationFit,
       DataMapping mapLineFit,
-      DataMapping mapTheorieFit)
+      DataMapping mapTheorieFit)  //Parameter mapInterpolationFit,mapLineFit und mapTheorieFit überflüssig */
     {
       string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
@@ -664,162 +674,86 @@ namespace VianaNET.Modules.Chart
       {
         case AxisType.I:
           mapPoints.Path = "Framenumber";
-
-          // mapInterpolationFit.Path = "Framenumber";
-          // mapLineFit.Path = "Framenumber";
           break;
         case AxisType.T:
           mapPoints.Path = "Timestamp";
-
-          // mapInterpolationFit.Path = "Timestamp";
-          // mapLineFit.Path = "Timestamp";
           break;
         case AxisType.PX:
           mapPoints.Path = "PositionX";
-
-          // mapInterpolationFit.Path = "PositionX";
-          // mapLineFit.Path = "PositionX";
           break;
         case AxisType.PY:
           mapPoints.Path = "PositionY";
-
-          // mapInterpolationFit.Path = "PositionY";
-          // mapLineFit.Path = "PositionY";
           break;
         case AxisType.D:
           mapPoints.Path = "Distance";
-
-          // mapInterpolationFit.Path = "Distance";
-          // mapLineFit.Path = "Distance";
           break;
         case AxisType.DX:
           mapPoints.Path = "DistanceX";
-
-          // mapInterpolationFit.Path = "DistanceX";
-          // mapLineFit.Path = "DistanceX";
           break;
         case AxisType.DY:
           mapPoints.Path = "DistanceY";
-
-          // mapInterpolationFit.Path = "DistanceY";
-          // mapLineFit.Path = "DistanceY";
           break;
         case AxisType.S:
           mapPoints.Path = "Length";
-
-          // mapInterpolationFit.Path = "Length";
-          // mapLineFit.Path = "Length";
           break;
         case AxisType.SX:
           mapPoints.Path = "LengthX";
-
-          // mapInterpolationFit.Path = "LengthX";
-          // mapLineFit.Path = "LengthX";
           break;
         case AxisType.SY:
           mapPoints.Path = "LengthY";
-
-          // mapInterpolationFit.Path = "LengthY";
-          // mapLineFit.Path = "LengthY";
           break;
         case AxisType.V:
           mapPoints.Path = "Velocity";
-
-          // mapInterpolationFit.Path = "VelocityI";
-          // mapLineFit.Path = "VelocityI";
           break;
         case AxisType.VX:
           mapPoints.Path = "VelocityX";
-
-          // mapInterpolationFit.Path = "VelocityXI";
-          // mapLineFit.Path = "VelocityXI";
           break;
         case AxisType.VY:
           mapPoints.Path = "VelocityY";
-
-          // mapInterpolationFit.Path = "VelocityYI";
-          // mapLineFit.Path = "VelocityYI";
           break;
         case AxisType.VI:
           mapPoints.Path = "VelocityI";
-
-          // mapInterpolationFit.Path = "VelocityI";
-          // mapLineFit.Path = "VelocityI";
           break;
         case AxisType.VXI:
           mapPoints.Path = "VelocityXI";
-
-          // mapInterpolationFit.Path = "VelocityXI";
-          // mapLineFit.Path = "VelocityXI";
           break;
         case AxisType.VYI:
           mapPoints.Path = "VelocityYI";
-
-          // mapInterpolationFit.Path = "VelocityYI";
-          // mapLineFit.Path = "VelocityYI";
           break;
         case AxisType.A:
           mapPoints.Path = "Acceleration";
-
-          // mapInterpolationFit.Path = "AccelerationI";
-          // mapLineFit.Path = "AccelerationI";
           break;
         case AxisType.AX:
           mapPoints.Path = "AccelerationX";
-
-          // mapInterpolationFit.Path = "AccelerationXI";
-          // mapLineFit.Path = "AccelerationXI";
           break;
         case AxisType.AY:
           mapPoints.Path = "AccelerationY";
-
-          // mapInterpolationFit.Path = "AccelerationYI";
-          // mapLineFit.Path = "AccelerationYI";
           break;
         case AxisType.AI:
           mapPoints.Path = "AccelerationI";
-
-          // mapInterpolationFit.Path = "AccelerationI";
-          // mapLineFit.Path = "AccelerationI";
           break;
         case AxisType.AXI:
           mapPoints.Path = "AccelerationXI";
-
-          // mapInterpolationFit.Path = "AccelerationXI";
-          // mapLineFit.Path = "AccelerationXI";
           break;
         case AxisType.AYI:
           mapPoints.Path = "AccelerationYI";
-
-          // mapInterpolationFit.Path = "AccelerationYI";
-          // mapLineFit.Path = "AccelerationYI";
           break;
       }
 
-      mapPoints.Path = prefix + mapPoints.Path;
+      if (axis.Axis != AxisType.T)       // Don´t prefix the timestamp
+      {
+          mapPoints.Path = prefix + mapPoints.Path;
+      }
+
+ /*   mapPoints.Path = prefix + mapPoints.Path;
 
       // Don´t prefix the timestamp
       if (axis.Axis == AxisType.T)
       {
         mapPoints.Path = "Timestamp";
       }
-
-      // mapInterpolationFit.Path = prefix + mapInterpolationFit.Path;
-      // mapLineFit.Path = prefix + mapLineFit.Path;
-      //if (mapInterpolationFit != null)
-      //{
-      //  mapInterpolationFit.Path = mapPoints.Path;
-      //}
-
-      //if (mapLineFit != null)
-      //{
-      //  mapLineFit.Path = mapPoints.Path;
-      //}
-
-      //if (mapTheorieFit != null)
-      //{
-      //  mapTheorieFit.Path = mapPoints.Path;
-      //}
+*/   
+      
     }
 
     /// <summary>
@@ -1011,11 +945,11 @@ namespace VianaNET.Modules.Chart
       }
 
       DataMapping map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
-      DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
-      DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
-      DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
-
-      this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
+   //   DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
+   //   DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
+   //   DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
+      this.UpdateAxisMappings(axis, map);
+   //   this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
       return true;
     }
 
@@ -1122,11 +1056,21 @@ namespace VianaNET.Modules.Chart
     private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
     {
       FittedData.Instance.IsShowingRegressionSeries = true;
+
+     // Funktionsterm und mittleres Fehlerquadrat anzeigen
+      LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
+      LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
     }
 
     private void LineFitCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
+    //  FittedData.Instance.RegressionSeries.Clear();
       FittedData.Instance.IsShowingRegressionSeries = false;
+      
+    // Funktionsterm und mittleres Fehlerquadrat nicht mehr anzeigen
+      FittedData.Instance.RegressionFunctionString = string.Empty;
+      LinefitFunctionLabel.Content = string.Empty;
+      LinefitAberationLabel.Content = string.Empty;
     }
 
     private void InterpolationLineCheckBoxChecked(object sender, RoutedEventArgs e)

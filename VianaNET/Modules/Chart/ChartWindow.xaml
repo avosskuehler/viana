@@ -144,6 +144,7 @@
             <Grid.RowDefinitions>
               <RowDefinition/>
               <RowDefinition/>
+              <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
@@ -162,8 +163,9 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel"/>
-          </Grid>
+            <Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel" Grid.ColumnSpan="2" />
+            <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=RegressionAberrationString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitAberationLabel" Grid.ColumnSpan="2" />
+           </Grid>
         </GroupBox>
         <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
                       Style="{StaticResource GroupBoxStyle}">
@@ -190,7 +192,7 @@
               Unchecked="CheckBoxShowTheorieUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Linefit:FittedData.Instance}}" Name="TheoreticalFunctionLabel"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Linefit:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />
           </Grid>
         </GroupBox>
         <StackPanel Style="{StaticResource SpacerStyle}"/>

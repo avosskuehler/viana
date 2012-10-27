@@ -42,7 +42,7 @@
           <VianaNET:SliderValue Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0"
               VerticalAlignment="Center" SmallChange="1"
               Orientation="Horizontal"
-                  Minimum="1" Maximum="10"
+                  Minimum="0" Maximum="10"
               TickPlacement="Both" IsSnapToTickEnabled="True" Value="{Binding Path=NumberOfDigits}" />
         </Grid>
         <Button Name="OK"  Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,110,0" Height="23" Width="80" IsDefault="True" Content="{lex:LocText VianaNET:Labels:OK}" Click="OkClick" />

@@ -177,6 +177,13 @@ namespace VianaNET.Data.Linefit
     public static readonly DependencyProperty RegressionFunctionStringProperty = DependencyProperty.Register(
       "RegressionFunctionString", typeof(string), typeof(FittedData), new UIPropertyMetadata(null));
 
+      
+    /// <summary>
+    /// Gets the Ausgabestring für die Abweichung der Ausgleichsfunktion
+    /// </summary>
+    public static readonly DependencyProperty RegressionAberrationStringProperty = DependencyProperty.Register(
+      "RegressionAberrationString", typeof(string), typeof(FittedData), new UIPropertyMetadata(null));
+
 
     /// <summary>
     ///   The instance.
@@ -206,8 +213,9 @@ namespace VianaNET.Data.Linefit
       this.InterpolationLineThickness = 2;
       this.RegressionLineThickness = 2;
       this.TheoryLineThickness = 2;
-      this.LineFitType = new LineFit();
+      this.LineFitObject = new LineFit();
       this.RegressionFunctionString = "---";
+      this.RegressionAberrationString = " ";
     }
 
     #endregion
@@ -366,7 +374,7 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// Gets or sets the LineFitClassType
     /// </summary>
-    public LineFit LineFitType
+    public LineFit LineFitObject
     {
       get
       {
@@ -392,11 +400,11 @@ namespace VianaNET.Data.Linefit
       set
       {
         this.SetValue(RegressionTypeProperty, value);
-        if (this.LineFitType != null && this.LineFitType.WertX.Count > 0)
+        if (this.LineFitObject != null && this.LineFitObject.WertX.Count > 0)
         {
           // sind Datenreihen ausgewählt ?
           // neu berechnen !
-          this.LineFitType.CalculateLineFitFunction(value);
+          this.LineFitObject.CalculateLineFitFunction(value);
         }
       }
     }
@@ -537,9 +545,9 @@ namespace VianaNET.Data.Linefit
       {
         this.SetValue(NumericPrecisionProperty, value);
         this.OnPropertyChanged("NumericPrecisionString");
-        if (this.LineFitType != null)
+        if (this.LineFitObject != null)
         {
-          this.LineFitType.UpdateRegressionFunctionString();
+          this.LineFitObject.UpdateRegressionFunctionString();
         }
       }
     }
@@ -604,7 +612,14 @@ namespace VianaNET.Data.Linefit
 
       set
       {
-        this.SetValue(AxisXProperty, value);
+          if ((DataAxis)this.GetValue(AxisXProperty) != value)
+          {       
+              IsShowingRegressionSeries = false;
+              RegressionFunctionString = string.Empty;
+              RegressionAberrationString = string.Empty;
+              RegressionSeries.Clear();
+              this.SetValue(AxisXProperty, value);
+          }
       }
     }
 
@@ -619,7 +634,7 @@ namespace VianaNET.Data.Linefit
       }
 
       set
-      {
+      { 
         this.SetValue(AxisYProperty, value);
       }
     }
@@ -634,8 +649,24 @@ namespace VianaNET.Data.Linefit
       set
       {
         this.SetValue(RegressionFunctionStringProperty, value);
+        this.OnPropertyChanged("RegressionFunctionString");
       }
     }
+
+    public string RegressionAberrationString
+    {
+        get
+        {
+            return (string)this.GetValue(RegressionAberrationStringProperty);
+        }
+
+        set
+        {
+            this.SetValue(RegressionAberrationStringProperty, value);
+            this.OnPropertyChanged("RegressionAberrationString");
+        }
+    }
+
     /// <summary>
     /// Gets the numeric precision string.
     /// </summary>
@@ -674,13 +705,13 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void PopulateSampleArrayFromVideoData()
     {
-      if (this.LineFitType == null)
+      if (this.LineFitObject == null)
       {
-        this.LineFitType = new LineFit();
+        this.LineFitObject = new LineFit();
       }
 
       // übernehme die Daten in die Arrays wertX und wertY
-      this.LineFitType.ExtractDataColumnsFromVideoSamples(
+      this.LineFitObject.ExtractDataColumnsFromVideoSamples(
          VideoData.Instance.Samples,
          VideoData.Instance.ActiveObject,
          this.AxisX,
@@ -692,7 +723,7 @@ namespace VianaNET.Data.Linefit
     /// </summary>
     private void CalculateRegressionSeriesDataPoints()
     {
-      if (this.LineFitType == null)
+      if (this.LineFitObject == null)
       {
         return;
       }
@@ -700,7 +731,7 @@ namespace VianaNET.Data.Linefit
       if (this.IsShowingRegressionSeries)
       {
         this.PopulateSampleArrayFromVideoData();
-        this.LineFitType.CalculateLineFitFunction(this.RegressionType);
+        this.LineFitObject.CalculateLineFitFunction(this.RegressionType);
       }
       else
       {
@@ -718,15 +749,15 @@ namespace VianaNET.Data.Linefit
         return;
       }
 
-      if (this.LineFitType == null)
+      if (this.LineFitObject == null)
       {
-        this.LineFitType = new LineFit();
+        this.LineFitObject = new LineFit();
       }
 
       if (this.IsShowingTheorySeries)
       {
         this.PopulateSampleArrayFromVideoData();
-        this.LineFitType.CalculateLineFitTheorieSeries(this.TheoreticalFunction, this.TheorySeries);
+        this.LineFitObject.CalculateLineFitTheorieSeries(this.TheoreticalFunction, this.TheorySeries);
       }
       else
       {
