@@ -1091,6 +1091,12 @@ namespace VianaNET.Data.Linefit
 
       maxSchaetz = maxSchaetz * maxSchaetz;
       schaetzWert = schaetzWert * schaetzWert;
+      if (maxSchaetz < schaetzWert)
+      {
+          double hilf = maxSchaetz;
+          maxSchaetz = schaetzWert;
+          schaetzWert = hilf;
+      }
       double grenze = 1;
       while (grenze > (maxSchaetz - schaetzWert) / 1000)
       {
@@ -1105,14 +1111,14 @@ namespace VianaNET.Data.Linefit
         schaetzWert = schaetzWert - 2 * schaetzStep;
       }
 
-      var z = 9 - (int)Math.Floor((maxSchaetz - schaetzWert) / schaetzStep);
+      var z = 9 - (int)Math.Floor( (maxSchaetz - schaetzWert) / schaetzStep);
 
       var abw = StartAbw;
       int iter = 0;
       while (iter < MaxIteration)
       {
         // Iteration über c
-        // lin. Reg vorbereiten    1/y^2 = 1/a^2 + b/a^2 * (x - c/x) = a' + b' * hilfX
+        // lin. Reg vorbereiten    1/y^2 = 1/a^2 + b/a^2 * (x - c/x)² = a' + b' * hilfX
         int anz = 0;
         double xi;
         double hilfX;
@@ -1120,10 +1126,10 @@ namespace VianaNET.Data.Linefit
         {
           xi = this.WertX[k];
           yi = this.WertY[k];
-          if (yi != 0)
+          if ((yi != 0)&&(xi != 0))
           {
             hilfX = xi - schaetzWert / xi;
-            tempWertY[anz] = hilfX * hilfX;
+            tempWertX[anz] = hilfX * hilfX;
             tempWertY[anz] = 1 / (yi * yi);
             anz = anz + 1;
           }
@@ -1947,22 +1953,5 @@ namespace VianaNET.Data.Linefit
     }
 
     #endregion
-
-   /* 
-        private void RegressAuswahl()
-        {
-            double minX, maxX, minY, maxY;
-
-            getMinMax(wertX, anzahl, out minX, out maxX);
-            getMinMax(wertY, anzahl, out minY, out maxY);
-            LinefittingDialog RegAuswahlDlg = new LinefittingDialog(minX < 0, (minY < 0), regTyp);
-            RegAuswahlDlg.ShowDialog();
-            if ((bool)RegAuswahlDlg.DialogResult)
-            {
-                regTyp = (int)RegAuswahlDlg.GetAuswahl();
-            }
-        }
-   */      
-
   }
 }
