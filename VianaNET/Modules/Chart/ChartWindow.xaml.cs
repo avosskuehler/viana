@@ -45,6 +45,8 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Modules.Video.Control;
   using Visifire.Charts;
 
+  using WPFMath;
+
   /// <summary>
   ///   The chart window.
   /// </summary>
@@ -156,7 +158,6 @@ namespace VianaNET.Modules.Chart
         window.RefreshSeries();
       }
     }
-
 
     /// <summary>
     /// The chart content tab selection changed.
@@ -294,11 +295,36 @@ namespace VianaNET.Modules.Chart
       var dlg = new NumericalPrecisionDialog { NumberOfDigits = FittedData.Instance.NumericPrecision };
       if (dlg.ShowDialog().GetValueOrDefault(false))
       {
-          FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
-          if (LineFitCheckBox.IsChecked())
-          {
-              LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
-          }
+        FittedData.Instance.NumericPrecision = dlg.NumberOfDigits;
+        if (LineFitCheckBox.IsChecked())
+        {
+          this.RefreshLinefitFuctionTerm();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Updates the function term visual with a tex representation of the regression function
+    /// </summary>
+    private void RefreshLinefitFuctionTerm()
+    {
+      if (FittedData.Instance.RegressionFunctionTexFormula != null)
+      {
+        // Render formula to visual.
+        var visual = new DrawingVisual();
+        var renderer = FittedData.Instance.RegressionFunctionTexFormula.GetRenderer(TexStyle.Display, 20d);
+
+        using (var drawingContext = visual.RenderOpen())
+        {
+          renderer.Render(drawingContext, 0, 1);
+        }
+
+        this.formulaContainerElement.Visual = visual;
+      }
+      else
+      {
+        // Formula is empty
+        this.formulaContainerElement.Visual = null;
       }
     }
 
@@ -362,7 +388,7 @@ namespace VianaNET.Modules.Chart
         if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
         {
           FittedData.Instance.LineFitObject.CalculateLineFitFunction(FittedData.Instance.RegressionType);
-          LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
+          this.RefreshLinefitFuctionTerm();
           LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
         }
       }
@@ -479,32 +505,8 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private void RefreshChartDataPoints()
     {
-      //if (FittedData.Instance.IsShowingRegressionSeries)
-      //{
-      //  this.NewCalculationForLineFitting();
-      //}
-
       this.DefaultSeries.DataSource = null;
       this.DefaultSeries.DataSource = VideoData.Instance.Samples;
-
-      //this.InterpolationSeries.DataSource = null;
-      //this.InterpolationSeries.DataSource = VideoData.Instance.Samples;
-      //this.LineFitSeries.DataSource = null;
-      //this.TheorieSeries.DataSource = null;
-      //if ((FittedData.Instance.LineFitObject != null) & FittedData.Instance.IsInterpolationAllowed)
-      //{
-      //  if ((FittedData.Instance.LineFitObject.LineFitDisplaySample != null)
-      //      && (FittedData.Instance.LineFitObject.LineFitDisplaySample.Count > 0))
-      //  {
-      //    this.LineFitSeries.DataSource = FittedData.Instance.LineFitObject.LineFitDisplaySample;
-      //  }
-
-      //  if ((FittedData.Instance.LineFitObject.TheorieDisplaySample != null)
-      //      && (FittedData.Instance.LineFitObject.TheorieDisplaySample.Count > 0))
-      //  {
-      //    this.TheorieSeries.DataSource = FittedData.Instance.LineFitObject.TheorieDisplaySample;
-      //  }
-      //}
     }
 
     /// <summary>
@@ -636,9 +638,9 @@ namespace VianaNET.Modules.Chart
       }
       if ((FittedData.Instance.AxisX != (DataAxis)this.xAxisContent.SelectedItem) || (FittedData.Instance.AxisY != (DataAxis)this.yAxisContent.SelectedItem))
       {
-          FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
-          FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
-          LineFitCheckBoxUnchecked(null, null);
+        FittedData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
+        FittedData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
+        LineFitCheckBoxUnchecked(null, null);
       }
     }
 
@@ -660,13 +662,13 @@ namespace VianaNET.Modules.Chart
     /// <param name="mapTheorieFit">
     /// The map theorie fit. 
     /// </param>
-    private void UpdateAxisMappings( DataAxis axis, DataMapping mapPoints)
-   /* private void UpdateAxisMappings(
-      DataAxis axis,
-      DataMapping mapPoints,
-      DataMapping mapInterpolationFit,
-      DataMapping mapLineFit,
-      DataMapping mapTheorieFit)  //Parameter mapInterpolationFit,mapLineFit und mapTheorieFit überflüssig */
+    private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints)
+    /* private void UpdateAxisMappings(
+       DataAxis axis,
+       DataMapping mapPoints,
+       DataMapping mapInterpolationFit,
+       DataMapping mapLineFit,
+       DataMapping mapTheorieFit)  //Parameter mapInterpolationFit,mapLineFit und mapTheorieFit überflüssig */
     {
       string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
@@ -742,18 +744,18 @@ namespace VianaNET.Modules.Chart
 
       if (axis.Axis != AxisType.T)       // Don´t prefix the timestamp
       {
-          mapPoints.Path = prefix + mapPoints.Path;
+        mapPoints.Path = prefix + mapPoints.Path;
       }
 
- /*   mapPoints.Path = prefix + mapPoints.Path;
+      /*   mapPoints.Path = prefix + mapPoints.Path;
 
-      // Don´t prefix the timestamp
-      if (axis.Axis == AxisType.T)
-      {
-        mapPoints.Path = "Timestamp";
-      }
-*/   
-      
+           // Don´t prefix the timestamp
+           if (axis.Axis == AxisType.T)
+           {
+             mapPoints.Path = "Timestamp";
+           }
+     */
+
     }
 
     /// <summary>
@@ -945,11 +947,11 @@ namespace VianaNET.Modules.Chart
       }
 
       DataMapping map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
-   //   DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
-   //   DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
-   //   DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
+      //   DataMapping mapInterpolationFit = this.InterpolationSeries.DataMappings[axisX ? 0 : 1];
+      //   DataMapping mapLineFit = this.LineFitSeries.DataMappings[axisX ? 0 : 1];
+      //   DataMapping mapTheorieFit = this.TheorieSeries.DataMappings[axisX ? 0 : 1];
       this.UpdateAxisMappings(axis, map);
-   //   this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
+      //   this.UpdateAxisMappings(axis, map, mapInterpolationFit, mapLineFit, mapTheorieFit);
       return true;
     }
 
@@ -1055,21 +1057,18 @@ namespace VianaNET.Modules.Chart
 
     private void LineFitCheckBoxChecked(object sender, RoutedEventArgs e)
     {
+      // Funktionsterm und mittleres Fehlerquadrat anzeigen
       FittedData.Instance.IsShowingRegressionSeries = true;
-
-     // Funktionsterm und mittleres Fehlerquadrat anzeigen
-      LinefitFunctionLabel.Content = FittedData.Instance.RegressionFunctionString;
+      this.RefreshLinefitFuctionTerm();
       LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
     }
 
     private void LineFitCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
-    //  FittedData.Instance.RegressionSeries.Clear();
+      // Funktionsterm und mittleres Fehlerquadrat nicht mehr anzeigen
       FittedData.Instance.IsShowingRegressionSeries = false;
-      
-    // Funktionsterm und mittleres Fehlerquadrat nicht mehr anzeigen
-      FittedData.Instance.RegressionFunctionString = string.Empty;
-      LinefitFunctionLabel.Content = string.Empty;
+      FittedData.Instance.RegressionFunctionTexFormula = null;
+      this.RefreshLinefitFuctionTerm();
       LinefitAberationLabel.Content = string.Empty;
     }
 
@@ -1174,9 +1173,7 @@ namespace VianaNET.Modules.Chart
         FittedData.Instance.InterpolationLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
       }
     }
+
     #endregion
-
-
-
   }
 }

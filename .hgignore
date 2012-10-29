@@ -3,3 +3,5 @@ Debug/*
 Release/*
 VianaNET.suo
 VianaNET/VianaNET.csproj.user
+_ReSharper*
+VianaTestVideos*
