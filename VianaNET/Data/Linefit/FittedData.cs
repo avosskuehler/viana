@@ -32,6 +32,8 @@ namespace VianaNET.Data.Linefit
 
   using VianaNET.CustomStyles.Types;
 
+  using WPFMath;
+
   /// <summary>
   ///   The video data.
   /// </summary>
@@ -174,16 +176,14 @@ namespace VianaNET.Data.Linefit
     /// <summary>
     /// Gets the Ausgabestring für die Ausgleichsfunktion
     /// </summary>
-    public static readonly DependencyProperty RegressionFunctionStringProperty = DependencyProperty.Register(
-      "RegressionFunctionString", typeof(string), typeof(FittedData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty RegressionFunctionTexFormulaProperty = DependencyProperty.Register(
+      "RegressionFunctionTexFormula", typeof(TexFormula), typeof(FittedData), new UIPropertyMetadata(null));
 
-      
     /// <summary>
     /// Gets the Ausgabestring für die Abweichung der Ausgleichsfunktion
     /// </summary>
     public static readonly DependencyProperty RegressionAberrationStringProperty = DependencyProperty.Register(
       "RegressionAberrationString", typeof(string), typeof(FittedData), new UIPropertyMetadata(null));
-
 
     /// <summary>
     ///   The instance.
@@ -214,7 +214,7 @@ namespace VianaNET.Data.Linefit
       this.RegressionLineThickness = 2;
       this.TheoryLineThickness = 2;
       this.LineFitObject = new LineFit();
-      this.RegressionFunctionString = "---";
+      this.RegressionFunctionTexFormula = null;
       this.RegressionAberrationString = " ";
     }
 
@@ -417,7 +417,7 @@ namespace VianaNET.Data.Linefit
     {
       get
       {
-          return (FunctionCalcTree)this.GetValue(TheoreticalFunctionProperty);
+        return (FunctionCalcTree)this.GetValue(TheoreticalFunctionProperty);
       }
 
       set
@@ -613,14 +613,14 @@ namespace VianaNET.Data.Linefit
 
       set
       {
-          if ((DataAxis)this.GetValue(AxisXProperty) != value)
-          {       
-              IsShowingRegressionSeries = false;
-              RegressionFunctionString = string.Empty;
-              RegressionAberrationString = string.Empty;
-              RegressionSeries.Clear();
-              this.SetValue(AxisXProperty, value);
-          }
+        if (this.GetValue(AxisXProperty) != value)
+        {
+          this.IsShowingRegressionSeries = false;
+          this.RegressionFunctionTexFormula = null;
+          this.RegressionAberrationString = string.Empty;
+          this.RegressionSeries.Clear();
+          this.SetValue(AxisXProperty, value);
+        }
       }
     }
 
@@ -635,37 +635,43 @@ namespace VianaNET.Data.Linefit
       }
 
       set
-      { 
+      {
         this.SetValue(AxisYProperty, value);
       }
     }
 
-    public string RegressionFunctionString
+    /// <summary>
+    /// Gets or sets the regression function tex formula.
+    /// </summary>
+    public TexFormula RegressionFunctionTexFormula
     {
       get
       {
-        return (string)this.GetValue(RegressionFunctionStringProperty);
+        return (TexFormula)this.GetValue(RegressionFunctionTexFormulaProperty);
       }
 
       set
       {
-        this.SetValue(RegressionFunctionStringProperty, value);
-        this.OnPropertyChanged("RegressionFunctionString");
+        this.SetValue(RegressionFunctionTexFormulaProperty, value);
+        this.OnPropertyChanged("RegressionFunctionTexFormula");
       }
     }
 
+    /// <summary>
+    /// Gets or sets the regression aberration string.
+    /// </summary>
     public string RegressionAberrationString
     {
-        get
-        {
-            return (string)this.GetValue(RegressionAberrationStringProperty);
-        }
+      get
+      {
+        return (string)this.GetValue(RegressionAberrationStringProperty);
+      }
 
-        set
-        {
-            this.SetValue(RegressionAberrationStringProperty, value);
-            this.OnPropertyChanged("RegressionAberrationString");
-        }
+      set
+      {
+        this.SetValue(RegressionAberrationStringProperty, value);
+        this.OnPropertyChanged("RegressionAberrationString");
+      }
     }
 
     /// <summary>
@@ -675,10 +681,9 @@ namespace VianaNET.Data.Linefit
     {
       get
       {
-        return "G" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture);
+        return "N" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture);
       }
     }
-
 
     #endregion
 

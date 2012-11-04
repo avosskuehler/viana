@@ -163,7 +163,8 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel" Grid.ColumnSpan="2" />
+            <VianaNET:VisualContainerElement Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="formulaContainerElement" SnapsToDevicePixels="True"/>
+            <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel" Grid.ColumnSpan="2" />-->
             <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=RegressionAberrationString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitAberationLabel" Grid.ColumnSpan="2" />
            </Grid>
         </GroupBox>

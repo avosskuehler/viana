@@ -132,6 +132,7 @@
     <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
       <DependentUpon>LineStyleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
@@ -574,6 +575,10 @@
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFMath, Version=0.1.0.39082, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\WPFMath.dll</HintPath>
+    </Reference>
     <Reference Include="WPFToolkit.Extended">
       <HintPath>DLL\WPFToolkit.Extended.dll</HintPath>
     </Reference>
@@ -788,9 +793,9 @@
   <ItemGroup />
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
-  xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
 ) ELSE (
-  xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
+ C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>
