@@ -285,8 +285,8 @@ namespace VianaNET.Modules.Video.Dialogs
       rect.Location = new Point(this.LeftLine.X1 * factorX, this.TopLine.Y1 * factorY);
       rect.Width = (this.RightLine.X1 - this.LeftLine.X1) * factorX;
       rect.Height = (this.BottomLine.Y1 - this.TopLine.Y1) * factorY;
-      Calibration.Instance.ClipRegion = rect;
-      Calibration.Instance.HasClipRegion = true;
+      CalibrationData.Instance.ClipRegion = rect;
+      CalibrationData.Instance.HasClipRegion = true;
     }
 
     /// <summary>
@@ -314,7 +314,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      if (!Calibration.Instance.HasClipRegion)
+      if (!CalibrationData.Instance.HasClipRegion)
       {
         this.TopLine.X1 = margin;
         this.TopLine.X2 = this.VideoImage.ActualWidth - margin;
@@ -334,23 +334,23 @@ namespace VianaNET.Modules.Video.Dialogs
         double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-        this.TopLine.X1 = Calibration.Instance.ClipRegion.Left / factorX;
-        this.TopLine.X2 = Calibration.Instance.ClipRegion.Right / factorX;
-        this.TopLine.Y1 = Calibration.Instance.ClipRegion.Top / factorY;
-        this.TopLine.Y2 = Calibration.Instance.ClipRegion.Top / factorY;
-        this.LeftLine.X1 = Calibration.Instance.ClipRegion.Left / factorX;
-        this.LeftLine.X2 = Calibration.Instance.ClipRegion.Left / factorX;
-        this.LeftLine.Y1 = Calibration.Instance.ClipRegion.Top / factorY;
-        this.LeftLine.Y2 = Calibration.Instance.ClipRegion.Bottom / factorY;
-        this.BottomLine.X1 = Calibration.Instance.ClipRegion.Left / factorX;
-        this.BottomLine.Y1 = Calibration.Instance.ClipRegion.Bottom / factorY;
-        this.BottomLine.X2 = Calibration.Instance.ClipRegion.Right / factorX;
-        this.BottomLine.Y2 = Calibration.Instance.ClipRegion.Bottom / factorY;
-        this.RightLine.X1 = Calibration.Instance.ClipRegion.Right / factorX;
-        this.RightLine.Y1 = Calibration.Instance.ClipRegion.Top / factorY;
-        this.RightLine.X2 = Calibration.Instance.ClipRegion.Right / factorX;
-        this.RightLine.Y2 = Calibration.Instance.ClipRegion.Bottom / factorY;
-        Calibration.Instance.HasClipRegion = true;
+        this.TopLine.X1 = CalibrationData.Instance.ClipRegion.Left / factorX;
+        this.TopLine.X2 = CalibrationData.Instance.ClipRegion.Right / factorX;
+        this.TopLine.Y1 = CalibrationData.Instance.ClipRegion.Top / factorY;
+        this.TopLine.Y2 = CalibrationData.Instance.ClipRegion.Top / factorY;
+        this.LeftLine.X1 = CalibrationData.Instance.ClipRegion.Left / factorX;
+        this.LeftLine.X2 = CalibrationData.Instance.ClipRegion.Left / factorX;
+        this.LeftLine.Y1 = CalibrationData.Instance.ClipRegion.Top / factorY;
+        this.LeftLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom / factorY;
+        this.BottomLine.X1 = CalibrationData.Instance.ClipRegion.Left / factorX;
+        this.BottomLine.Y1 = CalibrationData.Instance.ClipRegion.Bottom / factorY;
+        this.BottomLine.X2 = CalibrationData.Instance.ClipRegion.Right / factorX;
+        this.BottomLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom / factorY;
+        this.RightLine.X1 = CalibrationData.Instance.ClipRegion.Right / factorX;
+        this.RightLine.Y1 = CalibrationData.Instance.ClipRegion.Top / factorY;
+        this.RightLine.X2 = CalibrationData.Instance.ClipRegion.Right / factorX;
+        this.RightLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom / factorY;
+        CalibrationData.Instance.HasClipRegion = true;
       }
 
       this.ResetOuterRegion();

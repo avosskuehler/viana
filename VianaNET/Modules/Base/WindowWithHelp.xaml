@@ -6,7 +6,7 @@
     xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
-  Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}"
+  Background="{Binding Path=GradientBackground, Source={x:Static Data:CalibrationData.Instance}}"
   PreviewKeyDown="Window_PreviewKeyDown" Topmost="True">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -25,7 +25,7 @@
         <Binding ElementName="VideoImage" Path="ActualHeight" />
       </Canvas.Height>
       <Border Name="ObjectIndexPanel" 
-              Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=VideoImage,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 

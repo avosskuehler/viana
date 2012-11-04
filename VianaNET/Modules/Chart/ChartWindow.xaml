@@ -8,10 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
     xmlns:Data="clr-namespace:VianaNET.Data"
-    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
-    xmlns:Chart="clr-namespace:VianaNET.Modules.Chart"
-    xmlns:VianaNET="clr-namespace:VianaNET" xmlns:Linefit="clr-namespace:VianaNET.Data.Linefit"
-  lex:LocalizeDictionary.DesignCulture="de"
+    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:VianaNET="clr-namespace:VianaNET" xmlns:Collections="clr-namespace:VianaNET.Data.Collections"
+  xmlns:Filter="clr-namespace:VianaNET.Data.Filter" lex:LocalizeDictionary.DesignCulture="de"
     d:DesignHeight="500" d:DesignWidth="700">
   <UserControl.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -27,7 +25,7 @@
         <Label Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" Style="{StaticResource HeaderStyle}"/>
         <Grid Name="ObjectSelectionGrid" 
                 Margin="5"
-                Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+                Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -53,7 +51,7 @@
                       SelectedValuePath="Chart" 
                       DisplayMemberPath="Description" 
                       Margin="2" 
-                      ItemsSource="{Binding Source={x:Static Data:DataCharts.PredefinedDataChartsPositionSpace}}" 
+                      ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPositionSpace}}" 
                       SelectionChanged="ChartContentSelectionChanged" />
               <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
             </Grid>
@@ -70,7 +68,7 @@
                       SelectedValuePath="Chart" 
                       DisplayMemberPath="Description" 
                       Margin="2" 
-                      ItemsSource="{Binding Source={x:Static Data:DataCharts.PredefinedDataChartsPhaseSpace}}" 
+                      ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPhaseSpace}}" 
                       SelectionChanged="ChartContentSelectionChanged" />
               <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
             </Grid>
@@ -96,7 +94,7 @@
                     SelectedIndex="5" 
                     SelectedValuePath="Axis" 
                     DisplayMemberPath="Description" 
-                    ItemsSource="{Binding Source={x:Static Data:DataAxis.DataAxes}}"
+                    ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}"
                     SelectionChanged="XAxisContentSelectionChanged" />
               <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}" 
                     HorizontalAlignment="Right"  
@@ -109,7 +107,7 @@
                     SelectedIndex="6" 
                     SelectedValuePath="Axis"
                     DisplayMemberPath="Description"
-                    ItemsSource="{Binding Source={x:Static Data:DataAxis.DataAxes}}" 
+                    ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}" 
                     SelectionChanged="YAxisContentSelectionChanged" />
             </Grid>
           </TabItem>
@@ -126,8 +124,8 @@
                       Margin="5"
                       Name="InterpolationLineCheckBox"
                       Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
-                      IsChecked="{Binding Path=IsShowingInterpolationSeries, Source={x:Static Linefit:FittedData.Instance}, Mode=TwoWay}" 
-                      Checked="InterpolationLineCheckBoxChecked" Unchecked="InterpolationLineCheckBoxUnchecked"
+                      IsChecked="{Binding Path=IsShowingInterpolationSeries, Source={x:Static Filter:FilterData.Instance}, Mode=TwoWay}" 
+                      Checked="ShowInterpolationCheckBoxChecked" Unchecked="ShowInterpolationCheckBoxUnchecked"
                       HorizontalAlignment="Left"
                    VerticalAlignment="Center"/>
             <VianaNET:ImageButton x:Name="InterpolationOptionsButton" 
@@ -138,7 +136,7 @@
                                Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}"/>
           </Grid>
         </GroupBox>
-        <GroupBox Header="{lex:LocText VianaNET:Labels:LineFitLineLabel}"
+        <GroupBox Header="{lex:LocText VianaNET:Labels:RegressionLineLabel}"
                       Style="{StaticResource GroupBoxStyle}">
           <Grid>
             <Grid.RowDefinitions>
@@ -151,21 +149,21 @@
               <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <VianaNET:ImageButton 
-                      x:Name="LineFitTypeButton" Grid.Column="1" Grid.Row="0"
-                      Click="LineFitTypeButtonClick" 
+                      x:Name="RegressionTypeButton" Grid.Column="1" Grid.Row="0"
+                      Click="RegressionTypeButtonClick" 
                       HorizontalAlignment="Right"
-                      Content="{lex:LocText VianaNET:Labels:ChartWindowLineFitChooseTypeLabel}" ImageSource="/VianaNET;component/Images/LineFit_Linear_16.png" />
+                      Content="{lex:LocText VianaNET:Labels:ChartWindowRegressionChooseTypeLabel}" ImageSource="/VianaNET;component/Images/RegressionLinear16.png" />
             <CheckBox 
               Grid.Row="0" Grid.Column="0"  Margin="5"
-              Name="LineFitCheckBox"
-              IsChecked="{Binding Path=IsShowingRegressionSeries, Source={x:Static Linefit:FittedData.Instance}, Mode=TwoWay}" 
-              Checked="LineFitCheckBoxChecked" Unchecked="LineFitCheckBoxUnchecked"
+              Name="RegressionCheckBox"
+              IsChecked="{Binding Path=IsShowingRegressionSeries, Source={x:Static Filter:FilterData.Instance}, Mode=TwoWay}" 
+              Checked="ShowRegressionCheckBoxChecked" Unchecked="ShowRegressionCheckBoxUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
-            <VianaNET:VisualContainerElement Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="formulaContainerElement" SnapsToDevicePixels="True"/>
-            <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitFunctionLabel" Grid.ColumnSpan="2" />-->
-            <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=RegressionAberrationString, Source={x:Static Linefit:FittedData.Instance}}" Name="LinefitAberationLabel" Grid.ColumnSpan="2" />
+            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="formulaContainerElement" SnapsToDevicePixels="True"/>
+            <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
+            <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static Filter:FilterData.Instance}}" Grid.ColumnSpan="2" />
            </Grid>
         </GroupBox>
         <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
@@ -180,20 +178,21 @@
               <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <VianaNET:ImageButton 
-                x:Name="LineFitTheorieButton"
+                x:Name="RegressionTheorieButton"
                 Grid.Row="0" Grid.Column="1"
-                Click="LineFitTheorieButtonClick" Content="{lex:LocText VianaNET:Labels:ChartWindowTheoreticalFunctionChooseTypeLabel}" 
-                ImageSource="/VianaNET;component/Images/LineFit_Linear_16.png"
+                Click="TheoryOptionsButtonClick" Content="{lex:LocText VianaNET:Labels:ChartWindowTheoreticalFunctionChooseTypeLabel}" 
+                ImageSource="/VianaNET;component/Images/RegressionLinear16.png"
                 HorizontalAlignment="Right"/>
             <CheckBox 
               Grid.Row="0" Grid.Column="0" Margin="5" 
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}" Name="checkBoxShowTheorie"
-              IsChecked="{Binding Path=IsShowingTheorySeries, Source={x:Static Linefit:FittedData.Instance}}" 
-              Checked="CheckBoxShowTheorieChecked"
-              Unchecked="CheckBoxShowTheorieUnchecked"
+              IsChecked="{Binding Path=IsShowingTheorySeries, Source={x:Static Filter:FilterData.Instance}}" 
+              Checked="ShowTheorieCheckBoxChecked"
+              Unchecked="ShowTheorieCheckBoxUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Linefit:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />
+            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"/>
+            <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
           </Grid>
         </GroupBox>
         <StackPanel Style="{StaticResource SpacerStyle}"/>
@@ -203,7 +202,7 @@
                                 Click="RechnerButtonClick"/>
           <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowPrecisionLabel}"
                               ImageSource="/VianaNET;component/Images/InterpolateData16.png"
-                                Click="LinefitPrecisionButtonClick"/>
+                                Click="FilterPrecisionButtonClick"/>
         </StackPanel>
       </StackPanel>
     </ScrollViewer>
@@ -235,8 +234,8 @@
           RenderAs="Point" 
           LegendText="{Binding ElementName=yAxisContent, Path=Text}"
           DataSource="{Binding Path=Samples, Source={x:Static Data:VideoData.Instance}}"
-          LineThickness="{Binding Path=DataLineThickness, Source={x:Static Linefit:FittedData.Instance}}"
-          Color="{Binding Path=DataLineColor, Source={x:Static Linefit:FittedData.Instance}}"
+          LineThickness="{Binding Path=DataLineThickness, Source={x:Static Filter:FilterData.Instance}}"
+          Color="{Binding Path=DataLineColor, Source={x:Static Filter:FilterData.Instance}}"
           MovingMarkerEnabled="true"
           SelectionEnabled = "true"
           SelectionMode = "Multiple"
@@ -253,9 +252,9 @@
           MarkerEnabled="False" 
           RenderAs="Spline"
           LegendText="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}"
-          DataSource="{Binding Path=InterpolationSeries, Source={x:Static Linefit:FittedData.Instance}}"
-          LineThickness="{Binding Path=InterpolationLineThickness, Source={x:Static Linefit:FittedData.Instance}}"
-          Color="{Binding Path=InterpolationLineColor, Source={x:Static Linefit:FittedData.Instance}}">
+          DataSource="{Binding Path=InterpolationSeries, Source={x:Static Filter:FilterData.Instance}}"
+          LineThickness="{Binding Path=InterpolationLineThickness, Source={x:Static Filter:FilterData.Instance}}"
+          Color="{Binding Path=InterpolationLineColor, Source={x:Static Filter:FilterData.Instance}}">
           <vc:DataSeries.DataMappings>
             <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
             <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
@@ -263,12 +262,12 @@
         </vc:DataSeries>
 
         <vc:DataSeries 
-          Name="LineFitSeries" 
+          Name="RegressionSeries" 
           RenderAs="Line" 
           LegendText="{lex:LocText VianaNET:Labels:ChartWindowRegressionLineLegend}"
-          DataSource="{Binding Path=RegressionSeries, Source={x:Static Linefit:FittedData.Instance}}"
-          LineThickness="{Binding Path=RegressionLineThickness, Source={x:Static Linefit:FittedData.Instance}}"
-          Color="{Binding Path=RegressionLineColor, Source={x:Static Linefit:FittedData.Instance}}">
+          DataSource="{Binding Path=RegressionSeries, Source={x:Static Filter:FilterData.Instance}}"
+          LineThickness="{Binding Path=RegressionLineThickness, Source={x:Static Filter:FilterData.Instance}}"
+          Color="{Binding Path=RegressionLineColor, Source={x:Static Filter:FilterData.Instance}}">
           <vc:DataSeries.DataMappings>
             <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
             <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
@@ -276,12 +275,12 @@
         </vc:DataSeries>
 
         <vc:DataSeries 
-          Name="TheorieSeries" 
+          Name="TheorySeries" 
           RenderAs="Line" 
           LegendText="{lex:LocText VianaNET:Labels:ChartWindowTheoryLineLegend}"
-          DataSource="{Binding Path=TheorySeries, Source={x:Static Linefit:FittedData.Instance}}"
-          LineThickness="{Binding Path=TheoryLineThickness, Source={x:Static Linefit:FittedData.Instance}}"
-          Color="{Binding Path=TheoryLineColor, Source={x:Static Linefit:FittedData.Instance}}">
+          DataSource="{Binding Path=TheorySeries, Source={x:Static Filter:FilterData.Instance}}"
+          LineThickness="{Binding Path=TheoryLineThickness, Source={x:Static Filter:FilterData.Instance}}"
+          Color="{Binding Path=TheoryLineColor, Source={x:Static Filter:FilterData.Instance}}">
           <vc:DataSeries.DataMappings>
             <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
             <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
