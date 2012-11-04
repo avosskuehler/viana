@@ -185,7 +185,7 @@ namespace VianaNET.Modules.Base
       var window = obj as WindowWithHelp;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Video.Instance.ImageProcessing.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Video.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

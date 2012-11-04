@@ -60,7 +60,7 @@ namespace VianaNET.Modules.DataAcquisition
       "BrushOfCossHair", 
       typeof(SolidColorBrush), 
       typeof(ManualDataAquisitionWindow), 
-      new FrameworkPropertyMetadata(ImageProcessing.TrackObjectColors[0], OnPropertyChanged));
+      new FrameworkPropertyMetadata(ProcessingData.TrackObjectColors[0], OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -234,13 +234,13 @@ namespace VianaNET.Modules.DataAcquisition
       var window = obj as ManualDataAquisitionWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Video.Instance.ImageProcessing.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Video.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }
 
       // Update crosshair brush
-      window.BrushOfCossHair = ImageProcessing.TrackObjectColors[window.IndexOfTrackedObject - 1];
+      window.BrushOfCossHair = ProcessingData.TrackObjectColors[window.IndexOfTrackedObject - 1];
     }
 
     /// <summary>
@@ -302,7 +302,7 @@ namespace VianaNET.Modules.DataAcquisition
       // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
           foreach (Ellipse item in this.visualDataPoints[j])
           {
@@ -321,8 +321,8 @@ namespace VianaNET.Modules.DataAcquisition
       // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
-        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+        this.visualDataPoints = new List<Ellipse>[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
@@ -330,7 +330,7 @@ namespace VianaNET.Modules.DataAcquisition
             var visualDataPoint = new Ellipse();
             visualDataPoint.Width = 2 * this.visualDataPointRadius;
             visualDataPoint.Height = 2 * this.visualDataPointRadius;
-            visualDataPoint.Stroke = ImageProcessing.TrackObjectColors[j];
+            visualDataPoint.Stroke = ProcessingData.TrackObjectColors[j];
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 
@@ -522,7 +522,7 @@ namespace VianaNET.Modules.DataAcquisition
 
         VideoData.Instance.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Video.Instance.ImageProcessing.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == Video.Instance.ProcessingData.NumberOfTrackedObjects)
         {
           this.StepOneFrameForward();
         }

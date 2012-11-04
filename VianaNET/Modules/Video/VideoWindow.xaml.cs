@@ -57,7 +57,7 @@ namespace VianaNET.Modules.Video
     /// <summary>
     ///   The margin.
     /// </summary>
-    private const int margin = 10;
+    private const int DefaultMargin = 10;
 
     #endregion
 
@@ -122,22 +122,22 @@ namespace VianaNET.Modules.Video
       this.SetVideoMode(VideoMode.File);
       this.CreateCrossHairLines();
       this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      this.timesliderUpdateTimer.Tick += this.timesliderUpdateTimer_Tick;
+      this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
 
       // this.thresholdEffect = new ThresholdEffect();
       RenderOptions.SetBitmapScalingMode(this.VideoImage, BitmapScalingMode.LowQuality);
 
-      Calibration.Instance.PropertyChanged += this.CalibrationPropertyChanged;
+      CalibrationData.Instance.PropertyChanged += this.CalibrationPropertyChanged;
 
       Video.Instance.VideoFrameChanged += this.OnVideoFrameChanged;
 
-      Video.Instance.VideoPlayerElement.StepComplete += this.VideoPlayerElement_StepComplete;
-      Video.Instance.VideoPlayerElement.FileComplete += this.VideoPlayerElement_FileComplete;
+      Video.Instance.VideoPlayerElement.StepComplete += this.VideoPlayerElementStepComplete;
+      Video.Instance.VideoPlayerElement.FileComplete += this.VideoPlayerElementFileComplete;
 
-      Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessing_PropertyChanged;
-      Video.Instance.ImageProcessing.FrameProcessed += this.ImageProcessing_FrameProcessed;
-      this.timelineSlider.SelectionEndReached += this.timelineSlider_SelectionEndReached;
-      this.timelineSlider.SelectionAndValueChanged += this.timelineSlider_SelectionAndValueChanged;
+      Video.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      Video.Instance.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
+      this.timelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
+      this.timelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
     }
 
     #endregion
@@ -208,9 +208,9 @@ namespace VianaNET.Modules.Video
     public void SetVideoMode(VideoMode newVideoMode)
     {
       // Reset UI
-      Calibration.Instance.Reset();
+      CalibrationData.Instance.Reset();
       VideoData.Instance.Reset();
-      Video.Instance.ImageProcessing.Reset();
+      Video.Instance.ProcessingData.Reset();
       this.BlobsControl.UpdateDataPoints();
       this.timelineSlider.ResetSelection();
       this.CreateCrossHairLines();
@@ -251,7 +251,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowCalibration(bool show)
     {
-      if (Calibration.Instance.IsVideoCalibrated)
+      if (CalibrationData.Instance.IsVideoCalibrated)
       {
         this.ShowOrHideCalibration(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -265,7 +265,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowClipRegion(bool show)
     {
-      if (Calibration.Instance.HasClipRegion)
+      if (CalibrationData.Instance.HasClipRegion)
       {
         this.ShowOrHideClipRegion(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -343,7 +343,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void BottomLine_MouseEnter(object sender, MouseEventArgs e)
+    private void BottomLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeNS;
     }
@@ -382,35 +382,37 @@ namespace VianaNET.Modules.Video
         }
       }
 
-      this.blobHorizontalLines = new Line[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
-      this.blobVerticalLines = new Line[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      this.blobHorizontalLines = new Line[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.blobVerticalLines = new Line[Video.Instance.ProcessingData.NumberOfTrackedObjects];
 
-      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        var widthBinding = new Binding("ActualWidth");
-        widthBinding.ElementName = "VideoImage";
-        var newHorizontalLine = new Line();
-        newHorizontalLine.Visibility = Visibility.Hidden;
-        newHorizontalLine.Stroke = ImageProcessing.TrackObjectColors[i];
-        newHorizontalLine.StrokeThickness = 2;
-        newHorizontalLine.X1 = 0;
-        newHorizontalLine.X2 = 0;
-        newHorizontalLine.Y1 = 0;
-        newHorizontalLine.Y2 = 0;
+        var widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
+        var newHorizontalLine = new Line
+          {
+            Visibility = Visibility.Hidden,
+            Stroke = ProcessingData.TrackObjectColors[i],
+            StrokeThickness = 2,
+            X1 = 0,
+            X2 = 0,
+            Y1 = 0,
+            Y2 = 0
+          };
         newHorizontalLine.SetBinding(Line.X2Property, widthBinding);
         this.blobHorizontalLines[i] = newHorizontalLine;
         this.OverlayCanvas.Children.Add(newHorizontalLine);
 
-        var heightBinding = new Binding("ActualHeight");
-        heightBinding.ElementName = "VideoImage";
-        var newVerticalLine = new Line();
-        newVerticalLine.Visibility = Visibility.Hidden;
-        newVerticalLine.Stroke = ImageProcessing.TrackObjectColors[i];
-        newVerticalLine.StrokeThickness = 2;
-        newVerticalLine.X1 = 0;
-        newVerticalLine.X2 = 0;
-        newVerticalLine.Y1 = 0;
-        newVerticalLine.Y2 = 0;
+        var heightBinding = new Binding("ActualHeight") { ElementName = "VideoImage" };
+        var newVerticalLine = new Line
+          {
+            Visibility = Visibility.Hidden,
+            Stroke = ProcessingData.TrackObjectColors[i],
+            StrokeThickness = 2,
+            X1 = 0,
+            X2 = 0,
+            Y1 = 0,
+            Y2 = 0
+          };
         newVerticalLine.SetBinding(Line.Y2Property, heightBinding);
         this.blobVerticalLines[i] = newVerticalLine;
         this.OverlayCanvas.Children.Add(newVerticalLine);
@@ -469,16 +471,16 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void ImageProcessing_FrameProcessed(object sender, EventArgs e)
+    private void ProcessingDataFrameProcessed(object sender, EventArgs e)
     {
       double scaleX;
       double scaleY;
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          Point? blobCenter = Video.Instance.ImageProcessing.CurrentBlobCenter[i];
+          Point? blobCenter = Video.Instance.ProcessingData.CurrentBlobCenter[i];
           if (blobCenter.HasValue)
           {
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -506,7 +508,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "TargetColor")
       {
@@ -514,11 +516,11 @@ namespace VianaNET.Modules.Video
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
-        if (Video.Instance.ImageProcessing.IsTargetColorSet)
+        if (Video.Instance.ProcessingData.IsTargetColorSet)
         {
           this.UpdateCrossHairColors();
 
-          for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
           {
             this.blobVerticalLines[i].Visibility = Visibility.Visible;
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -540,7 +542,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void LeftLine_MouseEnter(object sender, MouseEventArgs e)
+    private void LeftLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeWE;
     }
@@ -554,7 +556,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Line_MouseLeave(object sender, MouseEventArgs e)
+    private void LineMouseLeave(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.Hand;
     }
@@ -568,7 +570,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Line_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void LineMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       this.currentLine = sender as Line;
       Mouse.Capture(this.currentLine);
@@ -583,7 +585,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Line_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    private void LineMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
       Mouse.Capture(null);
     }
@@ -597,7 +599,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Line_MouseMove(object sender, MouseEventArgs e)
+    private void LineMouseMove(object sender, MouseEventArgs e)
     {
       if (e.LeftButton == MouseButtonState.Pressed && this.currentLine != null)
       {
@@ -616,7 +618,7 @@ namespace VianaNET.Modules.Video
         switch (this.currentLine.Name)
         {
           case "TopLine":
-            if (newY + margin < this.BottomLine.Y1)
+            if (newY + DefaultMargin < this.BottomLine.Y1)
             {
               this.currentLine.Y1 = newY;
               this.currentLine.Y2 = newY;
@@ -626,7 +628,7 @@ namespace VianaNET.Modules.Video
 
             break;
           case "BottomLine":
-            if (newY > this.TopLine.Y1 + margin)
+            if (newY > this.TopLine.Y1 + DefaultMargin)
             {
               this.currentLine.Y1 = newY;
               this.currentLine.Y2 = newY;
@@ -636,7 +638,7 @@ namespace VianaNET.Modules.Video
 
             break;
           case "LeftLine":
-            if (newX + margin < this.RightLine.X1)
+            if (newX + DefaultMargin < this.RightLine.X1)
             {
               this.currentLine.X1 = newX;
               this.currentLine.X2 = newX;
@@ -646,7 +648,7 @@ namespace VianaNET.Modules.Video
 
             break;
           case "RightLine":
-            if (newX > this.LeftLine.X1 + margin)
+            if (newX > this.LeftLine.X1 + DefaultMargin)
             {
               this.currentLine.X1 = newX;
               this.currentLine.X2 = newX;
@@ -674,11 +676,11 @@ namespace VianaNET.Modules.Video
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        Video.Instance.ImageProcessing.ProcessImage();
+        Video.Instance.ProcessingData.ProcessImage();
       }
       else
       {
-        this.Dispatcher.BeginInvoke((ThreadStart)delegate { Video.Instance.ImageProcessing.ProcessImage(); });
+        this.Dispatcher.BeginInvoke((ThreadStart)(() => Video.Instance.ProcessingData.ProcessImage()));
       }
     }
 
@@ -691,7 +693,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void OverlayCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+    private void OverlayCanvasSizeChanged(object sender, SizeChangedEventArgs e)
     {
       this.PlaceCalibration();
       this.PlaceClippingRegion();
@@ -715,12 +717,12 @@ namespace VianaNET.Modules.Video
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        Canvas.SetLeft(this.OriginPath, Calibration.Instance.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
-        Canvas.SetTop(this.OriginPath, Calibration.Instance.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
-        this.RulerLine.X1 = Calibration.Instance.RulerStartPointInPixel.X * scaleX;
-        this.RulerLine.Y1 = Calibration.Instance.RulerStartPointInPixel.Y * scaleY;
-        this.RulerLine.X2 = Calibration.Instance.RulerEndPointInPixel.X * scaleX;
-        this.RulerLine.Y2 = Calibration.Instance.RulerEndPointInPixel.Y * scaleY;
+        Canvas.SetLeft(this.OriginPath, CalibrationData.Instance.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
+        Canvas.SetTop(this.OriginPath, CalibrationData.Instance.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
+        this.RulerLine.X1 = CalibrationData.Instance.RulerStartPointInPixel.X * scaleX;
+        this.RulerLine.Y1 = CalibrationData.Instance.RulerStartPointInPixel.Y * scaleY;
+        this.RulerLine.X2 = CalibrationData.Instance.RulerEndPointInPixel.X * scaleX;
+        this.RulerLine.Y2 = CalibrationData.Instance.RulerEndPointInPixel.Y * scaleY;
         double centerLineX = (this.RulerLine.X1 + this.RulerLine.X2) / 2;
         double centerLineY = (this.RulerLine.Y1 + this.RulerLine.Y2) / 2;
 
@@ -742,24 +744,24 @@ namespace VianaNET.Modules.Video
         return;
       }
 
-      if (this.OuterRegion.IsVisible && Calibration.Instance.ClipRegion != Rect.Empty)
+      if (this.OuterRegion.IsVisible && CalibrationData.Instance.ClipRegion != Rect.Empty)
       {
-        this.TopLine.X1 = Calibration.Instance.ClipRegion.Left * scaleX;
-        this.TopLine.X2 = Calibration.Instance.ClipRegion.Right * scaleX;
-        this.TopLine.Y1 = Calibration.Instance.ClipRegion.Top * scaleY;
-        this.TopLine.Y2 = Calibration.Instance.ClipRegion.Top * scaleY;
-        this.BottomLine.X1 = Calibration.Instance.ClipRegion.Left * scaleX;
-        this.BottomLine.X2 = Calibration.Instance.ClipRegion.Right * scaleX;
-        this.BottomLine.Y1 = Calibration.Instance.ClipRegion.Bottom * scaleY;
-        this.BottomLine.Y2 = Calibration.Instance.ClipRegion.Bottom * scaleY;
-        this.LeftLine.X1 = Calibration.Instance.ClipRegion.Left * scaleX;
-        this.LeftLine.X2 = Calibration.Instance.ClipRegion.Left * scaleX;
-        this.LeftLine.Y1 = Calibration.Instance.ClipRegion.Top * scaleY;
-        this.LeftLine.Y2 = Calibration.Instance.ClipRegion.Bottom * scaleY;
-        this.RightLine.X1 = Calibration.Instance.ClipRegion.Right * scaleX;
-        this.RightLine.X2 = Calibration.Instance.ClipRegion.Right * scaleX;
-        this.RightLine.Y1 = Calibration.Instance.ClipRegion.Top * scaleY;
-        this.RightLine.Y2 = Calibration.Instance.ClipRegion.Bottom * scaleY;
+        this.TopLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
+        this.TopLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
+        this.TopLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
+        this.TopLine.Y2 = CalibrationData.Instance.ClipRegion.Top * scaleY;
+        this.BottomLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
+        this.BottomLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
+        this.BottomLine.Y1 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
+        this.BottomLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
+        this.LeftLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
+        this.LeftLine.X2 = CalibrationData.Instance.ClipRegion.Left * scaleX;
+        this.LeftLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
+        this.LeftLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
+        this.RightLine.X1 = CalibrationData.Instance.ClipRegion.Right * scaleX;
+        this.RightLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
+        this.RightLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
+        this.RightLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
         this.ResetOuterRegion();
       }
     }
@@ -783,7 +785,7 @@ namespace VianaNET.Modules.Video
       {
         Rect clipRect = innerRect;
         clipRect.Scale(1 / scaleX, 1 / scaleY);
-        Calibration.Instance.ClipRegion = clipRect;
+        CalibrationData.Instance.ClipRegion = clipRect;
       }
     }
 
@@ -796,7 +798,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void RightLine_MouseEnter(object sender, MouseEventArgs e)
+    private void RightLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeWE;
     }
@@ -838,7 +840,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void TopLine_MouseEnter(object sender, MouseEventArgs e)
+    private void TopLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeNS;
     }
@@ -848,10 +850,10 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void UpdateCrossHairColors()
     {
-      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.blobHorizontalLines[i].Stroke = ImageProcessing.TrackObjectColors[i];
-        this.blobVerticalLines[i].Stroke = ImageProcessing.TrackObjectColors[i];
+        this.blobHorizontalLines[i].Stroke = ProcessingData.TrackObjectColors[i];
+        this.blobVerticalLines[i].Stroke = ProcessingData.TrackObjectColors[i];
       }
     }
 
@@ -864,7 +866,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void VideoPlayerElement_FileComplete(object sender, EventArgs e)
+    private void VideoPlayerElementFileComplete(object sender, EventArgs e)
     {
       this.Dispatcher.BeginInvoke(
         (ThreadStart)delegate
@@ -885,7 +887,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void VideoPlayerElement_StepComplete(object sender, EventArgs e)
+    private void VideoPlayerElementStepComplete(object sender, EventArgs e)
     {
       // Do Events
       this.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
@@ -921,7 +923,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void VideoPlayer_VideoFileOpened(object sender, EventArgs e)
+    private void VideoPlayerVideoFileOpened(object sender, EventArgs e)
     {
       // this.BlobsControl.UpdatedProcessedImage();
       // this.BlobsControl.UpdateScale();
@@ -938,7 +940,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnPause_Click(object sender, RoutedEventArgs e)
+    private void BtnPauseClick(object sender, RoutedEventArgs e)
     {
       Video.Instance.Pause();
     }
@@ -952,7 +954,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnRecord_Click(object sender, RoutedEventArgs e)
+    private void BtnRecordClick(object sender, RoutedEventArgs e)
     {
       bool wasCapturing = false;
       if (Video.Instance.VideoMode == VideoMode.Capture)
@@ -962,7 +964,7 @@ namespace VianaNET.Modules.Video
       }
 
       var saveVideoDialog = new SaveVideoDialog();
-      if (saveVideoDialog.ShowDialog().Value)
+      if (saveVideoDialog.ShowDialog().GetValueOrDefault(false))
       {
         this.SetVideoMode(VideoMode.File);
         this.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
@@ -982,7 +984,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnRevert_Click(object sender, RoutedEventArgs e)
+    private void BtnRevertClick(object sender, RoutedEventArgs e)
     {
       Video.Instance.Revert();
       this.timelineSlider.Value = this.timelineSlider.SelectionStart;
@@ -997,7 +999,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnStart_Click(object sender, RoutedEventArgs e)
+    private void BtnStartClick(object sender, RoutedEventArgs e)
     {
       Video.Instance.Play();
     }
@@ -1011,7 +1013,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnStop_Click(object sender, RoutedEventArgs e)
+    private void BtnStopClick(object sender, RoutedEventArgs e)
     {
       Video.Instance.Stop();
     }
@@ -1025,7 +1027,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
         (long)(this.timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
@@ -1041,7 +1043,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
+    private void TimelineSliderDragDelta(object sender, DragDeltaEventArgs e)
     {
       // Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
     }
@@ -1055,7 +1057,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
+    private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
     {
       this.isDragging = true;
     }
@@ -1069,7 +1071,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_SelectionAndValueChanged(object sender, EventArgs e)
+    private void TimelineSliderSelectionAndValueChanged(object sender, EventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
         (long)(this.timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
@@ -1084,7 +1086,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_SelectionEndReached(object sender, EventArgs e)
+    private void TimelineSliderSelectionEndReached(object sender, EventArgs e)
     {
       Video.Instance.Pause();
     }
@@ -1098,7 +1100,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_TickDownClicked(object sender, EventArgs e)
+    private void TimelineSliderTickDownClicked(object sender, EventArgs e)
     {
       if (this.timelineSlider.Value >= this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
       {
@@ -1115,7 +1117,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timelineSlider_TickUpClicked(object sender, EventArgs e)
+    private void TimelineSliderTickUpClicked(object sender, EventArgs e)
     {
       if (this.timelineSlider.Value <= this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
       {
@@ -1132,7 +1134,7 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void timesliderUpdateTimer_Tick(object sender, EventArgs e)
+    private void TimesliderUpdateTimerTick(object sender, EventArgs e)
     {
       if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
       {

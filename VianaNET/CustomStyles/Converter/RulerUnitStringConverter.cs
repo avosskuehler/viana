@@ -61,15 +61,15 @@ namespace VianaNET.CustomStyles.Converter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var valueToConvert = (double)value;
-      string unit = " " + Calibration.Instance.PositionUnit;
+      string unit = " " + CalibrationData.Instance.PositionUnit;
       var param = (MeasurementType)parameter;
       switch (param)
       {
         case MeasurementType.Pixel:
-          unit = " " + Calibration.Instance.PixelUnit;
+          unit = " " + CalibrationData.Instance.PixelUnit;
           break;
         case MeasurementType.Position:
-          unit = " " + Calibration.Instance.PositionUnit;
+          unit = " " + CalibrationData.Instance.PositionUnit;
           break;
       }
 

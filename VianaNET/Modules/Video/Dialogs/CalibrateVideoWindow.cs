@@ -177,7 +177,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (!this.originIsSet)
       {
-        Calibration.Instance.OriginInPixel = new Point(originalX, originalY);
+        CalibrationData.Instance.OriginInPixel = new Point(originalX, originalY);
         this.originIsSet = true;
         this.originPath.Visibility = Visibility.Visible;
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);
@@ -246,20 +246,20 @@ namespace VianaNET.Modules.Video.Dialogs
       if (lengthDialog.ShowDialog().Value)
       {
         // Save ruler points to Settings
-        Calibration.Instance.RulerEndPointInPixel = this.endPoint;
-        Calibration.Instance.RulerStartPointInPixel = this.startPoint;
+        CalibrationData.Instance.RulerEndPointInPixel = this.endPoint;
+        CalibrationData.Instance.RulerStartPointInPixel = this.startPoint;
 
         var lengthVector = new Vector();
         lengthVector = Vector.Add(
           lengthVector, 
-          new Vector(Calibration.Instance.RulerStartPointInPixel.X, Calibration.Instance.RulerStartPointInPixel.Y));
+          new Vector(CalibrationData.Instance.RulerStartPointInPixel.X, CalibrationData.Instance.RulerStartPointInPixel.Y));
         lengthVector.Negate();
         lengthVector = Vector.Add(
           lengthVector, 
-          new Vector(Calibration.Instance.RulerEndPointInPixel.X, Calibration.Instance.RulerEndPointInPixel.Y));
+          new Vector(CalibrationData.Instance.RulerEndPointInPixel.X, CalibrationData.Instance.RulerEndPointInPixel.Y));
         double length = lengthVector.Length;
-        Calibration.Instance.ScalePixelToUnit = Calibration.Instance.RulerValueInRulerUnits / length;
-        Calibration.Instance.IsVideoCalibrated = true;
+        CalibrationData.Instance.ScalePixelToUnit = CalibrationData.Instance.RulerValueInRulerUnits / length;
+        CalibrationData.Instance.IsVideoCalibrated = true;
         this.DialogResult = true;
       }
 

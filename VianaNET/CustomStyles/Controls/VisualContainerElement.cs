@@ -64,18 +64,11 @@ namespace VianaNET
     protected override Size MeasureOverride(Size availableSize)
     {
       if (this.visual != null)
+      {
         return this.visual.ContentBounds.Size;
+      }
+
       return base.MeasureOverride(availableSize);
-    }
-
-    protected override Size ArrangeOverride(Size finalSize)
-    {
-      return base.ArrangeOverride(finalSize);
-    }
-
-    protected override void OnVisualChildrenChanged(DependencyObject visualAdded, DependencyObject visualRemoved)
-    {
-      base.OnVisualChildrenChanged(visualAdded, visualRemoved);
     }
   }
 }
