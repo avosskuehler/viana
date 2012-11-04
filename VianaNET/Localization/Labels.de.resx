@@ -1337,8 +1337,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Beenden</value>
   </data>
   <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
-    <value>
-Übernehmen</value>
+    <value>Übernehmen</value>
   </data>
   <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
     <value>Funktionseditor</value>
@@ -1444,5 +1443,8 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
     <value>Bitte geben Sie Farbe und Dicke für die Kurve an.</value>
+  </data>
+  <data name="LineFitBestRegress" xml:space="preserve">
+    <value>Finde beste Ausgleichskurve</value>
   </data>
 </root>

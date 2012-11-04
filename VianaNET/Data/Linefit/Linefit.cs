@@ -63,7 +63,7 @@ namespace VianaNET.Data.Linefit
 
     /// <summary>
     /// Parameter und Abweichungen der 9 Ausgleichsfunktionen; 
-    /// ein weiterer Parametersatz, wenn man die beste aller Regressionen herausfinden will. 
+    /// ein weiterer Parametersatz - Satz 0 -, wenn man die beste aller Regressionen herausfinden will. 
     /// </summary>
     private static readonly Matrix FitParameterMatrix = new Matrix(10, 6);
 
@@ -394,6 +394,19 @@ namespace VianaNET.Data.Linefit
       }
     }
 
+    public void UpdateLinefitFunctionData(bool neuBerechnen)
+    {
+        // Darstellung des Funktionsterms übernehmen
+        this.UpdateRegressionFunctionString();
+        FittedData.Instance.RegressionAberrationString = this.LineFitAbweichung.ToString();
+
+        // Serie neu berechnen: Punkte mit Ausgleichsfunktion bestimmen
+        if ((this.AusgleichsFunktion != NullFkt) && neuBerechnen)
+        {
+            this.CalculateLineFitSeries(FittedData.Instance.RegressionSeries);
+        }   
+    }
+
     /// <summary>
     /// Calculate the theory series xySamples
     /// </summary>
@@ -552,8 +565,6 @@ namespace VianaNET.Data.Linefit
     /// </returns>
     private string GetRegressionFunctionString(Regression regTyp)
     {
-    //  var a = FitParameterMatrix[(int)regTyp, 0];
-    //  var b = FitParameterMatrix[(int)regTyp, 1];
       var c = FitParameterMatrix[(int)regTyp, 2];
       var d = FitParameterMatrix[(int)regTyp, 3];
       string fktStr;
@@ -566,7 +577,6 @@ namespace VianaNET.Data.Linefit
         switch (regTyp)
         {
           case Regression.Linear:
-              //  fktStr = string.Concat(a.ToString(numberFormat), "*x + ", b.ToString(numberFormat));
              fktStr = string.Concat(aString, "*x + ", bString);
             break;
           case Regression.ExponentiellMitKonstante:
@@ -586,15 +596,12 @@ namespace VianaNET.Data.Linefit
             break;
           case Regression.Sinus:
             fktStr = string.Concat(aString, "*Sin(", bString, "*x + ", c.ToString(numberFormat), ") + ", d.ToString(numberFormat));
-           // this.AusgleichsFunktion = AusgleichsSin;
             break;
           case Regression.SinusGedämpft:
             fktStr = string.Concat(aString, "*Sin(", bString, "*x )*exp( ", c.ToString(numberFormat), "*x)");
-          //  this.AusgleichsFunktion = AusgleichsSinExp;
             break;
           case Regression.Resonanz:
             fktStr = string.Concat(aString, "/Sqrt( 1 +", bString, "*( x - ", c.ToString(numberFormat), "/x)² )");
-          //  this.AusgleichsFunktion = AusgleichsReso;
             break;
           default:
             fktStr = " - ";
@@ -664,30 +671,6 @@ namespace VianaNET.Data.Linefit
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
     #region Methods
-
-    /////// <summary>
-    ///////   The berechne abc.
-    /////// </summary>
-    ////private void BerechneABC()
-    ////{
-    ////  double a, b, c;
-    ////  int k;
-    ////  a = 0;
-    ////  c = 0;
-    ////  b = this.AbschaetzungFuerB();
-    ////  for (k = 0; k < this.anzahl; k++)
-    ////  {
-    ////    a = a + (this.WertY[k] - this.WertY[k + 1]) / (Math.Exp(b * this.WertX[k]) - Math.Exp(b * this.WertX[k + 1]));
-    ////  }
-
-    ////  a = a / this.anzahl;
-    ////  for (k = 0; k < this.anzahl; k++)
-    ////  {
-    ////    c = c + this.WertY[0] - a * Math.Exp(b * this.WertX[0]);
-    ////  }
-
-    ////  c = c / this.anzahl;
-    ////}
 
     /// <summary>
     ///   The bestimme exp fkt.
@@ -1441,15 +1424,14 @@ namespace VianaNET.Data.Linefit
     {
       // erase old values
       lineFitSamples.Clear();
-
-      int k;
-      double x;
-      XYSample p;
-
       if (this.AusgleichsFunktion == null)
       {
         return;
       }
+
+      int k;
+      double x;
+      XYSample p;
 
       if (this.regressionType == Regression.Linear)
       {
@@ -1482,6 +1464,7 @@ namespace VianaNET.Data.Linefit
       {
         // endPixelX und startPixelX
         // startX,endX und stepX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
+        //  var anzahlPixel = ChartWindow.AktuelleBreite();
         var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
         x = this.startX;
         for (k = 0; k < anzahlPixel; k++)
@@ -1508,10 +1491,7 @@ namespace VianaNET.Data.Linefit
     /// The akty nr. 
     /// </param>
     private void CopySampleColumnsToArrays(int aktObjectNr)
-    {
-      //DataSample aktDataSample;
-      //int firstPossibleValueNr = 0;
-
+    {     
       if (this.WertX == null)
       {
         return;
@@ -1520,6 +1500,14 @@ namespace VianaNET.Data.Linefit
       this.WertX.Clear();
       this.WertY.Clear();
       this.anzahl = 0;
+
+      if (this.orgDataSamples == null)
+      {
+          this.orgDataSamples = VideoData.Instance.Samples;
+          this.numberOfObject = VideoData.Instance.ActiveObject;
+          this.axisX = FittedData.Instance.AxisX;
+          this.axisY = FittedData.Instance.AxisY;
+      }
 
       foreach (TimeSample sample in this.orgDataSamples)
       {
@@ -1729,7 +1717,7 @@ namespace VianaNET.Data.Linefit
     //}
 
     /// <summary>
-    /// The get regression function string and average error.
+    /// The get regression function and average aberration.
     /// </summary>
     /// <param name="regTyp">
     /// The reg typ. 
@@ -1737,7 +1725,7 @@ namespace VianaNET.Data.Linefit
     /// <param name="fehler">
     /// The fehler. 
     /// </param>
-    private void GetRegressionFunctionStringAndAverageAberration(Regression regTyp, double aberration)
+    private void GetRegressionFunctionAndAverageAberration(Regression regTyp, double aberration)
     {
      //Ausgleichsfunktion zuweisen
       switch (regTyp)
@@ -1772,23 +1760,9 @@ namespace VianaNET.Data.Linefit
         default:
           this.AusgleichsFunktion = NullFkt;
           break;
-      }
-      // Darstellung des Funktionsterms übernehmen
-      this.UpdateRegressionFunctionString();
-
+      }     
       // mittleres Abweichungsquadrat errechnen
-      GetAverageAberration(aberration);
-      FittedData.Instance.RegressionAberrationString = this.LineFitAbweichung.ToString();
-
-      // Serie neu berechnen
-      if (this.AusgleichsFunktion != NullFkt)
-      {
-          // Berechnung der Ausgleichsfunktion war erfolgreich, also series neu füllen
-          FittedData.Instance.RegressionSeries.Clear();
-
-          // Punkte mit Ausgleichsfunktion bestimmen
-          this.CalculateLineFitSeries(FittedData.Instance.RegressionSeries);       
-      }       
+      GetAverageAberration(aberration);         
     }
 
     /// <summary>
@@ -1951,6 +1925,39 @@ namespace VianaNET.Data.Linefit
         schaetzWert = schaetzStep;
       }
     }
+
+
+
+    /// <summary>
+    /// The _Get _BestRegress
+    /// </summary>
+    /// <param name="bestRegTyp">
+    /// type of best fit. 
+    /// </param> 
+    public void GetBestRegressData( out Regression bestRegTyp)
+    {
+        double abw;
+        Regression aktRegTyp;
+        
+        FitParameterMatrix[0, 5] = -2;
+        bestRegTyp = Regression.Linear;
+        abw = StartAbw;
+        for (aktRegTyp = Regression.Linear; aktRegTyp <= Regression.Resonanz; aktRegTyp++)
+        {
+            CalculateLineFitFunction(aktRegTyp);
+            FitParameterMatrix[(int)aktRegTyp, 5] = this.LineFitAbweichung;
+            if (this.LineFitAbweichung > -2)
+            {
+                if (abw > this.LineFitAbweichung)
+                {
+                    abw = this.LineFitAbweichung;
+                    bestRegTyp = aktRegTyp;
+                }
+            }
+        }
+        this.GetRegressionFunctionAndAverageAberration(bestRegTyp, FitParameterMatrix[(int)bestRegTyp, 5]);
+    }
+
 
     #endregion
   }
