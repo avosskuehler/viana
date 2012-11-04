@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="VianaNET.Modules.DataGrid.DataGridWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation" xmlns:Data="clr-namespace:VianaNET.Data"
+    lex:LocalizeDictionary.DesignCulture="de"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  mc:Ignorable="d"
+  d:DesignHeight="418" d:DesignWidth="770">
+  <UserControl.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </UserControl.Resources>
+  <DataGrid 
+    AutoGenerateColumns="False" 
+    Name="dataGrid"
+    Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}"
+    ItemsSource="{Binding Path=Samples, Source={x:Static Data:VideoData.Instance}}" 
+      HorizontalGridLinesBrush="Gray" 
+      VerticalGridLinesBrush="Gray" 
+      RowHeaderWidth="20" 
+      AlternationCount="1" 
+      CanUserDeleteRows="False"
+      CanUserResizeColumns="True">
+    <!--VirtualizingStackPanel.IsVirtualizing="True"
+      EnableRowVirtualization="True"
+      EnableColumnVirtualization="True"-->
+  </DataGrid>
+  <!--</ScrollViewer>-->
+</UserControl>
