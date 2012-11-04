@@ -190,6 +190,10 @@ namespace VianaNET.Data.Linefit
       {
         this.SelectedRegressionType = Regression.Resonanz;
       }
+      else if (sender == this.radioButtonFindBestRegress)
+      {
+          this.SelectedRegressionType = Regression.best;
+      }
       else
       {
         this.SelectedRegressionType = Regression.Linear;
@@ -197,5 +201,6 @@ namespace VianaNET.Data.Linefit
     }
 
     #endregion
+
   }
 }

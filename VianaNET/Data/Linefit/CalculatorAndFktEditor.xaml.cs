@@ -81,7 +81,7 @@ namespace VianaNET.Data.Linefit
         this.buttonFertig.Content = resMgr.GetString("CalculatorDialogButtonDoneFktEdit");
       }
 
-      for (k = 0; k < Enum.GetNames(typeof(Regression)).Length; k++)
+      for (k = 0; k < Constants.konstante.Length; k++)
       {
         string s = resMgr.GetString(Constants.konstante[k].titel);
         this.comboBox1.Items.Add(s);

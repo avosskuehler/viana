@@ -55,8 +55,6 @@
         <Button Content="End" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,179,0,0" Name="buttonEnd" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonEndClick" />
         </Grid>
         <Button Content="{lex:LocText VianaNET:Labels:Cancel}" Height="38" Grid.Row="2" HorizontalAlignment="Left" Margin="26,0,0,0" Name="buttonESC" VerticalAlignment="Center" Width="149" IsCancel="True" Click="ButtonEscClick" FontWeight="Bold" FontSize="13" Background="#FFEFCACA" />
-        <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogButtonDoneCalc}" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,30,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="ButtonFertigClick" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />
-
-       
+        <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogButtonDoneCalc}" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,26,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="ButtonFertigClick" FontWeight="Bold" FontSize="13" Background="#FFB2D87A" />      
     </Grid>
 </Window>

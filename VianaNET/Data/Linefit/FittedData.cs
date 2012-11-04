@@ -405,6 +405,7 @@ namespace VianaNET.Data.Linefit
           // sind Datenreihen ausgewählt ?
           // neu berechnen !
           this.LineFitObject.CalculateLineFitFunction(value);
+          this.LineFitObject.UpdateLinefitFunctionData(true);
         }
       }
     }
@@ -737,6 +738,7 @@ namespace VianaNET.Data.Linefit
       {
         this.PopulateSampleArrayFromVideoData();
         this.LineFitObject.CalculateLineFitFunction(this.RegressionType);
+        this.LineFitObject.UpdateLinefitFunctionData(true);
       }
       else
       {

@@ -1459,4 +1459,7 @@ Click OK or press Enter, when ready.</value>
   <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
     <value>Please specify color and thickness of data curve</value>
   </data>
+  <data name="LineFitBestRegress" xml:space="preserve">
+    <value>find best linefit</value>
+  </data>
 </root>

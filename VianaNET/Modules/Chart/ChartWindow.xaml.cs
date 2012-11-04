@@ -329,6 +329,65 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// </summary>
+    /// <param name="aktregressionType">
+    /// The aktual selected regression type. 
+    /// </param>
+    /// <param name="neuBerechnen">
+    /// Flag for calculating the linefitting 
+    /// </param>
+    private void UpdateLineFitImageButtonAndLabels(Regression aktregressionType, bool neuBerechnen)
+    {       
+            FittedData.Instance.RegressionType = aktregressionType;
+            string bildsource;
+            switch (FittedData.Instance.RegressionType)
+            {
+                case Regression.Linear:
+                    bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
+                    break;
+                case Regression.Exponentiell:
+                    bildsource = "/VianaNET;component/Images/LineFit_Exponential1_16.png";
+                    break;
+                case Regression.Logarithmisch:
+                    bildsource = "/VianaNET;component/Images/LineFit_Logarithmus_16.png";
+                    break;
+                case Regression.Potenz:
+                    bildsource = "/VianaNET;component/Images/LineFit_Potentiell_16.png";
+                    break;
+                case Regression.Quadratisch:
+                    bildsource = "/VianaNET;component/Images/LineFit_Quadratisch_16.png";
+                    break;
+                case Regression.ExponentiellMitKonstante:
+                    bildsource = "/VianaNET;component/Images/LineFit_Exponential2_16.png";
+                    break;
+                case Regression.Sinus:
+                    bildsource = "/VianaNET;component/Images/LineFit_Sinus_16.png";
+                    break;
+                case Regression.SinusGedämpft:
+                    bildsource = "/VianaNET;component/Images/LineFit_SinusExponential_16.png";
+                    break;
+                case Regression.Resonanz:
+                    bildsource = "/VianaNET;component/Images/LineFit_Resonanz_16.png";
+                    break;
+                default:
+                    bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
+                    break;
+            }
+
+            var neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
+            this.LineFitTypeButton.ImageSource = new BitmapImage(neuBildsource);
+
+            if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
+            {
+                FittedData.Instance.LineFitObject.CalculateLineFitFunction(FittedData.Instance.RegressionType);  
+                FittedData.Instance.LineFitObject.UpdateLinefitFunctionData(neuBerechnen);
+          this.RefreshLinefitFuctionTerm();
+                LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
+            }       
+    }
+
+
+    /// <summary>
     /// The line fit type button click.
     /// </summary>
     /// <param name="sender">
@@ -340,57 +399,23 @@ namespace VianaNET.Modules.Chart
     private void LineFitTypeButtonClick(object sender, RoutedEventArgs e)
     {
       double minX, minY, hilf;
+      Regression bestRegression;
 
       FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertX, out minX, out hilf);
       FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertY, out minY, out hilf);
       var linefittingDialog = new LinefittingDialog(minX < 0, minY < 0, FittedData.Instance.RegressionType);
       if (linefittingDialog.ShowDialog().GetValueOrDefault(false))
       {
-        FittedData.Instance.RegressionType = linefittingDialog.SelectedRegressionType;
-        string bildsource;
-        switch (FittedData.Instance.RegressionType)
-        {
-          case Regression.Linear:
-            bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
-            break;
-          case Regression.Exponentiell:
-            bildsource = "/VianaNET;component/Images/LineFit_Exponential1_16.png";
-            break;
-          case Regression.Logarithmisch:
-            bildsource = "/VianaNET;component/Images/LineFit_Logarithmus_16.png";
-            break;
-          case Regression.Potenz:
-            bildsource = "/VianaNET;component/Images/LineFit_Potentiell_16.png";
-            break;
-          case Regression.Quadratisch:
-            bildsource = "/VianaNET;component/Images/LineFit_Quadratisch_16.png";
-            break;
-          case Regression.ExponentiellMitKonstante:
-            bildsource = "/VianaNET;component/Images/LineFit_Exponential2_16.png";
-            break;
-          case Regression.Sinus:
-            bildsource = "/VianaNET;component/Images/LineFit_Sinus_16.png";
-            break;
-          case Regression.SinusGedämpft:
-            bildsource = "/VianaNET;component/Images/LineFit_SinusExponential_16.png";
-            break;
-          case Regression.Resonanz:
-            bildsource = "/VianaNET;component/Images/LineFit_Resonanz_16.png";
-            break;
-          default:
-            bildsource = "/VianaNET;component/Images/LineFit_Linear_16.png";
-            break;
-        }
-
-        var neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
-        this.LineFitTypeButton.ImageSource = new BitmapImage(neuBildsource);
-
-        if (this.LineFitCheckBox.IsChecked.GetValueOrDefault(false))
-        {
-          FittedData.Instance.LineFitObject.CalculateLineFitFunction(FittedData.Instance.RegressionType);
-          this.RefreshLinefitFuctionTerm();
-          LinefitAberationLabel.Content = FittedData.Instance.RegressionAberrationString;
-        }
+          FittedData.Instance.IsShowingRegressionSeries = false;
+          if (linefittingDialog.SelectedRegressionType == Regression.best)
+          {
+              FittedData.Instance.LineFitObject.GetBestRegressData(out bestRegression);
+              UpdateLineFitImageButtonAndLabels(bestRegression, false);
+          }
+          else
+          {
+              UpdateLineFitImageButtonAndLabels(linefittingDialog.SelectedRegressionType, true);
+          }
       }
     }
 
@@ -668,7 +693,8 @@ namespace VianaNET.Modules.Chart
        DataMapping mapPoints,
        DataMapping mapInterpolationFit,
        DataMapping mapLineFit,
-       DataMapping mapTheorieFit)  //Parameter mapInterpolationFit,mapLineFit und mapTheorieFit überflüssig */
+      DataMapping mapTheorieFit)  //Parameter mapInterpolationFit,mapLineFit und mapTheorieFit überflüssig 
+    */
     {
       string prefix = "Object[" + Video.Instance.ImageProcessing.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
