@@ -61,6 +61,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @AberrationStringPrefix.
+        /// </summary>
+        internal static string AberrationStringPrefix {
+            get {
+                return ResourceManager.GetString("AberrationStringPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @AboutBoxDescription.
         /// </summary>
         internal static string AboutBoxDescription {
@@ -2383,24 +2392,6 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @ChartWindowLineFitChooseTypeLabel.
-        /// </summary>
-        internal static string ChartWindowLineFitChooseTypeLabel {
-            get {
-                return ResourceManager.GetString("ChartWindowLineFitChooseTypeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @ChartWindowLinefitHeader.
-        /// </summary>
-        internal static string ChartWindowLinefitHeader {
-            get {
-                return ResourceManager.GetString("ChartWindowLinefitHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowObjectSelectionLabel.
         /// </summary>
         internal static string ChartWindowObjectSelectionLabel {
@@ -2433,6 +2424,24 @@ namespace VianaNET.Localization {
         internal static string ChartWindowPrecisionLabel {
             get {
                 return ResourceManager.GetString("ChartWindowPrecisionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowRegressionChooseTypeLabel.
+        /// </summary>
+        internal static string ChartWindowRegressionChooseTypeLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionChooseTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowRegressionHeader.
+        /// </summary>
+        internal static string ChartWindowRegressionHeader {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionHeader", resourceCulture);
             }
         }
         
@@ -3094,195 +3103,6 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to @LineFitCalculatorDialogTitle.
-        /// </summary>
-        internal static string LineFitCalculatorDialogTitle {
-            get {
-                return ResourceManager.GetString("LineFitCalculatorDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitColorRegress.
-        /// </summary>
-        internal static string LineFitColorRegress {
-            get {
-                return ResourceManager.GetString("LineFitColorRegress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitColorTheorie.
-        /// </summary>
-        internal static string LineFitColorTheorie {
-            get {
-                return ResourceManager.GetString("LineFitColorTheorie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitCurve.
-        /// </summary>
-        internal static string LineFitCurve {
-            get {
-                return ResourceManager.GetString("LineFitCurve", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitDialogHeader.
-        /// </summary>
-        internal static string LineFitDialogHeader {
-            get {
-                return ResourceManager.GetString("LineFitDialogHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitDialogTitle.
-        /// </summary>
-        internal static string LineFitDialogTitle {
-            get {
-                return ResourceManager.GetString("LineFitDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitDialogTopTitle.
-        /// </summary>
-        internal static string LineFitDialogTopTitle {
-            get {
-                return ResourceManager.GetString("LineFitDialogTopTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitExp.
-        /// </summary>
-        internal static string LineFitExp {
-            get {
-                return ResourceManager.GetString("LineFitExp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitExpo.
-        /// </summary>
-        internal static string LineFitExpo {
-            get {
-                return ResourceManager.GetString("LineFitExpo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitFunctionLabel.
-        /// </summary>
-        internal static string LineFitFunctionLabel {
-            get {
-                return ResourceManager.GetString("LineFitFunctionLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitLinear.
-        /// </summary>
-        internal static string LineFitLinear {
-            get {
-                return ResourceManager.GetString("LineFitLinear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitLineLabel.
-        /// </summary>
-        internal static string LineFitLineLabel {
-            get {
-                return ResourceManager.GetString("LineFitLineLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitLineThickness.
-        /// </summary>
-        internal static string LineFitLineThickness {
-            get {
-                return ResourceManager.GetString("LineFitLineThickness", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitLog.
-        /// </summary>
-        internal static string LineFitLog {
-            get {
-                return ResourceManager.GetString("LineFitLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitNumberDigits.
-        /// </summary>
-        internal static string LineFitNumberDigits {
-            get {
-                return ResourceManager.GetString("LineFitNumberDigits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitPot.
-        /// </summary>
-        internal static string LineFitPot {
-            get {
-                return ResourceManager.GetString("LineFitPot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitQuad.
-        /// </summary>
-        internal static string LineFitQuad {
-            get {
-                return ResourceManager.GetString("LineFitQuad", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitResonanz.
-        /// </summary>
-        internal static string LineFitResonanz {
-            get {
-                return ResourceManager.GetString("LineFitResonanz", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitSin.
-        /// </summary>
-        internal static string LineFitSin {
-            get {
-                return ResourceManager.GetString("LineFitSin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitSinExp.
-        /// </summary>
-        internal static string LineFitSinExp {
-            get {
-                return ResourceManager.GetString("LineFitSinExp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @LineFitTheorie.
-        /// </summary>
-        internal static string LineFitTheorie {
-            get {
-                return ResourceManager.GetString("LineFitTheorie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to @LineOptionsDialogTitle.
         /// </summary>
         internal static string LineOptionsDialogTitle {
@@ -3513,6 +3333,204 @@ namespace VianaNET.Localization {
         internal static string QATButtonSaveToolTipTitle {
             get {
                 return ResourceManager.GetString("QATButtonSaveToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionBestType.
+        /// </summary>
+        internal static string RegressionBestType {
+            get {
+                return ResourceManager.GetString("RegressionBestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionCalculatorDialogTitle.
+        /// </summary>
+        internal static string RegressionCalculatorDialogTitle {
+            get {
+                return ResourceManager.GetString("RegressionCalculatorDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionColorRegress.
+        /// </summary>
+        internal static string RegressionColorRegress {
+            get {
+                return ResourceManager.GetString("RegressionColorRegress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionColorTheorie.
+        /// </summary>
+        internal static string RegressionColorTheorie {
+            get {
+                return ResourceManager.GetString("RegressionColorTheorie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionCurve.
+        /// </summary>
+        internal static string RegressionCurve {
+            get {
+                return ResourceManager.GetString("RegressionCurve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogHeader.
+        /// </summary>
+        internal static string RegressionDialogHeader {
+            get {
+                return ResourceManager.GetString("RegressionDialogHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogTitle.
+        /// </summary>
+        internal static string RegressionDialogTitle {
+            get {
+                return ResourceManager.GetString("RegressionDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogTopTitle.
+        /// </summary>
+        internal static string RegressionDialogTopTitle {
+            get {
+                return ResourceManager.GetString("RegressionDialogTopTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionExp.
+        /// </summary>
+        internal static string RegressionExp {
+            get {
+                return ResourceManager.GetString("RegressionExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionExpo.
+        /// </summary>
+        internal static string RegressionExpo {
+            get {
+                return ResourceManager.GetString("RegressionExpo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionFunctionLabel.
+        /// </summary>
+        internal static string RegressionFunctionLabel {
+            get {
+                return ResourceManager.GetString("RegressionFunctionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLinear.
+        /// </summary>
+        internal static string RegressionLinear {
+            get {
+                return ResourceManager.GetString("RegressionLinear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLineLabel.
+        /// </summary>
+        internal static string RegressionLineLabel {
+            get {
+                return ResourceManager.GetString("RegressionLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLineThickness.
+        /// </summary>
+        internal static string RegressionLineThickness {
+            get {
+                return ResourceManager.GetString("RegressionLineThickness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLog.
+        /// </summary>
+        internal static string RegressionLog {
+            get {
+                return ResourceManager.GetString("RegressionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionNumberDigits.
+        /// </summary>
+        internal static string RegressionNumberDigits {
+            get {
+                return ResourceManager.GetString("RegressionNumberDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionPot.
+        /// </summary>
+        internal static string RegressionPot {
+            get {
+                return ResourceManager.GetString("RegressionPot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionQuad.
+        /// </summary>
+        internal static string RegressionQuad {
+            get {
+                return ResourceManager.GetString("RegressionQuad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionResonanz.
+        /// </summary>
+        internal static string RegressionResonanz {
+            get {
+                return ResourceManager.GetString("RegressionResonanz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionSin.
+        /// </summary>
+        internal static string RegressionSin {
+            get {
+                return ResourceManager.GetString("RegressionSin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionSinExp.
+        /// </summary>
+        internal static string RegressionSinExp {
+            get {
+                return ResourceManager.GetString("RegressionSinExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionTheorie.
+        /// </summary>
+        internal static string RegressionTheorie {
+            get {
+                return ResourceManager.GetString("RegressionTheorie", resourceCulture);
             }
         }
         

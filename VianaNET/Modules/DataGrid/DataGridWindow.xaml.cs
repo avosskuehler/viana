@@ -33,7 +33,6 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows.Data;
 
   using VianaNET.Data;
-  using VianaNET.Data.Interpolation;
   using VianaNET.Localization;
   using VianaNET.Modules.Video.Control;
 
@@ -51,9 +50,9 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
       this.PopulateDataGridWithColumns();
-      Calibration.Instance.PropertyChanged += this.DataPropertyChanged;
+      CalibrationData.Instance.PropertyChanged += this.DataPropertyChanged;
       VideoData.Instance.PropertyChanged += this.DataPropertyChanged;
-      Video.Instance.ImageProcessing.PropertyChanged += this.DataPropertyChanged;
+      Video.Instance.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
 
     #endregion
@@ -75,32 +74,26 @@ namespace VianaNET.Modules.DataGrid
     /// <param name="measurement">
     /// The measurement. 
     /// </param>
-    /// <param name="bindVisibility">
-    /// The bind visibility. 
-    /// </param>
-    private void CreateColumn(string path, string header, string[] cellstyles, string measurement, bool bindVisibility)
+    private void CreateColumn(string path, string header, string[] cellstyles, string measurement)
     {
-      var newColumn = new DataGridTextColumn();
-      newColumn.Header = header;
-      newColumn.HeaderStyle = (Style)this.Resources[cellstyles[0]];
-      newColumn.CellStyle = (Style)this.Resources[cellstyles[1]];
-      newColumn.CanUserReorder = true;
-      newColumn.IsReadOnly = true;
-      newColumn.CanUserSort = false;
+      var newColumn = new DataGridTextColumn
+        {
+          Header = header,
+          HeaderStyle = (Style)this.Resources[cellstyles[0]],
+          CellStyle = (Style)this.Resources[cellstyles[1]],
+          CanUserReorder = true,
+          IsReadOnly = true,
+          CanUserSort = false
+        };
 
       // newColumn.SortMemberPath = path;
-      var valueBinding = new Binding(path);
-      valueBinding.Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"];
-      valueBinding.ConverterParameter = this.Resources[measurement];
-      newColumn.Binding = valueBinding;
-      if (bindVisibility)
-      {
-        var visibilityBinding = new Binding("IsInterpolatingData");
-        visibilityBinding.Converter = (IValueConverter)this.Resources["BoolVisibleConverter"];
-        visibilityBinding.Source = Interpolation.Instance;
-        BindingOperations.SetBinding(newColumn, DataGridColumn.VisibilityProperty, visibilityBinding);
-      }
+      var valueBinding = new Binding(path)
+        {
+          Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
+          ConverterParameter = this.Resources[measurement]
+        };
 
+      newColumn.Binding = valueBinding;
       this.dataGrid.Columns.Add(newColumn);
     }
 
@@ -138,96 +131,80 @@ namespace VianaNET.Modules.DataGrid
       this.dataGrid.Columns.Clear();
 
       // Create style string arrays
-      var cellStyles = new List<string[]>();
-      cellStyles.Add(new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" });
-      cellStyles.Add(new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" });
-      cellStyles.Add(new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" });
+      var cellStyles = new List<string[]>
+        {
+          new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" },
+          new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" },
+          new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" }
+        };
 
       // Create default framenumber colum
-      var frameColumn = new DataGridTextColumn();
-      frameColumn.Header = Labels.DataGridFramenumber;
-      frameColumn.HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"];
-      frameColumn.CellStyle = (Style)this.Resources["DataGridCellStyle"];
-      frameColumn.CanUserReorder = false;
-      frameColumn.IsReadOnly = true;
-      frameColumn.CanUserSort = false;
+      var frameColumn = new DataGridTextColumn
+        {
+          Header = Labels.DataGridFramenumber,
+          HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+          CellStyle = (Style)this.Resources["DataGridCellStyle"],
+          CanUserReorder = false,
+          IsReadOnly = true,
+          CanUserSort = false
+        };
 
       // frameColumn.SortMemberPath = "Framenumber";
-      var valueBinding = new Binding("Framenumber");
-      valueBinding.StringFormat = "N0";
+      var valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
       frameColumn.Binding = valueBinding;
       this.dataGrid.Columns.Add(frameColumn);
 
       // Create default time column
-      var timeColumn = new DataGridTextColumn();
-      timeColumn.Header = Labels.DataGridTimestamp;
-      timeColumn.HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"];
-      timeColumn.CellStyle = (Style)this.Resources["DataGridCellStyle"];
-      timeColumn.CanUserReorder = false;
-      timeColumn.IsReadOnly = true;
-      timeColumn.CanUserSort = false;
+      var timeColumn = new DataGridTextColumn
+        {
+          Header = Labels.DataGridTimestamp,
+          HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+          CellStyle = (Style)this.Resources["DataGridCellStyle"],
+          CanUserReorder = false,
+          IsReadOnly = true,
+          CanUserSort = false
+        };
 
       // timeColumn.SortMemberPath = "Timestamp";
-      var valueBindingTime = new Binding("Timestamp");
-      valueBindingTime.Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"];
-      valueBindingTime.ConverterParameter = this.Resources["TimeMeasurement"];
+      var valueBindingTime = new Binding("Timestamp")
+        {
+          Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
+          ConverterParameter = this.Resources["TimeMeasurement"]
+        };
+
       timeColumn.Binding = valueBindingTime;
       this.dataGrid.Columns.Add(timeColumn);
 
       // For each tracked object create the whole bunch of columns
-      for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        string prefix = Video.Instance.ImageProcessing.NumberOfTrackedObjects > 1
+        string prefix = Video.Instance.ProcessingData.NumberOfTrackedObjects > 1
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
-        string obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
-        this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement", false);
-        this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement", false);
+        var obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
+        this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
         this.CreateColumn(
-          obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement", false);
+          obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(
-          obj + "DistanceX", prefix + Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement", false);
+          obj + "DistanceX", prefix + Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(
-          obj + "DistanceY", prefix + Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement", false);
-        this.CreateColumn(obj + "Length", prefix + Labels.DataGridLength, cellStyles[i], "PositionMeasurement", false);
-        this.CreateColumn(obj + "LengthX", prefix + Labels.DataGridXLength, cellStyles[i], "PositionMeasurement", false);
-        this.CreateColumn(obj + "LengthY", prefix + Labels.DataGridYLength, cellStyles[i], "PositionMeasurement", false);
+          obj + "DistanceY", prefix + Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Length", prefix + Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthX", prefix + Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthY", prefix + Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(
-          obj + "Velocity", prefix + Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement", false);
+          obj + "Velocity", prefix + Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
-          obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement", false);
+          obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
-          obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement", false);
+          obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
-          obj + "VelocityI", prefix + Labels.DataGridVelocityInterpolated, cellStyles[i], "VelocityMeasurement", true);
+                obj + "Acceleration", prefix + Labels.DataGridAcceleration, cellStyles[i], "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "VelocityXI", prefix + Labels.DataGridXVelocityInterpolated, cellStyles[i], "VelocityMeasurement", true);
+          obj + "AccelerationX", prefix + Labels.DataGridXAcceleration, cellStyles[i], "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "VelocityYI", prefix + Labels.DataGridYVelocityInterpolated, cellStyles[i], "VelocityMeasurement", true);
-        this.CreateColumn(
-          obj + "Acceleration", prefix + Labels.DataGridAcceleration, cellStyles[i], "AccelerationMeasurement", false);
-        this.CreateColumn(
-          obj + "AccelerationX", prefix + Labels.DataGridXAcceleration, cellStyles[i], "AccelerationMeasurement", false);
-        this.CreateColumn(
-          obj + "AccelerationY", prefix + Labels.DataGridYAcceleration, cellStyles[i], "AccelerationMeasurement", false);
-        this.CreateColumn(
-          obj + "AccelerationI", 
-          prefix + Labels.DataGridAccelerationInterpolated, 
-          cellStyles[i], 
-          "AccelerationMeasurement", 
-          true);
-        this.CreateColumn(
-          obj + "AccelerationXI", 
-          prefix + Labels.DataGridXAccelerationInterpolated, 
-          cellStyles[i], 
-          "AccelerationMeasurement", 
-          true);
-        this.CreateColumn(
-          obj + "AccelerationYI", 
-          prefix + Labels.DataGridYAccelerationInterpolated, 
-          cellStyles[i], 
-          "AccelerationMeasurement", 
-          true);
+          obj + "AccelerationY", prefix + Labels.DataGridYAcceleration, cellStyles[i], "AccelerationMeasurement");
       }
     }
 

@@ -80,33 +80,33 @@ namespace VianaNET.CustomStyles.Converter
 
       var param = (MeasurementType)parameter;
 
-      string unit = " " + Calibration.Instance.PositionUnit;
+      string unit = " " + CalibrationData.Instance.PositionUnit;
       string formatting = "N2";
       switch (param)
       {
         case MeasurementType.Time:
-          unit = " " + Calibration.Instance.TimeUnit;
+          unit = " " + CalibrationData.Instance.TimeUnit;
           formatting = "N0";
           break;
         case MeasurementType.Pixel:
-          unit = " " + Calibration.Instance.PixelUnit;
+          unit = " " + CalibrationData.Instance.PixelUnit;
           formatting = "N0";
           break;
         case MeasurementType.Position:
-          unit = " " + Calibration.Instance.PositionUnit;
+          unit = " " + CalibrationData.Instance.PositionUnit;
           formatting = "N2";
           break;
         case MeasurementType.Velocity:
-          unit = " " + Calibration.Instance.VelocityUnit;
+          unit = " " + CalibrationData.Instance.VelocityUnit;
           formatting = "N2";
           break;
         case MeasurementType.Acceleration:
-          unit = " " + Calibration.Instance.AccelerationUnit;
+          unit = " " + CalibrationData.Instance.AccelerationUnit;
           formatting = "N2";
           break;
       }
 
-      if (Calibration.Instance.IsShowingUnits)
+      if (CalibrationData.Instance.IsShowingUnits)
       {
         return valueToConvert.ToString(formatting) + unit;
       }

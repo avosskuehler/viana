@@ -1258,43 +1258,43 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
     <value>Select object</value>
   </data>
-  <data name="LineFitExpo" xml:space="preserve">
+  <data name="RegressionExpo" xml:space="preserve">
     <value>Expontentialfunktion ( a*exp(b*x) + c )</value>
   </data>
-  <data name="LineFitDialogTitle" xml:space="preserve">
+  <data name="RegressionDialogTitle" xml:space="preserve">
     <value>Hier können Sie den Typ der Ausgleichskurve auswählen</value>
   </data>
-  <data name="LineFitDialogTopTitle" xml:space="preserve">
+  <data name="RegressionDialogTopTitle" xml:space="preserve">
     <value>Ausgleichsfunktion auswählen</value>
   </data>
-  <data name="LineFitExp" xml:space="preserve">
+  <data name="RegressionExp" xml:space="preserve">
     <value>Expontentialfunktion ( a*exp(b*x) )</value>
   </data>
-  <data name="LineFitLinear" xml:space="preserve">
+  <data name="RegressionLinear" xml:space="preserve">
     <value>lineare Funktion (m*x+n)</value>
   </data>
-  <data name="LineFitLog" xml:space="preserve">
+  <data name="RegressionLog" xml:space="preserve">
     <value>logarithmische Funktion ( a*ln(b*x) )</value>
   </data>
-  <data name="LineFitPot" xml:space="preserve">
+  <data name="RegressionPot" xml:space="preserve">
     <value>Potenzfunktion ( a*x^b)</value>
   </data>
-  <data name="LineFitQuad" xml:space="preserve">
+  <data name="RegressionQuad" xml:space="preserve">
     <value>quadratische Funktion (a*x²+b*x+c)</value>
   </data>
-  <data name="LineFitResonanz" xml:space="preserve">
+  <data name="RegressionResonanz" xml:space="preserve">
     <value>Resonanzfunktion ( a/sqrt(1+b*(x-c/x) )</value>
   </data>
-  <data name="LineFitSin" xml:space="preserve">
+  <data name="RegressionSin" xml:space="preserve">
     <value>Sinus-Funktion ( a*sin(bx+c)+d )</value>
   </data>
-  <data name="LineFitSinExp" xml:space="preserve">
+  <data name="RegressionSinExp" xml:space="preserve">
     <value>gedämpfte Sinusfkt ( a*sin(b*x)*exp(c*x)  )</value>
   </data>
-  <data name="LineFitFunctionLabel" xml:space="preserve">
+  <data name="RegressionFunctionLabel" xml:space="preserve">
     <value>AusgleichsFkt</value>
   </data>
-  <data name="LineFitLineLabel" xml:space="preserve">
+  <data name="RegressionLineLabel" xml:space="preserve">
     <value>Ausgleichskurve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
@@ -1303,25 +1303,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>Anpassen der Darstellungen</value>
   </data>
-  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+  <data name="RegressionCalculatorDialogTitle" xml:space="preserve">
     <value>Taschenrechner oder Eingabe von Funktionstermen (theoretische Funktion)</value>
   </data>
-  <data name="LineFitColorRegress" xml:space="preserve">
+  <data name="RegressionColorRegress" xml:space="preserve">
     <value>Farbe Regress</value>
   </data>
-  <data name="LineFitColorTheorie" xml:space="preserve">
+  <data name="RegressionColorTheorie" xml:space="preserve">
     <value>Farbe Theorie</value>
   </data>
-  <data name="LineFitCurve" xml:space="preserve">
+  <data name="RegressionCurve" xml:space="preserve">
     <value>Ausgleichskurve</value>
   </data>
-  <data name="LineFitLineThickness" xml:space="preserve">
+  <data name="RegressionLineThickness" xml:space="preserve">
     <value>Liniendicke</value>
   </data>
-  <data name="LineFitNumberDigits" xml:space="preserve">
+  <data name="RegressionNumberDigits" xml:space="preserve">
     <value>gültige Stellen</value>
   </data>
-  <data name="LineFitTheorie" xml:space="preserve">
+  <data name="RegressionTheorie" xml:space="preserve">
     <value>theoret. Kurve</value>
   </data>
   <data name="CalculatorDialogInsert" xml:space="preserve">
@@ -1337,8 +1337,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Beenden</value>
   </data>
   <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
-    <value>
-Übernehmen</value>
+    <value>Übernehmen</value>
   </data>
   <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
     <value>Funktionseditor</value>
@@ -1400,10 +1399,10 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ChartWindowLineColorLabel" xml:space="preserve">
     <value>Farbe</value>
   </data>
-  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+  <data name="ChartWindowRegressionChooseTypeLabel" xml:space="preserve">
     <value>Funktionstyp</value>
   </data>
-  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+  <data name="ChartWindowRegressionHeader" xml:space="preserve">
     <value>Fitten</value>
   </data>
   <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
@@ -1412,7 +1411,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>Theorie</value>
   </data>
-  <data name="LineFitDialogHeader" xml:space="preserve">
+  <data name="RegressionDialogHeader" xml:space="preserve">
     <value>Ausgleichsfunktion auswählen</value>
   </data>
   <data name="CalculatorDialogTitleCalc" xml:space="preserve">
@@ -1444,5 +1443,11 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
     <value>Bitte geben Sie Farbe und Dicke für die Kurve an.</value>
+  </data>
+  <data name="AberrationStringPrefix" xml:space="preserve">
+    <value>Fehlerquadrat: </value>
+  </data>
+  <data name="RegressionBestType" xml:space="preserve">
+    <value>Finde beste Ausgleichskurve</value>
   </data>
 </root>
