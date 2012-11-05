@@ -29,6 +29,11 @@ namespace VianaNET.Data.Linefit
   /// </summary>
   public enum Regression
   {
+      /// <summary>
+      /// find best regression 
+      /// </summary>
+      best = 0,
+
     /// <summary>
     /// Lineare Regression, mx+n
     /// </summary>
