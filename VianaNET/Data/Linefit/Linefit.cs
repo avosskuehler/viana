@@ -700,7 +700,7 @@ namespace VianaNET.Data.Linefit
             else
             {
                 // endPixelX und startPixelX
-                // startX und endX wurden in CopySampleColumnsToArrays(int aktObjectNr) bestimmt
+                // startX und endX wurden schon in CopySampleColumnsToArrays(int aktObjectNr) bestimmt
                 var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
                 x = this.startX;
 
