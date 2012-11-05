@@ -114,25 +114,25 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.rdbKM.IsChecked.Value)
         {
-          Calibration.Instance.RulerUnit = Unit.km;
+          CalibrationData.Instance.RulerUnit = Unit.km;
         }
         else if (this.rdbM.IsChecked.Value)
         {
-          Calibration.Instance.RulerUnit = Unit.m;
+          CalibrationData.Instance.RulerUnit = Unit.m;
         }
         else if (this.rdbCM.IsChecked.Value)
         {
-          Calibration.Instance.RulerUnit = Unit.cm;
+          CalibrationData.Instance.RulerUnit = Unit.cm;
         }
         else if (this.rdbMM.IsChecked.Value)
         {
-          Calibration.Instance.RulerUnit = Unit.mm;
+          CalibrationData.Instance.RulerUnit = Unit.mm;
         }
 
         // This line is necessary to get an update event for the ruler value
         // even if only the ruler unit was changed
-        Calibration.Instance.RulerValueInRulerUnits = -1;
-        Calibration.Instance.RulerValueInRulerUnits = result;
+        CalibrationData.Instance.RulerValueInRulerUnits = -1;
+        CalibrationData.Instance.RulerValueInRulerUnits = result;
 
         this.DialogResult = true;
         this.Close();

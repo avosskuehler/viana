@@ -42,7 +42,7 @@ namespace VianaNET.MainWindow
   using VianaNET.CustomStyles.Styles;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data;
-  using VianaNET.Data.Interpolation;
+  using VianaNET.Data.Filter.Interpolation;
   using VianaNET.Localization;
   using VianaNET.Modules.Chart;
   using VianaNET.Modules.DataAcquisition;
@@ -73,7 +73,7 @@ namespace VianaNET.MainWindow
       this.InitializeComponent();
 
       this.mainRibbon.DataContext = this;
-      Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessingPropertyChanged;
+      Video.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
 
@@ -357,34 +357,6 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The button interpolation properties_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void InterpolationPropertiesButtonClick(object sender, RoutedEventArgs e)
-    {
-      Interpolation.ShowInterpolationOptionsDialog();
-    }
-
-    /// <summary>
-    /// The button is interpolating data command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void IsInterpolatingDataButtonClick(object sender, RoutedEventArgs e)
-    {
-      Interpolation.Instance.IsInterpolatingData = this.ButtonIsInterpolatingData.IsChecked.GetValueOrDefault();
-    }
-
-    /// <summary>
     /// The button record video command_ executed.
     /// </summary>
     /// <param name="sender">
@@ -430,13 +402,13 @@ namespace VianaNET.MainWindow
       VideoData.Instance.Reset();
 
       // Increase number of objects, shrink to maximal 3.
-      if (Video.Instance.ImageProcessing.NumberOfTrackedObjects == 3)
+      if (Video.Instance.ProcessingData.NumberOfTrackedObjects == 3)
       {
-        Video.Instance.ImageProcessing.NumberOfTrackedObjects = 1;
+        Video.Instance.ProcessingData.NumberOfTrackedObjects = 1;
       }
       else
       {
-        Video.Instance.ImageProcessing.NumberOfTrackedObjects++;
+        Video.Instance.ProcessingData.NumberOfTrackedObjects++;
       }
 
       // Update button image source
@@ -454,7 +426,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void SelectObjectButtonClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.ImageProcessing.IndexOfObject++;
+      Video.Instance.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
@@ -614,7 +586,7 @@ namespace VianaNET.MainWindow
       // 5,
       // 5);
       var text = new FormattedText(
-        Video.Instance.ImageProcessing.NumberOfTrackedObjects.ToString("N0"),
+        Video.Instance.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -627,7 +599,8 @@ namespace VianaNET.MainWindow
       var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
       this.SelectNumberOfObjectsButton.LargeImageSource = bmp;
-      if (Video.Instance.ImageProcessing.NumberOfTrackedObjects > 1)
+
+      if (Video.Instance.ProcessingData.NumberOfTrackedObjects > 1)
       {
         this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle2;
       }
@@ -674,7 +647,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void ImageProcessingPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "IndexOfObject" || e.PropertyName == "NumberOfTrackedObjects")
       {
@@ -730,7 +703,7 @@ namespace VianaNET.MainWindow
       VideoData.Instance.RefreshDistanceVelocityAcceleration();
 
       // Update BlobsControl Dataview if visible
-      if (Video.Instance.ImageProcessing.IsTargetColorSet)
+      if (Video.Instance.ProcessingData.IsTargetColorSet)
       {
         this.VideoWindow.BlobsControl.UpdateDataPoints();
       }
@@ -771,12 +744,12 @@ namespace VianaNET.MainWindow
         var drawingVisual = new DrawingVisual();
         DrawingContext drawingContext = drawingVisual.RenderOpen();
         drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
-        int count = Video.Instance.ImageProcessing.NumberOfTrackedObjects;
+        int count = Video.Instance.ProcessingData.NumberOfTrackedObjects;
         float bandwidth = 26f / count;
         for (int i = 0; i < count; i++)
         {
           drawingContext.DrawRectangle(
-            new SolidColorBrush(Video.Instance.ImageProcessing.TargetColor[i]),
+            new SolidColorBrush(Video.Instance.ProcessingData.TargetColor[i]),
             null,
             new Rect(3 + i * bandwidth, 3, bandwidth, 27));
         }
@@ -788,8 +761,8 @@ namespace VianaNET.MainWindow
         var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
         bmp.Render(drawingVisual);
         this.SelectColorRibbonButton.LargeImageSource = bmp;
-        Video.Instance.ImageProcessing.IsTargetColorSet = false;
-        Video.Instance.ImageProcessing.IsTargetColorSet = true;
+        Video.Instance.ProcessingData.IsTargetColorSet = false;
+        Video.Instance.ProcessingData.IsTargetColorSet = true;
 
         // this.VideoWindow.BlobsControl.Visibility = Visibility.Visible;
         // Video.Instance.UpdateNativeBitmap();
@@ -801,13 +774,13 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectBindings()
     {
-      var thresholdBinding = new Binding("ImageProcessing.ColorThreshold[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      var thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
       this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
 
-      var minDiameterBinding = new Binding("ImageProcessing.BlobMinDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      var minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
       this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
 
-      var maxDiameterBinding = new Binding("ImageProcessing.BlobMaxDiameter[" + Video.Instance.ImageProcessing.IndexOfObject + "]") { Source = Video.Instance };
+      var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
       this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
     }
 
@@ -822,7 +795,7 @@ namespace VianaNET.MainWindow
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawImage(icon, new Rect(0, 0, 32, 32));
       var text = new FormattedText(
-        (Video.Instance.ImageProcessing.IndexOfObject + 1).ToString("N0"),
+        (Video.Instance.ProcessingData.IndexOfObject + 1).ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),

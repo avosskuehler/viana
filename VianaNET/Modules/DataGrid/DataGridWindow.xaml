@@ -14,7 +14,7 @@
   <DataGrid 
     AutoGenerateColumns="False" 
     Name="dataGrid"
-    Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}"
+    Background="{Binding Path=GradientBackground, Source={x:Static Data:CalibrationData.Instance}}"
     ItemsSource="{Binding Path=Samples, Source={x:Static Data:VideoData.Instance}}" 
       HorizontalGridLinesBrush="Gray" 
       VerticalGridLinesBrush="Gray" 

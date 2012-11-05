@@ -32,15 +32,15 @@ namespace VianaNET.Modules.Video.BlobDetection
   using System.Windows.Shapes;
 
   using VianaNET.Data;
+  using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
-  using VianaNET.Modules.Video.Filter;
 
   using VianaNETShaderEffectLibrary;
 
   /// <summary>
   ///   Interaction logic for BlobsControl.xaml
   /// </summary>
-  public partial class BlobsControl : UserControl
+  public partial class BlobsControl
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -76,23 +76,18 @@ namespace VianaNET.Modules.Video.BlobDetection
       this.DataContext = this;
       this.InitializeComponent();
 
-      this.thresholdEffect = new ThresholdEffect();
-      this.thresholdEffect.MinX = 0.001d;
-      this.thresholdEffect.MaxX = 0.999d;
-      this.thresholdEffect.MinY = 0.001d;
-      this.thresholdEffect.MaxY = 0.999d;
+      this.thresholdEffect = new ThresholdEffect { MinX = 0.001d, MaxX = 0.999d, MinY = 0.001d, MaxY = 0.999d };
 
-      this.backgroundEffect = new BackgroundEffect();
-      this.backgroundEffect.Threshold = 0.4;
+      this.backgroundEffect = new BackgroundEffect { Threshold = 0.4 };
 
       this.ProcessedImageControl.Effect = this.thresholdEffect;
       this.OverlayImageControl.Effect = this.backgroundEffect;
 
       // this.PopulateObjectCombo();
-      Video.Instance.ImageProcessing.PropertyChanged += this.ImageProcessing_PropertyChanged;
-      Calibration.Instance.PropertyChanged += this.Calibration_PropertyChanged;
-      VideoData.Instance.PropertyChanged += this.VideoData_PropertyChanged;
-      Video.Instance.PropertyChanged += this.Video_PropertyChanged;
+      Video.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      CalibrationData.Instance.PropertyChanged += this.CalibrationPropertyChanged;
+      VideoData.Instance.PropertyChanged += this.VideoDataPropertyChanged;
+      Video.Instance.PropertyChanged += this.VideoPropertyChanged;
     }
 
     #endregion
@@ -118,13 +113,15 @@ namespace VianaNET.Modules.Video.BlobDetection
       this.CanvasDataPoints.Children.Clear();
       foreach (TimeSample sample in VideoData.Instance.Samples)
       {
-        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          var dataPoint = new Ellipse();
-          dataPoint.Stroke = ImageProcessing.TrackObjectColors[i];
-          dataPoint.StrokeThickness = 2;
-          dataPoint.Width = 15;
-          dataPoint.Height = 15;
+          var dataPoint = new Ellipse
+            {
+              Stroke = ProcessingData.TrackObjectColors[i],
+              StrokeThickness = 2,
+              Width = 15,
+              Height = 15
+            };
           var location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
@@ -156,7 +153,7 @@ namespace VianaNET.Modules.Video.BlobDetection
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       var window = obj as BlobsControl;
-      window.UpdateThresholdForHLSL();
+      window.UpdateThresholdForHlsl();
     }
 
     /// <summary>
@@ -168,7 +165,7 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void BlobsControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    private void BlobsControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       this.SetBlobs();
     }
@@ -182,18 +179,18 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Calibration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void CalibrationPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "HasClipRegion" || e.PropertyName == "ClipRegion")
       {
         double videoWidth = Video.Instance.VideoElement.NaturalVideoWidth;
         double videoHeight = Video.Instance.VideoElement.NaturalVideoHeight;
-        if (Calibration.Instance.HasClipRegion)
+        if (CalibrationData.Instance.HasClipRegion)
         {
-          this.thresholdEffect.MinX = Calibration.Instance.ClipRegion.Left / videoWidth;
-          this.thresholdEffect.MaxX = Calibration.Instance.ClipRegion.Right / videoWidth;
-          this.thresholdEffect.MinY = Calibration.Instance.ClipRegion.Top / videoHeight;
-          this.thresholdEffect.MaxY = Calibration.Instance.ClipRegion.Bottom / videoHeight;
+          this.thresholdEffect.MinX = CalibrationData.Instance.ClipRegion.Left / videoWidth;
+          this.thresholdEffect.MaxX = CalibrationData.Instance.ClipRegion.Right / videoWidth;
+          this.thresholdEffect.MinY = CalibrationData.Instance.ClipRegion.Top / videoHeight;
+          this.thresholdEffect.MaxY = CalibrationData.Instance.ClipRegion.Bottom / videoHeight;
         }
         else
         {
@@ -216,11 +213,13 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void CanvasDataPoints_SizeChanged(object sender, SizeChangedEventArgs e)
+    private void CanvasDataPointsSizeChanged(object sender, SizeChangedEventArgs e)
     {
-      var videoSizeToCanvasSize = new ScaleTransform();
-      videoSizeToCanvasSize.ScaleX = this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
-      videoSizeToCanvasSize.ScaleY = this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+      var videoSizeToCanvasSize = new ScaleTransform
+        {
+          ScaleX = this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth,
+          ScaleY = this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight
+        };
       this.CanvasDataPoints.RenderTransform = videoSizeToCanvasSize;
     }
 
@@ -290,11 +289,11 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void ImageProcessing_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "TargetColor" || e.PropertyName == "HLSLParams" || e.PropertyName == "IndexOfObject")
       {
-        this.UpdateThresholdForHLSL();
+        this.UpdateThresholdForHlsl();
       }
 
       this.SetBlobs();
@@ -317,19 +316,21 @@ namespace VianaNET.Modules.Video.BlobDetection
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        for (int i = 0; i < Video.Instance.ImageProcessing.DetectedBlob.Count; i++)
+        for (int i = 0; i < Video.Instance.ProcessingData.DetectedBlob.Count; i++)
         {
-          Segment blob = Video.Instance.ImageProcessing.DetectedBlob[i];
+          var blob = Video.Instance.ProcessingData.DetectedBlob[i];
 
           if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
               && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
           {
-            var blobEllipse = new Ellipse();
-            blobEllipse.Fill = ImageProcessing.TrackObjectColors[i];
-            blobEllipse.Stroke = Brushes.Black; // ImageProcessing.TrackObjectColors[i];
-            blobEllipse.StrokeThickness = 1;
-            blobEllipse.Width = blob.Width * scaleX;
-            blobEllipse.Height = blob.Height * scaleY;
+            var blobEllipse = new Ellipse
+              {
+                Fill = ProcessingData.TrackObjectColors[i],
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+                Width = blob.Width * scaleX,
+                Height = blob.Height * scaleY
+              };
             this.OverlayCanvas.Children.Add(blobEllipse);
 
             Canvas.SetLeft(blobEllipse, blob.Center.X * scaleX - blobEllipse.Width / 2);
@@ -342,14 +343,14 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <summary>
     ///   The update threshold for hlsl.
     /// </summary>
-    private void UpdateThresholdForHLSL()
+    private void UpdateThresholdForHlsl()
     {
       this.thresholdEffect.Threshold =
-        Video.Instance.ImageProcessing.ColorThreshold[Video.Instance.ImageProcessing.IndexOfObject] / 255d;
+        Video.Instance.ProcessingData.ColorThreshold[Video.Instance.ProcessingData.IndexOfObject] / 255d;
       this.thresholdEffect.BlankColor = Colors.Black;
       this.thresholdEffect.CropColor = Colors.DarkGray;
       this.thresholdEffect.TargetColor =
-        Video.Instance.ImageProcessing.TargetColor[Video.Instance.ImageProcessing.IndexOfObject];
+        Video.Instance.ProcessingData.TargetColor[Video.Instance.ProcessingData.IndexOfObject];
     }
 
     /// <summary>
@@ -361,17 +362,19 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void VideoData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void VideoDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        for (int i = 0; i < Video.Instance.ImageProcessing.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          var dataPoint = new Ellipse();
-          dataPoint.Stroke = ImageProcessing.TrackObjectColors[i];
-          dataPoint.StrokeThickness = 2;
-          dataPoint.Width = 15;
-          dataPoint.Height = 15;
+          var dataPoint = new Ellipse
+            {
+              Stroke = ProcessingData.TrackObjectColors[i],
+              StrokeThickness = 2,
+              Width = 15,
+              Height = 15
+            };
           Point location = VideoData.Instance.LastPoint[i];
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
@@ -389,7 +392,7 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void Video_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void VideoPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "IsDataAcquisitionRunning")
       {

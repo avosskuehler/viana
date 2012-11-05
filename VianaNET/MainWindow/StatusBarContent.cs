@@ -77,7 +77,7 @@ namespace VianaNET.MainWindow
     #region Public Properties
 
     /// <summary>
-    ///   Gets the <see cref="Calibration" /> singleton.
+    ///   Gets the <see cref="CalibrationData" /> singleton.
     ///   If the underlying instance is null, a instance will be created.
     /// </summary>
     public static StatusBarContent Instance

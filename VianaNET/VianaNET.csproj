@@ -132,6 +132,8 @@
     <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
       <DependentUpon>LineStyleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
+    <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
@@ -152,42 +154,44 @@
     </Page>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
     <Compile Include="CustomStyles\Types\ChartType.cs" />
-    <Compile Include="Data\Calibration.cs" />
-    <Compile Include="Data\DataCharts.cs" />
-    <Compile Include="Data\Interpolation\ExponentialSmoothControl.xaml.cs">
+    <Compile Include="Data\CalibrationData.cs" />
+    <Compile Include="Data\Collections\DataCharts.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationFilterTypes.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationFilter.cs" />
+    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothControl.xaml.cs">
       <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\CalculatorAndFktEditor.xaml.cs">
+    <Compile Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml.cs">
       <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\CalculatorFunctionTerm.cs" />
-    <Compile Include="Data\Linefit\XYSample.cs" />
-    <Compile Include="Data\Linefit\NumericalPrecisionDialog.xaml.cs">
+    <Compile Include="Data\Filter\Theory\FunctionCalcTree.cs" />
+    <Compile Include="Data\Filter\Theory\TheoryFilter.cs" />
+    <Compile Include="Data\Collections\XYSample.cs" />
+    <Compile Include="Data\Filter\NumericalPrecisionDialog.xaml.cs">
       <DependentUpon>NumericalPrecisionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\LineOptionsDialog.xaml.cs">
+    <Compile Include="Data\Filter\LineOptionsDialog.xaml.cs">
       <DependentUpon>LineOptionsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\MatrixLibrary.cs" />
-    <Compile Include="Data\Linefit\LineFit.cs" />
-    <Compile Include="Data\Linefit\LinefittingDialog.xaml.cs">
-      <DependentUpon>LinefittingDialog.xaml</DependentUpon>
+    <Compile Include="Data\Filter\Regression\MatrixLibrary.cs" />
+    <Compile Include="Data\Filter\Regression\RegressionFilter.cs" />
+    <Compile Include="Data\Filter\Regression\RegressionOptionsDialog.xaml.cs">
+      <DependentUpon>RegressionOptionsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\Parser.cs" />
-    <Compile Include="Data\Linefit\Regression.cs" />
-    <Compile Include="Data\TimeSample.cs" />
-    <Compile Include="Data\Interpolation\ExponentialSmoothFilter.cs" />
-    <Compile Include="Data\Interpolation\Interpolation.cs" />
-    <Compile Include="Data\Interpolation\InterpolationOptionsDialog.xaml.cs">
+    <Compile Include="Data\Filter\Theory\Parser.cs" />
+    <Compile Include="Data\Filter\Regression\RegressionType.cs" />
+    <Compile Include="Data\Collections\TimeSample.cs" />
+    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothFilter.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationOptionsDialog.xaml.cs">
       <DependentUpon>InterpolationOptionsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Interpolation\MovingAverageFilter.cs" />
-    <Compile Include="Data\Interpolation\InterpolationBase.cs" />
-    <Compile Include="Data\ImageProcessing.cs" />
-    <Compile Include="Data\Interpolation\MovingAverageControl.xaml.cs">
+    <Compile Include="Data\Filter\Interpolation\MovingAverageFilter.cs" />
+    <Compile Include="Data\Filter\FilterBase.cs" />
+    <Compile Include="Data\ProcessingData.cs" />
+    <Compile Include="Data\Filter\Interpolation\MovingAverageControl.xaml.cs">
       <DependentUpon>MovingAverageControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Linefit\FittedData.cs" />
+    <Compile Include="Data\Filter\FilterData.cs" />
     <Compile Include="Modules\DataGrid\ExportData.cs" />
     <Compile Include="MainWindow\StatusBarContent.cs" />
     <Compile Include="CustomStyles\Types\MeasurementType.cs" />
@@ -195,9 +199,9 @@
     <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
     <Compile Include="CustomStyles\Types\Unit.cs" />
     <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
-    <Compile Include="Data\DataAxes.cs" />
-    <Compile Include="Data\DataCollection.cs" />
-    <Compile Include="Data\DataSample.cs" />
+    <Compile Include="Data\Collections\DataAxes.cs" />
+    <Compile Include="Data\Collections\DataCollection.cs" />
+    <Compile Include="Data\Collections\DataSample.cs" />
     <Compile Include="Data\VideoData.cs" />
     <Compile Include="Localization\Labels.en.Designer.cs">
       <DependentUpon>Labels.en.resx</DependentUpon>
@@ -342,31 +346,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Interpolation\ExponentialSmoothControl.xaml">
+    <Page Include="Data\Filter\Interpolation\ExponentialSmoothControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Interpolation\InterpolationOptionsDialog.xaml">
+    <Page Include="Data\Filter\Interpolation\InterpolationOptionsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Interpolation\MovingAverageControl.xaml">
+    <Page Include="Data\Filter\Interpolation\MovingAverageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Linefit\CalculatorAndFktEditor.xaml">
+    <Page Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Data\Linefit\NumericalPrecisionDialog.xaml">
+    <Page Include="Data\Filter\NumericalPrecisionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Linefit\LinefittingDialog.xaml">
+    <Page Include="Data\Filter\Regression\RegressionOptionsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Data\Linefit\LineOptionsDialog.xaml">
+    <Page Include="Data\Filter\LineOptionsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -574,6 +578,10 @@
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFMath, Version=0.1.0.39082, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\WPFMath.dll</HintPath>
+    </Reference>
     <Reference Include="WPFToolkit.Extended">
       <HintPath>DLL\WPFToolkit.Extended.dll</HintPath>
     </Reference>
@@ -734,24 +742,24 @@
     <Resource Include="Images\InterpolateData32.png" />
     <Resource Include="Images\SelectObject16.png" />
     <Resource Include="Images\SelectObject32.png" />
-    <Resource Include="Images\LineFit_Exponential1_32.png" />
-    <Resource Include="Images\LineFit_Exponential2_32.png" />
-    <Resource Include="Images\LineFit_Linear_16.png" />
-    <Resource Include="Images\LineFit_Linear_32.png" />
-    <Resource Include="Images\LineFit_Logarithmus_32.png" />
-    <Resource Include="Images\LineFit_Potentiell_32.png" />
-    <Resource Include="Images\LineFit_Quadratisch_32.png" />
-    <Resource Include="Images\LineFit_Resonanz_32.png" />
-    <Resource Include="Images\LineFit_SinusExponential_32.png" />
-    <Resource Include="Images\LineFit_Sinus_32.png" />
-    <Resource Include="Images\LineFit_Logarithmus_16.png" />
-    <Resource Include="Images\LineFit_Exponential1_16.png" />
-    <Resource Include="Images\LineFit_Exponential2_16.png" />
-    <Resource Include="Images\LineFit_Potentiell_16.png" />
-    <Resource Include="Images\LineFit_Quadratisch_16.png" />
-    <Resource Include="Images\LineFit_Resonanz_16.png" />
-    <Resource Include="Images\LineFit_SinusExponential_16.png" />
-    <Resource Include="Images\LineFit_Sinus_16.png" />
+    <Resource Include="Images\RegressionExponentialA32.png" />
+    <Resource Include="Images\RegressionExponentialB32.png" />
+    <Resource Include="Images\RegressionLinear16.png" />
+    <Resource Include="Images\RegressionLinear32.png" />
+    <Resource Include="Images\RegressionLogarithmus32.png" />
+    <Resource Include="Images\RegressionPotentiell32.png" />
+    <Resource Include="Images\RegressionQuadratisch32.png" />
+    <Resource Include="Images\RegressionResonanz32.png" />
+    <Resource Include="Images\RegressionSinusExponential32.png" />
+    <Resource Include="Images\RegressionSinus32.png" />
+    <Resource Include="Images\RegressionLogarithmus16.png" />
+    <Resource Include="Images\RegressionExponentialA16.png" />
+    <Resource Include="Images\RegressionExponentialB16.png" />
+    <Resource Include="Images\RegressionPotentiell16.png" />
+    <Resource Include="Images\RegressionQuadratisch16.png" />
+    <Resource Include="Images\RegressionResonanz16.png" />
+    <Resource Include="Images\RegressionSinusExponential16.png" />
+    <Resource Include="Images\RegressionSinus16.png" />
     <Resource Include="Images\RecordVideo16.png" />
     <Resource Include="Images\ExportChart32.png" />
     <Resource Include="Images\ExportData32.png" />
@@ -788,9 +796,9 @@
   <ItemGroup />
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
-  xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
 ) ELSE (
-  xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
+ C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
 )</PostBuildEvent>
   </PropertyGroup>
 </Project>
