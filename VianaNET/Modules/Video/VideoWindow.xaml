@@ -18,7 +18,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Data:CalibrationData.Instance}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -33,7 +33,7 @@
                Source="{Binding Path=VideoSource, Source={x:Static Control:Video.Instance}}"
                >
         </Image>
-        <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvas_SizeChanged"
+        <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
           <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
@@ -53,14 +53,14 @@
             </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=RulerValueInRulerUnits,
-              Source={x:Static Data:Calibration.Instance},
+              Source={x:Static Data:CalibrationData.Instance},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
-          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseMove="Line_MouseMove" MouseLeftButtonUp="Line_MouseLeftButtonUp" />
-          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
-          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
-          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLine_MouseEnter" MouseLeave="Line_MouseLeave" MouseLeftButtonDown="Line_MouseLeftButtonDown" MouseLeftButtonUp="Line_MouseLeftButtonUp" MouseMove="Line_MouseMove" />
+          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
+          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
           <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
             <Path.Data>
               <CombinedGeometry GeometryCombineMode="Xor">
@@ -77,7 +77,7 @@
       </Grid>
       <BlobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ImageProcessing.IsTargetColorSet, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -87,19 +87,19 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10,0,10,0" >
-        <Button x:Name="btnRecord" Click="btnRecord_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Button x:Name="btnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
           <Image Source="/VianaNET;component/Images/Record16.png" Width="16"/>
         </Button>
-        <Button x:Name="btnStart" Click="btnStart_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Button x:Name="btnStart" Click="BtnStartClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
           <Image Source="/VianaNET;component/Images/Start16.png" Width="16"/>
         </Button>
-        <Button x:Name="btnPause" Click="btnPause_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Button x:Name="btnPause" Click="BtnPauseClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
           <Image Source="/VianaNET;component/Images/Pause16.png" Width="16"/>
         </Button>
-        <Button x:Name="btnStop" Click="btnStop_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Button x:Name="btnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
           <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
         </Button>
-        <Button x:Name="btnRevert" Click="btnRevert_Click" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Button x:Name="btnRevert" Click="BtnRevertClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
           <Image Source="/VianaNET;component/Images/Revert16.png" Width="16"/>
         </Button>
       </StackPanel>
@@ -108,8 +108,8 @@
         x:Name="timelineSlider" 
         Style="{StaticResource MediaSliderStyle}"
         IsSelectionRangeEnabled="True" 
-        TickDownClicked="timelineSlider_TickDownClicked"
-        TickUpClicked="timelineSlider_TickUpClicked"
+        TickDownClicked="TimelineSliderTickDownClicked"
+        TickUpClicked="TimelineSliderTickUpClicked"
         FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static Control:Video.Instance}}"
         Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static Control:Video.Instance}}"
         SelectionStart="{Binding Path=VideoPlayerElement.SelectionStart, Source={x:Static Control:Video.Instance}}"
@@ -118,9 +118,9 @@
         TickPlacement="BottomRight" 
         Interval="1" 
         Minimum="0"
-        Thumb.DragStarted="timelineSlider_DragStarted"
-        Thumb.DragCompleted="timelineSlider_DragCompleted"
-        Thumb.DragDelta="timelineSlider_DragDelta"/>
+        Thumb.DragStarted="TimelineSliderDragStarted"
+        Thumb.DragCompleted="TimelineSliderDragCompleted"
+        Thumb.DragDelta="TimelineSliderDragDelta"/>
     </Grid>
   </Grid>
 </UserControl>

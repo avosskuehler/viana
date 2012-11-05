@@ -1260,44 +1260,44 @@
   <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
     <value>@ButtonSelectObjectToolTipTitle</value>
   </data>
-  <data name="LineFitDialogTitle" xml:space="preserve">
-    <value>@LineFitDialogTitle</value>
+  <data name="RegressionDialogTitle" xml:space="preserve">
+    <value>@RegressionDialogTitle</value>
   </data>
-  <data name="LineFitDialogTopTitle" xml:space="preserve">
-    <value>@LineFitDialogTopTitle</value>
+  <data name="RegressionDialogTopTitle" xml:space="preserve">
+    <value>@RegressionDialogTopTitle</value>
   </data>
-  <data name="LineFitExp" xml:space="preserve">
-    <value>@LineFitExp</value>
+  <data name="RegressionExp" xml:space="preserve">
+    <value>@RegressionExp</value>
   </data>
-  <data name="LineFitExpo" xml:space="preserve">
-    <value>@LineFitExpo</value>
+  <data name="RegressionExpo" xml:space="preserve">
+    <value>@RegressionExpo</value>
   </data>
-  <data name="LineFitFunctionLabel" xml:space="preserve">
-    <value>@LineFitFunctionLabel</value>
+  <data name="RegressionFunctionLabel" xml:space="preserve">
+    <value>@RegressionFunctionLabel</value>
   </data>
-  <data name="LineFitLinear" xml:space="preserve">
-    <value>@LineFitLinear</value>
+  <data name="RegressionLinear" xml:space="preserve">
+    <value>@RegressionLinear</value>
   </data>
-  <data name="LineFitLineLabel" xml:space="preserve">
-    <value>@LineFitLineLabel</value>
+  <data name="RegressionLineLabel" xml:space="preserve">
+    <value>@RegressionLineLabel</value>
   </data>
-  <data name="LineFitLog" xml:space="preserve">
-    <value>@LineFitLog</value>
+  <data name="RegressionLog" xml:space="preserve">
+    <value>@RegressionLog</value>
   </data>
-  <data name="LineFitPot" xml:space="preserve">
-    <value>@LineFitPot</value>
+  <data name="RegressionPot" xml:space="preserve">
+    <value>@RegressionPot</value>
   </data>
-  <data name="LineFitQuad" xml:space="preserve">
-    <value>@LineFitQuad</value>
+  <data name="RegressionQuad" xml:space="preserve">
+    <value>@RegressionQuad</value>
   </data>
-  <data name="LineFitResonanz" xml:space="preserve">
-    <value>@LineFitResonanz</value>
+  <data name="RegressionResonanz" xml:space="preserve">
+    <value>@RegressionResonanz</value>
   </data>
-  <data name="LineFitSin" xml:space="preserve">
-    <value>@LineFitSin</value>
+  <data name="RegressionSin" xml:space="preserve">
+    <value>@RegressionSin</value>
   </data>
-  <data name="LineFitSinExp" xml:space="preserve">
-    <value>@LineFitSinExp</value>
+  <data name="RegressionSinExp" xml:space="preserve">
+    <value>@RegressionSinExp</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
     <value>@LineOptionsDialogTitle</value>
@@ -1305,26 +1305,26 @@
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>@LineOptionsDialogTopTitle</value>
   </data>
-  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
-    <value>@LineFitCalculatorDialogTitle</value>
+  <data name="RegressionCalculatorDialogTitle" xml:space="preserve">
+    <value>@RegressionCalculatorDialogTitle</value>
   </data>
-  <data name="LineFitColorRegress" xml:space="preserve">
-    <value>@LineFitColorRegress</value>
+  <data name="RegressionColorRegress" xml:space="preserve">
+    <value>@RegressionColorRegress</value>
   </data>
-  <data name="LineFitColorTheorie" xml:space="preserve">
-    <value>@LineFitColorTheorie</value>
+  <data name="RegressionColorTheorie" xml:space="preserve">
+    <value>@RegressionColorTheorie</value>
   </data>
-  <data name="LineFitCurve" xml:space="preserve">
-    <value>@LineFitCurve</value>
+  <data name="RegressionCurve" xml:space="preserve">
+    <value>@RegressionCurve</value>
   </data>
-  <data name="LineFitLineThickness" xml:space="preserve">
-    <value>@LineFitLineThickness</value>
+  <data name="RegressionLineThickness" xml:space="preserve">
+    <value>@RegressionLineThickness</value>
   </data>
-  <data name="LineFitNumberDigits" xml:space="preserve">
-    <value>@LineFitNumberDigits</value>
+  <data name="RegressionNumberDigits" xml:space="preserve">
+    <value>@RegressionNumberDigits</value>
   </data>
-  <data name="LineFitTheorie" xml:space="preserve">
-    <value>@LineFitTheorie</value>
+  <data name="RegressionTheorie" xml:space="preserve">
+    <value>@RegressionTheorie</value>
   </data>
   <data name="CalculatorDialogInsert" xml:space="preserve">
     <value>@CalculatorDialogInsert</value>
@@ -1401,11 +1401,11 @@
   <data name="ChartWindowLineColorLabel" xml:space="preserve">
     <value>@ChartWindowLineColorLabel</value>
   </data>
-  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
-    <value>@ChartWindowLineFitChooseTypeLabel</value>
+  <data name="ChartWindowRegressionChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowRegressionChooseTypeLabel</value>
   </data>
-  <data name="ChartWindowLinefitHeader" xml:space="preserve">
-    <value>@ChartWindowLinefitHeader</value>
+  <data name="ChartWindowRegressionHeader" xml:space="preserve">
+    <value>@ChartWindowRegressionHeader</value>
   </data>
   <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
     <value>@ChartWindowTheoreticalFunctionChooseTypeLabel</value>
@@ -1413,8 +1413,8 @@
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>@ChartWindowTheorieLabel</value>
   </data>
-  <data name="LineFitDialogHeader" xml:space="preserve">
-    <value>@LineFitDialogHeader</value>
+  <data name="RegressionDialogHeader" xml:space="preserve">
+    <value>@RegressionDialogHeader</value>
   </data>
   <data name="CalculatorDialogTitleCalc" xml:space="preserve">
     <value>@CalculatorDialogTitleCalc</value>
@@ -1445,6 +1445,12 @@
   </data>
   <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
     <value>@LineStyleOptionsDialogTitle</value>
+  </data>
+  <data name="AberrationStringPrefix" xml:space="preserve">
+    <value>@AberrationStringPrefix</value>
+  </data>
+  <data name="RegressionBestType" xml:space="preserve">
+    <value>@RegressionBestType</value>
   </data>
   <data name="LineFitBestRegress" xml:space="preserve">
     <value>@LineFitBestRegress</value>

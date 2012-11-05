@@ -61,7 +61,16 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxDescription ähnelt.
+        ///   Looks up a localized string similar to @AberrationStringPrefix.
+        /// </summary>
+        internal static string AberrationStringPrefix {
+            get {
+                return ResourceManager.GetString("AberrationStringPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AboutBoxDescription.
         /// </summary>
         internal static string AboutBoxDescription {
             get {
@@ -70,7 +79,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxTextBlock ähnelt.
+        ///   Looks up a localized string similar to @AboutBoxTextBlock.
         /// </summary>
         internal static string AboutBoxTextBlock {
             get {
@@ -79,7 +88,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxTitle ähnelt.
+        ///   Looks up a localized string similar to @AboutBoxTitle.
         /// </summary>
         internal static string AboutBoxTitle {
             get {
@@ -88,7 +97,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ApplicationTitle ähnelt.
+        ///   Looks up a localized string similar to @ApplicationTitle.
         /// </summary>
         internal static string ApplicationTitle {
             get {
@@ -97,7 +106,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAcceleration ähnelt.
+        ///   Looks up a localized string similar to @AxisAcceleration.
         /// </summary>
         internal static string AxisAcceleration {
             get {
@@ -2383,24 +2392,6 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLineFitChooseTypeLabel ähnelt.
-        /// </summary>
-        internal static string ChartWindowLineFitChooseTypeLabel {
-            get {
-                return ResourceManager.GetString("ChartWindowLineFitChooseTypeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLinefitHeader ähnelt.
-        /// </summary>
-        internal static string ChartWindowLinefitHeader {
-            get {
-                return ResourceManager.GetString("ChartWindowLinefitHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowObjectSelectionLabel ähnelt.
         /// </summary>
         internal static string ChartWindowObjectSelectionLabel {
@@ -2437,7 +2428,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRegressionLineLegend ähnelt.
+        ///   Looks up a localized string similar to @ChartWindowRegressionChooseTypeLabel.
+        /// </summary>
+        internal static string ChartWindowRegressionChooseTypeLabel {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionChooseTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowRegressionHeader.
+        /// </summary>
+        internal static string ChartWindowRegressionHeader {
+            get {
+                return ResourceManager.GetString("ChartWindowRegressionHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// </summary>
         internal static string ChartWindowRegressionLineLegend {
             get {
@@ -3094,7 +3102,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitBestRegress ähnelt.
+        ///   Looks up a localized string similar to @LineFitCalculatorDialogTitle.
         /// </summary>
         internal static string LineFitBestRegress {
             get {
@@ -3105,195 +3113,6 @@ namespace VianaNET.Localization {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitCalculatorDialogTitle ähnelt.
         /// </summary>
-        internal static string LineFitCalculatorDialogTitle {
-            get {
-                return ResourceManager.GetString("LineFitCalculatorDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitColorRegress ähnelt.
-        /// </summary>
-        internal static string LineFitColorRegress {
-            get {
-                return ResourceManager.GetString("LineFitColorRegress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitColorTheorie ähnelt.
-        /// </summary>
-        internal static string LineFitColorTheorie {
-            get {
-                return ResourceManager.GetString("LineFitColorTheorie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitCurve ähnelt.
-        /// </summary>
-        internal static string LineFitCurve {
-            get {
-                return ResourceManager.GetString("LineFitCurve", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitDialogHeader ähnelt.
-        /// </summary>
-        internal static string LineFitDialogHeader {
-            get {
-                return ResourceManager.GetString("LineFitDialogHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitDialogTitle ähnelt.
-        /// </summary>
-        internal static string LineFitDialogTitle {
-            get {
-                return ResourceManager.GetString("LineFitDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitDialogTopTitle ähnelt.
-        /// </summary>
-        internal static string LineFitDialogTopTitle {
-            get {
-                return ResourceManager.GetString("LineFitDialogTopTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitExp ähnelt.
-        /// </summary>
-        internal static string LineFitExp {
-            get {
-                return ResourceManager.GetString("LineFitExp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitExpo ähnelt.
-        /// </summary>
-        internal static string LineFitExpo {
-            get {
-                return ResourceManager.GetString("LineFitExpo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitFunctionLabel ähnelt.
-        /// </summary>
-        internal static string LineFitFunctionLabel {
-            get {
-                return ResourceManager.GetString("LineFitFunctionLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLinear ähnelt.
-        /// </summary>
-        internal static string LineFitLinear {
-            get {
-                return ResourceManager.GetString("LineFitLinear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLineLabel ähnelt.
-        /// </summary>
-        internal static string LineFitLineLabel {
-            get {
-                return ResourceManager.GetString("LineFitLineLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLineThickness ähnelt.
-        /// </summary>
-        internal static string LineFitLineThickness {
-            get {
-                return ResourceManager.GetString("LineFitLineThickness", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitLog ähnelt.
-        /// </summary>
-        internal static string LineFitLog {
-            get {
-                return ResourceManager.GetString("LineFitLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitNumberDigits ähnelt.
-        /// </summary>
-        internal static string LineFitNumberDigits {
-            get {
-                return ResourceManager.GetString("LineFitNumberDigits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitPot ähnelt.
-        /// </summary>
-        internal static string LineFitPot {
-            get {
-                return ResourceManager.GetString("LineFitPot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitQuad ähnelt.
-        /// </summary>
-        internal static string LineFitQuad {
-            get {
-                return ResourceManager.GetString("LineFitQuad", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitResonanz ähnelt.
-        /// </summary>
-        internal static string LineFitResonanz {
-            get {
-                return ResourceManager.GetString("LineFitResonanz", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitSin ähnelt.
-        /// </summary>
-        internal static string LineFitSin {
-            get {
-                return ResourceManager.GetString("LineFitSin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitSinExp ähnelt.
-        /// </summary>
-        internal static string LineFitSinExp {
-            get {
-                return ResourceManager.GetString("LineFitSinExp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineFitTheorie ähnelt.
-        /// </summary>
-        internal static string LineFitTheorie {
-            get {
-                return ResourceManager.GetString("LineFitTheorie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineOptionsDialogTitle ähnelt.
-        /// </summary>
         internal static string LineOptionsDialogTitle {
             get {
                 return ResourceManager.GetString("LineOptionsDialogTitle", resourceCulture);
@@ -3301,7 +3120,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineOptionsDialogTopTitle ähnelt.
+        ///   Looks up a localized string similar to @LineOptionsDialogTopTitle.
         /// </summary>
         internal static string LineOptionsDialogTopTitle {
             get {
@@ -3310,7 +3129,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LineStyleOptionsDialogTitle ähnelt.
+        ///   Looks up a localized string similar to @LineStyleOptionsDialogTitle.
         /// </summary>
         internal static string LineStyleOptionsDialogTitle {
             get {
@@ -3319,7 +3138,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LoadVideoFilesTitle ähnelt.
+        ///   Looks up a localized string similar to @LoadVideoFilesTitle.
         /// </summary>
         internal static string LoadVideoFilesTitle {
             get {
@@ -3328,7 +3147,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisition ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisition.
         /// </summary>
         internal static string ManualDataAcquisition {
             get {
@@ -3337,7 +3156,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionAllPoints ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionAllPoints.
         /// </summary>
         internal static string ManualDataAcquisitionAllPoints {
             get {
@@ -3346,7 +3165,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionControlTitle ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionControlTitle.
         /// </summary>
         internal static string ManualDataAcquisitionControlTitle {
             get {
@@ -3355,7 +3174,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionDescription ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionDescription.
         /// </summary>
         internal static string ManualDataAcquisitionDescription {
             get {
@@ -3364,7 +3183,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionFrameLabel ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionFrameLabel.
         /// </summary>
         internal static string ManualDataAcquisitionFrameLabel {
             get {
@@ -3373,7 +3192,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionRecentPointCount ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionRecentPointCount.
         /// </summary>
         internal static string ManualDataAcquisitionRecentPointCount {
             get {
@@ -3382,7 +3201,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionTrackItemNumberHeader ähnelt.
+        ///   Looks up a localized string similar to @ManualDataAcquisitionTrackItemNumberHeader.
         /// </summary>
         internal static string ManualDataAcquisitionTrackItemNumberHeader {
             get {
@@ -3391,7 +3210,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @MovingAverageDialogTitle ähnelt.
+        ///   Looks up a localized string similar to @MovingAverageDialogTitle.
         /// </summary>
         internal static string MovingAverageDialogTitle {
             get {
@@ -3400,7 +3219,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @OK ähnelt.
+        ///   Looks up a localized string similar to @OK.
         /// </summary>
         internal static string OK {
             get {
@@ -3409,7 +3228,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_c ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_c.
         /// </summary>
         internal static string PhysikKonstant_c {
             get {
@@ -3418,7 +3237,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_e ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_e.
         /// </summary>
         internal static string PhysikKonstant_e {
             get {
@@ -3427,7 +3246,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_epsilon ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_epsilon.
         /// </summary>
         internal static string PhysikKonstant_epsilon {
             get {
@@ -3436,7 +3255,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_f ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_f.
         /// </summary>
         internal static string PhysikKonstant_f {
             get {
@@ -3445,7 +3264,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_g ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_g.
         /// </summary>
         internal static string PhysikKonstant_g {
             get {
@@ -3454,7 +3273,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_h ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_h.
         /// </summary>
         internal static string PhysikKonstant_h {
             get {
@@ -3463,7 +3282,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_Lambda0 ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_Lambda0.
         /// </summary>
         internal static string PhysikKonstant_Lambda0 {
             get {
@@ -3472,7 +3291,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_me ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_me.
         /// </summary>
         internal static string PhysikKonstant_me {
             get {
@@ -3481,7 +3300,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_mu ähnelt.
+        ///   Looks up a localized string similar to @PhysikKonstant_mu.
         /// </summary>
         internal static string PhysikKonstant_mu {
             get {
@@ -3490,7 +3309,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveLabelDescription ähnelt.
+        ///   Looks up a localized string similar to @QATButtonSaveLabelDescription.
         /// </summary>
         internal static string QATButtonSaveLabelDescription {
             get {
@@ -3499,7 +3318,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveLabelTitle ähnelt.
+        ///   Looks up a localized string similar to @QATButtonSaveLabelTitle.
         /// </summary>
         internal static string QATButtonSaveLabelTitle {
             get {
@@ -3508,7 +3327,7 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveToolTipDescription ähnelt.
+        ///   Looks up a localized string similar to @QATButtonSaveToolTipDescription.
         /// </summary>
         internal static string QATButtonSaveToolTipDescription {
             get {
@@ -3517,11 +3336,210 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveToolTipTitle ähnelt.
+        ///   Looks up a localized string similar to @QATButtonSaveToolTipTitle.
         /// </summary>
         internal static string QATButtonSaveToolTipTitle {
             get {
                 return ResourceManager.GetString("QATButtonSaveToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionBestType.
+        /// </summary>
+        internal static string RegressionBestType {
+            get {
+                return ResourceManager.GetString("RegressionBestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionCalculatorDialogTitle.
+        /// </summary>
+        internal static string RegressionCalculatorDialogTitle {
+            get {
+                return ResourceManager.GetString("RegressionCalculatorDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionColorRegress.
+        /// </summary>
+        internal static string RegressionColorRegress {
+            get {
+                return ResourceManager.GetString("RegressionColorRegress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionColorTheorie.
+        /// </summary>
+        internal static string RegressionColorTheorie {
+            get {
+                return ResourceManager.GetString("RegressionColorTheorie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionCurve.
+        /// </summary>
+        internal static string RegressionCurve {
+            get {
+                return ResourceManager.GetString("RegressionCurve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogHeader.
+        /// </summary>
+        internal static string RegressionDialogHeader {
+            get {
+                return ResourceManager.GetString("RegressionDialogHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogTitle.
+        /// </summary>
+        internal static string RegressionDialogTitle {
+            get {
+                return ResourceManager.GetString("RegressionDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionDialogTopTitle.
+        /// </summary>
+        internal static string RegressionDialogTopTitle {
+            get {
+                return ResourceManager.GetString("RegressionDialogTopTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionExp.
+        /// </summary>
+        internal static string RegressionExp {
+            get {
+                return ResourceManager.GetString("RegressionExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionExpo.
+        /// </summary>
+        internal static string RegressionExpo {
+            get {
+                return ResourceManager.GetString("RegressionExpo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionFunctionLabel.
+        /// </summary>
+        internal static string RegressionFunctionLabel {
+            get {
+                return ResourceManager.GetString("RegressionFunctionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLinear.
+        /// </summary>
+        internal static string RegressionLinear {
+            get {
+                return ResourceManager.GetString("RegressionLinear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLineLabel.
+        /// </summary>
+        internal static string RegressionLineLabel {
+            get {
+                return ResourceManager.GetString("RegressionLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLineThickness.
+        /// </summary>
+        internal static string RegressionLineThickness {
+            get {
+                return ResourceManager.GetString("RegressionLineThickness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionLog.
+        /// </summary>
+        internal static string RegressionLog {
+            get {
+                return ResourceManager.GetString("RegressionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionNumberDigits.
+        /// </summary>
+        internal static string RegressionNumberDigits {
+            get {
+                return ResourceManager.GetString("RegressionNumberDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionPot.
+        /// </summary>
+        internal static string RegressionPot {
+            get {
+                return ResourceManager.GetString("RegressionPot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionQuad.
+        /// </summary>
+        internal static string RegressionQuad {
+            get {
+                return ResourceManager.GetString("RegressionQuad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionResonanz.
+        /// </summary>
+        internal static string RegressionResonanz {
+            get {
+                return ResourceManager.GetString("RegressionResonanz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionSin.
+        ///   Looks up a localized string similar to @QATButtonSaveToolTipDescription.
+        /// </summary>
+        internal static string RegressionSin {
+            get {
+                return ResourceManager.GetString("RegressionSin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionSinExp.
+        /// </summary>
+        internal static string RegressionSinExp {
+            get {
+                return ResourceManager.GetString("RegressionSinExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RegressionTheorie.
+        /// </summary>
+        internal static string RegressionTheorie {
+            get {
+                return ResourceManager.GetString("RegressionTheorie", resourceCulture);
             }
         }
         

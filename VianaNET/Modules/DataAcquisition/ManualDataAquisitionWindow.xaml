@@ -9,7 +9,7 @@
     lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
-  Background="{Binding Path=GradientBackground, Source={x:Static Data:Calibration.Instance}}"
+  Background="{Binding Path=GradientBackground, Source={x:Static Data:CalibrationData.Instance}}"
   Loaded="Window_Loaded" 
   PreviewKeyDown="Window_PreviewKeyDown">
   <Window.Resources>
@@ -27,7 +27,7 @@
       <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
       <Border Name="ObjectIndexPanel" 
-              Visibility="{Binding Path=ImageProcessing.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static Control:Video.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=windowCanvas,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 

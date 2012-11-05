@@ -1273,44 +1273,44 @@ Click OK or press Enter, when ready.</value>
   <data name="SelectColorWindowObjectIndexHeader" xml:space="preserve">
     <value>Color for object</value>
   </data>
-  <data name="LineFitDialogTitle" xml:space="preserve">
-    <value>Here you can choose the type of the linefitting function</value>
+  <data name="RegressionDialogTitle" xml:space="preserve">
+    <value>Here you can choose the type of the Regressionting function</value>
   </data>
-  <data name="LineFitDialogTopTitle" xml:space="preserve">
-    <value>choose LineFitting function</value>
+  <data name="RegressionDialogTopTitle" xml:space="preserve">
+    <value>choose Regressionting function</value>
   </data>
-  <data name="LineFitExp" xml:space="preserve">
+  <data name="RegressionExp" xml:space="preserve">
     <value>Expontentialfunction ( a*exp(b*x) )</value>
   </data>
-  <data name="LineFitExpo" xml:space="preserve">
+  <data name="RegressionExpo" xml:space="preserve">
     <value>Expontentialfunction ( a*exp(b*x) + c )</value>
   </data>
-  <data name="LineFitLinear" xml:space="preserve">
+  <data name="RegressionLinear" xml:space="preserve">
     <value>lineare Function (m*x+n)</value>
   </data>
-  <data name="LineFitLog" xml:space="preserve">
+  <data name="RegressionLog" xml:space="preserve">
     <value>logarithmische Function ( a*ln(b*x) )</value>
   </data>
-  <data name="LineFitPot" xml:space="preserve">
+  <data name="RegressionPot" xml:space="preserve">
     <value>Potenzfunction ( a*x^b)</value>
   </data>
-  <data name="LineFitQuad" xml:space="preserve">
+  <data name="RegressionQuad" xml:space="preserve">
     <value>quadratic Function (a*x²+b*x+c)</value>
   </data>
-  <data name="LineFitResonanz" xml:space="preserve">
+  <data name="RegressionResonanz" xml:space="preserve">
     <value>Resonanzfunction ( a/sqrt(1+b*(x-c/x) )</value>
   </data>
-  <data name="LineFitSin" xml:space="preserve">
+  <data name="RegressionSin" xml:space="preserve">
     <value>Sinus-Function ( a*sin(bx+c)+d )</value>
   </data>
-  <data name="LineFitSinExp" xml:space="preserve">
+  <data name="RegressionSinExp" xml:space="preserve">
     <value>gedämpfte Sinusfkt ( a*sin(b*x)*exp(c*x)  )</value>
   </data>
-  <data name="LineFitFunctionLabel" xml:space="preserve">
-    <value>linefit Function</value>
+  <data name="RegressionFunctionLabel" xml:space="preserve">
+    <value>Regression Function</value>
   </data>
-  <data name="LineFitLineLabel" xml:space="preserve">
-    <value>linefitting curve</value>
+  <data name="RegressionLineLabel" xml:space="preserve">
+    <value>Regressionting curve</value>
   </data>
   <data name="LineOptionsDialogTitle" xml:space="preserve">
     <value>Specify the number of digits when showing decimals.</value>
@@ -1318,25 +1318,25 @@ Click OK or press Enter, when ready.</value>
   <data name="LineOptionsDialogTopTitle" xml:space="preserve">
     <value>some options for display</value>
   </data>
-  <data name="LineFitCalculatorDialogTitle" xml:space="preserve">
+  <data name="RegressionCalculatorDialogTitle" xml:space="preserve">
     <value>Calculator or input for functionterms (theoretical Funktion)</value>
   </data>
-  <data name="LineFitColorRegress" xml:space="preserve">
-    <value>Color linefit</value>
+  <data name="RegressionColorRegress" xml:space="preserve">
+    <value>Color Regression</value>
   </data>
-  <data name="LineFitColorTheorie" xml:space="preserve">
+  <data name="RegressionColorTheorie" xml:space="preserve">
     <value>Color theorie</value>
   </data>
-  <data name="LineFitCurve" xml:space="preserve">
-    <value>linefitting curve</value>
+  <data name="RegressionCurve" xml:space="preserve">
+    <value>Regressionting curve</value>
   </data>
-  <data name="LineFitLineThickness" xml:space="preserve">
+  <data name="RegressionLineThickness" xml:space="preserve">
     <value>Linethickness</value>
   </data>
-  <data name="LineFitNumberDigits" xml:space="preserve">
+  <data name="RegressionNumberDigits" xml:space="preserve">
     <value>number of digits</value>
   </data>
-  <data name="LineFitTheorie" xml:space="preserve">
+  <data name="RegressionTheorie" xml:space="preserve">
     <value>theoretical curve</value>
   </data>
   <data name="CalculatorDialogInsert" xml:space="preserve">
@@ -1414,10 +1414,10 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartWindowLineColorLabel" xml:space="preserve">
     <value>color</value>
   </data>
-  <data name="ChartWindowLineFitChooseTypeLabel" xml:space="preserve">
+  <data name="ChartWindowRegressionChooseTypeLabel" xml:space="preserve">
     <value>choose type</value>
   </data>
-  <data name="ChartWindowLinefitHeader" xml:space="preserve">
+  <data name="ChartWindowRegressionHeader" xml:space="preserve">
     <value>fit</value>
   </data>
   <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
@@ -1426,7 +1426,7 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartWindowTheorieLabel" xml:space="preserve">
     <value>Theory</value>
   </data>
-  <data name="LineFitDialogHeader" xml:space="preserve">
+  <data name="RegressionDialogHeader" xml:space="preserve">
     <value>Choose regression function</value>
   </data>
   <data name="CalculatorDialogTitleCalc" xml:space="preserve">
@@ -1458,6 +1458,12 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
     <value>Please specify color and thickness of data curve</value>
+  </data>
+  <data name="AberrationStringPrefix" xml:space="preserve">
+    <value>Error square: </value>
+  </data>
+  <data name="RegressionBestType" xml:space="preserve">
+    <value>find best linefit</value>
   </data>
   <data name="LineFitBestRegress" xml:space="preserve">
     <value>find best linefit</value>

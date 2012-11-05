@@ -29,6 +29,7 @@ namespace VianaNET.Data
   using System.ComponentModel;
   using System.Windows;
 
+  using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
 
   /// <summary>
@@ -72,9 +73,8 @@ namespace VianaNET.Data
     private VideoData()
     {
       this.Samples = new DataCollection();
-      this.LastPoint = new Point[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Video.Instance.ProcessingData.NumberOfTrackedObjects];
       this.ActiveObject = 0;
-      Interpolation.Interpolation.Instance.PropertyChanged += this.Interpolation_PropertyChanged;
     }
 
     #endregion
@@ -99,14 +99,8 @@ namespace VianaNET.Data
       get
       {
         // check again, if the underlying instance is null
-        if (instance == null)
-        {
-          // create a new instance
-          instance = new VideoData();
-        }
-
         // return the existing/new instance
-        return instance;
+        return instance ?? (instance = new VideoData());
       }
     }
 
@@ -197,13 +191,17 @@ namespace VianaNET.Data
     {
       this.LastPoint[objectIndex] = newSamplePosition;
 
-      var timeSample = new TimeSample();
-      timeSample.Framenumber = Video.Instance.FrameIndex;
-      timeSample.Timestamp = Video.Instance.FrameTimestampInMS;
+      var timeSample = new TimeSample
+        {
+          Framenumber = Video.Instance.FrameIndex,
+          Timestamp = Video.Instance.FrameTimestampInMS
+        };
 
-      var newObjectSample = new DataSample();
-      newObjectSample.PixelX = newSamplePosition.X;
-      newObjectSample.PixelY = newSamplePosition.Y;
+      var newObjectSample = new DataSample
+      {
+        PixelX = newSamplePosition.X,
+        PixelY = newSamplePosition.Y
+      };
 
       // Add new point
       int index;
@@ -225,14 +223,14 @@ namespace VianaNET.Data
     /// </summary>
     public void RefreshDistanceVelocityAcceleration()
     {
-      var previousSamples = new TimeSample[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
-      var validSamples = new int[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      var previousSamples = new TimeSample[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      var validSamples = new int[Video.Instance.ProcessingData.NumberOfTrackedObjects];
 
-      for (int i = 0; i < this.Samples.Count; i++)
+      foreach (TimeSample timeSample in this.Samples)
       {
-        for (int j = 0; j < Video.Instance.ImageProcessing.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
-          DataSample currentSample = this.Samples[i].Object[j];
+          DataSample currentSample = timeSample.Object[j];
           if (currentSample == null)
           {
             continue;
@@ -252,12 +250,12 @@ namespace VianaNET.Data
             currentSample.Length = 0d;
             currentSample.LengthX = 0d;
             currentSample.LengthY = 0d;
-            previousSamples[j] = this.Samples[i];
+            previousSamples[j] = timeSample;
             continue;
           }
 
           DataSample previousSample = previousSamples[j].Object[j];
-          long timeTifference = this.Samples[i].Timestamp - previousSamples[j].Timestamp;
+          long timeTifference = timeSample.Timestamp - previousSamples[j].Timestamp;
           currentSample.Distance = GetDistance(j, currentSample, previousSample);
           currentSample.DistanceX = GetXDistance(j, currentSample, previousSample);
           currentSample.DistanceY = GetYDistance(j, currentSample, previousSample);
@@ -270,7 +268,7 @@ namespace VianaNET.Data
 
           if (validSamples[j] == 2)
           {
-            previousSamples[j] = this.Samples[i];
+            previousSamples[j] = timeSample;
             continue;
           }
 
@@ -278,14 +276,8 @@ namespace VianaNET.Data
           currentSample.AccelerationX = GetXAcceleration(j, currentSample, previousSample, timeTifference);
           currentSample.AccelerationY = GetYAcceleration(j, currentSample, previousSample, timeTifference);
 
-          previousSamples[j] = this.Samples[i];
+          previousSamples[j] = timeSample;
         }
-      }
-
-      if (Interpolation.Interpolation.Instance.IsInterpolatingData)
-      {
-        Interpolation.Interpolation.Instance.CurrentInterpolationFilter.CalculateInterpolatedValues(this.Samples);
-        this.OnPropertyChanged("Interpolation");
       }
 
       // Refresh DataBinding to DataGrid.
@@ -314,7 +306,7 @@ namespace VianaNET.Data
     public void Reset()
     {
       this.Samples.Clear();
-      this.LastPoint = new Point[Video.Instance.ImageProcessing.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Video.Instance.ProcessingData.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
 
@@ -347,15 +339,15 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!Calibration.Instance.IsVideoCalibrated)
+      if (!CalibrationData.Instance.IsVideoCalibrated)
       {
         return new Point(value.PixelX, value.PixelY);
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(-Calibration.Instance.OriginInPixel.X, -Calibration.Instance.OriginInPixel.Y);
-      calibratedPoint.X = calibratedPoint.X * Calibration.Instance.ScalePixelToUnit;
-      calibratedPoint.Y = calibratedPoint.Y * Calibration.Instance.ScalePixelToUnit;
+      calibratedPoint.Offset(-CalibrationData.Instance.OriginInPixel.X, -CalibrationData.Instance.OriginInPixel.Y);
+      calibratedPoint.X = calibratedPoint.X * CalibrationData.Instance.ScalePixelToUnit;
+      calibratedPoint.Y = calibratedPoint.Y * CalibrationData.Instance.ScalePixelToUnit;
 
       return calibratedPoint;
     }
@@ -630,23 +622,6 @@ namespace VianaNET.Data
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
       return (newSample.PositionY - previousSample.PositionY) / timedifference * 1000;
-    }
-
-    /// <summary>
-    /// The interpolation_ property changed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Interpolation_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "IsInterpolatingData" || e.PropertyName == "CurrentInterpolationFilter")
-      {
-        this.RefreshDistanceVelocityAcceleration();
-      }
     }
 
     #endregion
