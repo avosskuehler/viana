@@ -1465,7 +1465,4 @@ Click OK or press Enter, when ready.</value>
   <data name="RegressionBestType" xml:space="preserve">
     <value>find best linefit</value>
   </data>
-  <data name="LineFitBestRegress" xml:space="preserve">
-    <value>find best linefit</value>
-  </data>
 </root>
