@@ -87,6 +87,9 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private readonly TexFormulaParser formulaParser;
 
+    private char achsName = 'x';
+    private char funcName = 'y';
+
     #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -243,12 +246,13 @@ namespace VianaNET.Modules.Chart
     /// Updates the function term visual with a tex representation of the regression function
     /// </summary>
     private void RefreshRegressionFuctionTerm()
-    {       
+    {
       if (FilterData.Instance.RegressionFunctionTexFormula != null)
       {
         // Render formula to visual.
         var visual = new DrawingVisual();
         var renderer = FilterData.Instance.RegressionFunctionTexFormula.GetRenderer(TexStyle.Display, 14d);
+
         using (var drawingContext = visual.RenderOpen())
         {
           renderer.Render(drawingContext, 0, 1);
@@ -276,7 +280,7 @@ namespace VianaNET.Modules.Chart
         var renderer = FilterData.Instance.TheoryFunctionTexFormula.GetRenderer(TexStyle.Display, 14d);
 
         using (var drawingContext = visual.RenderOpen())
-            {
+        {
           renderer.Render(drawingContext, 0, 1);
         }
 
@@ -286,38 +290,6 @@ namespace VianaNET.Modules.Chart
       {
         // Formula is empty
         this.TheorieFormulaContainerElement.Visual = null;
-    }
-
-
-    /// <summary>
-    /// The line fit type button click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void LineFitTypeButtonClick(object sender, RoutedEventArgs e)
-    {
-      double minX, minY, hilf;
-      Regression bestRegression;
-
-      FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertX, out minX, out hilf);
-      FittedData.Instance.LineFitObject.GetMinMax(FittedData.Instance.LineFitObject.WertY, out minY, out hilf);
-      var linefittingDialog = new LinefittingDialog(minX < 0, minY < 0, FittedData.Instance.RegressionType);
-      if (linefittingDialog.ShowDialog().GetValueOrDefault(false))
-      {
-          FittedData.Instance.IsShowingRegressionSeries = false;
-          if (linefittingDialog.SelectedRegressionType == Regression.best)
-          {
-              FittedData.Instance.LineFitObject.GetBestRegressData(out bestRegression);
-              UpdateLineFitImageButtonAndLabels(bestRegression, false);
-          }
-          else
-          {
-              UpdateLineFitImageButtonAndLabels(linefittingDialog.SelectedRegressionType, true);
-          }
       }
     }
 
@@ -359,6 +331,7 @@ namespace VianaNET.Modules.Chart
         functionString = functionString.Replace("*", "{\\cdot}");
         functionString = functionString.Replace("(", "{(");
         functionString = functionString.Replace(")", ")}");
+        functionString = functionString.Replace('x', this.achsName);
         var formula = this.formulaParser.Parse(functionString);
         if (formula != null)
         {
@@ -515,6 +488,8 @@ namespace VianaNET.Modules.Chart
       }
 
       var chartType = ChartType.YoverX;
+      char achsBez = 'x';
+      char funcBez = 'y';
 
       if (this.TabPositionSpace.IsSelected)
       {
@@ -545,77 +520,97 @@ namespace VianaNET.Modules.Chart
         case ChartType.YoverX:
           this.xAxisContent.SelectedValue = AxisType.PX;
           this.yAxisContent.SelectedValue = AxisType.PY;
+          achsBez = 'x'; funcBez = 'y';
           break;
         case ChartType.XoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.PX;
+          achsBez = 't'; funcBez = 'x';
           break;
         case ChartType.YoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.PY;
+          achsBez = 't'; funcBez = 'y';
           break;
         case ChartType.VoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.V;
+          achsBez = 't'; funcBez = 'v';
           break;
         case ChartType.VXoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.VX;
+          achsBez = 't'; funcBez = 'v';
           break;
         case ChartType.VYoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.VY;
+          achsBez = 't'; funcBez = 'v';
           break;
         case ChartType.AoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.A;
+          achsBez = 't'; funcBez = 'a';
           break;
         case ChartType.AXoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.AX;
+          achsBez = 't'; funcBez = 'a';
           break;
         case ChartType.AYoverT:
           this.xAxisContent.SelectedValue = AxisType.T;
           this.yAxisContent.SelectedValue = AxisType.AY;
+          achsBez = 't'; funcBez = 'a';
           break;
         case ChartType.VoverD:
           this.xAxisContent.SelectedValue = AxisType.D;
           this.yAxisContent.SelectedValue = AxisType.V;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.VXoverDX:
           this.xAxisContent.SelectedValue = AxisType.DX;
           this.yAxisContent.SelectedValue = AxisType.VX;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.VYoverDY:
           this.xAxisContent.SelectedValue = AxisType.DY;
           this.yAxisContent.SelectedValue = AxisType.VY;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.VoverS:
           this.xAxisContent.SelectedValue = AxisType.S;
           this.yAxisContent.SelectedValue = AxisType.V;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.VXoverSX:
           this.xAxisContent.SelectedValue = AxisType.SX;
           this.yAxisContent.SelectedValue = AxisType.VX;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.VYoverSY:
           this.xAxisContent.SelectedValue = AxisType.SY;
           this.yAxisContent.SelectedValue = AxisType.VY;
+          achsBez = 's'; funcBez = 'v';
           break;
         case ChartType.AoverV:
           this.xAxisContent.SelectedValue = AxisType.V;
           this.yAxisContent.SelectedValue = AxisType.A;
+          achsBez = 'v'; funcBez = 'a';
           break;
         case ChartType.AXoverVX:
           this.xAxisContent.SelectedValue = AxisType.VX;
           this.yAxisContent.SelectedValue = AxisType.AX;
+          achsBez = 'v'; funcBez = 'a';
           break;
         case ChartType.AYoverVY:
           this.xAxisContent.SelectedValue = AxisType.VY;
           this.yAxisContent.SelectedValue = AxisType.AY;
+          achsBez = 'v'; funcBez = 'a';
           break;
       }
-
+      this.achsName = achsBez;
+      this.funcName = funcBez;
+      FilterData.Instance.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
       FilterData.Instance.AxisX = (DataAxis)this.xAxisContent.SelectedItem;
       FilterData.Instance.AxisY = (DataAxis)this.yAxisContent.SelectedItem;
       this.RefreshChartDataPoints();
@@ -630,7 +625,6 @@ namespace VianaNET.Modules.Chart
     /// <param name="axis">The axis that changed</param>
     /// <param name="mapPoints">The new data mapping. </param>
     private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints)
-    */
     {
       string prefix = "Object[" + Video.Instance.ProcessingData.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
@@ -933,18 +927,18 @@ namespace VianaNET.Modules.Chart
         if (regressionOptionsDialog.RegressionType == RegressionType.Best)
         {
           RegressionType bestRegression;
+          if (FilterData.Instance.RegressionFilter.WertX.Count == 0)
+          {
+              FilterData.Instance.RegressionFilter.CalculateFilterValues(VideoData.Instance.Samples, null);
+          } 
           FilterData.Instance.RegressionFilter.GetBestRegressData(out bestRegression);
-          FilterData.Instance.RegressionFilter.RegressionType = bestRegression;
-          this.UpdateRegressionImageButtonAndLabels(bestRegression);
+          this.UpdateRegressionImageButtonAndLabels(bestRegression,false);
         }
         else
         {
-          FilterData.Instance.RegressionFilter.RegressionType = regressionOptionsDialog.RegressionType;
-          this.UpdateRegressionImageButtonAndLabels(regressionOptionsDialog.RegressionType);
+          this.UpdateRegressionImageButtonAndLabels(regressionOptionsDialog.RegressionType,true);
         }
 
-        FilterData.Instance.CalculateRegressionSeriesDataPoints();
-        this.RefreshRegressionFuctionTerm();
       }
     }
 
@@ -955,9 +949,10 @@ namespace VianaNET.Modules.Chart
     /// <param name="aktregressionType">
     /// The aktual selected regression type. 
     /// </param>
-    private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType)
+    private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType, bool neuBerechnen)
     {
       string bildsource;
+      FilterData.Instance.RegressionFilter.RegressionType = aktregressionType;
       switch (aktregressionType)
       {
         case RegressionType.Linear:
@@ -998,7 +993,9 @@ namespace VianaNET.Modules.Chart
       if (this.RegressionCheckBox.IsChecked.GetValueOrDefault(false))
       {
         FilterData.Instance.CalculateRegressionSeriesDataPoints();
+        FilterData.Instance.RegressionFilter.UpdateLinefitFunctionData(neuBerechnen);
         this.RefreshRegressionFuctionTerm();
+          
       }
     }
 
@@ -1207,7 +1204,7 @@ namespace VianaNET.Modules.Chart
         FilterData.Instance.InterpolationLineColor = new SolidColorBrush(lineOptionsDialog.LineStyleControl.ColorPicker.SelectedColor);
       }
     }
-   
+
     #endregion
   }
 }

@@ -231,6 +231,8 @@ namespace VianaNET.Data.Filter
       this.RegressionFunctionTexFormula = null;
       this.RegressionAberration = 0d;
       this.InterpolationFilter = InterpolationFilter.Filter[InterpolationFilterTypes.MovingAverage];
+      this.IsShowingRegressionSeries = false;
+      this.IsShowingTheorySeries = false;
     }
 
     #endregion
@@ -528,6 +530,7 @@ namespace VianaNET.Data.Filter
 
       set
       {
+        this.SetValue(IsShowingRegressionSeriesProperty, value);
         if (value)
         {
           this.CalculateRegressionSeriesDataPoints();
@@ -535,9 +538,7 @@ namespace VianaNET.Data.Filter
         else
         {
           this.RegressionSeries.Clear();
-        }
-
-        this.SetValue(IsShowingRegressionSeriesProperty, value);
+        }      
       }
     }
 
@@ -553,6 +554,7 @@ namespace VianaNET.Data.Filter
 
       set
       {
+        this.SetValue(IsShowingTheorySeriesProperty, value);
         if (value)
         {
           this.CalculateTheorySeriesDataPoints();
@@ -560,9 +562,7 @@ namespace VianaNET.Data.Filter
         else
         {
           this.TheorySeries.Clear();
-        }
-
-        this.SetValue(IsShowingTheorySeriesProperty, value);
+        }       
       }
     }
 
@@ -717,7 +717,10 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(RegressionAberrationProperty, value);
-        this.OnPropertyChanged("RegressionAberration");
+        if (this.IsShowingRegressionSeries)
+        {
+            this.OnPropertyChanged("RegressionAberration");
+        }
       }
     }
 
@@ -774,6 +777,7 @@ namespace VianaNET.Data.Filter
       if (this.IsShowingRegressionSeries)
       {
         this.RegressionFilter.CalculateFilterValues(VideoData.Instance.Samples, this.RegressionSeries);
+        this.RegressionFilter.UpdateLinefitFunctionData(true);
       }
       else
       {
