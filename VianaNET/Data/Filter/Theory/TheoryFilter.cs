@@ -94,6 +94,16 @@ namespace VianaNET.Data.Filter.Theory
       XYSample p;
       var tempParser = new Parse();
 
+      // Nur wenn gar keine Daten da sind...
+      if (originalSamples.Count == 0)
+        {
+          p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
+          fittedSamples.Add(p);
+          p = new XYSample(10, tempParser.FreierFktWert(fx, 10));
+          fittedSamples.Add(p);
+        }
+      
+
       /*     if (tempParser.isLinearFunction(fx))
            {
           
@@ -134,68 +144,33 @@ namespace VianaNET.Data.Filter.Theory
                x = x + this.stepX;
              }
            } */
+        
       if (tempParser.isLinearFunction(fx))
       {
         // zwei Punkte genügen bei x-y-Diagramm
-        if (originalSamples.Count == 0)
-        {
-          // Nur wenn gar keine Daten da sind...
-          p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
-          fittedSamples.Add(p);
-          p = new XYSample(10, tempParser.FreierFktWert(fx, 10));
-          fittedSamples.Add(p);
-        }
-        else
-        {
           x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
           p = new XYSample(x, tempParser.FreierFktWert(fx, x));
           fittedSamples.Add(p);
           x = this.WertX[this.anzahl - 1];
           p = new XYSample(x, tempParser.FreierFktWert(fx, x));
           fittedSamples.Add(p);
-        }
       }
       else
       {
-        if (originalSamples.Count == 0)
-        {
-          // Nur wenn gar keine Daten da sind...
-          for (int i = -10; i < 10; i++)
-          {
-            p = new XYSample(i, tempParser.FreierFktWert(fx, i));
-            fittedSamples.Add(p);
-          }
-        }
-        else
-        {
-          int k;
-          if (FilterData.Instance.AxisX.Axis != AxisType.T)
-          {
-            // Workaround beim t-?-Diagramm: gleichviele Punkte wie bei Originalwerten und gleiche x Werte. 
-            for (k = 0; k < this.anzahl; k++)
-            {
-              x = this.WertX[k];
-              p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-              fittedSamples.Add(p);
-            }
-          }
-          else
-          {
-            // endPixelX und startPixelX
-            // startX und endX wurden in aktualisiereTab(int aktObjectNr,int aktxNr, int aktyNr) bestimmt
-            var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
-            x = this.startX;
+         // endPixelX und startPixelX sowie startX,endX und stepX 
+         // wurden in CopySampleColumnsToArrays(int aktObjectNr, DataCollection originalSamples) bestimmt
+         // besser wäre Festlegung durch den (Pixel)Abstand auf der aktuellen Chart 
+         int k;
+         var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
+         x = this.startX;
 
-            for (k = 0; k < anzahlPixel; k++)
+         for (k = 0; k <= anzahlPixel; k++)
             {
               // Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
-              // führt bei t-?-Diagrammen zu falschen Darstellungen !!
               p = new XYSample(x, tempParser.FreierFktWert(fx, x));
               fittedSamples.Add(p);
               x = x + this.stepX;
             }
-          }
-        }
       }
     }
 
