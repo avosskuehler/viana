@@ -1452,7 +1452,4 @@
   <data name="RegressionBestType" xml:space="preserve">
     <value>@RegressionBestType</value>
   </data>
-  <data name="LineFitBestRegress" xml:space="preserve">
-    <value>@LineFitBestRegress</value>
-  </data>
 </root>
