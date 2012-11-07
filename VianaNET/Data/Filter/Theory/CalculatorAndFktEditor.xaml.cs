@@ -52,6 +52,8 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     private FunctionCalcTree scannedFkt;
 
+    public readonly bool usesDecimalkomma;
+
     #endregion
 
     #region Constructors and Destructors
@@ -70,6 +72,7 @@ namespace VianaNET.Data.Filter.Theory
       this.Ergebnis = string.Empty;
       this.art = modus;
       this.buttonTakeKonst.IsEnabled = true;
+      this.usesDecimalkomma = (15 == Convert.ToDouble("1.5"));
       if (modus == TRechnerArt.rechner)
       {
         this.Title = Labels.CalculatorDialogTitleCalc;
@@ -89,7 +92,14 @@ namespace VianaNET.Data.Filter.Theory
         string s = resMgr.GetString(Constants.konstante[k].titel);
         this.comboBox1.Items.Add(s);
       }
-
+      if (usesDecimalkomma)
+      {
+          buttonKomma.Content = ",";
+      }
+      else
+      {
+          buttonKomma.Content = ".";
+      }
       this.textBox1.Focus();
     }
 
@@ -387,7 +397,15 @@ namespace VianaNET.Data.Filter.Theory
     private void TextBox1TextChanged1(object sender, TextChangedEventArgs e)
     {
       var formelStr = this.textBox1.Text;
-
+      if (usesDecimalkomma)
+      { 
+          formelStr = formelStr.Replace('.', ','); 
+      }
+      else 
+      { 
+          formelStr = formelStr.Replace(',', '.'); 
+      }
+      string hilfStr = string.Empty;
       var aktParser = new Parse();
       this.scannedFkt = null;
       aktParser.ScanFkt(ref this.scannedFkt, formelStr);
@@ -399,14 +417,17 @@ namespace VianaNET.Data.Filter.Theory
         }
         else
         {
-          this.textBoxErgebnis.Text = string.Empty;
+          this.textBoxErgebnis.Text = string.Empty;          
         }
+        aktParser.ErrMsg(aktParser.lastErrNr, ref hilfStr);
+        this.textBoxErgebnis.Text = hilfStr;
       }
       else
       {
         if (this.art == TRechnerArt.formelRechner)
         {
           this.buttonFertig.IsEnabled = true;
+          this.textBoxErgebnis.Text = string.Empty;
         }
         else
         {

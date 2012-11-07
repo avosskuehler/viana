@@ -65,7 +65,7 @@ namespace VianaNET.Data.Filter.Theory
     ///   _symAn = '#' - switch to symbol font
     ///   _symAus = '§' - switch to normal font
     /// </summary>
-    public static readonly string spezialChars = string.Concat('\'', '\"', '!', '#', '$', '_');
+    public static readonly string spezialChars = string.Concat('\'', '\"', '!', '#', '§', '_');
 
     /// <summary>
     ///   The konstante.
@@ -815,7 +815,6 @@ namespace VianaNET.Data.Filter.Theory
       if (funcStr0 != string.Empty)
       {
         this.maxLang = (byte)funcStr0.Length;
-        funcStr0.Replace(',', '.');
         this.funcStr = funcStr0;
         this.fx = fx0;
 
