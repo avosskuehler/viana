@@ -305,6 +305,7 @@ namespace VianaNET.Modules.Chart
     private void TheoryOptionsButtonClick(object sender, RoutedEventArgs e)
     {
       var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
+      fktEditor.buttonX.Content = string.Concat(achsName);
       if (FilterData.Instance.TheoreticalFunction != null)
       {
         fktEditor.textBox1.Text = FilterData.Instance.TheoreticalFunction.Name;
