@@ -92,6 +92,8 @@ namespace VianaNET.Data.Filter.Theory
         "WURZEL", "SIGN", "ABS", "DELTA", "?"
       };
 
+    public static string varName = "x";
+
     #endregion
 
     /// <summary>
@@ -137,7 +139,6 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     rechner
   }
-
   // end TRechnerArt
 
   /// <summary>
@@ -265,7 +266,6 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     fstrEnd
   }
-
   // end symTyp
 
   /// <summary>
@@ -417,7 +417,7 @@ namespace VianaNET.Data.Filter.Theory
     {
       switch (nr)
       {
-        case 1:
+        case 1:  // muss noch an Sprache angepasst werden
           s = "( erwartet";
           break;
         case 2:
@@ -434,6 +434,9 @@ namespace VianaNET.Data.Filter.Theory
           break;
         case 6:
           s = "keine Formel definiert";
+          break;
+        case 7:
+          s = "ungültiger Bezeichner";
           break;
       }
     }
@@ -494,8 +497,6 @@ namespace VianaNET.Data.Filter.Theory
     /// </returns>
     public double FktWert_Berechne(FunctionCalcTree fx, int nr)
     {
-      // double result;
-      // double erg1;
       double erg2;
       if (this.fktWertError)
       {
@@ -512,26 +513,7 @@ namespace VianaNET.Data.Filter.Theory
           this.result = fx.Zwert; 
           break;
         case symTyp.ident:
-
-          /*      if (nr >= 0)
-                    {
-                        switch (fx.vwert.WertAtOk((ushort)nr,ref erg1))
-                        {
-                            case Constants.is_FehlerZahl:
-                                fktWertError = true;
-                                calcErr = true;
-                                break;
-                            case Constants.is_LeerFeld:
-                                fktWertError = true;
-                                break;
-                        }
-                        result = erg1;
-                    }
-                    else
-                    { */
           this.result = this.varXwert;
-
-          // }
           break;
         default:
           erg2 = this.FktWert_Berechne(fx.Re, nr);
@@ -817,11 +799,6 @@ namespace VianaNET.Data.Filter.Theory
         this.maxLang = (byte)funcStr0.Length;
         this.funcStr = funcStr0;
         this.fx = fx0;
-
-        // while (funcStr.IndexOf(',') > 0)
-        // {
-        // funcStr[funcStr.IndexOf(',')] = '.';
-        // }
         this.fFormel = string.Empty;
         this.chPos = -1;
         this.oldChPos = -1;
@@ -1134,14 +1111,10 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public void ScanFkt_Identifier()
     {
-      string buf;
-      string buf1;
-   //   string Spezi = string.Concat(
-   //     Constants._hoch, Constants._tief, Constants._symAn, Constants._symAus, Constants._formAus, Constants._normal);
+      string buf = string.Empty;
+      string buf1 = string.Empty;
       ushort i;
 
-      buf = string.Empty;
-      buf1 = string.Empty;
       do
       {
         buf = buf + this.ch;
@@ -1172,43 +1145,13 @@ namespace VianaNET.Data.Filter.Theory
           return;
         }
       }
-
+      // teste auf Funktionsbezeichner
       this.sym = symTyp.sinf;
       while ((this.sym < symTyp.ffmax) && (buf != Constants.fnam[(int)this.sym - 5]))
       {
         this.sym++;
       }
-
-      /* 
-            if ((sym == symTyp.ffmax))
-            {
-                i = 1;
-                if ((this.fAnker != null))
-                {
-                    do
-                    {
-                        sp = this.fAnker[i];
-                        if (sp != null)
-                        {
-                            if ((sp != this) && ((sp.Bez).ToLower().CompareTo((buf).ToLower()) == 0) && (!noUpCase || (sp.Bez.CompareTo(buf1) == 0)))
-                            {
-                                sym = symTyp.ident;
-                                xVar = ScanFkt_MakeNode(null, symTyp.ident, null);
-                                xVar.vwert = sp;
-                                return;
-                            }
-                            else
-                            {
-                                i ++;
-                            }
-                        }
-                        else
-                        {
-                            i = PhysTab.Constants.max_Anzahl_Spalten + 1;
-                        }
-                    } while (!((i > PhysTab.Constants.max_Anzahl_Spalten)));
-                }
-        */
+      // teste auf Konstantenbezeichner
       if (this.sym != symTyp.ident)
       {
         i = 0;
@@ -1234,15 +1177,20 @@ namespace VianaNET.Data.Filter.Theory
 
       if (this.sym == symTyp.ffmax)
       {
-        this.sym = symTyp.ident;
-        if (this.xVar == null)
-        {
-          this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
-          this.xVar.Zwert = 0;
-          this.xVar.Name = buf1;
-        }
-
-        // ScanFkt_Err(5);
+          if (buf.ToLower().CompareTo(Constants.varName.ToLower()) == 0)
+          {
+              this.sym = symTyp.ident;
+              if (this.xVar == null)
+              {
+                  this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
+                  this.xVar.Zwert = 0;
+                  this.xVar.Name = buf1;
+              }
+          }
+          else
+          {
+              ScanFkt_Err(7);
+          }
       }
     }
 

@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <MainWindow:TopFrame x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:RegressionCalculatorDialogTitle}" />
         <Grid Grid.Row="1">
-        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,42,0,0" Name="textBoxErgebnis" VerticalAlignment="Top" Width="378" />
+        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,42,0,0" Name="textBoxErgebnis" VerticalAlignment="Top" Width="378" FontFamily="Courier New" FontSize="14" />
         <Button Content="1" Height="28" HorizontalAlignment="Left" Margin="94,205,0,0" Name="button1" VerticalAlignment="Top" Width="28" UseLayoutRounding="True" FontSize="14" FontWeight="Bold" Click="ButtonZifferClick" />
         <Button Content="2" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,205,244,0" Name="button2" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
         <Button Content="3" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,205,0,0" Name="button3" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
@@ -45,7 +45,7 @@
         <Button Content="sin" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,171,0,0" Name="buttonSin" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
         <Button Content="cos" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="12,205,0,0" Name="buttonCos" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
         <Button Content="tan" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="12,239,0,0" Name="buttonTan" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
-        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,12,0,0" Name="textBox1" VerticalAlignment="Top" Width="378" TextChanged="TextBox1TextChanged1" />
+        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,12,0,0" Name="textBox1" VerticalAlignment="Top" Width="378" TextChanged="TextBox1TextChanged1" FontFamily="Courier New" FontSize="14" />
         <ComboBox Height="26" HorizontalAlignment="Left" Margin="21,310,0,0" Name="comboBox1" VerticalAlignment="Top" Width="248" />
             <Label Content="{lex:LocText VianaNET:Labels:CalculatorDialogPhysicalKonst}" Height="27" HorizontalAlignment="Left" Margin="20,283,0,0" Name="label1" VerticalAlignment="Top" Width="190" />
             <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogInsert}" FontSize="12" Height="28" HorizontalAlignment="Left" Margin="275,0,0,0" Name="buttonTakeKonst" UseLayoutRounding="True" VerticalAlignment="Bottom" Width="80" Click="ButtonTakeKonstClick" OpacityMask="#80000000" FontWeight="Bold" />
@@ -55,8 +55,6 @@
         <Button Content="End" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,179,0,0" Name="buttonEnd" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonEndClick" />
         </Grid>
         <Button Content="{lex:LocText VianaNET:Labels:Cancel}" Height="38" Grid.Row="2" HorizontalAlignment="Left" Margin="26,0,0,0" Name="buttonESC" VerticalAlignment="Center" Width="149" IsCancel="True" Click="ButtonEscClick" FontWeight="Bold" FontSize="13" Background="#FFEFCACA" />
-        <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogButtonDoneCalc}" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,30,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="ButtonFertigClick" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />
-
-       
+        <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogButtonDoneCalc}" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,30,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="ButtonFertigClick" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />      
     </Grid>
 </Window>

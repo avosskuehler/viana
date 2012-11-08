@@ -420,6 +420,12 @@ namespace VianaNET.Data.Filter.Theory
           this.textBoxErgebnis.Text = string.Empty;          
         }
         aktParser.ErrMsg(aktParser.lastErrNr, ref hilfStr);
+        // Fehlerposition anzeigen mit ^
+        hilfStr = string.Concat("^ ", hilfStr);
+        for (int i = 1; i <= aktParser.lastErrPos; i++)
+        { 
+            hilfStr = string.Concat(" ", hilfStr); 
+        }
         this.textBoxErgebnis.Text = hilfStr;
       }
       else

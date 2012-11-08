@@ -1593,10 +1593,6 @@ namespace VianaNET.Data.Filter.Regression
           this.AusgleichsFunktion = NullFkt;
           break;
       }
-
-      // Darstellung des Funktionsterms übernehmen
-   //   this.UpdateRegressionFunctionString();
-
       // mittleres Abweichungsquadrat errechnen
       this.GetAverageAberration(tempAberration);
       FilterData.Instance.RegressionAberration = this.Aberration;
