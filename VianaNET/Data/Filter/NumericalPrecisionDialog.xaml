@@ -11,7 +11,7 @@
     Title="{lex:LocText VianaNET:Labels:InterpolationDialogTopTitle}" 
         mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:VianaNET="clr-namespace:VianaNET"
-        Height="208" Width="328" SizeToContent="Manual">
+        Height="263" Width="328">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -27,26 +27,30 @@
           <RowDefinition Height="*"/>
           <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,0">
+        <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-          </Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <Label Content="{lex:LocText VianaNET:Labels:RegressionNumberDigits}" Grid.Row="0" HorizontalAlignment="Left"
              VerticalAlignment="Center" Margin="4" Padding="1" />
-          <!--<Label Content="0,1234567890" Grid.Row="1" HorizontalAlignment="Left" Name="labelBeispiel"
-             VerticalAlignment="Center" Margin="4" Padding="1" />-->
           <VianaNET:SliderValue Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0"
               VerticalAlignment="Center" SmallChange="1"
               Orientation="Horizontal"
                   Minimum="0" Maximum="10"
-              TickPlacement="Both" IsSnapToTickEnabled="True" Value="{Binding Path=NumberOfDigits}" />
-        </Grid>
-        <Button Name="OK"  Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,110,0" Height="23" Width="80" IsDefault="True" Content="{lex:LocText VianaNET:Labels:OK}" Click="OkClick" />
-        <Button Name="Cancel" Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,0" Height="23" Width="80" IsDefault="False" Content="{lex:LocText VianaNET:Labels:Cancel}" Click="CancelClick" />
+              TickPlacement="Both" IsSnapToTickEnabled="True" Value="{Binding Path=NumberOfDigits}" ValueChanged="SliderValue_ValueChanged" />
+                    <Label Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0" Name="labelSmallNumber" VerticalAlignment="Center" FontSize="10" />
+                    <Label Grid.Row="2" HorizontalAlignment="Left" Margin="4,0,0,0" Name="labelBigNumber" VerticalAlignment="Center" FontSize="10" />
+                    <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="12,0,0,0" Name="labelFormatSmallNumber" VerticalAlignment="Center" />
+                    <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="12,0,0,0" Name="labelFormatBigNumber" VerticalAlignment="Center" />
+                </Grid>
+        <Button Name="OK"  Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,110,0" Height="23" Width="80" IsDefault="True" Content="{lex:LocText VianaNET:Labels:OK}" Click="OkClick" />
+        <Button Name="Cancel" Grid.Row="3" HorizontalAlignment="Right" Margin="0,0,20,0" Height="23" Width="80" IsDefault="False" Content="{lex:LocText VianaNET:Labels:Cancel}" Click="CancelClick" />
       </Grid>
     </Border>
   </Grid>

@@ -306,6 +306,7 @@ namespace VianaNET.Modules.Chart
     {
       var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
       fktEditor.buttonX.Content = string.Concat(achsName);
+      Constants.varName = string.Concat(achsName);
       if (FilterData.Instance.TheoreticalFunction != null)
       {
         fktEditor.textBox1.Text = FilterData.Instance.TheoreticalFunction.Name;
@@ -939,7 +940,6 @@ namespace VianaNET.Modules.Chart
         {
           this.UpdateRegressionImageButtonAndLabels(regressionOptionsDialog.RegressionType,true);
         }
-
       }
     }
 

@@ -25,6 +25,7 @@
 namespace VianaNET.Data.Filter
 {
   using System.Windows;
+    using System;
 
   /// <summary>
   ///   The interpolation options dialog.
@@ -38,12 +39,19 @@ namespace VianaNET.Data.Filter
     {
       this.InitializeComponent();
       this.DataContext = this;
+      smallNumber = 123456789E-12;
+      bigNumber = 98765432109E-5;
+      this.labelBigNumber.Content = bigNumber.ToString("G0");
+      this.labelSmallNumber.Content = smallNumber.ToString("G0");
     }
 
     /// <summary>
     /// Gets or sets the number of digits.
     /// </summary>
     public int NumberOfDigits { get; set; }
+
+    private double smallNumber;
+    private double bigNumber;
 
     #region Methods
 
@@ -74,6 +82,17 @@ namespace VianaNET.Data.Filter
     {
       this.DialogResult = true;
       this.Close();
+    }
+
+    
+    private void SliderValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        int n = this.NumberOfDigits;
+        string formatStr1 = string.Concat("G", n.ToString());
+        string formatStr2 = string.Concat("G", n.ToString());
+      //  string formatStr2 = string.Concat("N", n.ToString());
+        labelFormatSmallNumber.Content =smallNumber.ToString(formatStr1);
+        labelFormatBigNumber.Content = bigNumber.ToString(formatStr2);
     }
 
     #endregion
