@@ -1465,4 +1465,25 @@ Click OK or press Enter, when ready.</value>
   <data name="RegressionBestType" xml:space="preserve">
     <value>find best linefit</value>
   </data>
+  <data name="ParseErrorBracketClose" xml:space="preserve">
+    <value>) expected</value>
+  </data>
+  <data name="ParseErrorBracketOpen" xml:space="preserve">
+    <value>( expected</value>
+  </data>
+  <data name="ParseErrorIllegalCharacter" xml:space="preserve">
+    <value>illegal characteror identifier</value>
+  </data>
+  <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
+    <value>no formula defined</value>
+  </data>
+  <data name="ParseErrorOperatorMissing" xml:space="preserve">
+    <value>operator expected</value>
+  </data>
+  <data name="ParseErrorTermMissing" xml:space="preserve">
+    <value>( or number or identifier expected</value>
+  </data>
+  <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
+    <value>unknown identifier</value>
+  </data>
 </root>
