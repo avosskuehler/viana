@@ -33,7 +33,32 @@ namespace VianaNET.Data.Filter.Theory
   /// </summary>
   public class Constants
   {
-    
+
+    /// <summary>
+    ///   The konst record.
+    /// </summary>
+    public struct KonstRec
+      {
+          #region Fields
+
+          /// <summary>
+          ///   long name of constant.
+          /// </summary>
+          public string titel;
+
+          /// <summary>
+          ///   short name of constant.
+          /// </summary>
+          public string bez;
+
+          /// <summary>
+          ///   value of constant.
+          /// </summary>
+          public double wert;
+
+          #endregion
+      }
+   
     #region Constants
 
     /// <summary>
@@ -58,30 +83,25 @@ namespace VianaNET.Data.Filter.Theory
     #region Static Fields
 
     /// <summary>
-    ///   spezial chars in shortnames of physical constants. originial were those chars used for formatting the string
-    ///   _formAus = '!' - end of formula
-    ///   _hoch = '\'' - move up (exponent)
-    ///   _normal = '\"' - normal
-    ///   _tief = '_' - move down (index)
-    ///   _symAn = '#' - switch to symbol font
-    ///   _symAus = '§' - switch to normal font
+    ///   spezial chars in shortnames of physical constants. 
+    ///   # next char symbolic font; _ underscript
     /// </summary>
-    public static readonly string spezialChars = string.Concat('\'', '\"', '!', '#', '§', '_');
+    public static readonly string spezialChars =  "#_0123456789";
 
     /// <summary>
     ///   The konstante.
     /// </summary>
     public static readonly KonstRec[] konstante = new[]
       {
-        new KonstRec { titel = "PhysikKonstant_e", bez = "e§", wert = 1.6021E-19 }, 
-        new KonstRec { titel = "PhysikKonstant_epsilon", bez = "#e§_0!", wert = 8.85419E-12 }, 
-        new KonstRec { titel = "PhysikKonstant_c", bez = "c§", wert = 2.99792458E8 }, 
-        new KonstRec { titel = "PhysikKonstant_mu", bez = "#m§_0!", wert = 1.256637E-6 }, 
-        new KonstRec { titel = "PhysikKonstant_g", bez = "g§", wert = 9.80665 }, 
-        new KonstRec { titel = "PhysikKonstant_h", bez = "h§", wert = 6.6256E-34 }, 
-        new KonstRec { titel = "PhysikKonstant_me", bez = "m_#e§", wert = 9.1093897E-31 }, 
-        new KonstRec { titel = "PhysikKonstant_f", bez = "#g§", wert = 6.67259E-11 }, 
-        new KonstRec { titel = "PhysikKonstant_Lambda0", bez = "#l§_c!", wert = 2.43E-12 }
+        new KonstRec { titel = "PhysikKonstant_e", bez = "§e", wert = 1.6021E-19 }, 
+        new KonstRec { titel = "PhysikKonstant_epsilon", bez = "§#e_0", wert = 8.85419E-12 }, 
+        new KonstRec { titel = "PhysikKonstant_c", bez = "§c", wert = 2.99792458E8 }, 
+        new KonstRec { titel = "PhysikKonstant_mu", bez = "§mu_0", wert = 1.256637E-6 }, 
+        new KonstRec { titel = "PhysikKonstant_g", bez = "§g", wert = 9.80665 }, 
+        new KonstRec { titel = "PhysikKonstant_h", bez = "§h", wert = 6.6256E-34 }, 
+        new KonstRec { titel = "PhysikKonstant_me", bez = "§m_e", wert = 9.1093897E-31 }, 
+        new KonstRec { titel = "PhysikKonstant_f", bez = "§#g", wert = 6.67259E-11 }, 
+        new KonstRec { titel = "PhysikKonstant_Lambda0", bez = "§#l_c", wert = 2.43E-12 }
       };
 
     /// <summary>
@@ -97,30 +117,6 @@ namespace VianaNET.Data.Filter.Theory
 
     #endregion
 
-    /// <summary>
-    ///   The konst record.
-    /// </summary>
-    public struct KonstRec
-    {
-      #region Fields
-
-      /// <summary>
-      ///   short name of constant.
-      /// </summary>
-      public string bez;
-
-      /// <summary>
-      ///   long name of constant.
-      /// </summary>
-      public string titel;
-
-      /// <summary>
-      ///   value of constant.
-      /// </summary>
-      public double wert;
-
-      #endregion
-    }
   }
 
 
@@ -1064,7 +1060,7 @@ namespace VianaNET.Data.Filter.Theory
       }
 
       this.oldChPos = this.chPos;
-      if ((('A' <= this.ch) && (this.ch <= 'Z')) || (this.ch == '#'))
+      if (('A' <= this.ch) && (this.ch <= 'Z')) 
       {
         this.ScanFkt_Identifier();
       }
@@ -1097,6 +1093,9 @@ namespace VianaNET.Data.Filter.Theory
           case '^':
             this.ScanFkt_MakeSym(symTyp.pot);
             break;
+          case '§':
+            this.ScanFkt_ConstantIdentifier();
+            break;
           case '\0':
             this.sym = symTyp.fstrEnd;
             break;
@@ -1114,16 +1113,14 @@ namespace VianaNET.Data.Filter.Theory
     {
       string buf = string.Empty;
       string buf1 = string.Empty;
-      ushort i;
-
       do
       {
         buf = buf + this.ch;
         buf1 = buf1 + this.ch_;
         this.ScanFkt_GetCh();
       }
-      while (
-        !(((this.ch < '0') || ((this.ch > '9') && (this.ch < 'A')) || (this.ch > 'Z')) && (Constants.spezialChars.IndexOf(this.ch) == -1)));
+      while ( (this.ch >= 'A') && (this.ch <= 'Z') ); 
+
       if (buf == "PI")
       {
         this.sym = symTyp.istZahl;
@@ -1152,29 +1149,6 @@ namespace VianaNET.Data.Filter.Theory
       {
         this.sym++;
       }
-      // teste auf Konstantenbezeichner
-      if (this.sym != symTyp.ident)
-      {
-        i = 0;
-        do
-        {
-          if ((Constants.konstante[i].bez.ToLower().CompareTo(buf.ToLower()) == 0)
-              && (!this.noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
-          {
-            this.sym = symTyp.istKonst;
-            this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
-            this.kVar.Name = Constants.konstante[i].bez;
-            this.kVar.Nr = i;
-            this.kVar.Zwert = Constants.konstante[i].wert;
-            return;
-          }
-          else
-          {
-            i++;
-          }
-        }
-        while (!(i > Constants.konstante.Length-1));
-      }
 
       if (this.sym == symTyp.ffmax)
       {
@@ -1192,8 +1166,46 @@ namespace VianaNET.Data.Filter.Theory
           {
               ScanFkt_Err(7);
           }
-      }
+      }   
     }
+
+
+    /// <summary>
+    ///   Method of the Scanfkt: reads a constant_identifier.
+    /// </summary>
+    public void ScanFkt_ConstantIdentifier()
+    {
+        string buf = string.Empty;
+        string buf1 = string.Empty;
+        ushort i;
+
+        do
+        {
+            buf = buf + this.ch;
+            buf1 = buf1 + this.ch_;
+            this.ScanFkt_GetCh();
+        }
+        while (( (this.ch >= 'A') && (this.ch <= 'Z') ) || (Constants.spezialChars.IndexOf(this.ch) >= 0) );
+        
+        i = 0;
+        while (i < Constants.konstante.Length) 
+        {
+            if ((Constants.konstante[i].bez.ToLower().CompareTo(buf.ToLower()) == 0)
+                    && (!this.noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
+            {
+               this.sym = symTyp.istKonst;
+               this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
+               this.kVar.Name = Constants.konstante[i].bez;
+               this.kVar.Nr = i;
+               this.kVar.Zwert = Constants.konstante[i].wert;
+               return;
+            }
+            i++;
+        }
+        // keine Konstantenbezeichnung gefunden
+        ScanFkt_Err(7);
+    }
+
 
     /// <summary>
     /// Makes a node in the function tree.
