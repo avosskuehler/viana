@@ -333,6 +333,21 @@ namespace VianaNET.Modules.Chart
         functionString = functionString.Replace("*", "{\\cdot}");
         functionString = functionString.Replace("(", "{(");
         functionString = functionString.Replace(")", ")}");
+        if (functionString.IndexOf("§") >= 0)
+        {
+            functionString = functionString.Replace("§#e_0", "\\epsilon_0");  
+            functionString = functionString.Replace("§#mu_0", "\\mu_0");    
+            functionString = functionString.Replace("§#l_c", "\\lambda_c");
+            functionString = functionString.Replace("§#g", "\\gamma");
+            functionString = functionString.Replace("§m_e", "m_e");
+            functionString = functionString.Replace("§", "");
+
+         /*   functionString = functionString.Replace("§e", "e");
+            functionString = functionString.Replace("§h", "h");
+            functionString = functionString.Replace("§c", "c");            
+            functionString = functionString.Replace("§g", "g");
+         */
+        }
         functionString = functionString.Replace('x', this.achsName);
         var formula = this.formulaParser.Parse(functionString);
         if (formula != null)

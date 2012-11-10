@@ -97,10 +97,18 @@ namespace VianaNET.Data.Filter.Theory
       //  if (originalSamples.Count == 0)
       if (this.WertX.Count==0)
         {
-          p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
+      /*    p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
           fittedSamples.Add(p);
           p = new XYSample(10, tempParser.FreierFktWert(fx, 10));
           fittedSamples.Add(p);
+          return; */
+          x = -10;
+          while (x <= 10)
+          {
+              p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+              fittedSamples.Add(p);
+              x = x + 0.2;
+          }
           return;
         }     
         
