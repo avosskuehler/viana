@@ -1452,4 +1452,25 @@
   <data name="RegressionBestType" xml:space="preserve">
     <value>@RegressionBestType</value>
   </data>
+  <data name="ParseErrorBracketClose" xml:space="preserve">
+    <value>@ParseErrorBracketClose</value>
+  </data>
+  <data name="ParseErrorBracketOpen" xml:space="preserve">
+    <value>@ParseErrorBracketOpen</value>
+  </data>
+  <data name="ParseErrorIllegalCharacter" xml:space="preserve">
+    <value>@ParseErrorIllegalCharacter</value>
+  </data>
+  <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
+    <value>@ParseErrorNoFormulaDefined</value>
+  </data>
+  <data name="ParseErrorOperatorMissing" xml:space="preserve">
+    <value>@ParseErrorOperatorMissing</value>
+  </data>
+  <data name="ParseErrorTermMissing" xml:space="preserve">
+    <value>@ParseErrorTermMissing</value>
+  </data>
+  <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
+    <value>@ParseErrorUnknownIdentifier</value>
+  </data>
 </root>

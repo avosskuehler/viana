@@ -1450,4 +1450,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="RegressionBestType" xml:space="preserve">
     <value>Finde beste Ausgleichskurve</value>
   </data>
+  <data name="ParseErrorBracketClose" xml:space="preserve">
+    <value>) erwartet</value>
+  </data>
+  <data name="ParseErrorBracketOpen" xml:space="preserve">
+    <value>( erwartet</value>
+  </data>
+  <data name="ParseErrorIllegalCharacter" xml:space="preserve">
+    <value>unzulässiges Zeichen oder Bezeichner</value>
+  </data>
+  <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
+    <value>keine Formel definiert</value>
+  </data>
+  <data name="ParseErrorOperatorMissing" xml:space="preserve">
+    <value>Operator erwartet</value>
+  </data>
+  <data name="ParseErrorTermMissing" xml:space="preserve">
+    <value>( oder Zahl oder Bezeichner erwartet</value>
+  </data>
+  <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
+    <value>ungültiger Bezeichner</value>
+  </data>
 </root>

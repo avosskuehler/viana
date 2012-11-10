@@ -26,6 +26,7 @@
 namespace VianaNET.Data.Filter.Theory
 {
   using System;
+  using VianaNET.Localization;
 
   /// <summary>
   ///   The constants.
@@ -417,26 +418,26 @@ namespace VianaNET.Data.Filter.Theory
     {
       switch (nr)
       {
-        case 1:  // muss noch an Sprache angepasst werden
-          s = "( erwartet";
+        case 1: 
+          s = Labels.ParseErrorBracketOpen;
           break;
         case 2:
-          s = ") erwartet";
+          s = Labels.ParseErrorBracketClose;
           break;
         case 3:
-          s = "Operator erwartet";
+          s = Labels.ParseErrorOperatorMissing;
           break;
         case 4:
-          s = "( oder Zahl oder Bezeichner erwartet";
+          s = Labels.ParseErrorTermMissing;
           break;
         case 5:
-          s = "unzulässiges Zeichen";
+          s = Labels.ParseErrorIllegalCharacter;
           break;
         case 6:
-          s = "keine Formel definiert";
+          s = Labels.ParseErrorNoFormulaDefined;
           break;
         case 7:
-          s = "ungültiger Bezeichner";
+          s = Labels.ParseErrorUnknownIdentifier;
           break;
       }
     }
