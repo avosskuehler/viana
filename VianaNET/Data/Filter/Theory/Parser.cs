@@ -96,7 +96,7 @@ namespace VianaNET.Data.Filter.Theory
         new KonstRec { titel = "PhysikKonstant_e", bez = "§e", wert = 1.6021E-19 }, 
         new KonstRec { titel = "PhysikKonstant_epsilon", bez = "§#e_0", wert = 8.85419E-12 }, 
         new KonstRec { titel = "PhysikKonstant_c", bez = "§c", wert = 2.99792458E8 }, 
-        new KonstRec { titel = "PhysikKonstant_mu", bez = "§mu_0", wert = 1.256637E-6 }, 
+        new KonstRec { titel = "PhysikKonstant_mu", bez = "§#m_0", wert = 1.256637E-6 }, 
         new KonstRec { titel = "PhysikKonstant_g", bez = "§g", wert = 9.80665 }, 
         new KonstRec { titel = "PhysikKonstant_h", bez = "§h", wert = 6.6256E-34 }, 
         new KonstRec { titel = "PhysikKonstant_me", bez = "§m_e", wert = 9.1093897E-31 }, 
