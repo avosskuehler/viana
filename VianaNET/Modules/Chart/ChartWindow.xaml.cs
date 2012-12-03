@@ -640,77 +640,111 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     /// <param name="axis">The axis that changed</param>
     /// <param name="mapPoints">The new data mapping. </param>
+    private string axisUnitName = string.Empty;
+
     private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints)
     {
       string prefix = "Object[" + Video.Instance.ProcessingData.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
+      
+      string rulerUnitName = string.Empty;
+      switch (CalibrationData.Instance.RulerUnit)
+      {
+          case Unit.mm: rulerUnitName = "mm"; break;
+          case Unit.cm: rulerUnitName = "cm"; break;
+          case Unit.m: rulerUnitName = "m"; break;
+          case Unit.km: rulerUnitName = "km"; break;
+          case Unit.px: rulerUnitName = "pixel"; break;
+      }
       switch (axis.Axis)
       {
         case AxisType.I:
           mapPoints.Path = "Framenumber";
+          axisUnitName = "";
           break;
         case AxisType.T:
           mapPoints.Path = "Timestamp";
+          axisUnitName = "ms";
           break;
         case AxisType.PX:
           mapPoints.Path = "PositionX";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.PY:
           mapPoints.Path = "PositionY";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.D:
           mapPoints.Path = "Distance";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.DX:
           mapPoints.Path = "DistanceX";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.DY:
           mapPoints.Path = "DistanceY";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.S:
           mapPoints.Path = "Length";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.SX:
           mapPoints.Path = "LengthX";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.SY:
           mapPoints.Path = "LengthY";
+          axisUnitName = rulerUnitName;
           break;
         case AxisType.V:
           mapPoints.Path = "Velocity";
+          axisUnitName = string.Concat(rulerUnitName,"/ms");
           break;
         case AxisType.VX:
           mapPoints.Path = "VelocityX";
+          axisUnitName = string.Concat(rulerUnitName, "/ms");
           break;
         case AxisType.VY:
           mapPoints.Path = "VelocityY";
+          axisUnitName = string.Concat(rulerUnitName, "/ms");
           break;
         case AxisType.VI:
           mapPoints.Path = "VelocityI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms");
           break;
         case AxisType.VXI:
           mapPoints.Path = "VelocityXI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms");
           break;
         case AxisType.VYI:
           mapPoints.Path = "VelocityYI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms");
           break;
         case AxisType.A:
           mapPoints.Path = "Acceleration";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
         case AxisType.AX:
           mapPoints.Path = "AccelerationX";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
         case AxisType.AY:
           mapPoints.Path = "AccelerationY";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
         case AxisType.AI:
           mapPoints.Path = "AccelerationI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
         case AxisType.AXI:
           mapPoints.Path = "AccelerationXI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
         case AxisType.AYI:
           mapPoints.Path = "AccelerationYI";
+          axisUnitName = string.Concat(rulerUnitName, "/ms²");
           break;
       }
 
@@ -719,6 +753,7 @@ namespace VianaNET.Modules.Chart
       {
         mapPoints.Path = prefix + mapPoints.Path;
       }
+      axisUnitName = "  [" + axisUnitName + "]";
     }
 
     /// <summary>
@@ -736,7 +771,7 @@ namespace VianaNET.Modules.Chart
         if (this.DataChart.AxesX.Count > 0)
         {
           var axisX = this.DataChart.AxesX[0];
-          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text : null;
+          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text + axisXUnitName : null;
           axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
 
           if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
@@ -766,7 +801,7 @@ namespace VianaNET.Modules.Chart
         if (this.DataChart.AxesY.Count > 0)
         {
           var axisY = this.DataChart.AxesY[0];
-          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text : null;
+          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text + axisYUnitName : null;
           axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
 
           if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
@@ -862,6 +897,8 @@ namespace VianaNET.Modules.Chart
       this.TheorySeries.Enabled = enabled;
     }
 
+    string axisXUnitName, axisYUnitName;
+
     /// <summary>
     /// This method updates the series mappings for the given axis.
     /// </summary>
@@ -909,6 +946,11 @@ namespace VianaNET.Modules.Chart
 
       var map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
       this.UpdateAxisMappings(axis, map);
+      if (axisX) { axisXUnitName = axisUnitName; }
+      else
+      {
+          axisYUnitName = axisUnitName;
+      }
       return true;
     }
 
