@@ -7,7 +7,8 @@
 	xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
 	xmlns:BlobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:VianaNET="clr-namespace:VianaNET" mc:Ignorable="d"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:VianaNET="clr-namespace:VianaNET"
+	xmlns:application="clr-namespace:VianaNET.Application" mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">
   <UserControl.Resources>
@@ -18,7 +19,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=GradientBackground, Source={x:Static Data:CalibrationData.Instance}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Project.Instance}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -52,8 +53,8 @@
               <ScaleTransform ScaleX="1" ScaleY="-1"/>
             </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
-                   Content="{Binding Path=RulerValueInRulerUnits,
-              Source={x:Static Data:CalibrationData.Instance},
+                   Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
+              Source={x:Static application:Project.Instance},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
@@ -77,7 +78,7 @@
       </Grid>
       <BlobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Project.Instance}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>

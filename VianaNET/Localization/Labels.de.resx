@@ -1471,4 +1471,13 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
     <value>ungültiger Bezeichner</value>
   </data>
+  <data name="SaveProjectDialogTitle" xml:space="preserve">
+    <value>Projekt sichern ...</value>
+  </data>
+  <data name="QATButtonOpenLabelTitle" xml:space="preserve">
+    <value>Öffne Viana.Net Projekt</value>
+  </data>
+  <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
+    <value>Lädt eine Projektdatei mit gespeicherten Daten zur weiteren Analyse.</value>
+  </data>
 </root>

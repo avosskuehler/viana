@@ -1473,4 +1473,13 @@
   <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
     <value>@ParseErrorUnknownIdentifier</value>
   </data>
+  <data name="SaveProjectDialogTitle" xml:space="preserve">
+    <value>@SaveProjectDialogTitle</value>
+  </data>
+  <data name="QATButtonOpenLabelTitle" xml:space="preserve">
+    <value>@QATButtonOpenLabelTitle</value>
+  </data>
+  <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
+    <value>@QATButtonOpenToolTipDescription</value>
+  </data>
 </root>

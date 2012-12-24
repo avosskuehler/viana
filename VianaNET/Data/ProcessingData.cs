@@ -23,6 +23,9 @@
 //   The image processing.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Data
 {
   using System;
@@ -42,15 +45,9 @@ namespace VianaNET.Data
   /// <summary>
   ///   The image processing.
   /// </summary>
+  [Serializable]
   public class ProcessingData : DependencyObject, INotifyPropertyChanged
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
     /// <summary>
@@ -226,7 +223,6 @@ namespace VianaNET.Data
       this.BlobMaxDiameter.CollectionChanged += this.HlslParamsCollectionChanged;
 
       this.PropertyChanged += this.ProcessingDataPropertyChanged;
-      CalibrationData.Instance.PropertyChanged += this.CalibrationPropertyChanged;
     }
 
     #endregion
@@ -257,6 +253,22 @@ namespace VianaNET.Data
     ///   Gets or sets  a list of brushes for the different tracked objects
     /// </summary>
     public static List<SolidColorBrush> TrackObjectColors { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the target color.
+    /// </summary>
+    public ObservableCollection<Color> TargetColor
+    {
+      get
+      {
+        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(TargetColorProperty, value);
+      }
+    }
 
     /// <summary>
     ///   Gets or sets the blob max diameter.
@@ -386,22 +398,6 @@ namespace VianaNET.Data
       }
     }
 
-    /// <summary>
-    ///   Gets or sets the target color.
-    /// </summary>
-    public ObservableCollection<Color> TargetColor
-    {
-      get
-      {
-        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(TargetColorProperty, value);
-      }
-    }
-
     #endregion
 
     #region Public Methods and Operators
@@ -421,9 +417,9 @@ namespace VianaNET.Data
       this.colorAndCropFilter.BlankColor = Colors.Black;
       this.colorAndCropFilter.TargetColor = this.TargetColor[0];
       this.colorAndCropFilter.Threshold = this.ColorThreshold[0];
-      if (CalibrationData.Instance.HasClipRegion)
+      if (Project.Instance.CalibrationData.HasClipRegion)
       {
-        this.colorAndCropFilter.CropRectangle = CalibrationData.Instance.ClipRegion;
+        this.colorAndCropFilter.CropRectangle = Project.Instance.CalibrationData.ClipRegion;
       }
       else
       {
@@ -439,9 +435,9 @@ namespace VianaNET.Data
       this.colorRangeFilter.BlankColor = Colors.Black;
       this.colorRangeFilter.TargetColor = this.TargetColor[0];
       this.colorRangeFilter.Threshold = this.ColorThreshold[0];
-      if (CalibrationData.Instance.HasClipRegion)
+      if (Project.Instance.CalibrationData.HasClipRegion)
       {
-        this.colorRangeFilter.CropRectangle = CalibrationData.Instance.ClipRegion;
+        this.colorRangeFilter.CropRectangle = Project.Instance.CalibrationData.ClipRegion;
       }
       else
       {
@@ -483,7 +479,7 @@ namespace VianaNET.Data
       this.watch.Start();
       long start = this.watch.ElapsedMilliseconds;
 
-      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
         // Console.Write("BeforeColorFilter: ");
         // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
@@ -514,7 +510,7 @@ namespace VianaNET.Data
 
           if (Video.Instance.IsDataAcquisitionRunning)
           {
-            VideoData.Instance.AddPoint(i, this.CurrentBlobCenter[i].Value);
+            Project.Instance.VideoData.AddPoint(i, this.CurrentBlobCenter[i].Value);
           }
 
           objectsFound = true;
@@ -555,7 +551,7 @@ namespace VianaNET.Data
     /// </summary>
     public void Reset()
     {
-      this.ResetProcessing(Video.Instance.ProcessingData.NumberOfTrackedObjects);
+      this.ResetProcessing(Project.Instance.ProcessingData.NumberOfTrackedObjects);
     }
 
     #endregion
@@ -611,23 +607,6 @@ namespace VianaNET.Data
       if (!this.doNotThrowPropertyChanged)
       {
         this.OnPropertyChanged("Blob");
-      }
-    }
-
-    /// <summary>
-    /// The calibration_ property changed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void CalibrationPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "HasClipRegion" || e.PropertyName == "ClipRegion")
-      {
-        this.InitializeImageFilters();
       }
     }
 

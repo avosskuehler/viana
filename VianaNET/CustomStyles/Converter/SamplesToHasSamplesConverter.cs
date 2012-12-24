@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RulerUnitStringConverter.cs" company="Freie Universität Berlin">
+// <copyright file="NumberOfObjectsToVisibilityConverter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -20,97 +20,54 @@
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
 // <summary>
-//   The ruler unit string converter.
+//   The number of objects to visibility converter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
 
 namespace VianaNET.CustomStyles.Converter
 {
   using System;
   using System.Globalization;
   using System.Windows.Data;
-
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
+  using Data.Collections;
 
   /// <summary>
-  ///   The ruler unit string converter.
+  /// This value converter converts a DataCollection into a 
+  /// bool indicating whether the collection has samples or not.
   /// </summary>
-  [ValueConversion(typeof(double), typeof(String))]
-  public class RulerUnitStringConverter : IValueConverter
+  [ValueConversion(typeof(DataCollection), typeof(bool))]
+  public class SamplesToHasSamplesConverter : IValueConverter
   {
     #region Public Methods and Operators
 
     /// <summary>
-    /// The convert.
+    /// This method converts the DataCollection into a 
+    /// bool indicating whether the collection has samples or not.
     /// </summary>
-    /// <param name="value">
-    /// The value. 
-    /// </param>
-    /// <param name="targetType">
-    /// The target type. 
-    /// </param>
-    /// <param name="parameter">
-    /// The parameter. 
-    /// </param>
-    /// <param name="culture">
-    /// The culture. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="object"/> . 
-    /// </returns>
+    /// <param name="value">The data collection value.</param>
+    /// <param name="targetType">The target type.</param>
+    /// <param name="parameter">The parameter.</param>
+    /// <param name="culture"> The culture.  </param>
+    /// <returns>The <see cref="object"/> with a bool indicating whether 
+    /// the collection has samples or not.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (double)value;
-      string unit = " " + Project.Instance.CalibrationData.PositionUnit;
-      var param = (MeasurementType)parameter;
-      switch (param)
-      {
-        case MeasurementType.Pixel:
-          unit = " " + Project.Instance.CalibrationData.PixelUnit;
-          break;
-        case MeasurementType.Position:
-          unit = " " + Project.Instance.CalibrationData.PositionUnit;
-          break;
-      }
-
-      string formatting = "N0";
-      if (valueToConvert < 1)
-      {
-        formatting = "N2";
-      }
-      else if (valueToConvert < 5)
-      {
-        formatting = "N1";
-      }
-
-      return valueToConvert.ToString(formatting) + unit;
+      var valueToConvert = (DataCollection)value;
+      return valueToConvert.Count > 0;
     }
 
     /// <summary>
-    /// The convert back.
+    /// This method is not implemented. A back conversion is not 
+    /// available.
     /// </summary>
-    /// <param name="value">
-    /// The value. 
-    /// </param>
-    /// <param name="targetType">
-    /// The target type. 
-    /// </param>
-    /// <param name="parameter">
-    /// The parameter. 
-    /// </param>
-    /// <param name="culture">
-    /// The culture. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="object"/> . 
-    /// </returns>
+    /// <param name="value">The value.</param>
+    /// <param name="targetType"> The target type.  </param>
+    /// <param name="parameter"> The parameter.  </param>
+    /// <param name="culture"> The culture.  </param>
+    /// <returns> The <see cref="object"/> .  </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (string)value;
-      return double.Parse(valueToConvertBack);
+      throw new Exception("BackConversionNotAllowed");
     }
 
     #endregion

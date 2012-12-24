@@ -32,7 +32,7 @@ namespace VianaNET.Logging
   using System.IO;
   using System.Text;
 
-  using VianaNET.MainWindow;
+  using MainWindow;
 
   /// <summary>
   ///   This class is used to log errors and exceptions into a file that can 

@@ -35,6 +35,14 @@ namespace VianaNET.Data.Collections
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="XYSample"/> class.
+    /// This parameterless constructor is needed for serialization
+    /// </summary>
+    public XYSample()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="XYSample"/> class.
     /// </summary>
     /// <param name="valueX"> The value x. </param>
     /// <param name="valueY">The value y.</param>

@@ -26,23 +26,26 @@
 namespace VianaNET.CustomStyles.Types
 {
   /// <summary>
-  ///   The video mode.
+  /// Enumerates the availanle video modes.
+  /// Currently two: file, for file playback and capture for live streams
   /// </summary>
   public enum VideoMode
   {
     /// <summary>
-    ///   The none.
+    /// No video mode selected.
     /// </summary>
-    None, 
+    None,
 
     /// <summary>
-    ///   The file.
+    /// File video mode.
+    /// A video file is loaded from disk.
     /// </summary>
-    File, 
+    File,
 
     /// <summary>
-    ///   The capture.
+    /// Capture file mode.
+    /// A video is captured from a live stream.
     /// </summary>
-    Capture, 
+    Capture,
   }
 }

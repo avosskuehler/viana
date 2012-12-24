@@ -23,6 +23,9 @@
 //   The main window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Visifire.Charts;
+
 namespace VianaNET.MainWindow
 {
   using System;
@@ -73,7 +76,7 @@ namespace VianaNET.MainWindow
       this.InitializeComponent();
 
       this.mainRibbon.DataContext = this;
-      Video.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      Project.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
 
@@ -99,6 +102,81 @@ namespace VianaNET.MainWindow
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// The save project on click event handler.
+    /// Calls a save file dialog and saves all settings of the project
+    /// into the given file
+    /// </summary>
+    /// <param name="sender"> The sender. </param>
+    /// <param name="e"> The e. </param>
+    private void SaveProjectOnClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new SaveFileDialog
+        {
+          Filter = "Viana.NET projects|*.via",
+          Title = Labels.SaveProjectDialogTitle,
+          DefaultExt = "via"
+        };
+
+      if (dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        Project.Serialize(Project.Instance, dlg.FileName);
+      }
+    }
+
+    /// <summary>
+    /// The open project on click event handler.
+    /// Calls an open file dialog and restores all settings of the project
+    /// from the given file
+    /// </summary>
+    /// <param name="sender">Source of the event</param>
+    /// <param name="e">The event args</param>
+    private void OpenProjectOnClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new OpenFileDialog
+      {
+        Filter = "Viana.NET projects|*.via",
+        Title = Labels.SaveProjectDialogTitle,
+        DefaultExt = "via",
+        Multiselect = false
+      };
+
+      if (!dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        return;
+      }
+
+      // Restore project settings
+      Project.Instance = Project.Deserialize(dlg.FileName);
+
+      // Restore video mode
+      Video.Instance.VideoMode = Project.Instance.VideoMode;
+      switch (Project.Instance.VideoMode)
+      {
+        case VideoMode.File:
+          // load video
+          this.VideoWindow.LoadVideo(Project.Instance.VideoFile);
+          break;
+        case VideoMode.Capture:
+          break;
+      }
+
+      // Update datagrid
+      Project.Instance.VideoData.NotifyLoading();
+      this.DataGridWindow.Refresh();
+
+      // Update data series values
+      this.ChartWindow.Refresh();
+
+      // Update bindings that got lost during deserialization
+      var regressionSeriesBinding = new Binding("FilterData.RegressionSeries") { Source = Project.Instance };
+      this.ChartWindow.RegressionSeries.SetBinding(DataSeries.DataSourceProperty, regressionSeriesBinding);
+      var interpolationSeriesBinding = new Binding("FilterData.InterpolationSeries") { Source = Project.Instance };
+      this.ChartWindow.InterpolationSeries.SetBinding(DataSeries.DataSourceProperty, interpolationSeriesBinding);
+      var theorySeriesBinding = new Binding("FilterData.TheorySeries") { Source = Project.Instance };
+      this.ChartWindow.TheorySeries.SetBinding(DataSeries.DataSourceProperty, theorySeriesBinding);
+    }
 
     /// <summary>
     /// The about command_ executed.
@@ -155,7 +233,7 @@ namespace VianaNET.MainWindow
     private void CalculateVelocityButtonClick(object sender, RoutedEventArgs e)
     {
       this.Cursor = Cursors.Wait;
-      VideoData.Instance.RefreshDistanceVelocityAcceleration();
+      Project.Instance.VideoData.RefreshDistanceVelocityAcceleration();
       this.Cursor = Cursors.Arrow;
     }
 
@@ -198,7 +276,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void DeleteDataButtonClick(object sender, RoutedEventArgs e)
     {
-      VideoData.Instance.Reset();
+      Project.Instance.VideoData.Reset();
       this.Refresh();
     }
 
@@ -280,7 +358,7 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToCsv(VideoData.Instance.Samples, sfd.FileName);
+        ExportData.ToCsv(Project.Instance.VideoData.Samples, sfd.FileName);
       }
     }
 
@@ -309,7 +387,7 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToTxt(VideoData.Instance.Samples, sfd.FileName);
+        ExportData.ToTxt(Project.Instance.VideoData.Samples, sfd.FileName);
       }
     }
 
@@ -324,7 +402,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ExportDataToXlsButtonClick(object sender, RoutedEventArgs e)
     {
-      ExportData.ToXls(VideoData.Instance.Samples);
+      ExportData.ToXls(Project.Instance.VideoData.Samples);
     }
 
     /// <summary>
@@ -352,7 +430,7 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToXml(VideoData.Instance.Samples, sfd.FileName);
+        ExportData.ToXml(Project.Instance.VideoData.Samples, sfd.FileName);
       }
     }
 
@@ -399,16 +477,16 @@ namespace VianaNET.MainWindow
     private void SelectNumberOfObjectsButtonClick(object sender, RoutedEventArgs e)
     {
       // Clear all data to correctly recreate data arrays.
-      VideoData.Instance.Reset();
+      Project.Instance.VideoData.Reset();
 
       // Increase number of objects, shrink to maximal 3.
-      if (Video.Instance.ProcessingData.NumberOfTrackedObjects == 3)
+      if (Project.Instance.ProcessingData.NumberOfTrackedObjects == 3)
       {
-        Video.Instance.ProcessingData.NumberOfTrackedObjects = 1;
+        Project.Instance.ProcessingData.NumberOfTrackedObjects = 1;
       }
       else
       {
-        Video.Instance.ProcessingData.NumberOfTrackedObjects++;
+        Project.Instance.ProcessingData.NumberOfTrackedObjects++;
       }
 
       // Update button image source
@@ -426,7 +504,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void SelectObjectButtonClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.ProcessingData.IndexOfObject++;
+      Project.Instance.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
@@ -586,7 +664,7 @@ namespace VianaNET.MainWindow
       // 5,
       // 5);
       var text = new FormattedText(
-        Video.Instance.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
+        Project.Instance.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -600,7 +678,7 @@ namespace VianaNET.MainWindow
       bmp.Render(drawingVisual);
       this.SelectNumberOfObjectsButton.LargeImageSource = bmp;
 
-      if (Video.Instance.ProcessingData.NumberOfTrackedObjects > 1)
+      if (Project.Instance.ProcessingData.NumberOfTrackedObjects > 1)
       {
         this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle2;
       }
@@ -683,7 +761,7 @@ namespace VianaNET.MainWindow
     /// </param>
     private void ManualDataAquisitionButtonClick(object sender, RoutedEventArgs e)
     {
-      VideoData.Instance.Reset();
+      Project.Instance.VideoData.Reset();
 
       var manualAquisitionWindow = new ManualDataAquisitionWindow();
       manualAquisitionWindow.ShowDialog();
@@ -700,10 +778,10 @@ namespace VianaNET.MainWindow
     private void Refresh()
     {
       // Update data grid
-      VideoData.Instance.RefreshDistanceVelocityAcceleration();
+      Project.Instance.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update BlobsControl Dataview if visible
-      if (Video.Instance.ProcessingData.IsTargetColorSet)
+      if (Project.Instance.ProcessingData.IsTargetColorSet)
       {
         this.VideoWindow.BlobsControl.UpdateDataPoints();
       }
@@ -744,12 +822,12 @@ namespace VianaNET.MainWindow
         var drawingVisual = new DrawingVisual();
         DrawingContext drawingContext = drawingVisual.RenderOpen();
         drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
-        int count = Video.Instance.ProcessingData.NumberOfTrackedObjects;
+        int count = Project.Instance.ProcessingData.NumberOfTrackedObjects;
         float bandwidth = 26f / count;
         for (int i = 0; i < count; i++)
         {
           drawingContext.DrawRectangle(
-            new SolidColorBrush(Video.Instance.ProcessingData.TargetColor[i]),
+            new SolidColorBrush(Project.Instance.ProcessingData.TargetColor[i]),
             null,
             new Rect(3 + i * bandwidth, 3, bandwidth, 27));
         }
@@ -761,8 +839,8 @@ namespace VianaNET.MainWindow
         var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
         bmp.Render(drawingVisual);
         this.SelectColorRibbonButton.LargeImageSource = bmp;
-        Video.Instance.ProcessingData.IsTargetColorSet = false;
-        Video.Instance.ProcessingData.IsTargetColorSet = true;
+        Project.Instance.ProcessingData.IsTargetColorSet = false;
+        Project.Instance.ProcessingData.IsTargetColorSet = true;
 
         // this.VideoWindow.BlobsControl.Visibility = Visibility.Visible;
         // Video.Instance.UpdateNativeBitmap();
@@ -774,13 +852,13 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectBindings()
     {
-      var thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
+      var thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + Project.Instance.ProcessingData.IndexOfObject + "]") { Source = Project.Instance };
       this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
 
-      var minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
+      var minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + Project.Instance.ProcessingData.IndexOfObject + "]") { Source = Project.Instance };
       this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
 
-      var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Video.Instance.ProcessingData.IndexOfObject + "]") { Source = Video.Instance };
+      var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Project.Instance.ProcessingData.IndexOfObject + "]") { Source = Project.Instance };
       this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
     }
 
@@ -795,7 +873,7 @@ namespace VianaNET.MainWindow
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawImage(icon, new Rect(0, 0, 32, 32));
       var text = new FormattedText(
-        (Video.Instance.ProcessingData.IndexOfObject + 1).ToString("N0"),
+        (Project.Instance.ProcessingData.IndexOfObject + 1).ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -827,5 +905,6 @@ namespace VianaNET.MainWindow
     }
 
     #endregion
+
   }
 }

@@ -111,11 +111,6 @@ namespace VianaNET.Modules.Video.Control
     private Thread eventThread;
 
     /// <summary>
-    ///   The filename.
-    /// </summary>
-    private string filename = string.Empty;
-
-    /// <summary>
     ///   The frame step.
     /// </summary>
     private IVideoFrameStep frameStep;
@@ -167,6 +162,11 @@ namespace VianaNET.Modules.Video.Control
     #endregion
 
     #region Public Properties
+
+    /// <summary>
+    /// Gets or sets the filename of the video file
+    /// </summary>
+    public string VideoFilename { get; set; }
 
     /// <summary>
     ///   Gets or sets the media duration in ms.
@@ -228,9 +228,9 @@ namespace VianaNET.Modules.Video.Control
         }
 
         int hr = this.mediaSeeking.SetPositions(
-          new DsLong(currentPosition), 
-          AMSeekingSeekingFlags.AbsolutePositioning, 
-          null, 
+          new DsLong(currentPosition),
+          AMSeekingSeekingFlags.AbsolutePositioning,
+          null,
           AMSeekingSeekingFlags.NoPositioning);
         DsError.ThrowExceptionForHR(hr);
 
@@ -326,7 +326,7 @@ namespace VianaNET.Modules.Video.Control
       base.Dispose();
 
       // Clear file name to allow selection of new file with open dialog
-      this.filename = string.Empty;
+      this.VideoFilename = string.Empty;
     }
 
     // this.openFileDialog1.Filter = @"Video Files (*.avi; *.qt; *.mov; *.mpg; *.mpeg; *.m1v)|*.avi; *.qt; *.mov; *.mpg; *.mpeg; *.m1v|Audio files (*.wav; *.mpa; *.mp2; *.mp3; *.au; *.aif; *.aiff; *.snd)|*.wav; *.mpa; *.mp2; *.mp3; *.au; *.aif; *.aiff; *.snd|MIDI Files (*.mid, *.midi, *.rmi)|*.mid; *.midi; *.rmi|Image Files (*.jpg, *.bmp, *.gif, *.tga)|*.jpg; *.bmp; *.gif; *.tga|All Files (*.*)|*.*";
@@ -364,7 +364,7 @@ namespace VianaNET.Modules.Video.Control
           }
         }
 
-        this.filename = fileName;
+        this.VideoFilename = fileName;
 
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
@@ -396,7 +396,7 @@ namespace VianaNET.Modules.Video.Control
         this.FrameCount = (int)(this.MediaDurationInMS / (this.FrameTimeInNanoSeconds * NanoSecsToMilliSecs));
 
         this.HasVideo = true;
-        Video.Instance.ProcessingData.InitializeImageFilters();
+        Project.Instance.ProcessingData.InitializeImageFilters();
         this.Revert();
         this.OnVideoAvailable();
       }
@@ -527,7 +527,7 @@ namespace VianaNET.Modules.Video.Control
     {
       int hr = 0;
 
-      if (this.filename == string.Empty)
+      if (this.VideoFilename == string.Empty)
       {
         return;
       }
@@ -547,7 +547,7 @@ namespace VianaNET.Modules.Video.Control
       // DsError.ThrowExceptionForHR(hr);
       // this.filterGraph.AddFilter(sourceFilter, "URL Source");
       IBaseFilter sourceFilter;
-      this.filterGraph.AddSourceFilter(this.filename, "File Source", out sourceFilter);
+      this.filterGraph.AddSourceFilter(this.VideoFilename, "File Source", out sourceFilter);
 
       // Create the SampleGrabber interface
       this.sampleGrabber = (ISampleGrabber)new SampleGrabber();
@@ -737,14 +737,15 @@ namespace VianaNET.Modules.Video.Control
       // Console.WriteLine("LoopExited");
     }
 
-    // Some video renderers support stepping media frame by frame with the
-    // IVideoFrameStep interface.  See the interface documentation for more
-    // details on frame stepping.
+
     /// <summary>
-    ///   The get frame step interface.
+    /// The get frame step interface.
+    /// Some video renderers support stepping media frame by frame with the
+    /// IVideoFrameStep interface.  See the interface documentation for more
+    /// details on frame stepping.
     /// </summary>
-    /// <returns> The <see cref="bool" /> . </returns>
-    private bool GetFrameStepInterface()
+    /// <returns> True, if frame step interface is available, otherwise false </returns>
+    private bool GetFrameStepInterface() 
     {
       int hr = 0;
 
@@ -760,11 +761,9 @@ namespace VianaNET.Modules.Video.Control
         this.frameStep = frameStepTest;
         return true;
       }
-      else
-      {
-        this.frameStep = null;
-        return false;
-      }
+
+      this.frameStep = null;
+      return false;
     }
 
     /// <summary>

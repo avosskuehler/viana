@@ -23,6 +23,9 @@
 //   The time sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Data.Collections
 {
   using System.Collections.Generic;
@@ -41,7 +44,7 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public TimeSample()
     {
-      this.Object = new DataSample[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.Object = new DataSample[Project.Instance.ProcessingData.NumberOfTrackedObjects];
     }
 
     #endregion

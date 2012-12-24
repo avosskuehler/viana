@@ -23,6 +23,10 @@
 //   The exponential smooth filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Xml.Serialization;
+using VianaNET.Application;
+
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Collections.Generic;
@@ -67,6 +71,7 @@ namespace VianaNET.Data.Filter.Interpolation
     /// <summary>
     ///   Gets or sets the custom user control.
     /// </summary>
+    [XmlIgnore]
     public UserControl CustomUserControl { get; set; }
 
     /// <summary>
@@ -87,7 +92,7 @@ namespace VianaNET.Data.Filter.Interpolation
 
       if (dlg.ShowDialog().GetValueOrDefault())
       {
-        FilterData.Instance.InterpolationFilter = dlg.ChoosenInterpolationFilter;
+        Project.Instance.FilterData.InterpolationFilter = dlg.ChoosenInterpolationFilter;
       }
     }
 

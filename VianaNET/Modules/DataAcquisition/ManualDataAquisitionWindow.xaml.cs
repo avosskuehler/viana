@@ -23,6 +23,9 @@
 //   Interaction logic for ReconstructionWindow.xaml
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Modules.DataAcquisition
 {
   using System;
@@ -126,7 +129,7 @@ namespace VianaNET.Modules.DataAcquisition
       this.InitializeComponent();
 
       this.ObjectIndexPanel.DataContext = this;
-      this.windowCanvas.DataContext = this;
+      this.WindowCanvas.DataContext = this;
 
       this.indexOfVisualDataPointRingBuffer = 0;
       this.CreateVisualDataPoints(7);
@@ -152,7 +155,7 @@ namespace VianaNET.Modules.DataAcquisition
       if (Video.Instance.VideoMode == VideoMode.Capture)
       {
         this.FramePanel.Visibility = Visibility.Hidden;
-        this.timelineSlider.Visibility = Visibility.Hidden;
+        this.TimelineSlider.Visibility = Visibility.Hidden;
       }
     }
 
@@ -234,7 +237,7 @@ namespace VianaNET.Modules.DataAcquisition
       var window = obj as ManualDataAquisitionWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Video.Instance.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Project.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }
@@ -302,13 +305,13 @@ namespace VianaNET.Modules.DataAcquisition
       // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
           foreach (Ellipse item in this.visualDataPoints[j])
           {
-            if (this.windowCanvas.Children.Contains(item))
+            if (this.WindowCanvas.Children.Contains(item))
             {
-              this.windowCanvas.Children.Remove(item);
+              this.WindowCanvas.Children.Remove(item);
             }
           }
 
@@ -321,8 +324,8 @@ namespace VianaNET.Modules.DataAcquisition
       // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>[Video.Instance.ProcessingData.NumberOfTrackedObjects];
-        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        this.visualDataPoints = new List<Ellipse>[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
@@ -334,7 +337,7 @@ namespace VianaNET.Modules.DataAcquisition
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 
-            this.windowCanvas.Children.Add(visualDataPoint);
+            this.WindowCanvas.Children.Add(visualDataPoint);
             this.visualDataPoints[j].Add(visualDataPoint);
           }
         }
@@ -352,7 +355,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void DragWindowMouseDown(object sender, MouseButtonEventArgs args)
     {
-      this.mouseDownLocation = args.GetPosition(this.windowCanvas);
+      this.mouseDownLocation = args.GetPosition(this.WindowCanvas);
       this.GridTop.CaptureMouse();
     }
 
@@ -444,7 +447,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private void StepOneFrameBackward()
     {
-      if (this.timelineSlider.Value >= this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
+      if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
         Video.Instance.StepOneFrame(false);
       }
@@ -455,7 +458,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private void StepOneFrameForward()
     {
-      if (this.timelineSlider.Value <= this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
+      if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
       {
         Video.Instance.StepOneFrame(true);
       }
@@ -472,10 +475,10 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      this.HorizontalCursorLineLeft.X2 = this.windowCanvas.ActualWidth;
-      this.HorizontalCursorLineRight.X2 = this.windowCanvas.ActualWidth;
-      this.VerticalCursorLineTop.Y2 = this.windowCanvas.ActualHeight;
-      this.VerticalCursorLineBottom.Y2 = this.windowCanvas.ActualHeight;
+      this.HorizontalCursorLineLeft.X2 = this.WindowCanvas.ActualWidth;
+      this.HorizontalCursorLineRight.X2 = this.WindowCanvas.ActualWidth;
+      this.VerticalCursorLineTop.Y2 = this.WindowCanvas.ActualHeight;
+      this.VerticalCursorLineBottom.Y2 = this.WindowCanvas.ActualHeight;
 
       this.timesliderUpdateTimer.Start();
     }
@@ -520,15 +523,15 @@ namespace VianaNET.Modules.DataAcquisition
         double originalX = factorX * (scaledX - spaceX);
         double originalY = factorY * (scaledY - spaceY);
 
-        VideoData.Instance.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        Project.Instance.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Video.Instance.ProcessingData.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == Project.Instance.ProcessingData.NumberOfTrackedObjects)
         {
           this.StepOneFrameForward();
         }
 
-        double canvasPosX = e.GetPosition(this.windowCanvas).X;
-        double canvasPosY = e.GetPosition(this.windowCanvas).Y;
+        double canvasPosX = e.GetPosition(this.WindowCanvas).X;
+        double canvasPosY = e.GetPosition(this.WindowCanvas).Y;
 
         if (this.visualDataPointRingBufferSize > 0)
         {
@@ -567,7 +570,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void player_MouseMove(object sender, MouseEventArgs e)
     {
-      Point mouseMoveLocation = e.GetPosition(this.windowCanvas);
+      Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
 
       this.HorizontalCursorLineLeft.Y1 = mouseMoveLocation.Y;
       this.HorizontalCursorLineLeft.Y2 = mouseMoveLocation.Y;
@@ -597,7 +600,7 @@ namespace VianaNET.Modules.DataAcquisition
     private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
       this.isDragging = false;
     }
 
@@ -674,7 +677,7 @@ namespace VianaNET.Modules.DataAcquisition
 
         // double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
         // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
-        this.timelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
         Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       }
     }
@@ -690,7 +693,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void windowCanvas_MouseMove(object sender, MouseEventArgs e)
     {
-      Point mouseMoveLocation = e.GetPosition(this.windowCanvas);
+      Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
 
       if (e.LeftButton == MouseButtonState.Pressed)
       {

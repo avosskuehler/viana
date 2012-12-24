@@ -23,6 +23,9 @@
 //   The video window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Modules.Video
 {
   using System;
@@ -127,15 +130,15 @@ namespace VianaNET.Modules.Video
       // this.thresholdEffect = new ThresholdEffect();
       RenderOptions.SetBitmapScalingMode(this.VideoImage, BitmapScalingMode.LowQuality);
 
-      CalibrationData.Instance.PropertyChanged += this.CalibrationPropertyChanged;
+      Project.Instance.CalibrationData.PropertyChanged += this.CalibrationPropertyChanged;
 
       Video.Instance.VideoFrameChanged += this.OnVideoFrameChanged;
 
       Video.Instance.VideoPlayerElement.StepComplete += this.VideoPlayerElementStepComplete;
       Video.Instance.VideoPlayerElement.FileComplete += this.VideoPlayerElementFileComplete;
 
-      Video.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
-      Video.Instance.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
+      Project.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      Project.Instance.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
       this.timelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
       this.timelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
     }
@@ -180,7 +183,7 @@ namespace VianaNET.Modules.Video
     {
       StatusBarContent.Instance.StatusLabel = Labels.StatusIsCalculating;
 
-      VideoData.Instance.Reset();
+      Project.Instance.VideoData.Reset();
 
       // Set acquisition mode
       Video.Instance.IsDataAcquisitionRunning = true;
@@ -208,9 +211,9 @@ namespace VianaNET.Modules.Video
     public void SetVideoMode(VideoMode newVideoMode)
     {
       // Reset UI
-      CalibrationData.Instance.Reset();
-      VideoData.Instance.Reset();
-      Video.Instance.ProcessingData.Reset();
+      Project.Instance.CalibrationData.Reset();
+      Project.Instance.VideoData.Reset();
+      Project.Instance.ProcessingData.Reset();
       this.BlobsControl.UpdateDataPoints();
       this.timelineSlider.ResetSelection();
       this.CreateCrossHairLines();
@@ -251,7 +254,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowCalibration(bool show)
     {
-      if (CalibrationData.Instance.IsVideoCalibrated)
+      if (Project.Instance.CalibrationData.IsVideoCalibrated)
       {
         this.ShowOrHideCalibration(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -265,7 +268,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowClipRegion(bool show)
     {
-      if (CalibrationData.Instance.HasClipRegion)
+      if (Project.Instance.CalibrationData.HasClipRegion)
       {
         this.ShowOrHideClipRegion(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -331,7 +334,7 @@ namespace VianaNET.Modules.Video
       StatusBarContent.Instance.ProgressBarValue = 0;
 
       // Recalculate dependent data values
-      VideoData.Instance.RefreshDistanceVelocityAcceleration();
+      Project.Instance.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>
@@ -382,10 +385,10 @@ namespace VianaNET.Modules.Video
         }
       }
 
-      this.blobHorizontalLines = new Line[Video.Instance.ProcessingData.NumberOfTrackedObjects];
-      this.blobVerticalLines = new Line[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.blobHorizontalLines = new Line[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.blobVerticalLines = new Line[Project.Instance.ProcessingData.NumberOfTrackedObjects];
 
-      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
         var widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
         var newHorizontalLine = new Line
@@ -478,9 +481,9 @@ namespace VianaNET.Modules.Video
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          Point? blobCenter = Video.Instance.ProcessingData.CurrentBlobCenter[i];
+          Point? blobCenter = Project.Instance.ProcessingData.CurrentBlobCenter[i];
           if (blobCenter.HasValue)
           {
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -516,11 +519,11 @@ namespace VianaNET.Modules.Video
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
-        if (Video.Instance.ProcessingData.IsTargetColorSet)
+        if (Project.Instance.ProcessingData.IsTargetColorSet)
         {
           this.UpdateCrossHairColors();
 
-          for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
           {
             this.blobVerticalLines[i].Visibility = Visibility.Visible;
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -676,11 +679,11 @@ namespace VianaNET.Modules.Video
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        Video.Instance.ProcessingData.ProcessImage();
+        Project.Instance.ProcessingData.ProcessImage();
       }
       else
       {
-        this.Dispatcher.BeginInvoke((ThreadStart)(() => Video.Instance.ProcessingData.ProcessImage()));
+        this.Dispatcher.BeginInvoke((ThreadStart)(() => Project.Instance.ProcessingData.ProcessImage()));
       }
     }
 
@@ -717,12 +720,12 @@ namespace VianaNET.Modules.Video
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        Canvas.SetLeft(this.OriginPath, CalibrationData.Instance.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
-        Canvas.SetTop(this.OriginPath, CalibrationData.Instance.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
-        this.RulerLine.X1 = CalibrationData.Instance.RulerStartPointInPixel.X * scaleX;
-        this.RulerLine.Y1 = CalibrationData.Instance.RulerStartPointInPixel.Y * scaleY;
-        this.RulerLine.X2 = CalibrationData.Instance.RulerEndPointInPixel.X * scaleX;
-        this.RulerLine.Y2 = CalibrationData.Instance.RulerEndPointInPixel.Y * scaleY;
+        Canvas.SetLeft(this.OriginPath, Project.Instance.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
+        Canvas.SetTop(this.OriginPath, Project.Instance.CalibrationData.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
+        this.RulerLine.X1 = Project.Instance.CalibrationData.RulerStartPointInPixel.X * scaleX;
+        this.RulerLine.Y1 = Project.Instance.CalibrationData.RulerStartPointInPixel.Y * scaleY;
+        this.RulerLine.X2 = Project.Instance.CalibrationData.RulerEndPointInPixel.X * scaleX;
+        this.RulerLine.Y2 = Project.Instance.CalibrationData.RulerEndPointInPixel.Y * scaleY;
         double centerLineX = (this.RulerLine.X1 + this.RulerLine.X2) / 2;
         double centerLineY = (this.RulerLine.Y1 + this.RulerLine.Y2) / 2;
 
@@ -744,24 +747,24 @@ namespace VianaNET.Modules.Video
         return;
       }
 
-      if (this.OuterRegion.IsVisible && CalibrationData.Instance.ClipRegion != Rect.Empty)
+      if (this.OuterRegion.IsVisible && Project.Instance.CalibrationData.ClipRegion != Rect.Empty)
       {
-        this.TopLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
-        this.TopLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
-        this.TopLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
-        this.TopLine.Y2 = CalibrationData.Instance.ClipRegion.Top * scaleY;
-        this.BottomLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
-        this.BottomLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
-        this.BottomLine.Y1 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
-        this.BottomLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
-        this.LeftLine.X1 = CalibrationData.Instance.ClipRegion.Left * scaleX;
-        this.LeftLine.X2 = CalibrationData.Instance.ClipRegion.Left * scaleX;
-        this.LeftLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
-        this.LeftLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
-        this.RightLine.X1 = CalibrationData.Instance.ClipRegion.Right * scaleX;
-        this.RightLine.X2 = CalibrationData.Instance.ClipRegion.Right * scaleX;
-        this.RightLine.Y1 = CalibrationData.Instance.ClipRegion.Top * scaleY;
-        this.RightLine.Y2 = CalibrationData.Instance.ClipRegion.Bottom * scaleY;
+        this.TopLine.X1 = Project.Instance.CalibrationData.ClipRegion.Left * scaleX;
+        this.TopLine.X2 = Project.Instance.CalibrationData.ClipRegion.Right * scaleX;
+        this.TopLine.Y1 = Project.Instance.CalibrationData.ClipRegion.Top * scaleY;
+        this.TopLine.Y2 = Project.Instance.CalibrationData.ClipRegion.Top * scaleY;
+        this.BottomLine.X1 = Project.Instance.CalibrationData.ClipRegion.Left * scaleX;
+        this.BottomLine.X2 = Project.Instance.CalibrationData.ClipRegion.Right * scaleX;
+        this.BottomLine.Y1 = Project.Instance.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.BottomLine.Y2 = Project.Instance.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.LeftLine.X1 = Project.Instance.CalibrationData.ClipRegion.Left * scaleX;
+        this.LeftLine.X2 = Project.Instance.CalibrationData.ClipRegion.Left * scaleX;
+        this.LeftLine.Y1 = Project.Instance.CalibrationData.ClipRegion.Top * scaleY;
+        this.LeftLine.Y2 = Project.Instance.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.RightLine.X1 = Project.Instance.CalibrationData.ClipRegion.Right * scaleX;
+        this.RightLine.X2 = Project.Instance.CalibrationData.ClipRegion.Right * scaleX;
+        this.RightLine.Y1 = Project.Instance.CalibrationData.ClipRegion.Top * scaleY;
+        this.RightLine.Y2 = Project.Instance.CalibrationData.ClipRegion.Bottom * scaleY;
         this.ResetOuterRegion();
       }
     }
@@ -785,7 +788,7 @@ namespace VianaNET.Modules.Video
       {
         Rect clipRect = innerRect;
         clipRect.Scale(1 / scaleX, 1 / scaleY);
-        CalibrationData.Instance.ClipRegion = clipRect;
+        Project.Instance.CalibrationData.ClipRegion = clipRect;
       }
     }
 
@@ -850,7 +853,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void UpdateCrossHairColors()
     {
-      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
         this.blobHorizontalLines[i].Stroke = ProcessingData.TrackObjectColors[i];
         this.blobVerticalLines[i].Stroke = ProcessingData.TrackObjectColors[i];

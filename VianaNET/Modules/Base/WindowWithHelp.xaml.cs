@@ -23,6 +23,9 @@
 //   The window with help.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Modules.Base
 {
   using System.Windows;
@@ -185,7 +188,7 @@ namespace VianaNET.Modules.Base
       var window = obj as WindowWithHelp;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Video.Instance.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Project.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

@@ -1486,4 +1486,13 @@ Click OK or press Enter, when ready.</value>
   <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
     <value>unknown identifier</value>
   </data>
+  <data name="SaveProjectDialogTitle" xml:space="preserve">
+    <value>Save project ...</value>
+  </data>
+  <data name="QATButtonOpenLabelTitle" xml:space="preserve">
+    <value>Open viana.net project</value>
+  </data>
+  <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
+    <value>Opens a project file for further analysis.</value>
+  </data>
 </root>

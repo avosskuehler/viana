@@ -23,6 +23,9 @@
 //   The select color window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System;
@@ -168,7 +171,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
         Color color = frame.GetPixel((int)originalX, (int)originalY);
         System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(255, color.R, color.G, color.B);
-        Video.Instance.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
+        Project.Instance.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
         ProcessingData.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
       }
       catch (Exception)
@@ -177,7 +180,7 @@ namespace VianaNET.Modules.Video.Dialogs
         error.ShowDialog();
       }
 
-      if (this.IndexOfTrackedObject == Video.Instance.ProcessingData.NumberOfTrackedObjects)
+      if (this.IndexOfTrackedObject == Project.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         this.DialogResult = true;
         this.Close();
@@ -239,7 +242,7 @@ namespace VianaNET.Modules.Video.Dialogs
       var window = obj as SelectColorWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Video.Instance.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Project.Instance.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

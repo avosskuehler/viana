@@ -97,8 +97,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private Video()
     {
-      this.ProcessingData = new ProcessingData();
-
       // Need to have the construction of the Video objects
       // in constructor, to get the databindings to their 
       // properties to work.
@@ -170,11 +168,6 @@ namespace VianaNET.Modules.Video.Control
 
       // get { return this.videoElement.MediaPositionInMilliSeconds; }
     }
-
-    /// <summary>
-    ///   Gets or sets the image processing.
-    /// </summary>
-    public ProcessingData ProcessingData { get; set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether is data acquisition running.

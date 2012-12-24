@@ -20,17 +20,20 @@
 // <author>Herwig Niemeyer</author>
 // <email>hn_muenster@web.de</email>
 // <summary>
-//   The line fit class.
+// This class is a filter implementing FilterBase which is used to
+// display a theoretical function in the ChartWindow.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Theory
 {
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
-  using VianaNET.Data.Filter.Interpolation;
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
 
   /// <summary>
-  /// The line fit class.
+  /// This class is a filter implementing FilterBase which is used to
+  /// display a theoretical function in the ChartWindow.
   /// </summary>
   public class TheoryFilter : FilterBase
   {
@@ -70,20 +73,14 @@ namespace VianaNET.Data.Filter.Theory
     #region Public Methods and Operators
 
     /// <summary>
-    /// calculate line fit function.
+    /// Calculates the theoretical function sample values
     /// </summary>
-    /// <param name="originalSamples">
-    /// The original Samples.
-    /// </param>
-    /// <param name="fittedSamples">
-    /// The fitted Samples.
-    /// </param>
-    public override void CalculateFilterValues(DataCollection originalSamples, SortedObservableCollection<XYSample> fittedSamples)
+    public override void CalculateFilterValues()
     {
-      base.CalculateFilterValues(originalSamples, fittedSamples);
-      // Erase old values
-      fittedSamples.Clear();
-      var fx = FilterData.Instance.TheoreticalFunction;
+      base.CalculateFilterValues();
+
+      var fittedSamples = new SortedObservableCollection<XYSample>();
+      var fx = Project.Instance.FilterData.TheoreticalFunction;
       if (fx == null)
       {
         return;
@@ -94,51 +91,53 @@ namespace VianaNET.Data.Filter.Theory
       var tempParser = new Parse();
 
       // Nur wenn gar keine Daten da sind...
-      //  if (originalSamples.Count == 0)
-      if (this.WertX.Count==0)
-        {
-      /*    p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
+      if (this.WertX.Count == 0)
+      {
+        /*    p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
           fittedSamples.Add(p);
           p = new XYSample(10, tempParser.FreierFktWert(fx, 10));
           fittedSamples.Add(p);
           return; */
-          x = -10;
-          while (x <= 10)
-          {
-              p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-              fittedSamples.Add(p);
-              x = x + 0.2;
-          }
-          return;
-        }     
-        
+        x = -10;
+        while (x <= 10)
+        {
+          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+          fittedSamples.Add(p);
+          x = x + 0.2;
+        }
+
+        return;
+      }
+
       if (tempParser.isLinearFunction(fx))
       {
         // zwei Punkte genügen bei x-y-Diagramm
-          x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-          fittedSamples.Add(p);
-          x = this.WertX[this.anzahl - 1];
-          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-          fittedSamples.Add(p);
+        x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
+        p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+        fittedSamples.Add(p);
+        x = this.WertX[this.anzahl - 1];
+        p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+        fittedSamples.Add(p);
       }
       else
       {
-         // endPixelX und startPixelX sowie startX,endX und stepX 
-         // wurden in CopySampleColumnsToArrays(int aktObjectNr, DataCollection originalSamples) bestimmt
-         // besser wäre Festlegung durch den (Pixel)Abstand auf der aktuellen Chart 
-         int k;
-         var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
-         x = this.startX;
+        // endPixelX und startPixelX sowie startX,endX und stepX 
+        // wurden in CopySampleColumnsToArrays(int aktObjectNr, DataCollection originalSamples) bestimmt
+        // besser wäre Festlegung durch den (Pixel)Abstand auf der aktuellen Chart 
+        int k;
+        var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
+        x = this.startX;
 
-         for (k = 0; k <= anzahlPixel; k++)
-            {
-              // Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
-              p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-              fittedSamples.Add(p);
-              x = x + this.stepX;
-            }
+        for (k = 0; k <= anzahlPixel; k++)
+        {
+          // Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
+          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
+          fittedSamples.Add(p);
+          x = x + this.stepX;
+        }
       }
+
+      Project.Instance.FilterData.TheorySeries = fittedSamples;
     }
 
     #endregion
