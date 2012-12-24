@@ -1,0 +1,23 @@
+<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:Converter="clr-namespace:VianaNET.CustomStyles.Converter"
+	xmlns:Types="clr-namespace:VianaNET.CustomStyles.Types">
+  <Converter:DoubleToStringConverter x:Key="DoubleToStringConverter" />
+  <Converter:AberrationDoubleToStringConverter x:Key="AberrationDoubleToStringConverter" />
+  <Converter:PlusOneConverter x:Key="PlusOneConverter" />
+  <Converter:UnitDoubleStringConverter x:Key="UnitDoubleStringConverter" />
+  <Converter:InverseBooleanToVisibilityConverter x:Key="BoolVisibleConverterInverse" />
+  <BooleanToVisibilityConverter x:Key="BoolVisibleConverter" />
+  <Converter:DSTimeToMillisecondsConverter x:Key="DSTimeToMillisecondsConverter"/>
+  <Converter:RulerUnitStringConverter x:Key="RulerUnitStringConverter"/>
+  <Converter:PercentToDoubleConverter x:Key="PercentToDoubleConverter"/>
+  <Converter:NumberOfObjectsToVisibilityConverter x:Key="NumberOfObjectsToVisibilityConverter"/>
+  <Converter:SamplesToHasSamplesConverter x:Key="SamplesToHasSamplesConverter"/>
+  
+  <Types:MeasurementType x:Key="TimeMeasurement">Time</Types:MeasurementType>
+  <Types:MeasurementType x:Key="PixelMeasurement">Pixel</Types:MeasurementType>
+  <Types:MeasurementType x:Key="PositionMeasurement">Position</Types:MeasurementType>
+  <Types:MeasurementType x:Key="VelocityMeasurement">Velocity</Types:MeasurementType>
+  <Types:MeasurementType x:Key="AccelerationMeasurement">Acceleration</Types:MeasurementType>
+</ResourceDictionary>

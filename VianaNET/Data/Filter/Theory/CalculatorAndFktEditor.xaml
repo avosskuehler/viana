@@ -1,0 +1,60 @@
+﻿<Window x:Class="VianaNET.Data.Filter.Theory.CalculatorAndFktEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:lex="http://schemas.root-project.org/xaml/presentation" xmlns:MainWindow="clr-namespace:VianaNET.MainWindow"
+        lex:LocalizeDictionary.DesignCulture="de"
+             mc:Ignorable="d" Title="{lex:LocText VianaNET:Labels:CalculatorDialogTitleCalc}" d:DesignHeight="543" d:DesignWidth="420" SizeToContent="WidthAndHeight" 
+        Icon="/VianaNET;component/Images/Recalculate16.png" WindowStartupLocation="CenterScreen">
+     <Window.Resources>
+        <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    </Window.Resources>
+    <Grid Height="500" Width="400" Background="{StaticResource MainBackgroundBrush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <MainWindow:TopFrame x:Name="topFrame" Title="{lex:LocText VianaNET:Labels:RegressionCalculatorDialogTitle}" />
+        <Grid Grid.Row="1">
+        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,42,0,0" Name="textBoxErgebnis" VerticalAlignment="Top" Width="378" FontFamily="Courier New" FontSize="14" />
+        <Button Content="1" Height="28" HorizontalAlignment="Left" Margin="94,205,0,0" Name="button1" VerticalAlignment="Top" Width="28" UseLayoutRounding="True" FontSize="14" FontWeight="Bold" Click="ButtonZifferClick" />
+        <Button Content="2" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,205,244,0" Name="button2" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="3" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,205,0,0" Name="button3" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="4" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="94,171,0,0" Name="button4" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="5" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="128,171,0,0" Name="button5" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="6" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,171,0,0" Name="button6" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="7" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="94,137,0,0" Name="button7" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="8" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="128,137,0,0" Name="button8" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="9" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,137,0,0" Name="button9" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="0" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="94,239,0,0" Name="button0" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="," FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="128,239,0,0" Name="buttonKomma" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="(" FontSize="14" FontWeight="Bold" Height="28" Margin="94,103,0,0" Name="buttonKlammerAuf" UseLayoutRounding="True" VerticalAlignment="Top" Click="ButtonZifferClick" HorizontalAlignment="Left" Width="28" />
+        <Button Content=")" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="128,103,0,0" Name="buttonKlammerZu" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="x" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="162,103,0,0" Name="buttonX" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Visibility="Hidden" Background="#FFF5E432" Click="ButtonZifferClick" />
+        <Button Content="Entf" FontSize="10" Height="28" HorizontalAlignment="Left" Margin="162,239,0,0" Name="buttonEntf" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Background="#FFF2C9C9" Tag="0" Click="ButtonBackClick" />
+        <Button Content="Bk" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Right" Margin="0,239,88,0" Name="buttonBack" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Background="#FFF2C9C9" Tag="1" Click="ButtonBackClick" />
+        <Button Content="/" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,239,0,0" Name="buttonDurch" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="*" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,205,0,0" Name="buttonMal" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="-" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,171,0,0" Name="buttonMinus" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="+" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,137,0,0" Name="buttonPlus" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="^" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="204,103,0,0" Name="buttonHoch" UseLayoutRounding="True" VerticalAlignment="Top" Width="28" Click="ButtonZifferClick" />
+        <Button Content="exp" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,103,0,0" Name="buttonExp" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
+        <Button Content="Ln" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,137,0,0" Name="buttonLn" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
+        <Button Content="sin" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="10,171,0,0" Name="buttonSin" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
+        <Button Content="cos" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="12,205,0,0" Name="buttonCos" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
+        <Button Content="tan" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="12,239,0,0" Name="buttonTan" UseLayoutRounding="True" VerticalAlignment="Top" Width="72" Background="#FFF7F456" Click="ButtonFktClick" />
+        <TextBox Height="24" HorizontalAlignment="Left" Margin="10,12,0,0" Name="textBox1" VerticalAlignment="Top" Width="378" TextChanged="TextBox1TextChanged1" FontFamily="Courier New" FontSize="14" />
+        <ComboBox Height="26" HorizontalAlignment="Left" Margin="21,310,0,0" Name="comboBox1" VerticalAlignment="Top" Width="248" />
+            <Label Content="{lex:LocText VianaNET:Labels:CalculatorDialogPhysicalKonst}" Height="27" HorizontalAlignment="Left" Margin="20,283,0,0" Name="label1" VerticalAlignment="Top" Width="190" />
+            <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogInsert}" FontSize="12" Height="28" HorizontalAlignment="Left" Margin="275,0,0,0" Name="buttonTakeKonst" UseLayoutRounding="True" VerticalAlignment="Bottom" Width="80" Click="ButtonTakeKonstClick" OpacityMask="#80000000" FontWeight="Bold" />
+        <Button Content="Pos 1" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,111,0,0" Name="buttonPos1" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonPos1Click" />
+        <Button Content="&lt;--" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="246,145,0,0" Name="buttonLeft" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonLeftClick" />
+        <Button Content="--&gt;" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="324,145,0,0" Name="buttonRight" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonRightClick" />
+        <Button Content="End" FontSize="14" FontWeight="Bold" Height="28" HorizontalAlignment="Left" Margin="283,179,0,0" Name="buttonEnd" UseLayoutRounding="True" VerticalAlignment="Top" Width="64" Background="#FFF5F2D2" Click="ButtonEndClick" />
+        </Grid>
+        <Button Content="{lex:LocText VianaNET:Labels:Cancel}" Height="38" Grid.Row="2" HorizontalAlignment="Left" Margin="26,0,0,0" Name="buttonESC" VerticalAlignment="Center" Width="149" IsCancel="True" Click="ButtonEscClick" FontWeight="Bold" FontSize="13" Background="#FFEFCACA" />
+        <Button Content="{lex:LocText VianaNET:Labels:CalculatorDialogButtonDoneCalc}" Height="38" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,30,0" Name="buttonFertig" VerticalAlignment="Center" Width="149" IsDefault="True" Click="ButtonFertigClick" FontWeight="Bold" FontStretch="Normal" FontSize="13" Background="#FFB2D87A" />      
+    </Grid>
+</Window>

@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="VianaNET.LineStyleControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lex="http://schemas.root-project.org/xaml/presentation" 
+             lex:LocalizeDictionary.DesignCulture="de"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:VianaNET="clr-namespace:VianaNET"
+             mc:Ignorable="d" 
+             d:DesignHeight="95" d:DesignWidth="362"
+             DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
+  <UserControl.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Label Grid.Row="0" Name="label2" Content="{lex:LocText VianaNET:Labels:RegressionLineThickness}"
+                 VerticalAlignment="Center" />
+    <VianaNET:SliderValue Grid.Column="1" HorizontalAlignment="Stretch" x:Name="ThicknessSlider"
+                  VerticalAlignment="Center" Minimum="1" TickPlacement="Both" Value="3" Margin="8,4"
+                  TickFrequency="1" Maximum="20" SmallChange="1"
+                  IsSnapToTickEnabled="True" />
+
+    <Canvas Grid.Row="1" Grid.Column="1" Name="LineCanvas" Height="20" VerticalAlignment="Center">
+      <Line X1="0" Stroke="Red" StrokeThickness="{Binding ElementName=ThicknessSlider, Path=Value}" Grid.Row="1" VerticalAlignment="Center" Y1="5"
+                  Y2="5" X2="{Binding ElementName=LineCanvas, Path=ActualWidth}" Name="theorieLine" />
+    </Canvas>
+
+    <Label Grid.Row="2" Name="labelFarbeT" Content="{lex:LocText VianaNET:Labels:ChartWindowLineColorLabel}"
+           VerticalAlignment="Center" />
+    <xctk:ColorPicker Name="ColorPicker" Grid.Row="2" Grid.Column="1" DisplayColorAndName="True" ShowRecentColors="True" 
+                      SelectedColor="Red"
+                      SelectedColorChanged="ColorPickerSelectedColorChanged"/>
+  </Grid>
+</UserControl>

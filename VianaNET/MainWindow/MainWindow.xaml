@@ -1,0 +1,591 @@
+﻿<r:RibbonWindow 
+  x:Class="VianaNET.MainWindow.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
+    xmlns:Data="clr-namespace:VianaNET.Data" xmlns:MainWindow="clr-namespace:VianaNET.MainWindow" 
+    xmlns:Video="clr-namespace:VianaNET.Modules.Video"
+    xmlns:DataGrid="clr-namespace:VianaNET.Modules.DataGrid"
+    xmlns:Chart="clr-namespace:VianaNET.Modules.Chart" 
+    xmlns:VianaNET="clr-namespace:VianaNET" 
+  xmlns:application="clr-namespace:VianaNET.Application"
+  lex:LocalizeDictionary.DesignCulture="de"
+    ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Icon="/VianaNET;component/Images/VianaNET.ico"
+    Height="479" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="RibbonWindowClosing">
+
+  <r:RibbonWindow.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </r:RibbonWindow.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <r:Ribbon Grid.Row="0"
+              Title="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type r:RibbonWindow}},Path=Title}" 
+              x:Name="mainRibbon">
+      <r:Ribbon.ApplicationMenu>
+        <r:RibbonApplicationMenu SmallImageSource="/VianaNET;component/Images/VianaNET_32.png" KeyTip="S" Label="Datei" IsMainMenu="True">
+          <r:RibbonApplicationMenuItem 
+                        Click="OpenProjectOnClick"
+                        Header="{lex:LocText VianaNET:Labels:QATButtonOpenLabelTitle}"
+                        ImageSource="/VianaNET;component/Images/FileOpen32.png"
+                        QuickAccessToolBarImageSource="/VianaNET;component/Images/FileOpen16.png" 
+                        ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonOpenToolTipDescription}" 
+                        ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonOpenLabelTitle}"/>
+          <r:RibbonApplicationMenuItem 
+                        Click="SaveProjectOnClick"
+                        Header="{lex:LocText VianaNET:Labels:QATButtonSaveLabelTitle}"
+                        ImageSource="/VianaNET;component/Images/Save32.png"
+                        QuickAccessToolBarImageSource="/VianaNET;component/Images/Save16.png" 
+                        ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonSaveToolTipDescription}" 
+                        ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonSaveLabelTitle}"/>
+          <r:RibbonApplicationMenuItem 
+                         ImageSource="/VianaNET;component/Images/LoadVideo32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/LoadVideo16.png"
+                         Header="{lex:LocText VianaNET:Labels:ButtonLoadVideoLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipDescription}" />
+          <r:RibbonApplicationMenuItem 
+                         ImageSource="/VianaNET;component/Images/RecordVideo32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/RecordVideo16.png"
+                         Header="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" />
+          <r:RibbonSeparator/>
+          <r:RibbonApplicationSplitMenuItem
+            Header="{lex:LocText VianaNET:Labels:ButtonExportDataLabelTitle}"
+            ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToolTipTitle}"
+            ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToolTipDescription}"
+            ImageSource="/VianaNET;component/Images/ExportData32.png" >
+            <r:RibbonApplicationMenuItem Click="ExportDataToTxtButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportToTxt32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportToTxt16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+            <r:RibbonApplicationMenuItem Click="ExportDataToCsvButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportToCsv32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportToCsv16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}, Mode=OneWay}"/>
+            <r:RibbonApplicationMenuItem Click="ExportDataToXmlButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportToXml32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportToXml16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+            <r:RibbonApplicationMenuItem Click="ExportDataToXlsButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportToXls32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportToXls16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          </r:RibbonApplicationSplitMenuItem>
+          <r:RibbonApplicationSplitMenuItem 
+            Header="{lex:LocText VianaNET:Labels:ButtonExportChartLabelTitle}"
+            ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToolTipTitle}"
+            ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToolTipDescription}"
+            ImageSource="/VianaNET;component/Images/ExportChart32.png" >
+            <r:RibbonApplicationMenuItem Click="ExportChartToClipboardButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportChartToClipboard32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportChartToClipboard16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+            <r:RibbonApplicationMenuItem 
+                         Click="ExportChartToFileButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportChartToFileLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportChartToFile32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportChartToFile16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+            <r:RibbonApplicationMenuItem 
+                         Click="ExportChartToWordButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonExportChartToWordLabelTitle}" 
+                         ImageSource="/VianaNET;component/Images/ExportChartToWord32.png" 
+                         QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportChartToWord16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          </r:RibbonApplicationSplitMenuItem>
+          <!--<r:RibbonApplicationMenu.AuxiliaryPaneContent>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <r:RibbonSeparator Grid.Row="0" Label="Recent Documents"/>
+              <ItemsControl Grid.Row="2" ItemsSource="{Binding Source={x:Static data:WordModel.RecentDocuments},Path=GalleryItemDataCollection}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border x:Name="MainBorder" 
+                                                BorderThickness="1"
+                                                Padding="5,2,5,2">
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="Auto" />
+                          <ColumnDefinition Width="5" />
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Index}" TextDecorations="Underline" />
+                        <TextBlock Grid.Column="2" Text="{Binding Label}" />
+                        <Image x:Name="Pin" Grid.Column="3" Source="Images\EditUndo_16x16.png" />
+                        <Image x:Name="Unpin" Grid.Column="3" Source="Images\EditRedo_16x16.png" Visibility="Collapsed" />
+                      </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                      <DataTrigger Binding="{Binding IsChecked}" Value="True">
+                        <Setter TargetName="Pin" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="Unpin" Property="Visibility" Value="Visible" />
+                      </DataTrigger>
+                      <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="MainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(ribbon:RibbonControlService.Ribbon).MouseOverBackground}" />
+                        <Setter TargetName="MainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(ribbon:RibbonControlService.Ribbon).MouseOverBorderBrush}" />
+                      </Trigger>
+                    </DataTemplate.Triggers>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Grid>
+          </r:RibbonApplicationMenu.AuxiliaryPaneContent>-->
+
+          <r:RibbonApplicationMenu.FooterPaneContent>
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <r:RibbonButton Grid.Column="2" Click="CloseButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonCloseApplicationLabelTitle}" 
+                         SmallImageSource="/VianaNET;component/Images/Reset16.png" 
+                         LargeImageSource="/VianaNET;component/Images/Reset32.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipDescription}" />
+            </Grid>
+          </r:RibbonApplicationMenu.FooterPaneContent>
+        </r:RibbonApplicationMenu>
+      </r:Ribbon.ApplicationMenu>
+      <r:RibbonTab x:Name="RibbonTabHome" Header="{lex:LocText VianaNET:Labels:RibbonTabHomeLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupOpenVideoLabelTitle}">
+          <r:RibbonButton Click="LoadVideoButtonClick"
+                         LargeImageSource="/VianaNET;component/Images/LoadVideo32.png" 
+                         SmallImageSource="/VianaNET;component/Images/LoadVideo16.png"
+                         Label="{lex:LocText VianaNET:Labels:ButtonLoadVideoLabelTitle}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipDescription}"/>
+          <r:RibbonButton Click="RecordVideoButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonRecordVideoLabelTitle}"
+                         SmallImageSource="/VianaNET;component/Images/RecordVideo16.png" 
+                         LargeImageSource="/VianaNET;component/Images/RecordVideo32.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipDescription}"
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Click="CaptureVideoButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/Capture32.png" 
+                         SmallImageSource="/VianaNET;component/Images/Capture16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupPrepareLabelTitle}">
+          <r:RibbonButton Click="CalibrateVideoButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/Calibrate32.png"
+                         SmallImageSource="/VianaNET;component/Images/Calibrate16.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Name="SelectNumberOfObjectsButton"
+                         Click="SelectNumberOfObjectsButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/SelectColor32.png" 
+                         SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipDescription}" 
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Click="ManualDataAquisitionButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ManualDataAquisition32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ManualDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Click="ChooseAutomaticAnalysisButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/AutomaticDataAquisition32.png" 
+                         SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupWindowsLabelTitle}">
+          <r:RibbonButton Click="VideoWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonVideoWindowLabelTitle}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipDescription}" 
+                         SmallImageSource="/VianaNET;component/Images/VideoWindow16.png" 
+                         LargeImageSource="/VianaNET;component/Images/VideoWindow32.png" />
+          <r:RibbonButton Click="DatagridWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonDatagridWindowLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipDescription}"
+                         SmallImageSource="/VianaNET;component/Images/Datagrid16.png"
+                         LargeImageSource="/VianaNET;component/Images/Datagrid32.png" />
+          <r:RibbonButton Click="ChartWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonChartWindowLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipDescription}"
+                         SmallImageSource="/VianaNET;component/Images/Chart16.png"
+                         LargeImageSource="/VianaNET;component/Images/Chart32.png" />
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabAnalysis" Header="{lex:LocText VianaNET:Labels:RibbonTabAnalysisLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupManualAquisitionLabelTitle}">
+          <r:RibbonButton Click="ManualDataAquisitionButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/ManualDataAquisition32.png"
+                         SmallImageSource="/VianaNET;component/Images/ManualDataAquisition16.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}"
+                         IsEnabled="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Project.Instance}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupAutomaticAquisitionLabelTitle}">
+          <r:RibbonButton Click="SelectColorButtonClick" 
+                         Name="SelectColorRibbonButton"
+                         Label="{lex:LocText VianaNET:Labels:ButtonSelectColorLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/SelectColor32.png" 
+                         SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Click="ClipVideoButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonClipVideoLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/ClipVideo32.png"
+                         SmallImageSource="/VianaNET;component/Images/ClipVideo16.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonButton Name="StartAutomaticAquisition" 
+                          Click="AutomaticDataAquisitionButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/AutomaticDataAquisition32.png" 
+                         SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisition16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipDescription}"
+                          Visibility="{Binding Path=IsDataAcquisitionRunning,Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}"
+                          />
+          <r:RibbonButton Name="StopAutomaticAquisition"
+                          Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                         Click="AutomaticDataAquisitionStopButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/AutomaticDataAquisitionStop32.png" 
+                         SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisitionStop16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipDescription}" 
+                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoAutoDetectionOptionsLabelTitle}">
+          <r:RibbonButton 
+            Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Project.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+            Name="ButtonSelectObject" 
+            Click="SelectObjectButtonClick"
+            Label="{lex:LocText VianaNET:Labels:ButtonSelectObjectLabelTitle}" 
+            LargeImageSource="/VianaNET;component/Images/SelectObject32.png" 
+            SmallImageSource="/VianaNET;component/Images/SelectObject16.png" 
+            ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipTitle}"
+            ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipDescription}" 
+            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" 
+                   Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
+                   Margin="0" Padding="1"/>
+            <VianaNET:SliderValue 
+              Grid.Row="0" Grid.Column="1"
+            x:Name="SliderThreshold"
+            MinWidth="100"
+            Height="20"                      
+            Minimum="0"
+            Maximum="255"
+            SmallChange="1" 
+            LargeChange="1" 
+            TickFrequency="1"             
+            IsSnapToTickEnabled="True" 
+            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            <Label Grid.Row="1" Grid.Column="0" 
+                   Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
+                   Margin="0" Padding="1"/>
+            <VianaNET:SliderValue 
+              Grid.Row="1" Grid.Column="1"
+            x:Name="SliderMinDiameter"
+            Height="20"
+            MinWidth="100"
+            Minimum="1"
+            Maximum="500"
+            SmallChange="1" 
+            IsSnapToTickEnabled="True"
+            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            <Label Grid.Row="2" Grid.Column="0" 
+                   Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
+                   Margin="0" Padding="1"/>
+            <VianaNET:SliderValue 
+              Grid.Row="2" Grid.Column="1"
+            x:Name="SliderMaxDiameter"
+            Height="20"
+            MinWidth="100"
+            Minimum="1"             
+            Maximum="500"
+            SmallChange="1" 
+            IsSnapToTickEnabled="True"
+            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+          </Grid>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabVideo" Header="{lex:LocText VianaNET:Labels:RibbonTabVideoLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoShowWindowLabelTitle}">
+          <r:RibbonButton Click="VideoWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonVideoWindowLabelTitle}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoWindowToolTipDescription}" 
+                         SmallImageSource="/VianaNET;component/Images/VideoWindow16.png" 
+                         LargeImageSource="/VianaNET;component/Images/VideoWindow32.png" />
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoSelectDeviceLabelTitle}">
+          <Label Content="{lex:LocText VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
+          <r:RibbonComboBox IsEditable="False" IsReadOnly="False" SelectionBoxWidth="120" >
+            <r:RibbonGallery Name="VideoInputDeviceCombo"
+                             SelectedItem="{Binding Source={x:Static Control:Video.Instance}, Path=VideoCapturerElement.VideoCaptureDevice}">
+              <r:RibbonGalleryCategory ItemsSource="{Binding Source={x:Static Control:Video.Instance}, Path=VideoInputDevices}" DisplayMemberPath="Name" />
+            </r:RibbonGallery>
+          </r:RibbonComboBox>
+          <r:RibbonButton Click="VideoCaptureDevicePropertiesButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/VideoDeviceOptions32.png" 
+                         SmallImageSource="/VianaNET;component/Images/VideoDeviceOptions16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" 
+                         IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static Control:Video.Instance}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}">
+          <r:RibbonCheckBox Name="ShowCalibrationCheckbox"  
+                            Click="CalibrationOptionsShowCalibrationButtonClick" 
+                            Label="{lex:LocText VianaNET:Labels:ShowCalibrationLabelTitle}"
+                            ToolTipTitle="{lex:LocText VianaNET:Labels:ShowCalibrationToolTipTitle}" 
+                            ToolTipDescription="{lex:LocText VianaNET:Labels:ShowCalibrationToolTipDescription}"
+                            IsEnabled="{Binding Path=CalibrationData.IsVideoCalibrated, Source={x:Static application:Project.Instance}}" 
+                            IsChecked="True"/>
+          <r:RibbonCheckBox Name="ShowClipRegionCheckbox" 
+                            Click="CalibrationOptionsShowClipRegionButtonClick" 
+                            Label="{lex:LocText VianaNET:Labels:ShowClipRegionLabelTitle}"
+                            ToolTipTitle="{lex:LocText VianaNET:Labels:ShowClipRegionToolTipTitle}" 
+                            ToolTipDescription="{lex:LocText VianaNET:Labels:ShowClipRegionToolTipDescription}" 
+                            IsEnabled="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Project.Instance}}" 
+                            IsChecked="True"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabDatagrid" Header="{lex:LocText VianaNET:Labels:RibbonTabDatagridLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupDatagridShowWindowLabelTitle}">
+          <r:RibbonButton Click="DatagridWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonDatagridWindowLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonDatagridWindowToolTipDescription}"
+                         SmallImageSource="/VianaNET;component/Images/Datagrid16.png"
+                         LargeImageSource="/VianaNET;component/Images/Datagrid32.png" />
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupDatagridExportLabelTitle}">
+          <r:RibbonButton Click="ExportDataToTxtButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportToTxt32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportToTxt16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          <r:RibbonButton Click="ExportDataToCsvButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportToCsv32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportToCsv16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToCsvToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          <r:RibbonButton Click="ExportDataToXmlButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportToXml32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportToXml16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          <r:RibbonButton Click="ExportDataToXlsButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportToXls32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportToXls16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToXlsToolTipDescription}"
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupDatagridUpdateDataLabelTitle}">
+          <r:RibbonButton Click="DeleteDataButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonDeleteDataLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/DataDelete32.png" 
+                         SmallImageSource="/VianaNET;component/Images/DataDelete16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonDeleteDataToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonDeleteDataToolTipDescription}" 
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+          <r:RibbonButton Click="CalculateVelocityButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/Recalculate32.png" 
+                         SmallImageSource="/VianaNET;component/Images/Recalculate16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalculateVelocityToolTipDescription}" 
+                         IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupDatagridOptionsLabelTitle}">
+          <r:RibbonCheckBox Name="DisplayUnitsCheckbox" 
+                            IsChecked="{Binding Path=CalibrationData.IsShowingUnits, Source={x:Static application:Project.Instance}}"
+                            Label="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsLabelTitle}"
+                            ToolTipTitle="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsToolTipTitle}" 
+                            ToolTipDescription="{lex:LocText VianaNET:Labels:DatagridDisplayUnitsToolTipDescription}"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabChart" Header="{lex:LocText VianaNET:Labels:RibbonTabChartLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupChartShowWindowLabelTitle}">
+          <r:RibbonButton Click="ChartWindowButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonChartWindowLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChartWindowToolTipDescription}"
+                         SmallImageSource="/VianaNET;component/Images/Chart16.png"
+                         LargeImageSource="/VianaNET;component/Images/Chart32.png" />
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupChartExportLabelTitle}">
+          <r:RibbonButton Click="ExportChartToClipboardButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportChartToClipboard32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportChartToClipboard16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardToolTipDescription}" />
+          <r:RibbonButton Click="ExportChartToFileButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportChartToFileLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportChartToFile32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportChartToFile16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToFileToolTipDescription}" />
+          <r:RibbonButton Click="ExportChartToWordButtonClick" 
+                         Label="{lex:LocText VianaNET:Labels:ButtonExportChartToWordLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/ExportChartToWord32.png" 
+                         SmallImageSource="/VianaNET;component/Images/ExportChartToWord16.png" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipDescription}" />
+        </r:RibbonGroup>
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupChartOptionsLabelTitle}">
+          <r:RibbonButton Click="ChartDisplayOptionsButtonClick" 
+                         SmallImageSource="/VianaNET;component/Images/Options16.png" 
+                         LargeImageSource="/VianaNET;component/Images/Options32.png"
+                         Label="{lex:LocText VianaNET:Labels:ChartDisplayOptionsLabelTitle}"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ChartDisplayOptionsToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ChartDisplayOptionsToolTipDescription}"/>
+        </r:RibbonGroup>
+      </r:RibbonTab>
+      <r:RibbonTab x:Name="RibbonTabOptions" Header="{lex:LocText VianaNET:Labels:RibbonTabOptionsLabel}">
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupLanguageLabelTitle, ForceCulture=en }">
+          <r:RibbonComboBox>
+            <r:RibbonGallery Name="LanguageCombo" SelectionChanged="LanguageComboSelectionChanged">
+              <r:RibbonGalleryCategory >
+                <r:RibbonGalleryItem Content="Deutsch" IsSelected="True"/>
+                <r:RibbonGalleryItem Content="English"/>
+              </r:RibbonGalleryCategory>
+            </r:RibbonGallery>
+          </r:RibbonComboBox>
+        </r:RibbonGroup>
+        <!--<r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupStyleLabelTitle}">
+          <r:RibbonButton Click="ChangeColorButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/Color32.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChangeColorSchemeToolTipDescription}" />
+          <r:RibbonButton Click="ResetColorButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/ColorReset32.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonResetColorSchemeToolTipDescription}" />
+        </r:RibbonGroup>-->
+        <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupHelpLabelTitle}">
+          <r:RibbonButton Click="AboutButtonClick"
+                         Label="{lex:LocText VianaNET:Labels:ButtonAboutLabelTitle}"
+                         SmallImageSource="/VianaNET;component/Images/Help16.png"
+                         LargeImageSource="/VianaNET;component/Images/Help32.png"
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAboutToolTipTitle}"
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAboutToolTipDescription}" />
+        </r:RibbonGroup>
+      </r:RibbonTab>
+    </r:Ribbon>
+    <TabControl Grid.Row="1" Name="TabControl" Margin="5">
+      <TabItem Name="VideoTab">
+        <TabItem.Header>
+          <StackPanel Orientation="Horizontal">
+            <Image Name="Img" Height="auto" Width="auto" Source="/VianaNET;component/Images/Video16.png" />
+            <TextBlock Text="{lex:LocText VianaNET:Labels:VideoWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
+          </StackPanel>
+        </TabItem.Header>
+        <Video:VideoWindow x:Name="VideoWindow"/>
+      </TabItem>
+
+      <TabItem Name="DatagridTab">
+        <TabItem.Header>
+          <StackPanel Orientation="Horizontal">
+            <Image Height="auto" Width="auto" Source="/VianaNET;component/Images/Datagrid16.png" />
+            <TextBlock Text="{lex:LocText VianaNET:Labels:DatagridWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
+          </StackPanel>
+        </TabItem.Header>
+        <DataGrid:DataGridWindow x:Name="DataGridWindow" Margin="5" />
+      </TabItem>
+      <TabItem Name="ChartTab">
+        <TabItem.Header>
+          <StackPanel Orientation="Horizontal">
+            <Image Source="/VianaNET;component/Images/Chart16.png" />
+            <TextBlock Text="{lex:LocText VianaNET:Labels:ChartWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
+          </StackPanel>
+        </TabItem.Header>
+        <Chart:ChartWindow x:Name="ChartWindow" Margin="5" />
+      </TabItem>
+    </TabControl>
+    <StatusBar VerticalAlignment="Bottom" Grid.Row="2">
+      <StatusBarItem>
+        <Label Content="{Binding Path=StatusLabel,
+              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+      </StatusBarItem>
+      <StatusBarItem>
+        <ProgressBar Width="120" Height="20" Value="{Binding Path=ProgressBarValue,
+              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+      </StatusBarItem>
+      <StatusBarItem HorizontalAlignment="Right">
+        <Label Content="{Binding Path=MessagesLabel,
+              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+      </StatusBarItem>
+    </StatusBar>
+  </Grid>
+</r:RibbonWindow>

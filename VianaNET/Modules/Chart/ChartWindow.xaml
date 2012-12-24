@@ -1,0 +1,394 @@
+﻿<UserControl 
+  x:Class="VianaNET.Modules.Chart.ChartWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts"
+    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    xmlns:Data="clr-namespace:VianaNET.Data"
+    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:VianaNET="clr-namespace:VianaNET" xmlns:Collections="clr-namespace:VianaNET.Data.Collections"
+  xmlns:Filter="clr-namespace:VianaNET.Data.Filter" xmlns:application="clr-namespace:VianaNET.Application"
+  lex:LocalizeDictionary.DesignCulture="de"
+    d:DesignHeight="500" d:DesignWidth="700">
+  <UserControl.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" CanContentScroll="True" >
+      <StackPanel Margin="5">
+        <Label Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" Style="{StaticResource HeaderStyle}"/>
+        <Grid Name="ObjectSelectionGrid" 
+                Margin="5"
+                Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Project.Instance}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
+          <ComboBox 
+              Name="ObjectSelectionCombo"
+              Grid.Column="1" 
+              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
+              ItemsSource="{Binding Path=VideoData.ActiveObject, Source={x:Static application:Project.Instance}}"
+              SelectionChanged="ObjectSelectionComboSelectionChanged" />
+        </Grid>
+        <TabControl Name="ChartContentTab" SelectionChanged="ChartContentTabSelectionChanged">
+          <TabItem Name="TabPositionSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPositionSpaceHeader}">
+            <Grid Name="PositionSpaceGrid">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <ComboBox Name="AxesContentPositionSpace" 
+                          Grid.Column="0" 
+                      SelectedIndex="0" 
+                      SelectedValuePath="Chart" 
+                      DisplayMemberPath="Description" 
+                      Margin="2" 
+                      ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPositionSpace}}" 
+                      SelectionChanged="ChartContentSelectionChanged" />
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
+            </Grid>
+          </TabItem>
+          <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">
+            <Grid Name="PhaseSpaceGrid">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <ComboBox Name="AxesContentPhaseSpace" 
+                      Grid.Column="0" 
+                      SelectedIndex="0" 
+                      SelectedValuePath="Chart" 
+                      DisplayMemberPath="Description" 
+                      Margin="2" 
+                      ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPhaseSpace}}" 
+                      SelectionChanged="ChartContentSelectionChanged" />
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
+            </Grid>
+          </TabItem>
+          <TabItem Name="TabOther" Header="{lex:LocText VianaNET:Labels:ChartWindowCustomAxisHeader}">
+            <Grid Name="OtherContentGrid">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}" 
+                    HorizontalAlignment="Right" 
+                    Grid.Column="0"
+                    Grid.Row="0"/>
+              <ComboBox 
+                    Name="XAxisContent" 
+                    Grid.Column="1" 
+                    Grid.Row="0"
+                    SelectedIndex="5" 
+                    SelectedValuePath="Axis" 
+                    DisplayMemberPath="Description" 
+                    ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}"
+                    SelectionChanged="XAxisContentSelectionChanged" />
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}" 
+                    HorizontalAlignment="Right"  
+                    Grid.Column="0"
+                    Grid.Row="1"/>
+              <ComboBox 
+                    Name="YAxisContent" 
+                    Grid.Column="1" 
+                    Grid.Row="1"
+                    SelectedIndex="6" 
+                    SelectedValuePath="Axis"
+                    DisplayMemberPath="Description"
+                    ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}" 
+                    SelectionChanged="YAxisContentSelectionChanged" />
+            </Grid>
+          </TabItem>
+        </TabControl>
+
+        <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowInterpolationHeader}"
+                      Style="{StaticResource GroupBoxStyle}">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0"
+                      Margin="5"
+                      Name="InterpolationLineCheckBox"
+                      Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
+                      IsChecked="{Binding Path=FilterData.IsShowingInterpolationSeries, Source={x:Static application:Project.Instance}}" 
+                      Checked="ShowInterpolationCheckBoxCheckedChanged"
+                      Unchecked="ShowInterpolationCheckBoxCheckedChanged"
+                      HorizontalAlignment="Left"
+                   VerticalAlignment="Center"/>
+            <VianaNET:ImageButton x:Name="InterpolationOptionsButton" 
+                               Margin="1" Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               ImageSource="/VianaNET;component/Images/InterpolateData16.png" 
+                               Click="InterpolationOptionsButtonClick" 
+                               Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}"/>
+          </Grid>
+        </GroupBox>
+        <GroupBox Header="{lex:LocText VianaNET:Labels:RegressionLineLabel}"
+                      Style="{StaticResource GroupBoxStyle}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <VianaNET:ImageButton 
+                      x:Name="RegressionTypeButton" Grid.Column="1" Grid.Row="0"
+                      Click="RegressionTypeButtonClick" 
+                      HorizontalAlignment="Right"
+                      Content="{lex:LocText VianaNET:Labels:ChartWindowRegressionChooseTypeLabel}" ImageSource="/VianaNET;component/Images/RegressionLinear16.png" />
+            <CheckBox 
+              Grid.Row="0" Grid.Column="0"  Margin="5"
+              Name="RegressionCheckBox"
+              IsChecked="{Binding Path=FilterData.IsShowingRegressionSeries, Source={x:Static application:Project.Instance}, Mode=TwoWay}" 
+              Checked="ShowRegressionCheckBoxChecked" Unchecked="ShowRegressionCheckBoxUnchecked"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Center"
+              Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
+            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="FormulaContainerElement" SnapsToDevicePixels="True"/>
+            <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
+            <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=FilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:Project.Instance}}" Grid.ColumnSpan="2" />
+          </Grid>
+        </GroupBox>
+        <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
+                      Style="{StaticResource GroupBoxStyle}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <VianaNET:ImageButton 
+                x:Name="RegressionTheorieButton"
+                Grid.Row="0" Grid.Column="1"
+                Click="TheoryOptionsButtonClick" Content="{lex:LocText VianaNET:Labels:ChartWindowTheoreticalFunctionChooseTypeLabel}" 
+                ImageSource="/VianaNET;component/Images/RegressionLinear16.png"
+                HorizontalAlignment="Right"/>
+            <CheckBox 
+              Grid.Row="0" Grid.Column="0" Margin="5" 
+              Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}" Name="CheckBoxShowTheorie"
+              IsChecked="{Binding Path=FilterData.IsShowingTheorySeries, Source={x:Static application:Project.Instance}}" 
+              Checked="ShowTheorieCheckBoxChecked"
+              Unchecked="ShowTheorieCheckBoxUnchecked"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Center"/>
+            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"/>
+            <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
+          </Grid>
+        </GroupBox>
+        <StackPanel Style="{StaticResource SpacerStyle}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowCalculatorHeader}"
+                              ImageSource="/VianaNET;component/Images/Recalculate16.png"
+                                Click="RechnerButtonClick"/>
+          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowPrecisionLabel}"
+                              ImageSource="/VianaNET;component/Images/InterpolateData16.png"
+                                Click="FilterPrecisionButtonClick"/>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+    <vc:Chart x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False"
+              AnimatedUpdate="False" Grid.Column="1">
+      <vc:Chart.Titles>
+        <vc:Title Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}"/>
+      </vc:Chart.Titles>
+      <vc:Chart.Legends>
+        <vc:Legend Title="{lex:LocText VianaNET:Labels:ChartWindowChartLegend}"/>
+      </vc:Chart.Legends>
+      <vc:Chart.AxesX>
+        <vc:Axis>
+          <vc:Axis.Grids>
+            <vc:ChartGrid LineColor="Red"/>
+          </vc:Axis.Grids>
+        </vc:Axis>
+      </vc:Chart.AxesX>
+      <vc:Chart.AxesY>
+        <vc:Axis>
+          <vc:Axis.Grids>
+            <vc:ChartGrid LineColor="Green"/>
+          </vc:Axis.Grids>
+        </vc:Axis>
+      </vc:Chart.AxesY>
+      <vc:Chart.Series>
+        <vc:DataSeries 
+          Name="DefaultSeries" 
+          RenderAs="Point" 
+          LegendText="{Binding ElementName=YAxisContent, Path=Text}"
+          DataSource="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}}"
+          LineThickness="{Binding Path=FilterData.DataLineThickness, Source={x:Static application:Project.Instance}}"
+          Color="{Binding Path=FilterData.DataLineColor, Source={x:Static application:Project.Instance}}"
+          MovingMarkerEnabled="true"
+          SelectionEnabled = "true"
+          SelectionMode = "Multiple"
+          ShowInLegend = "true">
+          <vc:DataSeries.DataMappings>
+            <vc:DataMapping MemberName="XValue" Path="Object[0].DistanceX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="Object[0].DistanceY"></vc:DataMapping>
+          </vc:DataSeries.DataMappings>
+        </vc:DataSeries>
+
+        <vc:DataSeries 
+          Name="InterpolationSeries" 
+          MarkerEnabled="False" 
+          RenderAs="Line"
+          LegendText="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}"
+          DataSource="{Binding Path=FilterData.InterpolationSeries, Source={x:Static application:Project.Instance}}"
+          LineThickness="{Binding Path=FilterData.InterpolationLineThickness, Source={x:Static application:Project.Instance}}"
+          Color="{Binding Path=FilterData.InterpolationLineColor, Source={x:Static application:Project.Instance}}"
+          Enabled="{Binding Path=FilterData.IsShowingInterpolationSeries, Source={x:Static application:Project.Instance}}">
+          <vc:DataSeries.DataMappings>
+            <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
+          </vc:DataSeries.DataMappings>
+        </vc:DataSeries>
+
+        <vc:DataSeries 
+          Name="RegressionSeries" 
+          RenderAs="Line" 
+          LegendText="{lex:LocText VianaNET:Labels:ChartWindowRegressionLineLegend}"
+          DataSource="{Binding Path=FilterData.RegressionSeries, Source={x:Static application:Project.Instance}}"
+          LineThickness="{Binding Path=FilterData.RegressionLineThickness, Source={x:Static application:Project.Instance}}"
+          Color="{Binding Path=FilterData.RegressionLineColor, Source={x:Static application:Project.Instance}}"
+          Enabled="{Binding Path=FilterData.IsShowingRegressionSeries, Source={x:Static application:Project.Instance}}">
+          <vc:DataSeries.DataMappings>
+            <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
+          </vc:DataSeries.DataMappings>
+        </vc:DataSeries>
+
+        <vc:DataSeries 
+          Name="TheorySeries" 
+          RenderAs="Line" 
+          LegendText="{lex:LocText VianaNET:Labels:ChartWindowTheoryLineLegend}"
+          DataSource="{Binding Path=FilterData.TheorySeries, Source={x:Static application:Project.Instance}}"
+          LineThickness="{Binding Path=FilterData.TheoryLineThickness, Source={x:Static application:Project.Instance}}"
+          Color="{Binding Path=FilterData.TheoryLineColor, Source={x:Static application:Project.Instance}}"
+          Enabled="{Binding Path=FilterData.IsShowingTheorySeries, Source={x:Static application:Project.Instance}}">
+          <vc:DataSeries.DataMappings>
+            <vc:DataMapping MemberName="XValue" Path="ValueX"></vc:DataMapping>
+            <vc:DataMapping MemberName="YValue" Path="ValueY"></vc:DataMapping>
+          </vc:DataSeries.DataMappings>
+        </vc:DataSeries>
+
+      </vc:Chart.Series>
+    </vc:Chart>
+    <Expander Grid.Column="2" ExpandDirection="Left" IsExpanded="True" Name="PropertiesExpander" BorderThickness="0" Margin="0,2,0,0">
+      <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+        <StackPanel Margin="5">
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowAxisStyleHeader}"
+                    Style="{StaticResource GroupBoxStyle}">
+            <UniformGrid Columns="3" Rows="2">
+              <RadioButton Name="RadioChartStyleScatter" IsChecked="True" Checked="RadioChartStyleChecked" GroupName="ChartTypes" >
+                <Image Source="/VianaNET;component/Images/ChartTypeXYScatter32.png"/>
+              </RadioButton>
+              <RadioButton Name="RadioChartStyleLine" Checked="RadioChartStyleChecked" GroupName="ChartTypes">
+                <Image Source="/VianaNET;component/Images/ChartTypeLine32.png"/>
+              </RadioButton>
+              <RadioButton Name="RadioChartStyleArea" Checked="RadioChartStyleChecked" GroupName="ChartTypes">
+                <Image Source="/VianaNET;component/Images/ChartTypeArea32.png"/>
+              </RadioButton>
+              <RadioButton Name="RadioChartStyleColumn" Checked="RadioChartStyleChecked" GroupName="ChartTypes" >
+                <Image Source="/VianaNET;component/Images/ChartTypeColumn32.png"/>
+              </RadioButton>
+              <RadioButton  Name="RadioChartStyleBubble" Checked="RadioChartStyleChecked" GroupName="ChartTypes">
+                <Image Source="/VianaNET;component/Images/ChartTypeBubble32.png"/>
+              </RadioButton>
+              <RadioButton Name="RadioChartStylePie" Checked="RadioChartStyleChecked" GroupName="ChartTypes">
+                <Image Source="/VianaNET;component/Images/ChartTypePie32.png"/>
+              </RadioButton>
+            </UniformGrid>
+          </GroupBox>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowChartProperties}" Visibility="Collapsed">
+            <StackPanel Visibility="{Binding ElementName=RadioChartStyleScatter, Path=IsChecked, Converter={StaticResource BoolVisibleConverter}}">
+              <RadioButton IsChecked="True" Content="{lex:LocText VianaNET:Labels:ChartWindowScatterPointStyleColored}"/>
+              <RadioButton Content="{lex:LocText VianaNET:Labels:ChartWindowScatterPointStyleSingleColored}"/>
+            </StackPanel>
+          </GroupBox>
+          <StackPanel Style="{StaticResource SpacerStyle}"/>
+
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTitlesHeader}"
+                    Style="{StaticResource GroupBoxStyle}">
+            <StackPanel>
+              <VianaNET:LabeledTextBox x:Name="ChartTitle" Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}"  Label="{lex:LocText VianaNET:Labels:ChartWindowChartTitleHeader}" IsChecked="True" TextChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+              <VianaNET:LabeledTextBox x:Name="LegendTitle" Text="{lex:LocText VianaNET:Labels:ChartWindowChartLegend}"  Label="{lex:LocText VianaNET:Labels:ChartWindowLegendHeader}" IsChecked="False" TextChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+              <VianaNET:LabeledTextBox
+            x:Name="SeriesTitle" 
+            Text="{lex:LocText VianaNET:Labels:AxisPositionY}"  
+            Label="{lex:LocText VianaNET:Labels:ChartWindowSeriesHeader}" 
+            IsChecked="False" 
+            TextChanged="ValueChangedUpdateChart" 
+            CheckedChanged="ValueChangedUpdateChart"/>
+              <!--<CheckBox x:Name="SelectionEnabled" Content="{lex:LocText VianaNET:Labels:ChartWindowSelectionEnabledHeader}" Checked="ValueChanged_UpdateChart" Unchecked="ValueChanged_UpdateChart"/>-->
+            </StackPanel>
+          </GroupBox>
+
+          <StackPanel Style="{StaticResource SpacerStyle}"/>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowSeriesStyleHeader}"
+                    Style="{StaticResource GroupBoxStyle}">
+            <UniformGrid Rows="2" Columns="2" >
+              <VianaNET:ImageButton Margin="2"
+                Content="{lex:LocText VianaNET:Labels:ChartWindowDataSeriesLabel}" 
+                ImageSource="/VianaNET;component/Images/LineColor16.png" 
+                Click="DataStyleButtonClick"/>
+              <VianaNET:ImageButton Margin="2"
+                Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationSeriesLabel}" 
+                ImageSource="/VianaNET;component/Images/LineColor16.png" 
+                Click="InterpolationStyleButtonClick"/>
+              <VianaNET:ImageButton Margin="2"
+                Content="{lex:LocText VianaNET:Labels:ChartWindowRegressionSeriesLabel}" 
+                ImageSource="/VianaNET;component/Images/LineColor16.png" 
+                Click="RegressionStyleButtonClick"/>
+              <VianaNET:ImageButton Margin="2"
+                Content="{lex:LocText VianaNET:Labels:ChartWindowTheorySeriesLabel}" 
+                ImageSource="/VianaNET;component/Images/LineColor16.png" 
+                Click="TheoryStyleButtonClick"/>
+            </UniformGrid>
+          </GroupBox>
+          <StackPanel Style="{StaticResource SpacerStyle}"/>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}"
+                    Style="{StaticResource GroupBoxStyle}">
+            <StackPanel Name="AxisControls">
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}"/>
+              <StackPanel>
+                <VianaNET:LabeledTextBox x:Name="XAxisTitle" Text="{lex:LocText VianaNET:Labels:AxisDistanceX}" Label="{lex:LocText VianaNET:Labels:ChartWindowXAxisTitleHeader}" TextChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart" IsChecked="True" />
+                <CheckBox x:Name="XAxisShowGridLines" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" Checked="ValueChangedUpdateChart" Unchecked="ValueChangedUpdateChart"/>
+                <VianaNET:LabeledSlider x:Name="XAxisMinimum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}" Minimum="-1000" Maximum="1000" Value="0" IsCheckable="True" ValueChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+                <VianaNET:LabeledSlider x:Name="XAxisMaximum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}" Minimum="-1000" Maximum="1000" Value="5" IsCheckable="True" ValueChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+                <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
+              </StackPanel>
+              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}"/>
+              <StackPanel>
+                <VianaNET:LabeledTextBox x:Name="YAxisTitle" Text="{lex:LocText VianaNET:Labels:AxisDistanceY}"  Label="{lex:LocText VianaNET:Labels:ChartWindowYAxisTitleHeader}" TextChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart" IsChecked="True" />
+                <CheckBox x:Name="YAxisShowGridLines" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" Checked="ValueChangedUpdateChart" Unchecked="ValueChangedUpdateChart"/>
+                <VianaNET:LabeledSlider x:Name="YAxisMinimum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}" Minimum="-1000" Maximum="1000" Value="0" IsCheckable="True" ValueChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+                <VianaNET:LabeledSlider x:Name="YAxisMaximum" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}" Minimum="-1000" Maximum="1000" Value="5" IsCheckable="True" ValueChanged="ValueChangedUpdateChart" CheckedChanged="ValueChangedUpdateChart"/>
+                <!--<Viana:LabeledSlider x:Name="YAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
+              </StackPanel>
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </ScrollViewer>
+    </Expander>
+  </Grid>
+</UserControl>

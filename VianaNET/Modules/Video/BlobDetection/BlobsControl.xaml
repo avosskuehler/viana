@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="VianaNET.Modules.Video.BlobDetection.BlobsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+             lex:LocalizeDictionary.DesignCulture="de"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" Width="300" 
+             Height="400" IsVisibleChanged="BlobsControlIsVisibleChanged">
+  <UserControl.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </UserControl.Resources>
+  <UniformGrid MinWidth="50" Rows="3" IsItemsHost="False">
+    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlProcessedImageHeader}">
+      <!--<Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Name="ObjectSelectionGrid" Margin="0,0,0,3"
+              Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Project.Instance.ProcessingData}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
+          <ComboBox 
+              Name="ObjectSelectionCombo"
+              Grid.Column="1" 
+              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
+              ItemsSource="{Binding ObjectDescriptions}"
+              SelectionChanged="ObjectSelectionCombo_SelectionChanged" />
+        </Grid>-->
+        <Image Grid.Row="1" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center">
+          <Image.RenderTransform>
+            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          </Image.RenderTransform>
+        </Image>
+      <!--</Grid>-->
+    </GroupBox>
+    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlFoundBlobsHeader}">
+      <Grid RenderTransformOrigin="0.5,0.5" >
+        <Grid.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Grid.RenderTransform>
+        <Image Name="OverlayImageControl" Source="{Binding Path=VideoSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center">
+        </Image>
+        <Canvas Name="OverlayCanvas" 
+                Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"
+                Height="{Binding ElementName=OverlayImageControl, Path=ActualHeight}">
+        </Canvas>
+      </Grid>
+    </GroupBox>
+    <GroupBox Header="{lex:LocText VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
+      <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
+      <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Grid.RenderTransform>
+        <Canvas Name="CanvasDataPoints" SizeChanged="CanvasDataPointsSizeChanged">
+        </Canvas>
+      </Grid>
+      <!--<Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
+        <charting:Chart.Series>
+          <charting:ScatterSeries 
+            Title="{lex:LocText VianaNET:Labels:ChartWindowChartSeries}" 
+            ItemsSource="{Binding Path=Samples, Source={x:Static Viana:Project.Instance.VideoData}}"
+            IndependentValueBinding="{Binding DistanceX}" 
+            DependentValueBinding="{Binding DistanceY}">
+            <charting:ScatterSeries.IndependentAxis>
+              <charting:LinearAxis Orientation="X" Style="{x:Null}" GridLineStyle="{x:Null}" AxisLabelStyle="{x:Null}" TitleStyle="{x:Null}" MajorTickMarkStyle="{x:Null}" MinorTickMarkStyle="{x:Null}" ExtendRangeToOrigin="True" FontSize="5" Minimum="0" Maximum="{Binding Path=VideoElement.NaturalVideoWidth, Source={x:Static Viana:Video.Instance}}" Interval="50"/>
+            </charting:ScatterSeries.IndependentAxis>
+            <charting:ScatterSeries.DependentRangeAxis>
+              <charting:LinearAxis Orientation="Y" Style="{x:Null}" GridLineStyle="{x:Null}" AxisLabelStyle="{x:Null}" TitleStyle="{x:Null}" MajorTickMarkStyle="{x:Null}" MinorTickMarkStyle="{x:Null}" ExtendRangeToOrigin="True" FontSize="5" Minimum="0" Maximum="{Binding Path=VideoElement.NaturalVideoHeight, Source={x:Static Viana:Video.Instance}}" Interval="50"/>
+            </charting:ScatterSeries.DependentRangeAxis>
+          </charting:ScatterSeries>
+        </charting:Chart.Series>
+      </Viana:VianaChart>-->
+    </GroupBox>
+  </UniformGrid>
+</UserControl>
