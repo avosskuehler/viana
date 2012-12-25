@@ -15,7 +15,7 @@
     ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
     Icon="/VianaNET;component/Images/VianaNET.ico"
     Height="479" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
-    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="RibbonWindowClosing">
+    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="MainWindowClosing">
 
   <r:RibbonWindow.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -28,7 +28,7 @@
     </Grid.RowDefinitions>
     <r:Ribbon Grid.Row="0"
               Title="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type r:RibbonWindow}},Path=Title}" 
-              x:Name="mainRibbon">
+              x:Name="MainRibbon">
       <r:Ribbon.ApplicationMenu>
         <r:RibbonApplicationMenu SmallImageSource="/VianaNET;component/Images/VianaNET_32.png" KeyTip="S" Label="Datei" IsMainMenu="True">
           <r:RibbonApplicationMenuItem 
@@ -39,30 +39,49 @@
                         ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonOpenToolTipDescription}" 
                         ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonOpenLabelTitle}"/>
           <r:RibbonApplicationMenuItem 
-                        Click="SaveProjectOnClick"
+                        Click="SaveProjectClick"
                         Header="{lex:LocText VianaNET:Labels:QATButtonSaveLabelTitle}"
                         ImageSource="/VianaNET;component/Images/Save32.png"
                         QuickAccessToolBarImageSource="/VianaNET;component/Images/Save16.png" 
                         ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonSaveToolTipDescription}" 
                         ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonSaveLabelTitle}"/>
           <r:RibbonApplicationMenuItem 
+                        Click="SaveProjectAsClick"
+                        Header="{lex:LocText VianaNET:Labels:QATButtonSaveAsLabelTitle}"
+                        ImageSource="/VianaNET;component/Images/Save32.png"
+                        QuickAccessToolBarImageSource="/VianaNET;component/Images/Save16.png" 
+                        ToolTipDescription="{lex:LocText VianaNET:Labels:QATButtonSaveAsToolTipDescription}" 
+                        ToolTipTitle="{lex:LocText VianaNET:Labels:QATButtonSaveAsLabelTitle}"/>
+          <r:RibbonSeparator/>
+          <r:RibbonApplicationMenuItem 
+                         Click="LoadVideoButtonClick"
                          ImageSource="/VianaNET;component/Images/LoadVideo32.png" 
                          QuickAccessToolBarImageSource="/VianaNET;component/Images/LoadVideo16.png"
                          Header="{lex:LocText VianaNET:Labels:ButtonLoadVideoLabelTitle}" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonLoadVideoToolTipDescription}" />
           <r:RibbonApplicationMenuItem 
+                         Click="RecordVideoButtonClick"
                          ImageSource="/VianaNET;component/Images/RecordVideo32.png" 
                          QuickAccessToolBarImageSource="/VianaNET;component/Images/RecordVideo16.png"
-                         Header="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonRecordVideoLabelTitle}" 
+                         ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipTitle}" 
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipDescription}"
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+          <r:RibbonApplicationMenuItem
+                         Click="CaptureVideoButtonClick" 
+                         Header="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}"
+                         ImageSource="/VianaNET;component/Images/Capture32.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
-                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" />
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
           <r:RibbonSeparator/>
           <r:RibbonApplicationSplitMenuItem
             Header="{lex:LocText VianaNET:Labels:ButtonExportDataLabelTitle}"
             ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportDataToolTipTitle}"
             ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportDataToolTipDescription}"
             ImageSource="/VianaNET;component/Images/ExportData32.png" >
+            <r:RibbonSeparator Label="{lex:LocText VianaNET:Labels:ButtonExportDataLabelTitle}"/>
             <r:RibbonApplicationMenuItem Click="ExportDataToTxtButtonClick" 
                          Header="{lex:LocText VianaNET:Labels:ButtonExportDataToTxtLabelTitle}" 
                          ImageSource="/VianaNET;component/Images/ExportToTxt32.png" 
@@ -97,6 +116,7 @@
             ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonExportChartToolTipTitle}"
             ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToolTipDescription}"
             ImageSource="/VianaNET;component/Images/ExportChart32.png" >
+            <r:RibbonSeparator Label="{lex:LocText VianaNET:Labels:ButtonExportChartLabelTitle}"/>
             <r:RibbonApplicationMenuItem Click="ExportChartToClipboardButtonClick" 
                          Header="{lex:LocText VianaNET:Labels:ButtonExportChartToClipboardLabelTitle}" 
                          ImageSource="/VianaNET;component/Images/ExportChartToClipboard32.png" 
@@ -121,15 +141,20 @@
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonExportChartToWordToolTipDescription}"
                          IsEnabled="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}, Converter={StaticResource SamplesToHasSamplesConverter}}"/>
           </r:RibbonApplicationSplitMenuItem>
-          <!--<r:RibbonApplicationMenu.AuxiliaryPaneContent>
+          <r:RibbonApplicationMenu.AuxiliaryPaneContent>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="5" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <r:RibbonSeparator Grid.Row="0" Label="Recent Documents"/>
-              <ItemsControl Grid.Row="2" ItemsSource="{Binding Source={x:Static data:WordModel.RecentDocuments},Path=GalleryItemDataCollection}">
+              <r:RibbonSeparator Grid.Row="0" Label="{lex:LocText VianaNET:Labels:RibbonApplicationMenuRecentFilesTitle}"/>
+              <ItemsControl Grid.Row="2" ItemsSource="{Binding Source={x:Static application:RecentFiles.Instance}, Path=RecentFilesCollection}">
+                <ItemsControl.ItemContainerStyle>
+                  <Style TargetType="{x:Type FrameworkElement}">
+                    <EventSetter Event="MouseDown" Handler="RecentProjectMouseDown"/>
+                  </Style>
+                </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                   <DataTemplate>
                     <Border x:Name="MainBorder" 
@@ -140,30 +165,22 @@
                           <ColumnDefinition Width="Auto" />
                           <ColumnDefinition Width="5" />
                           <ColumnDefinition Width="*" />
-                          <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Index}" TextDecorations="Underline" />
-                        <TextBlock Grid.Column="2" Text="{Binding Label}" />
-                        <Image x:Name="Pin" Grid.Column="3" Source="Images\EditUndo_16x16.png" />
-                        <Image x:Name="Unpin" Grid.Column="3" Source="Images\EditRedo_16x16.png" Visibility="Collapsed" />
+                        <Image Grid.Column="0" Source="{Binding ProjectImageSource}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding ProjectFileName, Mode=OneWay}" ToolTip="{Binding ProjectFile}"/>
                       </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                      <DataTrigger Binding="{Binding IsChecked}" Value="True">
-                        <Setter TargetName="Pin" Property="Visibility" Value="Collapsed" />
-                        <Setter TargetName="Unpin" Property="Visibility" Value="Visible" />
-                      </DataTrigger>
                       <Trigger Property="IsMouseOver" Value="True">
-                        <Setter TargetName="MainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(ribbon:RibbonControlService.Ribbon).MouseOverBackground}" />
-                        <Setter TargetName="MainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(ribbon:RibbonControlService.Ribbon).MouseOverBorderBrush}" />
+                        <Setter TargetName="MainBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(r:RibbonControlService.Ribbon).MouseOverBackground}" />
+                        <Setter TargetName="MainBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent},Path=(r:RibbonControlService.Ribbon).MouseOverBorderBrush}" />
                       </Trigger>
                     </DataTemplate.Triggers>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
             </Grid>
-          </r:RibbonApplicationMenu.AuxiliaryPaneContent>-->
-
+          </r:RibbonApplicationMenu.AuxiliaryPaneContent>
           <r:RibbonApplicationMenu.FooterPaneContent>
             <Grid>
               <Grid.ColumnDefinitions>
@@ -176,7 +193,11 @@
                          SmallImageSource="/VianaNET;component/Images/Reset16.png" 
                          LargeImageSource="/VianaNET;component/Images/Reset32.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipTitle}" 
-                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipDescription}" />
+                         ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCloseApplicationToolTipDescription}">
+                <r:RibbonButton.ControlSizeDefinition>
+                  <r:RibbonControlSizeDefinition ImageSize="Small" />
+                </r:RibbonButton.ControlSizeDefinition>
+              </r:RibbonButton>
             </Grid>
           </r:RibbonApplicationMenu.FooterPaneContent>
         </r:RibbonApplicationMenu>

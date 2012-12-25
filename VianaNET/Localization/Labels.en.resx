@@ -1490,9 +1490,30 @@ Click OK or press Enter, when ready.</value>
     <value>Save project ...</value>
   </data>
   <data name="QATButtonOpenLabelTitle" xml:space="preserve">
-    <value>Open viana.net project</value>
+    <value>Open project ...</value>
   </data>
   <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
     <value>Opens a project file for further analysis.</value>
+  </data>
+  <data name="AskSaveProjectDialogDescription" xml:space="preserve">
+    <value>Should save the current project?</value>
+  </data>
+  <data name="AskSaveProjectDialogMessage" xml:space="preserve">
+    <value>You worked with a newly created project. Should it be saved before closing?</value>
+  </data>
+  <data name="AskSaveProjectDialogTitle" xml:space="preserve">
+    <value>Save project?</value>
+  </data>
+  <data name="QATButtonSaveAsLabelTitle" xml:space="preserve">
+    <value>Save as ...</value>
+  </data>
+  <data name="QATButtonSaveAsToolTipDescription" xml:space="preserve">
+    <value>Saves the current project under a new name.</value>
+  </data>
+  <data name="SaveProjectDialogDescription" xml:space="preserve">
+    <value>Overwrite existing project file?</value>
+  </data>
+  <data name="SaveProjectDialogMessage" xml:space="preserve">
+    <value>The project file already exists and will be overwritten.</value>
   </data>
 </root>

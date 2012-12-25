@@ -1472,12 +1472,33 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>ungültiger Bezeichner</value>
   </data>
   <data name="SaveProjectDialogTitle" xml:space="preserve">
-    <value>Projekt sichern ...</value>
+    <value>Projekt %1 sichern ...</value>
   </data>
   <data name="QATButtonOpenLabelTitle" xml:space="preserve">
-    <value>Öffne Viana.Net Projekt</value>
+    <value>Öffne Projekt ...</value>
   </data>
   <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
     <value>Lädt eine Projektdatei mit gespeicherten Daten zur weiteren Analyse.</value>
+  </data>
+  <data name="AskSaveProjectDialogDescription" xml:space="preserve">
+    <value>Wollen Sie das Projekt %1 speichern?</value>
+  </data>
+  <data name="AskSaveProjectDialogMessage" xml:space="preserve">
+    <value>Sie haben an einem Projekt gearbeitet, welches noch nicht gespeichert ist. Wollen Sie es speichern?</value>
+  </data>
+  <data name="AskSaveProjectDialogTitle" xml:space="preserve">
+    <value>Projekt speichern?</value>
+  </data>
+  <data name="QATButtonSaveAsLabelTitle" xml:space="preserve">
+    <value>Speichern als ...</value>
+  </data>
+  <data name="QATButtonSaveAsToolTipDescription" xml:space="preserve">
+    <value>Speichert das Projekt unter anderem Namen.</value>
+  </data>
+  <data name="SaveProjectDialogDescription" xml:space="preserve">
+    <value>Bestehende Projektdatei überschreiben?</value>
+  </data>
+  <data name="SaveProjectDialogMessage" xml:space="preserve">
+    <value>Die Projektdatei existiert bereits und wird nun überschrieben.</value>
   </data>
 </root>
