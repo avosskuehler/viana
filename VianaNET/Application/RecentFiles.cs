@@ -26,19 +26,23 @@
 //   if you call <code>RecentFiles.List</code>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System.Runtime.Serialization;
+using System.Xml;
+
 namespace VianaNET.Application
 {
+  using System;
   using System.Collections.Generic;
-  using System.Collections.Specialized;
+  using System.Collections.ObjectModel;
   using System.ComponentModel;
+  using System.Drawing;
   using System.IO;
-  using System.Text;
   using System.Windows;
-  using System.Windows.Controls;
-
-  using Microsoft.Windows.Controls.Ribbon;
-
-  using VianaNET.Properties;
+  using System.Windows.Interop;
+  using System.Windows.Media.Imaging;
+  using Modules.Video.Control;
+  using Properties;
 
   /// <summary>
   ///   Derived from <see cref="DependencyObject" /> and implements <see cref="INotifyPropertyChanged" />.
@@ -57,12 +61,12 @@ namespace VianaNET.Application
     ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
-    ///// <summary>
-    /////   Represents the <see cref="DependencyProperty" /> for the
-    /////   <see cref="RibbonList" />
-    ///// </summary>
-    //public static readonly DependencyProperty RibbonListProperty = DependencyProperty.Register(
-    //  "RibbonList", typeof(RibbonHighlightingListItem[]), typeof(RecentFiles), new UIPropertyMetadata());
+    /// <summary>
+    ///   Represents the <see cref="DependencyProperty" /> for the
+    ///   <see cref="RibbonList" />
+    /// </summary>
+    public static readonly DependencyProperty RecentFilesCollectionProperty = DependencyProperty.Register(
+      "RecentFilesCollection", typeof(ObservableCollection<ProjectEntry>), typeof(RecentFiles), new UIPropertyMetadata());
 
     /// <summary>
     ///   Maximum number of items in recent files list.
@@ -85,11 +89,6 @@ namespace VianaNET.Application
     private readonly Settings appSettings;
 
     /// <summary>
-    ///   The <see cref="StringCollection" /> containg the recent files.
-    /// </summary>
-    private readonly StringCollection fileCollection;
-
-    /// <summary>
     ///   Maximum length of file name for display in recent file list
     /// </summary>
     private int maxLengthDisplay = 40;
@@ -109,8 +108,12 @@ namespace VianaNET.Application
     {
       this.appSettings = Settings.Default;
       maxNumItems = this.appSettings.NumberOfRecentFiles;
-      this.fileCollection = new StringCollection();
       this.Load();
+
+      if (this.RecentFilesCollection == null)
+      {
+        this.RecentFilesCollection = new ObservableCollection<ProjectEntry>();
+      }
     }
 
     #endregion
@@ -138,33 +141,37 @@ namespace VianaNET.Application
     /// <value> A <see cref="RecentFiles" /> with the recent files. </value>
     public static RecentFiles Instance
     {
+      get { return recentFiles ?? (recentFiles = new RecentFiles()); }
+    }
+
+    /// <summary>
+    ///   Gets or sets the <see cref="RecentFilesCollection" /> array
+    ///   which contains the recent files list for the ribbon.
+    /// </summary>
+    public ObservableCollection<ProjectEntry> RecentFilesCollection
+    {
       get
       {
-        if (recentFiles == null)
-        {
-          recentFiles = new RecentFiles();
-        }
+        return (ObservableCollection<ProjectEntry>)this.GetValue(RecentFilesCollectionProperty);
+      }
 
-        return recentFiles;
+      set
+      {
+        this.SetValue(RecentFilesCollectionProperty, value);
       }
     }
 
-    ///// <summary>
-    /////   Gets or sets the <see cref="RibbonHighlightingListItem" /> array
-    /////   which contains the recent files list for the ribbon.
-    ///// </summary>
-    //public RibbonHighlightingListItem[] RibbonList
-    //{
-    //  get
-    //  {
-    //    return (RibbonHighlightingListItem[])this.GetValue(RibbonListProperty);
-    //  }
-
-    //  set
-    //  {
-    //    this.SetValue(RibbonListProperty, value);
-    //  }
-    //}
+    /// <summary>
+    /// Gets the complete filename with path
+    /// to the settings file used to store recent file collection.
+    /// </summary>
+    public string SettingsFile
+    {
+      get
+      {
+        return Path.Combine(this.appSettings.SettingsPath, "VianaRecentFileList.xml");
+      }
+    }
 
     #endregion
 
@@ -181,26 +188,29 @@ namespace VianaNET.Application
     /// </param>
     public void Add(string file)
     {
-      int fileIndex = this.FindFile(file);
+      var fileIndex = this.FindFile(file);
+      var bitmap = Video.Instance.CreateBitmapFromCurrentImageSource();
+      bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+      var smallBitmap = ScaleImage(bitmap, 64, 64);
+      var projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };
 
       if (fileIndex < 0)
       {
-        this.fileCollection.Insert(0, file);
+        this.RecentFilesCollection.Insert(0, projectEntry);
 
-        while (this.fileCollection.Count > maxNumItems)
+        while (this.RecentFilesCollection.Count > maxNumItems)
         {
-          this.fileCollection.RemoveAt(this.fileCollection.Count - 1);
+          this.RecentFilesCollection.RemoveAt(this.RecentFilesCollection.Count - 1);
         }
       }
       else
       {
-        this.fileCollection.RemoveAt(fileIndex);
-        this.fileCollection.Insert(0, file);
+        this.RecentFilesCollection.RemoveAt(fileIndex);
+        this.RecentFilesCollection.Insert(0, projectEntry);
       }
 
       this.Save();
-
-      //this.RebuildRibbonList();
+      this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -208,10 +218,9 @@ namespace VianaNET.Application
     /// </summary>
     public void Delete()
     {
-      this.appSettings.RecentFileList = string.Empty;
-      this.appSettings.Save();
-      this.fileCollection.Clear();
-      //this.RebuildRibbonList();
+      this.RecentFilesCollection.Clear();
+      this.Save();
+      this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -258,20 +267,20 @@ namespace VianaNET.Application
 
       if (fileIndex < 0)
       {
-        this.fileCollection.Insert(0, file);
+        //this.appSettings.RecentProjectEntries.Insert(0, file);
 
-        while (this.fileCollection.Count > maxNumItems)
+        while (this.RecentFilesCollection.Count > maxNumItems)
         {
-          this.fileCollection.RemoveAt(this.fileCollection.Count - 1);
+          this.RecentFilesCollection.RemoveAt(this.RecentFilesCollection.Count - 1);
         }
       }
       else
       {
-        this.fileCollection.RemoveAt(fileIndex);
+        this.RecentFilesCollection.RemoveAt(fileIndex);
       }
 
       this.Save();
-      //this.RebuildRibbonList();
+      this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -280,24 +289,10 @@ namespace VianaNET.Application
     /// </summary>
     public void Save()
     {
-      var stringBuilder = new StringBuilder();
-      bool first = true;
-      foreach (string file in this.fileCollection)
-      {
-        if (first)
-        {
-          first = false;
-        }
-        else
-        {
-          stringBuilder.Append('|');
-        }
-
-        stringBuilder.Append(file);
-      }
-
-      this.appSettings.RecentFileList = stringBuilder.ToString();
-      this.appSettings.Save();
+      var dcs = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
+      var fs = new FileStream(this.SettingsFile, FileMode.Create);
+      dcs.WriteObject(fs, this.RecentFilesCollection);
+      fs.Close();
     }
 
     #endregion
@@ -329,10 +324,6 @@ namespace VianaNET.Application
     // Methods and Eventhandling for Background tasks                            //
     ///////////////////////////////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     /// Get index in recent file list from given file path.
     /// </summary>
@@ -345,9 +336,9 @@ namespace VianaNET.Application
     private int FindFile(string file)
     {
       string fileLower = file.ToLower();
-      for (int index = 0; index < this.fileCollection.Count; index++)
+      for (int index = 0; index < this.RecentFilesCollection.Count; index++)
       {
-        if (fileLower == this.fileCollection[index].ToLower())
+        if (fileLower == this.RecentFilesCollection[index].ProjectFile.ToLower())
         {
           return index;
         }
@@ -361,44 +352,66 @@ namespace VianaNET.Application
     /// </summary>
     private void Load()
     {
-      string listEntry = this.appSettings.RecentFileList;
-      if (listEntry != null)
+      if (File.Exists(this.SettingsFile))
       {
-        string[] files = listEntry.Split(new[] { '|' });
-        foreach (string file in files)
-        {
-          this.fileCollection.Add(file);
-        }
+        var fs = new FileStream(this.SettingsFile, FileMode.Open);
+        var reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+        var ser = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
+
+        // Deserialize the data and read it from the instance.
+        this.RecentFilesCollection = (ObservableCollection<ProjectEntry>)ser.ReadObject(reader, true);
+        reader.Close();
+        fs.Close();
       }
 
-      //this.RebuildRibbonList();
+      this.RebuildRibbonList();
     }
 
-    ///// <summary>
-    /////   This method creates a list of <see cref="RibbonHighlightingListItem" />
-    /////   to display the recent files in the ribbon of the application.
-    ///// </summary>
-    //private void RebuildRibbonList()
-    //{
-    //  var items = new List<RibbonHighlightingListItem>((int)maxNumItems);
-    //  foreach (string item in this.fileCollection)
-    //  {
-    //    if (!File.Exists(item))
-    //    {
-    //      continue;
-    //    }
+    /// <summary>
+    ///   This method creates a list of <see cref="RibbonHighlightingListItem" />
+    ///   to display the recent files in the ribbon of the application.
+    /// </summary>
+    private void RebuildRibbonList()
+    {
+      //var items = new List<RibbonApplicationMenuItem>((int)maxNumItems);
+      //if (this.appSettings.RecentProjectEntries == null)
+      //{
+      //  return;
+      //}
 
-    //    var ribbonItem = new RibbonHighlightingListItem();
-    //    ribbonItem.Content = Path.GetFileName(item);
-    //    var itemToolTip = new ToolTip();
-    //    itemToolTip.Content = item;
-    //    ribbonItem.ToolTip = itemToolTip;
-    //    items.Add(ribbonItem);
-    //  }
+      //foreach (ProjectEntry item in this.appSettings.RecentProjectEntries)
+      //{
+      //  if (!File.Exists(item.ProjectFile))
+      //  {
+      //    continue;
+      //  }
 
-    //  this.RibbonList = items.ToArray();
-    //  this.OnPropertyChanged("RibbonList");
-    //}
+      //  var ribbonItem = new RibbonApplicationMenuItem();
+      //  ribbonItem.Header = Path.GetFileName(item.ProjectFile);
+      //  ribbonItem.ImageSource = CreateBitmapSourceFromBitmap(item.ProjectIcon);
+      //  var itemToolTip = new ToolTip();
+      //  itemToolTip.Content = item.ProjectFile;
+      //  ribbonItem.ToolTip = itemToolTip;
+      //  items.Add(ribbonItem);
+      //}
+
+      //this.RecentFilesCollection = this.appSettings.RecentProjectEntries;
+      //this.OnPropertyChanged("RecentFilesCollection");
+    }
+
+    public static System.Drawing.Bitmap ScaleImage(System.Drawing.Bitmap image, int maxWidth, int maxHeight)
+    {
+      var ratioX = (double)maxWidth / image.Width;
+      var ratioY = (double)maxHeight / image.Height;
+      var ratio = Math.Min(ratioX, ratioY);
+
+      var newWidth = (int)(image.Width * ratio);
+      var newHeight = (int)(image.Height * ratio);
+
+      var newImage = new System.Drawing.Bitmap(newWidth, newHeight);
+      System.Drawing.Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
+      return newImage;
+    }
 
     #endregion
   }

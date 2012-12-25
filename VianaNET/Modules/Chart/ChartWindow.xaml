@@ -125,7 +125,7 @@
                       Margin="5"
                       Name="InterpolationLineCheckBox"
                       Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
-                      IsChecked="{Binding Path=FilterData.IsShowingInterpolationSeries, Source={x:Static application:Project.Instance}}" 
+                      IsChecked="{Binding Path=FilterData.IsShowingInterpolationSeries, PresentationTraceSources.TraceLevel=High, Source={x:Static application:Project.Instance}}" 
                       Checked="ShowInterpolationCheckBoxCheckedChanged"
                       Unchecked="ShowInterpolationCheckBoxCheckedChanged"
                       HorizontalAlignment="Left"

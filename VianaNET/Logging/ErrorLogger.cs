@@ -149,7 +149,7 @@ namespace VianaNET.Logging
       WriteLine(message);
       {
         // if (showMessageBox)
-        var dlg = new VianaDialog("Exception occured", ex.Message, message);
+        var dlg = new VianaDialog("Exception occured", ex.Message, message, true);
         dlg.ShowDialog();
       }
     }

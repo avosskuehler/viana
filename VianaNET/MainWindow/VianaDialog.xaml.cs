@@ -31,16 +31,8 @@ namespace VianaNET.MainWindow
   /// <summary>
   ///   The viana dialog.
   /// </summary>
-  public partial class VianaDialog : Window
+  public partial class VianaDialog
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
@@ -48,7 +40,6 @@ namespace VianaNET.MainWindow
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VianaDialog" /> class. 
-    ///   Initializes a new instance of the MainWindow class.
     /// </summary>
     public VianaDialog()
     {
@@ -58,21 +49,17 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// Initializes a new instance of the VianaDialog class.
     /// </summary>
-    /// <param name="title">
-    /// The title. 
-    /// </param>
-    /// <param name="messageDescription">
-    /// The message Description. 
-    /// </param>
-    /// <param name="message">
-    /// The message. 
-    /// </param>
-    public VianaDialog(string title, string messageDescription, string message)
+    /// <param name="title">The title for the dialog.</param>
+    /// <param name="messageDescription">The message header.</param>
+    /// <param name="message">The message to be displayed.</param>
+    /// <param name="isOnlyOk">True, if only the OK button should be displayed.</param>
+    public VianaDialog(string title, string messageDescription, string message, bool isOnlyOk)
     {
       this.InitializeComponent();
       this.VianaTitle = title;
       this.MessageDescription = messageDescription;
       this.Message = message;
+      this.CancelButton.Visibility = isOnlyOk ? Visibility.Hidden : Visibility.Visible;
     }
 
     #endregion
@@ -89,10 +76,6 @@ namespace VianaNET.MainWindow
         this.DescriptionArea.Background = value;
       }
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
@@ -116,7 +99,7 @@ namespace VianaNET.MainWindow
     {
       set
       {
-        this.description.Content = value;
+        this.Description.Content = value;
       }
     }
 
@@ -148,42 +131,32 @@ namespace VianaNET.MainWindow
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
-    /// The button_ click.
+    /// Event handler for the button click event.
+    /// OK is clicked, so set the dialog result to true and exit.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Button_Click(object sender, RoutedEventArgs e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments.</param>
+    private void OkButtonClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
       this.Close();
     }
 
+    /// <summary>
+    /// Event handler for the button click event.
+    /// Cancel is clicked, so set the dialog result to false and exit.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments.</param>
+    private void CancelButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = false;
+      this.Close();
+    }
+
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

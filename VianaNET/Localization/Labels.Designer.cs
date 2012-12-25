@@ -106,6 +106,33 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @AskSaveProjectDialogDescription.
+        /// </summary>
+        internal static string AskSaveProjectDialogDescription {
+            get {
+                return ResourceManager.GetString("AskSaveProjectDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AskSaveProjectDialogMessage.
+        /// </summary>
+        internal static string AskSaveProjectDialogMessage {
+            get {
+                return ResourceManager.GetString("AskSaveProjectDialogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AskSaveProjectDialogTitle.
+        /// </summary>
+        internal static string AskSaveProjectDialogTitle {
+            get {
+                return ResourceManager.GetString("AskSaveProjectDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @AxisAcceleration.
         /// </summary>
         internal static string AxisAcceleration {
@@ -3382,6 +3409,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @QATButtonSaveAsLabelTitle.
+        /// </summary>
+        internal static string QATButtonSaveAsLabelTitle {
+            get {
+                return ResourceManager.GetString("QATButtonSaveAsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @QATButtonSaveAsToolTipDescription.
+        /// </summary>
+        internal static string QATButtonSaveAsToolTipDescription {
+            get {
+                return ResourceManager.GetString("QATButtonSaveAsToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @QATButtonSaveLabelDescription.
         /// </summary>
         internal static string QATButtonSaveLabelDescription {
@@ -3900,6 +3945,24 @@ namespace VianaNET.Localization {
         internal static string RibbonVideoDevicesSelectDeviceLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonVideoDevicesSelectDeviceLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SaveProjectDialogDescription.
+        /// </summary>
+        internal static string SaveProjectDialogDescription {
+            get {
+                return ResourceManager.GetString("SaveProjectDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SaveProjectDialogMessage.
+        /// </summary>
+        internal static string SaveProjectDialogMessage {
+            get {
+                return ResourceManager.GetString("SaveProjectDialogMessage", resourceCulture);
             }
         }
         

@@ -24,21 +24,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
-
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
-
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
-  using VianaNET.Localization;
-  using VianaNET.MainWindow;
+  using Application;
+  using CustomStyles.Types;
+  using Localization;
+  using MainWindow;
 
   /// <summary>
   ///   The length dialog.
   /// </summary>
-  public partial class LengthDialog : Window
+  public partial class LengthDialog
   {
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Constants                                                        //
@@ -115,19 +112,19 @@ namespace VianaNET.Modules.Video.Dialogs
       string addOn = string.Empty;
       if (double.TryParse(this.txbLength.Text, out result))
       {
-        if (this.rdbKM.IsChecked.Value)
+        if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {
           Project.Instance.CalibrationData.RulerUnit = Unit.km;
         }
-        else if (this.rdbM.IsChecked.Value)
+        else if (this.rdbM.IsChecked.GetValueOrDefault(false))
         {
           Project.Instance.CalibrationData.RulerUnit = Unit.m;
         }
-        else if (this.rdbCM.IsChecked.Value)
+        else if (this.rdbCM.IsChecked.GetValueOrDefault(false))
         {
           Project.Instance.CalibrationData.RulerUnit = Unit.cm;
         }
-        else if (this.rdbMM.IsChecked.Value)
+        else if (this.rdbMM.IsChecked.GetValueOrDefault(false))
         {
           Project.Instance.CalibrationData.RulerUnit = Unit.mm;
         }
@@ -143,7 +140,11 @@ namespace VianaNET.Modules.Video.Dialogs
       else
       {
         var dlg = new VianaDialog(
-          Labels.CalibrationErrorTitle, Labels.CalibrationErrorDescription, Labels.CalibrationErrorMessage);
+          Labels.CalibrationErrorTitle,
+          Labels.CalibrationErrorDescription,
+          Labels.CalibrationErrorMessage,
+          true);
+
         dlg.ShowDialog();
       }
     }
