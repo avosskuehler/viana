@@ -23,6 +23,7 @@
 //   The select color window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+using VianaNET.Logging;
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System;
@@ -58,9 +59,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject", 
-        typeof(int), 
-        typeof(SelectColorWindow), 
+        "IndexOfTrackedObject",
+        typeof(int),
+        typeof(SelectColorWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -173,7 +174,7 @@ namespace VianaNET.Modules.Video.Dialogs
       }
       catch (Exception)
       {
-        var error = new VianaDialog("Error", "No Color selected", "Could not detect the color at the given position");
+        var error = new VianaDialog("Error", "No Color selected", "Could not detect the color at the given position", true);
         error.ShowDialog();
       }
 

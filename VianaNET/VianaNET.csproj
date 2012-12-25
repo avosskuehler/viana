@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\ExtensionMethods.cs" />
+    <Compile Include="Application\ProjectEntry.cs" />
     <Compile Include="Application\RecentFiles.cs" />
     <Compile Include="Application\VianaNETApplication.xaml.cs">
       <DependentUpon>VianaNETApplication.xaml</DependentUpon>
@@ -140,6 +141,7 @@
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
+    <Compile Include="Settings.cs" />
     <Page Include="CustomStyles\Styles\OfficeColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -565,6 +567,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />

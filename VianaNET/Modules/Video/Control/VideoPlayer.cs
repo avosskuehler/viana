@@ -369,9 +369,6 @@ namespace VianaNET.Modules.Video.Control
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
 
-        // Add video file to recent files list
-        RecentFiles.Instance.Add(fileName);
-
         var videoHeader = new MediaInfo();
         videoHeader.Open(fileName);
 
