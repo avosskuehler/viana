@@ -23,14 +23,16 @@
 //   The interpolation base.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter
 {
   using System.Collections.Generic;
   using System.Windows;
-
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
-
+  using System.Xml.Serialization;
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
+  
   /// <summary>
   ///   The interpolation base.
   /// </summary>
@@ -95,12 +97,26 @@ namespace VianaNET.Data.Filter
     /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
     /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
     /// </summary>
+    [XmlIgnore]
     public List<double> WertX { get; set; }
+
+    /// <summary>
+    /// Gets or sets the minimal value of the WertX Array
+    /// </summary>
+    [XmlIgnore]
+    public double WertXMin { get; set; }
+
+    /// <summary>
+    /// Gets or sets the maximal value of the WertX Array
+    /// </summary>
+    [XmlIgnore]
+    public double WertXMax { get; set; }
 
     /// <summary>
     /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
     /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
     /// </summary>
+    [XmlIgnore]
     public List<double> WertY { get; set; }
 
     /// <summary>
@@ -124,18 +140,12 @@ namespace VianaNET.Data.Filter
     #region Public Methods and Operators
 
     /// <summary>
-    /// The calculate interpolated values.
+    /// This virtual method should be overridden from
+    /// a filter to calculate filtered values.
     /// </summary>
-    /// <param name="originalSamples">
-    /// The original data samples to be fitted
-    /// </param>
-    /// <param name="fittedSamples">The collection to be populated with the fitted samples</param>
-    public virtual void CalculateFilterValues(DataCollection originalSamples, SortedObservableCollection<XYSample> fittedSamples)
+    public virtual void CalculateFilterValues()
     {
-      //if (this.WertX.Count == 0)
-      {
-        this.CopySampleColumnsToArrays(VideoData.Instance.ActiveObject, originalSamples);
-      }
+      this.CopySampleColumnsToArrays();
     }
 
     /// <summary>
@@ -171,26 +181,24 @@ namespace VianaNET.Data.Filter
     #endregion
 
     /// <summary>
-    /// The copy sample columns to arrays.
+    /// Copies data sample columns to WertX and WertY arrays.
+    /// Both arrays are used to determine the filter values.
     /// </summary>
-    /// <param name="aktObjectNr">
-    /// The akt object nr. 
-    /// </param>
-    /// <param name="originalSamples">
-    /// The original Samples.
-    /// </param>
-    private void CopySampleColumnsToArrays(int aktObjectNr, DataCollection originalSamples)
+    private void CopySampleColumnsToArrays()
     {
       if (this.WertX == null)
       {
         return;
       }
 
+      var aktObjectNr = Project.Instance.VideoData.ActiveObject;
       this.WertX.Clear();
       this.WertY.Clear();
+      this.WertXMin = double.MaxValue;
+      this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (TimeSample sample in originalSamples)
+      foreach (var sample in Project.Instance.VideoData.Samples)
       {
         var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
         var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
@@ -204,6 +212,16 @@ namespace VianaNET.Data.Filter
 
           this.WertX.Add(valueX.Value);
           this.WertY.Add(valueY.Value);
+          if (valueX.Value > this.WertXMax)
+          {
+            this.WertXMax = valueX.Value;
+          }
+
+          if (valueX.Value < this.WertXMin)
+          {
+            this.WertXMin = valueX.Value;
+          }
+
           this.endPixelX = sample.Object[aktObjectNr].PixelX;
           this.anzahl++;
         }
@@ -245,7 +263,7 @@ namespace VianaNET.Data.Filter
     {
       double? value = null;
 
-      switch (isXValue ? FilterData.Instance.AxisX.Axis : FilterData.Instance.AxisY.Axis)
+      switch (isXValue ? Project.Instance.FilterData.AxisX.Axis : Project.Instance.FilterData.AxisY.Axis)
       {
         case AxisType.T:
           value = sample.Timestamp;

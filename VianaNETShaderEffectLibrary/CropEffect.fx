@@ -14,6 +14,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	{
 		return blankColor;
 	}
-	
+	else {
     return color;
+	}
 }

@@ -23,6 +23,7 @@
 //   The length dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
@@ -113,25 +114,25 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {
-          CalibrationData.Instance.RulerUnit = Unit.km;
+          Project.Instance.CalibrationData.RulerUnit = Unit.km;
         }
         else if (this.rdbM.IsChecked.GetValueOrDefault(false))
         {
-          CalibrationData.Instance.RulerUnit = Unit.m;
+          Project.Instance.CalibrationData.RulerUnit = Unit.m;
         }
         else if (this.rdbCM.IsChecked.GetValueOrDefault(false))
         {
-          CalibrationData.Instance.RulerUnit = Unit.cm;
+          Project.Instance.CalibrationData.RulerUnit = Unit.cm;
         }
         else if (this.rdbMM.IsChecked.GetValueOrDefault(false))
         {
-          CalibrationData.Instance.RulerUnit = Unit.mm;
+          Project.Instance.CalibrationData.RulerUnit = Unit.mm;
         }
 
         // This line is necessary to get an update event for the ruler value
         // even if only the ruler unit was changed
-        CalibrationData.Instance.RulerValueInRulerUnits = -1;
-        CalibrationData.Instance.RulerValueInRulerUnits = result;
+        Project.Instance.CalibrationData.RulerValueInRulerUnits = -1;
+        Project.Instance.CalibrationData.RulerValueInRulerUnits = result;
 
         this.DialogResult = true;
         this.Close();

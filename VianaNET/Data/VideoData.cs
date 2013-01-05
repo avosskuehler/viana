@@ -23,18 +23,20 @@
 //   The video data.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data
 {
   using System;
   using System.ComponentModel;
   using System.Windows;
-
-  using VianaNET.Data.Collections;
-  using VianaNET.Modules.Video.Control;
+  using Application;
+  using Collections;
+  using Modules.Video.Control;
 
   /// <summary>
   ///   The video data.
   /// </summary>
+  [Serializable]
   public class VideoData : DependencyObject, INotifyPropertyChanged
   {
     #region Static Fields
@@ -57,23 +59,16 @@ namespace VianaNET.Data
     public static readonly DependencyProperty SamplesProperty = DependencyProperty.Register(
       "Samples", typeof(DataCollection), typeof(VideoData), new UIPropertyMetadata(null));
 
-    /// <summary>
-    ///   The instance.
-    /// </summary>
-    private static VideoData instance;
-
     #endregion
 
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Prevents a default instance of the <see cref="VideoData" /> class from being created. 
-    ///   Initializes a new instance of the DataStream class.
+    /// Initializes a new instance of the <see cref="VideoData"/> class. 
     /// </summary>
-    private VideoData()
+    public VideoData()
     {
       this.Samples = new DataCollection();
-      this.LastPoint = new Point[Video.Instance.ProcessingData.NumberOfTrackedObjects];
       this.ActiveObject = 0;
     }
 
@@ -89,20 +84,6 @@ namespace VianaNET.Data
     #endregion
 
     #region Public Properties
-
-    /// <summary>
-    ///   Gets the <see cref="VideoData" /> singleton.
-    ///   If the underlying instance is null, a instance will be created.
-    /// </summary>
-    public static VideoData Instance
-    {
-      get
-      {
-        // check again, if the underlying instance is null
-        // return the existing/new instance
-        return instance ?? (instance = new VideoData());
-      }
-    }
 
     /// <summary>
     ///   Gets the count.
@@ -160,23 +141,33 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(SamplesProperty, value);
+        this.OnPropertyChanged("Samples");
       }
     }
 
-    /// <summary>
-    /// Gets a value indicating whether there is at least one data sample
-    /// </summary>
-    public bool HasSamples
-    {
-      get
-      {
-        return this.Count > 0;
-      }
-    }
+    ///// <summary>
+    ///// Gets a value indicating whether there is at least one data sample
+    ///// </summary>
+    //public bool HasSamples
+    //{
+    //  get
+    //  {
+    //    return this.Count > 0;
+    //  }
+    //}
 
     #endregion
 
     #region Public Methods and Operators
+
+    public void NotifyLoading()
+    {
+      // Recalculate dependent data values
+      Project.Instance.VideoData.RefreshDistanceVelocityAcceleration();
+
+      // Update dependencies
+      this.OnPropertyChanged("Samples");
+    }
 
     /// <summary>
     /// The add point.
@@ -223,12 +214,12 @@ namespace VianaNET.Data
     /// </summary>
     public void RefreshDistanceVelocityAcceleration()
     {
-      var previousSamples = new TimeSample[Video.Instance.ProcessingData.NumberOfTrackedObjects];
-      var validSamples = new int[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      var previousSamples = new TimeSample[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+      var validSamples = new int[Project.Instance.ProcessingData.NumberOfTrackedObjects];
 
       foreach (TimeSample timeSample in this.Samples)
       {
-        for (int j = 0; j < Video.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
         {
           DataSample currentSample = timeSample.Object[j];
           if (currentSample == null)
@@ -306,7 +297,7 @@ namespace VianaNET.Data
     public void Reset()
     {
       this.Samples.Clear();
-      this.LastPoint = new Point[Video.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Project.Instance.ProcessingData.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
 
@@ -339,15 +330,15 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!CalibrationData.Instance.IsVideoCalibrated)
+      if (!Project.Instance.CalibrationData.IsVideoCalibrated)
       {
         return new Point(value.PixelX, value.PixelY);
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(-CalibrationData.Instance.OriginInPixel.X, -CalibrationData.Instance.OriginInPixel.Y);
-      calibratedPoint.X = calibratedPoint.X * CalibrationData.Instance.ScalePixelToUnit;
-      calibratedPoint.Y = calibratedPoint.Y * CalibrationData.Instance.ScalePixelToUnit;
+      calibratedPoint.Offset(-Project.Instance.CalibrationData.OriginInPixel.X, -Project.Instance.CalibrationData.OriginInPixel.Y);
+      calibratedPoint.X = calibratedPoint.X * Project.Instance.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Y = calibratedPoint.Y * Project.Instance.CalibrationData.ScalePixelToUnit;
 
       return calibratedPoint;
     }

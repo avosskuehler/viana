@@ -39,6 +39,7 @@ namespace VianaNET.Data
   ///   used to measure lenght in the video, if the user has provided
   ///   a calibration point and length.
   /// </summary>
+  [Serializable]
   public class CalibrationData : DependencyObject, INotifyPropertyChanged
   {
     ///////////////////////////////////////////////////////////////////////////////
@@ -54,9 +55,9 @@ namespace VianaNET.Data
     ///   The <see cref="DependencyProperty" /> for the property <see cref="AccelerationUnit" />.
     /// </summary>
     public static readonly DependencyProperty AccelerationUnitProperty = DependencyProperty.Register(
-      "AccelerationUnit", 
-      typeof(string), 
-      typeof(CalibrationData), 
+      "AccelerationUnit",
+      typeof(string),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata("px/s^2", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
@@ -70,9 +71,9 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty GradientBackgroundProperty =
       DependencyProperty.Register(
-        "GradientBackground", 
-        typeof(LinearGradientBrush), 
-        typeof(CalibrationData), 
+        "GradientBackground",
+        typeof(LinearGradientBrush),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(
           default(LinearGradientBrush), FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
@@ -80,18 +81,18 @@ namespace VianaNET.Data
     ///   The <see cref="DependencyProperty" /> for the property <see cref="HasClipRegion" />.
     /// </summary>
     public static readonly DependencyProperty HasClipRegionProperty = DependencyProperty.Register(
-      "HasClipRegion", 
-      typeof(Boolean), 
-      typeof(CalibrationData), 
+      "HasClipRegion",
+      typeof(Boolean),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty IsShowingUnitsProperty = DependencyProperty.Register(
-      "IsShowingUnits", 
-      typeof(bool), 
-      typeof(CalibrationData), 
+      "IsShowingUnits",
+      typeof(bool),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
@@ -99,27 +100,27 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty IsVideoCalibratedProperty =
       DependencyProperty.Register(
-        "IsVideoCalibrated", 
-        typeof(Boolean), 
-        typeof(CalibrationData), 
+        "IsVideoCalibrated",
+        typeof(Boolean),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty PixelUnitProperty = DependencyProperty.Register(
-      "PixelUnit", 
-      typeof(string), 
-      typeof(CalibrationData), 
+      "PixelUnit",
+      typeof(string),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata("px", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="PositionUnit" />.
     /// </summary>
     public static readonly DependencyProperty PositionUnitProperty = DependencyProperty.Register(
-      "PositionUnit", 
-      typeof(string), 
-      typeof(CalibrationData), 
+      "PositionUnit",
+      typeof(string),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata("px", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
@@ -127,33 +128,28 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty RulerValueInRulerUnitsProperty =
       DependencyProperty.Register(
-        "RulerValueInRulerUnits", 
-        typeof(double), 
-        typeof(CalibrationData), 
+        "RulerValueInRulerUnits",
+        typeof(double),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(default(double), OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty TimeUnitProperty = DependencyProperty.Register(
-      "TimeUnit", 
-      typeof(string), 
-      typeof(CalibrationData), 
+      "TimeUnit",
+      typeof(string),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata("ms", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="VelocityUnit" />.
     /// </summary>
     public static readonly DependencyProperty VelocityUnitProperty = DependencyProperty.Register(
-      "VelocityUnit", 
-      typeof(string), 
-      typeof(CalibrationData), 
+      "VelocityUnit",
+      typeof(string),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata("px/s", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
-
-    /// <summary>
-    ///   Holds the instance of singleton
-    /// </summary>
-    private static CalibrationData instance;
 
     #endregion
 
@@ -176,7 +172,7 @@ namespace VianaNET.Data
     ///   Prevents a default instance of the <see cref="CalibrationData" /> class from being created. 
     ///   Initializes an instance of the Calibration class.
     /// </summary>
-    private CalibrationData()
+    public CalibrationData()
     {
       this.InitFields();
     }
@@ -199,26 +195,6 @@ namespace VianaNET.Data
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
-
-    /// <summary>
-    ///   Gets the <see cref="CalibrationData" /> singleton.
-    ///   If the underlying instance is null, a instance will be created.
-    /// </summary>
-    public static CalibrationData Instance
-    {
-      get
-      {
-        // check again, if the underlying instance is null
-        if (instance == null)
-        {
-          // create a new instance
-          instance = new CalibrationData();
-        }
-
-        // return the existing/new instance
-        return instance;
-      }
-    }
 
     /// <summary>
     ///   Gets or sets the acceleration unit string. (Pixel per second squared by default)
@@ -491,13 +467,6 @@ namespace VianaNET.Data
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
@@ -528,14 +497,6 @@ namespace VianaNET.Data
       (obj as CalibrationData).OnPropertyChanged(args);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     ///   Initially set the properties default values.
     /// </summary>
@@ -550,7 +511,7 @@ namespace VianaNET.Data
       this.IsVideoCalibrated = false;
       this.HasClipRegion = false;
       this.RulerDescription = string.Empty;
-      this.ClipRegion = Rect.Empty;
+      this.ClipRegion = new Rect(0, 0, 0, 0);
       this.PositionUnit = "px";
       this.VelocityUnit = "px/s";
       this.AccelerationUnit = "px/s^2";
@@ -558,9 +519,5 @@ namespace VianaNET.Data
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }
