@@ -23,6 +23,7 @@
 //   The data grid window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
@@ -31,10 +32,8 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Data;
-
-  using VianaNET.Data;
-  using VianaNET.Localization;
-  using VianaNET.Modules.Video.Control;
+  using Application;
+  using Localization;
 
   /// <summary>
   ///   The data grid window.
@@ -50,12 +49,21 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
       this.PopulateDataGridWithColumns();
-      CalibrationData.Instance.PropertyChanged += this.DataPropertyChanged;
-      VideoData.Instance.PropertyChanged += this.DataPropertyChanged;
-      Video.Instance.ProcessingData.PropertyChanged += this.DataPropertyChanged;
+      Project.Instance.CalibrationData.PropertyChanged += this.DataPropertyChanged;
+      Project.Instance.VideoData.PropertyChanged += this.DataPropertyChanged;
+      Project.Instance.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
 
     #endregion
+
+    /// <summary>
+    /// Update the datagrids items source
+    /// </summary>
+    public void Refresh()
+    {
+      this.DataGrid.ItemsSource = null;
+      this.DataGrid.ItemsSource = Project.Instance.VideoData.Samples;
+    }
 
     #region Methods
 
@@ -94,7 +102,7 @@ namespace VianaNET.Modules.DataGrid
         };
 
       newColumn.Binding = valueBinding;
-      this.dataGrid.Columns.Add(newColumn);
+      this.DataGrid.Columns.Add(newColumn);
     }
 
     /// <summary>
@@ -128,7 +136,7 @@ namespace VianaNET.Modules.DataGrid
     private void PopulateDataGridWithColumns()
     {
       // Clear existing columns
-      this.dataGrid.Columns.Clear();
+      this.DataGrid.Columns.Clear();
 
       // Create style string arrays
       var cellStyles = new List<string[]>
@@ -152,7 +160,7 @@ namespace VianaNET.Modules.DataGrid
       // frameColumn.SortMemberPath = "Framenumber";
       var valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
       frameColumn.Binding = valueBinding;
-      this.dataGrid.Columns.Add(frameColumn);
+      this.DataGrid.Columns.Add(frameColumn);
 
       // Create default time column
       var timeColumn = new DataGridTextColumn
@@ -173,12 +181,12 @@ namespace VianaNET.Modules.DataGrid
         };
 
       timeColumn.Binding = valueBindingTime;
-      this.dataGrid.Columns.Add(timeColumn);
+      this.DataGrid.Columns.Add(timeColumn);
 
       // For each tracked object create the whole bunch of columns
-      for (int i = 0; i < Video.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        string prefix = Video.Instance.ProcessingData.NumberOfTrackedObjects > 1
+        string prefix = Project.Instance.ProcessingData.NumberOfTrackedObjects > 1
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
         var obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
@@ -206,15 +214,6 @@ namespace VianaNET.Modules.DataGrid
         this.CreateColumn(
           obj + "AccelerationY", prefix + Labels.DataGridYAcceleration, cellStyles[i], "AccelerationMeasurement");
       }
-    }
-
-    /// <summary>
-    ///   The refresh.
-    /// </summary>
-    private void Refresh()
-    {
-      this.dataGrid.ItemsSource = null;
-      this.dataGrid.ItemsSource = VideoData.Instance.Samples;
     }
 
     #endregion

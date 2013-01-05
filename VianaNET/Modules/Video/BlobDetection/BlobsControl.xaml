@@ -16,7 +16,7 @@
           <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Name="ObjectSelectionGrid" Margin="0,0,0,3"
-              Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Video.Instance.ProcessingData}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+              Visibility="{Binding Path=NumberOfTrackedObjects, Source={x:Static Viana:Project.Instance.ProcessingData}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="85"/>
             <ColumnDefinition Width="*"/>
@@ -62,7 +62,7 @@
         <charting:Chart.Series>
           <charting:ScatterSeries 
             Title="{lex:LocText VianaNET:Labels:ChartWindowChartSeries}" 
-            ItemsSource="{Binding Path=Samples, Source={x:Static Viana:VideoData.Instance}}"
+            ItemsSource="{Binding Path=Samples, Source={x:Static Viana:Project.Instance.VideoData}}"
             IndependentValueBinding="{Binding DistanceX}" 
             DependentValueBinding="{Binding DistanceY}">
             <charting:ScatterSeries.IndependentAxis>

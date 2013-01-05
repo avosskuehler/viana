@@ -23,59 +23,19 @@
 //   The data sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Collections
 {
+  using System.Xml.Serialization;
+
   /// <summary>
-  ///   The data sample.
+  /// This class is the container for the data samples without a time stamp.
+  /// The XmlIgnore attribute is used to reduce the data,
+  /// cause we can recalculate the values after loading.
   /// </summary>
   public class DataSample
   {
     #region Public Properties
-
-    /// <summary>
-    ///   Gets or sets the acceleration.
-    /// </summary>
-    public double? Acceleration { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the acceleration x.
-    /// </summary>
-    public double? AccelerationX { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the acceleration y.
-    /// </summary>
-    public double? AccelerationY { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the distance.
-    /// </summary>
-    public double Distance { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the distance x.
-    /// </summary>
-    public double DistanceX { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the distance y.
-    /// </summary>
-    public double DistanceY { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the length.
-    /// </summary>
-    public double Length { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the length x.
-    /// </summary>
-    public double LengthX { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the length y.
-    /// </summary>
-    public double LengthY { get; set; }
 
     /// <summary>
     ///   Gets or sets the pixel x.
@@ -88,28 +48,87 @@ namespace VianaNET.Data.Collections
     public double PixelY { get; set; }
 
     /// <summary>
+    ///   Gets or sets the acceleration.
+    /// </summary>
+    [XmlIgnore]
+    public double? Acceleration { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the acceleration x.
+    /// </summary>
+    [XmlIgnore]
+    public double? AccelerationX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the acceleration y.
+    /// </summary>
+    [XmlIgnore]
+    public double? AccelerationY { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the distance.
+    /// </summary>
+    [XmlIgnore]
+    public double Distance { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the distance x.
+    /// </summary>
+    [XmlIgnore]
+    public double DistanceX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the distance y.
+    /// </summary>
+    [XmlIgnore]
+    public double DistanceY { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the length.
+    /// </summary>
+    [XmlIgnore]
+    public double Length { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the length x.
+    /// </summary>
+    [XmlIgnore]
+    public double LengthX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the length y.
+    /// </summary>
+    [XmlIgnore]
+    public double LengthY { get; set; }
+
+    /// <summary>
     ///   Gets or sets the position x.
     /// </summary>
+    [XmlIgnore]
     public double PositionX { get; set; }
 
     /// <summary>
     ///   Gets or sets the position y.
     /// </summary>
+    [XmlIgnore]
     public double PositionY { get; set; }
 
     /// <summary>
     ///   Gets or sets the velocity.
     /// </summary>
+    [XmlIgnore]
     public double? Velocity { get; set; }
 
     /// <summary>
     ///   Gets or sets the velocity x.
     /// </summary>
+    [XmlIgnore]
     public double? VelocityX { get; set; }
 
     /// <summary>
     ///   Gets or sets the velocity y.
     /// </summary>
+    [XmlIgnore]
     public double? VelocityY { get; set; }
 
     #endregion

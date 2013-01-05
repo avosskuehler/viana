@@ -23,10 +23,12 @@
 //   The exponential smooth filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Interpolation
 {
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
 
   /// <summary>
   ///   The exponential smooth filter.
@@ -60,23 +62,21 @@ namespace VianaNET.Data.Filter.Interpolation
     #region Public Methods and Operators
 
     /// <summary>
-    /// The calculate interpolated values.
+    /// Calculate exponential smoothed values for the current data series.
     /// </summary>
-    /// <param name="originalSamples">
-    /// The samples. 
-    /// </param>
-    /// <param name="fittedSamples">
-    /// The interpolated Samples.
-    /// </param>
-    public override void CalculateFilterValues(DataCollection originalSamples, SortedObservableCollection<XYSample> fittedSamples)
+    public override void CalculateFilterValues()
     {
-      base.CalculateFilterValues(originalSamples, fittedSamples);
-      fittedSamples.Clear();
-      for (int i = 1; i < this.WertY.Count; i++)
+      base.CalculateFilterValues();
+
+      var fittedSamples = new SortedObservableCollection<XYSample>();
+
+      for (var i = 1; i < this.WertY.Count; i++)
       {
         var smoothValue = this.SmoothingFactor * this.WertY[i] + (1 - this.SmoothingFactor) * this.WertY[i - 1];
         fittedSamples.Add(new XYSample(this.WertX[i], smoothValue));
       }
+
+      Project.Instance.FilterData.InterpolationSeries = fittedSamples;
     }
 
     #endregion

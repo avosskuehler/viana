@@ -27,6 +27,9 @@
 //   the application.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Modules.Video.Control
 {
   using System;
@@ -275,7 +278,7 @@ namespace VianaNET.Modules.Video.Control
         return;
       }
 
-      Video.Instance.ProcessingData.InitializeImageFilters();
+      Project.Instance.ProcessingData.InitializeImageFilters();
 
       this.Play();
       this.HasVideo = true;

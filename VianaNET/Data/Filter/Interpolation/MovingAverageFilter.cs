@@ -23,13 +23,14 @@
 //   The moving average filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Linq;
-
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
-
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
+  
   /// <summary>
   ///   The moving average filter.
   /// </summary>
@@ -52,19 +53,13 @@ namespace VianaNET.Data.Filter.Interpolation
     #region Public Methods and Operators
 
     /// <summary>
-    /// The calculate interpolated values.
+    /// Calculate moving average values for the current data series.
     /// </summary>
-    /// <param name="originalSamples">
-    /// The original Samples.
-    /// </param>
-    /// <param name="fittedSamples">
-    /// The fitted Samples.
-    /// </param>
-    public override void CalculateFilterValues(DataCollection originalSamples, SortedObservableCollection<XYSample> fittedSamples)
+    public override void CalculateFilterValues()
     {
-      base.CalculateFilterValues(originalSamples, fittedSamples);
+      base.CalculateFilterValues();
 
-      fittedSamples.Clear();
+      var fittedSamples = new SortedObservableCollection<XYSample>();
       var startIndex = (int)(this.NumberOfSamplesToInterpolate / 2f);
 
       // Calculate interpolation
@@ -73,6 +68,8 @@ namespace VianaNET.Data.Filter.Interpolation
         var samplesForInterpolation = this.GetRangeAtPosition(i - startIndex, this.NumberOfSamplesToInterpolate);
         fittedSamples.Add(new XYSample(this.WertX[i], samplesForInterpolation.Sum() / this.NumberOfSamplesToInterpolate));
       }
+
+      Project.Instance.FilterData.InterpolationSeries = fittedSamples;
     }
 
     #endregion

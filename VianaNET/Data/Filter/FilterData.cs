@@ -23,24 +23,26 @@
 //   The video data.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter
 {
+  using System;
   using System.ComponentModel;
   using System.Globalization;
   using System.Windows;
   using System.Windows.Media;
-
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
-  using VianaNET.Data.Filter.Interpolation;
-  using VianaNET.Data.Filter.Regression;
-  using VianaNET.Data.Filter.Theory;
-
+  using System.Xml.Serialization;
+  using Collections;
+  using CustomStyles.Types;
+  using Interpolation;
+  using Regression;
+  using Theory;
   using WPFMath;
 
   /// <summary>
   ///   The video data.
   /// </summary>
+  [Serializable]
   public class FilterData : DependencyObject, INotifyPropertyChanged
   {
     #region Static Fields
@@ -201,19 +203,14 @@ namespace VianaNET.Data.Filter
     public static readonly DependencyProperty RegressionAberrationProperty = DependencyProperty.Register(
       "RegressionAberration", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
 
-    /// <summary>
-    ///   The instance.
-    /// </summary>
-    private static FilterData instance;
-
     #endregion
 
     #region Constructors and Destructors
 
     /// <summary>
-    /// Prevents a default instance of the <see cref="FilterData"/> class from being created. 
+    /// Initializes a new instance of the <see cref="FilterData"/> class. 
     /// </summary>
-    private FilterData()
+    public FilterData()
     {
       this.NumericPrecision = 2;
       this.InterpolationSeries = new SortedObservableCollection<XYSample>();
@@ -247,18 +244,6 @@ namespace VianaNET.Data.Filter
     #endregion
 
     #region Public Properties
-
-    /// <summary>
-    ///   Gets the <see cref="FilterData" /> singleton.
-    ///   If the underlying instance is null, a instance will be created.
-    /// </summary>
-    public static FilterData Instance
-    {
-      get
-      {
-        return instance ?? (instance = new FilterData());
-      }
-    }
 
     /// <summary>
     ///   Gets or sets a the interpolation filter to use for
@@ -505,15 +490,6 @@ namespace VianaNET.Data.Filter
 
       set
       {
-        if (value)
-        {
-          this.CalculateInterpolationSeriesDataPoints();
-        }
-        else
-        {
-          this.InterpolationSeries.Clear();
-        }
-
         this.SetValue(IsShowingInterpolationSeriesProperty, value);
       }
     }
@@ -531,14 +507,6 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(IsShowingRegressionSeriesProperty, value);
-        if (value)
-        {
-          this.CalculateRegressionSeriesDataPoints();
-        }
-        else
-        {
-          this.RegressionSeries.Clear();
-        }      
       }
     }
 
@@ -555,14 +523,6 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(IsShowingTheorySeriesProperty, value);
-        if (value)
-        {
-          this.CalculateTheorySeriesDataPoints();
-        }
-        else
-        {
-          this.TheorySeries.Clear();
-        }       
       }
     }
 
@@ -590,6 +550,7 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the InterpolationSeries.
     /// </summary>
+    [XmlIgnore]
     public SortedObservableCollection<XYSample> InterpolationSeries
     {
       get
@@ -606,6 +567,7 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the RegressionSeries.
     /// </summary>
+    [XmlIgnore]
     public SortedObservableCollection<XYSample> RegressionSeries
     {
       get
@@ -616,12 +578,14 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(RegressionSeriesProperty, value);
+        this.OnPropertyChanged("RegressionSeries");
       }
     }
 
     /// <summary>
     /// Gets or sets the TheorySeries.
     /// </summary>
+    [XmlIgnore]
     public SortedObservableCollection<XYSample> TheorySeries
     {
       get
@@ -719,7 +683,7 @@ namespace VianaNET.Data.Filter
         this.SetValue(RegressionAberrationProperty, value);
         if (this.IsShowingRegressionSeries)
         {
-            this.OnPropertyChanged("RegressionAberration");
+          this.OnPropertyChanged("RegressionAberration");
         }
       }
     }
@@ -756,7 +720,7 @@ namespace VianaNET.Data.Filter
 
       if (this.IsShowingInterpolationSeries)
       {
-        this.InterpolationFilter.CalculateFilterValues(VideoData.Instance.Samples, this.InterpolationSeries);
+        this.InterpolationFilter.CalculateFilterValues();
       }
       else
       {
@@ -776,7 +740,7 @@ namespace VianaNET.Data.Filter
 
       if (this.IsShowingRegressionSeries)
       {
-        this.RegressionFilter.CalculateFilterValues(VideoData.Instance.Samples, this.RegressionSeries);
+        this.RegressionFilter.CalculateFilterValues();
         this.RegressionFilter.UpdateLinefitFunctionData(true);
       }
       else
@@ -802,7 +766,7 @@ namespace VianaNET.Data.Filter
 
       if (this.IsShowingTheorySeries)
       {
-        this.TheoryFilter.CalculateFilterValues(VideoData.Instance.Samples, this.TheorySeries);
+        this.TheoryFilter.CalculateFilterValues();
       }
       else
       {
