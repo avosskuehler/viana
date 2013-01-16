@@ -21,6 +21,7 @@
     <SccProvider>
     </SccProvider>
     <ApplicationIcon>Images\VianaNET.ico</ApplicationIcon>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Properties\VianaNETKey.snk</AssemblyOriginatorKeyFile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -104,11 +105,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <StartupObject>VianaNET.Application.VianaNetApplication</StartupObject>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -142,12 +139,12 @@
     </Compile>
     <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
     <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
-    <Compile Include="CustomStyles\Converter\SamplesToHasSamplesConverter.cs" />
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
+    <Compile Include="CustomStyles\Converter\SamplesToHasSamplesConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
     <Compile Include="Settings.cs" />
     <Page Include="CustomStyles\Styles\OfficeColors.xaml">

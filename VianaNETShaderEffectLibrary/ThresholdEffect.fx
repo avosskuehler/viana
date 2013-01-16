@@ -24,7 +24,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	{
 		return cropColor;
 	}
-
+	else {
 	float4 Color= tex2D(input , uv);
 		
 	if ((Color.r < rMin || Color.r > rMax) || 
@@ -33,6 +33,8 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	{
 		return blankColor;
 	}
-	
+	else {
     return Color;
+	}
+	}
 }
