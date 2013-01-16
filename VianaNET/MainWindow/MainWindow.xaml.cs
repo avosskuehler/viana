@@ -212,8 +212,9 @@ namespace VianaNET.MainWindow
       Project.Instance.FilterData.TheoreticalFunction = openedProject.FilterData.TheoreticalFunction;
       Project.Instance.FilterData.AxisX = openedProject.FilterData.AxisX;
       Project.Instance.FilterData.AxisY = openedProject.FilterData.AxisY;
-      Project.Instance.FilterData.RegressionFilter = openedProject.FilterData.RegressionFilter;
-      Project.Instance.FilterData.RegressionAberration = openedProject.FilterData.RegressionAberration;
+     // No calculation until series updated
+     // Project.Instance.FilterData.RegressionFilter = openedProject.FilterData.RegressionFilter;
+     // Project.Instance.FilterData.RegressionAberration = openedProject.FilterData.RegressionAberration;
       Project.Instance.FilterData.IsShowingDataSeries = openedProject.FilterData.IsShowingDataSeries;
       Project.Instance.FilterData.IsShowingInterpolationSeries = openedProject.FilterData.IsShowingInterpolationSeries;
       Project.Instance.FilterData.IsShowingRegressionSeries = openedProject.FilterData.IsShowingRegressionSeries;
@@ -224,6 +225,9 @@ namespace VianaNET.MainWindow
       Project.Instance.VideoFile = openedProject.VideoFile;
       Project.Instance.VideoMode = openedProject.VideoMode;
 
+// after updating series do calculation
+      Project.Instance.FilterData.RegressionFilter = openedProject.FilterData.RegressionFilter;
+      Project.Instance.FilterData.RegressionAberration = openedProject.FilterData.RegressionAberration;
       // Restore video mode
       Video.Instance.VideoMode = Project.Instance.VideoMode;
       switch (Project.Instance.VideoMode)
@@ -768,6 +772,21 @@ namespace VianaNET.MainWindow
         }
       }
       else
+      {
+        var description = Labels.AskSaveProjectDialogDescription;
+        description = description.Replace("%1", Project.Instance.ProjectFilename);
+        var dlg = new VianaDialog(
+          title,
+          description,
+          Labels.AskSaveProjectDialogMessage,
+          false);
+
+        if (dlg.ShowDialog().GetValueOrDefault(false))
+        {
+          SaveProjectToNewFile();
+        }
+      }
+
       {
         var description = Labels.AskSaveProjectDialogDescription;
         description = description.Replace("%1", Project.Instance.ProjectFilename);
