@@ -1024,7 +1024,7 @@ namespace VianaNET.Modules.Chart
           Project.Instance.FilterData.RegressionFilter.CalculateFilterValues();
         }
 
-        Project.Instance.FilterData.RegressionFilter.GetBestRegressData(out bestRegression);
+        Project.Instance.FilterData.RegressionFilter.GetBestRegressData(out bestRegression, regressionOptionsDialog.negFlag);
         this.UpdateRegressionImageButtonAndLabels(bestRegression, false);
       }
       else

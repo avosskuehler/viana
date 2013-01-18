@@ -33,6 +33,7 @@ namespace VianaNET.Data.Filter.Regression
   public partial class RegressionOptionsDialog
   {
     #region Fields
+      public int negFlag;
     #endregion
 
     #region Constructors and Destructors
@@ -53,7 +54,9 @@ namespace VianaNET.Data.Filter.Regression
       regressionFilter.GetMinMax(regressionFilter.WertY, out minY, out hilf);
       var negativeX = minX < 0;
       var negativeY = minY < 0;
-
+      negFlag = 0;
+      if (negativeX) { negFlag = 1; }
+      if (negativeY) { negFlag = negFlag+2; }
       this.radioButtonPot.IsEnabled = (!negativeX) & (!negativeY);
       if ((!this.radioButtonPot.IsEnabled) & (this.RegressionType == RegressionType.Potenz))
       {
