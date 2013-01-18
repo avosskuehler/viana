@@ -401,7 +401,7 @@ namespace VianaNET.Data.Filter.Regression
     /// <param name="bestRegTyp">
     /// type of best fit. 
     /// </param> 
-    public void GetBestRegressData(out RegressionType bestRegTyp)
+    public void GetBestRegressData(out RegressionType bestRegTyp, int negFlag)
     {
       RegressionType aktRegTyp;
       double abw = StartAbw;
@@ -409,14 +409,21 @@ namespace VianaNET.Data.Filter.Regression
       bestRegTyp = RegressionType.Linear;
       for (aktRegTyp = RegressionType.Linear; aktRegTyp <= RegressionType.Resonanz; aktRegTyp++)
       {
-        this.CalcRegressionFunction(aktRegTyp);
-        FitParameterMatrix[(int)aktRegTyp, 5] = this.Aberration;
-        if (this.Aberration > -2)
+        bool weiter=true;
+        if ( ((aktRegTyp==RegressionType.Potenz) & (negFlag>0)) |
+           ((aktRegTyp==RegressionType.Logarithmisch) & (negFlag % 2 == 1) ) |
+           ( (aktRegTyp==RegressionType.Exponentiell) & (negFlag>1) )){weiter=false;}
+        if (weiter)
         {
-          if (abw > this.Aberration)
+          this.CalcRegressionFunction(aktRegTyp);
+          FitParameterMatrix[(int)aktRegTyp, 5] = this.Aberration;
+          if (this.Aberration > -2)
           {
-            abw = this.Aberration;
-            bestRegTyp = aktRegTyp;
+            if (abw > this.Aberration)
+            {
+              abw = this.Aberration;
+              bestRegTyp = aktRegTyp;
+            }
           }
         }
       }
@@ -1056,7 +1063,8 @@ namespace VianaNET.Data.Filter.Regression
       }
 
       maxSchaetz = anz * Math.PI / (maxX - minX);
-      schaetzWert = (anz - 1) * Math.PI / maxX;
+      //schaetzWert = (anz - 1) * Math.PI /maxX;   kann negativen Wert für hilf ergeben, wenn minX negativ: Endlosschleife!!
+      schaetzWert = (anz - 1) * Math.PI / (maxX - minX);
       schaetzStep = 10000;
       var hilf = maxSchaetz - schaetzWert;
       while (schaetzStep >= hilf)
@@ -1271,6 +1279,7 @@ namespace VianaNET.Data.Filter.Regression
         }
 
         // for k
+        iter = iter + 1;
         if (anz >= 0.8 * this.anzahl)
         {
           // mehr als 80% der Wertepaare können bei dieser Schätzung für b berücksichtigt werden
@@ -1285,7 +1294,7 @@ namespace VianaNET.Data.Filter.Regression
             fehler = fehler + hilf * hilf;
           }
 
-          iter = iter + 1;
+          //iter = iter + 1;  wird evtl. nicht hochgezählt, wenn anz < 80% von Anzahl der Messpaare
           if (abw > fehler)
           {
             abw = fehler;
@@ -1298,7 +1307,7 @@ namespace VianaNET.Data.Filter.Regression
         {
           z = z - 1;
         }
-
+        
         if ((z < 9) && (schaetzWert < maxSchaetz))
         {
           schaetzWert = schaetzWert + schaetzStep;
