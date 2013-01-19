@@ -1501,4 +1501,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="SaveProjectDialogMessage" xml:space="preserve">
     <value>Die Projektdatei existiert bereits und wird nun überschrieben.</value>
   </data>
+  <data name="OpenProjectDialogTitle" xml:space="preserve">
+    <value>Projekt öffnen</value>
+  </data>
 </root>
