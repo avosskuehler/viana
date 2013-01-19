@@ -1472,7 +1472,7 @@ Click OK or press Enter, when ready.</value>
     <value>( expected</value>
   </data>
   <data name="ParseErrorIllegalCharacter" xml:space="preserve">
-    <value>illegal characteror identifier</value>
+    <value>illegal character or identifier</value>
   </data>
   <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
     <value>no formula defined</value>
@@ -1515,5 +1515,8 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="SaveProjectDialogMessage" xml:space="preserve">
     <value>The project file already exists and will be overwritten.</value>
+  </data>
+  <data name="OpenProjectDialogTitle" xml:space="preserve">
+    <value>open project</value>
   </data>
 </root>

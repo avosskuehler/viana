@@ -1503,4 +1503,7 @@
   <data name="SaveProjectDialogMessage" xml:space="preserve">
     <value>@SaveProjectDialogMessage</value>
   </data>
+  <data name="OpenProjectDialogTitle" xml:space="preserve">
+    <value>@OpenProjectDialogTitle</value>
+  </data>
 </root>

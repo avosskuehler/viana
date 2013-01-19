@@ -171,7 +171,7 @@ namespace VianaNET.MainWindow
       var dlg = new OpenFileDialog
       {
         Filter = "Viana.NET projects|*.via",
-        Title = Labels.SaveProjectDialogTitle,
+        Title = Labels.OpenProjectDialogTitle,
         DefaultExt = "via",
         Multiselect = false
       };
@@ -182,9 +182,12 @@ namespace VianaNET.MainWindow
       }
 
       // Add project file to recent files list
-      RecentFiles.Instance.Add(dlg.FileName);
+      // RecentFiles.Instance.Add(dlg.FileName);       first open project before adding to recentfilelist
 
       this.OpenGivenProject(dlg.FileName);
+
+      // Add project file to recent files list
+      RecentFiles.Instance.Add(dlg.FileName);
     }
 
     /// <summary>
