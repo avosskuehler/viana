@@ -1,0 +1,37 @@
+﻿<Window x:Class="VianaNET.MainWindow.VianaSaveDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lex="http://schemas.root-project.org/xaml/presentation" xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
+        lex:LocalizeDictionary.DesignCulture="de"
+   ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:LocText VianaNET:Labels:VianaDialogTitle}" Icon="/VianaNET;component/Images/VianaNET.ico">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="80"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <mainWindow:TopFrame x:Name="topFrame"/>
+    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
+            <Label Name="Description" FontWeight="Bold">Description</Label>
+            <TextBlock TextWrapping="Wrap" Name="message"/>
+          </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button Name="SaveAndCloseButton" Click="SaveAndCloseButtonClick" IsDefault="True" Content="Speichern" Height="21" Width="124" DataContext="{Binding}" Margin="5" />
+                    <Button Name="DontSaveAndCloseButton" Click="DontSaveAndCloseButtonClick" IsDefault="False" Content="Nicht speichern" Height="21" Width="118" IsCancel="True" Margin="65,5" HorizontalAlignment="Right" />
+                </StackPanel>
+            </Grid>
+    </Border>
+  </Grid>
+</Window>

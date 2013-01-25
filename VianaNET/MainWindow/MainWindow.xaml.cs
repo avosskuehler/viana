@@ -675,7 +675,7 @@ namespace VianaNET.MainWindow
       //this.datagridWindow.Refresh();
     }
 
-    /// <summary>
+/// <summary>
     /// The datagrid window command_ executed.
     /// </summary>
     /// <param name="sender">Source of the event.</param>
@@ -763,11 +763,11 @@ namespace VianaNET.MainWindow
       {
         var description = Labels.SaveProjectDialogDescription;
         description = description.Replace("%1", Project.Instance.ProjectFilename);
-        var dlg = new VianaDialog(
+        var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.SaveProjectDialogMessage,
-          false);
+          Labels.SaveProjectDialogMessage); /*,
+          false);*/
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -778,33 +778,33 @@ namespace VianaNET.MainWindow
       {
         var description = Labels.AskSaveProjectDialogDescription;
         description = description.Replace("%1", Project.Instance.ProjectFilename);
-        var dlg = new VianaDialog(
+        var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.AskSaveProjectDialogMessage,
-          false);
+          Labels.AskSaveProjectDialogMessage);/*,
+          false);*/
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
           SaveProjectToNewFile();
         }
       }
-
-      {
-        var description = Labels.AskSaveProjectDialogDescription;
-        description = description.Replace("%1", Project.Instance.ProjectFilename);
-        var dlg = new VianaDialog(
-          title,
-          description,
-          Labels.AskSaveProjectDialogMessage,
-          false);
-
-        if (dlg.ShowDialog().GetValueOrDefault(false))
+      /*  when asked to save project, a second question not necessary
         {
-          SaveProjectToNewFile();
-        }
-      }
+          var description = Labels.AskSaveProjectDialogDescription;
+          description = description.Replace("%1", Project.Instance.ProjectFilename);
+          var dlg = new VianaDialog(
+            title,
+            description,
+            Labels.AskSaveProjectDialogMessage,
+            false);
 
+          if (dlg.ShowDialog().GetValueOrDefault(false))
+          {
+            SaveProjectToNewFile();
+          }
+        }
+    */
       Video.Instance.Cleanup();
     }
 
