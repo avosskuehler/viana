@@ -1506,4 +1506,10 @@
   <data name="OpenProjectDialogTitle" xml:space="preserve">
     <value>@OpenProjectDialogTitle</value>
   </data>
+  <data name="AboutBoxCredits" xml:space="preserve">
+    <value>@AboutBoxCredits</value>
+  </data>
+  <data name="AboutBoxCreditsHeader" xml:space="preserve">
+    <value>@AboutBoxCreditsHeader</value>
+  </data>
 </root>

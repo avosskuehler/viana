@@ -84,12 +84,6 @@ namespace VianaNET.Modules.Video.Control
         "FrameTimeInNanoSeconds", typeof(long), typeof(VideoBase), new UIPropertyMetadata(default(long)));
 
     /// <summary>
-    ///   The has video property.
-    /// </summary>
-    public static readonly DependencyProperty HasVideoProperty = DependencyProperty.Register(
-      "HasVideo", typeof(bool), typeof(VideoBase), new UIPropertyMetadata(false));
-
-    /// <summary>
     ///   The image source property.
     /// </summary>
     public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
@@ -291,22 +285,6 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   Gets or sets a value indicating whether has video.
-    /// </summary>
-    public bool HasVideo
-    {
-      get
-      {
-        return (bool)this.GetValue(HasVideoProperty);
-      }
-
-      set
-      {
-        this.SetValue(HasVideoProperty, value);
-      }
-    }
-
-    /// <summary>
     ///   Gets or sets the image source.
     /// </summary>
     public ImageSource ImageSource
@@ -407,7 +385,7 @@ namespace VianaNET.Modules.Video.Control
           DispatcherPriority.Normal, 
           (SendOrPostCallback)delegate
             {
-              this.HasVideo = false;
+              Video.Instance.HasVideo = false;
               this.CurrentState = PlayState.Init;
               this.frameCounter = 0;
             }, 
@@ -448,7 +426,7 @@ namespace VianaNET.Modules.Video.Control
           Marshal.FinalReleaseComObject(this.filterGraph);
           this.filterGraph = null;
           this.mediaControl = null;
-          this.HasVideo = false;
+          Video.Instance.HasVideo = false;
         }
       }
 

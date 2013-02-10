@@ -40,7 +40,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Freie Universität Berlin")]
 [assembly: AssemblyProduct("Viana.NET")]
-[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2012")]
+[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

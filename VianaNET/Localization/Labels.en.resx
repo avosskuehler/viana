@@ -1519,4 +1519,10 @@ Click OK or press Enter, when ready.</value>
   <data name="OpenProjectDialogTitle" xml:space="preserve">
     <value>open project</value>
   </data>
+  <data name="AboutBoxCredits" xml:space="preserve">
+    <value>Herwig Niemeyer for the regression and theory series functionality along with lots of bug fixes.</value>
+  </data>
+  <data name="AboutBoxCreditsHeader" xml:space="preserve">
+    <value>Credits to</value>
+  </data>
 </root>

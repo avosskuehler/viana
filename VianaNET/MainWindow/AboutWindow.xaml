@@ -37,13 +37,21 @@
           <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-          <Label FontWeight="Bold" Content="{lex:LocText VianaNET:Labels:AboutBoxDescription}"></Label>
-          <TextBlock TextWrapping="Wrap" Text="{lex:LocText VianaNET:Labels:AboutBoxTextBlock}"/>
-          <TextBlock>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:AboutBoxDescription}">
+            <StackPanel>
+              <TextBlock TextWrapping="Wrap" Text="{lex:LocText VianaNET:Labels:AboutBoxTextBlock}"/>
+              <TextBlock>
                         <Hyperlink NavigateUri="mailto:adrian.vosskuehler@fu-berlin.de">
                            adrian.vosskuehler@fu-berlin.de
                         </Hyperlink>
-          </TextBlock>
+              </TextBlock>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:AboutBoxCreditsHeader}">
+            <StackPanel>
+              <TextBlock TextWrapping="Wrap" Text="{lex:LocText VianaNET:Labels:AboutBoxCredits}"/>
+            </StackPanel>
+          </GroupBox>
         </StackPanel>
         <Button Grid.Row="1" HorizontalAlignment="Right" Margin="0,0,20,0" Height="23" Width="80" Click="Button_Click">OK</Button>
       </Grid>

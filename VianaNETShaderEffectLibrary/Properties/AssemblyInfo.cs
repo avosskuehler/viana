@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Freie UniversitätBerlin")]
 [assembly: AssemblyProduct("VianaNETShaderEffectLibrary")]
-[assembly: AssemblyCopyright("Copyright ©  2012 Dr. Adrian Voßkühler")]
+[assembly: AssemblyCopyright("Copyright ©  2013 Dr. Adrian Voßkühler")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -2,13 +2,13 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
   xmlns:s="clr-namespace:System;assembly=mscorlib"
-  xmlns:Viana="clr-namespace:VianaNET">
+  xmlns:viana="clr-namespace:VianaNET">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/SliderStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
 
-  <ControlTemplate x:Key="MediaSliderHorizontalSlider" TargetType="{x:Type Viana:MediaSlider}">
+  <ControlTemplate x:Key="MediaSliderHorizontalSlider" TargetType="{x:Type viana:MediaSlider}">
     <Border
         BorderThickness="{TemplateBinding Border.BorderThickness}"
         BorderBrush="{TemplateBinding Border.BorderBrush}"
@@ -30,33 +30,33 @@
 
         <Label Grid.Row="2" 
                Grid.Column="0" 
-               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               Visibility="{TemplateBinding viana:MediaSlider.IsShowingTimes}" 
                HorizontalAlignment="Center" 
-               Content="{TemplateBinding Viana:MediaSlider.SelectionStartString}"
+               Content="{TemplateBinding viana:MediaSlider.SelectionStartString}"
                Padding="0"
                Margin="0,-2,0,0"
                FontSize="10"
                Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-        <Label Grid.Row="1" Grid.Column="0" Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding Viana:MediaSlider.CurrentTimeString}"/>
-        <Label Grid.Row="1" Grid.Column="4" Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding Viana:MediaSlider.MaximumString}"/>
+        <Label Grid.Row="1" Grid.Column="0" Visibility="{TemplateBinding viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding viana:MediaSlider.CurrentTimeString}"/>
+        <Label Grid.Row="1" Grid.Column="4" Visibility="{TemplateBinding viana:MediaSlider.IsShowingTimes}" HorizontalAlignment="Center" Content="{TemplateBinding viana:MediaSlider.MaximumString}"/>
         <Label Grid.Row="2" 
                Grid.Column="4" 
-               Visibility="{TemplateBinding Viana:MediaSlider.IsShowingTimes}" 
+               Visibility="{TemplateBinding viana:MediaSlider.IsShowingTimes}" 
                HorizontalAlignment="Center" 
-               Content="{TemplateBinding Viana:MediaSlider.SelectionEndString}"
+               Content="{TemplateBinding viana:MediaSlider.SelectionEndString}"
                Padding="0"
                Margin="0,-2,0,0"
                FontSize="10"
                Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
         <RepeatButton Name="TickDownButton"  Grid.Column="1" Grid.Row="1" 
-          Command="{x:Static Viana:MediaSlider.TickDownClickedCommand}"
+          Command="{x:Static viana:MediaSlider.TickDownClickedCommand}"
           Style="{StaticResource BaseSliderSidesButtonStyle}">
           <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
         </RepeatButton>
 
         <RepeatButton Name="TickUpButton" Grid.Row="1" Grid.Column="3"
-						Command="{x:Static Viana:MediaSlider.TickUpClickedCommand}"
+						Command="{x:Static viana:MediaSlider.TickUpClickedCommand}"
             Style="{StaticResource BaseSliderSidesButtonStyle}">
 
           <Path Fill="{StaticResource GlyphBrush}" Stretch="None">
@@ -1013,7 +1013,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
 
-  <Style x:Key="MediaSliderStyle" TargetType="{x:Type Viana:MediaSlider}">
+  <Style x:Key="MediaSliderStyle" TargetType="{x:Type viana:MediaSlider}">
     <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False"/>
     <Style.Triggers>
       <Trigger Property="Orientation" Value="Horizontal">
