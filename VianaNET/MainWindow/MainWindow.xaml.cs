@@ -24,9 +24,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Windows.Controls;
-using VianaNET.Properties;
-
 namespace VianaNET.MainWindow
 {
   using System;
@@ -34,22 +31,26 @@ namespace VianaNET.MainWindow
   using System.Globalization;
   using System.IO;
   using System.Windows;
+  using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
   using System.Windows.Data;
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
-  using Application;
-  using CustomStyles.Types;
-  using Localization;
+
   using Microsoft.Win32;
   using Microsoft.Windows.Controls.Ribbon;
-  using Modules.Chart;
-  using Modules.DataAcquisition;
-  using Modules.DataGrid;
-  using Modules.Video.Control;
-  using Modules.Video.Dialogs;
-  using Visifire.Charts;
+
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.Localization;
+  using VianaNET.Modules.Chart;
+  using VianaNET.Modules.DataAcquisition;
+  using VianaNET.Modules.DataGrid;
+  using VianaNET.Modules.Video.Control;
+  using VianaNET.Modules.Video.Dialogs;
+  using VianaNET.Properties;
+
   using WPFLocalizeExtension.Engine;
 
   /// <summary>
@@ -76,7 +77,8 @@ namespace VianaNET.MainWindow
       Project.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
-
+      this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0];
+      this.VideoInputDeviceCombo.DisplayMemberPath = "Name";
       this.Show();
     }
 
@@ -181,9 +183,7 @@ namespace VianaNET.MainWindow
         return;
       }
 
-      // Add project file to recent files list
-      // RecentFiles.Instance.Add(dlg.FileName);       first open project before adding to recentfilelist
-
+      // first open project before adding to recentfilelist
       this.OpenGivenProject(dlg.FileName);
 
       // Add project file to recent files list
@@ -215,9 +215,6 @@ namespace VianaNET.MainWindow
       Project.Instance.FilterData.TheoreticalFunction = openedProject.FilterData.TheoreticalFunction;
       Project.Instance.FilterData.AxisX = openedProject.FilterData.AxisX;
       Project.Instance.FilterData.AxisY = openedProject.FilterData.AxisY;
-     // No calculation until series updated
-     // Project.Instance.FilterData.RegressionFilter = openedProject.FilterData.RegressionFilter;
-     // Project.Instance.FilterData.RegressionAberration = openedProject.FilterData.RegressionAberration;
       Project.Instance.FilterData.IsShowingDataSeries = openedProject.FilterData.IsShowingDataSeries;
       Project.Instance.FilterData.IsShowingInterpolationSeries = openedProject.FilterData.IsShowingInterpolationSeries;
       Project.Instance.FilterData.IsShowingRegressionSeries = openedProject.FilterData.IsShowingRegressionSeries;
@@ -228,9 +225,10 @@ namespace VianaNET.MainWindow
       Project.Instance.VideoFile = openedProject.VideoFile;
       Project.Instance.VideoMode = openedProject.VideoMode;
 
-// after updating series do calculation
+      // after updating series do calculation
       Project.Instance.FilterData.RegressionFilter = openedProject.FilterData.RegressionFilter;
       Project.Instance.FilterData.RegressionAberration = openedProject.FilterData.RegressionAberration;
+
       // Restore video mode
       Video.Instance.VideoMode = Project.Instance.VideoMode;
       switch (Project.Instance.VideoMode)
@@ -251,12 +249,12 @@ namespace VianaNET.MainWindow
       this.ChartWindow.Refresh();
 
       //// Update bindings that got lost during deserialization
-      //var regressionSeriesBinding = new Binding("FilterData.RegressionSeries") { Source = Project.Instance };
-      //this.ChartWindow.RegressionSeries.SetBinding(DataSeries.DataSourceProperty, regressionSeriesBinding);
-      //var interpolationSeriesBinding = new Binding("FilterData.InterpolationSeries") { Source = Project.Instance };
-      //this.ChartWindow.InterpolationSeries.SetBinding(DataSeries.DataSourceProperty, interpolationSeriesBinding);
-      //var theorySeriesBinding = new Binding("FilterData.TheorySeries") { Source = Project.Instance };
-      //this.ChartWindow.TheorySeries.SetBinding(DataSeries.DataSourceProperty, theorySeriesBinding);
+      // var regressionSeriesBinding = new Binding("FilterData.RegressionSeries") { Source = Project.Instance };
+      // this.ChartWindow.RegressionSeries.SetBinding(DataSeries.DataSourceProperty, regressionSeriesBinding);
+      // var interpolationSeriesBinding = new Binding("FilterData.InterpolationSeries") { Source = Project.Instance };
+      // this.ChartWindow.InterpolationSeries.SetBinding(DataSeries.DataSourceProperty, interpolationSeriesBinding);
+      // var theorySeriesBinding = new Binding("FilterData.TheorySeries") { Source = Project.Instance };
+      // this.ChartWindow.TheorySeries.SetBinding(DataSeries.DataSourceProperty, theorySeriesBinding);
     }
 
     /// <summary>
@@ -309,6 +307,11 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void CaptureVideoButtonClick(object sender, RoutedEventArgs e)
     {
+      if (Video.Instance.VideoCapturerElement.VideoCaptureDevice == null)
+      {
+        Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevices[0];
+      }
+
       this.VideoWindow.SetVideoMode(VideoMode.Capture);
     }
 
@@ -675,7 +678,7 @@ namespace VianaNET.MainWindow
       //this.datagridWindow.Refresh();
     }
 
-/// <summary>
+    /// <summary>
     /// The datagrid window command_ executed.
     /// </summary>
     /// <param name="sender">Source of the event.</param>
@@ -766,8 +769,7 @@ namespace VianaNET.MainWindow
         var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.SaveProjectDialogMessage); /*,
-          false);*/
+          Labels.SaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -781,30 +783,14 @@ namespace VianaNET.MainWindow
         var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.AskSaveProjectDialogMessage);/*,
-          false);*/
+          Labels.AskSaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
           SaveProjectToNewFile();
         }
       }
-      /*  when asked to save project, a second question not necessary
-        {
-          var description = Labels.AskSaveProjectDialogDescription;
-          description = description.Replace("%1", Project.Instance.ProjectFilename);
-          var dlg = new VianaDialog(
-            title,
-            description,
-            Labels.AskSaveProjectDialogMessage,
-            false);
 
-          if (dlg.ShowDialog().GetValueOrDefault(false))
-          {
-            SaveProjectToNewFile();
-          }
-        }
-    */
       Video.Instance.Cleanup();
     }
 

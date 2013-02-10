@@ -27,6 +27,7 @@ namespace VianaNET.Modules.Video.Control
 {
   using System;
   using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Drawing;
   using System.IO;
@@ -37,7 +38,6 @@ namespace VianaNET.Modules.Video.Control
   using DirectShowLib;
 
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
 
   /// <summary>
   ///   The video.
@@ -58,6 +58,12 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public static readonly DependencyProperty VideoSourceProperty = DependencyProperty.Register(
       "VideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+
+    /// <summary>
+    ///   The has video property.
+    /// </summary>
+    public static readonly DependencyProperty HasVideoProperty = DependencyProperty.Register(
+      "HasVideo", typeof(bool), typeof(Video), new UIPropertyMetadata(false));
 
     /// <summary>
     ///   The instance.
@@ -186,6 +192,22 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
+    ///   Gets or sets a value indicating whether has video.
+    /// </summary>
+    public bool HasVideo
+    {
+      get
+      {
+        return (bool)this.GetValue(HasVideoProperty);
+      }
+
+      set
+      {
+        this.SetValue(HasVideoProperty, value);
+      }
+    }
+
+    /// <summary>
     ///   Gets the video capturer element.
     /// </summary>
     public VideoCapturer VideoCapturerElement
@@ -253,11 +275,11 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     /// Gets the video input devices.
     /// </summary>
-    public List<DsDevice> VideoInputDevices
+    public ObservableCollection<DsDevice> VideoInputDevices
     {
       get
       {
-        return DShowUtils.GetVideoInputDevices();
+        return new ObservableCollection<DsDevice>(DShowUtils.GetVideoInputDevices());
       }
     }
 

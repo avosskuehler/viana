@@ -24,16 +24,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
-
 namespace VianaNET.CustomStyles.Converter
 {
   using System;
   using System.Globalization;
   using System.Windows.Data;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
 
   /// <summary>
   ///   The unit double string converter.
@@ -113,10 +111,8 @@ namespace VianaNET.CustomStyles.Converter
       {
         return valueToConvert.ToString(formatting) + unit;
       }
-      else
-      {
-        return valueToConvert.ToString(formatting);
-      }
+
+      return valueToConvert.ToString(formatting);
     }
 
     /// <summary>

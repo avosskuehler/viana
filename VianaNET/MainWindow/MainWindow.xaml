@@ -1,21 +1,21 @@
 ﻿<r:RibbonWindow 
   x:Class="VianaNET.MainWindow.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
-    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
-    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
-    xmlns:Data="clr-namespace:VianaNET.Data" xmlns:MainWindow="clr-namespace:VianaNET.MainWindow" 
-    xmlns:Video="clr-namespace:VianaNET.Modules.Video"
-    xmlns:DataGrid="clr-namespace:VianaNET.Modules.DataGrid"
-    xmlns:Chart="clr-namespace:VianaNET.Modules.Chart" 
-    xmlns:VianaNET="clr-namespace:VianaNET" 
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+  xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+  xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
+  xmlns:mainWindow="clr-namespace:VianaNET.MainWindow" 
+  xmlns:video="clr-namespace:VianaNET.Modules.Video"
+  xmlns:dataGrid="clr-namespace:VianaNET.Modules.DataGrid"
+  xmlns:chart="clr-namespace:VianaNET.Modules.Chart" 
+  xmlns:vianaNet="clr-namespace:VianaNET" 
   xmlns:application="clr-namespace:VianaNET.Application"
   lex:LocalizeDictionary.DesignCulture="de"
-    ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
-    Icon="/VianaNET;component/Images/VianaNET.ico"
-    Height="479" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
-    Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="MainWindowClosing">
+  ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+  Icon="/VianaNET;component/Images/VianaNET.ico"
+  Height="479" Width="900" MinHeight="300" MinWidth="400" WindowStyle="ThreeDBorderWindow"
+  Title="{lex:LocText VianaNET:Labels:ApplicationTitle}" Closing="MainWindowClosing">
 
   <r:RibbonWindow.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -67,14 +67,14 @@
                          Header="{lex:LocText VianaNET:Labels:ButtonRecordVideoLabelTitle}" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipDescription}"
-                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonApplicationMenuItem
                          Click="CaptureVideoButtonClick" 
                          Header="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}"
                          ImageSource="/VianaNET;component/Images/Capture32.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
-                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonSeparator/>
           <r:RibbonApplicationSplitMenuItem
             Header="{lex:LocText VianaNET:Labels:ButtonExportDataLabelTitle}"
@@ -216,14 +216,14 @@
                          LargeImageSource="/VianaNET;component/Images/RecordVideo32.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonRecordVideoToolTipDescription}"
-                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Click="CaptureVideoButtonClick" 
                          Label="{lex:LocText VianaNET:Labels:ButtonCaptureVideoLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/Capture32.png" 
                          SmallImageSource="/VianaNET;component/Images/Capture16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
-                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
         </r:RibbonGroup>
         <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupPrepareLabelTitle}">
           <r:RibbonButton Click="CalibrateVideoButtonClick"
@@ -232,7 +232,7 @@
                          SmallImageSource="/VianaNET;component/Images/Calibrate16.png"
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonCalibrateVideoToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Name="SelectNumberOfObjectsButton"
                          Click="SelectNumberOfObjectsButtonClick"
                          Label="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 
@@ -240,21 +240,21 @@
                          SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectNumberOfObjectsToolTipDescription}" 
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Click="ManualDataAquisitionButtonClick" 
                          Label="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionLabelTitle}" 
                          LargeImageSource="/VianaNET;component/Images/ManualDataAquisition32.png" 
                          SmallImageSource="/VianaNET;component/Images/ManualDataAquisition16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Click="ChooseAutomaticAnalysisButtonClick" 
                          Label="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisLabelTitle}" 
                          LargeImageSource="/VianaNET;component/Images/AutomaticDataAquisition32.png" 
                          SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisition16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonChooseAutomaticAnalysisToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
         </r:RibbonGroup>
         <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupWindowsLabelTitle}">
           <r:RibbonButton Click="VideoWindowButtonClick" 
@@ -295,14 +295,14 @@
                          SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectColorToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Click="ClipVideoButtonClick"
                          Label="{lex:LocText VianaNET:Labels:ButtonClipVideoLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/ClipVideo32.png"
                          SmallImageSource="/VianaNET;component/Images/ClipVideo16.png"
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipTitle}"
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonClipVideoToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <r:RibbonButton Name="StartAutomaticAquisition" 
                           Click="AutomaticDataAquisitionButtonClick" 
                          Label="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionLabelTitle}"
@@ -310,17 +310,17 @@
                          SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisition16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionToolTipDescription}"
-                          Visibility="{Binding Path=IsDataAcquisitionRunning,Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}"
+                          Visibility="{Binding Path=IsDataAcquisitionRunning,Source={x:Static control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}"
                           />
           <r:RibbonButton Name="StopAutomaticAquisition"
-                          Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static control:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}"
                          Click="AutomaticDataAquisitionStopButtonClick" 
                          Label="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/AutomaticDataAquisitionStop32.png" 
                          SmallImageSource="/VianaNET;component/Images/AutomaticDataAquisitionStop16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipDescription}" 
-                         IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
         </r:RibbonGroup>
         <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoAutoDetectionOptionsLabelTitle}">
           <r:RibbonButton 
@@ -332,7 +332,7 @@
             SmallImageSource="/VianaNET;component/Images/SelectObject16.png" 
             ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipTitle}"
             ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonSelectObjectToolTipDescription}" 
-            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
@@ -347,7 +347,7 @@
             <Label Grid.Row="0" Grid.Column="0" 
                    Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionTolerance}"
                    Margin="0" Padding="1"/>
-            <VianaNET:SliderValue 
+            <vianaNet:SliderValue 
               Grid.Row="0" Grid.Column="1"
             x:Name="SliderThreshold"
             MinWidth="100"
@@ -358,11 +358,11 @@
             LargeChange="1" 
             TickFrequency="1"             
             IsSnapToTickEnabled="True" 
-            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
             <Label Grid.Row="1" Grid.Column="0" 
                    Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMinDiameter}"
                    Margin="0" Padding="1"/>
-            <VianaNET:SliderValue 
+            <vianaNet:SliderValue 
               Grid.Row="1" Grid.Column="1"
             x:Name="SliderMinDiameter"
             Height="20"
@@ -371,11 +371,11 @@
             Maximum="500"
             SmallChange="1" 
             IsSnapToTickEnabled="True"
-            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
             <Label Grid.Row="2" Grid.Column="0" 
                    Content="{lex:LocText VianaNET:Labels:RibbonLabelAutoDetectionBlobMaxDiameter}"
                    Margin="0" Padding="1"/>
-            <VianaNET:SliderValue 
+            <vianaNet:SliderValue 
               Grid.Row="2" Grid.Column="1"
             x:Name="SliderMaxDiameter"
             Height="20"
@@ -384,7 +384,7 @@
             Maximum="500"
             SmallChange="1" 
             IsSnapToTickEnabled="True"
-            IsEnabled="{Binding Path=VideoElement.HasVideo, Source={x:Static Control:Video.Instance}}"/>
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           </Grid>
         </r:RibbonGroup>
       </r:RibbonTab>
@@ -399,10 +399,10 @@
         </r:RibbonGroup>
         <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoSelectDeviceLabelTitle}">
           <Label Content="{lex:LocText VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
-          <r:RibbonComboBox IsEditable="False" IsReadOnly="False" SelectionBoxWidth="120" >
+          <r:RibbonComboBox SelectionBoxWidth="120" IsEditable="True" IsReadOnly="True" >
             <r:RibbonGallery Name="VideoInputDeviceCombo"
-                             SelectedItem="{Binding Source={x:Static Control:Video.Instance}, Path=VideoCapturerElement.VideoCaptureDevice}">
-              <r:RibbonGalleryCategory ItemsSource="{Binding Source={x:Static Control:Video.Instance}, Path=VideoInputDevices}" DisplayMemberPath="Name" />
+                             SelectedItem="{Binding Source={x:Static control:Video.Instance}, Path=VideoCapturerElement.VideoCaptureDevice, Mode=TwoWay}">
+              <r:RibbonGalleryCategory Name="VideoSourceGalleryCategory" ItemsSource="{Binding Source={x:Static control:Video.Instance}, Path=VideoInputDevices}" DisplayMemberPath="Name"/>
             </r:RibbonGallery>
           </r:RibbonComboBox>
           <r:RibbonButton Click="VideoCaptureDevicePropertiesButtonClick" 
@@ -411,7 +411,7 @@
                          SmallImageSource="/VianaNET;component/Images/VideoDeviceOptions16.png" 
                          ToolTipTitle="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipTitle}" 
                          ToolTipDescription="{lex:LocText VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" 
-                         IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static Control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>
         </r:RibbonGroup>
         <r:RibbonGroup Header="{lex:LocText VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}">
           <r:RibbonCheckBox Name="ShowCalibrationCheckbox"  
@@ -572,7 +572,7 @@
             <TextBlock Text="{lex:LocText VianaNET:Labels:VideoWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
           </StackPanel>
         </TabItem.Header>
-        <Video:VideoWindow x:Name="VideoWindow"/>
+        <video:VideoWindow x:Name="VideoWindow"/>
       </TabItem>
 
       <TabItem Name="DatagridTab">
@@ -582,7 +582,7 @@
             <TextBlock Text="{lex:LocText VianaNET:Labels:DatagridWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
           </StackPanel>
         </TabItem.Header>
-        <DataGrid:DataGridWindow x:Name="DataGridWindow" Margin="5" />
+        <dataGrid:DataGridWindow x:Name="DataGridWindow" Margin="5" />
       </TabItem>
       <TabItem Name="ChartTab">
         <TabItem.Header>
@@ -591,21 +591,21 @@
             <TextBlock Text="{lex:LocText VianaNET:Labels:ChartWindowTitle}" Margin="2,0,0,0" VerticalAlignment="Center" />
           </StackPanel>
         </TabItem.Header>
-        <Chart:ChartWindow x:Name="ChartWindow" Margin="5" />
+        <chart:ChartWindow x:Name="ChartWindow" Margin="5" />
       </TabItem>
     </TabControl>
     <StatusBar VerticalAlignment="Bottom" Grid.Row="2">
       <StatusBarItem>
         <Label Content="{Binding Path=StatusLabel,
-              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+              Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
       <StatusBarItem>
         <ProgressBar Width="120" Height="20" Value="{Binding Path=ProgressBarValue,
-              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+              Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
       <StatusBarItem HorizontalAlignment="Right">
         <Label Content="{Binding Path=MessagesLabel,
-              Source={x:Static MainWindow:StatusBarContent.Instance}}"/>
+              Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
     </StatusBar>
   </Grid>

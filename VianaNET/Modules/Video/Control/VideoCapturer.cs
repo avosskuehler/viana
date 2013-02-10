@@ -116,6 +116,7 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public VideoCapturer()
     {
+      //this.VideoCaptureDevice = Video.Instance.VideoInputDevices[0];
     }
 
     /// <summary>
@@ -266,7 +267,7 @@ namespace VianaNET.Modules.Video.Control
         // Set up the capture graph
         if (!this.SetupGraph(device, frameRate, width, height))
         {
-          this.HasVideo = false;
+          Video.Instance.HasVideo = false;
           return;
         }
       }
@@ -274,14 +275,14 @@ namespace VianaNET.Modules.Video.Control
       {
         this.Dispose();
         ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
-        this.HasVideo = false;
+        Video.Instance.HasVideo = false;
         return;
       }
 
       Project.Instance.ProcessingData.InitializeImageFilters();
 
       this.Play();
-      this.HasVideo = true;
+      Video.Instance.HasVideo = true;
       this.OnVideoAvailable();
     }
 
@@ -375,9 +376,20 @@ namespace VianaNET.Modules.Video.Control
     private static void OnVideoCaptureDevicePropertyChanged(
       DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      if (Video.Instance.VideoMode == VideoMode.Capture)
+      if (args.NewValue as DsDevice == null)
       {
-        (obj as VideoCapturer).NewCamera(args.NewValue as DsDevice, 0, 0, 0);
+        return;
+      }
+
+      if (Video.Instance.VideoMode != VideoMode.Capture)
+      {
+        return;
+      }
+
+      var videoCapturer = obj as VideoCapturer;
+      if (videoCapturer != null)
+      {
+        videoCapturer.NewCamera(args.NewValue as DsDevice, 0, 0, 0);
       }
     }
 
