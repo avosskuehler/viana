@@ -77,8 +77,11 @@ namespace VianaNET.MainWindow
       Project.Instance.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
-      this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0];
-      this.VideoInputDeviceCombo.DisplayMemberPath = "Name";
+      if (Video.Instance.VideoInputDevices.Count > 0)
+      {
+        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0];
+      }
+
       this.Show();
     }
 

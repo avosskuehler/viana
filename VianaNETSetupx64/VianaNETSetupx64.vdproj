@@ -381,15 +381,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:VianaNET V4.0 (64-Bit)"
-        "ProductCode" = "8:{5CC5828F-7EA6-4541-B1F1-64DA6A735DC8}"
-        "PackageCode" = "8:{76F7330E-122D-4285-B747-C1A37593649A}"
+        "ProductCode" = "8:{E1B0EB5C-2C59-4A1A-9B89-52FE53B56455}"
+        "PackageCode" = "8:{AE783941-B7F3-467E-881C-5511BD3BC064}"
         "UpgradeCode" = "8:{168032DB-C066-4F2B-B175-6211466759BC}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:4.0"
+        "ProductVersion" = "8:4.0.1"
         "Manufacturer" = "8:Freie Universität Berlin"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://viana.codeplex.com"
@@ -880,7 +880,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8B1F6515144C4A1EA234793BEF697445"
             {
-            "SourcePath" = "8:..\\VianaNET\\obj\\x64\\Release\\VianaNET.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
