@@ -45,29 +45,15 @@ namespace VianaNET.Application
   public class Project
   {
     /// <summary>
-    ///   The static member, that holds the recent files list.
+    /// Initializes a new instance of the <see cref="Project"/> class. 
     /// </summary>
-    private static Project project;
-
-    /// <summary>
-    /// Prevents a default instance of the <see cref="Project"/> class from being created. 
-    /// </summary>
-    private Project()
+    public Project()
     {
       this.FilterData = new FilterData();
       this.CalibrationData = new CalibrationData();
       this.CalibrationData.PropertyChanged += this.CalibrationData_PropertyChanged;
       this.ProcessingData = new ProcessingData();
       this.VideoData = new VideoData { LastPoint = new Point[this.ProcessingData.NumberOfTrackedObjects] };
-    }
-
-    /// <summary>
-    ///   Gets or sets the current project
-    /// </summary>
-    public static Project Instance
-    {
-      get { return project ?? (project = new Project()); }
-      set { project = value; }
     }
 
     /// <summary>

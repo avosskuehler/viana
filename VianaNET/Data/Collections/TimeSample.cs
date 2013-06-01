@@ -44,7 +44,7 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public TimeSample()
     {
-      this.Object = new DataSample[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.Object = new DataSample[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
     }
 
     #endregion

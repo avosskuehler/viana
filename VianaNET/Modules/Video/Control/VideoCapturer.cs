@@ -279,7 +279,7 @@ namespace VianaNET.Modules.Video.Control
         return;
       }
 
-      Project.Instance.ProcessingData.InitializeImageFilters();
+      VianaNetApplication.Project.ProcessingData.InitializeImageFilters();
 
       this.Play();
       Video.Instance.HasVideo = true;

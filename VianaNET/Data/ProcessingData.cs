@@ -209,7 +209,7 @@ namespace VianaNET.Data
       this.ColorThreshold = new ObservableCollection<int>();
       this.BlobMinDiameter = new ObservableCollection<double>();
       this.BlobMaxDiameter = new ObservableCollection<double>();
-      this.ResetProcessing(1);
+      //this.ResetProcessing(1);
       this.colorAndCropFilter = new ColorAndCropFilterRGB();
       this.colorRangeFilter = new ColorAndCropFilterYCbCr();
       this.histogrammFilter = new Histogram();
@@ -417,9 +417,9 @@ namespace VianaNET.Data
       this.colorAndCropFilter.BlankColor = Colors.Black;
       this.colorAndCropFilter.TargetColor = this.TargetColor[0];
       this.colorAndCropFilter.Threshold = this.ColorThreshold[0];
-      if (Project.Instance.CalibrationData.HasClipRegion)
+      if (VianaNetApplication.Project.CalibrationData.HasClipRegion)
       {
-        this.colorAndCropFilter.CropRectangle = Project.Instance.CalibrationData.ClipRegion;
+        this.colorAndCropFilter.CropRectangle = VianaNetApplication.Project.CalibrationData.ClipRegion;
       }
       else
       {
@@ -435,9 +435,9 @@ namespace VianaNET.Data
       this.colorRangeFilter.BlankColor = Colors.Black;
       this.colorRangeFilter.TargetColor = this.TargetColor[0];
       this.colorRangeFilter.Threshold = this.ColorThreshold[0];
-      if (Project.Instance.CalibrationData.HasClipRegion)
+      if (VianaNetApplication.Project.CalibrationData.HasClipRegion)
       {
-        this.colorRangeFilter.CropRectangle = Project.Instance.CalibrationData.ClipRegion;
+        this.colorRangeFilter.CropRectangle = VianaNetApplication.Project.CalibrationData.ClipRegion;
       }
       else
       {
@@ -479,10 +479,17 @@ namespace VianaNET.Data
       this.watch.Start();
       long start = this.watch.ElapsedMilliseconds;
 
-      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
         // Console.Write("BeforeColorFilter: ");
         // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+        if (this.TargetColor.Count <= i || this.ColorThreshold.Count <= i
+          || this.BlobMinDiameter.Count <= i || this.BlobMaxDiameter.Count <= i
+          || this.CurrentBlobCenter.Count <= i)
+        {
+          break;
+        }
+
         Video.Instance.RefreshProcessingMap();
         this.colorAndCropFilter.TargetColor = this.TargetColor[i];
         this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
@@ -510,7 +517,7 @@ namespace VianaNET.Data
 
           if (Video.Instance.IsDataAcquisitionRunning)
           {
-            Project.Instance.VideoData.AddPoint(i, this.CurrentBlobCenter[i].Value);
+            VianaNetApplication.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i].Value);
           }
 
           objectsFound = true;
@@ -539,11 +546,9 @@ namespace VianaNET.Data
         StatusBarContent.Instance.MessagesLabel = Labels.BlobsObjectsFound;
         return true;
       }
-      else
-      {
-        StatusBarContent.Instance.MessagesLabel = Labels.BlobsNoObjectFound;
-        return false;
-      }
+
+      StatusBarContent.Instance.MessagesLabel = Labels.BlobsNoObjectFound;
+      return false;
     }
 
     /// <summary>
@@ -551,7 +556,7 @@ namespace VianaNET.Data
     /// </summary>
     public void Reset()
     {
-      this.ResetProcessing(Project.Instance.ProcessingData.NumberOfTrackedObjects);
+      this.ResetProcessing(VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects);
     }
 
     #endregion

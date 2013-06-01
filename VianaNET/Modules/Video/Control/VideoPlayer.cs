@@ -393,7 +393,7 @@ namespace VianaNET.Modules.Video.Control
         this.FrameCount = (int)(this.MediaDurationInMS / (this.FrameTimeInNanoSeconds * NanoSecsToMilliSecs));
 
         Video.Instance.HasVideo = true;
-        Project.Instance.ProcessingData.InitializeImageFilters();
+        VianaNetApplication.Project.ProcessingData.InitializeImageFilters();
         this.Revert();
         this.OnVideoAvailable();
       }

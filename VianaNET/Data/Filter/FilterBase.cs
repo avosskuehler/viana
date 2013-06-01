@@ -191,14 +191,14 @@ namespace VianaNET.Data.Filter
         return;
       }
 
-      var aktObjectNr = Project.Instance.VideoData.ActiveObject;
+      var aktObjectNr = VianaNetApplication.Project.VideoData.ActiveObject;
       this.WertX.Clear();
       this.WertY.Clear();
       this.WertXMin = double.MaxValue;
       this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (var sample in Project.Instance.VideoData.Samples)
+      foreach (var sample in VianaNetApplication.Project.VideoData.Samples)
       {
         var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
         var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
@@ -263,7 +263,7 @@ namespace VianaNET.Data.Filter
     {
       double? value = null;
 
-      switch (isXValue ? Project.Instance.FilterData.AxisX.Axis : Project.Instance.FilterData.AxisY.Axis)
+      switch (isXValue ? VianaNetApplication.Project.FilterData.AxisX.Axis : VianaNetApplication.Project.FilterData.AxisY.Axis)
       {
         case AxisType.T:
           value = sample.Timestamp;

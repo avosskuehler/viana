@@ -237,7 +237,7 @@ namespace VianaNET.Modules.DataAcquisition
       var window = obj as ManualDataAquisitionWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Project.Instance.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }
@@ -305,7 +305,7 @@ namespace VianaNET.Modules.DataAcquisition
       // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           foreach (Ellipse item in this.visualDataPoints[j])
           {
@@ -324,8 +324,8 @@ namespace VianaNET.Modules.DataAcquisition
       // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>[Project.Instance.ProcessingData.NumberOfTrackedObjects];
-        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        this.visualDataPoints = new List<Ellipse>[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
+        for (int j = 0; j < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
@@ -523,9 +523,9 @@ namespace VianaNET.Modules.DataAcquisition
         double originalX = factorX * (scaledX - spaceX);
         double originalY = factorY * (scaledY - spaceY);
 
-        Project.Instance.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        VianaNetApplication.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Project.Instance.ProcessingData.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects)
         {
           this.StepOneFrameForward();
         }

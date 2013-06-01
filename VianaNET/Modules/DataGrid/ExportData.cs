@@ -100,7 +100,7 @@ namespace VianaNET.Modules.DataGrid
         var row = 1;
         ws.Cells[row, 1] = Labels.DataGridFramenumber;
         ws.Cells[row, 2] = Labels.DataGridTimestamp;
-        for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
           ws.Cells[row, 3 + i * 20] = title + Labels.DataGridXPosition;
@@ -124,7 +124,7 @@ namespace VianaNET.Modules.DataGrid
           row++;
           ws.Cells[row, 1] = sample.Framenumber;
           ws.Cells[row, 2] = sample.Timestamp;
-          for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
           {
             if (sample.Object[i] == null)
             {
@@ -260,7 +260,7 @@ namespace VianaNET.Modules.DataGrid
       WriteCellValue(writer, "String", Labels.DataGridFramenumber);
       WriteCellValue(writer, "String", Labels.DataGridTimestamp);
 
-      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
         string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
         WriteCellValue(writer, "String", title + Labels.DataGridXPosition);
@@ -291,7 +291,7 @@ namespace VianaNET.Modules.DataGrid
         // Alle Zellen der aktuellen Zeile durchlaufen
         WriteCellValue(writer, "Number", row.Framenumber);
         WriteCellValue(writer, "Number", row.Timestamp);
-        for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           WriteCellValue(writer, "Number", row.Object[i].PositionX);
           WriteCellValue(writer, "Number", row.Object[i].PositionY);
@@ -430,7 +430,7 @@ namespace VianaNET.Modules.DataGrid
         sw.Write(separator);
         sw.Write(Labels.DataGridTimestamp);
         sw.Write(separator);
-        for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
           sw.Write(title + Labels.DataGridXPosition);
@@ -469,7 +469,7 @@ namespace VianaNET.Modules.DataGrid
           sw.Write(separator);
           sw.Write(sample.Timestamp);
           sw.Write(separator);
-          for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
           {
             sw.Write(sample.Object[i].PositionX);
             sw.Write(separator);

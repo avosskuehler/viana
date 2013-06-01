@@ -15,6 +15,24 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_055C9E936C69C6CE6FB6B01E2F4A7D70"
+        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_055C9E936C69C6CE6FB6B01E2F4A7D70"
+        "OwnerKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_065DA86670C73A5EBE81CA40D7C89589"
+        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_23B325AD23834858ABD550D23026643D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -33,20 +51,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6A124F697DEBE4D88F7F17B1A693F456"
-        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6A2FB8A3457A2E1D46234CE11149158C"
-        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_6A2FB8A3457A2E1D46234CE11149158C"
         "OwnerKey" = "8:_89A8F8EDC88F528F6FA396EAC8ABA280"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6A2FB8A3457A2E1D46234CE11149158C"
+        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,14 +93,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_ADB90F4D81974E819DC7AD1097343ACD"
+        "MsmKey" = "8:_AB0AA1556D7EC6DF60CC1106BB862FD9"
         "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_ADB90F4D81974E819DC7AD1097343ACD"
-        "OwnerKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,25 +136,25 @@
         "Entry"
         {
         "MsmKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
-        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
         "OwnerKey" = "8:_6A2FB8A3457A2E1D46234CE11149158C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
-        "OwnerKey" = "8:_89A8F8EDC88F528F6FA396EAC8ABA280"
+        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
         "OwnerKey" = "8:_C2418B5EFDD2DCAC471C573F89800ABF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E227392B250B5526A34F0F5C3D93473C"
+        "OwnerKey" = "8:_89A8F8EDC88F528F6FA396EAC8ABA280"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -165,12 +171,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F97DCFCD0A064D219BAE4A7C13ADD050"
-        "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
         "MsmSig" = "8:_UNDEFINED"
@@ -178,49 +178,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_715D15D74D0A6E713BF587BC49202C8B"
+        "OwnerKey" = "8:_739DD25705E332F86207E5E8431647AC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DC9D4FBCF98F545E78D851515F7CD2CE"
+        "OwnerKey" = "8:_DE8BC985FD76D05A2DAD10824A2C7EE3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ADB90F4D81974E819DC7AD1097343ACD"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6A124F697DEBE4D88F7F17B1A693F456"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F97DCFCD0A064D219BAE4A7C13ADD050"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B2A496417438F42935428B1FDF80F734"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_89A8F8EDC88F528F6FA396EAC8ABA280"
+        "OwnerKey" = "8:_AE130D7557CFC7A8E3B540145BC962E5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C2418B5EFDD2DCAC471C573F89800ABF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_89A8F8EDC88F528F6FA396EAC8ABA280"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -238,19 +220,37 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AE130D7557CFC7A8E3B540145BC962E5"
+        "OwnerKey" = "8:_B2A496417438F42935428B1FDF80F734"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DE8BC985FD76D05A2DAD10824A2C7EE3"
+        "OwnerKey" = "8:_AB0AA1556D7EC6DF60CC1106BB862FD9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_739DD25705E332F86207E5E8431647AC"
+        "OwnerKey" = "8:_065DA86670C73A5EBE81CA40D7C89589"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_055C9E936C69C6CE6FB6B01E2F4A7D70"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DC9D4FBCF98F545E78D851515F7CD2CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_715D15D74D0A6E713BF587BC49202C8B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -372,6 +372,68 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_055C9E936C69C6CE6FB6B01E2F4A7D70"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                "ScatterAssemblies"
+                {
+                    "_055C9E936C69C6CE6FB6B01E2F4A7D70"
+                    {
+                    "Name" = "8:stdole.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:stdole.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_065DA86670C73A5EBE81CA40D7C89589"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=4.0.4900.40473, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_065DA86670C73A5EBE81CA40D7C89589"
+                    {
+                    "Name" = "8:VianaNETShaderEffectLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23B325AD23834858ABD550D23026643D"
             {
             "SourcePath" = "8:..\\VianaNET\\Images\\InstallerBanner.jpg"
@@ -412,32 +474,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6A124F697DEBE4D88F7F17B1A693F456"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=4.0.4789.19530, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6A2FB8A3457A2E1D46234CE11149158C"
             {
             "AssemblyRegister" = "3:1"
@@ -445,6 +481,11 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.Vbe.Interop, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_6A2FB8A3457A2E1D46234CE11149158C"
+                    {
+                    "Name" = "8:Microsoft.Vbe.Interop.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Microsoft.Vbe.Interop.dll"
             "TargetName" = "8:"
@@ -471,6 +512,11 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_715D15D74D0A6E713BF587BC49202C8B"
+                    {
+                    "Name" = "8:Microsoft.Windows.Shell.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Microsoft.Windows.Shell.dll"
             "TargetName" = "8:"
@@ -497,6 +543,11 @@
             "AssemblyAsmDisplayName" = "8:WPFVisifire.Charts, Version=3.1.5.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_739DD25705E332F86207E5E8431647AC"
+                    {
+                    "Name" = "8:WPFVisifire.Charts.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:WPFVisifire.Charts.dll"
             "TargetName" = "8:"
@@ -523,6 +574,11 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_89A8F8EDC88F528F6FA396EAC8ABA280"
+                    {
+                    "Name" = "8:Microsoft.Office.Interop.Excel.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Microsoft.Office.Interop.Excel.dll"
             "TargetName" = "8:"
@@ -542,15 +598,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ADB90F4D81974E819DC7AD1097343ACD"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AB0AA1556D7EC6DF60CC1106BB862FD9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=4.0.4900.35654, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
+                    "_AB0AA1556D7EC6DF60CC1106BB862FD9"
+                    {
+                    "Name" = "8:WPFLocalizeExtension.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:stdole.dll"
+            "SourcePath" = "8:WPFLocalizeExtension.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
@@ -575,6 +636,11 @@
             "AssemblyAsmDisplayName" = "8:WPFMath, Version=0.1.0.41441, Culture=neutral, PublicKeyToken=c11fab32a3894c29, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_AE130D7557CFC7A8E3B540145BC962E5"
+                    {
+                    "Name" = "8:WPFMath.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:WPFMath.dll"
             "TargetName" = "8:"
@@ -601,6 +667,11 @@
             "AssemblyAsmDisplayName" = "8:DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B2A496417438F42935428B1FDF80F734"
+                    {
+                    "Name" = "8:DirectShowLib-2005.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:DirectShowLib-2005.dll"
             "TargetName" = "8:"
@@ -647,6 +718,11 @@
             "AssemblyAsmDisplayName" = "8:Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_C2418B5EFDD2DCAC471C573F89800ABF"
+                    {
+                    "Name" = "8:Microsoft.Office.Interop.Word.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Microsoft.Office.Interop.Word.dll"
             "TargetName" = "8:"
@@ -673,6 +749,11 @@
             "AssemblyAsmDisplayName" = "8:RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DC9D4FBCF98F545E78D851515F7CD2CE"
+                    {
+                    "Name" = "8:RibbonControlsLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:RibbonControlsLibrary.dll"
             "TargetName" = "8:"
@@ -699,6 +780,11 @@
             "AssemblyAsmDisplayName" = "8:WPFToolkit.Extended, Version=1.7.4644.13122, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DE8BC985FD76D05A2DAD10824A2C7EE3"
+                    {
+                    "Name" = "8:WPFToolkit.Extended.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:WPFToolkit.Extended.dll"
             "TargetName" = "8:"
@@ -725,6 +811,11 @@
             "AssemblyAsmDisplayName" = "8:office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E227392B250B5526A34F0F5C3D93473C"
+                    {
+                    "Name" = "8:office.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:office.dll"
             "TargetName" = "8:"
@@ -782,32 +873,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F97DCFCD0A064D219BAE4A7C13ADD050"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=4.0.4789.19491, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                }
-            "SourcePath" = "8:WPFLocalizeExtension.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -876,20 +941,20 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:VianaNET V4.0"
-        "ProductCode" = "8:{3DB3D4C7-370A-43ED-A073-255C936F0131}"
-        "PackageCode" = "8:{6218CF02-F696-444F-A136-05AB1476A718}"
+        "ProductName" = "8:VianaNET V4.1"
+        "ProductCode" = "8:{2D56FD28-15A0-443E-8FAF-3088D59B073D}"
+        "PackageCode" = "8:{20D6270E-B50B-4724-86F0-D88AE0F81D7B}"
         "UpgradeCode" = "8:{8F1F8DFB-7BA8-41F4-A3F5-1AA48CAB1FD3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:4.0.1"
+        "ProductVersion" = "8:4.1"
         "Manufacturer" = "8:Freie Universität Berlin"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://viana.codeplex.com"
-        "Title" = "8:VianaNET V4.0 (x86)"
+        "Title" = "8:VianaNET V4.1 (x86)"
         "Subject" = "8:Video analysis software."
         "ARPCONTACT" = "8:Dr. Adrian Voßkühler"
         "Keywords" = "8:"
@@ -1381,7 +1446,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_59E195577DD04B9B8E6DBA9E1FDC6FEA"
             {
-            "SourcePath" = "8:..\\VianaNET\\obj\\x86\\Release\\VianaNET.exe"
+            "SourcePath" = "8:..\\VianaNET\\obj\\x86\\Debug\\VianaNET.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_28117B99C7A040239059BA017EFBBA66"

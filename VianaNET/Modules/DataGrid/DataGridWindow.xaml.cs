@@ -49,9 +49,9 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
       this.PopulateDataGridWithColumns();
-      Project.Instance.CalibrationData.PropertyChanged += this.DataPropertyChanged;
-      Project.Instance.VideoData.PropertyChanged += this.DataPropertyChanged;
-      Project.Instance.ProcessingData.PropertyChanged += this.DataPropertyChanged;
+      VianaNetApplication.Project.CalibrationData.PropertyChanged += this.DataPropertyChanged;
+      VianaNetApplication.Project.VideoData.PropertyChanged += this.DataPropertyChanged;
+      VianaNetApplication.Project.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
 
     #endregion
@@ -62,7 +62,7 @@ namespace VianaNET.Modules.DataGrid
     public void Refresh()
     {
       this.DataGrid.ItemsSource = null;
-      this.DataGrid.ItemsSource = Project.Instance.VideoData.Samples;
+      this.DataGrid.ItemsSource = VianaNetApplication.Project.VideoData.Samples;
     }
 
     #region Methods
@@ -184,9 +184,9 @@ namespace VianaNET.Modules.DataGrid
       this.DataGrid.Columns.Add(timeColumn);
 
       // For each tracked object create the whole bunch of columns
-      for (int i = 0; i < Project.Instance.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        string prefix = Project.Instance.ProcessingData.NumberOfTrackedObjects > 1
+        string prefix = VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects > 1
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
         var obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";

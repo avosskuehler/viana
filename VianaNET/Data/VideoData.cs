@@ -163,7 +163,7 @@ namespace VianaNET.Data
     public void NotifyLoading()
     {
       // Recalculate dependent data values
-      Project.Instance.VideoData.RefreshDistanceVelocityAcceleration();
+      VianaNetApplication.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update dependencies
       this.OnPropertyChanged("Samples");
@@ -214,12 +214,12 @@ namespace VianaNET.Data
     /// </summary>
     public void RefreshDistanceVelocityAcceleration()
     {
-      var previousSamples = new TimeSample[Project.Instance.ProcessingData.NumberOfTrackedObjects];
-      var validSamples = new int[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+      var previousSamples = new TimeSample[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
+      var validSamples = new int[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
 
       foreach (TimeSample timeSample in this.Samples)
       {
-        for (int j = 0; j < Project.Instance.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           DataSample currentSample = timeSample.Object[j];
           if (currentSample == null)
@@ -297,7 +297,7 @@ namespace VianaNET.Data
     public void Reset()
     {
       this.Samples.Clear();
-      this.LastPoint = new Point[Project.Instance.ProcessingData.NumberOfTrackedObjects];
+      this.LastPoint = new Point[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
 
@@ -330,15 +330,15 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!Project.Instance.CalibrationData.IsVideoCalibrated)
+      if (!VianaNetApplication.Project.CalibrationData.IsVideoCalibrated)
       {
         return new Point(value.PixelX, value.PixelY);
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(-Project.Instance.CalibrationData.OriginInPixel.X, -Project.Instance.CalibrationData.OriginInPixel.Y);
-      calibratedPoint.X = calibratedPoint.X * Project.Instance.CalibrationData.ScalePixelToUnit;
-      calibratedPoint.Y = calibratedPoint.Y * Project.Instance.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Offset(-VianaNetApplication.Project.CalibrationData.OriginInPixel.X, -VianaNetApplication.Project.CalibrationData.OriginInPixel.Y);
+      calibratedPoint.X = calibratedPoint.X * VianaNetApplication.Project.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Y = calibratedPoint.Y * VianaNetApplication.Project.CalibrationData.ScalePixelToUnit;
 
       return calibratedPoint;
     }
