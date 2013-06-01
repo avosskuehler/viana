@@ -392,7 +392,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public void UpdateRegressionFunctionString()
     {
-      Project.Instance.FilterData.RegressionFunctionTexFormula = this.GetRegressionFunctionTexFormula(this.regressionType);
+      VianaNetApplication.Project.FilterData.RegressionFunctionTexFormula = this.GetRegressionFunctionTexFormula(this.regressionType);
     }
 
     /// <summary>
@@ -487,10 +487,10 @@ namespace VianaNET.Data.Filter.Regression
       var b = FitParameterMatrix[(int)regTyp, 1];
       var c = FitParameterMatrix[(int)regTyp, 2];
       var d = FitParameterMatrix[(int)regTyp, 3];
-      var aString = Project.Instance.FilterData.GetFormattedString(a);
-      var bString = Project.Instance.FilterData.GetFormattedString(b);
-      var cString = Project.Instance.FilterData.GetFormattedString(c);
-      var dString = Project.Instance.FilterData.GetFormattedString(d);
+      var aString = VianaNetApplication.Project.FilterData.GetFormattedString(a);
+      var bString = VianaNetApplication.Project.FilterData.GetFormattedString(b);
+      var cString = VianaNetApplication.Project.FilterData.GetFormattedString(c);
+      var dString = VianaNetApplication.Project.FilterData.GetFormattedString(d);
       string fktStr;
 
       if (this.AusgleichsFunktion != null)
@@ -1502,7 +1502,7 @@ namespace VianaNET.Data.Filter.Regression
       {
         // Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
         // da Chart selbst Geraden zeichnen kann. 
-        if (Project.Instance.FilterData.AxisX.Axis != AxisType.T)
+        if (VianaNetApplication.Project.FilterData.AxisX.Axis != AxisType.T)
         {
           // zwei Punkte genügen bei x-y-Diagramm (kleinster und größter)
           x = this.WertXMin;
@@ -1539,7 +1539,7 @@ namespace VianaNET.Data.Filter.Regression
         }
       }
 
-      Project.Instance.FilterData.RegressionSeries = regressionSamples;
+      VianaNetApplication.Project.FilterData.RegressionSeries = regressionSamples;
     }
 
     /// <summary>
@@ -1590,7 +1590,7 @@ namespace VianaNET.Data.Filter.Regression
 
       // mittleres Abweichungsquadrat errechnen
       this.GetAverageAberration(tempAberration);
-      Project.Instance.FilterData.RegressionAberration = this.Aberration;
+      VianaNetApplication.Project.FilterData.RegressionAberration = this.Aberration;
       FitParameterMatrix[(int)regTyp, 5] = this.Aberration;
     }
 

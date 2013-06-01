@@ -14,8 +14,8 @@
   <DataGrid 
     AutoGenerateColumns="False" 
     Name="DataGrid"
-    Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Project.Instance}}"
-    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:Project.Instance}}" 
+    Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:VianaNetApplication.Project}}"
+    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:VianaNetApplication.Project}}" 
       HorizontalGridLinesBrush="Gray" 
       VerticalGridLinesBrush="Gray" 
       RowHeaderWidth="20" 

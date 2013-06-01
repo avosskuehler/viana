@@ -180,7 +180,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (!this.originIsSet)
       {
-        Project.Instance.CalibrationData.OriginInPixel = new Point(originalX, originalY);
+        VianaNetApplication.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
         this.originIsSet = true;
         this.originPath.Visibility = Visibility.Visible;
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);
@@ -249,20 +249,20 @@ namespace VianaNET.Modules.Video.Dialogs
       if (lengthDialog.ShowDialog().Value)
       {
         // Save ruler points to Settings
-        Project.Instance.CalibrationData.RulerEndPointInPixel = this.endPoint;
-        Project.Instance.CalibrationData.RulerStartPointInPixel = this.startPoint;
+        VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
+        VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
 
         var lengthVector = new Vector();
         lengthVector = Vector.Add(
           lengthVector, 
-          new Vector(Project.Instance.CalibrationData.RulerStartPointInPixel.X, Project.Instance.CalibrationData.RulerStartPointInPixel.Y));
+          new Vector(VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.Y));
         lengthVector.Negate();
         lengthVector = Vector.Add(
           lengthVector, 
-          new Vector(Project.Instance.CalibrationData.RulerEndPointInPixel.X, Project.Instance.CalibrationData.RulerEndPointInPixel.Y));
+          new Vector(VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.Y));
         double length = lengthVector.Length;
-        Project.Instance.CalibrationData.ScalePixelToUnit = Project.Instance.CalibrationData.RulerValueInRulerUnits / length;
-        Project.Instance.CalibrationData.IsVideoCalibrated = true;
+        VianaNetApplication.Project.CalibrationData.ScalePixelToUnit = VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits / length;
+        VianaNetApplication.Project.CalibrationData.IsVideoCalibrated = true;
         this.DialogResult = true;
       }
 

@@ -19,7 +19,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Project.Instance}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:VianaNetApplication.Project}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -54,7 +54,7 @@
             </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
-              Source={x:Static application:Project.Instance},
+              Source={x:Static application:VianaNetApplication.Project},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
@@ -78,7 +78,7 @@
       </Grid>
       <BlobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Project.Instance}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:VianaNetApplication.Project}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>

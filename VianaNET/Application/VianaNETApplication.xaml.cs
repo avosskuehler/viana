@@ -42,6 +42,27 @@ namespace VianaNET.Application
   /// </summary>
   public partial class VianaNetApplication
   {
+    /// <summary>
+    ///   The static member, that holds the project.
+    /// </summary>
+    private static Project project;
+
+    /// <summary>
+    /// Gets or sets the static member, that holds the project.
+    /// </summary>
+    public static Project Project
+    {
+      get
+      {
+        return project ?? (project = new Project());
+      }
+      
+      set
+      {
+        project = value;
+      }
+    }
+
     #region Public Methods and Operators
 
     /// <summary>

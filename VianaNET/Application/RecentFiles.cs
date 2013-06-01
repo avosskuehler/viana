@@ -27,22 +27,19 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Runtime.Serialization;
-using System.Xml;
-
 namespace VianaNET.Application
 {
   using System;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Drawing;
   using System.IO;
+  using System.Runtime.Serialization;
   using System.Windows;
-  using System.Windows.Interop;
-  using System.Windows.Media.Imaging;
-  using Modules.Video.Control;
-  using Properties;
+  using System.Xml;
+
+  using VianaNET.Modules.Video.Control;
+  using VianaNET.Properties;
 
   /// <summary>
   ///   Derived from <see cref="DependencyObject" /> and implements <see cref="INotifyPropertyChanged" />.
