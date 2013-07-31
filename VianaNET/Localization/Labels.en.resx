@@ -1525,4 +1525,19 @@ Click OK or press Enter, when ready.</value>
   <data name="AboutBoxCreditsHeader" xml:space="preserve">
     <value>Credits to</value>
   </data>
+  <data name="ButtonSwitchTimeUnitLabelTitle" xml:space="preserve">
+    <value>Switch time unit</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipDescription" xml:space="preserve">
+    <value>Change the unit for the time variable, e.g. from milliseconds to seconds.</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipTitle" xml:space="preserve">
+    <value>Change the time unit</value>
+  </data>
+  <data name="TimeUnitDialogDescription" xml:space="preserve">
+    <value>Choose the unit for the time variable which to be used for the display.</value>
+  </data>
+  <data name="TimeUnitDialogTitle" xml:space="preserve">
+    <value>Choose time unit</value>
+  </data>
 </root>

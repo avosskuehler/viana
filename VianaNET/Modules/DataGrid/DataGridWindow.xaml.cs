@@ -174,7 +174,7 @@ namespace VianaNET.Modules.DataGrid
         };
 
       // timeColumn.SortMemberPath = "Timestamp";
-      var valueBindingTime = new Binding("Timestamp")
+      var valueBindingTime = new Binding("Object[0].Time")
         {
           Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
           ConverterParameter = this.Resources["TimeMeasurement"]

@@ -674,26 +674,6 @@ namespace VianaNET.Modules.Chart
       string prefix = "Object[" + VianaNetApplication.Project.ProcessingData.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
 
-      string rulerUnitName = string.Empty;
-      switch (VianaNetApplication.Project.CalibrationData.RulerUnit)
-      {
-        case Unit.mm:
-          rulerUnitName = "mm";
-          break;
-        case Unit.cm:
-          rulerUnitName = "cm";
-          break;
-        case Unit.m:
-          rulerUnitName = "m";
-          break;
-        case Unit.km:
-          rulerUnitName = "km";
-          break;
-        case Unit.px:
-          rulerUnitName = "pixel";
-          break;
-      }
-
       switch (axis.Axis)
       {
         case AxisType.I:
@@ -701,96 +681,92 @@ namespace VianaNET.Modules.Chart
           this.axisUnitName = string.Empty;
           break;
         case AxisType.T:
-          mapPoints.Path = "Timestamp";
-          this.axisUnitName = "ms";
+          mapPoints.Path = "Time";
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.TimeUnit.ToString();
           break;
         case AxisType.PX:
           mapPoints.Path = "PositionX";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.PY:
           mapPoints.Path = "PositionY";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.D:
           mapPoints.Path = "Distance";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.DX:
           mapPoints.Path = "DistanceX";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.DY:
           mapPoints.Path = "DistanceY";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.S:
           mapPoints.Path = "Length";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.SX:
           mapPoints.Path = "LengthX";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.SY:
           mapPoints.Path = "LengthY";
-          this.axisUnitName = rulerUnitName;
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.V:
           mapPoints.Path = "Velocity";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VX:
           mapPoints.Path = "VelocityX";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VY:
           mapPoints.Path = "VelocityY";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VI:
           mapPoints.Path = "VelocityI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VXI:
           mapPoints.Path = "VelocityXI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VYI:
           mapPoints.Path = "VelocityYI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.A:
           mapPoints.Path = "Acceleration";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AX:
           mapPoints.Path = "AccelerationX";
-          axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AY:
           mapPoints.Path = "AccelerationY";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AI:
           mapPoints.Path = "AccelerationI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AXI:
           mapPoints.Path = "AccelerationXI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AYI:
           mapPoints.Path = "AccelerationYI";
-          this.axisUnitName = string.Concat(rulerUnitName, "/ms²");
+          this.axisUnitName = VianaNetApplication.Project.CalibrationData.AccelerationUnit;
           break;
       }
 
-      // Don´t prefix the timestamp
-      if (axis.Axis != AxisType.T)
-      {
-        mapPoints.Path = prefix + mapPoints.Path;
-      }
+      mapPoints.Path = prefix + mapPoints.Path;
 
       this.axisUnitName = "  [" + this.axisUnitName + "]";
     }
@@ -810,7 +786,7 @@ namespace VianaNET.Modules.Chart
         if (this.DataChart.AxesX.Count > 0)
         {
           var axisX = this.DataChart.AxesX[0];
-          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text + axisXUnitName : null;
+          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text + this.axisXUnitName : null;
           axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
 
           if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
@@ -818,14 +794,28 @@ namespace VianaNET.Modules.Chart
             this.XAxisMinimum.Value = this.XAxisMaximum.Value;
           }
 
-          axisX.AxisMinimum = this.XAxisMinimum.IsChecked ? this.XAxisMinimum.Value : new double?();
-
+          if (this.XAxisMinimum.IsChecked)
+          {
+            axisX.AxisMinimum = this.XAxisMinimum.Value;
+          }
+          else
+          {
+            axisX.AxisMinimum = null;
+          }
+ 
           if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
           {
             this.XAxisMaximum.Value = this.XAxisMinimum.Value;
           }
 
-          axisX.AxisMaximum = this.XAxisMaximum.IsChecked ? this.XAxisMaximum.Value : new double?();
+          if (this.XAxisMaximum.IsChecked)
+          {
+            axisX.AxisMaximum = this.XAxisMaximum.Value;
+          }
+          else
+          {
+            axisX.AxisMaximum = null;
+          }
 
           // if (XAxisInterval.IsChecked)
           // {
@@ -840,7 +830,7 @@ namespace VianaNET.Modules.Chart
         if (this.DataChart.AxesY.Count > 0)
         {
           var axisY = this.DataChart.AxesY[0];
-          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text + axisYUnitName : null;
+          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text + this.axisYUnitName : null;
           axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
 
           if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
@@ -848,14 +838,28 @@ namespace VianaNET.Modules.Chart
             this.YAxisMinimum.Value = this.YAxisMaximum.Value;
           }
 
-          axisY.AxisMinimum = this.YAxisMinimum.IsChecked ? this.YAxisMinimum.Value : new double?();
+          if (this.YAxisMinimum.IsChecked)
+          {
+            axisY.AxisMinimum = this.YAxisMinimum.Value;
+          }
+          else
+          {
+            axisY.AxisMinimum = null;
+          }
 
           if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
           {
             this.YAxisMaximum.Value = this.YAxisMinimum.Value;
           }
 
-          axisY.AxisMaximum = this.YAxisMaximum.IsChecked ? this.YAxisMaximum.Value : new double?();
+           if (this.YAxisMaximum.IsChecked)
+          {
+            axisY.AxisMaximum = this.YAxisMaximum.Value;
+          }
+          else
+          {
+            axisY.AxisMaximum = null;
+          }
 
           // if (YAxisInterval.IsChecked)
           // {
@@ -977,11 +981,15 @@ namespace VianaNET.Modules.Chart
 
       var map = this.DefaultSeries.DataMappings[axisX ? 0 : 1];
       this.UpdateAxisMappings(axis, map);
-      if (axisX) { axisXUnitName = axisUnitName; }
+      if (axisX)
+      {
+        this.axisXUnitName = this.axisUnitName;
+      }
       else
       {
-        axisYUnitName = axisUnitName;
+        this.axisYUnitName = this.axisUnitName;
       }
+
       return true;
     }
 
@@ -1040,6 +1048,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="aktregressionType">
     /// The aktual selected regression type. 
     /// </param>
+    /// <param name="neuBerechnen">True, wenn die Regression neu berechnet werden soll </param>
     private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType, bool neuBerechnen)
     {
       string bildsource;
@@ -1086,7 +1095,6 @@ namespace VianaNET.Modules.Chart
         VianaNetApplication.Project.FilterData.CalculateRegressionSeriesDataPoints();
         VianaNetApplication.Project.FilterData.RegressionFilter.UpdateLinefitFunctionData(neuBerechnen);
         this.RefreshRegressionFuctionTerm();
-
       }
     }
 
@@ -1176,14 +1184,14 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowTheorieCheckBoxChecked(object sender, RoutedEventArgs e)
     {
-      VianaNetApplication.Project.FilterData.CalculateTheorySeriesDataPoints(); 
+      VianaNetApplication.Project.FilterData.CalculateTheorySeriesDataPoints();
       this.UpdateTheoryFormula();
       this.RefreshTheorieFunctionTerm();
     }
 
     private void ShowTheorieCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
-      VianaNetApplication.Project.FilterData.CalculateTheorySeriesDataPoints(); 
+      VianaNetApplication.Project.FilterData.CalculateTheorySeriesDataPoints();
       VianaNetApplication.Project.FilterData.TheoryFunctionTexFormula = null;
       this.RefreshTheorieFunctionTerm();
     }

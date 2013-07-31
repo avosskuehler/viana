@@ -1510,4 +1510,19 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="AboutBoxCreditsHeader" xml:space="preserve">
     <value>Dank an</value>
   </data>
+  <data name="ButtonSwitchTimeUnitLabelTitle" xml:space="preserve">
+    <value>Zeiteinheit ändern</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipDescription" xml:space="preserve">
+    <value>Ändern Sie die Einheit in der die Zeit dargestellt wird, z.B. Millisekunden oder Sekunden.</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipTitle" xml:space="preserve">
+    <value>Die Einheit der Zeit anpassen</value>
+  </data>
+  <data name="TimeUnitDialogDescription" xml:space="preserve">
+    <value>Wählen Sie die Einheit zur Darstellung der Zeit.</value>
+  </data>
+  <data name="TimeUnitDialogTitle" xml:space="preserve">
+    <value>Zeiteinheit wählen</value>
+  </data>
 </root>

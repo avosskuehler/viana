@@ -33,6 +33,8 @@ namespace VianaNET.Data
   using Collections;
   using Modules.Video.Control;
 
+  using VianaNET.CustomStyles.Types;
+
   /// <summary>
   ///   The video data.
   /// </summary>
@@ -188,8 +190,21 @@ namespace VianaNET.Data
           Timestamp = Video.Instance.FrameTimestampInMS
         };
 
+      double newTime = Video.Instance.FrameTimestampInMS;
+      switch (VianaNetApplication.Project.CalibrationData.TimeUnit)
+      {
+        case TimeUnit.ms:
+          break;
+        case TimeUnit.s:
+          newTime = newTime / 1000;
+          break;
+        default:
+          throw new ArgumentOutOfRangeException("TimeUnit not given");
+      }
+
       var newObjectSample = new DataSample
       {
+        Time = newTime,
         PixelX = newSamplePosition.X,
         PixelY = newSamplePosition.Y
       };
@@ -230,6 +245,7 @@ namespace VianaNET.Data
           validSamples[j]++;
 
           Point calibratedPoint = CalibrateSample(currentSample);
+          currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
           currentSample.PositionX = calibratedPoint.X;
           currentSample.PositionY = calibratedPoint.Y;
 
@@ -364,8 +380,31 @@ namespace VianaNET.Data
     private static double GetAcceleration(
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      double value = (newSample.Velocity.Value - previousSample.Velocity.Value) / timedifference * 1000;
+
+      double value = (newSample.Velocity.Value - previousSample.Velocity.Value) / timedifference * GetTimeFactor();
       return value;
+    }
+
+    /// <summary>
+    /// Returns the factor to convert sample with milliseconds in the current time unit;
+    /// </summary>
+    /// <returns>The factor to multiply with</returns>
+    private static int GetTimeFactor()
+    {
+      var timefactor = 1;
+      switch (VianaNetApplication.Project.CalibrationData.TimeUnit)
+      {
+        case TimeUnit.ms:
+          timefactor = 1;
+          break;
+        case TimeUnit.s:
+          timefactor = 1000;
+          break;
+        default:
+          throw new ArgumentOutOfRangeException("TimeUnit not specified");
+      }
+
+      return timefactor;
     }
 
     /// <summary>
@@ -414,27 +453,6 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The get velocity.
-    /// </summary>
-    /// <param name="objectIndex">
-    /// The object index. 
-    /// </param>
-    /// <param name="newSample">
-    /// The new sample. 
-    /// </param>
-    /// <param name="timedifference">
-    /// The timedifference. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="double"/> . 
-    /// </returns>
-    private static double GetVelocity(int objectIndex, DataSample newSample, long timedifference)
-    {
-      double velocity = newSample.Distance / timedifference * 1000;
-      return velocity;
-    }
-
-    /// <summary>
     /// The get x acceleration.
     /// </summary>
     /// <param name="objectIndex">
@@ -455,7 +473,7 @@ namespace VianaNET.Data
     private static double GetXAcceleration(
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.VelocityX.Value - previousSample.VelocityX.Value) / timedifference * 1000;
+      return (newSample.VelocityX.Value - previousSample.VelocityX.Value) / timedifference * GetTimeFactor();
     }
 
     /// <summary>
@@ -501,6 +519,26 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    /// The get velocity.
+    /// </summary>
+    /// <param name="objectIndex">
+    /// The object index. 
+    /// </param>
+    /// <param name="newSample">
+    /// The new sample. 
+    /// </param>
+    /// <param name="timedifference">
+    /// The timedifference. 
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> . 
+    /// </returns>
+    private static double GetVelocity(int objectIndex, DataSample newSample, long timedifference)
+    {
+      return newSample.Distance / timedifference * GetTimeFactor();
+    }
+
+    /// <summary>
     /// The get x velocity.
     /// </summary>
     /// <param name="objectIndex">
@@ -521,8 +559,7 @@ namespace VianaNET.Data
     private static double GetXVelocity(
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      double xvelocity = (newSample.PositionX - previousSample.PositionX) / timedifference * 1000;
-      return xvelocity;
+      return (newSample.PositionX - previousSample.PositionX) / timedifference * GetTimeFactor();
     }
 
     /// <summary>
@@ -546,7 +583,7 @@ namespace VianaNET.Data
     private static double GetYAcceleration(
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.VelocityY.Value - previousSample.VelocityY.Value) / timedifference * 1000;
+      return (newSample.VelocityY.Value - previousSample.VelocityY.Value) / timedifference * GetTimeFactor();
     }
 
     /// <summary>
@@ -612,7 +649,7 @@ namespace VianaNET.Data
     private static double GetYVelocity(
       int objectIndex, DataSample newSample, DataSample previousSample, long timedifference)
     {
-      return (newSample.PositionY - previousSample.PositionY) / timedifference * 1000;
+      return (newSample.PositionY - previousSample.PositionY) / timedifference * GetTimeFactor();
     }
 
     #endregion

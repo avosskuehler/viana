@@ -123,7 +123,7 @@ namespace VianaNET.Modules.DataGrid
         {
           row++;
           ws.Cells[row, 1] = sample.Framenumber;
-          ws.Cells[row, 2] = sample.Timestamp;
+          ws.Cells[row, 2] = sample.Object[0].Time;
           for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
           {
             if (sample.Object[i] == null)
@@ -290,7 +290,7 @@ namespace VianaNET.Modules.DataGrid
 
         // Alle Zellen der aktuellen Zeile durchlaufen
         WriteCellValue(writer, "Number", row.Framenumber);
-        WriteCellValue(writer, "Number", row.Timestamp);
+        WriteCellValue(writer, "Number", row.Object[0].Time);
         for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           WriteCellValue(writer, "Number", row.Object[i].PositionX);
@@ -467,7 +467,7 @@ namespace VianaNET.Modules.DataGrid
         {
           sw.Write(sample.Framenumber);
           sw.Write(separator);
-          sw.Write(sample.Timestamp);
+          sw.Write(sample.Object[0].Time);
           sw.Write(separator);
           for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
           {
