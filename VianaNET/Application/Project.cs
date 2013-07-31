@@ -42,7 +42,7 @@ namespace VianaNET.Application
   [XmlInclude(typeof(System.Windows.Media.MatrixTransform))]
   [XmlInclude(typeof(Data.Filter.Interpolation.MovingAverageFilter))]
   [XmlInclude(typeof(Data.Filter.Interpolation.ExponentialSmoothFilter))]
-  public class Project
+  public class Project : INotifyPropertyChanged
   {
     /// <summary>
     /// Initializes a new instance of the <see cref="Project"/> class. 
@@ -55,6 +55,12 @@ namespace VianaNET.Application
       this.ProcessingData = new ProcessingData();
       this.VideoData = new VideoData { LastPoint = new Point[this.ProcessingData.NumberOfTrackedObjects] };
     }
+
+    /// <summary>
+    /// Implements INotifyPropertyChanged
+    /// </summary>
+    [field: NonSerialized]
+    public event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
     /// Gets or sets the filter data.
@@ -95,6 +101,18 @@ namespace VianaNET.Application
     /// Gets or sets the path.
     /// </summary>
     public string ProjectPath { get; set; }
+
+    /// <summary>
+    /// Gets a valaue indicating whether there are video input devices
+    /// available on the system
+    /// </summary>
+    public bool HasData
+    {
+      get
+      {
+        return this.VideoData.Samples.Count > 0;
+      }
+    }
 
     /// <summary>
     /// Serializes the project into the given file in a xml structure.
@@ -172,6 +190,20 @@ namespace VianaNET.Application
     }
 
     /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The property name. 
+    /// </param>
+    public virtual void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+
+    /// <summary>
     /// The calibration_ property changed.
     /// </summary>
     /// <param name="sender">
@@ -187,5 +219,6 @@ namespace VianaNET.Application
         this.ProcessingData.InitializeImageFilters();
       }
     }
+
   }
 }

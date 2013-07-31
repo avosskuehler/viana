@@ -38,6 +38,11 @@ namespace VianaNET.Data.Collections
     #region Public Properties
 
     /// <summary>
+    ///   Gets or sets the time in units of the current time unit
+    /// </summary>
+    public double Time { get; set; }
+
+    /// <summary>
     ///   Gets or sets the pixel x.
     /// </summary>
     public double PixelX { get; set; }

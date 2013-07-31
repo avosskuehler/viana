@@ -266,7 +266,7 @@ namespace VianaNET.Data.Filter
       switch (isXValue ? VianaNetApplication.Project.FilterData.AxisX.Axis : VianaNetApplication.Project.FilterData.AxisY.Axis)
       {
         case AxisType.T:
-          value = sample.Timestamp;
+          value = sample.Object[aktObjectNr].Time;
           break;
         case AxisType.X:
           value = sample.Object[aktObjectNr].PixelX;

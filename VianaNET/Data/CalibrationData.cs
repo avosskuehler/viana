@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Calibration.cs" company="Freie Universität Berlin">
+// <copyright file="CalibrationData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -32,6 +32,7 @@ namespace VianaNET.Data
   using System.Windows;
   using System.Windows.Media;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
 
   /// <summary>
@@ -50,15 +51,6 @@ namespace VianaNET.Data
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="AccelerationUnit" />.
-    /// </summary>
-    public static readonly DependencyProperty AccelerationUnitProperty = DependencyProperty.Register(
-      "AccelerationUnit",
-      typeof(string),
-      typeof(CalibrationData),
-      new FrameworkPropertyMetadata("px/s^2", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
@@ -82,7 +74,7 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty HasClipRegionProperty = DependencyProperty.Register(
       "HasClipRegion",
-      typeof(Boolean),
+      typeof(bool),
       typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
@@ -101,27 +93,18 @@ namespace VianaNET.Data
     public static readonly DependencyProperty IsVideoCalibratedProperty =
       DependencyProperty.Register(
         "IsVideoCalibrated",
-        typeof(Boolean),
+        typeof(bool),
         typeof(CalibrationData),
         new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="LengthUnit" />.
     /// </summary>
-    public static readonly DependencyProperty PixelUnitProperty = DependencyProperty.Register(
-      "PixelUnit",
-      typeof(string),
+    public static readonly DependencyProperty LengthUnitProperty = DependencyProperty.Register(
+      "LengthUnit",
+      typeof(LengthUnit),
       typeof(CalibrationData),
-      new FrameworkPropertyMetadata("px", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="PositionUnit" />.
-    /// </summary>
-    public static readonly DependencyProperty PositionUnitProperty = DependencyProperty.Register(
-      "PositionUnit",
-      typeof(string),
-      typeof(CalibrationData),
-      new FrameworkPropertyMetadata("px", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+      new FrameworkPropertyMetadata(LengthUnit.px, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
@@ -134,32 +117,23 @@ namespace VianaNET.Data
         new FrameworkPropertyMetadata(default(double), OnPropertyChanged));
 
     /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="TimeUnit" />.
     /// </summary>
     public static readonly DependencyProperty TimeUnitProperty = DependencyProperty.Register(
       "TimeUnit",
-      typeof(string),
+      typeof(TimeUnit),
       typeof(CalibrationData),
-      new FrameworkPropertyMetadata("ms", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="VelocityUnit" />.
-    /// </summary>
-    public static readonly DependencyProperty VelocityUnitProperty = DependencyProperty.Register(
-      "VelocityUnit",
-      typeof(string),
-      typeof(CalibrationData),
-      new FrameworkPropertyMetadata("px/s", FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+      new FrameworkPropertyMetadata(TimeUnit.s, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     #endregion
 
     #region Fields
 
     /// <summary>
-    ///   Saves the <see cref="Unit" /> used for the calibration ruler
+    ///   Saves the <see cref="CustomStyles.Types.LengthUnit" /> used for the calibration ruler
     ///   during measuring distancs.
     /// </summary>
-    private Unit rulerUnit;
+    private LengthUnit rulerUnit;
 
     #endregion
 
@@ -169,8 +143,7 @@ namespace VianaNET.Data
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Prevents a default instance of the <see cref="CalibrationData" /> class from being created. 
-    ///   Initializes an instance of the Calibration class.
+    /// Initializes a new instance of the <see cref="CalibrationData"/> class. 
     /// </summary>
     public CalibrationData()
     {
@@ -195,22 +168,6 @@ namespace VianaNET.Data
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
-
-    /// <summary>
-    ///   Gets or sets the acceleration unit string. (Pixel per second squared by default)
-    /// </summary>
-    public string AccelerationUnit
-    {
-      get
-      {
-        return (string)this.GetValue(AccelerationUnitProperty);
-      }
-
-      set
-      {
-        this.SetValue(AccelerationUnitProperty, value);
-      }
-    }
 
     /// <summary>
     ///   Gets or sets the clip region.
@@ -253,7 +210,7 @@ namespace VianaNET.Data
     {
       get
       {
-        return (Boolean)this.GetValue(HasClipRegionProperty);
+        return (bool)this.GetValue(HasClipRegionProperty);
       }
 
       set
@@ -287,7 +244,7 @@ namespace VianaNET.Data
     {
       get
       {
-        return (Boolean)this.GetValue(IsVideoCalibratedProperty);
+        return (bool)this.GetValue(IsVideoCalibratedProperty);
       }
 
       set
@@ -303,34 +260,71 @@ namespace VianaNET.Data
     public Point OriginInPixel { get; set; }
 
     /// <summary>
-    ///   Gets or sets the string for the pixel unit.
+    ///   Gets the string for the pixel unit.
     /// </summary>
     public string PixelUnit
     {
       get
       {
-        return (string)this.GetValue(PixelUnitProperty);
+        return LengthUnit.px.ToString();
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the string value
+    /// </summary>
+    public TimeUnit TimeUnit
+    {
+      get
+      {
+        return (TimeUnit)this.GetValue(TimeUnitProperty);
       }
 
       set
       {
-        this.SetValue(PixelUnitProperty, value);
+        this.SetValue(TimeUnitProperty, value);
+        this.OnPropertyChanged("VelocityUnit");
+        this.OnPropertyChanged("AccelerationUnit");
       }
     }
 
     /// <summary>
     ///   Gets or sets the position unit string. (Pixel by default).
     /// </summary>
-    public string PositionUnit
+    public LengthUnit LengthUnit
     {
       get
       {
-        return (string)this.GetValue(PositionUnitProperty);
+        return (LengthUnit)this.GetValue(LengthUnitProperty);
       }
 
       set
       {
-        this.SetValue(PositionUnitProperty, value);
+        this.SetValue(LengthUnitProperty, value);
+        this.OnPropertyChanged("VelocityUnit");
+        this.OnPropertyChanged("AccelerationUnit");
+      }
+    }
+
+    /// <summary>
+    ///   Gets the velocity unit string. (Pixel per second by default)
+    /// </summary>
+    public string VelocityUnit
+    {
+      get
+      {
+        return string.Format("{0}/{1}", this.LengthUnit, this.TimeUnit);
+      }
+    }
+
+    /// <summary>
+    ///   Gets the acceleration unit string. (Pixel per second squared by default)
+    /// </summary>
+    public string AccelerationUnit
+    {
+      get
+      {
+        return string.Format("{0}/{1}²", this.LengthUnit, this.TimeUnit);
       }
     }
 
@@ -353,9 +347,9 @@ namespace VianaNET.Data
     public Point RulerStartPointInPixel { get; set; }
 
     /// <summary>
-    ///   Gets or sets the <see cref="Unit" /> the ruler value is measured in.
+    ///   Gets or sets the <see cref="CustomStyles.Types.LengthUnit" /> the ruler value is measured in.
     /// </summary>
-    public Unit RulerUnit
+    public LengthUnit RulerUnit
     {
       get
       {
@@ -365,34 +359,7 @@ namespace VianaNET.Data
       set
       {
         this.rulerUnit = value;
-        switch (value)
-        {
-          case Unit.px:
-            this.PositionUnit = "px";
-            this.VelocityUnit = "px/s";
-            this.AccelerationUnit = "px/s^2";
-            break;
-          case Unit.mm:
-            this.PositionUnit = "mm";
-            this.VelocityUnit = "mm/s";
-            this.AccelerationUnit = "mm/s^2";
-            break;
-          case Unit.cm:
-            this.PositionUnit = "cm";
-            this.VelocityUnit = "cm/s";
-            this.AccelerationUnit = "cm/s^2";
-            break;
-          case Unit.m:
-            this.PositionUnit = "m";
-            this.VelocityUnit = "m/s";
-            this.AccelerationUnit = "m/s^2";
-            break;
-          case Unit.km:
-            this.PositionUnit = "km";
-            this.VelocityUnit = "km/s";
-            this.AccelerationUnit = "km/s^2";
-            break;
-        }
+        this.LengthUnit = this.rulerUnit;
       }
     }
 
@@ -417,38 +384,6 @@ namespace VianaNET.Data
     ///   convert pixels to unit values.
     /// </summary>
     public double ScalePixelToUnit { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the string value
-    /// </summary>
-    public string TimeUnit
-    {
-      get
-      {
-        return (string)this.GetValue(TimeUnitProperty);
-      }
-
-      set
-      {
-        this.SetValue(TimeUnitProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the velocity unit string. (Pixel per second by default)
-    /// </summary>
-    public string VelocityUnit
-    {
-      get
-      {
-        return (string)this.GetValue(VelocityUnitProperty);
-      }
-
-      set
-      {
-        this.SetValue(VelocityUnitProperty, value);
-      }
-    }
 
     #endregion
 
@@ -498,6 +433,20 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The name of the property that changed
+    /// </param>
+    private void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+
+    /// <summary>
     ///   Initially set the properties default values.
     /// </summary>
     private void InitFields()
@@ -505,16 +454,15 @@ namespace VianaNET.Data
       this.OriginInPixel = new Point();
       this.RulerStartPointInPixel = new Point();
       this.RulerEndPointInPixel = new Point();
-      this.RulerUnit = Unit.px;
+      this.RulerUnit = LengthUnit.px;
       this.RulerValueInRulerUnits = 0d;
       this.ScalePixelToUnit = 1d;
       this.IsVideoCalibrated = false;
       this.HasClipRegion = false;
       this.RulerDescription = string.Empty;
       this.ClipRegion = new Rect(0, 0, 0, 0);
-      this.PositionUnit = "px";
-      this.VelocityUnit = "px/s";
-      this.AccelerationUnit = "px/s^2";
+      this.LengthUnit = LengthUnit.px;
+      this.TimeUnit = TimeUnit.s;
       this.IsShowingUnits = false;
     }
 

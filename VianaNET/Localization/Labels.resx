@@ -1512,4 +1512,19 @@
   <data name="AboutBoxCreditsHeader" xml:space="preserve">
     <value>@AboutBoxCreditsHeader</value>
   </data>
+  <data name="ButtonSwitchTimeUnitLabelTitle" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitLabelTitle</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipDescription" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitToolTipDescription</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipTitle" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitToolTipTitle</value>
+  </data>
+  <data name="TimeUnitDialogDescription" xml:space="preserve">
+    <value>@TimeUnitDialogDescription</value>
+  </data>
+  <data name="TimeUnitDialogTitle" xml:space="preserve">
+    <value>@TimeUnitDialogTitle</value>
+  </data>
 </root>

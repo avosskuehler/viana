@@ -64,7 +64,7 @@ namespace VianaNET.CustomStyles.Converter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var valueToConvert = (double)value;
-      string unit = " " + VianaNetApplication.Project.CalibrationData.PositionUnit;
+      string unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
       var param = (MeasurementType)parameter;
       switch (param)
       {
@@ -72,7 +72,7 @@ namespace VianaNET.CustomStyles.Converter
           unit = " " + VianaNetApplication.Project.CalibrationData.PixelUnit;
           break;
         case MeasurementType.Position:
-          unit = " " + VianaNetApplication.Project.CalibrationData.PositionUnit;
+          unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
           break;
       }
 

@@ -114,19 +114,19 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = Unit.km;
+          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.km;
         }
         else if (this.rdbM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = Unit.m;
+          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.m;
         }
         else if (this.rdbCM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = Unit.cm;
+          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.cm;
         }
         else if (this.rdbMM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = Unit.mm;
+          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.mm;
         }
 
         // This line is necessary to get an update event for the ruler value

@@ -209,15 +209,13 @@ namespace VianaNET.MainWindow
       VianaNetApplication.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
       VianaNetApplication.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
 
-      VianaNetApplication.Project.CalibrationData.AccelerationUnit = openedProject.CalibrationData.AccelerationUnit;
       VianaNetApplication.Project.CalibrationData.ClipRegion = openedProject.CalibrationData.ClipRegion;
       VianaNetApplication.Project.CalibrationData.GradientBackground = openedProject.CalibrationData.GradientBackground;
       VianaNetApplication.Project.CalibrationData.HasClipRegion = openedProject.CalibrationData.HasClipRegion;
       VianaNetApplication.Project.CalibrationData.IsShowingUnits = openedProject.CalibrationData.IsShowingUnits;
       VianaNetApplication.Project.CalibrationData.IsVideoCalibrated = openedProject.CalibrationData.IsVideoCalibrated;
       VianaNetApplication.Project.CalibrationData.OriginInPixel = openedProject.CalibrationData.OriginInPixel;
-      VianaNetApplication.Project.CalibrationData.PixelUnit = openedProject.CalibrationData.PixelUnit;
-      VianaNetApplication.Project.CalibrationData.PositionUnit = openedProject.CalibrationData.PositionUnit;
+      VianaNetApplication.Project.CalibrationData.LengthUnit = openedProject.CalibrationData.LengthUnit;
       VianaNetApplication.Project.CalibrationData.RulerDescription = openedProject.CalibrationData.RulerDescription;
       VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel = openedProject.CalibrationData.RulerEndPointInPixel;
       VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel = openedProject.CalibrationData.RulerStartPointInPixel;
@@ -225,7 +223,6 @@ namespace VianaNET.MainWindow
       VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits = openedProject.CalibrationData.RulerValueInRulerUnits;
       VianaNetApplication.Project.CalibrationData.ScalePixelToUnit = openedProject.CalibrationData.ScalePixelToUnit;
       VianaNetApplication.Project.CalibrationData.TimeUnit = openedProject.CalibrationData.TimeUnit;
-      VianaNetApplication.Project.CalibrationData.VelocityUnit = openedProject.CalibrationData.VelocityUnit;
 
       VianaNetApplication.Project.FilterData.NumericPrecision = openedProject.FilterData.NumericPrecision;
       VianaNetApplication.Project.FilterData.DataLineColor = openedProject.FilterData.DataLineColor;
@@ -331,6 +328,21 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void CalculateVelocityButtonClick(object sender, RoutedEventArgs e)
     {
+      this.Cursor = Cursors.Wait;
+      VianaNetApplication.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      this.Cursor = Cursors.Arrow;
+    }
+
+    /// <summary>
+    /// The switch time unit button click event handler.
+    /// Calls a dialog to change the time unit.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void SwitchTimeUnitButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new TimeUnitDialog();
+      dlg.ShowDialog();
       this.Cursor = Cursors.Wait;
       VianaNetApplication.Project.VideoData.RefreshDistanceVelocityAcceleration();
       this.Cursor = Cursors.Arrow;
@@ -763,6 +775,8 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void Refresh()
     {
+      VianaNetApplication.Project.OnPropertyChanged("HasData");
+
       // Update data grid
       VianaNetApplication.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
@@ -943,5 +957,7 @@ namespace VianaNET.MainWindow
     }
 
     #endregion
+
+
   }
 }

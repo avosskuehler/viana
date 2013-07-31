@@ -81,20 +81,33 @@ namespace VianaNET.CustomStyles.Converter
 
       var param = (MeasurementType)parameter;
 
-      string unit = " " + VianaNetApplication.Project.CalibrationData.PositionUnit;
+      string unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
       string formatting = "N2";
       switch (param)
       {
         case MeasurementType.Time:
-          unit = " " + VianaNetApplication.Project.CalibrationData.TimeUnit;
-          formatting = "N0";
+          var timeunit = VianaNetApplication.Project.CalibrationData.TimeUnit;
+          switch (timeunit)
+          {
+            case TimeUnit.ms:
+              unit = " " + timeunit;
+              formatting = "N0";
+              break;
+            case TimeUnit.s:
+              unit = " " + timeunit;
+              formatting = "N4";
+              break;
+            default:
+              throw new ArgumentOutOfRangeException("Wrong TimeUnit");
+          }
+
           break;
         case MeasurementType.Pixel:
           unit = " " + VianaNetApplication.Project.CalibrationData.PixelUnit;
           formatting = "N0";
           break;
         case MeasurementType.Position:
-          unit = " " + VianaNetApplication.Project.CalibrationData.PositionUnit;
+          unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
           formatting = "N2";
           break;
         case MeasurementType.Velocity:

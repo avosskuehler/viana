@@ -22,6 +22,7 @@
     <ResourceDictionary Source="BackgroundStyles.xaml"/>
     <ResourceDictionary Source="GeometryItems.xaml"/>
     <ResourceDictionary Source="SliderStyles.xaml"/>
+    <ResourceDictionary Source="EnumStyles.xaml"/>
     <ResourceDictionary Source="DataGridStyle.xaml"/>
   </ResourceDictionary.MergedDictionaries>
   <!-- Dummy Style, anything you won't use goes, otherwise all styling is lost... see

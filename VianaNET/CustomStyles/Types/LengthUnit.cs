@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Unit.cs" company="Freie Universität Berlin">
+// <copyright file="LengthUnit.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -28,31 +28,31 @@ namespace VianaNET.CustomStyles.Types
   /// <summary>
   ///   The unit.
   /// </summary>
-  public enum Unit
+  public enum LengthUnit
   {
     /// <summary>
     ///   The px.
     /// </summary>
-    px, 
+    px,
 
     /// <summary>
     ///   The mm.
     /// </summary>
-    mm, 
+    mm,
 
     /// <summary>
     ///   The cm.
     /// </summary>
-    cm, 
+    cm,
 
     /// <summary>
     ///   The m.
     /// </summary>
-    m, 
+    m,
 
     /// <summary>
     ///   The km.
     /// </summary>
-    km, 
+    km,
   }
 }
