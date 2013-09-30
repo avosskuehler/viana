@@ -535,7 +535,7 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Legende</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
-    <value>Ziehen Sie mit der Maus eine Strecke bekannter Länge auf, indem Sie mit der linken Maustaste an den Startpunkt klicken und gedrückt halten und am Endpunkt die Maustaste wieder loslassen.</value>
+    <value>Ziehen Sie mit der Maus eine Strecke bekannter Länge auf, indem Sie mit der linken Maustaste am Startpunkt und am Endpunkt klicken.</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
     <value>Reale Länge angeben</value>
@@ -619,7 +619,7 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Bitte geben Sie die Länge an.</value>
   </data>
   <data name="CalibrationErrorMessage" xml:space="preserve">
-    <value>Bitte geben Sie im folgenden Dialog die Länge der eingemessenen Strecke mit dazugehöriger Einheit ein.</value>
+    <value>Bitte geben Sie im Dialog die Länge der eingemessenen Strecke ohne Einheit ein, und wählen Sie dann die Einheit aus.</value>
   </data>
   <data name="CalibrationErrorTitle" xml:space="preserve">
     <value>Angabe fehlt ...</value>
@@ -1524,5 +1524,17 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="TimeUnitDialogTitle" xml:space="preserve">
     <value>Zeiteinheit wählen</value>
+  </data>
+  <data name="CalibrationLengthErrorHint" xml:space="preserve">
+    <value>Bitte die Länge ohne Einheit eingeben.</value>
+  </data>
+  <data name="CalibrationLengthToShortDescription" xml:space="preserve">
+    <value>Bitte beachten Sie:</value>
+  </data>
+  <data name="CalibrationLengthToShortMessage" xml:space="preserve">
+    <value>Die Messpunkte der Streckenlänge liegen zu dicht beieinander, bitte eine längere Messstrecke angeben.</value>
+  </data>
+  <data name="CalibrationLengthToShortTitle" xml:space="preserve">
+    <value>Abstand zu klein.</value>
   </data>
 </root>

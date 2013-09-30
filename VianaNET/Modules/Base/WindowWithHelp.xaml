@@ -8,7 +8,7 @@
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:VianaNetApplication.Project}}"
-  PreviewKeyDown="Window_PreviewKeyDown" Topmost="True">
+  PreviewKeyDown="Window_PreviewKeyDown" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -65,13 +65,13 @@
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Border.RenderTransform>
         <StackPanel Orientation="Vertical">
-          <Grid Grid.Row="0" x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
+          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="20"/>
               <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" x:Name="LabelTitle" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol">Control Panel Title</Label>
+            <Label Grid.Column="0" x:Name="LabelTitle" Cursor="SizeAll" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol">Control Panel Title</Label>
             <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
             <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
           </Grid>

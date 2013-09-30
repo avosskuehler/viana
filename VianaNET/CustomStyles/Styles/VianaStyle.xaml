@@ -24,6 +24,7 @@
     <ResourceDictionary Source="SliderStyles.xaml"/>
     <ResourceDictionary Source="EnumStyles.xaml"/>
     <ResourceDictionary Source="DataGridStyle.xaml"/>
+    <ResourceDictionary Source="TextBoxStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
   <!-- Dummy Style, anything you won't use goes, otherwise all styling is lost... see
   http://stackoverflow.com/questions/1229395/trouble-referencing-a-resource-dictionary-that-contains-a-merged-dictionary

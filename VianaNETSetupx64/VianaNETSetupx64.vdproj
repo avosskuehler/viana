@@ -69,6 +69,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_96188E459A175B6520CA6B2EAD6DEE52"
+        "OwnerKey" = "8:_BD46EC06A79F4D198511897E2C5F617E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9D0BEFA69134A70F02D7824DCA7E656F"
         "OwnerKey" = "8:_BD46EC06A79F4D198511897E2C5F617E"
         "MsmSig" = "8:_UNDEFINED"
@@ -89,12 +95,6 @@
         {
         "MsmKey" = "8:_A8C6AEA2CD327ABD37B201B8A1412231"
         "OwnerKey" = "8:_529356FDDC12AF48F3D13C68C2BCD1AF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BAA18BBAABC429F1E8D0FF59B8ED6644"
-        "OwnerKey" = "8:_BD46EC06A79F4D198511897E2C5F617E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -159,13 +159,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E5B67C05C4548CFD00620FC23795E561"
+        "MsmKey" = "8:_E8D355C19274008C39C82918EEE702B9"
         "OwnerKey" = "8:_BD46EC06A79F4D198511897E2C5F617E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E8D355C19274008C39C82918EEE702B9"
+        "MsmKey" = "8:_F5C27DE11013F71CE7A582636191C691"
         "OwnerKey" = "8:_BD46EC06A79F4D198511897E2C5F617E"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -173,12 +173,6 @@
         {
         "MsmKey" = "8:_F736989E83C1426793D19FE4F8DDD2F1"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_48DAB0DBAD7675D43E027E0843C8E83D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -238,13 +232,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BAA18BBAABC429F1E8D0FF59B8ED6644"
+        "OwnerKey" = "8:_96188E459A175B6520CA6B2EAD6DEE52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E5B67C05C4548CFD00620FC23795E561"
+        "OwnerKey" = "8:_F5C27DE11013F71CE7A582636191C691"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -257,6 +251,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1E771361A50853485CFFCA9B6139A8C2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_48DAB0DBAD7675D43E027E0843C8E83D"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -323,10 +323,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.4.5"
                     {
@@ -384,7 +384,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -596,6 +596,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_96188E459A175B6520CA6B2EAD6DEE52"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=4.2.4999.34625, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_96188E459A175B6520CA6B2EAD6DEE52"
+                    {
+                    "Name" = "8:WPFLocalizeExtension.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WPFLocalizeExtension.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9D0BEFA69134A70F02D7824DCA7E656F"
             {
             "AssemblyRegister" = "3:1"
@@ -641,37 +672,6 @@
                     }
                 }
             "SourcePath" = "8:Microsoft.Vbe.Interop.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BAA18BBAABC429F1E8D0FF59B8ED6644"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WPFLocalizeExtension, Version=4.2.4960.31469, Culture=neutral, PublicKeyToken=ebb80cb4900c3f91, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_BAA18BBAABC429F1E8D0FF59B8ED6644"
-                    {
-                    "Name" = "8:WPFLocalizeExtension.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WPFLocalizeExtension.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
@@ -833,20 +833,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5B67C05C4548CFD00620FC23795E561"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8D355C19274008C39C82918EEE702B9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=4.2.4960.31823, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:WPFVisifire.Charts, Version=4.5.1.0, Culture=neutral, PublicKeyToken=0cd785983078370b, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E5B67C05C4548CFD00620FC23795E561"
+                    "_E8D355C19274008C39C82918EEE702B9"
                     {
-                    "Name" = "8:VianaNETShaderEffectLibrary.dll"
+                    "Name" = "8:WPFVisifire.Charts.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
+            "SourcePath" = "8:WPFVisifire.Charts.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
@@ -864,20 +864,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8D355C19274008C39C82918EEE702B9"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F5C27DE11013F71CE7A582636191C691"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WPFVisifire.Charts, Version=4.5.1.0, Culture=neutral, PublicKeyToken=0cd785983078370b, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:VianaNETShaderEffectLibrary, Version=4.2.4999.34720, Culture=neutral, PublicKeyToken=dc61e4e6249873b3, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_E8D355C19274008C39C82918EEE702B9"
+                    "_F5C27DE11013F71CE7A582636191C691"
                     {
-                    "Name" = "8:WPFVisifire.Charts.dll"
+                    "Name" = "8:VianaNETShaderEffectLibrary.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:WPFVisifire.Charts.dll"
+            "SourcePath" = "8:VianaNETShaderEffectLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E9BDDEC42A1746A090CABF377CB3DB3A"
