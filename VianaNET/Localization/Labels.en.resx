@@ -550,7 +550,7 @@ We would like to have some feedback -&gt;</value>
     <value>Legend</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
-    <value>Please click with the left mouse button at the starting position of an object with known length move the mouse with the mouse button pressed and release the button at the ending point of the object with known length.</value>
+    <value>Please click with the left mouse button at the starting position of an object with known length and click again at the ending point of the object with known length.</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
     <value>Specify known length</value>
@@ -1539,5 +1539,17 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="TimeUnitDialogTitle" xml:space="preserve">
     <value>Choose time unit</value>
+  </data>
+  <data name="CalibrationLengthErrorHint" xml:space="preserve">
+    <value>Please specify length without unit.</value>
+  </data>
+  <data name="CalibrationLengthToShortDescription" xml:space="preserve">
+    <value>Please note:</value>
+  </data>
+  <data name="CalibrationLengthToShortMessage" xml:space="preserve">
+    <value>The measured distance is to small to be valid, please try again.</value>
+  </data>
+  <data name="CalibrationLengthToShortTitle" xml:space="preserve">
+    <value>Distance to small</value>
   </data>
 </root>

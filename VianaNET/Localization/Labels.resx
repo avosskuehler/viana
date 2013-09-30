@@ -1527,4 +1527,16 @@
   <data name="TimeUnitDialogTitle" xml:space="preserve">
     <value>@TimeUnitDialogTitle</value>
   </data>
+  <data name="CalibrationLengthErrorHint" xml:space="preserve">
+    <value>@CalibrationLengthErrorHint</value>
+  </data>
+  <data name="CalibrationLengthToShortDescription" xml:space="preserve">
+    <value>@CalibrationLengthToShortDescription</value>
+  </data>
+  <data name="CalibrationLengthToShortMessage" xml:space="preserve">
+    <value>@CalibrationLengthToShortMessage</value>
+  </data>
+  <data name="CalibrationLengthToShortTitle" xml:space="preserve">
+    <value>@CalibrationLengthToShortTitle</value>
+  </data>
 </root>

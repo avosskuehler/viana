@@ -5,7 +5,8 @@
     lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
     Height="185" Width="250" WindowStyle="ThreeDBorderWindow"
-    Title="{lex:LocText VianaNET:Labels:LengthDialogTitle}" SizeToContent="WidthAndHeight" ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico" Topmost="True">
+    Title="{lex:LocText VianaNET:Labels:LengthDialogTitle}" SizeToContent="WidthAndHeight" ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection"
+        xmlns:validation="clr-namespace:VianaNET.CustomStyles.Validation">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -16,9 +17,19 @@
         <RowDefinition Height="35"/>
       </Grid.RowDefinitions>
       <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-        <TextBlock Name="description" FontWeight="Bold" TextWrapping="Wrap" Text="{lex:LocText VianaNET:Labels:LengthDialogDescription}"/>
+        <TextBlock Name="description" 
+                   FontWeight="Bold" TextWrapping="Wrap" Text="{lex:LocText VianaNET:Labels:LengthDialogDescription}"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <TextBox Width="100" Height="25" Margin="5" Name="txbLength"></TextBox>
+          <TextBox Name="txbLength"  Width="100" Height="25" Margin="5" >
+            <TextBox.Text>
+              <Binding Path="UnitValue" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                  <validation:NumberValidationRule />
+                </Binding.ValidationRules>
+              </Binding>
+            </TextBox.Text>
+
+          </TextBox>
           <StackPanel Orientation="Vertical" Margin="10,0,0,0">
             <RadioButton Name="rdbKM">km</RadioButton>
             <RadioButton Name="rdbM">m</RadioButton>

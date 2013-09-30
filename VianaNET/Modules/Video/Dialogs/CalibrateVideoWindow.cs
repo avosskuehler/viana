@@ -28,6 +28,7 @@ using VianaNET.Application;
 
 namespace VianaNET.Modules.Video.Dialogs
 {
+  using System;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
@@ -35,6 +36,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
   using VianaNET.Data;
   using VianaNET.Localization;
+  using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
 
   /// <summary>
@@ -81,23 +83,13 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private bool startPointIsSet;
 
+    /// <summary>
+    /// Mausbewegungen ignorieren, da über Control panel
+    /// </summary>
+    private bool ignoreMouse;
+
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -123,53 +115,19 @@ namespace VianaNET.Modules.Video.Dialogs
     ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
-    /// <summary>
-    /// The container_ mouse left button down.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    protected override void MouseOverControlPanel(bool isOver)
+    {
+      base.MouseOverControlPanel(isOver);
+      this.ignoreMouse = isOver;
+    }
+
     protected override void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       base.Container_MouseLeftButtonDown(sender, e);
-
-      if (this.originIsSet)
+      if (ignoreMouse)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-        double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
-        double originalX = factorX * scaledX;
-        double originalY = factorY * scaledY;
-
-        if (!this.startPointIsSet)
-        {
-          this.startPoint = new Point(originalX, originalY);
-          this.ruler.X1 = scaledX;
-          this.ruler.Y1 = scaledY;
-          this.ruler.X2 = scaledX;
-          this.ruler.Y2 = scaledY;
-          this.ruler.Visibility = Visibility.Visible;
-          this.startPointIsSet = true;
-        }
+        return;
       }
-    }
-
-    /// <summary>
-    /// The container_ mouse left button up.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    protected override void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      base.Container_MouseLeftButtonUp(sender, e);
 
       double scaledX = e.GetPosition(this.VideoImage).X;
       double scaledY = e.GetPosition(this.VideoImage).Y;
@@ -189,10 +147,73 @@ namespace VianaNET.Modules.Video.Dialogs
         this.DescriptionTitle.Content = Labels.CalibrateWindowSpecifyLengthHeader;
         this.DescriptionMessage.Text = Labels.CalibrateWindowSpecifyLengthDescription;
       }
+      else if (!this.startPointIsSet)
+      {
+        this.startPoint = new Point(originalX, originalY);
+        this.ruler.X1 = scaledX;
+        this.ruler.Y1 = scaledY;
+        this.ruler.X2 = scaledX;
+        this.ruler.Y2 = scaledY;
+        this.ruler.Visibility = Visibility.Visible;
+        this.startPointIsSet = true;
+      }
       else if (this.startPointIsSet)
       {
-        this.ProcessSecondPoint(e);
+        this.endPoint = new Point(originalX, originalY);
+
+        // Sicher gehen, dass Messpunkt nicht zu dicht liegen
+        double distance = Math.Sqrt(Math.Pow(endPoint.Y - startPoint.Y, 2) + Math.Pow(endPoint.X - startPoint.X, 2));
+        if (distance < 5)
+        {
+          var info = new VianaDialog(
+            Labels.CalibrationLengthToShortTitle,
+            Labels.CalibrationLengthToShortDescription,
+            Labels.CalibrationLengthToShortMessage,
+            true);
+          info.ShowDialog();
+          this.startPointIsSet = false;
+          this.ruler.Visibility = Visibility.Hidden;
+          return;
+        }
+
+        var lengthDialog = new LengthDialog();
+
+        if (lengthDialog.ShowDialog().GetValueOrDefault(false))
+        {
+          // Save ruler points to Settings
+          VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
+          VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
+
+          var lengthVector = new Vector();
+          lengthVector = Vector.Add(
+            lengthVector,
+            new Vector(VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.Y));
+          lengthVector.Negate();
+          lengthVector = Vector.Add(
+            lengthVector,
+            new Vector(VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.Y));
+          double length = lengthVector.Length;
+          VianaNetApplication.Project.CalibrationData.ScalePixelToUnit = VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits / length;
+          VianaNetApplication.Project.CalibrationData.IsVideoCalibrated = true;
+          this.DialogResult = true;
+        }
+
+        this.Close();
       }
+    }
+
+    /// <summary>
+    /// The container_ mouse left button up.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    protected override void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+      base.Container_MouseLeftButtonUp(sender, e);
     }
 
     /// <summary>
@@ -207,6 +228,10 @@ namespace VianaNET.Modules.Video.Dialogs
     protected override void Container_MouseMove(object sender, MouseEventArgs e)
     {
       base.Container_MouseMove(sender, e);
+      if (ignoreMouse)
+      {
+        return;
+      }
 
       if (this.originIsSet && this.startPointIsSet)
       {
@@ -217,62 +242,7 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    /// <summary>
-    /// The process second point.
-    /// </summary>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void ProcessSecondPoint(MouseButtonEventArgs e)
-    {
-      double scaledX = e.GetPosition(this.VideoImage).X;
-      double scaledY = e.GetPosition(this.VideoImage).Y;
-      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
-      double originalX = factorX * scaledX;
-      double originalY = factorY * scaledY;
-      this.endPoint = new Point(originalX, originalY);
-
-      var lengthDialog = new LengthDialog();
-      if (lengthDialog.ShowDialog().Value)
-      {
-        // Save ruler points to Settings
-        VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
-        VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
-
-        var lengthVector = new Vector();
-        lengthVector = Vector.Add(
-          lengthVector, 
-          new Vector(VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.Y));
-        lengthVector.Negate();
-        lengthVector = Vector.Add(
-          lengthVector, 
-          new Vector(VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.Y));
-        double length = lengthVector.Length;
-        VianaNetApplication.Project.CalibrationData.ScalePixelToUnit = VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits / length;
-        VianaNetApplication.Project.CalibrationData.IsVideoCalibrated = true;
-        this.DialogResult = true;
-      }
-
-      this.Close();
-    }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

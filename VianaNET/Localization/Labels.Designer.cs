@@ -2203,6 +2203,42 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @CalibrationLengthErrorHint.
+        /// </summary>
+        internal static string CalibrationLengthErrorHint {
+            get {
+                return ResourceManager.GetString("CalibrationLengthErrorHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CalibrationLengthToShortDescription.
+        /// </summary>
+        internal static string CalibrationLengthToShortDescription {
+            get {
+                return ResourceManager.GetString("CalibrationLengthToShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CalibrationLengthToShortMessage.
+        /// </summary>
+        internal static string CalibrationLengthToShortMessage {
+            get {
+                return ResourceManager.GetString("CalibrationLengthToShortMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CalibrationLengthToShortTitle.
+        /// </summary>
+        internal static string CalibrationLengthToShortTitle {
+            get {
+                return ResourceManager.GetString("CalibrationLengthToShortTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @Cancel.
         /// </summary>
         internal static string Cancel {

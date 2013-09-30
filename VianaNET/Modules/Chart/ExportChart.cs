@@ -29,13 +29,14 @@ namespace VianaNET.Modules.Chart
   using System.IO;
   using System.Reflection;
   using System.Windows;
-  using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
   using Microsoft.Office.Interop.Word;
   using Microsoft.Win32;
 
   using VianaNET.Localization;
+
+  using Visifire.Charts;
 
   using Application = Microsoft.Office.Interop.Word.Application;
   using Chart = Visifire.Charts.Chart;
@@ -55,31 +56,14 @@ namespace VianaNET.Modules.Chart
     /// </param>
     public static void ToClipboard(Chart chart)
     {
-      int margin = 20;
-      var width = (int)((chart.ActualWidth + margin) * 300 / 96);
-      var height = (int)((chart.ActualHeight + margin) * 300 / 96);
-      var rtb = new RenderTargetBitmap(
-        width, 
-        height, 
-        300, 
-        // dpi x 
-        300, 
-        // dpi y 
-        PixelFormats.Pbgra32 // pixelformat 
-        );
+      var file = Path.GetTempFileName();
+      var jpgFile = file.Substring(0, file.Length - 4);
+      chart.Export(jpgFile, ExportType.Jpg);
 
-      var drawingVisual = new DrawingVisual();
-      DrawingContext drawingContext = drawingVisual.RenderOpen();
-      drawingContext.DrawRectangle(Brushes.White, null, new Rect(0, 0, width, height));
-
-      drawingContext.Close();
-
-      // Render drawing to bitmap
-      rtb.Render(drawingVisual);
-
-      rtb.Render(chart);
-
-      Clipboard.SetImage(rtb);
+      var source = new BitmapImage(new Uri(jpgFile + ".jpg"));
+      var croppedBitmap = new CroppedBitmap(source, new Int32Rect(2, 2, source.PixelWidth - 4, source.PixelHeight - 4));
+      Clipboard.SetImage(croppedBitmap);
+      File.Delete(jpgFile);
     }
 
     /// <summary>
@@ -100,68 +84,45 @@ namespace VianaNET.Modules.Chart
       sfd.Title = Labels.GraphicFilesSaveFileDialogTitle;
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        int margin = 20;
-        var width = (int)((chart.ActualWidth + margin) * 300 / 96);
-        var height = (int)((chart.ActualHeight + margin) * 300 / 96);
-        var rtb = new RenderTargetBitmap(
-          width, 
-          height, 
-          300, 
-          // dpi x 
-          300, 
-          // dpi y 
-          PixelFormats.Pbgra32 // pixelformat 
-          );
-
         using (var stream = new FileStream(sfd.FileName, FileMode.Create))
         {
           BitmapEncoder encoder;
-          bool transparentBackground = false;
           string extension = Path.GetExtension(sfd.FileName);
           switch (extension.ToLower())
           {
-            case ".jpg":
-            default:
-              encoder = new JpegBitmapEncoder();
-              break;
             case ".bmp":
               encoder = new BmpBitmapEncoder();
               break;
             case ".png":
               encoder = new PngBitmapEncoder();
-              transparentBackground = true;
               break;
             case ".gif":
               encoder = new GifBitmapEncoder();
-              transparentBackground = true;
               break;
             case ".tif":
               encoder = new TiffBitmapEncoder();
               break;
             case ".wmp":
               encoder = new WmpBitmapEncoder();
-              transparentBackground = true;
+              break;
+            case ".jpg":
+            default:
+              encoder = new JpegBitmapEncoder();
               break;
           }
 
-          if (!transparentBackground)
-          {
-            var drawingVisual = new DrawingVisual();
-            DrawingContext drawingContext = drawingVisual.RenderOpen();
-            drawingContext.DrawRectangle(Brushes.White, null, new Rect(0, 0, width, height));
+          var file = Path.GetTempFileName();
+          var jpgFile = file.Substring(0, file.Length - 4);
+          chart.Export(jpgFile, ExportType.Jpg);
 
-            drawingContext.Close();
-
-            // Render background 
-            rtb.Render(drawingVisual);
-          }
-
-          // Render chart
-          rtb.Render(chart);
+          var source = new BitmapImage(new Uri(jpgFile + ".jpg"));
+          var croppedBitmap = new CroppedBitmap(source, new Int32Rect(2, 2, source.PixelWidth - 4, source.PixelHeight - 4));
 
           // Save to file
-          encoder.Frames.Add(BitmapFrame.Create(rtb));
+          encoder.Frames.Add(BitmapFrame.Create(croppedBitmap));
           encoder.Save(stream);
+
+          File.Delete(file);
         }
       }
     }
@@ -176,16 +137,23 @@ namespace VianaNET.Modules.Chart
     {
       ToClipboard(chart);
 
-      // Insert in word
-      var word = new Application();
-      word.Visible = true;
+      try
+      {
+        // Insert in word
+        var word = new Application();
+        word.Visible = true;
 
-      object template = Missing.Value;
-      object newTemplate = Missing.Value;
-      object type = WdNewDocumentType.wdNewBlankDocument;
-      object visible = true;
-      word.Documents.Add(ref template, ref newTemplate, ref type, ref visible);
-      word.Selection.Paste();
+        object template = Missing.Value;
+        object newTemplate = Missing.Value;
+        object type = WdNewDocumentType.wdNewBlankDocument;
+        object visible = true;
+        word.Documents.Add(ref template, ref newTemplate, ref type, ref visible);
+        word.Selection.Paste();
+      }
+      catch (Exception ex)
+      {
+        Logging.ErrorLogger.ProcessException(ex, true);
+      }
     }
 
     #endregion

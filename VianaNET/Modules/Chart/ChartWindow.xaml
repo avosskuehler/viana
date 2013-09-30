@@ -21,32 +21,33 @@
       <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
-    <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" CanContentScroll="True" >
-      <StackPanel Margin="5">
-        <Label Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" Style="{StaticResource HeaderStyle}"/>
-        <Grid Name="ObjectSelectionGrid" 
+    <Expander ExpandDirection="Right" Grid.Column="0" Name="LeftColumn" IsExpanded="True">
+      <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" >
+        <StackPanel Margin="5">
+          <Label Content="{lex:LocText VianaNET:Labels:ChartWindowChartHeader}" Style="{StaticResource HeaderStyle}"/>
+          <Grid Name="ObjectSelectionGrid" 
                 Margin="5"
                 Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:VianaNetApplication.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-          <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
-          <ComboBox 
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="100"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="{lex:LocText VianaNET:Labels:ChartWindowObjectSelectionLabel}"/>
+            <ComboBox 
               Name="ObjectSelectionCombo"
               Grid.Column="1" 
               Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
               ItemsSource="{Binding Path=VideoData.ActiveObject, Source={x:Static application:VianaNetApplication.Project}}"
               SelectionChanged="ObjectSelectionComboSelectionChanged" />
-        </Grid>
-        <TabControl Name="ChartContentTab" SelectionChanged="ChartContentTabSelectionChanged">
-          <TabItem Name="TabPositionSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPositionSpaceHeader}">
-            <Grid Name="PositionSpaceGrid">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <ComboBox Name="AxesContentPositionSpace" 
+          </Grid>
+          <TabControl Name="ChartContentTab" SelectionChanged="ChartContentTabSelectionChanged">
+            <TabItem Name="TabPositionSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPositionSpaceHeader}">
+              <Grid Name="PositionSpaceGrid">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="80"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Name="AxesContentPositionSpace" 
                           Grid.Column="0" 
                       SelectedIndex="0" 
                       SelectedValuePath="Chart" 
@@ -54,16 +55,16 @@
                       Margin="2" 
                       ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPositionSpace}}" 
                       SelectionChanged="ChartContentSelectionChanged" />
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
-            </Grid>
-          </TabItem>
-          <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">
-            <Grid Name="PhaseSpaceGrid">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <ComboBox Name="AxesContentPhaseSpace" 
+                <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
+              </Grid>
+            </TabItem>
+            <TabItem Name="TabPhaseSpace" Header="{lex:LocText VianaNET:Labels:ChartWindowPhaseSpaceHeader}">
+              <Grid Name="PhaseSpaceGrid">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="80"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Name="AxesContentPhaseSpace" 
                       Grid.Column="0" 
                       SelectedIndex="0" 
                       SelectedValuePath="Chart" 
@@ -71,24 +72,24 @@
                       Margin="2" 
                       ItemsSource="{Binding Source={x:Static Collections:DataCharts.PredefinedDataChartsPhaseSpace}}" 
                       SelectionChanged="ChartContentSelectionChanged" />
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
-            </Grid>
-          </TabItem>
-          <TabItem Name="TabOther" Header="{lex:LocText VianaNET:Labels:ChartWindowCustomAxisHeader}">
-            <Grid Name="OtherContentGrid">
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-              </Grid.RowDefinitions>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}" 
+                <Label Content="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}" Grid.Column="1"/>
+              </Grid>
+            </TabItem>
+            <TabItem Name="TabOther" Header="{lex:LocText VianaNET:Labels:ChartWindowCustomAxisHeader}">
+              <Grid Name="OtherContentGrid">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="80"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}" 
                     HorizontalAlignment="Right" 
                     Grid.Column="0"
                     Grid.Row="0"/>
-              <ComboBox 
+                <ComboBox 
                     Name="XAxisContent" 
                     Grid.Column="1" 
                     Grid.Row="0"
@@ -97,11 +98,11 @@
                     DisplayMemberPath="Description" 
                     ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}"
                     SelectionChanged="XAxisContentSelectionChanged" />
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}" 
+                <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}" 
                     HorizontalAlignment="Right"  
                     Grid.Column="0"
                     Grid.Row="1"/>
-              <ComboBox 
+                <ComboBox 
                     Name="YAxisContent" 
                     Grid.Column="1" 
                     Grid.Row="1"
@@ -110,18 +111,18 @@
                     DisplayMemberPath="Description"
                     ItemsSource="{Binding Source={x:Static Collections:DataAxis.DataAxes}}" 
                     SelectionChanged="YAxisContentSelectionChanged" />
-            </Grid>
-          </TabItem>
-        </TabControl>
+              </Grid>
+            </TabItem>
+          </TabControl>
 
-        <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowInterpolationHeader}"
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowInterpolationHeader}"
                       Style="{StaticResource GroupBoxStyle}">
-          <Grid>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <CheckBox Grid.Column="0"
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <CheckBox Grid.Column="0"
                       Margin="5"
                       Name="InterpolationLineCheckBox"
                       Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
@@ -130,32 +131,32 @@
                       Unchecked="ShowInterpolationCheckBoxCheckedChanged"
                       HorizontalAlignment="Left"
                    VerticalAlignment="Center"/>
-            <VianaNET:ImageButton x:Name="InterpolationOptionsButton" 
+              <VianaNET:ImageButton x:Name="InterpolationOptionsButton" 
                                Margin="1" Grid.Column="1"
                                HorizontalAlignment="Right"
                                ImageSource="/VianaNET;component/Images/InterpolateData16.png" 
                                Click="InterpolationOptionsButtonClick" 
                                Content="{lex:LocText VianaNET:Labels:ChartWindowInterpolationOptions}"/>
-          </Grid>
-        </GroupBox>
-        <GroupBox Header="{lex:LocText VianaNET:Labels:RegressionLineLabel}"
+            </Grid>
+          </GroupBox>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:RegressionLineLabel}"
                       Style="{StaticResource GroupBoxStyle}">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <VianaNET:ImageButton 
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <VianaNET:ImageButton 
                       x:Name="RegressionTypeButton" Grid.Column="1" Grid.Row="0"
                       Click="RegressionTypeButtonClick" 
                       HorizontalAlignment="Right"
                       Content="{lex:LocText VianaNET:Labels:ChartWindowRegressionChooseTypeLabel}" ImageSource="/VianaNET;component/Images/RegressionLinear16.png" />
-            <CheckBox 
+              <CheckBox 
               Grid.Row="0" Grid.Column="0"  Margin="5"
               Name="RegressionCheckBox"
               IsChecked="{Binding Path=FilterData.IsShowingRegressionSeries, Source={x:Static application:VianaNetApplication.Project}, Mode=TwoWay}" 
@@ -163,29 +164,29 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
-            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="FormulaContainerElement" SnapsToDevicePixels="True"/>
-            <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
-            <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=FilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:VianaNetApplication.Project}}" Grid.ColumnSpan="2" />
-          </Grid>
-        </GroupBox>
-        <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
+              <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="FormulaContainerElement" SnapsToDevicePixels="True"/>
+              <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
+              <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=FilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:VianaNetApplication.Project}}" Grid.ColumnSpan="2" />
+            </Grid>
+          </GroupBox>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTheorieLabel}"
                       Style="{StaticResource GroupBoxStyle}">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition/>
-              <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <VianaNET:ImageButton 
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <VianaNET:ImageButton 
                 x:Name="RegressionTheorieButton"
                 Grid.Row="0" Grid.Column="1"
                 Click="TheoryOptionsButtonClick" Content="{lex:LocText VianaNET:Labels:ChartWindowTheoreticalFunctionChooseTypeLabel}" 
                 ImageSource="/VianaNET;component/Images/RegressionLinear16.png"
                 HorizontalAlignment="Right"/>
-            <CheckBox 
+              <CheckBox 
               Grid.Row="0" Grid.Column="0" Margin="5" 
               Content="{lex:LocText VianaNET:Labels:ChartWindowDisplayCurveLabel}" Name="CheckBoxShowTheorie"
               IsChecked="{Binding Path=FilterData.IsShowingTheorySeries, Source={x:Static application:VianaNetApplication.Project}}" 
@@ -193,23 +194,24 @@
               Unchecked="ShowTheorieCheckBoxUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"/>
-            <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"/>
-            <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
-          </Grid>
-        </GroupBox>
-        <StackPanel Style="{StaticResource SpacerStyle}"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowCalculatorHeader}"
+              <VianaNET:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"/>
+              <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
+            </Grid>
+          </GroupBox>
+          <StackPanel Style="{StaticResource SpacerStyle}"/>
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowCalculatorHeader}"
                               ImageSource="/VianaNET;component/Images/Recalculate16.png"
                                 Click="RechnerButtonClick"/>
-          <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowPrecisionLabel}"
+            <VianaNET:ImageButton Margin="3" Content="{lex:LocText VianaNET:Labels:ChartWindowPrecisionLabel}"
                               ImageSource="/VianaNET;component/Images/InterpolateData16.png"
                                 Click="FilterPrecisionButtonClick"/>
+          </StackPanel>
         </StackPanel>
-      </StackPanel>
-    </ScrollViewer>
+      </ScrollViewer>
+    </Expander>
     <vc:Chart x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False"
-              AnimatedUpdate="False" Grid.Column="1">
+              AnimatedUpdate="False" Grid.Column="1" ToolBarEnabled="True">
       <vc:Chart.Titles>
         <vc:Title Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}"/>
       </vc:Chart.Titles>
@@ -293,7 +295,7 @@
 
       </vc:Chart.Series>
     </vc:Chart>
-    <Expander Grid.Column="2" ExpandDirection="Left" IsExpanded="True" Name="PropertiesExpander" BorderThickness="0" Margin="0,2,0,0">
+    <Expander Grid.Column="2" ExpandDirection="Left" IsExpanded="False" Name="PropertiesExpander" BorderThickness="0" Margin="0,2,0,0">
       <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
         <StackPanel Margin="5">
           <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowAxisStyleHeader}"

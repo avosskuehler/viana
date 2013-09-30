@@ -30,7 +30,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -146,6 +146,7 @@
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
+    <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
     <Compile Include="MainWindow\VianaSaveDialog.xaml.cs">
       <DependentUpon>VianaSaveDialog.xaml</DependentUpon>
     </Compile>
@@ -153,6 +154,10 @@
       <DependentUpon>TimeUnitDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Page Include="CustomStyles\Styles\TextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CustomStyles\Styles\EnumStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
