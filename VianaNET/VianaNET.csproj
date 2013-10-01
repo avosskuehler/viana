@@ -828,6 +828,13 @@
     <Resource Include="Images\TimeUnit16.png" />
     <Resource Include="Images\TimeUnit32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SetCutoutLeft16.png" />
+    <Resource Include="Images\SetCutoutRight16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SetZeroTime16.png" />
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
   C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f

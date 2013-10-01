@@ -58,9 +58,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty CurrentTimeStringProperty =
       DependencyProperty.Register(
-        "CurrentTimeString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "CurrentTimeString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -68,36 +68,36 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
       DependencyProperty.Register(
-        "FrameTimeInNanoSeconds", 
-        typeof(long), 
-        typeof(MediaSlider), 
+        "FrameTimeInNanoSeconds",
+        typeof(long),
+        typeof(MediaSlider),
         new UIPropertyMetadata(default(long), OnFrameTimeChanged));
 
     /// <summary>
     ///   The is showing times property.
     /// </summary>
     public static readonly DependencyProperty IsShowingTimesProperty = DependencyProperty.Register(
-      "IsShowingTimes", 
-      typeof(Visibility), 
-      typeof(MediaSlider), 
+      "IsShowingTimes",
+      typeof(Visibility),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The maximum string property.
     /// </summary>
     public static readonly DependencyProperty MaximumStringProperty = DependencyProperty.Register(
-      "MaximumString", 
-      typeof(string), 
-      typeof(MediaSlider), 
+      "MaximumString",
+      typeof(string),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The minimum string property.
     /// </summary>
     public static readonly DependencyProperty MinimumStringProperty = DependencyProperty.Register(
-      "MinimumString", 
-      typeof(string), 
-      typeof(MediaSlider), 
+      "MinimumString",
+      typeof(string),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -105,9 +105,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionEndStringProperty =
       DependencyProperty.Register(
-        "SelectionEndString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "SelectionEndString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -115,9 +115,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionStartStringProperty =
       DependencyProperty.Register(
-        "SelectionStartString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "SelectionStartString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -243,17 +243,17 @@ namespace VianaNET
       /// <summary>
       ///   The none.
       /// </summary>
-      None, 
+      None,
 
       /// <summary>
       ///   The start.
       /// </summary>
-      Start, 
+      Start,
 
       /// <summary>
       ///   The end.
       /// </summary>
-      End, 
+      End,
     }
 
     #endregion
@@ -412,6 +412,12 @@ namespace VianaNET
     {
       this.SelectionStart = 0;
       this.SelectionEnd = this.Maximum;
+    }
+
+    public void UpdateSelectionTimes()
+    {
+      this.SelectionStartString = this.ConvertToTimeString(this.SelectionStart);
+      this.SelectionEndString = this.ConvertToTimeString(this.SelectionEnd);
     }
 
     #endregion

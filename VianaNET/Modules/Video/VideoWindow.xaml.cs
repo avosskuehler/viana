@@ -139,8 +139,8 @@ namespace VianaNET.Modules.Video
 
       VianaNetApplication.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       VianaNetApplication.Project.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
-      this.timelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
-      this.timelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
+      this.TimelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
+      this.TimelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
     }
 
     #endregion
@@ -195,8 +195,8 @@ namespace VianaNET.Modules.Video
         this.automaticDataAquisitionCurrentFrameCount = 0;
         this.automaticDataAquisitionTotalFrameCount =
           (int)
-          ((this.timelineSlider.SelectionEnd - this.timelineSlider.SelectionStart)
-           / (this.timelineSlider.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs));
+          ((this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart)
+           / (this.TimelineSlider.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs));
 
         Video.Instance.StepOneFrame(true);
       }
@@ -215,7 +215,7 @@ namespace VianaNET.Modules.Video
       VianaNetApplication.Project.VideoData.Reset();
       VianaNetApplication.Project.ProcessingData.Reset();
       this.BlobsControl.UpdateDataPoints();
-      this.timelineSlider.ResetSelection();
+      this.TimelineSlider.ResetSelection();
       this.CreateCrossHairLines();
 
       this.ShowOrHideCalibration(Visibility.Hidden);
@@ -234,14 +234,18 @@ namespace VianaNET.Modules.Video
         case VideoMode.File:
 
           // Update UI
-          this.timelineSlider.Visibility = Visibility.Visible;
-          this.btnRevert.Visibility = Visibility.Visible;
-          this.btnRecord.Visibility = Visibility.Collapsed;
+          this.TimelineSlider.Visibility = Visibility.Visible;
+          this.BtnRecord.Visibility = Visibility.Collapsed;
+          this.SelectionPanel.Visibility = Visibility.Visible;
+          this.BtnSeekPrevious.Visibility = Visibility.Visible;
+          this.BtnSeekNext.Visibility = Visibility.Visible;
           break;
         case VideoMode.Capture:
-          this.timelineSlider.Visibility = Visibility.Collapsed;
-          this.btnRevert.Visibility = Visibility.Collapsed;
-          this.btnRecord.Visibility = Visibility.Visible;
+          this.TimelineSlider.Visibility = Visibility.Collapsed;
+          this.BtnRecord.Visibility = Visibility.Visible;
+          this.SelectionPanel.Visibility = Visibility.Collapsed;
+          this.BtnSeekPrevious.Visibility = Visibility.Collapsed;
+          this.BtnSeekNext.Visibility = Visibility.Collapsed;
           break;
       }
     }
@@ -944,20 +948,6 @@ namespace VianaNET.Modules.Video
     }
 
     /// <summary>
-    /// The btn pause_ click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void BtnPauseClick(object sender, RoutedEventArgs e)
-    {
-      Video.Instance.Pause();
-    }
-
-    /// <summary>
     /// The btn record_ click.
     /// </summary>
     /// <param name="sender">
@@ -987,20 +977,7 @@ namespace VianaNET.Modules.Video
       }
     }
 
-    /// <summary>
-    /// The btn revert_ click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void BtnRevertClick(object sender, RoutedEventArgs e)
-    {
-      Video.Instance.Revert();
-      this.timelineSlider.Value = this.timelineSlider.SelectionStart;
-    }
+    private bool isPlaying;
 
     /// <summary>
     /// The btn start_ click.
@@ -1011,9 +988,20 @@ namespace VianaNET.Modules.Video
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void BtnStartClick(object sender, RoutedEventArgs e)
+    private void BtnPlayClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.Play();
+      if (this.isPlaying)
+      {
+        this.BtnPlayImage.Source = VianaNetApplication.GetImageSource("Start16.png");
+        Video.Instance.Pause();
+      }
+      else
+      {
+        this.BtnPlayImage.Source = VianaNetApplication.GetImageSource("Pause16.png");
+        Video.Instance.Play();
+      }
+
+      this.isPlaying = !this.isPlaying;
     }
 
     /// <summary>
@@ -1027,7 +1015,20 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void BtnStopClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.Stop();
+      Video.Instance.Revert();
+      this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
+      this.isPlaying = false;
+      this.BtnPlayImage.Source = VianaNetApplication.GetImageSource("Start16.png");
+    }
+
+    private void BtnSeekNextClick(object sender, RoutedEventArgs e)
+    {
+      this.StepForward();
+    }
+
+    private void BtnSeekPreviousClick(object sender, RoutedEventArgs e)
+    {
+      this.StepBackward();
     }
 
     /// <summary>
@@ -1042,7 +1043,7 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
       this.isDragging = false;
     }
 
@@ -1086,7 +1087,7 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderSelectionAndValueChanged(object sender, EventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.timelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
     }
 
     /// <summary>
@@ -1114,10 +1115,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void TimelineSliderTickDownClicked(object sender, EventArgs e)
     {
-      if (this.timelineSlider.Value >= this.timelineSlider.SelectionStart + this.timelineSlider.TickFrequency)
-      {
-        Video.Instance.StepOneFrame(false);
-      }
+      this.StepBackward();
     }
 
     /// <summary>
@@ -1131,10 +1129,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void TimelineSliderTickUpClicked(object sender, EventArgs e)
     {
-      if (this.timelineSlider.Value <= this.timelineSlider.SelectionEnd - this.timelineSlider.TickFrequency)
-      {
-        Video.Instance.StepOneFrame(true);
-      }
+      this.StepForward();
     }
 
     /// <summary>
@@ -1154,10 +1149,48 @@ namespace VianaNET.Modules.Video
 
         // double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
         // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
-        this.timelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
       }
     }
 
+    /// <summary>
+    /// Steps the video one frame backward, if available
+    /// </summary>
+    private void StepBackward()
+    {
+      if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(false);
+      }
+    }
+
+    /// <summary>
+    /// Steps the video one frame forwared, if available
+    /// </summary>
+    private void StepForward()
+    {
+      if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
+      {
+        Video.Instance.StepOneFrame(true);
+      }
+    }
     #endregion
+
+    private void BtnSetCutoutLeftClick(object sender, RoutedEventArgs e)
+    {
+      this.TimelineSlider.SelectionStart = this.TimelineSlider.Value;
+      this.TimelineSlider.UpdateSelectionTimes();
+    }
+
+    private void BtnSetCutoutRightClick(object sender, RoutedEventArgs e)
+    {
+      this.TimelineSlider.SelectionEnd = this.TimelineSlider.Value;
+      this.TimelineSlider.UpdateSelectionTimes();
+    }
+
+    private void BtnSetZeroTimeClick(object sender, RoutedEventArgs e)
+    {
+
+    }
   }
 }

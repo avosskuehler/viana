@@ -26,9 +26,13 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Application
 {
+  using System;
   using System.Globalization;
   using System.Threading;
   using System.Windows;
+  using System.Windows.Controls;
+  using System.Windows.Media;
+  using System.Windows.Media.Imaging;
   using System.Windows.Threading;
 
   using VianaNET.Logging;
@@ -75,6 +79,42 @@ namespace VianaNET.Application
       {
         Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
       }
+    }
+
+    /// <summary>
+    /// This static mehtod returns an <see cref="Image"/>
+    /// for the given filename string, if the image is in the Images
+    /// subfolder of the solution.
+    /// </summary>
+    /// <param name="imageName">A <see cref="String"/> with the images file name</param>
+    /// <returns>The <see cref="Image"/> that can be used as a source for
+    /// an icon property.</returns>
+    public static Image GetImage(string imageName)
+    {
+      var terminMenuentryIcon = new Image();
+      var terminMenuentryIconImage = new BitmapImage();
+      terminMenuentryIconImage.BeginInit();
+      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
+      terminMenuentryIconImage.EndInit();
+      terminMenuentryIcon.Source = terminMenuentryIconImage;
+      return terminMenuentryIcon;
+    }
+
+    /// <summary>
+    /// This static mehtod returns an <see cref="ImageSource"/>
+    /// for the given filename string, if the image is in the Images
+    /// subfolder of the solution.
+    /// </summary>
+    /// <param name="imageName">A <see cref="String"/> with the images file name</param>
+    /// <returns>The <see cref="ImageSource"/> that can be used as a source for
+    /// an imagesource property.</returns>
+    public static ImageSource GetImageSource(string imageName)
+    {
+      var terminMenuentryIconImage = new BitmapImage();
+      terminMenuentryIconImage.BeginInit();
+      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
+      terminMenuentryIconImage.EndInit();
+      return terminMenuentryIconImage;
     }
 
     #endregion
