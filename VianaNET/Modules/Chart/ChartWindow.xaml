@@ -15,7 +15,7 @@
   <UserControl.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </UserControl.Resources>
-  <Grid>
+  <Grid Name="ParentGrid">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="*"/>
@@ -211,7 +211,7 @@
       </ScrollViewer>
     </Expander>
     <vc:Chart x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False"
-              AnimatedUpdate="False" Grid.Column="1" ToolBarEnabled="True">
+              AnimatedUpdate="False" Grid.Column="1" ToolBarEnabled="True" Rendered="DataChart_Rendered">
       <vc:Chart.Titles>
         <vc:Title Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}"/>
       </vc:Chart.Titles>

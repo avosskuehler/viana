@@ -1102,6 +1102,8 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderSelectionEndReached(object sender, EventArgs e)
     {
       Video.Instance.Pause();
+      this.BtnPlayImage.Source = VianaNetApplication.GetImageSource("Start16.png");
+      this.isPlaying = false;
     }
 
     /// <summary>
@@ -1190,7 +1192,7 @@ namespace VianaNET.Modules.Video
 
     private void BtnSetZeroTimeClick(object sender, RoutedEventArgs e)
     {
-
+      Video.Instance.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
     }
   }
 }
