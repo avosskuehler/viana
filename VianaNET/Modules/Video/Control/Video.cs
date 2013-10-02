@@ -163,16 +163,33 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
+    /// Gets or sets the time position in milliseconds, where
+    /// the video time should be zero.
+    /// </summary>
+    public long TimeZeroPositionInMs { get; set; }
+
+    /// <summary>
     ///   Gets the frame timestamp in ms.
     /// </summary>
-    public long FrameTimestampInMS
+    public long FrameTimestampInMs
+    {
+      get
+      {
+        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) - this.TimeZeroPositionInMs;
+      }
+
+      // get { return this.videoElement.MediaPositionInMilliSeconds; }
+    }
+
+    /// <summary>
+    ///   Gets the frame timestamp in ms starting with zero at the beginning of the video.
+    /// </summary>
+    public long FrameTimestampInMsWithoutOffest
     {
       get
       {
         return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs);
       }
-
-      // get { return this.videoElement.MediaPositionInMilliSeconds; }
     }
 
     /// <summary>

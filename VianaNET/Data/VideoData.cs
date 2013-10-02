@@ -187,10 +187,10 @@ namespace VianaNET.Data
       var timeSample = new TimeSample
         {
           Framenumber = Video.Instance.FrameIndex,
-          Timestamp = Video.Instance.FrameTimestampInMS
+          Timestamp = Video.Instance.FrameTimestampInMs
         };
 
-      double newTime = Video.Instance.FrameTimestampInMS;
+      double newTime = Video.Instance.FrameTimestampInMs;
       switch (VianaNetApplication.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:

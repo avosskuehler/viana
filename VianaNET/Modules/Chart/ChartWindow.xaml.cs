@@ -195,7 +195,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ChartContentTabSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.PopulateAxesFromChartSelection();
+      //this.PopulateAxesFromChartSelection();
     }
 
     /// <summary>
@@ -468,8 +468,22 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private void RefreshChartDataPoints()
     {
-      this.DefaultSeries.DataSource = null;
-      this.DefaultSeries.DataSource = VianaNetApplication.Project.VideoData.Samples;
+      //if (this.DataChart.AxesX.Count > 0)
+      //{
+      //  var axisX = this.DataChart.AxesX[0];
+      //  axisX.AxisMinimum = null;
+      //  axisX.Interval = double.NaN;
+      //}
+
+      //if (this.DataChart.AxesY.Count > 0)
+      //{
+      //  var axisY = this.DataChart.AxesY[0];
+      //  axisY.AxisMinimum = null;
+      //  axisY.Interval = double.NaN;
+      //}
+      this.ParentGrid.UpdateLayout();
+      //this.DefaultSeries.DataSource = null;
+      //this.DefaultSeries.DataSource = VianaNetApplication.Project.VideoData.Samples;
       this.UpdateChartProperties();
       this.UpdateFilters();
     }
@@ -800,9 +814,11 @@ namespace VianaNET.Modules.Chart
           }
           else
           {
-            axisX.AxisMinimum = null;
+            double interval;
+            axisX.AxisMinimum = this.GetAxisMinimum(this.DataChart.AxesX[0], out interval);
+            axisX.Interval = interval;
           }
- 
+
           if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
           {
             this.XAxisMaximum.Value = this.XAxisMinimum.Value;
@@ -844,7 +860,9 @@ namespace VianaNET.Modules.Chart
           }
           else
           {
-            axisY.AxisMinimum = null;
+            double interval;
+            axisY.AxisMinimum = this.GetAxisMinimum(this.DataChart.AxesY[0], out interval);
+            axisY.Interval = interval;
           }
 
           if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
@@ -852,7 +870,7 @@ namespace VianaNET.Modules.Chart
             this.YAxisMaximum.Value = this.YAxisMinimum.Value;
           }
 
-           if (this.YAxisMaximum.IsChecked)
+          if (this.YAxisMaximum.IsChecked)
           {
             axisY.AxisMaximum = this.YAxisMaximum.Value;
           }
@@ -871,6 +889,74 @@ namespace VianaNET.Modules.Chart
           // }
         }
       }
+    }
+
+    private double? GetAxisMinimum(Axis axis, out double interval)
+    {
+      var span = (double)axis.ActualAxisMaximum - (double)axis.ActualAxisMinimum;
+
+      if (Double.IsNaN(span))
+      {
+        interval = double.NaN;
+        return null;
+      }
+
+      var roundDigit = 0;
+      interval = 1;
+      if (span < 0.001)
+      {
+        roundDigit = 4;
+        interval = 0.0001;
+      }
+      else if (span < 0.01)
+      {
+        roundDigit = 3;
+        interval = 0.001;
+      }
+      else if (span < 0.1)
+      {
+        roundDigit = 2;
+        interval = 0.01;
+      }
+      else if (span < 1)
+      {
+        roundDigit = 1;
+        interval = 0.1;
+      }
+      else if (span < 10)
+      {
+        roundDigit = 0;
+        interval = 1;
+      }
+      else if (span < 100)
+      {
+        roundDigit = -1;
+        interval = 10;
+      }
+      else if (span < 1000)
+      {
+        roundDigit = -2;
+        interval = 100;
+      }
+      else if (span < 10000)
+      {
+        roundDigit = -3;
+        interval = 1000;
+      }
+
+      return Round((double)axis.ActualAxisMinimum, roundDigit);
+    }
+
+    static double Round(double value, int digits)
+    {
+      if ((digits < -15) || (digits > 15))
+        throw new ArgumentOutOfRangeException("digits", "Rounding digits must be between -15 and 15, inclusive.");
+
+      if (digits >= 0)
+        return Math.Round(value, digits);
+
+      double n = Math.Pow(10, -digits);
+      return Math.Round(value / n, 0) * n;
     }
 
     /// <summary>
@@ -1139,7 +1225,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (!this.UpdateMapping(true))
+      //if (!this.UpdateMapping(true))
       {
         return;
       }
@@ -1156,7 +1242,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (!this.UpdateMapping(false))
+      //if (!this.UpdateMapping(false))
       {
         return;
       }
@@ -1329,6 +1415,11 @@ namespace VianaNET.Modules.Chart
     }
 
     #endregion
+
+    private void DataChart_Rendered(object sender, EventArgs e)
+    {
+
+    }
 
   }
 }
