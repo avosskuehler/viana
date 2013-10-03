@@ -62,9 +62,15 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// The data line color property.
     /// </summary>
+    public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.Register(
+      "SelectionColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
+
+    /// <summary>
+    /// The data line color property.
+    /// </summary>
     public static readonly DependencyProperty DataLineColorProperty = DependencyProperty.Register(
       "DataLineColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
-
+    
     /// <summary>
     /// The Regression line thickness property.
     /// </summary>
@@ -216,7 +222,8 @@ namespace VianaNET.Data.Filter
       this.InterpolationSeries = new SortedObservableCollection<XYSample>();
       this.RegressionSeries = new SortedObservableCollection<XYSample>();
       this.TheorySeries = new SortedObservableCollection<XYSample>();
-      this.DataLineColor = Brushes.Blue;
+      this.SelectionColor = Brushes.Blue;
+      this.DataLineColor = Brushes.LightBlue;
       this.InterpolationLineColor = Brushes.Brown;
       this.RegressionLineColor = Brushes.Red;
       this.TheoryLineColor = Brushes.GreenYellow;
@@ -291,6 +298,22 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(DataLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the selection color.
+    /// </summary>
+    public SolidColorBrush SelectionColor
+    {
+      get
+      {
+        return (SolidColorBrush)this.GetValue(SelectionColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionColorProperty, value);
       }
     }
 

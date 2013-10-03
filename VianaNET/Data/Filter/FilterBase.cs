@@ -32,7 +32,7 @@ namespace VianaNET.Data.Filter
   using Application;
   using Collections;
   using CustomStyles.Types;
-  
+
   /// <summary>
   ///   The interpolation base.
   /// </summary>
@@ -200,6 +200,11 @@ namespace VianaNET.Data.Filter
 
       foreach (var sample in VianaNetApplication.Project.VideoData.Samples)
       {
+        if (!sample.IsSelected)
+        {
+          continue;
+        }
+
         var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
         var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
 
@@ -236,6 +241,7 @@ namespace VianaNET.Data.Filter
       {
         this.startX = 0;
         this.endX = 0;
+        return;
       }
 
       if (this.startPixelX > this.endPixelX)

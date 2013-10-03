@@ -835,6 +835,10 @@
   <ItemGroup>
     <Resource Include="Images\SetZeroTime16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="CustomStyles\Cursors\CursorMinus.cur" />
+    <Resource Include="CustomStyles\Cursors\CursorPlus.cur" />
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
   C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
