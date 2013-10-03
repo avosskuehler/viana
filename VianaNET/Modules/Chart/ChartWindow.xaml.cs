@@ -29,10 +29,12 @@ namespace VianaNET.Modules.Chart
   using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
   using System.Windows.Data;
+  using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
@@ -44,6 +46,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Filter.Theory;
   using VianaNET.Localization;
   using Visifire.Charts;
+  using Visifire.Commons;
 
   using WPFMath;
 
@@ -60,6 +63,9 @@ namespace VianaNET.Modules.Chart
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
+
+    private readonly Cursor plusCursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorPlus.cur")).Stream);
+    private readonly Cursor minusCursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="ObjectDescriptions" />.
@@ -127,7 +133,6 @@ namespace VianaNET.Modules.Chart
       VianaNetApplication.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
-      this.UpdateChartProperties();
     }
 
     #endregion
@@ -468,22 +473,13 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private void RefreshChartDataPoints()
     {
-      //if (this.DataChart.AxesX.Count > 0)
-      //{
-      //  var axisX = this.DataChart.AxesX[0];
-      //  axisX.AxisMinimum = null;
-      //  axisX.Interval = double.NaN;
-      //}
+      this.DefaultSeries.DataSource = null;
+      this.DefaultSeries.DataSource = VianaNetApplication.Project.VideoData.Samples;
+      foreach (DataPoint dataPoint in this.DefaultSeries.DataPoints)
+      {
+        dataPoint.Color = VianaNetApplication.Project.FilterData.SelectionColor;
+      }
 
-      //if (this.DataChart.AxesY.Count > 0)
-      //{
-      //  var axisY = this.DataChart.AxesY[0];
-      //  axisY.AxisMinimum = null;
-      //  axisY.Interval = double.NaN;
-      //}
-      this.ParentGrid.UpdateLayout();
-      //this.DefaultSeries.DataSource = null;
-      //this.DefaultSeries.DataSource = VianaNetApplication.Project.VideoData.Samples;
       this.UpdateChartProperties();
       this.UpdateFilters();
     }
@@ -550,7 +546,8 @@ namespace VianaNET.Modules.Chart
 
         VianaNetApplication.Project.FilterData.AxisX = axisX;
         VianaNetApplication.Project.FilterData.AxisY = axisY;
-        this.RefreshChartDataPoints();
+        this.RefreshSeries();
+        //this.RefreshChartDataPoints();
 
         // axes content already set, so return
         return;
@@ -672,7 +669,8 @@ namespace VianaNET.Modules.Chart
       VianaNetApplication.Project.FilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
       VianaNetApplication.Project.FilterData.AxisX = (DataAxis)this.XAxisContent.SelectedItem;
       VianaNetApplication.Project.FilterData.AxisY = (DataAxis)this.YAxisContent.SelectedItem;
-      this.RefreshChartDataPoints();
+      //this.RefreshChartDataPoints();
+      this.RefreshSeries();
     }
 
     /// <summary>
@@ -792,46 +790,50 @@ namespace VianaNET.Modules.Chart
     {
       if (this.isInitialized)
       {
-        this.DataChart.Titles[0].Text = this.ChartTitle.IsChecked ? this.ChartTitle.Text : null;
-        this.DataChart.Legends[0].Title = this.LegendTitle.IsChecked ? this.LegendTitle.Text : null;
-        this.DataChart.Legends[0].Enabled = this.LegendTitle.IsChecked || this.SeriesTitle.IsChecked;
-        this.DefaultSeries.LegendText = this.SeriesTitle.IsChecked ? this.SeriesTitle.Text : null;
+        double interval, tickInterval, min, max;
 
         if (this.DataChart.AxesX.Count > 0)
         {
           var axisX = this.DataChart.AxesX[0];
-          axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text + this.axisXUnitName : null;
-          axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
-
-          if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
+          if (this.GetAxisBounds(true, out interval, out tickInterval, out min, out max))
           {
-            this.XAxisMinimum.Value = this.XAxisMaximum.Value;
-          }
-
-          if (this.XAxisMinimum.IsChecked)
-          {
-            axisX.AxisMinimum = this.XAxisMinimum.Value;
-          }
-          else
-          {
-            double interval;
-            axisX.AxisMinimum = this.GetAxisMinimum(this.DataChart.AxesX[0], out interval);
+            axisX.AxisMinimum = min;
+            axisX.AxisMaximum = max;
             axisX.Interval = interval;
+            axisX.Ticks[0].Interval = tickInterval;
           }
+          //axisX.Title = this.XAxisTitle.IsChecked ? this.XAxisTitle.Text + this.axisXUnitName : null;
+          //axisX.Grids[0].Enabled = this.XAxisShowGridLines.IsChecked();
 
-          if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
-          {
-            this.XAxisMaximum.Value = this.XAxisMinimum.Value;
-          }
+          //if (this.XAxisMinimum.Value > this.XAxisMaximum.Value)
+          //{
+          //  this.XAxisMinimum.Value = this.XAxisMaximum.Value;
+          //}
 
-          if (this.XAxisMaximum.IsChecked)
-          {
-            axisX.AxisMaximum = this.XAxisMaximum.Value;
-          }
-          else
-          {
-            axisX.AxisMaximum = null;
-          }
+          //if (this.XAxisMinimum.IsChecked)
+          //{
+          //  axisX.AxisMinimum = this.XAxisMinimum.Value;
+          //}
+          //else
+          //{
+          //  double interval;
+          //  axisX.AxisMinimum = this.GetAxisBounds(this.DataChart.AxesX[0], out interval);
+          //  axisX.Interval = interval;
+          //}
+
+          //if (this.XAxisMaximum.Value < this.XAxisMinimum.Value)
+          //{
+          //  this.XAxisMaximum.Value = this.XAxisMinimum.Value;
+          //}
+
+          //if (this.XAxisMaximum.IsChecked)
+          //{
+          //  axisX.AxisMaximum = this.XAxisMaximum.Value;
+          //}
+          //else
+          //{
+          //  axisX.AxisMaximum = null;
+          //}
 
           // if (XAxisInterval.IsChecked)
           // {
@@ -846,114 +848,205 @@ namespace VianaNET.Modules.Chart
         if (this.DataChart.AxesY.Count > 0)
         {
           var axisY = this.DataChart.AxesY[0];
-          axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text + this.axisYUnitName : null;
-          axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
-
-          if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
+          if (this.GetAxisBounds(false, out interval, out tickInterval, out min, out max))
           {
-            this.YAxisMinimum.Value = this.YAxisMaximum.Value;
-          }
-
-          if (this.YAxisMinimum.IsChecked)
-          {
-            axisY.AxisMinimum = this.YAxisMinimum.Value;
-          }
-          else
-          {
-            double interval;
-            axisY.AxisMinimum = this.GetAxisMinimum(this.DataChart.AxesY[0], out interval);
+            axisY.AxisMinimum = min;
+            axisY.AxisMaximum = max;
             axisY.Interval = interval;
+            axisY.Ticks[0].Interval = tickInterval;
           }
 
-          if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
-          {
-            this.YAxisMaximum.Value = this.YAxisMinimum.Value;
-          }
+          //  axisY.Title = this.YAxisTitle.IsChecked ? this.YAxisTitle.Text + this.axisYUnitName : null;
+          //  axisY.Grids[0].Enabled = this.YAxisShowGridLines.IsChecked();
 
-          if (this.YAxisMaximum.IsChecked)
-          {
-            axisY.AxisMaximum = this.YAxisMaximum.Value;
-          }
-          else
-          {
-            axisY.AxisMaximum = null;
-          }
+          //  if (this.YAxisMinimum.Value > this.YAxisMaximum.Value)
+          //  {
+          //    this.YAxisMinimum.Value = this.YAxisMaximum.Value;
+          //  }
 
-          // if (YAxisInterval.IsChecked)
-          // {
-          // yAxis.Interval = YAxisInterval.Value;
-          // }
-          // else
-          // {
-          // yAxis.Interval = double.NaN;
-          // }
+          //  if (this.YAxisMinimum.IsChecked)
+          //  {
+          //    axisY.AxisMinimum = this.YAxisMinimum.Value;
+          //  }
+          //  else
+          //  {
+          //    double interval;
+          //    axisY.AxisMinimum = this.GetAxisBounds(this.DataChart.AxesY[0], out interval);
+          //    axisY.Interval = interval;
+          //  }
+
+          //  if (this.YAxisMaximum.Value < this.YAxisMinimum.Value)
+          //  {
+          //    this.YAxisMaximum.Value = this.YAxisMinimum.Value;
+          //  }
+
+          //  if (this.YAxisMaximum.IsChecked)
+          //  {
+          //    axisY.AxisMaximum = this.YAxisMaximum.Value;
+          //  }
+          //  else
+          //  {
+          //    axisY.AxisMaximum = null;
+          //  }
+
+          //  // if (YAxisInterval.IsChecked)
+          //  // {
+          //  // yAxis.Interval = YAxisInterval.Value;
+          //  // }
+          //  // else
+          //  // {
+          //  // yAxis.Interval = double.NaN;
+          //  // }
         }
       }
     }
 
-    private double? GetAxisMinimum(Axis axis, out double interval)
+    private bool GetAxisBounds(bool xAxis, out double interval, out double tickInterval, out double min, out double max)
     {
-      var span = (double)axis.ActualAxisMaximum - (double)axis.ActualAxisMinimum;
+      interval = double.NaN;
+      tickInterval = double.NaN;
+      min = double.NaN;
+      max = double.NaN;
+
+      if (this.DefaultSeries.DataPoints.Count == 0)
+      {
+        return false;
+      }
+
+      double span;
+      if (xAxis)
+      {
+        min = (double)this.DefaultSeries.DataPoints.Min(o => o.XValue);
+        max = (double)this.DefaultSeries.DataPoints.Max(o => o.XValue);
+        //var span = (double)axis.ActualAxisMaximum - (double)axis.ActualAxisMinimum;
+        span = max - min;
+      }
+      else
+      {
+        min = this.DefaultSeries.DataPoints.Min(o => o.YValue);
+        max = this.DefaultSeries.DataPoints.Max(o => o.YValue);
+        span = max - min;
+      }
 
       if (Double.IsNaN(span))
       {
-        interval = double.NaN;
-        return null;
+        return false;
       }
 
       var roundDigit = 0;
       interval = 1;
+      tickInterval = 1;
       if (span < 0.001)
       {
         roundDigit = 4;
         interval = 0.0001;
+        tickInterval = 0.00001;
+      }
+      else if (span < 0.005)
+      {
+        roundDigit = 3;
+        interval = 0.001;
+        tickInterval = 0.0001;
       }
       else if (span < 0.01)
       {
         roundDigit = 3;
         interval = 0.001;
+        tickInterval = 0.0001;
+      }
+      else if (span < 0.05)
+      {
+        roundDigit = 2;
+        interval = 0.01;
+        tickInterval = 0.001;
       }
       else if (span < 0.1)
       {
         roundDigit = 2;
         interval = 0.01;
+        tickInterval = 0.001;
+      }
+      else if (span < 0.5)
+      {
+        roundDigit = 1;
+        interval = 0.1;
+        tickInterval = 0.01;
       }
       else if (span < 1)
       {
         roundDigit = 1;
         interval = 0.1;
+        tickInterval = 0.01;
+      }
+      else if (span < 5)
+      {
+        roundDigit = 0;
+        interval = 1;
+        tickInterval = 0.1;
       }
       else if (span < 10)
       {
         roundDigit = 0;
         interval = 1;
+        tickInterval = 0.1;
+      }
+      else if (span < 50)
+      {
+        roundDigit = -1;
+        interval = 5;
+        tickInterval = 1;
       }
       else if (span < 100)
       {
         roundDigit = -1;
         interval = 10;
+        tickInterval = 1;
+      }
+      else if (span < 500)
+      {
+        roundDigit = -2;
+        interval = 50;
+        tickInterval = 5;
       }
       else if (span < 1000)
       {
         roundDigit = -2;
         interval = 100;
+        tickInterval = 10;
+      }
+      else if (span < 5000)
+      {
+        roundDigit = -3;
+        interval = 500;
+        tickInterval = 50;
       }
       else if (span < 10000)
       {
         roundDigit = -3;
         interval = 1000;
+        tickInterval = 100;
       }
 
-      return Round((double)axis.ActualAxisMinimum, roundDigit);
+      min = Round(min, roundDigit, true);
+      max = Round(max, roundDigit, false);
+      return true;
+
     }
 
-    static double Round(double value, int digits)
+    static double Round(double value, int digits, bool min)
     {
       if ((digits < -15) || (digits > 15))
+      {
         throw new ArgumentOutOfRangeException("digits", "Rounding digits must be between -15 and 15, inclusive.");
+      }
 
       if (digits >= 0)
-        return Math.Round(value, digits);
+      {
+        var factor = Math.Pow(10, digits);
+        double roundedValue = min ? Math.Floor(value * factor) : Math.Ceiling(value * factor);
+
+        return roundedValue / factor;
+      }
 
       double n = Math.Pow(10, -digits);
       return Math.Round(value / n, 0) * n;
@@ -1052,16 +1145,14 @@ namespace VianaNET.Modules.Chart
       {
         if (this.DataChart.AxesX.Count >= 1)
         {
-          this.DataChart.AxesX[0].Title = this.XAxisTitle.IsChecked ? axis.Description : null;
-          this.XAxisTitle.Text = axis.Description;
+          this.DataChart.AxesX[0].Title = axis.Description;
         }
       }
       else
       {
         if (this.DataChart.AxesY.Count >= 1)
         {
-          this.DataChart.AxesY[0].Title = this.YAxisTitle.IsChecked ? axis.Description : null;
-          this.YAxisTitle.Text = axis.Description;
+          this.DataChart.AxesY[0].Title = axis.Description;
         }
       }
 
@@ -1090,7 +1181,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ValueChangedUpdateChart(object sender, EventArgs e)
     {
-      this.UpdateChartProperties();
+      //this.UpdateChartProperties();
     }
 
     /// <summary>
@@ -1421,5 +1512,163 @@ namespace VianaNET.Modules.Chart
 
     }
 
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+    }
+    // MouseMove event handler
+
+    void PlotArea_MouseMove(object sender, PlotAreaMouseEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        Point currentPos = new Point(e.MouseEventArgs.GetPosition(MyCanvas).X, e.MouseEventArgs.GetPosition(MyCanvas).Y);
+
+        SelectRect.Visibility = Visibility.Visible;
+        SelectRect.Width = Math.Abs(startPos.X - currentPos.X);
+        SelectRect.Height = Math.Abs(startPos.Y - currentPos.Y);
+        if (currentPos.X < startPos.X)
+          SelectRect.SetValue(Canvas.LeftProperty, currentPos.X);
+        if (currentPos.Y < startPos.Y)
+          SelectRect.SetValue(Canvas.TopProperty, currentPos.Y);
+
+        endXValue = (Double)e.XValue;
+        endYValue = e.YValue;
+      }
+      else
+        SelectRect.Visibility = Visibility.Collapsed;
+    }
+
+    // MouseLeftButtonDown event handler
+    void PlotArea_MouseLeftButtonDown(object sender, PlotAreaMouseButtonEventArgs e)
+    {
+      this.mouseDown = true;
+      SelectRect.Width = 0;
+      SelectRect.Height = 0;
+      startXValue = (Double)e.XValue;
+      startYValue = e.YValue;
+
+      startPos = new Point(e.MouseButtonEventArgs.GetPosition(MyCanvas).X, e.MouseButtonEventArgs.GetPosition(MyCanvas).Y);
+      SelectRect.SetValue(Canvas.LeftProperty, startPos.X);
+      SelectRect.SetValue(Canvas.TopProperty, startPos.Y);
+
+      SelectRect.Visibility = Visibility.Visible;
+
+      // Control button is pressed so more points are to be selected
+      if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        return;
+      }
+
+      var selectedDataPoints = (from dp in this.DataChart.Series[0].DataPoints
+                                where dp.Color == VianaNetApplication.Project.FilterData.SelectionColor
+                                select dp);
+
+      var selectedIndizes = new List<int>();
+      foreach (DataPoint dataPoint in selectedDataPoints)
+      {
+        dataPoint.Color = VianaNetApplication.Project.FilterData.DataLineColor;
+        var number = Convert.ToInt32(dataPoint.LegendText.Replace("DataPoint", string.Empty));
+        selectedIndizes.Add(number);
+      }
+
+      foreach (var selectedIndex in selectedIndizes)
+      {
+        VianaNetApplication.Project.VideoData.Samples[selectedIndex].IsSelected = false;
+      }
+    }
+
+    // MouseLeftButtonUp event handler
+    void PlotAreaMouseLeftButtonUp(object sender, PlotAreaMouseButtonEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        var currentPos = new Point(e.MouseButtonEventArgs.GetPosition(MyCanvas).X, e.MouseButtonEventArgs.GetPosition(MyCanvas).Y);
+        if (startPos == currentPos)
+        {
+          this.mouseDown = false;
+          return;
+        }
+
+        var selectedDataPoints = (from dp in this.DataChart.Series[0].DataPoints
+                                  where (Convert.ToDouble(dp.XValue) > Math.Min(startXValue, endXValue))
+                                  && (Convert.ToDouble(dp.XValue) < Math.Max(startXValue, endXValue))
+                                  && (dp.YValue > Math.Min(startYValue, endYValue)
+                                  && dp.YValue < Math.Max(startYValue, endYValue))
+                                  orderby dp.XValue
+                                  select dp);
+
+        var selectedIndizes = new List<int>();
+
+        if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+        {
+          foreach (var dataPoint in selectedDataPoints)
+          {
+            dataPoint.Color = VianaNetApplication.Project.FilterData.DataLineColor;
+            var number = Convert.ToInt32(dataPoint.LegendText.Replace("DataPoint", string.Empty));
+            selectedIndizes.Add(number);
+          }
+
+          foreach (var selectedIndex in selectedIndizes)
+          {
+            VianaNetApplication.Project.VideoData.Samples[selectedIndex].IsSelected = false;
+          }
+        }
+        else
+        {
+          foreach (var dataPoint in selectedDataPoints)
+          {
+            dataPoint.Color = VianaNetApplication.Project.FilterData.SelectionColor;
+            var number = Convert.ToInt32(dataPoint.LegendText.Replace("DataPoint", string.Empty));
+            selectedIndizes.Add(number);
+          }
+
+          foreach (var selectedIndex in selectedIndizes)
+          {
+            VianaNetApplication.Project.VideoData.Samples[selectedIndex].IsSelected = true;
+          }
+        }
+      }
+
+      this.mouseDown = false;
+      SelectRect.Visibility = Visibility.Collapsed;
+    }
+
+    // MouseLeave event handler
+    void PlotAreaMouseLeave(object sender, MouseEventArgs e)
+    {
+      if (!this.mouseDown)
+        SelectRect.Visibility = Visibility.Collapsed;
+    }
+
+    void PlotAreaMouseEnter(object sender, MouseEventArgs e)
+    {
+      if (this.mouseDown)
+        SelectRect.Visibility = Visibility.Visible;
+    }
+
+    private Double startXValue, endXValue;
+    private Double startYValue, endYValue;
+    private Boolean mouseDown;
+    private Point startPos;
+
+
+    private void PlotArea_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+
+      if (Keyboard.Modifiers == ModifierKeys.Control)
+      {
+        this.DataChart.PlotArea.Cursor = plusCursor;
+      }
+      else if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        this.DataChart.PlotArea.Cursor = minusCursor;
+      }
+
+    }
+
+    private void PlotArea_PreviewKeyUp(object sender, KeyEventArgs e)
+    {
+      this.DataChart.PlotArea.Cursor = Cursors.Arrow;
+    }
   }
 }

@@ -187,7 +187,8 @@ namespace VianaNET.Data
       var timeSample = new TimeSample
         {
           Framenumber = Video.Instance.FrameIndex,
-          Timestamp = Video.Instance.FrameTimestampInMs
+          Timestamp = Video.Instance.FrameTimestampInMs,
+          IsSelected = true
         };
 
       double newTime = Video.Instance.FrameTimestampInMs;

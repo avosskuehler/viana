@@ -66,6 +66,11 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public long Timestamp { get; set; }
 
+    /// <summary>
+    ///   Gets or sets a value indicating whether this sample is selected
+    /// </summary>
+    public bool IsSelected { get; set; }
+
     #endregion
 
     /// <summary>
