@@ -59,6 +59,12 @@ namespace VianaNET.Modules.Chart
     // Defining Constants                                                        //
     ///////////////////////////////////////////////////////////////////////////////
 
+    /// <summary>
+    /// Determines maximum distance of two points (in pixel) given by mouse input
+    /// that should be considered as different.
+    /// </summary>
+    private const int MAXDISTANCEPOINTS = 10;
+
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
@@ -66,6 +72,7 @@ namespace VianaNET.Modules.Chart
 
     private readonly Cursor plusCursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorPlus.cur")).Stream);
     private readonly Cursor minusCursor = new Cursor(Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="ObjectDescriptions" />.
@@ -133,6 +140,7 @@ namespace VianaNET.Modules.Chart
       VianaNetApplication.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
+      this.PopulateAxesFromChartSelection();
     }
 
     #endregion
@@ -1530,9 +1538,6 @@ namespace VianaNET.Modules.Chart
           SelectRect.SetValue(Canvas.LeftProperty, currentPos.X);
         if (currentPos.Y < startPos.Y)
           SelectRect.SetValue(Canvas.TopProperty, currentPos.Y);
-
-        endXValue = (Double)e.XValue;
-        endYValue = e.YValue;
       }
       else
         SelectRect.Visibility = Visibility.Collapsed;
@@ -1577,23 +1582,48 @@ namespace VianaNET.Modules.Chart
       }
     }
 
+    /// <summary>
+    /// Checks if two points are nearer than MAX_DISTANCE_POLYLINE_CLOSE
+    /// </summary>
+    /// <remarks>Polyline is automatically closed, if they are.</remarks>
+    /// <param name="point1">A <see cref="Point"/> with point one </param>
+    /// <param name="point2">A <see cref="Point"/> with point two</param>
+    /// <returns><strong>True</strong>, if points are nearer than MAX_DISTANCE_POLYLINE_CLOSE,
+    /// otherwise <strong>false</strong>.</returns>
+    private bool PointsAreNear(Point point1, Point point2)
+    {
+      return Distance(point1, point2) < MAXDISTANCEPOINTS;
+    }
+
     // MouseLeftButtonUp event handler
     void PlotAreaMouseLeftButtonUp(object sender, PlotAreaMouseButtonEventArgs e)
     {
       if (this.mouseDown)
       {
+        endXValue = (Double)e.XValue;
+        endYValue = e.YValue;
+
         var currentPos = new Point(e.MouseButtonEventArgs.GetPosition(MyCanvas).X, e.MouseButtonEventArgs.GetPosition(MyCanvas).Y);
-        if (startPos == currentPos)
+
+        if (PointsAreNear(startPos, currentPos))
         {
-          this.mouseDown = false;
-          return;
+          startXValue -= Math.Abs(startXValue) * 0.02;
+          endXValue += Math.Abs(endXValue) * 0.02;
+          startYValue -= Math.Abs(startYValue) * 0.02;
+          endYValue += Math.Abs(endYValue) * 0.02;
         }
 
+        //if (startXValue <= endXValue + 5)
+        //{
+        //this.mouseDown = false;
+        //return;
+        //}
+
         var selectedDataPoints = (from dp in this.DataChart.Series[0].DataPoints
-                                  where (Convert.ToDouble(dp.XValue) > Math.Min(startXValue, endXValue))
-                                  && (Convert.ToDouble(dp.XValue) < Math.Max(startXValue, endXValue))
-                                  && (dp.YValue > Math.Min(startYValue, endYValue)
-                                  && dp.YValue < Math.Max(startYValue, endYValue))
+                                  where (Convert.ToDouble(dp.XValue) >= Math.Min(startXValue, endXValue))
+                                  && (Convert.ToDouble(dp.XValue) <= Math.Max(startXValue, endXValue))
+                                  && (dp.YValue >= Math.Min(startYValue, endYValue)
+                                  && dp.YValue <= Math.Max(startYValue, endYValue))
                                   orderby dp.XValue
                                   select dp);
 
@@ -1670,5 +1700,19 @@ namespace VianaNET.Modules.Chart
     {
       this.DataChart.PlotArea.Cursor = Cursors.Arrow;
     }
+
+    /// <summary>
+    /// Calculate Distance of two Vectors per Phythagoras
+    /// </summary>
+    /// <param name="pt1">Point 1 to calculate the distance for.</param>
+    /// <param name="pt2">Point 2 to calculate the distance for.</param>
+    /// <returns>Distance of the given Points in picture coordinates.</returns>
+    private static float Distance(Point pt1, Point pt2)
+    {
+      double squaredX = Math.Pow(pt1.X - pt2.X, 2);
+      double squaredY = Math.Pow(pt1.Y - pt2.Y, 2);
+      return Convert.ToSingle(Math.Sqrt(squaredX + squaredY));
+    }
+
   }
 }

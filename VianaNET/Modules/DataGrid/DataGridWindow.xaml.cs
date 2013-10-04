@@ -192,6 +192,8 @@ namespace VianaNET.Modules.DataGrid
         var obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
         this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
         this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PositionX", prefix + Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "PositionY", prefix + Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(
           obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(
