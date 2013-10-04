@@ -341,7 +341,6 @@
             </StackPanel>
           </GroupBox>
           <StackPanel Style="{StaticResource SpacerStyle}"/>
-
           <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowTitlesHeader}"
                     Style="{StaticResource GroupBoxStyle}">
             <Grid>
@@ -367,7 +366,6 @@
               <!--<CheckBox Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="{lex:LocText VianaNET:Labels:ChartWindowSelectionEnabledHeader}" IsChecked="{Binding ElementName=DefaultSeries, Path=SelectionEnabled}"/>-->
             </Grid>
           </GroupBox>
-
           <StackPanel Style="{StaticResource SpacerStyle}"/>
           <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowSeriesStyleHeader}"
                     Style="{StaticResource GroupBoxStyle}">
@@ -391,52 +389,51 @@
             </UniformGrid>
           </GroupBox>
           <StackPanel Style="{StaticResource SpacerStyle}"/>
-          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowAxesHeader}"
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}"
                     Style="{StaticResource GroupBoxStyle}">
-            <StackPanel Name="AxisControls">
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}"/>
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto"/>
-                  <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Grid.Row="0" Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisTitleHeader}"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ElementName=DataChart, Path=AxesX[0].Title, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" IsChecked="{Binding ElementName=DataChart, Path=AxesX[0].Grids[0].Enabled}"/>
-                <Label Grid.Column="0" Grid.Row="2" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}"/>
-                <Slider Grid.Column="1" Grid.Row="2" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesX[0].AxisMinimum}"/>
-                <Label Grid.Column="0" Grid.Row="3" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}"/>
-                <Slider Grid.Column="1" Grid.Row="3" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesX[0].AxisMaximum}"/>
-                <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
-              </Grid>
-              <Label Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}"/>
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                  <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="Auto"/>
-                  <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Grid.Row="0" Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisTitleHeader}"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ElementName=DataChart, Path=AxesY[0].Title, UpdateSourceTrigger=PropertyChanged}"/>
-                <CheckBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" IsChecked="{Binding ElementName=DataChart, Path=AxesY[0].Grids[0].Enabled}"/>
-                <Label Grid.Column="0" Grid.Row="2" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}"/>
-                <Slider Grid.Column="1" Grid.Row="2" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesY[0].AxisMinimum}"/>
-                <Label Grid.Column="0" Grid.Row="3" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}"/>
-                <Slider Grid.Column="1" Grid.Row="3" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesY[0].AxisMaximum}"/>
-                <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
-              </Grid>
-            </StackPanel>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Grid.Row="0" Content="{lex:LocText VianaNET:Labels:ChartWindowXAxisTitleHeader}"/>
+              <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ElementName=DataChart, Path=AxesX[0].Title, UpdateSourceTrigger=PropertyChanged}"/>
+              <CheckBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" IsChecked="{Binding ElementName=DataChart, Path=AxesX[0].Grids[0].Enabled}"/>
+              <Label Grid.Column="0" Grid.Row="2" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}"/>
+              <Slider Grid.Column="1" Grid.Row="2" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesX[0].AxisMinimum}"/>
+              <Label Grid.Column="0" Grid.Row="3" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}"/>
+              <Slider Grid.Column="1" Grid.Row="3" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesX[0].AxisMaximum}"/>
+              <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
+            </Grid>
+          </GroupBox>
+          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}"
+                    Style="{StaticResource GroupBoxStyle}">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Grid.Row="0" Content="{lex:LocText VianaNET:Labels:ChartWindowYAxisTitleHeader}"/>
+              <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ElementName=DataChart, Path=AxesY[0].Title, UpdateSourceTrigger=PropertyChanged}"/>
+              <CheckBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="{lex:LocText VianaNET:Labels:ChartWindowShowGridLinesHeader}" IsChecked="{Binding ElementName=DataChart, Path=AxesY[0].Grids[0].Enabled}"/>
+              <Label Grid.Column="0" Grid.Row="2" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMinimumHeader}"/>
+              <Slider Grid.Column="1" Grid.Row="2" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesY[0].AxisMinimum}"/>
+              <Label Grid.Column="0" Grid.Row="3" Content="{lex:LocText VianaNET:Labels:ChartWindowAxisMaximumHeader}"/>
+              <Slider Grid.Column="1" Grid.Row="3" Minimum="-1000" Maximum="1000" Value="{Binding ElementName=DataChart, Path=AxesY[0].AxisMaximum}"/>
+              <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
+            </Grid>
           </GroupBox>
         </StackPanel>
       </ScrollViewer>
