@@ -74,18 +74,6 @@ namespace VianaNET.Modules.Video.Control
       DependencyProperty.Register(
         "MediaDurationInMS", typeof(double), typeof(VideoPlayer), new UIPropertyMetadata(default(double)));
 
-    /// <summary>
-    ///   The selection end property.
-    /// </summary>
-    public static readonly DependencyProperty SelectionEndProperty = DependencyProperty.Register(
-      "SelectionEnd", typeof(double), typeof(MediaSlider));
-
-    /// <summary>
-    ///   The selection start property.
-    /// </summary>
-    public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
-      "SelectionStart", typeof(double), typeof(MediaSlider));
-
     #endregion
 
     #region Fields
@@ -238,38 +226,6 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    /// <summary>
-    ///   Gets or sets the selection end.
-    /// </summary>
-    public double SelectionEnd
-    {
-      get
-      {
-        return (double)this.GetValue(SelectionEndProperty);
-      }
-
-      set
-      {
-        this.SetValue(SelectionEndProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the selection start.
-    /// </summary>
-    public double SelectionStart
-    {
-      get
-      {
-        return (double)this.GetValue(SelectionStartProperty);
-      }
-
-      set
-      {
-        this.SetValue(SelectionStartProperty, value);
-      }
-    }
-
     #endregion
 
     #region Public Methods and Operators
@@ -414,7 +370,7 @@ namespace VianaNET.Modules.Video.Control
       base.Revert();
 
       int hr = 0;
-      var zeroPosition = new DsLong((long)(this.SelectionStart / NanoSecsToMilliSecs));
+      var zeroPosition = new DsLong((long)(VianaNetApplication.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
 
       // if (zeroPosition <= 0)
       // {
@@ -522,8 +478,6 @@ namespace VianaNET.Modules.Video.Control
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private void BuildGraph()
     {
-      int hr = 0;
-
       if (this.VideoFilename == string.Empty)
       {
         return;
@@ -553,7 +507,7 @@ namespace VianaNET.Modules.Video.Control
       this.ConfigureSampleGrabber(this.sampleGrabber);
 
       // Add the frame grabber to the graph
-      hr = this.filterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
+      int hr = this.filterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
       if (hr != 0)
       {
         ErrorLogger.WriteLine(

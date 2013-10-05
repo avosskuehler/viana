@@ -1192,7 +1192,7 @@ namespace VianaNET.Modules.Video
 
     private void BtnSetZeroTimeClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
+      VianaNetApplication.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
     }
   }
 }
