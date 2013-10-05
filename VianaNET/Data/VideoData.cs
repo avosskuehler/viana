@@ -61,6 +61,18 @@ namespace VianaNET.Data
     public static readonly DependencyProperty SamplesProperty = DependencyProperty.Register(
       "Samples", typeof(DataCollection), typeof(VideoData), new UIPropertyMetadata(null));
 
+    /// <summary>
+    ///   The selection end property.
+    /// </summary>
+    public static readonly DependencyProperty SelectionEndProperty = DependencyProperty.Register(
+      "SelectionEnd", typeof(double), typeof(VideoData));
+
+    /// <summary>
+    ///   The selection start property.
+    /// </summary>
+    public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
+      "SelectionStart", typeof(double), typeof(VideoData));
+
     #endregion
 
     #region Constructors and Destructors
@@ -147,16 +159,55 @@ namespace VianaNET.Data
       }
     }
 
-    ///// <summary>
-    ///// Gets a value indicating whether there is at least one data sample
-    ///// </summary>
-    //public bool HasSamples
-    //{
-    //  get
-    //  {
-    //    return this.Count > 0;
-    //  }
-    //}
+    /// <summary>
+    /// Gets or sets the time position in milliseconds, where
+    /// the video time should be zero.
+    /// </summary>
+    public long TimeZeroPositionInMs { get; set; }
+
+    /// <summary>
+    /// Gets or sets the ending position of the video selection
+    /// in milliseconds
+    /// </summary>
+    public double SelectionEnd
+    {
+      get
+      {
+        return (double)this.GetValue(SelectionEndProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionEndProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the starting position of the video selection
+    /// in milliseconds
+    /// </summary>
+    public double SelectionStart
+    {
+      get
+      {
+        return (double)this.GetValue(SelectionStartProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionStartProperty, value);
+      }
+    }
+    /// <summary>
+    /// Gets a value indicating whether there is at least one data sample
+    /// </summary>
+    public bool HasSamples
+    {
+      get
+      {
+        return this.Count > 0;
+      }
+    }
 
     #endregion
 

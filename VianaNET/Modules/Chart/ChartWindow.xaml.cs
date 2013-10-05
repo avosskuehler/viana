@@ -425,7 +425,7 @@ namespace VianaNET.Modules.Chart
       // Erase old entries
       this.ObjectDescriptions.Clear();
 
-      for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (var i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
         this.ObjectDescriptions.Add(Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
       }
@@ -483,7 +483,7 @@ namespace VianaNET.Modules.Chart
     {
       this.DefaultSeries.DataSource = null;
       this.DefaultSeries.DataSource = VianaNetApplication.Project.VideoData.Samples;
-      foreach (DataPoint dataPoint in this.DefaultSeries.DataPoints)
+      foreach (var dataPoint in this.DefaultSeries.DataPoints)
       {
         dataPoint.Color = VianaNetApplication.Project.FilterData.SelectionColor;
       }
@@ -532,8 +532,8 @@ namespace VianaNET.Modules.Chart
       }
 
       var chartType = ChartType.YoverX;
-      char achsBez = 'x';
-      char funcBez = 'y';
+      var achsBez = 'x';
+      var funcBez = 'y';
 
       if (this.TabPositionSpace.IsSelected)
       {
@@ -691,7 +691,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="mapPoints">The new data mapping. </param>
     private void UpdateAxisMappings(DataAxis axis, DataMapping mapPoints)
     {
-      string prefix = "Object[" + VianaNetApplication.Project.ProcessingData.IndexOfObject.ToString(CultureInfo.InvariantCulture)
+      var prefix = "Object[" + VianaNetApplication.Project.ProcessingData.IndexOfObject.ToString(CultureInfo.InvariantCulture)
                       + "].";
 
       switch (axis.Axis)
@@ -1051,12 +1051,12 @@ namespace VianaNET.Modules.Chart
       if (digits >= 0)
       {
         var factor = Math.Pow(10, digits);
-        double roundedValue = min ? Math.Floor(value * factor) : Math.Ceiling(value * factor);
+        var roundedValue = min ? Math.Floor(value * factor) : Math.Ceiling(value * factor);
 
         return roundedValue / factor;
       }
 
-      double n = Math.Pow(10, -digits);
+      var n = Math.Pow(10, -digits);
       return Math.Round(value / n, 0) * n;
     }
 
@@ -1068,7 +1068,8 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void UpdateChartStyle(RadioButton checkedRadioButton)
     {
-      this.AxisControls.Visibility = Visibility.Visible;
+      this.XAxisOptions.Visibility = Visibility.Visible;
+      this.YAxisOptions.Visibility = Visibility.Visible;
       this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
 
       this.RegressionSeries.RenderAs = RenderAs.Line;
@@ -1088,7 +1089,8 @@ namespace VianaNET.Modules.Chart
       else if (checkedRadioButton.Name.Contains("Pie"))
       {
         this.DefaultSeries.RenderAs = RenderAs.Pie;
-        this.AxisControls.Visibility = Visibility.Hidden;
+        this.XAxisOptions.Visibility = Visibility.Hidden;
+        this.YAxisOptions.Visibility = Visibility.Hidden;
         this.OtherContentGrid.RowDefinitions[0].Height = new GridLength(0);
       }
       else if (checkedRadioButton.Name.Contains("Column"))
@@ -1515,21 +1517,11 @@ namespace VianaNET.Modules.Chart
 
     #endregion
 
-    private void DataChart_Rendered(object sender, EventArgs e)
-    {
-
-    }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-    }
-    // MouseMove event handler
-
-    void PlotArea_MouseMove(object sender, PlotAreaMouseEventArgs e)
+    void PlotAreaMouseMove(object sender, PlotAreaMouseEventArgs e)
     {
       if (this.mouseDown)
       {
-        Point currentPos = new Point(e.MouseEventArgs.GetPosition(MyCanvas).X, e.MouseEventArgs.GetPosition(MyCanvas).Y);
+        var currentPos = new Point(e.MouseEventArgs.GetPosition(MyCanvas).X, e.MouseEventArgs.GetPosition(MyCanvas).Y);
 
         SelectRect.Visibility = Visibility.Visible;
         SelectRect.Width = Math.Abs(startPos.X - currentPos.X);
@@ -1544,7 +1536,7 @@ namespace VianaNET.Modules.Chart
     }
 
     // MouseLeftButtonDown event handler
-    void PlotArea_MouseLeftButtonDown(object sender, PlotAreaMouseButtonEventArgs e)
+    void PlotAreaMouseLeftButtonDown(object sender, PlotAreaMouseButtonEventArgs e)
     {
       this.mouseDown = true;
       SelectRect.Width = 0;
@@ -1569,7 +1561,7 @@ namespace VianaNET.Modules.Chart
                                 select dp);
 
       var selectedIndizes = new List<int>();
-      foreach (DataPoint dataPoint in selectedDataPoints)
+      foreach (var dataPoint in selectedDataPoints)
       {
         dataPoint.Color = VianaNetApplication.Project.FilterData.DataLineColor;
         var number = Convert.ToInt32(dataPoint.LegendText.Replace("DataPoint", string.Empty));
@@ -1709,8 +1701,8 @@ namespace VianaNET.Modules.Chart
     /// <returns>Distance of the given Points in picture coordinates.</returns>
     private static float Distance(Point pt1, Point pt2)
     {
-      double squaredX = Math.Pow(pt1.X - pt2.X, 2);
-      double squaredY = Math.Pow(pt1.Y - pt2.Y, 2);
+      var squaredX = Math.Pow(pt1.X - pt2.X, 2);
+      var squaredY = Math.Pow(pt1.Y - pt2.Y, 2);
       return Convert.ToSingle(Math.Sqrt(squaredX + squaredY));
     }
 

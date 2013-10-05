@@ -208,6 +208,7 @@ namespace VianaNET.MainWindow
       VianaNetApplication.Project.VideoData.Samples = openedProject.VideoData.Samples;
       VianaNetApplication.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
       VianaNetApplication.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
+      VianaNetApplication.Project.VideoData.TimeZeroPositionInMs = openedProject.VideoData.TimeZeroPositionInMs;
 
       VianaNetApplication.Project.CalibrationData.ClipRegion = openedProject.CalibrationData.ClipRegion;
       VianaNetApplication.Project.CalibrationData.GradientBackground = openedProject.CalibrationData.GradientBackground;
@@ -276,6 +277,12 @@ namespace VianaNET.MainWindow
         case VideoMode.Capture:
           break;
       }
+
+      // Set selection after loading video
+      VianaNetApplication.Project.VideoData.SelectionStart = openedProject.VideoData.SelectionStart;
+      VianaNetApplication.Project.VideoData.SelectionEnd = openedProject.VideoData.SelectionEnd;
+      this.VideoWindow.TimelineSlider.UpdateSelectionTimes();
+      Video.Instance.Revert();
 
       // Update datagrid
       VianaNetApplication.Project.VideoData.NotifyLoading();

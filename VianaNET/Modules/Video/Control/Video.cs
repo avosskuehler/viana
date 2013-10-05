@@ -37,7 +37,9 @@ namespace VianaNET.Modules.Video.Control
 
   using DirectShowLib;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.Data;
 
   /// <summary>
   ///   The video.
@@ -163,19 +165,14 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets or sets the time position in milliseconds, where
-    /// the video time should be zero.
-    /// </summary>
-    public long TimeZeroPositionInMs { get; set; }
-
-    /// <summary>
     ///   Gets the frame timestamp in ms.
     /// </summary>
     public long FrameTimestampInMs
     {
       get
       {
-        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) - this.TimeZeroPositionInMs;
+        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) -
+          VianaNetApplication.Project.VideoData.TimeZeroPositionInMs;
       }
 
       // get { return this.videoElement.MediaPositionInMilliSeconds; }

@@ -10,7 +10,7 @@
   xmlns:vianaNet="clr-namespace:VianaNET" xmlns:collections="clr-namespace:VianaNET.Data.Collections"
   xmlns:application="clr-namespace:VianaNET.Application"
   lex:LocalizeDictionary.DesignCulture="de"
-    d:DesignHeight="500" d:DesignWidth="700" Loaded="UserControl_Loaded"
+    d:DesignHeight="500" d:DesignWidth="700" 
   PreviewKeyDown="PlotArea_PreviewKeyDown" PreviewKeyUp="PlotArea_PreviewKeyUp">
   <UserControl.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -211,15 +211,16 @@
       </ScrollViewer>
     </Expander>
     <vc:Chart Grid.Column="1" x:Name="DataChart" Theme="Theme1" ScrollingEnabled="False" AnimationEnabled="False"
-              AnimatedUpdate="False" LightingEnabled="False" ToolBarEnabled="True" Rendered="DataChart_Rendered" BorderThickness="0" ShadowEnabled="False">
+              AnimatedUpdate="False" LightingEnabled="False" ToolBarEnabled="True" BorderThickness="0" ShadowEnabled="False">
       <vc:Chart.PlotArea>
-        <vc:PlotArea ShadowEnabled="False" MouseLeftButtonDown="PlotArea_MouseLeftButtonDown" MouseLeftButtonUp="PlotAreaMouseLeftButtonUp" MouseMove="PlotArea_MouseMove" MouseEnter="PlotAreaMouseEnter" MouseLeave="PlotAreaMouseLeave"  />
+        <vc:PlotArea ShadowEnabled="False" MouseLeftButtonDown="PlotAreaMouseLeftButtonDown" MouseLeftButtonUp="PlotAreaMouseLeftButtonUp" MouseMove="PlotAreaMouseMove" MouseEnter="PlotAreaMouseEnter" MouseLeave="PlotAreaMouseLeave"  />
       </vc:Chart.PlotArea>
       <vc:Chart.Titles>
         <vc:Title Text="{lex:LocText VianaNET:Labels:ChartWindowChartTitle}" ShadowEnabled="False" />
       </vc:Chart.Titles>
       <vc:Chart.Legends>
-        <vc:Legend Title="{lex:LocText VianaNET:Labels:ChartWindowChartLegend}" ShadowEnabled="False"/>
+        <vc:Legend Title="{lex:LocText VianaNET:Labels:ChartWindowChartLegend}" ShadowEnabled="False"
+                   Enabled="False"/>
       </vc:Chart.Legends>
       <vc:Chart.AxesX>
         <vc:Axis>
@@ -389,7 +390,7 @@
             </UniformGrid>
           </GroupBox>
           <StackPanel Style="{StaticResource SpacerStyle}"/>
-          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}"
+          <GroupBox Name="XAxisOptions" Header="{lex:LocText VianaNET:Labels:ChartWindowXAxisHeader}"
                     Style="{StaticResource GroupBoxStyle}">
             <Grid>
               <Grid.RowDefinitions>
@@ -412,7 +413,7 @@
               <!--<Viana:LabeledSlider x:Name="XAxisInterval" Label="{lex:LocText VianaNET:Labels:ChartWindowAxisIntervalHeader}" Minimum="1" Maximum="10" Value="1" IsCheckable="True" ValueChanged="ValueChanged_UpdateChart" CheckedChanged="ValueChanged_UpdateChart"/>-->
             </Grid>
           </GroupBox>
-          <GroupBox Header="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}"
+          <GroupBox Name="YAxisOptions" Header="{lex:LocText VianaNET:Labels:ChartWindowYAxisHeader}"
                     Style="{StaticResource GroupBoxStyle}">
             <Grid>
               <Grid.RowDefinitions>
