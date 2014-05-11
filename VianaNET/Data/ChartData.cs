@@ -40,7 +40,6 @@ namespace VianaNET.Data
   [Serializable]
   public class ChartData
   {
-
     #region Constructors and Destructors
 
     /// <summary>
@@ -60,10 +59,17 @@ namespace VianaNET.Data
       this.RegressionSeries = new LineSeries();
       this.TheorySeries = new LineSeries();
 
+      this.DefaultSeries.TrackerKey = "DefaultSeriesTracker";
+      this.InterpolationSeries.TrackerKey = "OtherSeriesTracker";
+      this.RegressionSeries.TrackerKey = "OtherSeriesTracker";
+      this.TheorySeries.TrackerKey = "OtherSeriesTracker";
+
       this.XAxis = new LinearAxis();
       this.XAxis.Position = AxisPosition.Bottom;
       this.XAxis.ExtraGridlines = new double[1];
       this.XAxis.ExtraGridlines[0] = 0;
+      this.XAxis.ExtraGridlineThickness = 2;
+      this.XAxis.ExtraGridlineColor = OxyColors.Gray;
       //this.XAxis.PositionAtZeroCrossing = true;
       //this.XAxis.TickStyle = TickStyle.Crossing;
       this.XAxis.MaximumPadding = 0.05;
@@ -73,6 +79,8 @@ namespace VianaNET.Data
       this.YAxis.Position = AxisPosition.Left;
       this.YAxis.ExtraGridlines = new double[1];
       this.YAxis.ExtraGridlines[0] = 0;
+      this.YAxis.ExtraGridlineThickness = 2;
+      this.YAxis.ExtraGridlineColor = OxyColors.Gray;
       //this.YAxis.PositionAtZeroCrossing = true;
       //this.YAxis.TickStyle = TickStyle.Crossing;
       this.YAxis.MaximumPadding = 0.05;

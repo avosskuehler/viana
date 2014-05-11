@@ -1626,4 +1626,7 @@
   <data name="ChartWindowLegendPlacementOutside" xml:space="preserve">
     <value>@ChartWindowLegendPlacementOutside</value>
   </data>
+  <data name="ChartExportedToClipboardMessage" xml:space="preserve">
+    <value>@ChartExportedToClipboardMessage</value>
+  </data>
 </root>

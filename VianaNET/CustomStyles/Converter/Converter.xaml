@@ -2,7 +2,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:converter="clr-namespace:VianaNET.CustomStyles.Converter"
-	xmlns:types="clr-namespace:VianaNET.CustomStyles.Types">
+	xmlns:types="clr-namespace:VianaNET.CustomStyles.Types"
+	xmlns:oxy="http://oxyplot.codeplex.com">
   <converter:DoubleToStringConverter x:Key="DoubleToStringConverter" />
   <converter:AberrationDoubleToStringConverter x:Key="AberrationDoubleToStringConverter" />
   <converter:PlusOneConverter x:Key="PlusOneConverter" />
@@ -14,6 +15,7 @@
   <converter:PercentToDoubleConverter x:Key="PercentToDoubleConverter"/>
   <converter:NumberOfObjectsToVisibilityConverter x:Key="NumberOfObjectsToVisibilityConverter"/>
   <converter:LineStyleToBooleanConverter x:Key="LineStyleToBooleanConverter"/>
+  <oxy:OxyColorConverter x:Key="OxyColorConverter" />
 
   <types:MeasurementType x:Key="TimeMeasurement">Time</types:MeasurementType>
   <types:MeasurementType x:Key="PixelMeasurement">Pixel</types:MeasurementType>

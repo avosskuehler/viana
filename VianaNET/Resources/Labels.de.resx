@@ -830,7 +830,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
     <value>Diagramm in Word öffnen</value>
   </data>
   <data name="GraphicFilesFilter" xml:space="preserve">
-    <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|BMP - Bitmap|*.bmp|TIF - Tagged Image Datei|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
+    <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|XAML - Extensible Application Markup Language|*.xaml|SVG - Scalable Vector Graphics|*.svg|BMP - Bitmap|*.bmp|TIF - Tagged Image Datei|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
   </data>
   <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
     <value>Bitte geben Sie Dateinamen und Format an ...</value>
@@ -1623,5 +1623,8 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   </data>
   <data name="ChartWindowLegendPlacementOutside" xml:space="preserve">
     <value>Außen</value>
+  </data>
+  <data name="ChartExportedToClipboardMessage" xml:space="preserve">
+    <value>Diagramm wurde in die Zwischenablage kopiert.</value>
   </data>
 </root>
