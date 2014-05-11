@@ -81,12 +81,12 @@ namespace VianaNET.CustomStyles.Converter
 
       var param = (MeasurementType)parameter;
 
-      string unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
+      string unit = " " + Viana.Project.CalibrationData.LengthUnit;
       string formatting = "N2";
       switch (param)
       {
         case MeasurementType.Time:
-          var timeunit = VianaNetApplication.Project.CalibrationData.TimeUnit;
+          var timeunit = Viana.Project.CalibrationData.TimeUnit;
           switch (timeunit)
           {
             case TimeUnit.ms:
@@ -103,24 +103,24 @@ namespace VianaNET.CustomStyles.Converter
 
           break;
         case MeasurementType.Pixel:
-          unit = " " + VianaNetApplication.Project.CalibrationData.PixelUnit;
+          unit = " " + Viana.Project.CalibrationData.PixelUnit;
           formatting = "N0";
           break;
         case MeasurementType.Position:
-          unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
+          unit = " " + Viana.Project.CalibrationData.LengthUnit;
           formatting = "N2";
           break;
         case MeasurementType.Velocity:
-          unit = " " + VianaNetApplication.Project.CalibrationData.VelocityUnit;
+          unit = " " + Viana.Project.CalibrationData.VelocityUnit;
           formatting = "N2";
           break;
         case MeasurementType.Acceleration:
-          unit = " " + VianaNetApplication.Project.CalibrationData.AccelerationUnit;
+          unit = " " + Viana.Project.CalibrationData.AccelerationUnit;
           formatting = "N2";
           break;
       }
 
-      if (VianaNetApplication.Project.CalibrationData.IsShowingUnits)
+      if (Viana.Project.CalibrationData.IsShowingUnits)
       {
         return valueToConvert.ToString(formatting) + unit;
       }

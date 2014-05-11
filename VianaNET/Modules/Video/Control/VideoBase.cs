@@ -269,7 +269,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   Time between frames in 100ns units.
+    /// Gets or sets the time between frames in nanoseconds.
     /// </summary>
     public long FrameTimeInNanoSeconds
     {
@@ -475,10 +475,10 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public virtual void Play()
     {
-      if (!(this.CurrentState == PlayState.Running) && this.mediaControl != null)
+      if (this.CurrentState != PlayState.Running && this.mediaControl != null)
       {
         int hr = this.mediaControl.Run();
-
+        
         if (hr != 0)
         {
           ErrorLogger.WriteLine("Error while starting to play. Message: " + DsError.GetErrorText(hr));

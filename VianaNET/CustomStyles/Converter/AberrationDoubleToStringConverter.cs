@@ -29,7 +29,7 @@ namespace VianaNET.CustomStyles.Converter
   using System.Globalization;
   using System.Windows.Data;
 
-  using VianaNET.Localization;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The double to string converter.

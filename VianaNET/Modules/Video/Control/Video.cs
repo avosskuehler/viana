@@ -171,8 +171,8 @@ namespace VianaNET.Modules.Video.Control
     {
       get
       {
-        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) -
-          VianaNetApplication.Project.VideoData.TimeZeroPositionInMs;
+        return (long)((this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) -
+          Viana.Project.VideoData.TimeZeroPositionInMs);
       }
 
       // get { return this.videoElement.MediaPositionInMilliSeconds; }

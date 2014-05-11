@@ -92,7 +92,7 @@ namespace VianaNET.Data.Filter.Interpolation
 
       if (dlg.ShowDialog().GetValueOrDefault())
       {
-        VianaNetApplication.Project.FilterData.InterpolationFilter = dlg.ChoosenInterpolationFilter;
+        Viana.Project.CurrentFilterData.InterpolationFilter = dlg.ChoosenInterpolationFilter;
       }
     }
 

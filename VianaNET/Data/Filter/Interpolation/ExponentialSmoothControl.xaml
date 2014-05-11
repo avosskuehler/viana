@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="VianaNET.Data.Filter.Interpolation.ExponentialSmoothControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:VianaNET="clr-namespace:VianaNET"
     lex:LocalizeDictionary.DesignCulture="de">
   <UserControl.Resources>
@@ -10,21 +10,21 @@
   <Grid>
     <Border Name="DescriptionArea" Background="Transparent">
       <StackPanel>
-        <GroupBox Header="{lex:LocText VianaNET:Labels:ExponentialSmoothDialogTitle}">
+        <GroupBox Header="{lex:Loc VianaNET:Labels:ExponentialSmoothDialogTitle}">
           <TextBox 
             IsReadOnly="True" 
             Background="Transparent" 
             TextWrapping="Wrap" 
-            Text="{lex:LocText VianaNET:Labels:InterpolationExponentialSmoothDescription}" 
+            Text="{lex:Loc VianaNET:Labels:InterpolationExponentialSmoothDescription}" 
             BorderThickness="0" />
         </GroupBox>
-        <GroupBox Header="{lex:LocText VianaNET:Labels:InterpolationPropertiesTitle}" FontWeight="Normal">
+        <GroupBox Header="{lex:Loc VianaNET:Labels:InterpolationPropertiesTitle}" FontWeight="Normal">
           <StackPanel Orientation="Horizontal">
             <TextBox 
               IsReadOnly="True"
               Background="Transparent" 
               TextWrapping="Wrap" 
-              Text="{lex:LocText VianaNET:Labels:ExponentialSmoothDialogSmoothingFactorLabel}"
+              Text="{lex:Loc VianaNET:Labels:ExponentialSmoothDialogSmoothingFactorLabel}"
               Width="150"
               BorderThickness="0"/>
             <VianaNET:NumericUpDown 

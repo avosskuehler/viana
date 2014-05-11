@@ -54,7 +54,7 @@ namespace VianaNET.MainWindow
     {
       set
       {
-        this.icon.Source = value;
+        this.LeftIcon.Source = value;
       }
     }
 
@@ -65,12 +65,12 @@ namespace VianaNET.MainWindow
     {
       get
       {
-        return this.title.Text;
+        return this.Header.Text;
       }
 
       set
       {
-        this.title.Text = value;
+        this.Header.Text = value;
       }
     }
 

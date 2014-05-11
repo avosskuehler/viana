@@ -73,99 +73,99 @@ namespace VianaNET.Data.Collections
     {
       // Single axis data
       var iAxis = new DataAxis(AxisType.I);
-      var lociAxis = new LocTextExtension("VianaNET:Labels:AxisFrame");
+      var lociAxis = new LocExtension("VianaNET:Labels:AxisFrame");
       lociAxis.SetBinding(iAxis, DescriptionProperty);
 
       var tAxis = new DataAxis(AxisType.T);
-      var loctAxis = new LocTextExtension("VianaNET:Labels:AxisTime");
+      var loctAxis = new LocExtension("VianaNET:Labels:AxisTime");
       loctAxis.SetBinding(tAxis, DescriptionProperty);
 
       var xAxis = new DataAxis(AxisType.X);
-      var locxAxis = new LocTextExtension("VianaNET:Labels:AxisPixelX");
+      var locxAxis = new LocExtension("VianaNET:Labels:AxisPixelX");
       locxAxis.SetBinding(xAxis, DescriptionProperty);
 
       var yAxis = new DataAxis(AxisType.Y);
-      var locyAxis = new LocTextExtension("VianaNET:Labels:AxisPixelY");
+      var locyAxis = new LocExtension("VianaNET:Labels:AxisPixelY");
       locyAxis.SetBinding(yAxis, DescriptionProperty);
 
       var pxAxis = new DataAxis(AxisType.PX);
-      var locpxAxis = new LocTextExtension("VianaNET:Labels:AxisPositionX");
+      var locpxAxis = new LocExtension("VianaNET:Labels:AxisPositionX");
       locpxAxis.SetBinding(pxAxis, DescriptionProperty);
 
       var pyAxis = new DataAxis(AxisType.PY);
-      var locpyAxis = new LocTextExtension("VianaNET:Labels:AxisPositionY");
+      var locpyAxis = new LocExtension("VianaNET:Labels:AxisPositionY");
       locpyAxis.SetBinding(pyAxis, DescriptionProperty);
 
       var dAxis = new DataAxis(AxisType.D);
-      var locdAxis = new LocTextExtension("VianaNET:Labels:AxisDistance");
+      var locdAxis = new LocExtension("VianaNET:Labels:AxisDistance");
       locdAxis.SetBinding(dAxis, DescriptionProperty);
 
       var dxAxis = new DataAxis(AxisType.DX);
-      var locdxAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceX");
+      var locdxAxis = new LocExtension("VianaNET:Labels:AxisDistanceX");
       locdxAxis.SetBinding(dxAxis, DescriptionProperty);
 
       var dyAxis = new DataAxis(AxisType.DY);
-      var locdyAxis = new LocTextExtension("VianaNET:Labels:AxisDistanceY");
+      var locdyAxis = new LocExtension("VianaNET:Labels:AxisDistanceY");
       locdyAxis.SetBinding(dyAxis, DescriptionProperty);
 
       var sAxis = new DataAxis(AxisType.S);
-      var locsAxis = new LocTextExtension("VianaNET:Labels:AxisLength");
+      var locsAxis = new LocExtension("VianaNET:Labels:AxisLength");
       locsAxis.SetBinding(sAxis, DescriptionProperty);
 
       var sxAxis = new DataAxis(AxisType.SX);
-      var locsxAxis = new LocTextExtension("VianaNET:Labels:AxisLengthX");
+      var locsxAxis = new LocExtension("VianaNET:Labels:AxisLengthX");
       locsxAxis.SetBinding(sxAxis, DescriptionProperty);
 
       var syAxis = new DataAxis(AxisType.SY);
-      var locsyAxis = new LocTextExtension("VianaNET:Labels:AxisLengthY");
+      var locsyAxis = new LocExtension("VianaNET:Labels:AxisLengthY");
       locsyAxis.SetBinding(syAxis, DescriptionProperty);
 
       var vAxis = new DataAxis(AxisType.V);
-      var locvAxis = new LocTextExtension("VianaNET:Labels:AxisVelocity");
+      var locvAxis = new LocExtension("VianaNET:Labels:AxisVelocity");
       locvAxis.SetBinding(vAxis, DescriptionProperty);
 
       var vxAxis = new DataAxis(AxisType.VX);
-      var locvxAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirection");
+      var locvxAxis = new LocExtension("VianaNET:Labels:AxisVelocityXDirection");
       locvxAxis.SetBinding(vxAxis, DescriptionProperty);
 
       var vyAxis = new DataAxis(AxisType.VY);
-      var locvyAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirection");
+      var locvyAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirection");
       locvyAxis.SetBinding(vyAxis, DescriptionProperty);
 
       var viAxis = new DataAxis(AxisType.VI);
-      var locviAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityInterpolated");
+      var locviAxis = new LocExtension("VianaNET:Labels:AxisVelocityInterpolated");
       locviAxis.SetBinding(viAxis, DescriptionProperty);
 
       var vxiAxis = new DataAxis(AxisType.VXI);
-      var locvxiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityXDirectionInterpolated");
+      var locvxiAxis = new LocExtension("VianaNET:Labels:AxisVelocityXDirectionInterpolated");
       locvxiAxis.SetBinding(vxiAxis, DescriptionProperty);
 
       var vyiAxis = new DataAxis(AxisType.VYI);
-      var locvyiAxis = new LocTextExtension("VianaNET:Labels:AxisVelocityYDirectionInterpolated");
+      var locvyiAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirectionInterpolated");
       locvyiAxis.SetBinding(vyiAxis, DescriptionProperty);
 
       var aAxis = new DataAxis(AxisType.A);
-      var locaAxis = new LocTextExtension("VianaNET:Labels:AxisAcceleration");
+      var locaAxis = new LocExtension("VianaNET:Labels:AxisAcceleration");
       locaAxis.SetBinding(aAxis, DescriptionProperty);
 
       var axAxis = new DataAxis(AxisType.AX);
-      var locaxAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirection");
+      var locaxAxis = new LocExtension("VianaNET:Labels:AxisAccelerationXDirection");
       locaxAxis.SetBinding(axAxis, DescriptionProperty);
 
       var ayAxis = new DataAxis(AxisType.AY);
-      var locayAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirection");
+      var locayAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirection");
       locayAxis.SetBinding(ayAxis, DescriptionProperty);
 
       var aiAxis = new DataAxis(AxisType.AI);
-      var locaiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationInterpolated");
+      var locaiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationInterpolated");
       locaiAxis.SetBinding(aiAxis, DescriptionProperty);
 
       var axiAxis = new DataAxis(AxisType.AXI);
-      var locaxiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationXDirectionInterpolated");
+      var locaxiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationXDirectionInterpolated");
       locaxiAxis.SetBinding(axiAxis, DescriptionProperty);
 
       var ayiAxis = new DataAxis(AxisType.AYI);
-      var locayiAxis = new LocTextExtension("VianaNET:Labels:AxisAccelerationYDirectionInterpolated");
+      var locayiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirectionInterpolated");
       locayiAxis.SetBinding(ayiAxis, DescriptionProperty);
 
       DataAxes = new List<DataAxis>

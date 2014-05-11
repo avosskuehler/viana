@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(sys.CURRENTDIR)Config.wxi?>
+  <Product Id="*"
+           Codepage="1252"
+           Language="!(loc.Property_ProductLanguage)"
+           Name="$(var.ProductName)"
+           Version="$(var.ProductVersion)"
+           Manufacturer="$(var.Manufactor)"
+           UpgradeCode="$(var.UpgradeGuid)">
+    <Package Comments="Installs VianaNET - open gaze and mouse analyzer"
+             InstallerVersion="405"
+             InstallPrivileges="elevated"
+             InstallScope="perMachine"
+             Compressed="yes"
+             Description="$(var.SoftwareDescription)"
+             Languages="!(loc.Property_ProductLanguage)"
+             Manufacturer="$(var.Manufactor)"/>
+
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+    </Condition>
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		
+    <MediaTemplate />
+
+    <Feature Id="DefaultFeature" ConfigurableDirectory="TARGETDIR" Level="1">
+      <FeatureRef Id="VianaMainApplicationFeature" />
+      <FeatureRef Id='LibsFeature'/>
+		</Feature>
+
+  </Product>
+</Wix>

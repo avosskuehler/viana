@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(sys.CURRENTDIR)Config.wxi?>
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+    </DirectoryRef>
+
+    <Feature Id='LibsFeature' Title='Libs' Description='Installs libraries for the application.' Level='1'>
+      <Feature Id='OpenCVFeature' Title='OpenCV' Description='Installs opencv libraries for the application.' Level='1'>
+        <ComponentRef Id='C_Emgu.CV.UI' />
+      </Feature>
+
+      <Feature Id='ExternalLibsFeature' Title='ExternalLibs' Description='Installs external libraries for the application.' Level='1'>
+        <ComponentRef Id='C_AxShockwaveFlashObjects' />
+      </Feature>
+
+      <Feature Id='AForgeFeature' Title='AForge' Description='Installs AForge libraries for the application.' Level='1'>
+        <ComponentRef Id='C_AForge' />
+      </Feature>
+
+    </Feature>
+  </Fragment>
+</Wix>

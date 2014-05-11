@@ -188,7 +188,7 @@ namespace VianaNET.Modules.Base
       var window = obj as WindowWithHelp;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

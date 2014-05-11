@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VianaNET</RootNamespace>
     <AssemblyName>VianaNET</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>
@@ -22,7 +22,7 @@
     </SccProvider>
     <ApplicationIcon>Images\VianaNET.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>Properties\VianaNETKey.snk</AssemblyOriginatorKeyFile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <FileUpgradeFlags>
@@ -30,7 +30,8 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -50,42 +51,46 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Release\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Debug\x86\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\Release\x86\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Debug\x64\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
@@ -94,22 +99,25 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\Release\x64\</OutputPath>
+    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>VianaNET.Application.VianaNetApplication</StartupObject>
+    <StartupObject>VianaNET.Application.Viana</StartupObject>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\app.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -123,8 +131,8 @@
     <Compile Include="Application\Project.cs" />
     <Compile Include="Application\ProjectEntry.cs" />
     <Compile Include="Application\RecentFiles.cs" />
-    <Compile Include="Application\VianaNETApplication.xaml.cs">
-      <DependentUpon>VianaNETApplication.xaml</DependentUpon>
+    <Compile Include="Application\Viana.xaml.cs">
+      <DependentUpon>Viana.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Colors\Coloration.cs" />
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
@@ -139,6 +147,7 @@
     </Compile>
     <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
     <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
+    <Compile Include="CustomStyles\Converter\LineStyleToBooleanConverter.cs" />
     <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
     <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
     <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
@@ -147,11 +156,30 @@
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
     <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
+    <Compile Include="Data\ChartData.cs" />
+    <Compile Include="Resources\Labels.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\VianaSaveDialog.xaml.cs">
       <DependentUpon>VianaSaveDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\DataGrid\TimeUnitDialog.xaml.cs">
       <DependentUpon>TimeUnitDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\VideoInfoDialog.xaml.cs">
+      <DependentUpon>VideoInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.en.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
     <Page Include="CustomStyles\Styles\TextBoxStyles.xaml">
@@ -210,8 +238,8 @@
     <Compile Include="Data\Filter\Interpolation\MovingAverageFilter.cs" />
     <Compile Include="Data\Filter\FilterBase.cs" />
     <Compile Include="Data\ProcessingData.cs" />
-    <Compile Include="Data\Filter\Interpolation\MovingAverageControl.xaml.cs">
-      <DependentUpon>MovingAverageControl.xaml</DependentUpon>
+    <Compile Include="Data\Filter\Interpolation\MovingAverageUserControl.xaml.cs">
+      <DependentUpon>MovingAverageUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Filter\FilterData.cs" />
     <Compile Include="Modules\DataGrid\ExportData.cs" />
@@ -225,16 +253,6 @@
     <Compile Include="Data\Collections\DataCollection.cs" />
     <Compile Include="Data\Collections\DataSample.cs" />
     <Compile Include="Data\VideoData.cs" />
-    <Compile Include="Localization\Labels.en.Designer.cs">
-      <DependentUpon>Labels.en.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Localization\Labels.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.de.resx</DependentUpon>
-    </Compile>
     <Compile Include="Logging\ErrorLogger.cs" />
     <Compile Include="MainWindow\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -289,7 +307,6 @@
     </Compile>
     <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
     <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
-    <Compile Include="Modules\Video\MediaInfo\MediaInfoDLL.cs" />
     <Compile Include="Modules\Video\Dialogs\LengthDialog.xaml.cs">
       <DependentUpon>LengthDialog.xaml</DependentUpon>
     </Compile>
@@ -297,11 +314,6 @@
       <DependentUpon>VideoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Localization\Labels.Designer.cs">
-      <DependentUpon>Labels.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -348,7 +360,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="Application\VianaNETApplication.xaml">
+    <ApplicationDefinition Include="Application\Viana.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -376,7 +388,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Filter\Interpolation\MovingAverageControl.xaml">
+    <Page Include="Data\Filter\Interpolation\MovingAverageUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -486,6 +498,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Modules\Video\Dialogs\VideoInfoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Modules\Video\VideoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -576,7 +592,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MediaInfoNET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\MediaInfoNET.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -585,17 +604,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.Core.2014.1.297.1\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf">
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.297.1\lib\NET45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
@@ -609,16 +633,20 @@
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFLocalizeExtension, Version=2.2.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WpfLocalizeExtension.2.2.0\lib\net35\WPFLocalizeExtension.dll</HintPath>
+    </Reference>
     <Reference Include="WPFMath, Version=0.1.0.39082, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\WPFMath.dll</HintPath>
     </Reference>
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>DLL\WPFToolkit.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFVisifire.Charts, Version=3.1.5.0, Culture=neutral, PublicKeyToken=99d724542e4db593, processorArchitecture=MSIL">
+    <Reference Include="XAMLMarkupExtensions, Version=1.1.6.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\WPFVisifire.Charts.dll</HintPath>
+      <HintPath>..\packages\XAMLMarkupExtensions.1.1.6.3\lib\net40\XAMLMarkupExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>DLL\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -638,20 +666,20 @@
     <Resource Include="Images\DownArrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization\Labels.en.resx">
+    <EmbeddedResource Include="Resources\Labels.en.resx">
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.en.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\Labels.de.resx">
+    <EmbeddedResource Include="Resources\Labels.de.resx">
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\Labels.resx">
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -802,10 +830,6 @@
       <Project>{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}</Project>
       <Name>VianaNETShaderEffectLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
-      <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
-      <Name>WPFLocalizeExtension</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -838,6 +862,10 @@
   <ItemGroup>
     <Resource Include="CustomStyles\Cursors\CursorMinus.cur" />
     <Resource Include="CustomStyles\Cursors\CursorPlus.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\VideoInfo16.png" />
+    <Resource Include="Images\VideoInfo32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

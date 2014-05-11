@@ -10,7 +10,7 @@ namespace VianaNET.CustomStyles.Validation
   using System.Globalization;
   using System.Windows.Controls;
 
-  using VianaNET.Localization;
+  using VianaNET.Resources;
 
   /// <summary>
   /// TODO: Update summary.
@@ -19,8 +19,6 @@ namespace VianaNET.CustomStyles.Validation
   {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-      double parameter = 0;
-
       try
       {
         if (((string)value).Length > 0)
@@ -28,7 +26,7 @@ namespace VianaNET.CustomStyles.Validation
           Double.Parse((String)value);
         }
       }
-      catch (Exception e)
+      catch (Exception)
       {
         return new ValidationResult(false, Labels.CalibrationLengthErrorHint);
       }

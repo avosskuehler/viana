@@ -34,7 +34,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Shapes;
 
   using VianaNET.Data;
-  using VianaNET.Localization;
+  using VianaNET.Resources;
   using VianaNET.Modules.Base;
 
   /// <summary>
@@ -288,8 +288,8 @@ namespace VianaNET.Modules.Video.Dialogs
       rect.Location = new Point(this.LeftLine.X1 * factorX, this.TopLine.Y1 * factorY);
       rect.Width = (this.RightLine.X1 - this.LeftLine.X1) * factorX;
       rect.Height = (this.BottomLine.Y1 - this.TopLine.Y1) * factorY;
-      VianaNetApplication.Project.CalibrationData.ClipRegion = rect;
-      VianaNetApplication.Project.CalibrationData.HasClipRegion = true;
+      Viana.Project.CalibrationData.ClipRegion = rect;
+      Viana.Project.CalibrationData.HasClipRegion = true;
     }
 
     /// <summary>
@@ -317,7 +317,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      if (!VianaNetApplication.Project.CalibrationData.HasClipRegion)
+      if (!Viana.Project.CalibrationData.HasClipRegion)
       {
         this.TopLine.X1 = margin;
         this.TopLine.X2 = this.VideoImage.ActualWidth - margin;
@@ -337,23 +337,23 @@ namespace VianaNET.Modules.Video.Dialogs
         double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-        this.TopLine.X1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.TopLine.X2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.TopLine.Y1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.TopLine.Y2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.LeftLine.X1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.LeftLine.X2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.LeftLine.Y1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.LeftLine.Y2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.BottomLine.X1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.BottomLine.Y1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.BottomLine.X2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.BottomLine.Y2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.RightLine.X1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.RightLine.Y1 = VianaNetApplication.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.RightLine.X2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.RightLine.Y2 = VianaNetApplication.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        VianaNetApplication.Project.CalibrationData.HasClipRegion = true;
+        this.TopLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.TopLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.TopLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.TopLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.LeftLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.LeftLine.X2 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.LeftLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.LeftLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.BottomLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.BottomLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.BottomLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.BottomLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.RightLine.X1 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.RightLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.RightLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.RightLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        Viana.Project.CalibrationData.HasClipRegion = true;
       }
 
       this.ResetOuterRegion();

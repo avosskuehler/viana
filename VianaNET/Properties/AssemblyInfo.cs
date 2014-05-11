@@ -57,7 +57,7 @@ using System.Windows;
   // Themes\Royale.NormalColor.xaml
   ResourceDictionaryLocation.None, // Specifies the location of the system non-theme specific resource dictionary:
   // Themes\generic.xaml
-  ResourceDictionaryLocation.ExternalAssembly)]
+  ResourceDictionaryLocation.SourceAssembly)]
 
 // Version information for an assembly consists of the following four values:
 // Major Version

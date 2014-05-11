@@ -34,6 +34,9 @@ namespace VianaNET.Data.Filter.Regression
   using CustomStyles.Types;
   using Collections;
   using Interpolation;
+
+  using VianaNET.Resources;
+
   using WPFMath;
 
   /// <summary>
@@ -392,7 +395,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public void UpdateRegressionFunctionString()
     {
-      VianaNetApplication.Project.FilterData.RegressionFunctionTexFormula = this.GetRegressionFunctionTexFormula(this.regressionType);
+      Viana.Project.CurrentFilterData.RegressionFunctionTexFormula = this.GetRegressionFunctionTexFormula(this.regressionType);
     }
 
     /// <summary>
@@ -487,10 +490,10 @@ namespace VianaNET.Data.Filter.Regression
       var b = FitParameterMatrix[(int)regTyp, 1];
       var c = FitParameterMatrix[(int)regTyp, 2];
       var d = FitParameterMatrix[(int)regTyp, 3];
-      var aString = VianaNetApplication.Project.FilterData.GetFormattedString(a);
-      var bString = VianaNetApplication.Project.FilterData.GetFormattedString(b);
-      var cString = VianaNetApplication.Project.FilterData.GetFormattedString(c);
-      var dString = VianaNetApplication.Project.FilterData.GetFormattedString(d);
+      var aString = Viana.Project.CurrentFilterData.GetFormattedString(a);
+      var bString = Viana.Project.CurrentFilterData.GetFormattedString(b);
+      var cString = Viana.Project.CurrentFilterData.GetFormattedString(c);
+      var dString = Viana.Project.CurrentFilterData.GetFormattedString(d);
       string fktStr;
 
       if (this.AusgleichsFunktion != null)
@@ -569,7 +572,7 @@ namespace VianaNET.Data.Filter.Regression
         {
           // Fehlerquadrate mit Nachkommastellen wie die Funktionsgleichung
           // sind glaube ich übertrieben oder?
-          fktStr = Localization.Labels.AberrationStringPrefix + a.ToString("N0"); // FittedData.Instance.GetFormattedString(a);
+          fktStr = Labels.AberrationStringPrefix + a.ToString("N0"); // FittedData.Instance.GetFormattedString(a);
         }
       }
 
@@ -1502,7 +1505,7 @@ namespace VianaNET.Data.Filter.Regression
       {
         // Sonderfall lineare Regression; Anzahl der Berechnungen wird drastisch reduziert,                                  
         // da Chart selbst Geraden zeichnen kann. 
-        if (VianaNetApplication.Project.FilterData.AxisX.Axis != AxisType.T)
+        if (Viana.Project.CurrentFilterData.AxisX.Axis != AxisType.T)
         {
           // zwei Punkte genügen bei x-y-Diagramm (kleinster und größter)
           x = this.WertXMin;
@@ -1539,7 +1542,7 @@ namespace VianaNET.Data.Filter.Regression
         }
       }
 
-      VianaNetApplication.Project.FilterData.RegressionSeries = regressionSamples;
+      Viana.Project.CurrentFilterData.RegressionSeries = regressionSamples;
     }
 
     /// <summary>
@@ -1590,7 +1593,7 @@ namespace VianaNET.Data.Filter.Regression
 
       // mittleres Abweichungsquadrat errechnen
       this.GetAverageAberration(tempAberration);
-      VianaNetApplication.Project.FilterData.RegressionAberration = this.Aberration;
+      Viana.Project.CurrentFilterData.RegressionAberration = this.Aberration;
       FitParameterMatrix[(int)regTyp, 5] = this.Aberration;
     }
 

@@ -27,19 +27,21 @@ namespace VianaNET.Modules.Video.Control
 {
   using System;
   using System.Globalization;
-  using System.IO;
   using System.Threading;
   using System.Windows;
   using System.Windows.Threading;
 
   using DirectShowLib;
 
+  using MediaInfoNET;
+
   using Microsoft.Win32;
 
   using VianaNET.Application;
-  using VianaNET.Localization;
   using VianaNET.Logging;
-  using VianaNET.Modules.Video.MediaInfo;
+  using VianaNET.Resources;
+
+  using File = System.IO.File;
 
   /// <summary>
   ///   The video player.
@@ -172,6 +174,18 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    ///// <summary>
+    /////   Gets the video duration in ms, which is the media duration
+    /////   times the framerate factor.
+    ///// </summary>
+    //public double VideoDurationInMs
+    //{
+    //  get
+    //  {
+    //    return this.MediaDurationInMS * Viana.Project.VideoData.FramerateFactor;
+    //  }
+    //}
+
     /// <summary>
     ///   Gets or sets the media position in nano seconds.
     /// </summary>
@@ -194,11 +208,11 @@ namespace VianaNET.Modules.Video.Control
         long milliSeconds = currentPosition;
         if (this.timeFormat == TimeFormat.Frame)
         {
-          return currentPosition * this.FrameTimeInNanoSeconds;
+          return (long)(currentPosition * this.FrameTimeInNanoSeconds);
         }
         else
         {
-          return currentPosition;
+          return (long)(currentPosition * Viana.Project.VideoData.FramerateFactor);
         }
       }
 
@@ -209,7 +223,7 @@ namespace VianaNET.Modules.Video.Control
           throw new ArgumentNullException("MediaSeekingInterface not implemented");
         }
 
-        long currentPosition = value;
+        long currentPosition = (long)(value / Viana.Project.VideoData.FramerateFactor);
         if (currentPosition < 0)
         {
           currentPosition = 0;
@@ -325,31 +339,17 @@ namespace VianaNET.Modules.Video.Control
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
 
-        var videoHeader = new MediaInfo();
-        videoHeader.Open(fileName);
-
-        // string parameters=videoHeader.Option("Info_Parameters"); 
-        string informString = videoHeader.Inform();
-        ErrorLogger.WriteLine("###################### LOAD VIDEO ##########################");
-        ErrorLogger.WriteLine(informString);
-        var nfi = new NumberFormatInfo();
-        nfi.NumberDecimalSeparator = ".";
-        string frameRateString = videoHeader.Get(StreamKind.Video, 0, "FrameRate");
-        double framerate;
-        if (double.TryParse(frameRateString, NumberStyles.AllowDecimalPoint, nfi, out framerate))
-        {
-          this.FrameTimeInNanoSeconds = (long)(10000000d / framerate); // Math.Round(1000d / framerate, 4);
-        }
-
-        videoHeader.Close();
-
+        // Read out video properties
+        var aviFile = new MediaFile(this.VideoFilename);
+        this.FrameTimeInNanoSeconds = (long)(10000000d / aviFile.Video[0].FrameRate);
+        this.MediaDurationInMS = aviFile.General.DurationMillis;
+        this.FrameCount = aviFile.FrameCount;
+        Viana.Project.VideoData.FramerateFactor = 1;
         this.BuildGraph();
-        this.ReadVideoProperties();
 
-        this.FrameCount = (int)(this.MediaDurationInMS / (this.FrameTimeInNanoSeconds * NanoSecsToMilliSecs));
-
+        Viana.Project.VideoFile = this.VideoFilename;
         Video.Instance.HasVideo = true;
-        VianaNetApplication.Project.ProcessingData.InitializeImageFilters();
+        Viana.Project.ProcessingData.InitializeImageFilters();
         this.Revert();
         this.OnVideoAvailable();
       }
@@ -370,7 +370,7 @@ namespace VianaNET.Modules.Video.Control
       base.Revert();
 
       int hr = 0;
-      var zeroPosition = new DsLong((long)(VianaNetApplication.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
+      var zeroPosition = new DsLong((long)(Viana.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
 
       // if (zeroPosition <= 0)
       // {
@@ -696,7 +696,7 @@ namespace VianaNET.Modules.Video.Control
     /// details on frame stepping.
     /// </summary>
     /// <returns> True, if frame step interface is available, otherwise false </returns>
-    private bool GetFrameStepInterface() 
+    private bool GetFrameStepInterface()
     {
       int hr = 0;
 
@@ -717,26 +717,26 @@ namespace VianaNET.Modules.Video.Control
       return false;
     }
 
-    /// <summary>
-    ///   The read video properties.
-    /// </summary>
-    /// <returns> The <see cref="int" /> . </returns>
-    private int ReadVideoProperties()
-    {
-      int hr = 0;
+    ///// <summary>
+    /////   The read video properties.
+    ///// </summary>
+    ///// <returns> The <see cref="int" /> . </returns>
+    //private int ReadVideoProperties()
+    //{
+    //  int hr = 0;
 
-      if (this.mediaSeeking == null)
-      {
-        return 0;
-      }
+    //  if (this.mediaSeeking == null)
+    //  {
+    //    return 0;
+    //  }
 
-      long mediaduration;
-      hr = this.mediaSeeking.GetDuration(out mediaduration);
-      DsError.ThrowExceptionForHR(hr);
-      this.MediaDurationInMS = mediaduration * NanoSecsToMilliSecs;
+    //  long mediaduration;
+    //  hr = this.mediaSeeking.GetDuration(out mediaduration);
+    //  DsError.ThrowExceptionForHR(hr);
+    //  this.MediaDurationInMS = mediaduration * NanoSecsToMilliSecs;
 
-      return hr;
-    }
+    //  return hr;
+    //}
 
     /// <summary>
     ///   The release event thread.
@@ -816,25 +816,5 @@ namespace VianaNET.Modules.Video.Control
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

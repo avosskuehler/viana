@@ -33,7 +33,9 @@ namespace VianaNET.Data.Filter.Theory
   using System.Windows.Controls;
 
   using VianaNET.Data.Filter.Regression;
-  using VianaNET.Localization;
+  using VianaNET.Resources;
+
+  using WPFLocalizeExtension.Extensions;
 
   /// <summary>
   ///   Interaktionslogik für CalculatorAndFktEditor.xaml
@@ -86,20 +88,15 @@ namespace VianaNET.Data.Filter.Theory
         this.buttonFertig.Content = Labels.CalculatorDialogButtonDoneFktEdit;
       }
 
-      var resMgr = new ResourceManager("VianaNET.Localization.Labels", Assembly.GetExecutingAssembly());
       for (k = 0; k < Constants.konstante.Length; k++)
       {
-        string s = resMgr.GetString(Constants.konstante[k].titel);
-        this.comboBox1.Items.Add(s);
+        string uiString;
+        var locExtension = new LocExtension("VianaNET:Labels:" + Constants.konstante[k].titel);
+        locExtension.ResolveLocalizedValue(out uiString);
+        this.comboBox1.Items.Add(uiString);
       }
-      if (usesDecimalkomma)
-      {
-          buttonKomma.Content = ",";
-      }
-      else
-      {
-          buttonKomma.Content = ".";
-      }
+
+      this.buttonKomma.Content = this.usesDecimalkomma ? "," : ".";
       this.textBox1.Focus();
     }
 
@@ -398,12 +395,12 @@ namespace VianaNET.Data.Filter.Theory
     {
       var formelStr = this.textBox1.Text;
       if (usesDecimalkomma)
-      { 
-          formelStr = formelStr.Replace('.', ','); 
+      {
+        formelStr = formelStr.Replace('.', ',');
       }
-      else 
-      { 
-          formelStr = formelStr.Replace(',', '.'); 
+      else
+      {
+        formelStr = formelStr.Replace(',', '.');
       }
       string hilfStr = string.Empty;
       var aktParser = new Parse();
@@ -417,14 +414,14 @@ namespace VianaNET.Data.Filter.Theory
         }
         else
         {
-          this.textBoxErgebnis.Text = string.Empty;          
+          this.textBoxErgebnis.Text = string.Empty;
         }
         aktParser.ErrMsg(aktParser.lastErrNr, ref hilfStr);
         // Fehlerposition anzeigen mit ^
         hilfStr = string.Concat("^ ", hilfStr);
         for (int i = 1; i <= aktParser.lastErrPos; i++)
-        { 
-            hilfStr = string.Concat(" ", hilfStr); 
+        {
+          hilfStr = string.Concat(" ", hilfStr);
         }
         this.textBoxErgebnis.Text = hilfStr;
       }

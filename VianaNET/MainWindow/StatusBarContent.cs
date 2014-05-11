@@ -68,7 +68,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     private StatusBarContent()
     {
-      // LocTextExtension ready = new LocTextExtension("VianaNET:Labels:StatusBarReady");
+      // LocExtension ready = new LocExtension("VianaNET:Labels:StatusBarReady");
       // ready.SetBinding(this, StatusBarContent.StatusLabelProperty);
     }
 

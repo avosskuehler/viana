@@ -80,7 +80,7 @@ namespace VianaNET.Data.Filter.Theory
       base.CalculateFilterValues();
 
       var fittedSamples = new SortedObservableCollection<XYSample>();
-      var fx = VianaNetApplication.Project.FilterData.TheoreticalFunction;
+      var fx = Viana.Project.CurrentFilterData.TheoreticalFunction;
       if (fx == null)
       {
         return;
@@ -137,7 +137,7 @@ namespace VianaNET.Data.Filter.Theory
         }
       }
 
-      VianaNetApplication.Project.FilterData.TheorySeries = fittedSamples;
+      Viana.Project.CurrentFilterData.TheorySeries = fittedSamples;
     }
 
     #endregion

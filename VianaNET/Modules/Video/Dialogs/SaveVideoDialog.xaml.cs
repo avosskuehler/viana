@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Forms;
 
-  using VianaNET.Localization;
+  using VianaNET.Resources;
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
 
