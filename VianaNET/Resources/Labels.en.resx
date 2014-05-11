@@ -845,7 +845,7 @@ Click OK or press Enter, when ready.</value>
     <value>Copy chart to word</value>
   </data>
   <data name="GraphicFilesFilter" xml:space="preserve">
-    <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|BMP - Bitmap|*.bmp|TIF - Tagged Image File|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
+    <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|XAML - Extensible Application Markup Language|*.xaml|SVG - Scalable Vector Graphics|*.svg|BMP - Bitmap|*.bmp|TIF - Tagged Image File|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
   </data>
   <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
     <value>Please specify an image file name ...</value>
@@ -1638,5 +1638,8 @@ Click OK or press Enter, when ready.</value>
   </data>
   <data name="ChartWindowLegendPlacementOutside" xml:space="preserve">
     <value>Outside</value>
+  </data>
+  <data name="ChartExportedToClipboardMessage" xml:space="preserve">
+    <value>Chart exported to clipboard.</value>
   </data>
 </root>

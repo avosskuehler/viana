@@ -2284,6 +2284,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartExportedToClipboardMessage.
+        /// </summary>
+        internal static string ChartExportedToClipboardMessage {
+            get {
+                return ResourceManager.GetString("ChartExportedToClipboardMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowAxesHeader.
         /// </summary>
         internal static string ChartWindowAxesHeader {

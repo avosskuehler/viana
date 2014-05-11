@@ -28,6 +28,7 @@ namespace VianaNET.Modules.Chart
   using System;
   using System.IO;
   using System.Reflection;
+  using System.Text;
   using System.Windows;
   using System.Windows.Media.Imaging;
 
@@ -37,6 +38,7 @@ namespace VianaNET.Modules.Chart
   using OxyPlot;
   using OxyPlot.Wpf;
 
+  using VianaNET.MainWindow;
   using VianaNET.Resources;
 
   using Application = Microsoft.Office.Interop.Word.Application;
@@ -58,6 +60,7 @@ namespace VianaNET.Modules.Chart
     {
       var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
       Clipboard.SetImage(bitmap);
+      StatusBarContent.Instance.MessagesLabel = Labels.ChartExportedToClipboardMessage;
     }
 
     /// <summary>
@@ -82,6 +85,7 @@ namespace VianaNET.Modules.Chart
         {
           BitmapEncoder encoder = null;
           string extension = Path.GetExtension(sfd.FileName);
+          var enc = new ASCIIEncoding();
           if (extension != null)
           {
             switch (extension.ToLower())
@@ -101,6 +105,15 @@ namespace VianaNET.Modules.Chart
               case ".wmp":
                 encoder = new WmpBitmapEncoder();
                 break;
+              case ".svg":
+                var rc = new ShapesRenderContext(null);
+                var svg = OxyPlot.SvgExporter.ExportToString(chart, chart.Width, chart.Height, true, rc);
+                stream.Write(enc.GetBytes(svg), 0, svg.Length);
+                return;
+              case ".xaml":
+                var xaml = XamlExporter.ExportToString(chart, chart.Width, chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+                stream.Write(enc.GetBytes(xaml), 0, xaml.Length);
+                return;
               case ".jpg":
               default:
                 encoder = new JpegBitmapEncoder();

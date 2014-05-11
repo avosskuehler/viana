@@ -408,8 +408,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ExportChartToClipboardButtonClick(object sender, RoutedEventArgs e)
     {
-      //ExportChart.ToClipboard(this.ChartWindow.DataChart);
-      // TODO
+      ExportChart.ToClipboard(this.ChartWindow.ChartData.ChartDataModel);
     }
 
     /// <summary>
@@ -419,8 +418,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ExportChartToFileButtonClick(object sender, RoutedEventArgs e)
     {
-      //ExportChart.ToFile(this.ChartWindow.DataChart);
-      // TODO
+      ExportChart.ToFile(this.ChartWindow.ChartData.ChartDataModel);
     }
 
     /// <summary>
@@ -430,8 +428,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ExportChartToWordButtonClick(object sender, RoutedEventArgs e)
     {
-      //ExportChart.ToWord(this.ChartWindow.DataChart);
-      // TODO
+      ExportChart.ToWord(this.ChartWindow.ChartData.ChartDataModel);
     }
 
     /// <summary>

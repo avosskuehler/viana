@@ -216,6 +216,49 @@
       </ScrollViewer>
     </Expander>
     <oxy:Plot Name="DataChart" Grid.Column="1" Model="{Binding ChartDataModel}">
+      <oxy:Plot.TrackerDefinitions>
+        <oxy:TrackerDefinition TrackerKey="DefaultSeriesTracker">
+          <oxy:TrackerDefinition.TrackerTemplate>
+            <ControlTemplate>
+              <oxy:TrackerControl Position="{Binding Position}" ShowPointer="False" CornerRadius="8" BorderEdgeMode="Unspecified" BorderBrush="{Binding Series.ActualColor, Converter={StaticResource OxyColorConverter}}"  LineExtents="{Binding PlotModel.PlotArea}">
+                <oxy:TrackerControl.Content>
+                  <Grid Canvas.Left="{Binding Position.X}" Canvas.Top="{Binding Position.Y}" Margin="7">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Series.Title}" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding XAxis.Title, StringFormat='{}{0}:'}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding DataPoint.X, StringFormat='{}{0:0.00}'}" Margin="3,0,1,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding XAxis.Unit}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding YAxis.Title, StringFormat='{}{0}:'}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding DataPoint.Y, StringFormat='{}{0:0.00}'}" Margin="3,0,1,0" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding YAxis.Unit}"/>
+                  </Grid>
+                </oxy:TrackerControl.Content>
+              </oxy:TrackerControl>
+            </ControlTemplate>
+          </oxy:TrackerDefinition.TrackerTemplate>
+        </oxy:TrackerDefinition>
+        <oxy:TrackerDefinition TrackerKey="OtherSeriesTracker">
+          <oxy:TrackerDefinition.TrackerTemplate>
+            <ControlTemplate>
+              <oxy:TrackerControl Position="{Binding Position}" ShowPointer="False" CornerRadius="8" BorderEdgeMode="Unspecified" LineExtents="{Binding PlotModel.PlotArea}">
+                <oxy:TrackerControl.Content>
+                  <TextBlock Text="{Binding}" Margin="7" />
+                </oxy:TrackerControl.Content>
+              </oxy:TrackerControl>
+            </ControlTemplate>
+          </oxy:TrackerDefinition.TrackerTemplate>
+        </oxy:TrackerDefinition>
+      </oxy:Plot.TrackerDefinitions>
+
       <!--<oxy:Plot.Axes>
         <oxy:LinearAxis Name="XAxis" Position="Bottom"/>
         <oxy:LinearAxis Name="YAxis" Position="Left"/>
