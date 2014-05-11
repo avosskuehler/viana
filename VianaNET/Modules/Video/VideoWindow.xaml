@@ -2,7 +2,7 @@
 	x:Class="VianaNET.Modules.Video.VideoWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:lex="http://schemas.root-project.org/xaml/presentation"
+  xmlns:lex="http://wpflocalizeextension.codeplex.com"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
 	xmlns:blobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,7 +18,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:VianaNetApplication.Project}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -53,7 +53,7 @@
             </Border.RenderTransform>
             <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
-              Source={x:Static application:VianaNetApplication.Project},
+              Source={x:Static application:Viana.Project},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
           </Border>
@@ -77,7 +77,7 @@
       </Grid>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:VianaNetApplication.Project}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -88,33 +88,33 @@
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Margin="10,0,10,0">
         <StackPanel Orientation="Horizontal"  >
-          <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-            <Image Source="/VianaNET;component/Images/Record16.png" Width="16"/>
+          <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowRecordButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/Record16.png" Width="16" />
           </Button>
-          <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
             <Image Name="BtnPlayImage" Source="/VianaNET;component/Images/Start16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
             <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
           </Button>
           <Rectangle Width="8" />
-          <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekNextButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SeekNext16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekPreviousButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SeekPrevious16.png" Width="16"/>
           </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Name="SelectionPanel" >
           <Rectangle Width="22"/>
-          <Button x:Name="BtnSetZeroTime" Click="BtnSetZeroTimeClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnSetZeroTime" Click="BtnSetZeroTimeClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetZeroTimeButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SetZeroTime16.png" Width="16"/>
           </Button>
           <Rectangle Width="8" />
-          <Button x:Name="BtnSetCutoutLeft" Click="BtnSetCutoutLeftClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnSetCutoutLeft" Click="BtnSetCutoutLeftClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutLeftButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SetCutoutLeft16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnSetCutoutRight" Click="BtnSetCutoutRightClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+          <Button x:Name="BtnSetCutoutRight" Click="BtnSetCutoutRightClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutRightButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SetCutoutRight16.png" Width="16"/>
           </Button>
         </StackPanel>
@@ -128,8 +128,8 @@
         TickUpClicked="TimelineSliderTickUpClicked"
         FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
         Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
-        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:VianaNetApplication.Project}}"
-        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:VianaNetApplication.Project}}"
+        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
+        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
         SmallChange="1" 
         TickPlacement="BottomRight" 
         Interval="1" 

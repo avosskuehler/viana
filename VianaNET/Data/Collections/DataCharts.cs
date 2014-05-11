@@ -78,34 +78,34 @@ namespace VianaNET.Data.Collections
     {
       // Double axis data position space
       var YoverX = new DataCharts(ChartType.YoverX);
-      var locYoverX = new LocTextExtension("VianaNET:Labels:AxisYoverX");
+      var locYoverX = new LocExtension("VianaNET:Labels:AxisYoverX");
       locYoverX.SetBinding(YoverX, DescriptionProperty);
       var XoverT = new DataCharts(ChartType.XoverT);
-      var locXoverT = new LocTextExtension("VianaNET:Labels:AxisXoverT");
+      var locXoverT = new LocExtension("VianaNET:Labels:AxisXoverT");
       locXoverT.SetBinding(XoverT, DescriptionProperty);
       var YoverT = new DataCharts(ChartType.YoverT);
-      var locYoverT = new LocTextExtension("VianaNET:Labels:AxisYoverT");
+      var locYoverT = new LocExtension("VianaNET:Labels:AxisYoverT");
       locYoverT.SetBinding(YoverT, DescriptionProperty);
       var SoverT = new DataCharts(ChartType.SoverT);
-      var locSoverT = new LocTextExtension("VianaNET:Labels:AxisSoverT");
+      var locSoverT = new LocExtension("VianaNET:Labels:AxisSoverT");
       locSoverT.SetBinding(SoverT, DescriptionProperty);
       var VoverT = new DataCharts(ChartType.VoverT);
-      var locVoverT = new LocTextExtension("VianaNET:Labels:AxisVoverT");
+      var locVoverT = new LocExtension("VianaNET:Labels:AxisVoverT");
       locVoverT.SetBinding(VoverT, DescriptionProperty);
       var VXoverT = new DataCharts(ChartType.VXoverT);
-      var locVXoverT = new LocTextExtension("VianaNET:Labels:AxisVXoverT");
+      var locVXoverT = new LocExtension("VianaNET:Labels:AxisVXoverT");
       locVXoverT.SetBinding(VXoverT, DescriptionProperty);
       var VYoverT = new DataCharts(ChartType.VYoverT);
-      var locVYoverT = new LocTextExtension("VianaNET:Labels:AxisVYoverT");
+      var locVYoverT = new LocExtension("VianaNET:Labels:AxisVYoverT");
       locVYoverT.SetBinding(VYoverT, DescriptionProperty);
       var AoverT = new DataCharts(ChartType.AoverT);
-      var locAoverT = new LocTextExtension("VianaNET:Labels:AxisAoverT");
+      var locAoverT = new LocExtension("VianaNET:Labels:AxisAoverT");
       locAoverT.SetBinding(AoverT, DescriptionProperty);
       var AXoverT = new DataCharts(ChartType.AXoverT);
-      var locAXoverT = new LocTextExtension("VianaNET:Labels:AxisAXoverT");
+      var locAXoverT = new LocExtension("VianaNET:Labels:AxisAXoverT");
       locAXoverT.SetBinding(AXoverT, DescriptionProperty);
       var AYoverT = new DataCharts(ChartType.AYoverT);
-      var locAYoverT = new LocTextExtension("VianaNET:Labels:AxisAYoverT");
+      var locAYoverT = new LocExtension("VianaNET:Labels:AxisAYoverT");
       locAYoverT.SetBinding(AYoverT, DescriptionProperty);
 
       PredefinedDataChartsPositionSpace = new List<DataCharts>();
@@ -121,31 +121,31 @@ namespace VianaNET.Data.Collections
 
       // Double axis data phase space
       var VoverD = new DataCharts(ChartType.VoverD);
-      var locDoverV = new LocTextExtension("VianaNET:Labels:AxisDoverV");
+      var locDoverV = new LocExtension("VianaNET:Labels:AxisDoverV");
       locDoverV.SetBinding(VoverD, DescriptionProperty);
       var VXoverDX = new DataCharts(ChartType.VXoverDX);
-      var locDXoverVX = new LocTextExtension("VianaNET:Labels:AxisDXoverVX");
+      var locDXoverVX = new LocExtension("VianaNET:Labels:AxisDXoverVX");
       locDXoverVX.SetBinding(VXoverDX, DescriptionProperty);
       var VYoverDY = new DataCharts(ChartType.VYoverDY);
-      var locDYoverVY = new LocTextExtension("VianaNET:Labels:AxisDYoverVY");
+      var locDYoverVY = new LocExtension("VianaNET:Labels:AxisDYoverVY");
       locDYoverVY.SetBinding(VYoverDY, DescriptionProperty);
       var VoverS = new DataCharts(ChartType.VoverS);
-      var locSoverV = new LocTextExtension("VianaNET:Labels:AxisSoverV");
+      var locSoverV = new LocExtension("VianaNET:Labels:AxisSoverV");
       locSoverV.SetBinding(VoverS, DescriptionProperty);
       var VXoverSX = new DataCharts(ChartType.VXoverSX);
-      var locSXoverVX = new LocTextExtension("VianaNET:Labels:AxisSXoverVX");
+      var locSXoverVX = new LocExtension("VianaNET:Labels:AxisSXoverVX");
       locSXoverVX.SetBinding(VXoverSX, DescriptionProperty);
       var VYoverSY = new DataCharts(ChartType.VYoverSY);
-      var locSYoverVY = new LocTextExtension("VianaNET:Labels:AxisSYoverVY");
+      var locSYoverVY = new LocExtension("VianaNET:Labels:AxisSYoverVY");
       locSYoverVY.SetBinding(VYoverSY, DescriptionProperty);
       var AoverV = new DataCharts(ChartType.AoverV);
-      var locVoverA = new LocTextExtension("VianaNET:Labels:AxisVoverA");
+      var locVoverA = new LocExtension("VianaNET:Labels:AxisVoverA");
       locVoverA.SetBinding(AoverV, DescriptionProperty);
       var AXoverVX = new DataCharts(ChartType.AXoverVX);
-      var locVXoverAX = new LocTextExtension("VianaNET:Labels:AxisVXoverAX");
+      var locVXoverAX = new LocExtension("VianaNET:Labels:AxisVXoverAX");
       locVXoverAX.SetBinding(AXoverVX, DescriptionProperty);
       var AYoverVY = new DataCharts(ChartType.AYoverVY);
-      var locVYoverAY = new LocTextExtension("VianaNET:Labels:AxisVYoverAY");
+      var locVYoverAY = new LocExtension("VianaNET:Labels:AxisVYoverAY");
       locVYoverAY.SetBinding(AYoverVY, DescriptionProperty);
 
       PredefinedDataChartsPhaseSpace = new List<DataCharts>();

@@ -191,14 +191,14 @@ namespace VianaNET.Data.Filter
         return;
       }
 
-      var aktObjectNr = VianaNetApplication.Project.VideoData.ActiveObject;
+      var aktObjectNr = Viana.Project.VideoData.ActiveObject;
       this.WertX.Clear();
       this.WertY.Clear();
       this.WertXMin = double.MaxValue;
       this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (var sample in VianaNetApplication.Project.VideoData.Samples)
+      foreach (var sample in Viana.Project.VideoData.Samples)
       {
         if (!sample.IsSelected)
         {
@@ -269,7 +269,7 @@ namespace VianaNET.Data.Filter
     {
       double? value = null;
 
-      switch (isXValue ? VianaNetApplication.Project.FilterData.AxisX.Axis : VianaNetApplication.Project.FilterData.AxisY.Axis)
+      switch (isXValue ? Viana.Project.CurrentFilterData.AxisX.Axis : Viana.Project.CurrentFilterData.AxisY.Axis)
       {
         case AxisType.T:
           value = sample.Object[aktObjectNr].Time;

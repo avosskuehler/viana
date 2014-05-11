@@ -36,35 +36,27 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Initializes a new instance of the <see cref="LineOptionsDialog"/> class.
     /// </summary>
-
     public LineOptionsDialog()
     {
       this.InitializeComponent();
     }
 
     /// <summary>
-    /// The cancel_ click.
+    /// Cancel has been clicked.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
 
+
     /// <summary>
-    /// The o k_ click.
+    /// Ok has been clicked.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;

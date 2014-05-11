@@ -35,7 +35,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Shapes;
 
   using VianaNET.Data;
-  using VianaNET.Localization;
+  using VianaNET.Resources;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
 
@@ -138,7 +138,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (!this.originIsSet)
       {
-        VianaNetApplication.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
+        Viana.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
         this.originIsSet = true;
         this.originPath.Visibility = Visibility.Visible;
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);
@@ -181,20 +181,20 @@ namespace VianaNET.Modules.Video.Dialogs
         if (lengthDialog.ShowDialog().GetValueOrDefault(false))
         {
           // Save ruler points to Settings
-          VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
-          VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
+          Viana.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
+          Viana.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
 
           var lengthVector = new Vector();
           lengthVector = Vector.Add(
             lengthVector,
-            new Vector(VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerStartPointInPixel.Y));
+            new Vector(Viana.Project.CalibrationData.RulerStartPointInPixel.X, Viana.Project.CalibrationData.RulerStartPointInPixel.Y));
           lengthVector.Negate();
           lengthVector = Vector.Add(
             lengthVector,
-            new Vector(VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.X, VianaNetApplication.Project.CalibrationData.RulerEndPointInPixel.Y));
+            new Vector(Viana.Project.CalibrationData.RulerEndPointInPixel.X, Viana.Project.CalibrationData.RulerEndPointInPixel.Y));
           double length = lengthVector.Length;
-          VianaNetApplication.Project.CalibrationData.ScalePixelToUnit = VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits / length;
-          VianaNetApplication.Project.CalibrationData.IsVideoCalibrated = true;
+          Viana.Project.CalibrationData.ScalePixelToUnit = Viana.Project.CalibrationData.RulerValueInRulerUnits / length;
+          Viana.Project.CalibrationData.IsVideoCalibrated = true;
           this.DialogResult = true;
         }
 

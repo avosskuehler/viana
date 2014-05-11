@@ -31,6 +31,12 @@ namespace VianaNET.CustomStyles.Types
   public enum ChartType
   {
     /// <summary>
+    /// A custom, not predefined chart type
+    /// for which the filter properties are not saved.
+    /// </summary>
+    Custom,
+
+    /// <summary>
     ///   The yover x.
     /// </summary>
     YoverX, 

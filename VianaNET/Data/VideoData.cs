@@ -73,6 +73,12 @@ namespace VianaNET.Data
     public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
       "SelectionStart", typeof(double), typeof(VideoData));
 
+    /// <summary>
+    ///   The selection start property.
+    /// </summary>
+    public static readonly DependencyProperty FramerateFactorProperty = DependencyProperty.Register(
+      "FramerateFactor", typeof(double), typeof(VideoData));
+
     #endregion
 
     #region Constructors and Destructors
@@ -84,6 +90,7 @@ namespace VianaNET.Data
     {
       this.Samples = new DataCollection();
       this.ActiveObject = 0;
+      this.FramerateFactor = 1;
     }
 
     #endregion
@@ -198,6 +205,24 @@ namespace VianaNET.Data
         this.SetValue(SelectionStartProperty, value);
       }
     }
+
+    /// <summary>
+    /// Gets or sets the frame rate of the video
+    /// This can be automatically set or manually defined.
+    /// </summary>
+    public double FramerateFactor
+    {
+      get
+      {
+        return (double)this.GetValue(FramerateFactorProperty);
+      }
+
+      set
+      {
+        this.SetValue(FramerateFactorProperty, value);
+      }
+    }
+
     /// <summary>
     /// Gets a value indicating whether there is at least one data sample
     /// </summary>
@@ -216,7 +241,7 @@ namespace VianaNET.Data
     public void NotifyLoading()
     {
       // Recalculate dependent data values
-      VianaNetApplication.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update dependencies
       this.OnPropertyChanged("Samples");
@@ -243,7 +268,7 @@ namespace VianaNET.Data
         };
 
       double newTime = Video.Instance.FrameTimestampInMs;
-      switch (VianaNetApplication.Project.CalibrationData.TimeUnit)
+      switch (Viana.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
           break;
@@ -281,12 +306,12 @@ namespace VianaNET.Data
     /// </summary>
     public void RefreshDistanceVelocityAcceleration()
     {
-      var previousSamples = new TimeSample[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
-      var validSamples = new int[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
+      var previousSamples = new TimeSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+      var validSamples = new int[Viana.Project.ProcessingData.NumberOfTrackedObjects];
 
       foreach (TimeSample timeSample in this.Samples)
       {
-        for (int j = 0; j < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           DataSample currentSample = timeSample.Object[j];
           if (currentSample == null)
@@ -365,7 +390,7 @@ namespace VianaNET.Data
     public void Reset()
     {
       this.Samples.Clear();
-      this.LastPoint = new Point[VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects];
+      this.LastPoint = new Point[Viana.Project.ProcessingData.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
 
@@ -398,15 +423,15 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!VianaNetApplication.Project.CalibrationData.IsVideoCalibrated)
+      if (!Viana.Project.CalibrationData.IsVideoCalibrated)
       {
         return new Point(value.PixelX, value.PixelY);
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(-VianaNetApplication.Project.CalibrationData.OriginInPixel.X, -VianaNetApplication.Project.CalibrationData.OriginInPixel.Y);
-      calibratedPoint.X = calibratedPoint.X * VianaNetApplication.Project.CalibrationData.ScalePixelToUnit;
-      calibratedPoint.Y = calibratedPoint.Y * VianaNetApplication.Project.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Offset(-Viana.Project.CalibrationData.OriginInPixel.X, -Viana.Project.CalibrationData.OriginInPixel.Y);
+      calibratedPoint.X = calibratedPoint.X * Viana.Project.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Y = calibratedPoint.Y * Viana.Project.CalibrationData.ScalePixelToUnit;
 
       return calibratedPoint;
     }
@@ -444,7 +469,7 @@ namespace VianaNET.Data
     private static int GetTimeFactor()
     {
       var timefactor = 1;
-      switch (VianaNetApplication.Project.CalibrationData.TimeUnit)
+      switch (Viana.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
           timefactor = 1;

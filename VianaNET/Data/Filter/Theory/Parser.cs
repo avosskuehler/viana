@@ -26,7 +26,7 @@
 namespace VianaNET.Data.Filter.Theory
 {
   using System;
-  using VianaNET.Localization;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The constants.

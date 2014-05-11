@@ -64,15 +64,15 @@ namespace VianaNET.CustomStyles.Converter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var valueToConvert = (double)value;
-      string unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
+      string unit = " " + Viana.Project.CalibrationData.LengthUnit;
       var param = (MeasurementType)parameter;
       switch (param)
       {
         case MeasurementType.Pixel:
-          unit = " " + VianaNetApplication.Project.CalibrationData.PixelUnit;
+          unit = " " + Viana.Project.CalibrationData.PixelUnit;
           break;
         case MeasurementType.Position:
-          unit = " " + VianaNetApplication.Project.CalibrationData.LengthUnit;
+          unit = " " + Viana.Project.CalibrationData.LengthUnit;
           break;
       }
 

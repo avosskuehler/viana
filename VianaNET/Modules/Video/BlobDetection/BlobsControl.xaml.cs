@@ -114,9 +114,9 @@ namespace VianaNET.Modules.Video.BlobDetection
 
     public void WirePropertyChangedEvents()
     {
-      VianaNetApplication.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
-      VianaNetApplication.Project.CalibrationData.PropertyChanged += this.CalibrationPropertyChanged;
-      VianaNetApplication.Project.VideoData.PropertyChanged += this.VideoDataPropertyChanged;
+      Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      Viana.Project.CalibrationData.PropertyChanged += this.CalibrationPropertyChanged;
+      Viana.Project.VideoData.PropertyChanged += this.VideoDataPropertyChanged;
       Video.Instance.PropertyChanged += this.VideoPropertyChanged;
     }
 
@@ -126,9 +126,9 @@ namespace VianaNET.Modules.Video.BlobDetection
     public void UpdateDataPoints()
     {
       this.CanvasDataPoints.Children.Clear();
-      foreach (TimeSample sample in VianaNetApplication.Project.VideoData.Samples)
+      foreach (TimeSample sample in Viana.Project.VideoData.Samples)
       {
-        for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           var dataPoint = new Ellipse
             {
@@ -206,12 +206,12 @@ namespace VianaNET.Modules.Video.BlobDetection
     {
       double videoWidth = Video.Instance.VideoElement.NaturalVideoWidth;
       double videoHeight = Video.Instance.VideoElement.NaturalVideoHeight;
-      if (VianaNetApplication.Project.CalibrationData.HasClipRegion)
+      if (Viana.Project.CalibrationData.HasClipRegion)
       {
-        this.thresholdEffect.MinX = VianaNetApplication.Project.CalibrationData.ClipRegion.Left / videoWidth;
-        this.thresholdEffect.MaxX = VianaNetApplication.Project.CalibrationData.ClipRegion.Right / videoWidth;
-        this.thresholdEffect.MinY = VianaNetApplication.Project.CalibrationData.ClipRegion.Top / videoHeight;
-        this.thresholdEffect.MaxY = VianaNetApplication.Project.CalibrationData.ClipRegion.Bottom / videoHeight;
+        this.thresholdEffect.MinX = Viana.Project.CalibrationData.ClipRegion.Left / videoWidth;
+        this.thresholdEffect.MaxX = Viana.Project.CalibrationData.ClipRegion.Right / videoWidth;
+        this.thresholdEffect.MinY = Viana.Project.CalibrationData.ClipRegion.Top / videoHeight;
+        this.thresholdEffect.MaxY = Viana.Project.CalibrationData.ClipRegion.Bottom / videoHeight;
       }
       else
       {
@@ -339,9 +339,9 @@ namespace VianaNET.Modules.Video.BlobDetection
         return;
       }
 
-      for (var i = 0; i < VianaNetApplication.Project.ProcessingData.DetectedBlob.Count; i++)
+      for (var i = 0; i < Viana.Project.ProcessingData.DetectedBlob.Count; i++)
       {
-        var blob = VianaNetApplication.Project.ProcessingData.DetectedBlob[i];
+        var blob = Viana.Project.ProcessingData.DetectedBlob[i];
 
         if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
             && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
@@ -369,17 +369,17 @@ namespace VianaNET.Modules.Video.BlobDetection
     private void UpdateThresholdForHlsl()
     {
       // Sanity checks
-      if (VianaNetApplication.Project.ProcessingData.ColorThreshold.Count > VianaNetApplication.Project.ProcessingData.IndexOfObject)
+      if (Viana.Project.ProcessingData.ColorThreshold.Count > Viana.Project.ProcessingData.IndexOfObject)
       {
         this.thresholdEffect.Threshold =
-         VianaNetApplication.Project.ProcessingData.ColorThreshold[VianaNetApplication.Project.ProcessingData.IndexOfObject] / 255d;
+         Viana.Project.ProcessingData.ColorThreshold[Viana.Project.ProcessingData.IndexOfObject] / 255d;
       }
 
       // Sanity check two
-      if (VianaNetApplication.Project.ProcessingData.TargetColor.Count > VianaNetApplication.Project.ProcessingData.IndexOfObject)
+      if (Viana.Project.ProcessingData.TargetColor.Count > Viana.Project.ProcessingData.IndexOfObject)
       {
         this.thresholdEffect.TargetColor =
-           VianaNetApplication.Project.ProcessingData.TargetColor[VianaNetApplication.Project.ProcessingData.IndexOfObject];
+           Viana.Project.ProcessingData.TargetColor[Viana.Project.ProcessingData.IndexOfObject];
       }
     }
 
@@ -396,7 +396,7 @@ namespace VianaNET.Modules.Video.BlobDetection
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        for (int i = 0; i < VianaNetApplication.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           var dataPoint = new Ellipse
             {
@@ -405,7 +405,7 @@ namespace VianaNET.Modules.Video.BlobDetection
               Width = 15,
               Height = 15
             };
-          Point location = VianaNetApplication.Project.VideoData.LastPoint[i];
+          Point location = Viana.Project.VideoData.LastPoint[i];
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
           Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);

@@ -34,12 +34,12 @@ namespace VianaNET.Modules.Chart
   using Microsoft.Office.Interop.Word;
   using Microsoft.Win32;
 
-  using VianaNET.Localization;
+  using OxyPlot;
+  using OxyPlot.Wpf;
 
-  using Visifire.Charts;
+  using VianaNET.Resources;
 
   using Application = Microsoft.Office.Interop.Word.Application;
-  using Chart = Visifire.Charts.Chart;
 
   /// <summary>
   ///   The export chart.
@@ -54,16 +54,10 @@ namespace VianaNET.Modules.Chart
     /// <param name="chart">
     /// The chart. 
     /// </param>
-    public static void ToClipboard(Chart chart)
+    public static void ToClipboard(PlotModel chart)
     {
-      var file = Path.GetTempFileName();
-      var jpgFile = file.Substring(0, file.Length - 4);
-      chart.Export(jpgFile, ExportType.Jpg);
-
-      var source = new BitmapImage(new Uri(jpgFile + ".jpg"));
-      var croppedBitmap = new CroppedBitmap(source, new Int32Rect(2, 2, source.PixelWidth - 4, source.PixelHeight - 4));
-      Clipboard.SetImage(croppedBitmap);
-      File.Delete(jpgFile);
+      var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+      Clipboard.SetImage(bitmap);
     }
 
     /// <summary>
@@ -72,7 +66,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="chart">
     /// The chart. 
     /// </param>
-    public static void ToFile(Chart chart)
+    public static void ToFile(PlotModel chart)
     {
       var sfd = new SaveFileDialog();
       sfd.CheckFileExists = false;
@@ -86,43 +80,42 @@ namespace VianaNET.Modules.Chart
       {
         using (var stream = new FileStream(sfd.FileName, FileMode.Create))
         {
-          BitmapEncoder encoder;
+          BitmapEncoder encoder = null;
           string extension = Path.GetExtension(sfd.FileName);
-          switch (extension.ToLower())
+          if (extension != null)
           {
-            case ".bmp":
-              encoder = new BmpBitmapEncoder();
-              break;
-            case ".png":
-              encoder = new PngBitmapEncoder();
-              break;
-            case ".gif":
-              encoder = new GifBitmapEncoder();
-              break;
-            case ".tif":
-              encoder = new TiffBitmapEncoder();
-              break;
-            case ".wmp":
-              encoder = new WmpBitmapEncoder();
-              break;
-            case ".jpg":
-            default:
-              encoder = new JpegBitmapEncoder();
-              break;
+            switch (extension.ToLower())
+            {
+              case ".bmp":
+                encoder = new BmpBitmapEncoder();
+                break;
+              case ".png":
+                encoder = new PngBitmapEncoder();
+                break;
+              case ".gif":
+                encoder = new GifBitmapEncoder();
+                break;
+              case ".tif":
+                encoder = new TiffBitmapEncoder();
+                break;
+              case ".wmp":
+                encoder = new WmpBitmapEncoder();
+                break;
+              case ".jpg":
+              default:
+                encoder = new JpegBitmapEncoder();
+                break;
+            }
           }
 
-          var file = Path.GetTempFileName();
-          var jpgFile = file.Substring(0, file.Length - 4);
-          chart.Export(jpgFile, ExportType.Jpg);
-
-          var source = new BitmapImage(new Uri(jpgFile + ".jpg"));
-          var croppedBitmap = new CroppedBitmap(source, new Int32Rect(2, 2, source.PixelWidth - 4, source.PixelHeight - 4));
+          var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
 
           // Save to file
-          encoder.Frames.Add(BitmapFrame.Create(croppedBitmap));
-          encoder.Save(stream);
-
-          File.Delete(file);
+          if (encoder != null)
+          {
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+            encoder.Save(stream);
+          }
         }
       }
     }
@@ -133,7 +126,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="chart">
     /// The chart. 
     /// </param>
-    public static void ToWord(Chart chart)
+    public static void ToWord(PlotModel chart)
     {
       ToClipboard(chart);
 

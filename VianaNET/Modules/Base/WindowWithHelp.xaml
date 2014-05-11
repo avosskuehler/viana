@@ -2,12 +2,12 @@
     x:Class="VianaNET.Modules.Base.WindowWithHelp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://schemas.root-project.org/xaml/presentation" xmlns:Data="clr-namespace:VianaNET.Data"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:Data="clr-namespace:VianaNET.Data"
     xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:application="clr-namespace:VianaNET.Application"
     lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
-  Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:VianaNetApplication.Project}}"
+  Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
   PreviewKeyDown="Window_PreviewKeyDown" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
@@ -26,7 +26,7 @@
         <Binding ElementName="VideoImage" Path="ActualHeight" />
       </Canvas.Height>
       <Border Name="ObjectIndexPanel" 
-              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:VianaNetApplication.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=VideoImage,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 
@@ -45,7 +45,7 @@
             Name="ObjectIndexHeader"
             TextWrapping="Wrap" 
             Background="Transparent"
-            Text="{lex:LocText VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
+            Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
             BorderThickness="0"
             Padding="0 4 0 0"
             TextAlignment="Center"/>
@@ -78,7 +78,7 @@
           <Separator/>
           <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description"/>
           <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap"/>
-          <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:LocText VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
+          <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
         </StackPanel>
       </Border>
     </Canvas>

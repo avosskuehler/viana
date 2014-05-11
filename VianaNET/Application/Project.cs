@@ -1,21 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Project.cs" company="Freie Universität Berlin">
 //   ************************************************************************
-//   //   Viana.NET - video analysis for physics education
-//   //   Copyright (C) 2012 Dr. Adrian Voßkühler  
-//   //   ------------------------------------------------------------------------
-//   //   This program is free software; you can redistribute it and/or modify it 
-//   //   under the terms of the GNU General Public License as published by the 
-//   //   Free Software Foundation; either version 2 of the License, or 
-//   //   (at your option) any later version.
-//   //   This program is distributed in the hope that it will be useful, 
-//   //   but WITHOUT ANY WARRANTY; without even the implied warranty of 
-//   //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-//   //   See the GNU General Public License for more details.
-//   //   You should have received a copy of the GNU General Public License 
-//   //   along with this program; if not, write to the Free Software Foundation, 
-//   //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//   //   ************************************************************************
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   ------------------------------------------------------------------------
+//   This program is free software; you can redistribute it and/or modify it 
+//   under the terms of the GNU General Public License as published by the 
+//   Free Software Foundation; either version 2 of the License, or 
+//   (at your option) any later version.
+//   This program is distributed in the hope that it will be useful, 
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+//   See the GNU General Public License for more details.
+//   You should have received a copy of the GNU General Public License 
+//   along with this program; if not, write to the Free Software Foundation, 
+//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//   ************************************************************************
 // </copyright>
 // <summary>
 //   This class holds all project data that can be saved
@@ -25,15 +25,18 @@
 namespace VianaNET.Application
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.IO;
-  using System.Windows;
   using System.Xml.Serialization;
   using CustomStyles.Types;
   using Data;
   using Data.Filter;
   using Logging;
+
   using Modules.Video.Control;
+
+  using Point = System.Windows.Point;
 
   /// <summary>
   /// This class is a singleton encapsulating all settings for a viana.net project
@@ -45,15 +48,28 @@ namespace VianaNET.Application
   public class Project : INotifyPropertyChanged
   {
     /// <summary>
+    /// The current chart type
+    /// </summary>
+    private ChartType currentChartType;
+
+    /// <summary>
+    /// Gets or sets the filter data for the specific <see cref="ChartType"/>
+    /// </summary>
+    private Dictionary<ChartType, FilterData> filterData;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Project"/> class. 
     /// </summary>
     public Project()
     {
-      this.FilterData = new FilterData();
+      this.filterData = new Dictionary<ChartType, FilterData> { { ChartType.YoverX, new FilterData() } };
       this.CalibrationData = new CalibrationData();
-      this.CalibrationData.PropertyChanged += this.CalibrationData_PropertyChanged;
+      this.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
       this.ProcessingData = new ProcessingData();
       this.VideoData = new VideoData { LastPoint = new Point[this.ProcessingData.NumberOfTrackedObjects] };
+      this.CurrentFilterData = new FilterData();
+      //this.ChartData = new ChartData();
+      this.currentChartType = ChartType.YoverX;
     }
 
     /// <summary>
@@ -63,9 +79,12 @@ namespace VianaNET.Application
     public event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
-    /// Gets or sets the filter data.
+    /// Gets or sets the current filter data.
     /// </summary>
-    public FilterData FilterData { get; set; }
+    /// <value>
+    /// The current filter data.
+    /// </value>
+    public FilterData CurrentFilterData { get; set; }
 
     /// <summary>
     /// Gets or sets the calibration data.
@@ -76,6 +95,11 @@ namespace VianaNET.Application
     /// Gets or sets the processing data.
     /// </summary>
     public ProcessingData ProcessingData { get; set; }
+
+    ///// <summary>
+    ///// Gets or sets the chart data
+    ///// </summary>
+    //public ChartData ChartData { get; set; }
 
     /// <summary>
     /// Gets or sets the video data.
@@ -103,7 +127,68 @@ namespace VianaNET.Application
     public string ProjectPath { get; set; }
 
     /// <summary>
-    /// Gets a valaue indicating whether there are video input devices
+    /// Gets or sets the current selected <see cref="ChartType"/> in the charts module
+    /// </summary>
+    public ChartType CurrentChartType
+    {
+      get
+      {
+        return this.currentChartType;
+      }
+      
+      set
+      {
+        // Write modified values back to filterData dictionary
+        this.CopyFilterData(this.CurrentFilterData, this.filterData[this.currentChartType]);
+
+        // Go to new chart
+        this.currentChartType = value;
+
+        // Check if we already have this chart type used in this project
+        // if not create a new filterdata entry
+        if (!this.filterData.ContainsKey(this.currentChartType))
+        {
+          this.filterData.Add(this.currentChartType, new FilterData());
+        }
+
+        // Move filter data from dictionary to bindable currentfilterdata
+        this.CopyFilterData(this.filterData[this.currentChartType], this.CurrentFilterData);
+      }
+    }
+
+    private void CopyFilterData(FilterData source, FilterData target)
+    {
+      target.AxisX = source.AxisX;
+      target.AxisY = source.AxisY;
+      target.CurrentFilter = source.CurrentFilter;
+      target.DataLineColor = source.DataLineColor;
+      target.DataLineThickness = source.DataLineThickness;
+      target.InterpolationFilter = source.InterpolationFilter;
+      target.InterpolationLineColor = source.InterpolationLineColor;
+      target.InterpolationLineThickness = source.InterpolationLineThickness;
+      target.InterpolationSeries = source.InterpolationSeries;
+      target.IsShowingDataSeries = source.IsShowingDataSeries;
+      target.IsShowingInterpolationSeries = source.IsShowingInterpolationSeries;
+      target.IsShowingRegressionSeries = source.IsShowingRegressionSeries;
+      target.IsShowingTheorySeries = source.IsShowingTheorySeries;
+      target.NumericPrecision = source.NumericPrecision;
+      target.RegressionAberration = source.RegressionAberration;
+      target.RegressionFilter = source.RegressionFilter;
+      target.RegressionFunctionTexFormula = source.RegressionFunctionTexFormula;
+      target.RegressionLineColor = source.RegressionLineColor;
+      target.RegressionLineThickness = source.RegressionLineThickness;
+      target.RegressionSeries = source.RegressionSeries;
+      target.SelectionColor = source.SelectionColor;
+      target.TheoreticalFunction = source.TheoreticalFunction;
+      target.TheoryFilter = source.TheoryFilter;
+      target.TheoryFunctionTexFormula = source.TheoryFunctionTexFormula;
+      target.TheoryLineColor = source.TheoryLineColor;
+      target.TheoryLineThickness = source.TheoryLineThickness;
+      target.TheorySeries = source.TheorySeries;
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether there are video input devices
     /// available on the system
     /// </summary>
     public bool HasData
@@ -204,21 +289,17 @@ namespace VianaNET.Application
     }
 
     /// <summary>
-    /// The calibration_ property changed.
+    /// The calibration property changed event handler which re-initializes
+    /// the image filters of the processing data.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void CalibrationData_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    private void CalibrationDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "HasClipRegion" || e.PropertyName == "ClipRegion")
       {
         this.ProcessingData.InitializeImageFilters();
       }
     }
-
   }
 }

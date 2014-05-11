@@ -19,12 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   This class is used to log errors and exceptions into a file that can
-//   be used for debug purposes of user systems. (Can be send to support)
-//   Its members are static so it can be called from every code line
-//   without instatiation.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Logging
 {
@@ -32,23 +26,16 @@ namespace VianaNET.Logging
   using System.IO;
   using System.Text;
 
-  using MainWindow;
+  using VianaNET.MainWindow;
 
   /// <summary>
-  ///   This class is used to log errors and exceptions into a file that can 
+  ///   This class is used to log errors and exceptions into a file that can
   ///   be used for debug purposes of user systems. (Can be send to support)
   ///   Its members are static so it can be called from every code line
   ///   without instatiation.
   /// </summary>
   public class ErrorLogger
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
     /// <summary>
@@ -63,9 +50,6 @@ namespace VianaNET.Logging
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -89,46 +73,16 @@ namespace VianaNET.Logging
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Delegates
-
-    /// <summary>
-    ///   This is the delegate for the <see cref="TrackerError" /> event.
-    /// </summary>
-    /// <param name="message"> A <see cref="string" /> with the message to show in the error dialog. </param>
-    public delegate void TrackerErrorMessageHandler(string message);
-
-    #endregion
-
-    #region Public Events
-
-    /// <summary>
-    ///   This event is raised when a customized ITU GazeTracker dialog 
-    ///   should be shown with a specific message.
-    /// </summary>
-    public static event TrackerErrorMessageHandler TrackerError;
-
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
     /// This method writes the MethodName and Excpetion message into the ErrorLog.txt file.
     /// </summary>
     /// <param name="ex">
-    /// The <see cref="Exception"/> to log. 
+    /// The <see cref="Exception"/> to log.
     /// </param>
     /// <param name="showMessageBox">
-    /// True, if this exception should also be displayed in a message box. 
+    /// True, if this exception should also be displayed in a message box.
     /// </param>
     public static void ProcessException(Exception ex, bool showMessageBox)
     {
@@ -158,7 +112,7 @@ namespace VianaNET.Logging
     /// This method writes the given line into the ErrorLog.txt file.
     /// </summary>
     /// <param name="line">
-    /// A <see cref="string"/> toi be written to file. 
+    /// A <see cref="string"/> toi be written to file.
     /// </param>
     public static void WriteLine(string line)
     {
@@ -179,31 +133,16 @@ namespace VianaNET.Logging
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
     /// Returns a human readable string for the exception
     /// </summary>
     /// <param name="e">
-    /// An <see cref="Exception"/> to be processed 
+    /// An <see cref="Exception"/> to be processed
     /// </param>
     /// <returns>
-    /// A human readable <see cref="String"/> for the exception 
+    /// A human readable <see cref="String"/> for the exception
     /// </returns>
     private static string GetLogEntryForException(Exception e)
     {
@@ -216,24 +155,6 @@ namespace VianaNET.Logging
       return sb.ToString();
     }
 
-    /// <summary>
-    /// Raises the <see cref="TrackerError"/> event with the given message.
-    /// </summary>
-    /// <param name="message">
-    /// A <see cref="String"/> with the message to display. 
-    /// </param>
-    private static void OnTrackerError(string message)
-    {
-      if (TrackerError != null)
-      {
-        TrackerError(message);
-      }
-    }
-
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

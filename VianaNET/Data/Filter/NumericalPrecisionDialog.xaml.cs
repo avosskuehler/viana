@@ -41,8 +41,8 @@ namespace VianaNET.Data.Filter
       this.DataContext = this;
       smallNumber = 123456789E-12;
       bigNumber = 98765432109E-5;
-      this.labelBigNumber.Content = bigNumber.ToString("G0");
-      this.labelSmallNumber.Content = smallNumber.ToString("G0");
+      this.LabelBigNumber.Content = bigNumber.ToString("G0");
+      this.LabelSmallNumber.Content = smallNumber.ToString("G0");
     }
 
     /// <summary>
@@ -91,8 +91,8 @@ namespace VianaNET.Data.Filter
         string formatStr1 = string.Concat("G", n.ToString());
         string formatStr2 = string.Concat("G", n.ToString());
       //  string formatStr2 = string.Concat("N", n.ToString());
-        labelFormatSmallNumber.Content =smallNumber.ToString(formatStr1);
-        labelFormatBigNumber.Content = bigNumber.ToString(formatStr2);
+        this.LabelFormatSmallNumber.Content =smallNumber.ToString(formatStr1);
+        this.LabelFormatBigNumber.Content = bigNumber.ToString(formatStr2);
     }
 
     #endregion

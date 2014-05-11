@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="DesktopFolder" SourceName="User's Desktop">
+        <Component Id="C_ShortCutDesktop" Guid="{D8DFF141-B56E-41C8-8A41-3E967B1494E2}" Transitive="yes" Win64="$(var.Win64)">
+          <Shortcut Id="ShortCutDesktop" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
+        </Component>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder" SourceName="User's Programs Menu">
+        <Directory Id="VianaNET" Name="$(var.ProductName)">
+          <Component Id="C_ShortCutMenu" Guid="{BA432F39-4E9D-4DFC-B535-455249EAA452}" Transitive="yes" Win64="$(var.Win64)">
+            <Shortcut Id="ProgShortCut" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
+            <?if $(sys.BUILDARCH)=x64?>
+            <Shortcut Id="UninstallShortCut" Name="Uninstall $(var.ProductName)" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
+            <?else?>
+            <Shortcut Id="UninstallShortCut" Name="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]"/>
+            <?endif?>
+            <CreateFolder Directory="VianaNET" />
+            <RegistryValue Id="R_Software" Root="HKCU" Key="Software\$(var.Manufactor)\$(var.ProductName)\{BA432F39-4E9D-4DFC-B535-455249EAA452}" Name="VianaNET" Value="[VianaNET]" Type="string" KeyPath="yes" />
+            <RemoveFolder Id="Remove" Directory="VianaNET" On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)">
+          <Component Id="C_VianaNETExe" Guid="{1246AC67-0A60-4224-8C33-8A4868FD3957}" Win64="$(var.Win64)">
+            <File Id="VianaNETExe" Name="VianaNET.exe" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNETExe" AssemblyApplication="VianaNETExe" DiskId="1"
+                  Source="$(var.VianaNET.TargetDir)" />
+            <ProgId Id="VianaNETProject" Description="An xml file with project descriptions." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
+              <Extension Id="ois" Advertise="yes">
+                <Verb Id="nothing" Command="Internal" Sequence="1" />
+              </Extension>
+            </ProgId>
+            <ProgId Id="VianaNET" Description="VianaNET experiment description xml file." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
+              <Extension Id="oga" Advertise="yes">
+                <Verb Id="open" Command="&amp;Open" Argument="&quot;%1&quot;" Sequence="1" />
+              </Extension>
+            </ProgId>
+            <Shortcut Id="_A07C5294E7E24F4CB7D6F426AE6326AB" Directory="DesktopFolder" Name="VianaNET" Description="Launches VianaNET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+            <Shortcut Id="_A2BF88A82C6947B294A261A87EBACFC4" Directory="VianaNET" Name="VianaNET" Description="Launches VianaNET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+          </Component>
+          <Component Id="C_VianaNETConfig" Guid="{A5DCF465-A9B5-4B96-341F-66BC43F8B985}" Win64="$(var.Win64)">
+            <File Id="_7262B43160C9C2035D3C73BFF21D58A1" Name="VianaNET.exe.config" KeyPath="yes" DiskId="1"
+                  Source="$(var.VianaNET.TargetDir)" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id='VianaMainApplicationFeature' Title='Viana.Net application' Description='Installs viana.net core components.' Level='1'>
+      <ComponentRef Id='C_VianaNETExe' />
+      <ComponentRef Id="C_ShortCutDesktop" />
+      <ComponentRef Id="C_ShortCutMenu" />
+      <ComponentRef Id="C_VianaNETConfig" />
+    </Feature>
+  </Fragment>
+</Wix>

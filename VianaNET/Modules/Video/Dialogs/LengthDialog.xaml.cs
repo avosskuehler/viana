@@ -29,8 +29,9 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows;
   using Application;
   using CustomStyles.Types;
-  using Localization;
   using MainWindow;
+
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The length dialog.
@@ -87,25 +88,25 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.km;
+          Viana.Project.CalibrationData.RulerUnit = LengthUnit.km;
         }
         else if (this.rdbM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.m;
+          Viana.Project.CalibrationData.RulerUnit = LengthUnit.m;
         }
         else if (this.rdbCM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.cm;
+          Viana.Project.CalibrationData.RulerUnit = LengthUnit.cm;
         }
         else if (this.rdbMM.IsChecked.GetValueOrDefault(false))
         {
-          VianaNetApplication.Project.CalibrationData.RulerUnit = LengthUnit.mm;
+          Viana.Project.CalibrationData.RulerUnit = LengthUnit.mm;
         }
 
         // This line is necessary to get an update event for the ruler value
         // even if only the ruler unit was changed
-        VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits = -1;
-        VianaNetApplication.Project.CalibrationData.RulerValueInRulerUnits = result;
+        Viana.Project.CalibrationData.RulerValueInRulerUnits = -1;
+        Viana.Project.CalibrationData.RulerValueInRulerUnits = result;
 
         this.DialogResult = true;
         this.Close();

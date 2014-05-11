@@ -76,7 +76,7 @@ namespace VianaNET.Data.Filter.Interpolation
         fittedSamples.Add(new XYSample(this.WertX[i], smoothValue));
       }
 
-      VianaNetApplication.Project.FilterData.InterpolationSeries = fittedSamples;
+      Viana.Project.CurrentFilterData.InterpolationSeries = fittedSamples;
     }
 
     #endregion

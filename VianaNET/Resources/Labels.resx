@@ -1,0 +1,1629 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutBoxDescription" xml:space="preserve">
+    <value>@AboutBoxDescription</value>
+  </data>
+  <data name="AboutBoxTextBlock" xml:space="preserve">
+    <value>@AboutBoxTextBlock</value>
+  </data>
+  <data name="AboutBoxTitle" xml:space="preserve">
+    <value>@AboutBoxTitle</value>
+  </data>
+  <data name="ButtonAboutLabelDescription" xml:space="preserve">
+    <value>@ButtonAboutLabelDescription</value>
+  </data>
+  <data name="ButtonAboutLabelTitle" xml:space="preserve">
+    <value>@ButtonAboutLabelTitle</value>
+  </data>
+  <data name="ButtonAboutToolTipDescription" xml:space="preserve">
+    <value>@ButtonAboutToolTipDescription</value>
+  </data>
+  <data name="ButtonAboutToolTipTitle" xml:space="preserve">
+    <value>@ButtonAboutToolTipTitle</value>
+  </data>
+  <data name="ButtonDatagridWindowLabelDescription" xml:space="preserve">
+    <value>@ButtonDatagridWindowLabelDescription</value>
+  </data>
+  <data name="ButtonDatagridWindowLabelTitle" xml:space="preserve">
+    <value>@ButtonDatagridWindowLabelTitle</value>
+  </data>
+  <data name="ButtonDatagridWindowToolTipDescription" xml:space="preserve">
+    <value>@ButtonDatagridWindowToolTipDescription</value>
+  </data>
+  <data name="ButtonDatagridWindowToolTipTitle" xml:space="preserve">
+    <value>@ButtonDatagridWindowToolTipTitle</value>
+  </data>
+  <data name="ButtonApplicationLabelDescription" xml:space="preserve">
+    <value>@ButtonApplicationLabelDescription</value>
+  </data>
+  <data name="ButtonApplicationLabelTitle" xml:space="preserve">
+    <value>@ButtonApplicationLabelTitle</value>
+  </data>
+  <data name="ButtonApplicationToolTipDescription" xml:space="preserve">
+    <value>@ButtonApplicationToolTipDescription</value>
+  </data>
+  <data name="ButtonApplicationToolTipTitle" xml:space="preserve">
+    <value>@ButtonApplicationToolTipTitle</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionLabelDescription" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionLabelDescription</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionLabelTitle" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionLabelTitle</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionToolTipDescription" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionToolTipDescription</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionToolTipTitle" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionToolTipTitle</value>
+  </data>
+  <data name="ButtonCalibrateVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonCalibrateVideoLabelDescription</value>
+  </data>
+  <data name="ButtonCalibrateVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonCalibrateVideoLabelTitle</value>
+  </data>
+  <data name="ButtonCalibrateVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonCalibrateVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonCalibrateVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonCalibrateVideoToolTipTitle</value>
+  </data>
+  <data name="ButtonChangeColorSchemeLabelDescription" xml:space="preserve">
+    <value>@ButtonChangeColorSchemeLabelDescription</value>
+  </data>
+  <data name="ButtonChangeColorSchemeLabelTitle" xml:space="preserve">
+    <value>@ButtonChangeColorSchemeLabelTitle</value>
+  </data>
+  <data name="ButtonChangeColorSchemeToolTipDescription" xml:space="preserve">
+    <value>@ButtonChangeColorSchemeToolTipDescription</value>
+  </data>
+  <data name="ButtonChangeColorSchemeToolTipTitle" xml:space="preserve">
+    <value>@ButtonChangeColorSchemeToolTipTitle</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelDescription" xml:space="preserve">
+    <value>@ButtonChangeLanguageLabelDescription</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelTitle" xml:space="preserve">
+    <value>@ButtonChangeLanguageLabelTitle</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipDescription" xml:space="preserve">
+    <value>@ButtonChangeLanguageToolTipDescription</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipTitle" xml:space="preserve">
+    <value>@ButtonChangeLanguageToolTipTitle</value>
+  </data>
+  <data name="ButtonClipVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonClipVideoLabelDescription</value>
+  </data>
+  <data name="ButtonClipVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonClipVideoLabelTitle</value>
+  </data>
+  <data name="ButtonClipVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonClipVideoToolTipTitle</value>
+  </data>
+  <data name="ButtonLoadVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonLoadVideoLabelDescription</value>
+  </data>
+  <data name="ButtonLoadVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonLoadVideoLabelTitle</value>
+  </data>
+  <data name="ButtonLoadVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonLoadVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonLoadVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonLoadVideoToolTipTitle</value>
+  </data>
+  <data name="ButtonManualDataAquisitionLabelDescription" xml:space="preserve">
+    <value>@ButtonManualDataAquisitionLabelDescription</value>
+  </data>
+  <data name="ButtonManualDataAquisitionLabelTitle" xml:space="preserve">
+    <value>@ButtonManualDataAquisitionLabelTitle</value>
+  </data>
+  <data name="ButtonManualDataAquisitionToolTipDescription" xml:space="preserve">
+    <value>@ButtonManualDataAquisitionToolTipDescription</value>
+  </data>
+  <data name="ButtonManualDataAquisitionToolTipTitle" xml:space="preserve">
+    <value>@ButtonManualDataAquisitionToolTipTitle</value>
+  </data>
+  <data name="ButtonNewLabelDescription" xml:space="preserve">
+    <value>@ButtonNewLabelDescription</value>
+  </data>
+  <data name="ButtonNewLabelTitle" xml:space="preserve">
+    <value>@ButtonNewLabelTitle</value>
+  </data>
+  <data name="ButtonNewToolTipDescription" xml:space="preserve">
+    <value>@ButtonNewToolTipDescription</value>
+  </data>
+  <data name="ButtonNewToolTipTitle" xml:space="preserve">
+    <value>@ButtonNewToolTipTitle</value>
+  </data>
+  <data name="ButtonPropertiesWindowLabelDescription" xml:space="preserve">
+    <value>@ButtonPropertiesWindowLabelDescription</value>
+  </data>
+  <data name="ButtonPropertiesWindowLabelTitle" xml:space="preserve">
+    <value>@ButtonPropertiesWindowLabelTitle</value>
+  </data>
+  <data name="ButtonPropertiesWindowToolTipDescription" xml:space="preserve">
+    <value>@ButtonPropertiesWindowToolTipDescription</value>
+  </data>
+  <data name="ButtonPropertiesWindowToolTipTitle" xml:space="preserve">
+    <value>@ButtonPropertiesWindowToolTipTitle</value>
+  </data>
+  <data name="ButtonResetColorSchemeLabelDescription" xml:space="preserve">
+    <value>@ButtonResetColorSchemeLabelDescription</value>
+  </data>
+  <data name="ButtonResetColorSchemeLabelTitle" xml:space="preserve">
+    <value>@ButtonResetColorSchemeLabelTitle</value>
+  </data>
+  <data name="ButtonResetColorSchemeToolTipDescription" xml:space="preserve">
+    <value>@ButtonResetColorSchemeToolTipDescription</value>
+  </data>
+  <data name="ButtonResetColorSchemeToolTipTitle" xml:space="preserve">
+    <value>@ButtonResetColorSchemeToolTipTitle</value>
+  </data>
+  <data name="ButtonRestoreLayoutLabelDescription" xml:space="preserve">
+    <value>@ButtonRestoreLayoutLabelDescription</value>
+  </data>
+  <data name="ButtonRestoreLayoutLabelTitle" xml:space="preserve">
+    <value>@ButtonRestoreLayoutLabelTitle</value>
+  </data>
+  <data name="ButtonRestoreLayoutToolTipDescription" xml:space="preserve">
+    <value>@ButtonRestoreLayoutToolTipDescription</value>
+  </data>
+  <data name="ButtonRestoreLayoutToolTipTitle" xml:space="preserve">
+    <value>@ButtonRestoreLayoutToolTipTitle</value>
+  </data>
+  <data name="ButtonSaveLayoutLabelDescription" xml:space="preserve">
+    <value>@ButtonSaveLayoutLabelDescription</value>
+  </data>
+  <data name="ButtonSaveLayoutLabelTitle" xml:space="preserve">
+    <value>@ButtonSaveLayoutLabelTitle</value>
+  </data>
+  <data name="ButtonSaveLayoutToolTipDescription" xml:space="preserve">
+    <value>@ButtonSaveLayoutToolTipDescription</value>
+  </data>
+  <data name="ButtonSaveLayoutToolTipTitle" xml:space="preserve">
+    <value>@ButtonSaveLayoutToolTipTitle</value>
+  </data>
+  <data name="ButtonSelectColorLabelDescription" xml:space="preserve">
+    <value>@ButtonSelectColorLabelDescription</value>
+  </data>
+  <data name="ButtonSelectColorLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectColorLabelTitle</value>
+  </data>
+  <data name="ButtonSelectColorToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectColorToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectColorToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectColorToolTipTitle</value>
+  </data>
+  <data name="ButtonVideoWindowLabelDescription" xml:space="preserve">
+    <value>@ButtonVideoWindowLabelDescription</value>
+  </data>
+  <data name="ButtonVideoWindowLabelTitle" xml:space="preserve">
+    <value>@ButtonVideoWindowLabelTitle</value>
+  </data>
+  <data name="ButtonVideoWindowToolTipDescription" xml:space="preserve">
+    <value>@ButtonVideoWindowToolTipDescription</value>
+  </data>
+  <data name="ButtonVideoWindowToolTipTitle" xml:space="preserve">
+    <value>@ButtonVideoWindowToolTipTitle</value>
+  </data>
+  <data name="ChartWindowTitle" xml:space="preserve">
+    <value>@ChartWindowTitle</value>
+  </data>
+  <data name="DataGridFramenumber" xml:space="preserve">
+    <value>@DataGridFramenumber</value>
+  </data>
+  <data name="DataGridTimestamp" xml:space="preserve">
+    <value>@DataGridTimestamp</value>
+  </data>
+  <data name="DatagridWindowTitle" xml:space="preserve">
+    <value>@DatagridWindowTitle</value>
+  </data>
+  <data name="DataGridXPosition" xml:space="preserve">
+    <value>@DataGridXPosition</value>
+  </data>
+  <data name="DataGridYPosition" xml:space="preserve">
+    <value>@DataGridYPosition</value>
+  </data>
+  <data name="DirectShowErrorPreface" xml:space="preserve">
+    <value>@DirectShowErrorPreface</value>
+  </data>
+  <data name="DirectShowErrorTitle" xml:space="preserve">
+    <value>@DirectShowErrorTitle</value>
+  </data>
+  <data name="LoadVideoFilesTitle" xml:space="preserve">
+    <value>@LoadVideoFilesTitle</value>
+  </data>
+  <data name="ManualDataAcquisition" xml:space="preserve">
+    <value>@ManualDataAcquisition</value>
+  </data>
+  <data name="ManualDataAcquisitionAllPoints" xml:space="preserve">
+    <value>@ManualDataAcquisitionAllPoints</value>
+  </data>
+  <data name="ManualDataAcquisitionControlTitle" xml:space="preserve">
+    <value>@ManualDataAcquisitionControlTitle</value>
+  </data>
+  <data name="ManualDataAcquisitionDescription" xml:space="preserve">
+    <value>@ManualDataAcquisitionDescription</value>
+  </data>
+  <data name="ManualDataAcquisitionFrameLabel" xml:space="preserve">
+    <value>@ManualDataAcquisitionFrameLabel</value>
+  </data>
+  <data name="ManualDataAcquisitionRecentPointCount" xml:space="preserve">
+    <value>@ManualDataAcquisitionRecentPointCount</value>
+  </data>
+  <data name="QATButtonSaveLabelDescription" xml:space="preserve">
+    <value>@QATButtonSaveLabelDescription</value>
+  </data>
+  <data name="QATButtonSaveLabelTitle" xml:space="preserve">
+    <value>@QATButtonSaveLabelTitle</value>
+  </data>
+  <data name="QATButtonSaveToolTipDescription" xml:space="preserve">
+    <value>@QATButtonSaveToolTipDescription</value>
+  </data>
+  <data name="QATButtonSaveToolTipTitle" xml:space="preserve">
+    <value>@QATButtonSaveToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupAutomaticAquisitionLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupAutomaticAquisitionLabelTitle</value>
+  </data>
+  <data name="RibbonGroupHelpLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupHelpLabelTitle</value>
+  </data>
+  <data name="RibbonGroupLanguageLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupLanguageLabelTitle</value>
+  </data>
+  <data name="RibbonGroupManualAquisitionLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupManualAquisitionLabelTitle</value>
+  </data>
+  <data name="RibbonGroupPrepareLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupPrepareLabelTitle</value>
+  </data>
+  <data name="RibbonGroupStyleLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupStyleLabelTitle</value>
+  </data>
+  <data name="RibbonGroupWindowsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupWindowsLabelTitle</value>
+  </data>
+  <data name="RibbonTabHomeLabel" xml:space="preserve">
+    <value>@RibbonTabHomeLabel</value>
+  </data>
+  <data name="RibbonTabWindowsLabel" xml:space="preserve">
+    <value>@RibbonTabWindowsLabel</value>
+  </data>
+  <data name="ShowCalibrationLabelTitle" xml:space="preserve">
+    <value>@ShowCalibrationLabelTitle</value>
+  </data>
+  <data name="ShowClipRegion" xml:space="preserve">
+    <value>@ShowClipRegion</value>
+  </data>
+  <data name="VianaDialogTitle" xml:space="preserve">
+    <value>@VianaDialogTitle</value>
+  </data>
+  <data name="VideoFilesFilter" xml:space="preserve">
+    <value>@VideoFilesFilter</value>
+  </data>
+  <data name="VideoWindowTitle" xml:space="preserve">
+    <value>@VideoWindowTitle</value>
+  </data>
+  <data name="AxisAcceleration" xml:space="preserve">
+    <value>@AxisAcceleration</value>
+  </data>
+  <data name="AxisAccelerationXDirection" xml:space="preserve">
+    <value>@AxisAccelerationXDirection</value>
+  </data>
+  <data name="AxisAccelerationYDirection" xml:space="preserve">
+    <value>@AxisAccelerationYDirection</value>
+  </data>
+  <data name="AxisTime" xml:space="preserve">
+    <value>@AxisTime</value>
+  </data>
+  <data name="AxisVelocity" xml:space="preserve">
+    <value>@AxisVelocity</value>
+  </data>
+  <data name="AxisVelocityXDirection" xml:space="preserve">
+    <value>@AxisVelocityXDirection</value>
+  </data>
+  <data name="AxisVelocityYDirection" xml:space="preserve">
+    <value>@AxisVelocityYDirection</value>
+  </data>
+  <data name="AxisPositionX" xml:space="preserve">
+    <value>@AxisPositionX</value>
+  </data>
+  <data name="AxisPositionY" xml:space="preserve">
+    <value>@AxisPositionY</value>
+  </data>
+  <data name="ChartWindowAxesHeader" xml:space="preserve">
+    <value>@ChartWindowAxesHeader</value>
+  </data>
+  <data name="ChartWindowAxisIntervalHeader" xml:space="preserve">
+    <value>@ChartWindowAxisIntervalHeader</value>
+  </data>
+  <data name="ChartWindowAxisMaximumHeader" xml:space="preserve">
+    <value>@ChartWindowAxisMaximumHeader</value>
+  </data>
+  <data name="ChartWindowAxisMinimumHeader" xml:space="preserve">
+    <value>@ChartWindowAxisMinimumHeader</value>
+  </data>
+  <data name="ChartWindowChartHeader" xml:space="preserve">
+    <value>@ChartWindowChartHeader</value>
+  </data>
+  <data name="ChartWindowChartLegend" xml:space="preserve">
+    <value>@ChartWindowChartLegend</value>
+  </data>
+  <data name="ChartWindowChartSeries" xml:space="preserve">
+    <value>@ChartWindowChartSeries</value>
+  </data>
+  <data name="ChartWindowChartTitle" xml:space="preserve">
+    <value>@ChartWindowChartTitle</value>
+  </data>
+  <data name="ChartWindowChartTitleHeader" xml:space="preserve">
+    <value>@ChartWindowChartTitleHeader</value>
+  </data>
+  <data name="ChartWindowLegendTitleHeader" xml:space="preserve">
+    <value>@ChartWindowLegendTitleHeader</value>
+  </data>
+  <data name="ChartWindowSelectionEnabledHeader" xml:space="preserve">
+    <value>@ChartWindowSelectionEnabledHeader</value>
+  </data>
+  <data name="ChartWindowSeriesHeader" xml:space="preserve">
+    <value>@ChartWindowSeriesHeader</value>
+  </data>
+  <data name="ChartWindowSeriesTitleHeader" xml:space="preserve">
+    <value>@ChartWindowSeriesTitleHeader</value>
+  </data>
+  <data name="ChartWindowShowGridLinesHeader" xml:space="preserve">
+    <value>@ChartWindowShowGridLinesHeader</value>
+  </data>
+  <data name="ChartWindowTitlesHeader" xml:space="preserve">
+    <value>@ChartWindowTitlesHeader</value>
+  </data>
+  <data name="ChartWindowXAxisHeader" xml:space="preserve">
+    <value>@ChartWindowXAxisHeader</value>
+  </data>
+  <data name="ChartWindowXAxisTitleHeader" xml:space="preserve">
+    <value>@ChartWindowXAxisTitleHeader</value>
+  </data>
+  <data name="ChartWindowYAxisHeader" xml:space="preserve">
+    <value>@ChartWindowYAxisHeader</value>
+  </data>
+  <data name="ChartWindowYAxisTitleHeader" xml:space="preserve">
+    <value>@ChartWindowYAxisTitleHeader</value>
+  </data>
+  <data name="AxisDistance" xml:space="preserve">
+    <value>@AxisDistance</value>
+  </data>
+  <data name="AxisFrame" xml:space="preserve">
+    <value>@AxisFrame</value>
+  </data>
+  <data name="DataGridAcceleration" xml:space="preserve">
+    <value>@DataGridAcceleration</value>
+  </data>
+  <data name="DataGridDistance" xml:space="preserve">
+    <value>@DataGridDistance</value>
+  </data>
+  <data name="DataGridVelocity" xml:space="preserve">
+    <value>@DataGridVelocity</value>
+  </data>
+  <data name="DataGridXAcceleration" xml:space="preserve">
+    <value>@DataGridXAcceleration</value>
+  </data>
+  <data name="DataGridXVelocity" xml:space="preserve">
+    <value>@DataGridXVelocity</value>
+  </data>
+  <data name="DataGridYAcceleration" xml:space="preserve">
+    <value>@DataGridYAcceleration</value>
+  </data>
+  <data name="DataGridYVelocity" xml:space="preserve">
+    <value>@DataGridYVelocity</value>
+  </data>
+  <data name="ChartWindowShowLegendHeader" xml:space="preserve">
+    <value>@ChartWindowShowLegendHeader</value>
+  </data>
+  <data name="ChartWindowLegendHeader" xml:space="preserve">
+    <value>@ChartWindowLegendHeader</value>
+  </data>
+  <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
+    <value>@CalibrateWindowSpecifyLengthDescription</value>
+  </data>
+  <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
+    <value>@CalibrateWindowSpecifyLengthHeader</value>
+  </data>
+  <data name="CalibrateWindowSpecifyOriginDescription" xml:space="preserve">
+    <value>@CalibrateWindowSpecifyOriginDescription</value>
+  </data>
+  <data name="CalibrateWindowSpecifyOriginHeader" xml:space="preserve">
+    <value>@CalibrateWindowSpecifyOriginHeader</value>
+  </data>
+  <data name="BlobsControlDetectedPositionsHeader" xml:space="preserve">
+    <value>@BlobsControlDetectedPositionsHeader</value>
+  </data>
+  <data name="BlobsControlFoundBlobsHeader" xml:space="preserve">
+    <value>@BlobsControlFoundBlobsHeader</value>
+  </data>
+  <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
+    <value>@BlobsControlProcessedImageHeader</value>
+  </data>
+  <data name="ButtonChartWindowLabelDescription" xml:space="preserve">
+    <value>@ButtonChartWindowLabelDescription</value>
+  </data>
+  <data name="ButtonChartWindowLabelTitle" xml:space="preserve">
+    <value>@ButtonChartWindowLabelTitle</value>
+  </data>
+  <data name="ButtonChartWindowToolTipDescriptioButtonChartWindowToolTipDescription" xml:space="preserve">
+    <value>@ButtonChartWindowToolTipDescription</value>
+  </data>
+  <data name="ButtonChartWindowToolTipTitle" xml:space="preserve">
+    <value>@ButtonChartWindowToolTipTitle</value>
+  </data>
+  <data name="DatagridDisplayUnitsLabelDescription" xml:space="preserve">
+    <value>@DatagridDisplayUnitsLabelDescription</value>
+  </data>
+  <data name="DatagridDisplayUnitsLabelTitle" xml:space="preserve">
+    <value>@DatagridDisplayUnitsLabelTitle</value>
+  </data>
+  <data name="DatagridDisplayUnitsToolTipDescription" xml:space="preserve">
+    <value>@DatagridDisplayUnitsToolTipDescription</value>
+  </data>
+  <data name="DatagridDisplayUnitsToolTipTitle" xml:space="preserve">
+    <value>@DatagridDisplayUnitsToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupDatagridOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonGroupVideoCalibrationOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoCalibrationOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonTabDatagridLabel" xml:space="preserve">
+    <value>@RibbonTabDatagridLabel</value>
+  </data>
+  <data name="RibbonTabVideoLabel" xml:space="preserve">
+    <value>@RibbonTabVideoLabel</value>
+  </data>
+  <data name="ShowCalibrationLabelDescription" xml:space="preserve">
+    <value>@ShowCalibrationLabelDescription</value>
+  </data>
+  <data name="ShowCalibrationToolTipDescription" xml:space="preserve">
+    <value>@ShowCalibrationToolTipDescription</value>
+  </data>
+  <data name="ShowCalibrationToolTipTitle" xml:space="preserve">
+    <value>@ShowCalibrationToolTipTitle</value>
+  </data>
+  <data name="ShowClipRegionLabelDescription" xml:space="preserve">
+    <value>@ShowClipRegionLabelDescription</value>
+  </data>
+  <data name="ShowClipRegionLabelTitle" xml:space="preserve">
+    <value>@ShowClipRegionLabelTitle</value>
+  </data>
+  <data name="ShowClipRegionToolTipDescription" xml:space="preserve">
+    <value>@ShowClipRegionToolTipDescription</value>
+  </data>
+  <data name="ShowClipRegionToolTipTitle" xml:space="preserve">
+    <value>@ShowClipRegionToolTipTitle</value>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>@ApplicationTitle</value>
+  </data>
+  <data name="CalibrationErrorDescription" xml:space="preserve">
+    <value>@CalibrationErrorDescription</value>
+  </data>
+  <data name="CalibrationErrorMessage" xml:space="preserve">
+    <value>@CalibrationErrorMessage</value>
+  </data>
+  <data name="CalibrationErrorTitle" xml:space="preserve">
+    <value>@CalibrationErrorTitle</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>@Cancel</value>
+  </data>
+  <data name="LengthDialogDescription" xml:space="preserve">
+    <value>@LengthDialogDescription</value>
+  </data>
+  <data name="LengthDialogTitle" xml:space="preserve">
+    <value>@LengthDialogTitle</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>@OK</value>
+  </data>
+  <data name="DataGridXDistance" xml:space="preserve">
+    <value>@DataGridXDistance</value>
+  </data>
+  <data name="DataGridYDistance" xml:space="preserve">
+    <value>@DataGridYDistance</value>
+  </data>
+  <data name="AxisDistanceX" xml:space="preserve">
+    <value>@AxisDistanceX</value>
+  </data>
+  <data name="AxisDistanceY" xml:space="preserve">
+    <value>@AxisDistanceY</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoAutoDetectionOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionTolerance" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionTolerance</value>
+  </data>
+  <data name="CalibrateVideoWindowTitle" xml:space="preserve">
+    <value>@CalibrateVideoWindowTitle</value>
+  </data>
+  <data name="CalibrateWindowHelpControlTitle" xml:space="preserve">
+    <value>@CalibrateWindowHelpControlTitle</value>
+  </data>
+  <data name="WindowWithHelpButtonDoneLabel" xml:space="preserve">
+    <value>@WindowWithHelpButtonDoneLabel</value>
+  </data>
+  <data name="ClipVideoDescriptionTitle" xml:space="preserve">
+    <value>@ClipVideoDescriptionTitle</value>
+  </data>
+  <data name="ClipVideoDescriptionMessage" xml:space="preserve">
+    <value>@ClipVideoDescriptionMessage</value>
+  </data>
+  <data name="ClipVideoHelpControlTitle" xml:space="preserve">
+    <value>@ClipVideoHelpControlTitle</value>
+  </data>
+  <data name="ClipVideoWindowTitle" xml:space="preserve">
+    <value>@ClipVideoWindowTitle</value>
+  </data>
+  <data name="SelectColorWindowDescriptionMessage" xml:space="preserve">
+    <value>@SelectColorWindowDescriptionMessage</value>
+  </data>
+  <data name="SelectColorWindowDescriptionTitle" xml:space="preserve">
+    <value>@SelectColorWindowDescriptionTitle</value>
+  </data>
+  <data name="SelectColorWindowHelpControlTitle" xml:space="preserve">
+    <value>@SelectColorWindowHelpControlTitle</value>
+  </data>
+  <data name="SelectColorWindowTitle" xml:space="preserve">
+    <value>@SelectColorWindowTitle</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionBlobMaxDiameter" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionBlobMaxDiameter</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionBlobMinDiameter" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionBlobMinDiameter</value>
+  </data>
+  <data name="ButtonOtherOptionsLabelDescription" xml:space="preserve">
+    <value>@ButtonOtherOptionsLabelDescription</value>
+  </data>
+  <data name="ButtonOtherOptionsLabelTitle" xml:space="preserve">
+    <value>@ButtonOtherOptionsLabelTitle</value>
+  </data>
+  <data name="ButtonOtherOptionsToolTipDescription" xml:space="preserve">
+    <value>@ButtonOtherOptionsToolTipDescription</value>
+  </data>
+  <data name="ButtonOtherOptionsToolTipTitle" xml:space="preserve">
+    <value>@ButtonOtherOptionsToolTipTitle</value>
+  </data>
+  <data name="StatusBarReady" xml:space="preserve">
+    <value>@StatusBarReady</value>
+  </data>
+  <data name="BlobsNoObjectFound" xml:space="preserve">
+    <value>@BlobsNoObjectFound</value>
+  </data>
+  <data name="BlobsObjectsFound" xml:space="preserve">
+    <value>@BlobsObjectsFound</value>
+  </data>
+  <data name="StatusIsCalculating" xml:space="preserve">
+    <value>@StatusIsCalculating</value>
+  </data>
+  <data name="ButtonExportDataToCsvLabelDescription" xml:space="preserve">
+    <value>@ButtonExportDataToCsvLabelDescription</value>
+  </data>
+  <data name="ButtonExportDataToCsvLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataToCsvLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToCsvToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToCsvToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToCsvToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToCsvToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataToTxtLabelDescription" xml:space="preserve">
+    <value>@ButtonExportDataToTxtLabelDescription</value>
+  </data>
+  <data name="ButtonExportDataToTxtLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataToTxtLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToTxtToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToTxtToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToTxtToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToTxtToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataToXlsLabelDescription" xml:space="preserve">
+    <value>@ButtonExportDataToXlsLabelDescription</value>
+  </data>
+  <data name="ButtonExportDataToXlsLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataToXlsLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToXlsToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToXlsToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToXlsToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToXlsToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataToXmlLabelDescription" xml:space="preserve">
+    <value>@ButtonExportDataToXmlLabelDescription</value>
+  </data>
+  <data name="ButtonExportDataToXmlLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataToXmlLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToXmlToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToXmlToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToXmlToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToXmlToolTipTitle</value>
+  </data>
+  <data name="CsvFilter" xml:space="preserve">
+    <value>@CsvFilter</value>
+  </data>
+  <data name="ExportWhereToSaveFile" xml:space="preserve">
+    <value>@ExportWhereToSaveFile</value>
+  </data>
+  <data name="RibbonGroupDatagridExportLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridExportLabelTitle</value>
+  </data>
+  <data name="TxtFilter" xml:space="preserve">
+    <value>@TxtFilter</value>
+  </data>
+  <data name="XmlFilter" xml:space="preserve">
+    <value>@XmlFilter</value>
+  </data>
+  <data name="ButtonCaptureVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonCaptureVideoLabelDescription</value>
+  </data>
+  <data name="ButtonCaptureVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonCaptureVideoLabelTitle</value>
+  </data>
+  <data name="ButtonCaptureVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonCaptureVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonCaptureVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonCaptureVideoToolTipTitle</value>
+  </data>
+  <data name="ButtonExportChartToClipboardLabelDescription" xml:space="preserve">
+    <value>@ButtonExportChartToClipboardLabelDescription</value>
+  </data>
+  <data name="ButtonExportChartToClipboardLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartToClipboardLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToClipboardToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToClipboardToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToClipboardToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToClipboardToolTipTitle</value>
+  </data>
+  <data name="ButtonExportChartToFileLabelDescription" xml:space="preserve">
+    <value>@ButtonExportChartToFileLabelDescription</value>
+  </data>
+  <data name="ButtonExportChartToFileLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartToFileLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToFileToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToFileToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToFileToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToFileToolTipTitle</value>
+  </data>
+  <data name="ButtonExportChartToWordLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartToWordLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToWordToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToWordToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToWordToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToWordToolTipTitle</value>
+  </data>
+  <data name="GraphicFilesFilter" xml:space="preserve">
+    <value>@GraphicFilesFilter</value>
+  </data>
+  <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
+    <value>@GraphicFilesSaveFileDialogTitle</value>
+  </data>
+  <data name="RibbonGroupOpenVideoLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupOpenVideoLabelTitle</value>
+  </data>
+  <data name="RibbonTabAnalysisLabel" xml:space="preserve">
+    <value>@RibbonTabAnalysisLabel</value>
+  </data>
+  <data name="ButtonChooseAnalysisLabelDescription" xml:space="preserve">
+    <value>@ButtonChooseAnalysisLabelDescription</value>
+  </data>
+  <data name="ButtonChooseAnalysisLabelTitle" xml:space="preserve">
+    <value>@ButtonChooseAnalysisLabelTitle</value>
+  </data>
+  <data name="ButtonChooseAnalysisToolTipDescription" xml:space="preserve">
+    <value>@ButtonChooseAnalysisToolTipDescription</value>
+  </data>
+  <data name="ButtonChooseAnalysisToolTipTitle" xml:space="preserve">
+    <value>@ButtonChooseAnalysisToolTipTitle</value>
+  </data>
+  <data name="RibbonTabOptionsLabel" xml:space="preserve">
+    <value>@RibbonTabOptionsLabel</value>
+  </data>
+  <data name="ChartDisplayOptionsLabelDescription" xml:space="preserve">
+    <value>@ChartDisplayOptionsLabelDescription</value>
+  </data>
+  <data name="ChartDisplayOptionsLabelTitle" xml:space="preserve">
+    <value>@ChartDisplayOptionsLabelTitle</value>
+  </data>
+  <data name="ChartDisplayOptionsToolTipDescription" xml:space="preserve">
+    <value>@ChartDisplayOptionsToolTipDescription</value>
+  </data>
+  <data name="ChartDisplayOptionsToolTipTitle" xml:space="preserve">
+    <value>@ChartDisplayOptionsToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupChartExportLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupChartExportLabelTitle</value>
+  </data>
+  <data name="RibbonGroupChartOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupChartOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonTabChartLabel" xml:space="preserve">
+    <value>@RibbonTabChartLabel</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisLabelDescription" xml:space="preserve">
+    <value>@ButtonChooseAutomaticAnalysisLabelDescription</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisLabelTitle" xml:space="preserve">
+    <value>@ButtonChooseAutomaticAnalysisLabelTitle</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisToolTipDescription" xml:space="preserve">
+    <value>@ButtonChooseAutomaticAnalysisToolTipDescription</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisToolTipTitle" xml:space="preserve">
+    <value>@ButtonChooseAutomaticAnalysisToolTipTitle</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopLabelDescription" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionStopLabelDescription</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopLabelTitle" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionStopLabelTitle</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopToolTipDescription" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionStopToolTipDescription</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopToolTipTitle" xml:space="preserve">
+    <value>@ButtonAutomaticDataAquisitionStopToolTipTitle</value>
+  </data>
+  <data name="ButtonSelectedColorLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectedColorLabelTitle</value>
+  </data>
+  <data name="ButtonCalculateVelocityLabelDescription" xml:space="preserve">
+    <value>@ButtonCalculateVelocityLabelDescription</value>
+  </data>
+  <data name="ButtonCalculateVelocityLabelTitle" xml:space="preserve">
+    <value>@ButtonCalculateVelocityLabelTitle</value>
+  </data>
+  <data name="ButtonCalculateVelocityToolTipDescription" xml:space="preserve">
+    <value>@ButtonCalculateVelocityToolTipDescription</value>
+  </data>
+  <data name="ButtonCalculateVelocityToolTipTitle" xml:space="preserve">
+    <value>@ButtonCalculateVelocityToolTipTitle</value>
+  </data>
+  <data name="ButtonDeleteDataLabelDescription" xml:space="preserve">
+    <value>@ButtonDeleteDataLabelDescription</value>
+  </data>
+  <data name="ButtonDeleteDataLabelTitle" xml:space="preserve">
+    <value>@ButtonDeleteDataLabelTitle</value>
+  </data>
+  <data name="ButtonDeleteDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonDeleteDataToolTipDescription</value>
+  </data>
+  <data name="ButtonDeleteDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonDeleteDataToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupDatagridUpdateDataLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridUpdateDataLabelTitle</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesLabelDescription" xml:space="preserve">
+    <value>@ButtonVideoCaptureDevicePropertiesLabelDescription</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesLabelTitle" xml:space="preserve">
+    <value>@ButtonVideoCaptureDevicePropertiesLabelTitle</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesToolTipDescription" xml:space="preserve">
+    <value>@ButtonVideoCaptureDevicePropertiesToolTipDescription</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesToolTipTitle" xml:space="preserve">
+    <value>@ButtonVideoCaptureDevicePropertiesToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupVideoSelectDeviceLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoSelectDeviceLabelTitle</value>
+  </data>
+  <data name="RibbonVideoDevicesSelectDeviceLabelTitle" xml:space="preserve">
+    <value>@RibbonVideoDevicesSelectDeviceLabelTitle</value>
+  </data>
+  <data name="RibbonGroupChartShowWindowLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupChartShowWindowLabelTitle</value>
+  </data>
+  <data name="RibbonGroupDatagridShowWindowLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridShowWindowLabelTitle</value>
+  </data>
+  <data name="RibbonGroupVideoShowWindowLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoShowWindowLabelTitle</value>
+  </data>
+  <data name="ButtonCloseApplicationLabelDescription" xml:space="preserve">
+    <value>@ButtonCloseApplicationLabelDescription</value>
+  </data>
+  <data name="ButtonCloseApplicationLabelTitle" xml:space="preserve">
+    <value>@ButtonCloseApplicationLabelTitle</value>
+  </data>
+  <data name="ButtonCloseApplicationToolTipDescription" xml:space="preserve">
+    <value>@ButtonCloseApplicationToolTipDescription</value>
+  </data>
+  <data name="ButtonCloseApplicationToolTipTitle" xml:space="preserve">
+    <value>@ButtonCloseApplicationToolTipTitle</value>
+  </data>
+  <data name="RibbonApplicationMenuRecentFilesTitle" xml:space="preserve">
+    <value>@RibbonApplicationMenuRecentFilesTitle</value>
+  </data>
+  <data name="ChartWindowAxisStyleHeader" xml:space="preserve">
+    <value>@ChartWindowAxisStyleHeader</value>
+  </data>
+  <data name="ButtonRecordVideoLabelDescription" xml:space="preserve">
+    <value>@ButtonRecordVideoLabelDescription</value>
+  </data>
+  <data name="ButtonRecordVideoLabelTitle" xml:space="preserve">
+    <value>@ButtonRecordVideoLabelTitle</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonRecordVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipTitle" xml:space="preserve">
+    <value>@ButtonRecordVideoToolTipTitle</value>
+  </data>
+  <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
+    <value>@SaveVideoDialogCompressorLabel</value>
+  </data>
+  <data name="SaveVideoDialogFilenameLabel" xml:space="preserve">
+    <value>@SaveVideoDialogFilenameLabel</value>
+  </data>
+  <data name="SaveVideoDialogTitle" xml:space="preserve">
+    <value>@SaveVideoDialogTitle</value>
+  </data>
+  <data name="IsRecordingVideo" xml:space="preserve">
+    <value>@IsRecordingVideo</value>
+  </data>
+  <data name="SaveVideoDialogFolderLabel" xml:space="preserve">
+    <value>@SaveVideoDialogFolderLabel</value>
+  </data>
+  <data name="VideoSaveFolderBrowserDescriptionTitle" xml:space="preserve">
+    <value>@VideoSaveFolderBrowserDescriptionTitle</value>
+  </data>
+  <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
+    <value>@SaveVideoDialogStartAnalysis</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelDescription" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataLabelDescription</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelTitle" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataLabelTitle</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataToolTipDescription</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonIsInterpolatingDataToolTipTitle</value>
+  </data>
+  <data name="InterpolationDescriptionTitle" xml:space="preserve">
+    <value>@InterpolationDescriptionTitle</value>
+  </data>
+  <data name="InterpolationDialogNumberOfSamplesToUse" xml:space="preserve">
+    <value>@InterpolationDialogNumberOfSamplesToUse</value>
+  </data>
+  <data name="InterpolationDialogTitle" xml:space="preserve">
+    <value>@InterpolationDialogTitle</value>
+  </data>
+  <data name="InterpolationDialogTopTitle" xml:space="preserve">
+    <value>@InterpolationDialogTopTitle</value>
+  </data>
+  <data name="InterpolationMovingAverageDescription" xml:space="preserve">
+    <value>@InterpolationMovingAverageDescription</value>
+  </data>
+  <data name="InterpolationPropertiesTitle" xml:space="preserve">
+    <value>@InterpolationPropertiesTitle</value>
+  </data>
+  <data name="MovingAverageDialogTitle" xml:space="preserve">
+    <value>@MovingAverageDialogTitle</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelDescription" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesLabelDescription</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelTitle" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesLabelTitle</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipDescription" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesToolTipDescription</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipTitle" xml:space="preserve">
+    <value>@ButtonInterpolationPropertiesToolTipTitle</value>
+  </data>
+  <data name="InterpolationDialogInterpolationType" xml:space="preserve">
+    <value>@InterpolationDialogInterpolationType</value>
+  </data>
+  <data name="AxisAccelerationInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationInterpolated</value>
+  </data>
+  <data name="AxisAccelerationXDirectionInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationXDirectionInterpolated</value>
+  </data>
+  <data name="AxisAccelerationYDirectionInterpolated" xml:space="preserve">
+    <value>@AxisAccelerationYDirectionInterpolated</value>
+  </data>
+  <data name="AxisVelocityInterpolated" xml:space="preserve">
+    <value>@AxisVelocityInterpolated</value>
+  </data>
+  <data name="AxisVelocityXDirectionInterpolated" xml:space="preserve">
+    <value>@AxisVelocityXDirectionInterpolated</value>
+  </data>
+  <data name="AxisVelocityYDirectionInterpolated" xml:space="preserve">
+    <value>@AxisVelocityYDirectionInterpolated</value>
+  </data>
+  <data name="DataGridAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridVelocityInterpolated</value>
+  </data>
+  <data name="DataGridXAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridXAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridXVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridXVelocityInterpolated</value>
+  </data>
+  <data name="DataGridYAccelerationInterpolated" xml:space="preserve">
+    <value>@DataGridYAccelerationInterpolated</value>
+  </data>
+  <data name="DataGridYVelocityInterpolated" xml:space="preserve">
+    <value>@DataGridYVelocityInterpolated</value>
+  </data>
+  <data name="AxisAoverT" xml:space="preserve">
+    <value>@AxisAoverT</value>
+  </data>
+  <data name="AxisAXoverT" xml:space="preserve">
+    <value>@AxisAXoverT</value>
+  </data>
+  <data name="AxisAYoverT" xml:space="preserve">
+    <value>@AxisAYoverT</value>
+  </data>
+  <data name="AxisVoverT" xml:space="preserve">
+    <value>@AxisVoverT</value>
+  </data>
+  <data name="AxisVXoverT" xml:space="preserve">
+    <value>@AxisVXoverT</value>
+  </data>
+  <data name="AxisVYoverT" xml:space="preserve">
+    <value>@AxisVYoverT</value>
+  </data>
+  <data name="AxisXoverT" xml:space="preserve">
+    <value>@AxisXoverT</value>
+  </data>
+  <data name="AxisYoverT" xml:space="preserve">
+    <value>@AxisYoverT</value>
+  </data>
+  <data name="AxisYoverX" xml:space="preserve">
+    <value>@AxisYoverX</value>
+  </data>
+  <data name="ChartWindowCustomAxisHeader" xml:space="preserve">
+    <value>@ChartWindowCustomAxisHeader</value>
+  </data>
+  <data name="ChartWindowCustomDiagrammTypes" xml:space="preserve">
+    <value>@ChartWindowCustomDiagrammTypes</value>
+  </data>
+  <data name="ChartWindowInterpolationLineLabel" xml:space="preserve">
+    <value>@ChartWindowInterpolationLineLabel</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleColored" xml:space="preserve">
+    <value>@ChartWindowScatterPointStyleColored</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleSingleColored" xml:space="preserve">
+    <value>@ChartWindowScatterPointStyleSingleColored</value>
+  </data>
+  <data name="AxisDoverV" xml:space="preserve">
+    <value>@AxisDoverV</value>
+  </data>
+  <data name="AxisDXoverVX" xml:space="preserve">
+    <value>@AxisDXoverVX</value>
+  </data>
+  <data name="AxisDYoverVY" xml:space="preserve">
+    <value>@AxisDYoverVY</value>
+  </data>
+  <data name="AxisLength" xml:space="preserve">
+    <value>@AxisLength</value>
+  </data>
+  <data name="AxisLengthX" xml:space="preserve">
+    <value>@AxisLengthX</value>
+  </data>
+  <data name="AxisLengthY" xml:space="preserve">
+    <value>@AxisLengthY</value>
+  </data>
+  <data name="AxisSoverT" xml:space="preserve">
+    <value>@AxisSoverT</value>
+  </data>
+  <data name="AxisSoverV" xml:space="preserve">
+    <value>@AxisSoverV</value>
+  </data>
+  <data name="AxisSXoverVX" xml:space="preserve">
+    <value>@AxisSXoverVX</value>
+  </data>
+  <data name="AxisSYoverVY" xml:space="preserve">
+    <value>@AxisSYoverVY</value>
+  </data>
+  <data name="AxisVoverA" xml:space="preserve">
+    <value>@AxisVoverA</value>
+  </data>
+  <data name="AxisVXoverAX" xml:space="preserve">
+    <value>@AxisVXoverAX</value>
+  </data>
+  <data name="AxisVYoverAY" xml:space="preserve">
+    <value>@AxisVYoverAY</value>
+  </data>
+  <data name="ChartWindowChartProperties" xml:space="preserve">
+    <value>@ChartWindowChartProperties</value>
+  </data>
+  <data name="ChartWindowInterpolationHeader" xml:space="preserve">
+    <value>@ChartWindowInterpolationHeader</value>
+  </data>
+  <data name="ChartWindowInterpolationOptions" xml:space="preserve">
+    <value>@ChartWindowInterpolationOptions</value>
+  </data>
+  <data name="ChartWindowPositionSpaceHeader" xml:space="preserve">
+    <value>@ChartWindowPositionSpaceHeader</value>
+  </data>
+  <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
+    <value>@ChartWindowPhaseSpaceHeader</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelDescription" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelDescription</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelTitle</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle2" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsLabelTitle2</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectNumberOfObjectsToolTipTitle</value>
+  </data>
+  <data name="DataGridLength" xml:space="preserve">
+    <value>@DataGridLength</value>
+  </data>
+  <data name="DataGridObjectPrefix" xml:space="preserve">
+    <value>@DataGridObjectPrefix</value>
+  </data>
+  <data name="DataGridXLength" xml:space="preserve">
+    <value>@DataGridXLength</value>
+  </data>
+  <data name="DataGridYLength" xml:space="preserve">
+    <value>@DataGridYLength</value>
+  </data>
+  <data name="AxisPixelX" xml:space="preserve">
+    <value>@AxisPixelX</value>
+  </data>
+  <data name="AxisPixelY" xml:space="preserve">
+    <value>@AxisPixelY</value>
+  </data>
+  <data name="DataGridXPixel" xml:space="preserve">
+    <value>@DataGridXPixel</value>
+  </data>
+  <data name="DataGridYPixel" xml:space="preserve">
+    <value>@DataGridYPixel</value>
+  </data>
+  <data name="ChartWindowObjectSelectionLabel" xml:space="preserve">
+    <value>@ChartWindowObjectSelectionLabel</value>
+  </data>
+  <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
+    <value>@ManualDataAcquisitionTrackItemNumberHeader</value>
+  </data>
+  <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
+    <value>@ExponentialSmoothDialogSmoothingFactorLabel</value>
+  </data>
+  <data name="ExponentialSmoothDialogTitle" xml:space="preserve">
+    <value>@ExponentialSmoothDialogTitle</value>
+  </data>
+  <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
+    <value>@InterpolationExponentialSmoothDescription</value>
+  </data>
+  <data name="ButtonSelectObjectLabelDescription" xml:space="preserve">
+    <value>@ButtonSelectObjectLabelDescription</value>
+  </data>
+  <data name="ButtonSelectObjectLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectObjectLabelTitle</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectObjectToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectObjectToolTipTitle</value>
+  </data>
+  <data name="RegressionDialogTitle" xml:space="preserve">
+    <value>@RegressionDialogTitle</value>
+  </data>
+  <data name="RegressionDialogTopTitle" xml:space="preserve">
+    <value>@RegressionDialogTopTitle</value>
+  </data>
+  <data name="RegressionExp" xml:space="preserve">
+    <value>@RegressionExp</value>
+  </data>
+  <data name="RegressionExpo" xml:space="preserve">
+    <value>@RegressionExpo</value>
+  </data>
+  <data name="RegressionFunctionLabel" xml:space="preserve">
+    <value>@RegressionFunctionLabel</value>
+  </data>
+  <data name="RegressionLinear" xml:space="preserve">
+    <value>@RegressionLinear</value>
+  </data>
+  <data name="RegressionLineLabel" xml:space="preserve">
+    <value>@RegressionLineLabel</value>
+  </data>
+  <data name="RegressionLog" xml:space="preserve">
+    <value>@RegressionLog</value>
+  </data>
+  <data name="RegressionPot" xml:space="preserve">
+    <value>@RegressionPot</value>
+  </data>
+  <data name="RegressionQuad" xml:space="preserve">
+    <value>@RegressionQuad</value>
+  </data>
+  <data name="RegressionResonanz" xml:space="preserve">
+    <value>@RegressionResonanz</value>
+  </data>
+  <data name="RegressionSin" xml:space="preserve">
+    <value>@RegressionSin</value>
+  </data>
+  <data name="RegressionSinExp" xml:space="preserve">
+    <value>@RegressionSinExp</value>
+  </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTitle</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>@LineOptionsDialogTopTitle</value>
+  </data>
+  <data name="RegressionCalculatorDialogTitle" xml:space="preserve">
+    <value>@RegressionCalculatorDialogTitle</value>
+  </data>
+  <data name="RegressionColorRegress" xml:space="preserve">
+    <value>@RegressionColorRegress</value>
+  </data>
+  <data name="RegressionColorTheorie" xml:space="preserve">
+    <value>@RegressionColorTheorie</value>
+  </data>
+  <data name="RegressionCurve" xml:space="preserve">
+    <value>@RegressionCurve</value>
+  </data>
+  <data name="RegressionLineThickness" xml:space="preserve">
+    <value>@RegressionLineThickness</value>
+  </data>
+  <data name="RegressionNumberDigits" xml:space="preserve">
+    <value>@RegressionNumberDigits</value>
+  </data>
+  <data name="RegressionTheorie" xml:space="preserve">
+    <value>@RegressionTheorie</value>
+  </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>@CalculatorDialogInsert</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>@CalculatorDialogPhysicalKonst</value>
+  </data>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>@ChartWindowCalculatorHeader</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>@CalculatorDialogButtonDoneCalc</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>@CalculatorDialogButtonDoneFktEdit</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>@CalculatorDialogTitleFunctionEditor</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>@PhysikKonstant_c</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>@PhysikKonstant_e</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>@PhysikKonstant_epsilon</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>@PhysikKonstant_f</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>@PhysikKonstant_g</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>@PhysikKonstant_h</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>@PhysikKonstant_Lambda0</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>@PhysikKonstant_me</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>@PhysikKonstant_mu</value>
+  </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>@RibbonGroupDatagridInterpolationTitle</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>@ButtonExportChartLabelTitle</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportChartToolTipDescription</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportChartToolTipTitle</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToolTipTitle</value>
+  </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>@ChartWindowChartFitAndSmooth</value>
+  </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>@ChartWindowDisplayCurveLabel</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>@ChartWindowLineColorLabel</value>
+  </data>
+  <data name="ChartWindowRegressionChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowRegressionChooseTypeLabel</value>
+  </data>
+  <data name="ChartWindowRegressionHeader" xml:space="preserve">
+    <value>@ChartWindowRegressionHeader</value>
+  </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>@ChartWindowTheoreticalFunctionChooseTypeLabel</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>@ChartWindowTheorieLabel</value>
+  </data>
+  <data name="RegressionDialogHeader" xml:space="preserve">
+    <value>@RegressionDialogHeader</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>@CalculatorDialogTitleCalc</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowDataSeriesLabel</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowInterpolationSeriesLabel</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>@ChartWindowRegressionSeriesLabel</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>@ChartWindowSeriesStyleHeader</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>@ChartWindowTheorySeriesLabel</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>@ChartWindowPrecisionLabel</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>@ChartWindowRegressionLineLegend</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>@ChartWindowTheoryLineLegend</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>@LineStyleOptionsDialogTitle</value>
+  </data>
+  <data name="AberrationStringPrefix" xml:space="preserve">
+    <value>@AberrationStringPrefix</value>
+  </data>
+  <data name="RegressionBestType" xml:space="preserve">
+    <value>@RegressionBestType</value>
+  </data>
+  <data name="ParseErrorBracketClose" xml:space="preserve">
+    <value>@ParseErrorBracketClose</value>
+  </data>
+  <data name="ParseErrorBracketOpen" xml:space="preserve">
+    <value>@ParseErrorBracketOpen</value>
+  </data>
+  <data name="ParseErrorIllegalCharacter" xml:space="preserve">
+    <value>@ParseErrorIllegalCharacter</value>
+  </data>
+  <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
+    <value>@ParseErrorNoFormulaDefined</value>
+  </data>
+  <data name="ParseErrorOperatorMissing" xml:space="preserve">
+    <value>@ParseErrorOperatorMissing</value>
+  </data>
+  <data name="ParseErrorTermMissing" xml:space="preserve">
+    <value>@ParseErrorTermMissing</value>
+  </data>
+  <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
+    <value>@ParseErrorUnknownIdentifier</value>
+  </data>
+  <data name="SaveProjectDialogTitle" xml:space="preserve">
+    <value>@SaveProjectDialogTitle</value>
+  </data>
+  <data name="QATButtonOpenLabelTitle" xml:space="preserve">
+    <value>@QATButtonOpenLabelTitle</value>
+  </data>
+  <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
+    <value>@QATButtonOpenToolTipDescription</value>
+  </data>
+  <data name="AskSaveProjectDialogDescription" xml:space="preserve">
+    <value>@AskSaveProjectDialogDescription</value>
+  </data>
+  <data name="AskSaveProjectDialogMessage" xml:space="preserve">
+    <value>@AskSaveProjectDialogMessage</value>
+  </data>
+  <data name="AskSaveProjectDialogTitle" xml:space="preserve">
+    <value>@AskSaveProjectDialogTitle</value>
+  </data>
+  <data name="QATButtonSaveAsLabelTitle" xml:space="preserve">
+    <value>@QATButtonSaveAsLabelTitle</value>
+  </data>
+  <data name="QATButtonSaveAsToolTipDescription" xml:space="preserve">
+    <value>@QATButtonSaveAsToolTipDescription</value>
+  </data>
+  <data name="SaveProjectDialogDescription" xml:space="preserve">
+    <value>@SaveProjectDialogDescription</value>
+  </data>
+  <data name="SaveProjectDialogMessage" xml:space="preserve">
+    <value>@SaveProjectDialogMessage</value>
+  </data>
+  <data name="OpenProjectDialogTitle" xml:space="preserve">
+    <value>@OpenProjectDialogTitle</value>
+  </data>
+  <data name="AboutBoxCredits" xml:space="preserve">
+    <value>@AboutBoxCredits</value>
+  </data>
+  <data name="AboutBoxCreditsHeader" xml:space="preserve">
+    <value>@AboutBoxCreditsHeader</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitLabelTitle" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitLabelTitle</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipDescription" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitToolTipDescription</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipTitle" xml:space="preserve">
+    <value>@ButtonSwitchTimeUnitToolTipTitle</value>
+  </data>
+  <data name="TimeUnitDialogDescription" xml:space="preserve">
+    <value>@TimeUnitDialogDescription</value>
+  </data>
+  <data name="TimeUnitDialogTitle" xml:space="preserve">
+    <value>@TimeUnitDialogTitle</value>
+  </data>
+  <data name="CalibrationLengthErrorHint" xml:space="preserve">
+    <value>@CalibrationLengthErrorHint</value>
+  </data>
+  <data name="CalibrationLengthToShortDescription" xml:space="preserve">
+    <value>@CalibrationLengthToShortDescription</value>
+  </data>
+  <data name="CalibrationLengthToShortMessage" xml:space="preserve">
+    <value>@CalibrationLengthToShortMessage</value>
+  </data>
+  <data name="CalibrationLengthToShortTitle" xml:space="preserve">
+    <value>@CalibrationLengthToShortTitle</value>
+  </data>
+  <data name="ShowVideoInfosButtonLabelTitle" xml:space="preserve">
+    <value>@ShowVideoInfosButtonLabelTitle</value>
+  </data>
+  <data name="ShowVideoInfosButtonToolTipDescription" xml:space="preserve">
+    <value>@ShowVideoInfosButtonToolTipDescription</value>
+  </data>
+  <data name="ShowVideoInfosButtonToolTipTitle" xml:space="preserve">
+    <value>@ShowVideoInfosButtonToolTipTitle</value>
+  </data>
+  <data name="VideoInfoDialogTitle" xml:space="preserve">
+    <value>@VideoInfoDialogTitle</value>
+  </data>
+  <data name="VideoInfoDialogTopFrameTitle" xml:space="preserve">
+    <value>@VideoInfoDialogTopFrameTitle</value>
+  </data>
+  <data name="VideoInfoBitrateLabel" xml:space="preserve">
+    <value>@VideoInfoBitrateLabel</value>
+  </data>
+  <data name="VideoInfoCodecLabel" xml:space="preserve">
+    <value>@VideoInfoCodecLabel</value>
+  </data>
+  <data name="VideoInfoDurationLabel" xml:space="preserve">
+    <value>@VideoInfoDurationLabel</value>
+  </data>
+  <data name="VideoInfoFilenameLabel" xml:space="preserve">
+    <value>@VideoInfoFilenameLabel</value>
+  </data>
+  <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
+    <value>@VideoInfoFPSDefaultLabel</value>
+  </data>
+  <data name="VideoInfoFPSLabel" xml:space="preserve">
+    <value>@VideoInfoFPSLabel</value>
+  </data>
+  <data name="VideoInfoFrameCountLabel" xml:space="preserve">
+    <value>@VideoInfoFrameCountLabel</value>
+  </data>
+  <data name="VideoInfoFrameSizeLabel" xml:space="preserve">
+    <value>@VideoInfoFrameSizeLabel</value>
+  </data>
+  <data name="VideoWindowPlayButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowPlayButtonToolTip</value>
+  </data>
+  <data name="VideoWindowRecordButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowRecordButtonToolTip</value>
+  </data>
+  <data name="VideoWindowSeekNextButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowSeekNextButtonToolTip</value>
+  </data>
+  <data name="VideoWindowSeekPreviousButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowSeekPreviousButtonToolTip</value>
+  </data>
+  <data name="VideoWindowSetCutoutLeftButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowSetCutoutLeftButtonToolTip</value>
+  </data>
+  <data name="VideoWindowSetCutoutRightButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowSetCutoutRightButtonToolTip</value>
+  </data>
+  <data name="VideoWindowSetZeroTimeButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowSetZeroTimeButtonToolTip</value>
+  </data>
+  <data name="VideoWindowStopButtonToolTip" xml:space="preserve">
+    <value>@VideoWindowStopButtonToolTip</value>
+  </data>
+  <data name="SaveDialogButtonDoNotSave" xml:space="preserve">
+    <value>@SaveDialogButtonDoNotSave</value>
+  </data>
+  <data name="SaveDialogButtonSave" xml:space="preserve">
+    <value>@SaveDialogButtonSave</value>
+  </data>
+  <data name="ChartWindowRescaleAxesButton" xml:space="preserve">
+    <value>@ChartWindowRescaleAxesButton</value>
+  </data>
+  <data name="LineStyleControlChartTitle" xml:space="preserve">
+    <value>@LineStyleControlChartTitle</value>
+  </data>
+  <data name="LineStyleDisplayMarkerLabel" xml:space="preserve">
+    <value>@LineStyleDisplayMarkerLabel</value>
+  </data>
+  <data name="ChartWindowLegendPlacementInside" xml:space="preserve">
+    <value>@ChartWindowLegendPlacementInside</value>
+  </data>
+  <data name="ChartWindowLegendPlacementLabel" xml:space="preserve">
+    <value>@ChartWindowLegendPlacementLabel</value>
+  </data>
+  <data name="ChartWindowLegendPlacementOutside" xml:space="preserve">
+    <value>@ChartWindowLegendPlacementOutside</value>
+  </data>
+</root>

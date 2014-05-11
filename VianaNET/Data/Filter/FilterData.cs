@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FilterData.cs" company="Freie Universität Berlin">
+// <copyright file="CurrentFilterData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2012 Dr. Adrian Voßkühler  
@@ -35,6 +35,9 @@ namespace VianaNET.Data.Filter
   using Collections;
   using CustomStyles.Types;
   using Interpolation;
+
+  using OxyPlot;
+
   using Regression;
   using Theory;
   using WPFMath;
@@ -63,14 +66,20 @@ namespace VianaNET.Data.Filter
     /// The data line color property.
     /// </summary>
     public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.Register(
-      "SelectionColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
+      "SelectionColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The data line color property.
     /// </summary>
     public static readonly DependencyProperty DataLineColorProperty = DependencyProperty.Register(
-      "DataLineColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
-    
+      "DataLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+
+    /// <summary>
+    /// The data line marker type property.
+    /// </summary>
+    public static readonly DependencyProperty DataLineMarkerTypeProperty = DependencyProperty.Register(
+      "DataLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
+
     /// <summary>
     /// The Regression line thickness property.
     /// </summary>
@@ -81,7 +90,13 @@ namespace VianaNET.Data.Filter
     /// The Regression line color property.
     /// </summary>
     public static readonly DependencyProperty RegressionLineColorProperty = DependencyProperty.Register(
-      "RegressionLineColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
+      "RegressionLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+
+    /// <summary>
+    /// The Regression line marker type property.
+    /// </summary>
+    public static readonly DependencyProperty RegressionLineMarkerTypeProperty = DependencyProperty.Register(
+      "RegressionLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The Interpolation line thickness property.
@@ -93,7 +108,13 @@ namespace VianaNET.Data.Filter
     /// The Interpolation line color property.
     /// </summary>
     public static readonly DependencyProperty InterpolationLineColorProperty = DependencyProperty.Register(
-      "InterpolationLineColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
+      "InterpolationLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+
+    /// <summary>
+    /// The Interpolation line marker type property.
+    /// </summary>
+    public static readonly DependencyProperty InterpolationLineMarkerTypeProperty = DependencyProperty.Register(
+      "InterpolationLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The Theory line thickness property.
@@ -105,7 +126,13 @@ namespace VianaNET.Data.Filter
     /// The Theory line color property.
     /// </summary>
     public static readonly DependencyProperty TheoryLineColorProperty = DependencyProperty.Register(
-      "TheoryLineColor", typeof(SolidColorBrush), typeof(FilterData), new UIPropertyMetadata(null));
+      "TheoryLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+
+    /// <summary>
+    /// The Theory line marker type property.
+    /// </summary>
+    public static readonly DependencyProperty TheoryLineMarkerTypeProperty = DependencyProperty.Register(
+      "TheoryLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The RegressionObject property.
@@ -222,15 +249,19 @@ namespace VianaNET.Data.Filter
       this.InterpolationSeries = new SortedObservableCollection<XYSample>();
       this.RegressionSeries = new SortedObservableCollection<XYSample>();
       this.TheorySeries = new SortedObservableCollection<XYSample>();
-      this.SelectionColor = Brushes.Blue;
-      this.DataLineColor = Brushes.LightBlue;
-      this.InterpolationLineColor = Brushes.Brown;
-      this.RegressionLineColor = Brushes.Red;
-      this.TheoryLineColor = Brushes.GreenYellow;
+      this.SelectionColor = OxyColors.Blue;
+      this.DataLineColor = OxyColors.LightBlue;
+      this.InterpolationLineColor = OxyColors.Brown;
+      this.RegressionLineColor = OxyColors.Red;
+      this.TheoryLineColor = OxyColors.GreenYellow;
       this.DataLineThickness = 2;
       this.InterpolationLineThickness = 2;
       this.RegressionLineThickness = 2;
       this.TheoryLineThickness = 2;
+      this.DataLineMarkerType = MarkerType.Circle;
+      this.InterpolationLineMarkerType = MarkerType.None;
+      this.RegressionLineMarkerType = MarkerType.None;
+      this.TheoryLineMarkerType = MarkerType.None;
       this.RegressionFilter = new RegressionFilter();
       this.RegressionFunctionTexFormula = null;
       this.RegressionAberration = 0d;
@@ -270,6 +301,22 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
+    /// Gets or sets the selection color.
+    /// </summary>
+    public OxyColor SelectionColor
+    {
+      get
+      {
+        return (OxyColor)this.GetValue(SelectionColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionColorProperty, value);
+      }
+    }
+
+    /// <summary>
     /// Gets or sets the data line thickness.
     /// </summary>
     public double DataLineThickness
@@ -288,11 +335,11 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the data line color.
     /// </summary>
-    public SolidColorBrush DataLineColor
+    public OxyColor DataLineColor
     {
       get
       {
-        return (SolidColorBrush)this.GetValue(DataLineColorProperty);
+        return (OxyColor)this.GetValue(DataLineColorProperty);
       }
 
       set
@@ -302,18 +349,18 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the selection color.
+    /// Gets or sets the data line marker type.
     /// </summary>
-    public SolidColorBrush SelectionColor
+    public MarkerType DataLineMarkerType
     {
       get
       {
-        return (SolidColorBrush)this.GetValue(SelectionColorProperty);
+        return (MarkerType)this.GetValue(DataLineMarkerTypeProperty);
       }
 
       set
       {
-        this.SetValue(SelectionColorProperty, value);
+        this.SetValue(DataLineMarkerTypeProperty, value);
       }
     }
 
@@ -336,16 +383,32 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the Regression line color.
     /// </summary>
-    public SolidColorBrush RegressionLineColor
+    public OxyColor RegressionLineColor
     {
       get
       {
-        return (SolidColorBrush)this.GetValue(RegressionLineColorProperty);
+        return (OxyColor)this.GetValue(RegressionLineColorProperty);
       }
 
       set
       {
         this.SetValue(RegressionLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the regression line marker type.
+    /// </summary>
+    public MarkerType RegressionLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(RegressionLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionLineMarkerTypeProperty, value);
       }
     }
 
@@ -368,16 +431,32 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the Interpolation line color.
     /// </summary>
-    public SolidColorBrush InterpolationLineColor
+    public OxyColor InterpolationLineColor
     {
       get
       {
-        return (SolidColorBrush)this.GetValue(InterpolationLineColorProperty);
+        return (OxyColor)this.GetValue(InterpolationLineColorProperty);
       }
 
       set
       {
         this.SetValue(InterpolationLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the interpolation line marker type.
+    /// </summary>
+    public MarkerType InterpolationLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(InterpolationLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationLineMarkerTypeProperty, value);
       }
     }
 
@@ -400,16 +479,32 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// Gets or sets the Theory line color.
     /// </summary>
-    public SolidColorBrush TheoryLineColor
+    public OxyColor TheoryLineColor
     {
       get
       {
-        return (SolidColorBrush)this.GetValue(TheoryLineColorProperty);
+        return (OxyColor)this.GetValue(TheoryLineColorProperty);
       }
 
       set
       {
         this.SetValue(TheoryLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets the theory line marker type.
+    /// </summary>
+    public MarkerType TheoryLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(TheoryLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryLineMarkerTypeProperty, value);
       }
     }
 
@@ -482,6 +577,22 @@ namespace VianaNET.Data.Filter
         {
           this.TheorySeries.Clear();
         }
+
+        this.OnPropertyChanged("HasTheoryFunction");
+      }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether this instance has theory function.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance has theory function; otherwise, <c>false</c>.
+    /// </value>
+    public bool HasTheoryFunction
+    {
+      get
+      {
+        return this.TheoreticalFunction != null;
       }
     }
 
@@ -816,5 +927,40 @@ namespace VianaNET.Data.Filter
     }
 
     #endregion
+
+    /// <summary>
+    /// Notifies changes of all properties, so that
+    /// the data bindings to the view were updated.
+    /// </summary>
+    public void NotifyChanges()
+    {
+      this.OnPropertyChanged("CurrentFilter");
+      this.OnPropertyChanged("DataLineThickness");
+      this.OnPropertyChanged("DataLineColor");
+      this.OnPropertyChanged("SelectionColor");
+      this.OnPropertyChanged("RegressionLineThickness");
+      this.OnPropertyChanged("RegressionLineColor");
+      this.OnPropertyChanged("InterpolationLineThickness");
+      this.OnPropertyChanged("InterpolationLineColor");
+      this.OnPropertyChanged("TheoryLineThickness");
+      this.OnPropertyChanged("TheoryLineColor");
+      this.OnPropertyChanged("RegressionFilter");
+      this.OnPropertyChanged("InterpolationFilter");
+      this.OnPropertyChanged("TheoryFilter");
+      this.OnPropertyChanged("TheoreticalFunction");
+      this.OnPropertyChanged("IsShowingDataSeries");
+      this.OnPropertyChanged("IsShowingInterpolationSeries");
+      this.OnPropertyChanged("IsShowingRegressionSeries");
+      this.OnPropertyChanged("IsShowingTheorySeries");
+      this.OnPropertyChanged("NumericPrecision");
+      this.OnPropertyChanged("InterpolationSeries");
+      this.OnPropertyChanged("RegressionSeries");
+      this.OnPropertyChanged("TheorySeries");
+      this.OnPropertyChanged("AxisX");
+      this.OnPropertyChanged("AxisY");
+      this.OnPropertyChanged("RegressionFunctionTexFormula");
+      this.OnPropertyChanged("TheoryFunctionTexFormula");
+      this.OnPropertyChanged("RegressionAberration");
+    }
   }
 }

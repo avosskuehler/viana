@@ -38,22 +38,14 @@ namespace VianaNET.CustomStyles.Converter
     #region Public Methods and Operators
 
     /// <summary>
-    /// The convert.
+    /// Converts a value.
     /// </summary>
-    /// <param name="value">
-    /// The value. 
-    /// </param>
-    /// <param name="targetType">
-    /// The target type. 
-    /// </param>
-    /// <param name="parameter">
-    /// The parameter. 
-    /// </param>
-    /// <param name="culture">
-    /// The culture. 
-    /// </param>
+    /// <param name="value">The value produced by the binding source.</param>
+    /// <param name="targetType">The type of the binding target property.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
-    /// The <see cref="object"/> . 
+    /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -62,22 +54,14 @@ namespace VianaNET.CustomStyles.Converter
     }
 
     /// <summary>
-    /// The convert back.
+    /// Converts a value.
     /// </summary>
-    /// <param name="value">
-    /// The value. 
-    /// </param>
-    /// <param name="targetType">
-    /// The target type. 
-    /// </param>
-    /// <param name="parameter">
-    /// The parameter. 
-    /// </param>
-    /// <param name="culture">
-    /// The culture. 
-    /// </param>
+    /// <param name="value">The value that is produced by the binding target.</param>
+    /// <param name="targetType">The type to convert to.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
-    /// The <see cref="object"/> . 
+    /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
