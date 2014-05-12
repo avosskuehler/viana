@@ -1642,4 +1642,7 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartExportedToClipboardMessage" xml:space="preserve">
     <value>Chart exported to clipboard.</value>
   </data>
+  <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
+    <value>Enable data selection.</value>
+  </data>
 </root>

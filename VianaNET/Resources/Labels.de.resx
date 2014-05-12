@@ -1627,4 +1627,7 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ChartExportedToClipboardMessage" xml:space="preserve">
     <value>Diagramm wurde in die Zwischenablage kopiert.</value>
   </data>
+  <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
+    <value>Auswahl von Datenpunkten zulassen</value>
+  </data>
 </root>

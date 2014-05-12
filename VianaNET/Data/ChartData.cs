@@ -26,6 +26,7 @@ namespace VianaNET.Data
   using System.Reflection;
 
   using OxyPlot;
+  using OxyPlot.Annotations;
   using OxyPlot.Axes;
   using OxyPlot.Series;
 
@@ -53,16 +54,81 @@ namespace VianaNET.Data
       this.ChartDataModel.LegendSymbolLength = 24;
       this.ChartDataModel.LegendBackground = OxyColor.FromArgb(200, 255, 255, 255);
       this.ChartDataModel.LegendBorder = OxyColors.LightGray;
+      this.ChartDataModel.SelectionColor = Viana.Project.CurrentFilterData.SelectionColor;
 
-      this.DefaultSeries = new LineSeries();
+      //var range = new RectangleAnnotation { Fill = OxyColor.FromAColor(120, OxyColors.SkyBlue), MinimumX = 0, MaximumX = 0 };
+      //this.ChartDataModel.Annotations.Add(range);
+
+      //double startx = double.NaN;
+
+      //this.ChartDataModel.MouseDown += (s, e) =>
+      //{
+      //  if (e.ChangedButton == OxyMouseButton.Left)
+      //  {
+      //    startx = range.InverseTransform(e.Position).X;
+      //    range.MinimumX = startx;
+      //    range.MaximumX = startx;
+      //    this.ChartDataModel.InvalidatePlot(true);
+      //    e.Handled = true;
+      //  }
+      //};
+      //this.ChartDataModel.MouseMove += (s, e) =>
+      //{
+      //  if (!double.IsNaN(startx))
+      //  {
+      //    var x = range.InverseTransform(e.Position).X;
+      //    range.MinimumX = Math.Min(x, startx);
+      //    range.MaximumX = Math.Max(x, startx);
+      //    range.Text = string.Format("∫ cos(x) dx =  {0:0.00}", Math.Sin(range.MaximumX) - Math.Sin(range.MinimumX));
+      //    this.ChartDataModel.Subtitle = string.Format("Integrating from {0:0.00} to {1:0.00}", range.MinimumX, range.MaximumX);
+      //    this.ChartDataModel.InvalidatePlot(true);
+      //    e.Handled = true;
+      //  }
+      //};
+
+      //this.ChartDataModel.MouseUp += (s, e) =>
+      //{
+      //  startx = double.NaN;
+      //};
+
+
+      this.DataScatterSeries = new ScatterSeries();
+      this.DataLineSeries = new LineSeries();
       this.InterpolationSeries = new LineSeries();
       this.RegressionSeries = new LineSeries();
       this.TheorySeries = new LineSeries();
 
-      this.DefaultSeries.TrackerKey = "DefaultSeriesTracker";
-      this.InterpolationSeries.TrackerKey = "OtherSeriesTracker";
-      this.RegressionSeries.TrackerKey = "OtherSeriesTracker";
-      this.TheorySeries.TrackerKey = "OtherSeriesTracker";
+      //this.DataScatterSeries.MouseDown += (s, e) =>
+      //{
+      //  var index = (int)e.HitTestResult.Index;
+
+      //  // Toggle the selection state for this item
+      //  if (this.DataScatterSeries.IsItemSelected(index))
+      //  {
+      //    this.DataScatterSeries.UnselectItem(index);
+      //  }
+      //  else
+      //  {
+      //    this.DataScatterSeries.SelectItem(index);
+      //  }
+
+      //  this.ChartDataModel.InvalidatePlot(false);
+      //  e.Handled = true;
+      //};
+
+      //this.ChartDataModel.MouseDown += (s, e) =>
+      //{
+      //  this.DataScatterSeries.ClearSelection();
+      //  this.ChartDataModel.InvalidatePlot(false);
+      //  e.Handled = true;
+      //};
+
+      this.DataScatterSeries.SelectionMode = SelectionMode.Multiple;
+      this.DataScatterSeries.TrackerKey = "DefaultTracker";
+      this.DataLineSeries.TrackerKey = "EmptyTracker";
+      this.InterpolationSeries.TrackerKey = "DefaultTracker";
+      this.RegressionSeries.TrackerKey = "DefaultTracker";
+      this.TheorySeries.TrackerKey = "DefaultTracker";
 
       this.XAxis = new LinearAxis();
       this.XAxis.Position = AxisPosition.Bottom;
@@ -86,7 +152,8 @@ namespace VianaNET.Data
       this.YAxis.MaximumPadding = 0.05;
       this.YAxis.MinimumPadding = 0.05;
 
-      this.ChartDataModel.Series.Add(this.DefaultSeries);
+      this.ChartDataModel.Series.Add(this.DataScatterSeries);
+      this.ChartDataModel.Series.Add(this.DataLineSeries);
       this.ChartDataModel.Series.Add(this.InterpolationSeries);
       this.ChartDataModel.Series.Add(this.RegressionSeries);
       this.ChartDataModel.Series.Add(this.TheorySeries);
@@ -94,13 +161,14 @@ namespace VianaNET.Data
       this.ChartDataModel.Axes.Add(this.YAxis);
 
       // Property info of target object
-      this.DefaultSeries.Mapping =
+      this.DataScatterSeries.Mapping =
+        item => new ScatterPoint(GetTargetValue(item, "PositionX"), GetTargetValue(item, "PositionY"));
+      this.DataLineSeries.Mapping =
         item => new DataPoint(GetTargetValue(item, "PositionX"), GetTargetValue(item, "PositionY"));
       this.InterpolationSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
       this.RegressionSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
       this.TheorySeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
 
-      this.DefaultSeries.SelectionMode = SelectionMode.Multiple;
 
       this.UpdateModel();
       this.UpdateAppearance();
@@ -121,12 +189,20 @@ namespace VianaNET.Data
     public PlotModel ChartDataModel { get; private set; }
 
     /// <summary>
+    ///   Gets or sets the default scatter series which is selectable
+    /// </summary>
+    /// <value>
+    ///   The default series.
+    /// </value>
+    public ScatterSeries DataScatterSeries { get; set; }
+
+    /// <summary>
     ///   Gets or sets the default series.
     /// </summary>
     /// <value>
     ///   The default series.
     /// </value>
-    public LineSeries DefaultSeries { get; set; }
+    public LineSeries DataLineSeries { get; set; }
 
     /// <summary>
     ///   Gets or sets the interpolation series.
@@ -177,7 +253,8 @@ namespace VianaNET.Data
     /// </summary>
     public void UpdateModel()
     {
-      this.DefaultSeries.ItemsSource = Viana.Project.VideoData.Samples;
+      this.DataScatterSeries.ItemsSource = Viana.Project.VideoData.Samples;
+      this.DataLineSeries.ItemsSource = Viana.Project.VideoData.Samples;
       this.InterpolationSeries.ItemsSource = Viana.Project.CurrentFilterData.InterpolationSeries;
       this.RegressionSeries.ItemsSource = Viana.Project.CurrentFilterData.RegressionSeries;
       this.TheorySeries.ItemsSource = Viana.Project.CurrentFilterData.TheorySeries;
@@ -189,13 +266,17 @@ namespace VianaNET.Data
 
     public void UpdateAppearance()
     {
-      this.DefaultSeries.Title = Labels.ChartWindowDataSeriesLabel;
-      this.DefaultSeries.MarkerSize = Viana.Project.CurrentFilterData.DataLineThickness + 2;
-      this.DefaultSeries.MarkerFill = Viana.Project.CurrentFilterData.DataLineColor;
-      this.SetMarkerStroke(Viana.Project.CurrentFilterData.DataLineMarkerType, this.DefaultSeries);
-      this.DefaultSeries.MarkerType = Viana.Project.CurrentFilterData.DataLineMarkerType;
-      this.DefaultSeries.Color = Viana.Project.CurrentFilterData.DataLineColor;
-      this.DefaultSeries.StrokeThickness = Viana.Project.CurrentFilterData.DataLineThickness;
+      this.DataScatterSeries.Title = Labels.ChartWindowDataSeriesLabel;
+
+      this.DataScatterSeries.MarkerSize = Viana.Project.CurrentFilterData.DataLineThickness + 2;
+      this.DataScatterSeries.MarkerFill = Viana.Project.CurrentFilterData.DataLineColor;
+      this.DataScatterSeries.MarkerStrokeThickness = 1.5;
+      this.DataScatterSeries.MarkerType = Viana.Project.CurrentFilterData.DataLineMarkerType;
+      this.DataScatterSeries.MarkerStroke = OxyColors.White;
+
+      this.DataLineSeries.Title = string.Empty;
+      this.DataLineSeries.Color = Viana.Project.CurrentFilterData.DataLineColor;
+      this.DataLineSeries.StrokeThickness = Viana.Project.CurrentFilterData.DataLineThickness;
 
       this.InterpolationSeries.Title = Labels.ChartWindowInterpolationSeriesLabel;
       this.InterpolationSeries.MarkerSize = Viana.Project.CurrentFilterData.InterpolationLineThickness + 2;
@@ -261,7 +342,9 @@ namespace VianaNET.Data
     /// </param>
     public void UpdateDefaultSeriesMapping(string propertyX, string propertyY)
     {
-      this.DefaultSeries.Mapping =
+      this.DataScatterSeries.Mapping =
+        item => new ScatterPoint(GetTargetValue(item, propertyX), GetTargetValue(item, propertyY));
+      this.DataLineSeries.Mapping =
         item => new DataPoint(GetTargetValue(item, propertyX), GetTargetValue(item, propertyY));
     }
 
