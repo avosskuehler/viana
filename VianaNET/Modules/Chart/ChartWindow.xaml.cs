@@ -26,7 +26,7 @@ namespace VianaNET.Modules.Chart
   using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
-  using System.Reflection;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
@@ -34,8 +34,6 @@ namespace VianaNET.Modules.Chart
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
-
-  using Microsoft.Office.Interop.Excel;
 
   using OxyPlot;
   using OxyPlot.Series;
@@ -47,20 +45,25 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Filter;
   using VianaNET.Data.Filter.Regression;
   using VianaNET.Data.Filter.Theory;
+  using VianaNET.Resources;
 
   using WPFMath;
-
-  using Application = System.Windows.Application;
-  using Constants = VianaNET.Data.Filter.Theory.Constants;
-  using Labels = VianaNET.Resources.Labels;
-  using Point = System.Windows.Point;
-  using SelectionMode = OxyPlot.SelectionMode;
 
   /// <summary>
   ///   The chart window.
   /// </summary>
   public partial class ChartWindow
   {
+    #region Constants
+
+    /// <summary>
+    ///   Determines maximum distance of two points (in pixel) given by mouse input
+    ///   that should be considered as different.
+    /// </summary>
+    private const int Maxdistancepoints = 10;
+
+    #endregion
+
     #region Static Fields
 
     /// <summary>
@@ -72,16 +75,6 @@ namespace VianaNET.Modules.Chart
         typeof(List<string>),
         typeof(ChartWindow),
         new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
-
-    #endregion
-
-    #region Constants
-
-    /// <summary>
-    ///   Determines maximum distance of two points (in pixel) given by mouse input
-    ///   that should be considered as different.
-    /// </summary>
-    private const int Maxdistancepoints = 10;
 
     #endregion
 
@@ -98,14 +91,14 @@ namespace VianaNET.Modules.Chart
     private readonly bool isInitialized;
 
     /// <summary>
-    /// The minus cursor.
+    ///   The minus cursor.
     /// </summary>
     private readonly Cursor minusCursor =
       new Cursor(
         Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
 
     /// <summary>
-    /// The plus cursor.
+    ///   The plus cursor.
     /// </summary>
     private readonly Cursor plusCursor =
       new Cursor(
@@ -117,34 +110,29 @@ namespace VianaNET.Modules.Chart
     private char axisName = 'x';
 
     /// <summary>
-    /// The end x value.
+    ///   The end x value.
     /// </summary>
-    private double endXValue;
+    private DataPoint mouseUpPositionInAxesCoordinates;
 
     /// <summary>
-    /// The end y value.
+    ///   Indicates whether data point selection is enabled.
     /// </summary>
-    private double endYValue;
+    private bool isSelectionEnabled;
 
     /// <summary>
-    /// The mouse down.
+    ///   Indicates whether the mouse button is pressed.
     /// </summary>
     private bool mouseDown;
 
     /// <summary>
-    /// The start pos.
+    ///   The start pos.
     /// </summary>
-    private Point startPos;
+    private Point mouseDownPositionInCanvasCoordinates;
 
     /// <summary>
-    /// The start x value.
+    ///   The start x value.
     /// </summary>
-    private double startXValue;
-
-    /// <summary>
-    /// The start y value.
-    /// </summary>
-    private double startYValue;
+    private DataPoint mouseDownPositionInAxesCoordinates;
 
     #endregion
 
@@ -163,19 +151,18 @@ namespace VianaNET.Modules.Chart
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
       this.PopulateAxesFromChartSelection();
-
-      //this.DefaultSeries.Mapping =
-      //  item => new ScatterPoint(GetTargetValue(item, "PositionX"), GetTargetValue(item, "PositionY"));
-      //this.InterpolationSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-      //this.RegressionSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-      //this.TheorySeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-      //this.DefaultSeries.SelectionMode = SelectionMode.Multiple;
     }
 
     #endregion
 
     #region Public Properties
 
+    /// <summary>
+    ///   Gets or sets the chart data. This is the view model for the chart.
+    /// </summary>
+    /// <value>
+    ///   The charts view model.
+    /// </value>
     public ChartData ChartData { get; set; }
 
     /// <summary>
@@ -198,20 +185,53 @@ namespace VianaNET.Modules.Chart
 
     #region Public Methods and Operators
 
-    ///// <summary>
-    ///// Updates the default series mapping.
-    ///// </summary>
-    ///// <param name="propertyX">
-    ///// The property x.
-    ///// </param>
-    ///// <param name="propertyY">
-    ///// The property y.
-    ///// </param>
-    //public void UpdateDefaultSeriesMapping(string propertyX, string propertyY)
-    //{
-    //  this.DefaultSeries.Mapping =
-    //    item => new ScatterPoint(GetTargetValue(item, propertyX), GetTargetValue(item, propertyY));
-    //}
+    /// <summary>
+    ///   This method refreshes the whole series and chart layout
+    /// </summary>
+    public void Refresh()
+    {
+      if (!this.isInitialized)
+      {
+        return;
+      }
+
+      if (this.ChartData.ChartDataModel.Series.Count == 0)
+      {
+        return;
+      }
+
+      // Whenever changing the axes, the theory formula will be odd, so hide it
+      Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
+      this.UpdateTheoryFormula();
+
+      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
+      var axisY = (DataAxis)this.YAxisContent.SelectedItem;
+
+      string propertyX;
+      string unitNameX;
+      this.UpdateAxisMappings(axisX, out propertyX, out unitNameX);
+
+      string propertyY;
+      string unitNameY;
+      this.UpdateAxisMappings(axisY, out propertyY, out unitNameY);
+
+      this.ChartData.XAxis.Title = axisX.Description;
+      this.ChartData.XAxis.Unit = unitNameX;
+      this.ChartData.YAxis.Title = axisY.Description;
+      this.ChartData.YAxis.Unit = unitNameY;
+
+      this.XAxisTitleTextBox.Text = axisX.Description;
+      this.YAxisTitleTextBox.Text = axisY.Description;
+
+      this.ChartData.UpdateDefaultSeriesMapping(propertyX, propertyY);
+
+      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
+      this.RefreshRegressionFuctionTerm();
+      Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
+
+      this.ChartData.UpdateModel();
+    }
 
     #endregion
 
@@ -237,29 +257,6 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// Gets the target value for the given object and the given property string.
-    ///   Uses reflection.
-    /// </summary>
-    /// <param name="item">
-    /// The item.
-    /// </param>
-    /// <param name="propertyString">
-    /// The property string.
-    /// </param>
-    /// <returns>
-    /// A <see cref="double"/> with the propertys value of the object.
-    /// </returns>
-    private static double GetTargetValue(object item, string propertyString)
-    {
-      PropertyInfo objectPropertyInfo = typeof(TimeSample).GetProperty("Object");
-      PropertyInfo targetPropertyInfo = typeof(DataSample).GetProperty(propertyString);
-      var propertyValue = (object[])objectPropertyInfo.GetValue(item);
-      object test = propertyValue[Viana.Project.ProcessingData.IndexOfObject];
-      object result = targetPropertyInfo.GetValue(test);
-      return result != null ? (double)result : 0;
-    }
-
-    /// <summary>
     /// Raises the PropertyChanged event.
     /// </summary>
     /// <param name="obj">
@@ -278,10 +275,44 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// Axis x title text box text changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="TextChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void AxisXTitleTextBoxChanged(object sender, TextChangedEventArgs e)
+    {
+      this.ChartData.XAxis.Title = this.XAxisTitleTextBox.Text;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
+    /// Axis y title text box text changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="TextChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void AxisYTitleTextBoxChanged(object sender, TextChangedEventArgs e)
+    {
+      this.ChartData.YAxis.Title = this.YAxisTitleTextBox.Text;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
     /// The chart content selection changed.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="SelectionChangedEventArgs"/> instance containing the event data.
+    /// </param>
     private void ChartContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       // This populates the chart combo boxes with the selected x and y Axes
@@ -290,40 +321,29 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// Filter precision button click.
+    /// Handles the OnTextChanged event of the DataSeriesTitleTextBox control.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void FilterPrecisionButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="TextChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void DataSeriesTitleTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-      var dlg = new NumericalPrecisionDialog { NumberOfDigits = Viana.Project.CurrentFilterData.NumericPrecision };
-      if (dlg.ShowDialog().GetValueOrDefault(false))
-      {
-        Viana.Project.CurrentFilterData.NumericPrecision = dlg.NumberOfDigits;
-        if (this.RegressionCheckBox.IsChecked())
-        {
-          this.RefreshRegressionFuctionTerm();
-          this.RefreshTheorieFunctionTerm();
-        }
-      }
-    }
-
-    /// <summary>
-    /// The interpolation options button click.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void InterpolationOptionsButtonClick(object sender, RoutedEventArgs e)
-    {
-      Viana.Project.CurrentFilterData.InterpolationFilter.ShowInterpolationOptionsDialog();
-      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      this.ChartData.DataScatterSeries.Title = this.DataSeriesTitleTextBox.Text;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
     /// <summary>
     /// Data style button click.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void DataStyleButtonClick(object sender, RoutedEventArgs e)
     {
       var lineOptionsDialog = new LineOptionsDialog();
@@ -342,21 +362,66 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// Filter precision button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void FilterPrecisionButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new NumericalPrecisionDialog { NumberOfDigits = Viana.Project.CurrentFilterData.NumericPrecision };
+      if (dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        Viana.Project.CurrentFilterData.NumericPrecision = dlg.NumberOfDigits;
+        if (this.RegressionCheckBox.IsChecked())
+        {
+          this.RefreshRegressionFuctionTerm();
+          this.RefreshTheorieFunctionTerm();
+        }
+      }
+    }
+
+    /// <summary>
+    /// The interpolation options button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void InterpolationOptionsButtonClick(object sender, RoutedEventArgs e)
+    {
+      Viana.Project.CurrentFilterData.InterpolationFilter.ShowInterpolationOptionsDialog();
+      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      this.ChartData.UpdateModel();
+    }
+
+    /// <summary>
     /// Interpolation style button click.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void InterpolationStyleButtonClick(object sender, RoutedEventArgs e)
     {
       var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.InterpolationLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness =
+        Viana.Project.CurrentFilterData.InterpolationLineThickness;
       lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.InterpolationLineColor;
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.InterpolationLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
-        Viana.Project.CurrentFilterData.InterpolationLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
+        Viana.Project.CurrentFilterData.InterpolationLineThickness =
+          lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
         Viana.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
         Viana.Project.CurrentFilterData.InterpolationLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
@@ -364,54 +429,89 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// Regression style button click.
+    /// Handles the OnChecked event of the LegendPlacementInsideRadioButton control.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void RegressionStyleButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void LegendPlacementInsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.RegressionLineColor;
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
-      lineOptionsDialog.ShowDialog();
-
-      if (lineOptionsDialog.DialogResult == true)
-      {
-        Viana.Project.CurrentFilterData.RegressionLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
-        Viana.Project.CurrentFilterData.RegressionLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
-        this.ChartData.UpdateAppearance();
-      }
+      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Inside;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
     /// <summary>
-    /// Theory style button click.
+    /// Handles the OnChecked event of the LegendPlacementOutsideRadioButton control.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void TheoryStyleButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void LegendPlacementOutsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.TheoryLineColor;
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
-      lineOptionsDialog.ShowDialog();
+      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Outside;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
 
-      if (lineOptionsDialog.DialogResult == true)
-      {
-        Viana.Project.CurrentFilterData.TheoryLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
-        Viana.Project.CurrentFilterData.TheoryLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
-        this.ChartData.UpdateAppearance();
-      }
+    /// <summary>
+    /// Legend text box text changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="TextChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void LegendTextBoxChanged(object sender, TextChangedEventArgs e)
+    {
+      this.ChartData.ChartDataModel.LegendTitle = this.LegendTextBox.Text;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
+    /// Legend visible CheckBox checked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void LegendVisibleCheckBoxChecked(object sender, RoutedEventArgs e)
+    {
+      this.ChartData.ChartDataModel.IsLegendVisible = true;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
+    /// Legend visible CheckBox unchecked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void LegendVisibleCheckBoxUnchecked(object sender, RoutedEventArgs e)
+    {
+      this.ChartData.ChartDataModel.IsLegendVisible = false;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
     /// <summary>
     /// The object selection combo selection changed.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="SelectionChangedEventArgs"/> instance containing the event data.
+    /// </param>
     private void ObjectSelectionComboSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       if (this.ObjectSelectionCombo.SelectedItem == null)
@@ -431,7 +531,7 @@ namespace VianaNET.Modules.Chart
     /// Polyline is automatically closed, if they are.
     /// </remarks>
     /// <param name="point1">
-    /// A <see cref="Point"/> with point one 
+    /// A <see cref="Point"/> with point one
     /// </param>
     /// <param name="point2">
     /// A <see cref="Point"/> with point two
@@ -626,8 +726,12 @@ namespace VianaNET.Modules.Chart
     /// <summary>
     /// The image processing property changed.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="PropertyChangedEventArgs"/> instance containing the event data.
+    /// </param>
     private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "NumberOfTrackedObjects")
@@ -636,30 +740,6 @@ namespace VianaNET.Modules.Chart
       }
       else if (e.PropertyName == "IndexOfObject")
       {
-        this.Refresh();
-      }
-    }
-
-    /// <summary>
-    /// The radio chart style checked.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void RadioChartStyleChecked(object sender, RoutedEventArgs e)
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
-
-      if (e.Source is RadioButton)
-      {
-        var checkedRadioButton = e.Source as RadioButton;
-        this.UpdateChartStyle(checkedRadioButton);
         this.Refresh();
       }
     }
@@ -707,50 +787,6 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    ///   This method refreshes the whole series and chart layout
-    /// </summary>
-    public void Refresh()
-    {
-      if (!this.isInitialized)
-      {
-        return;
-      }
-
-      if (this.ChartData.ChartDataModel.Series.Count == 0)
-      {
-        return;
-      }
-
-      // Whenever changing the axes, the theory formula will be odd, so hide it
-      Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
-      this.UpdateTheoryFormula();
-
-      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-      var axisY = (DataAxis)this.YAxisContent.SelectedItem;
-
-      string propertyX;
-      string unitNameX;
-      this.UpdateAxisMappings(axisX, out propertyX, out unitNameX);
-
-      string propertyY;
-      string unitNameY;
-      this.UpdateAxisMappings(axisY, out propertyY, out unitNameY);
-
-      this.ChartData.XAxis.Title = axisX.Description;
-      this.ChartData.XAxis.Unit = unitNameX;
-      this.ChartData.YAxis.Title = axisY.Description;
-      this.ChartData.YAxis.Unit = unitNameY;
-
-      this.XAxisTitleTextBox.Text = axisX.Description;
-      this.YAxisTitleTextBox.Text = axisY.Description;
-
-      this.ChartData.UpdateDefaultSeriesMapping(propertyX, propertyY);
-      this.UpdateFilters();
-      this.DataChart.ResetAllAxes();
-      this.ChartData.UpdateModel();
-    }
-
-    /// <summary>
     ///   Updates the theoretical term visual with a tex representation of the theoretical function
     /// </summary>
     private void RefreshTheorieFunctionTerm()
@@ -779,15 +815,41 @@ namespace VianaNET.Modules.Chart
       }
     }
 
-
     /// <summary>
-    /// The line fit type button click.
+    /// Regression style button click.
     /// </summary>
     /// <param name="sender">
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void RegressionStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.RegressionLineColor;
+      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        Viana.Project.CurrentFilterData.RegressionLineThickness =
+          lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
+        Viana.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.RegressionLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        this.ChartData.UpdateAppearance();
+      }
+    }
+
+    /// <summary>
+    /// Regression type button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void RegressionTypeButtonClick(object sender, RoutedEventArgs e)
     {
@@ -817,14 +879,29 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// Handles the OnClick event of the RescaleAxesButton control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void RescaleAxesButton_OnClick(object sender, RoutedEventArgs e)
+    {
+      this.ChartData.ChartDataModel.ResetAllAxes();
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
     /// The interpolation check box was checked.
     ///   So update the interpolation series.
     /// </summary>
     /// <param name="sender">
-    /// Source of the event
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// Event arguments
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void ShowInterpolationCheckBoxCheckedChanged(object sender, RoutedEventArgs e)
     {
@@ -839,7 +916,7 @@ namespace VianaNET.Modules.Chart
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void ShowRegressionCheckBoxChecked(object sender, RoutedEventArgs e)
     {
@@ -857,7 +934,7 @@ namespace VianaNET.Modules.Chart
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void ShowRegressionCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
@@ -871,13 +948,13 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// The check box show theorie_ checked.
+    /// The check box show theorie checked.
     /// </summary>
     /// <param name="sender">
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void ShowTheorieCheckBoxChecked(object sender, RoutedEventArgs e)
     {
@@ -894,7 +971,7 @@ namespace VianaNET.Modules.Chart
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void ShowTheorieCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
@@ -905,13 +982,13 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// The line fit theorie button click.
+    /// The theory options button click.
     /// </summary>
     /// <param name="sender">
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void TheoryOptionsButtonClick(object sender, RoutedEventArgs e)
     {
@@ -931,6 +1008,47 @@ namespace VianaNET.Modules.Chart
         Viana.Project.CurrentFilterData.TheoreticalFunction = fktEditor.GetFunktion();
         this.UpdateTheoryFormula();
       }
+    }
+
+    /// <summary>
+    /// Theory style button click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void TheoryStyleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.TheoryLineColor;
+      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
+      lineOptionsDialog.ShowDialog();
+
+      if (lineOptionsDialog.DialogResult == true)
+      {
+        Viana.Project.CurrentFilterData.TheoryLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
+        Viana.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.TheoryLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        this.ChartData.UpdateAppearance();
+      }
+    }
+
+    /// <summary>
+    /// Title text box text changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="TextChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void TitleTextBoxChanged(object sender, TextChangedEventArgs e)
+    {
+      this.ChartData.ChartDataModel.Title = this.ChartTitleTextBox.Text;
+      this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
     /// <summary>
@@ -1056,80 +1174,6 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// The update chart style.
-    /// </summary>
-    /// <param name="checkedRadioButton">
-    /// The checked radio button.
-    /// </param>
-    private void UpdateChartStyle(RadioButton checkedRadioButton)
-    {
-      // this.XAxisOptions.Visibility = Visibility.Visible;
-      // this.YAxisOptions.Visibility = Visibility.Visible;
-      // this.OtherContentGrid.RowDefinitions[0].Height = GridLength.Auto;
-
-      // this.RegressionSeries.RenderAs = RenderAs.Line;
-      // this.TheorySeries.RenderAs = RenderAs.Line;
-      // RenderAs? filterStyle = null;
-
-      // if (checkedRadioButton.Name.Contains("Scatter"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Point;
-      // filterStyle = RenderAs.Line;
-      // }
-      // else if (checkedRadioButton.Name.Contains("Line"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Line;
-      // filterStyle = RenderAs.Line;
-      // }
-      // else if (checkedRadioButton.Name.Contains("Pie"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Pie;
-      // this.XAxisOptions.Visibility = Visibility.Hidden;
-      // this.YAxisOptions.Visibility = Visibility.Hidden;
-      // this.OtherContentGrid.RowDefinitions[0].Height = new GridLength(0);
-      // }
-      // else if (checkedRadioButton.Name.Contains("Column"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Column;
-      // filterStyle = RenderAs.Line;
-      // }
-      // else if (checkedRadioButton.Name.Contains("Bubble"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Bubble;
-      // filterStyle = RenderAs.Line;
-      // }
-      // else if (checkedRadioButton.Name.Contains("Area"))
-      // {
-      // this.DefaultSeries.RenderAs = RenderAs.Area;
-      // filterStyle = RenderAs.Line;
-      // }
-
-      // var enabled = false;
-      // if (filterStyle.HasValue)
-      // {
-      // this.InterpolationSeries.RenderAs = filterStyle.Value;
-      // this.RegressionSeries.RenderAs = filterStyle.Value;
-      // this.TheorySeries.RenderAs = filterStyle.Value;
-      // enabled = true;
-      // }
-
-      // Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = enabled;
-      // Viana.Project.CurrentFilterData.IsShowingRegressionSeries = enabled;
-      // Viana.Project.CurrentFilterData.IsShowingTheorySeries = enabled;
-    }
-
-    /// <summary>
-    ///   This methods updates the filter series for the currently shown filters
-    /// </summary>
-    private void UpdateFilters()
-    {
-      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
-      Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
-      this.RefreshRegressionFuctionTerm();
-      Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
-    }
-
-    /// <summary>
     /// This method updates the regression button with
     ///   an image corresponding to the selected regression type
     /// </summary>
@@ -1137,7 +1181,7 @@ namespace VianaNET.Modules.Chart
     /// The aktual selected regression type.
     /// </param>
     /// <param name="neuBerechnen">
-    /// True, wenn die Regression neu berechnet werden soll 
+    /// True, wenn die Regression neu berechnet werden soll
     /// </param>
     private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType, bool neuBerechnen)
     {
@@ -1236,27 +1280,13 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// The value changed update chart.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void ValueChangedUpdateChart(object sender, EventArgs e)
-    {
-      // this.UpdateChartProperties();
-    }
-
-    /// <summary>
     /// The x axis content selection changed.
     /// </summary>
     /// <param name="sender">
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="SelectionChangedEventArgs"/> instance containing the event data.
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -1264,51 +1294,14 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// The y axis content selection changed.
+    /// X Axis show grid lines CheckBox checked.
     /// </summary>
     /// <param name="sender">
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
-    private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-      this.Refresh();
-    }
-
-    #endregion
-
-    private void TitleTextBoxChanged(object sender, TextChangedEventArgs e)
-    {
-      this.ChartData.ChartDataModel.Title = this.ChartTitleTextBox.Text;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
-    }
-
-    private void LegendVisibleCheckBoxChecked(object sender, RoutedEventArgs e)
-    {
-      this.ChartData.ChartDataModel.IsLegendVisible = true;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
-    }
-
-    private void LegendVisibleCheckBoxUnchecked(object sender, RoutedEventArgs e)
-    {
-      this.ChartData.ChartDataModel.IsLegendVisible = false;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
-    }
-
-    private void LegendTextBoxChanged(object sender, TextChangedEventArgs e)
-    {
-      this.ChartData.ChartDataModel.LegendTitle = this.LegendTextBox.Text;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
-    }
-
-    private void AxisXTitleTextBoxChanged(object sender, TextChangedEventArgs e)
-    {
-      this.ChartData.XAxis.Title = this.XAxisTitleTextBox.Text;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
-    }
-
     private void XAxisShowGridLinesCheckBoxChecked(object sender, RoutedEventArgs e)
     {
       this.ChartData.XAxis.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
@@ -1318,6 +1311,15 @@ namespace VianaNET.Modules.Chart
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
+    /// <summary>
+    /// X axis show grid lines CheckBox unchecked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void XAxisShowGridLinesCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
       this.ChartData.XAxis.MajorGridlineStyle = LineStyle.None;
@@ -1325,12 +1327,29 @@ namespace VianaNET.Modules.Chart
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
-    private void AxisYTitleTextBoxChanged(object sender, TextChangedEventArgs e)
+    /// <summary>
+    /// The y axis content selection changed.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="SelectionChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.ChartData.YAxis.Title = this.YAxisTitleTextBox.Text;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
+      this.Refresh();
     }
 
+    /// <summary>
+    /// Y axis show grid lines CheckBox checked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void YAxisShowGridLinesCheckBoxChecked(object sender, RoutedEventArgs e)
     {
       this.ChartData.YAxis.MajorGridlineColor = OxyColor.FromArgb(40, 0, 0, 139);
@@ -1340,6 +1359,15 @@ namespace VianaNET.Modules.Chart
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
+    /// <summary>
+    /// Y axis show grid lines CheckBox unchecked.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void YAxisShowGridLinesCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
       this.ChartData.YAxis.MajorGridlineStyle = LineStyle.None;
@@ -1348,47 +1376,233 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// Handles the OnClick event of the RescaleAxesButton control.
+    /// Plot area mouse move.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void RescaleAxesButton_OnClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaMouseMove(object sender, MouseEventArgs e)
     {
-      this.ChartData.ChartDataModel.ResetAllAxes();
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
+      if (this.mouseDown)
+      {
+        var currentPos = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
+
+        SelectRect.Visibility = Visibility.Visible;
+        SelectRect.Width = Math.Abs(this.mouseDownPositionInCanvasCoordinates.X - currentPos.X);
+        SelectRect.Height = Math.Abs(this.mouseDownPositionInCanvasCoordinates.Y - currentPos.Y);
+        if (currentPos.X < this.mouseDownPositionInCanvasCoordinates.X)
+        {
+          this.SelectRect.SetValue(Canvas.LeftProperty, currentPos.X);
+        }
+
+        if (currentPos.Y < this.mouseDownPositionInCanvasCoordinates.Y)
+        {
+          this.SelectRect.SetValue(Canvas.TopProperty, currentPos.Y);
+        }
+      }
+      else
+      {
+        SelectRect.Visibility = Visibility.Collapsed;
+      }
     }
 
     /// <summary>
-    /// Handles the OnTextChanged event of the DataSeriesTitleTextBox control.
+    /// Plot area mouse left button down.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
-    private void DataSeriesTitleTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      this.ChartData.DefaultSeries.Title = this.DataSeriesTitleTextBox.Text;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
+      if (!this.isSelectionEnabled)
+      {
+        return;
+      }
+
+      this.mouseDown = true;
+      SelectRect.Width = 0;
+      SelectRect.Height = 0;
+
+      this.mouseDownPositionInCanvasCoordinates = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
+      SelectRect.SetValue(Canvas.LeftProperty, this.mouseDownPositionInCanvasCoordinates.X);
+      SelectRect.SetValue(Canvas.TopProperty, this.mouseDownPositionInCanvasCoordinates.Y);
+      this.mouseDownPositionInAxesCoordinates = this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(this.mouseDownPositionInCanvasCoordinates.X, this.mouseDownPositionInCanvasCoordinates.Y));
+
+      SelectRect.Visibility = Visibility.Visible;
+
+      // Control button is pressed so more points are to be selected
+      if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        return;
+      }
+
+      // Remove selection in VideoData
+      //var selectedIndizes = this.ChartData.DataScatterSeries.GetSelectedItems();
+      //foreach (var selectedIndex in selectedIndizes)
+      //{
+      //  Viana.Project.VideoData.Samples[selectedIndex].IsSelected = false;
+      //}
+
+      foreach (var sample in Viana.Project.VideoData.Samples)
+      {
+        sample.IsSelected = false;
+      }
+
+      // Remove selection in series
+      this.ChartData.DataScatterSeries.ClearSelection();
+
     }
 
     /// <summary>
-    /// Handles the OnChecked event of the LegendPlacementInsideRadioButton control.
+    /// Plot area mouse left button up.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void LegendPlacementInsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
-      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Inside;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
+      if (this.mouseDown)
+      {
+        var currentPos = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
+        this.mouseUpPositionInAxesCoordinates = this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(currentPos.X, currentPos.Y));
+
+        if (this.PointsAreNear(this.mouseDownPositionInCanvasCoordinates, currentPos))
+        {
+          this.mouseDownPositionInAxesCoordinates.X -= Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02;
+          this.mouseUpPositionInAxesCoordinates.X += Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02;
+          this.mouseDownPositionInAxesCoordinates.Y -= Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02;
+          this.mouseUpPositionInAxesCoordinates.Y += Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02;
+        }
+
+        // Create current point list
+        var actualDataPoints = new List<ScatterPoint>();
+        foreach (var item in Viana.Project.VideoData.Samples)
+        {
+          actualDataPoints.Add(this.ChartData.DataScatterSeries.Mapping(item));
+        }
+
+        // Get points in rectangle
+        var selectedDataPoints = from dp in actualDataPoints
+                                 where (dp.X >= Math.Min(this.mouseDownPositionInAxesCoordinates.X, this.mouseUpPositionInAxesCoordinates.X))
+                                 && (dp.X <= Math.Max(this.mouseDownPositionInAxesCoordinates.X, this.mouseUpPositionInAxesCoordinates.X))
+                                 && (dp.Y >= Math.Min(this.mouseDownPositionInAxesCoordinates.Y, this.mouseUpPositionInAxesCoordinates.Y))
+                                 && (dp.Y <= Math.Max(this.mouseDownPositionInAxesCoordinates.Y, this.mouseUpPositionInAxesCoordinates.Y))
+                                 orderby dp.X
+                                 select dp;
+
+        if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+        {
+          foreach (var dataPoint in selectedDataPoints)
+          {
+            var index = actualDataPoints.IndexOf(dataPoint);
+            this.ChartData.DataScatterSeries.UnselectItem(index);
+            Viana.Project.VideoData.Samples[index].IsSelected = false;
+          }
+        }
+        else
+        {
+          foreach (var dataPoint in selectedDataPoints)
+          {
+            var index = actualDataPoints.IndexOf(dataPoint);
+            this.ChartData.DataScatterSeries.SelectItem(index);
+            Viana.Project.VideoData.Samples[index].IsSelected = true;
+          }
+        }
+
+        // Reset selection to whole series, if no point is selected
+        if (!selectedDataPoints.Any())
+        {
+          foreach (var sample in Viana.Project.VideoData.Samples)
+          {
+            sample.IsSelected = true;
+          }
+        }
+      }
+
+
+      this.mouseDown = false;
+      SelectRect.Visibility = Visibility.Collapsed;
+
+      this.Refresh();
     }
 
     /// <summary>
-    /// Handles the OnChecked event of the LegendPlacementOutsideRadioButton control.
+    /// Plot area mouse leave.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaMouseLeave(object sender, MouseEventArgs e)
+    {
+      if (!this.mouseDown)
+      {
+        SelectRect.Visibility = Visibility.Collapsed;
+      }
+    }
+
+    /// <summary>
+    /// Plot area mouse enter.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaMouseEnter(object sender, MouseEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        SelectRect.Visibility = Visibility.Visible;
+      }
+    }
+
+    /// <summary>
+    /// Handles the PreviewKeyDown event of the PlotArea control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+      if (Keyboard.Modifiers == ModifierKeys.Control)
+      {
+        this.DataChart.Cursor = this.plusCursor;
+      }
+      else if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        this.DataChart.Cursor = this.minusCursor;
+      }
+    }
+
+    /// <summary>
+    /// Handles the PreviewKeyUp event of the PlotArea control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+    private void PlotAreaPreviewKeyUp(object sender, KeyEventArgs e)
+    {
+      this.DataChart.Cursor = Cursors.Arrow;
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Handles the OnChecked event of the EnableTrackerCheckBox control.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void LegendPlacementOutsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
+    private void EnableTrackerCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
-      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Outside;
-      this.ChartData.ChartDataModel.InvalidatePlot(false);
+      this.isSelectionEnabled = true;
+    }
+
+    /// <summary>
+    /// Handles the OnUnchecked event of the EnableTrackerCheckBox control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void EnableTrackerCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+      this.isSelectionEnabled = false;
+      this.ChartData.DataScatterSeries.ClearSelection();
+      foreach (var sample in Viana.Project.VideoData.Samples)
+      {
+        sample.IsSelected = true;
+      }
+
+      this.Refresh();
     }
   }
 }

@@ -2446,6 +2446,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowEnableTrackerCheckBox.
+        /// </summary>
+        internal static string ChartWindowEnableTrackerCheckBox {
+            get {
+                return ResourceManager.GetString("ChartWindowEnableTrackerCheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowInterpolationHeader.
         /// </summary>
         internal static string ChartWindowInterpolationHeader {

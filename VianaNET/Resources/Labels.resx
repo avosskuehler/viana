@@ -1629,4 +1629,7 @@
   <data name="ChartExportedToClipboardMessage" xml:space="preserve">
     <value>@ChartExportedToClipboardMessage</value>
   </data>
+  <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
+    <value>@ChartWindowEnableTrackerCheckBox</value>
+  </data>
 </root>
