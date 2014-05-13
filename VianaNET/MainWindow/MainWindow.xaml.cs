@@ -463,7 +463,11 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToCsv(Viana.Project.VideoData.Samples, sfd.FileName);
+        var optionsDialog = new ExportOptionsDialog();
+        if (optionsDialog.ShowDialog().GetValueOrDefault())
+        {
+          ExportData.ToCsv(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+        }
       }
     }
 
@@ -476,19 +480,23 @@ namespace VianaNET.MainWindow
     {
       // Create new SaveFileDialog object
       var sfd = new SaveFileDialog
-        {
-          DefaultExt = "txt",
-          Filter = Labels.TxtFilter,
-          AddExtension = true,
-          RestoreDirectory = true,
-          Title = Labels.ExportWhereToSaveFile,
-          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-        };
+                  {
+                    DefaultExt = "txt",
+                    Filter = Labels.TxtFilter,
+                    AddExtension = true,
+                    RestoreDirectory = true,
+                    Title = Labels.ExportWhereToSaveFile,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                  };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToTxt(Viana.Project.VideoData.Samples, sfd.FileName);
+        var optionsDialog = new ExportOptionsDialog();
+        if (optionsDialog.ShowDialog().GetValueOrDefault())
+        {
+          ExportData.ToTxt(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+        }
       }
     }
 
@@ -499,7 +507,11 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ExportDataToXlsButtonClick(object sender, RoutedEventArgs e)
     {
-      ExportData.ToXls(Viana.Project.VideoData.Samples);
+      var optionsDialog = new ExportOptionsDialog();
+      if (optionsDialog.ShowDialog().GetValueOrDefault())
+      {
+        ExportData.ToXls(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions);
+      }
     }
 
     /// <summary>
@@ -523,7 +535,11 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToXml(Viana.Project.VideoData.Samples, sfd.FileName);
+        var optionsDialog = new ExportOptionsDialog();
+        if (optionsDialog.ShowDialog().GetValueOrDefault())
+        {
+          ExportData.ToXml(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+        }
       }
     }
 

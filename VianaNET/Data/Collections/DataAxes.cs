@@ -57,6 +57,15 @@ namespace VianaNET.Data.Collections
       typeof(DataAxis), 
       new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.AffectsRender));
 
+     /// <summary>
+    ///   The ShouldExport property.
+    /// </summary>
+    public static readonly DependencyProperty ShouldExportProperty = DependencyProperty.Register(
+      "ShouldExport", 
+      typeof(bool), 
+      typeof(DataAxis), 
+      new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.None));
+     
     /// <summary>
     ///   The data axes.
     /// </summary>
@@ -132,18 +141,6 @@ namespace VianaNET.Data.Collections
       var locvyAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirection");
       locvyAxis.SetBinding(vyAxis, DescriptionProperty);
 
-      var viAxis = new DataAxis(AxisType.VI);
-      var locviAxis = new LocExtension("VianaNET:Labels:AxisVelocityInterpolated");
-      locviAxis.SetBinding(viAxis, DescriptionProperty);
-
-      var vxiAxis = new DataAxis(AxisType.VXI);
-      var locvxiAxis = new LocExtension("VianaNET:Labels:AxisVelocityXDirectionInterpolated");
-      locvxiAxis.SetBinding(vxiAxis, DescriptionProperty);
-
-      var vyiAxis = new DataAxis(AxisType.VYI);
-      var locvyiAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirectionInterpolated");
-      locvyiAxis.SetBinding(vyiAxis, DescriptionProperty);
-
       var aAxis = new DataAxis(AxisType.A);
       var locaAxis = new LocExtension("VianaNET:Labels:AxisAcceleration");
       locaAxis.SetBinding(aAxis, DescriptionProperty);
@@ -156,17 +153,6 @@ namespace VianaNET.Data.Collections
       var locayAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirection");
       locayAxis.SetBinding(ayAxis, DescriptionProperty);
 
-      var aiAxis = new DataAxis(AxisType.AI);
-      var locaiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationInterpolated");
-      locaiAxis.SetBinding(aiAxis, DescriptionProperty);
-
-      var axiAxis = new DataAxis(AxisType.AXI);
-      var locaxiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationXDirectionInterpolated");
-      locaxiAxis.SetBinding(axiAxis, DescriptionProperty);
-
-      var ayiAxis = new DataAxis(AxisType.AYI);
-      var locayiAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirectionInterpolated");
-      locayiAxis.SetBinding(ayiAxis, DescriptionProperty);
 
       DataAxes = new List<DataAxis>
         {
@@ -185,15 +171,9 @@ namespace VianaNET.Data.Collections
           vAxis,
           vxAxis,
           vyAxis,
-          viAxis,
-          vxiAxis,
-          vyiAxis,
           aAxis,
           axAxis,
           ayAxis,
-          aiAxis,
-          axiAxis,
-          ayiAxis
         };
     }
 
@@ -248,6 +228,22 @@ namespace VianaNET.Data.Collections
       set
       {
         this.SetValue(DescriptionProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the description.
+    /// </summary>
+    public bool ShouldExport
+    {
+      get
+      {
+        return (bool)this.GetValue(ShouldExportProperty);
+      }
+
+      set
+      {
+        this.SetValue(ShouldExportProperty, value);
       }
     }
 
