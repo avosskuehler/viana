@@ -1645,4 +1645,22 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
     <value>Enable data selection.</value>
   </data>
+  <data name="ExportDialogTopFrameTitle" xml:space="preserve">
+    <value>Pleae specify the data columns to be exported.</value>
+  </data>
+  <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
+    <value>Columns for export:</value>
+  </data>
+  <data name="ExportOptionsDialogObjectGroupHeader" xml:space="preserve">
+    <value>Export data for the following objects:</value>
+  </data>
+  <data name="ExportOptionsDialogSelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="ExportOptionsDialogTitle" xml:space="preserve">
+    <value>Export data ...</value>
+  </data>
+  <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
+    <value>Unselect all</value>
+  </data>
 </root>

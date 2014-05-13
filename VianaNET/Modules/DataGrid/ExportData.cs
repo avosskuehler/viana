@@ -2,7 +2,7 @@
 // <copyright file="ExportData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,16 +19,11 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Enthält Hilfsfunktionen zum Erzeugen von Excel-Dateien mit SpreadsheetML.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-
 namespace VianaNET.Modules.DataGrid
 {
   using System;
+  using System.Collections.Generic;
   using System.Globalization;
   using System.IO;
   using System.Text;
@@ -37,10 +32,10 @@ namespace VianaNET.Modules.DataGrid
 
   using Microsoft.Office.Interop.Excel;
 
-  using VianaNET.Data;
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
   using VianaNET.Data.Collections;
   using VianaNET.Logging;
-  using VianaNET.Modules.Video.Control;
 
   using Application = System.Windows.Application;
   using Labels = VianaNET.Resources.Labels;
@@ -53,40 +48,38 @@ namespace VianaNET.Modules.DataGrid
     #region Public Methods and Operators
 
     /// <summary>
-    /// The to csv.
+    /// This method exports the given datasource with the given options to the given file
+    /// in csv format.
     /// </summary>
-    /// <param name="dataSource">
-    /// The data source. 
-    /// </param>
-    /// <param name="fileName">
-    /// The file name. 
-    /// </param>
-    public static void ToCsv(DataCollection dataSource, string fileName)
+    /// <param name="dataSource">The data source.</param>
+    /// <param name="options">The options.</param>
+    /// <param name="fileName">Name of the file.</param>
+    public static void ToCsv(DataCollection dataSource, ExportOptions options, string fileName)
     {
-      WriteToFileWithSeparator(dataSource, fileName, ";");
+      var arrays = GenerateExportArray(dataSource, options);
+      WriteToFileWithSeparator(arrays, fileName, ";");
     }
 
     /// <summary>
-    /// The to txt.
+    /// This method exports the given datasource with the given options to the given file
+    /// in txt format.
     /// </summary>
-    /// <param name="dataSource">
-    /// The data source. 
-    /// </param>
-    /// <param name="fileName">
-    /// The file name. 
-    /// </param>
-    public static void ToTxt(DataCollection dataSource, string fileName)
+    /// <param name="dataSource">The data source.</param>
+    /// <param name="options">The options.</param>
+    /// <param name="fileName">Name of the file.</param>
+    public static void ToTxt(DataCollection dataSource, ExportOptions options, string fileName)
     {
-      WriteToFileWithSeparator(dataSource, fileName, "\t");
+      var arrays = GenerateExportArray(dataSource, options);
+      WriteToFileWithSeparator(arrays, fileName, "\t");
     }
 
     /// <summary>
-    /// The to xls.
+    /// This method exports the given datasource with the given options directly to 
+    /// excel, if it is installed
     /// </summary>
-    /// <param name="dataSource">
-    /// The data source. 
-    /// </param>
-    public static void ToXls(DataCollection dataSource)
+    /// <param name="dataSource">The data source.</param>
+    /// <param name="options">The options.</param>
+    public static void ToXls(DataCollection dataSource, ExportOptions options)
     {
       Application.Current.MainWindow.Cursor = Cursors.Wait;
       try
@@ -97,54 +90,15 @@ namespace VianaNET.Modules.DataGrid
 
         var ws = (Worksheet)xla.ActiveSheet;
 
-        var row = 1;
-        ws.Cells[row, 1] = Labels.DataGridFramenumber;
-        ws.Cells[row, 2] = Labels.DataGridTimestamp;
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
-        {
-          string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
-          ws.Cells[row, 3 + i * 20] = title + Labels.DataGridXPosition;
-          ws.Cells[row, 4 + i * 20] = title + Labels.DataGridYPosition;
-          ws.Cells[row, 5 + i * 20] = title + Labels.DataGridDistance;
-          ws.Cells[row, 6 + i * 20] = title + Labels.DataGridXDistance;
-          ws.Cells[row, 7 + i * 20] = title + Labels.DataGridYDistance;
-          ws.Cells[row, 8 + i * 20] = title + Labels.DataGridLength;
-          ws.Cells[row, 9 + i * 20] = title + Labels.DataGridXLength;
-          ws.Cells[row, 10 + i * 20] = title + Labels.DataGridYLength;
-          ws.Cells[row, 11 + i * 20] = title + Labels.DataGridVelocity;
-          ws.Cells[row, 12 + i * 20] = title + Labels.DataGridXVelocity;
-          ws.Cells[row, 13 + i * 20] = title + Labels.DataGridYVelocity;
-          ws.Cells[row, 14 + i * 20] = title + Labels.DataGridAcceleration;
-          ws.Cells[row, 15 + i * 20] = title + Labels.DataGridXAcceleration;
-          ws.Cells[row, 16 + i * 20] = title + Labels.DataGridYAcceleration;
-        }
+        var arrays = GenerateExportArray(dataSource, options);
 
-        foreach (TimeSample sample in dataSource)
+        for (var i = 1; i <= arrays.Count; i++)
         {
-          row++;
-          ws.Cells[row, 1] = sample.Framenumber;
-          ws.Cells[row, 2] = sample.Object[0].Time;
-          for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+          var row = arrays[i - 1];
+          for (var j = 1; j <= row.Count; j++)
           {
-            if (sample.Object[i] == null)
-            {
-              continue;
-            }
-
-            ws.Cells[row, 3 + i * 20] = sample.Object[i].PositionX;
-            ws.Cells[row, 4 + i * 20] = sample.Object[i].PositionY;
-            ws.Cells[row, 5 + i * 20] = sample.Object[i].Distance;
-            ws.Cells[row, 6 + i * 20] = sample.Object[i].DistanceX;
-            ws.Cells[row, 7 + i * 20] = sample.Object[i].DistanceY;
-            ws.Cells[row, 8 + i * 20] = sample.Object[i].Length;
-            ws.Cells[row, 9 + i * 20] = sample.Object[i].LengthX;
-            ws.Cells[row, 10 + i * 20] = sample.Object[i].LengthY;
-            ws.Cells[row, 11 + i * 20] = sample.Object[i].Velocity;
-            ws.Cells[row, 12 + i * 20] = sample.Object[i].VelocityX;
-            ws.Cells[row, 13 + i * 20] = sample.Object[i].VelocityY;
-            ws.Cells[row, 14 + i * 20] = sample.Object[i].Acceleration;
-            ws.Cells[row, 15 + i * 20] = sample.Object[i].AccelerationX;
-            ws.Cells[row, 16 + i * 20] = sample.Object[i].AccelerationY;
+            var column = row[j - 1];
+            ws.Cells[i, j] = column;
           }
         }
       }
@@ -161,13 +115,10 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Erzeugt aus einer DataTable ein Excel-XML-Dokument mit SpreadsheetML.
     /// </summary>
-    /// <param name="dataSource">
-    /// Datenquelle, die in Excel exportiert werden soll 
-    /// </param>
-    /// <param name="fileName">
-    /// Dateiname der Ausgabe-XML-Datei 
-    /// </param>
-    public static void ToXml(DataCollection dataSource, string fileName)
+    /// <param name="dataSource"> Datenquelle, die in Excel exportiert werden soll </param>
+    /// <param name="options">Die Exporteinstellungen</param>
+    /// <param name="fileName"> Dateiname der Ausgabe-XML-Datei</param>
+    public static void ToXml(DataCollection dataSource, ExportOptions options, string fileName)
     {
       // XML-Schreiber erzeugen
       var writer = new XmlTextWriter(fileName, Encoding.UTF8);
@@ -253,60 +204,15 @@ namespace VianaNET.Modules.DataGrid
       writer.WriteAttributeString("x", "FullRows", null, "1");
       writer.WriteAttributeString("ss", "DefaultColumnWidth", null, "60");
 
-      // <Row>
-      writer.WriteStartElement("Row");
-
-      // Alle Zellen der aktuellen Zeile durchlaufen
-      WriteCellValue(writer, "String", Labels.DataGridFramenumber);
-      WriteCellValue(writer, "String", Labels.DataGridTimestamp);
-
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
-      {
-        string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
-        WriteCellValue(writer, "String", title + Labels.DataGridXPosition);
-        WriteCellValue(writer, "String", title + Labels.DataGridYPosition);
-        WriteCellValue(writer, "String", title + Labels.DataGridDistance);
-        WriteCellValue(writer, "String", title + Labels.DataGridXDistance);
-        WriteCellValue(writer, "String", title + Labels.DataGridYDistance);
-        WriteCellValue(writer, "String", title + Labels.DataGridLength);
-        WriteCellValue(writer, "String", title + Labels.DataGridXLength);
-        WriteCellValue(writer, "String", title + Labels.DataGridYLength);
-        WriteCellValue(writer, "String", title + Labels.DataGridVelocity);
-        WriteCellValue(writer, "String", title + Labels.DataGridXVelocity);
-        WriteCellValue(writer, "String", title + Labels.DataGridYVelocity);
-        WriteCellValue(writer, "String", title + Labels.DataGridAcceleration);
-        WriteCellValue(writer, "String", title + Labels.DataGridXAcceleration);
-        WriteCellValue(writer, "String", title + Labels.DataGridYAcceleration);
-      }
-
-      // </Row>
-      writer.WriteEndElement();
-
-      // Alle Zeilen der Datenquelle durchlaufen
-      foreach (TimeSample row in dataSource)
+      var arrays = GenerateExportArray(dataSource, options);
+      foreach (var row in arrays)
       {
         // <Row>
         writer.WriteStartElement("Row");
 
-        // Alle Zellen der aktuellen Zeile durchlaufen
-        WriteCellValue(writer, "Number", row.Framenumber);
-        WriteCellValue(writer, "Number", row.Object[0].Time);
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        foreach (var column in row)
         {
-          WriteCellValue(writer, "Number", row.Object[i].PositionX);
-          WriteCellValue(writer, "Number", row.Object[i].PositionY);
-          WriteCellValue(writer, "Number", row.Object[i].Distance);
-          WriteCellValue(writer, "Number", row.Object[i].DistanceX);
-          WriteCellValue(writer, "Number", row.Object[i].DistanceY);
-          WriteCellValue(writer, "Number", row.Object[i].Length);
-          WriteCellValue(writer, "Number", row.Object[i].LengthX);
-          WriteCellValue(writer, "Number", row.Object[i].LengthY);
-          WriteCellValue(writer, "Number", row.Object[i].Velocity);
-          WriteCellValue(writer, "Number", row.Object[i].VelocityX);
-          WriteCellValue(writer, "Number", row.Object[i].VelocityY);
-          WriteCellValue(writer, "Number", row.Object[i].Acceleration);
-          WriteCellValue(writer, "Number", row.Object[i].AccelerationX);
-          WriteCellValue(writer, "Number", row.Object[i].AccelerationY);
+          WriteCellValue(writer, "Number", column);
         }
 
         // </Row>
@@ -380,16 +286,244 @@ namespace VianaNET.Modules.DataGrid
     #region Methods
 
     /// <summary>
+    /// Generates the export array.
+    /// </summary>
+    /// <param name="dataSource">
+    /// The data source.
+    /// </param>
+    /// <param name="options">
+    /// The options.
+    /// </param>
+    /// <returns>
+    /// An array with the columns and data that should be exported according to options
+    /// </returns>
+    private static List<List<object>> GenerateExportArray(DataCollection dataSource, ExportOptions options)
+    {
+      var exportArray = new List<List<object>>();
+
+      // Write column header
+      var header = new List<object>();
+      if (options.Axes.Contains(DataAxis.DataAxes[0]))
+      {
+        header.Add(DataAxis.DataAxes[0].Description);
+      }
+
+      if (options.Axes.Contains(DataAxis.DataAxes[1]))
+      {
+        header.Add(DataAxis.DataAxes[1].Description + " [" + Viana.Project.CalibrationData.TimeUnit + "]");
+      }
+
+      foreach (int objectIndex in options.Objects)
+      {
+        var oneBased = objectIndex + 1;
+        string title = options.Objects.Count > 1 ? Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": " : string.Empty;
+        if (options.Axes.Contains(DataAxis.DataAxes[2]))
+        {
+          header.Add(title + DataAxis.DataAxes[2].Description + " [" + Viana.Project.CalibrationData.PixelUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[3]))
+        {
+          header.Add(title + DataAxis.DataAxes[3].Description + " [" + Viana.Project.CalibrationData.PixelUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[4]))
+        {
+          header.Add(title + DataAxis.DataAxes[4].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[5]))
+        {
+          header.Add(title + DataAxis.DataAxes[5].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[6]))
+        {
+          header.Add(title + DataAxis.DataAxes[6].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[7]))
+        {
+          header.Add(title + DataAxis.DataAxes[7].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[8]))
+        {
+          header.Add(title + DataAxis.DataAxes[8].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[9]))
+        {
+          header.Add(title + DataAxis.DataAxes[9].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[10]))
+        {
+          header.Add(title + DataAxis.DataAxes[10].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[11]))
+        {
+          header.Add(title + DataAxis.DataAxes[11].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[12]))
+        {
+          header.Add(title + DataAxis.DataAxes[12].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[13]))
+        {
+          header.Add(title + DataAxis.DataAxes[13].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[14]))
+        {
+          header.Add(title + DataAxis.DataAxes[14].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[15]))
+        {
+          header.Add(title + DataAxis.DataAxes[15].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[16]))
+        {
+          header.Add(title + DataAxis.DataAxes[16].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[17]))
+        {
+          header.Add(title + DataAxis.DataAxes[17].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+        }
+      }
+
+      exportArray.Add(header);
+
+      foreach (var sample in dataSource)
+      {
+        var columns = new List<object>();
+        if (options.Axes.Contains(DataAxis.DataAxes[0]))
+        {
+          columns.Add(sample.Framenumber);
+        }
+
+        if (options.Axes.Contains(DataAxis.DataAxes[1]))
+        {
+          var timeunit = Viana.Project.CalibrationData.TimeUnit;
+          switch (timeunit)
+          {
+            case TimeUnit.ms:
+              columns.Add(Math.Round(sample.Object[0].Time, 0));
+              break;
+            case TimeUnit.s:
+              columns.Add(Math.Round(sample.Object[0].Time, 4));
+              break;
+            default:
+              throw new ArgumentOutOfRangeException("Wrong TimeUnit");
+          }
+        }
+
+        foreach (int objectIndex in options.Objects)
+        {
+          if (options.Axes.Contains(DataAxis.DataAxes[2]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].PixelX, 0));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[3]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].PixelY, 0));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[4]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].PositionX, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[5]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].PositionY, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[6]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].Distance, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[7]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].DistanceX, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[8]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].DistanceY, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[9]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].Length, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[10]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].LengthX, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[11]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].LengthY, 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[12]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].Velocity.GetValueOrDefault(0), 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[13]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].VelocityX.GetValueOrDefault(0), 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[14]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].VelocityY.GetValueOrDefault(0), 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[15]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].Acceleration.GetValueOrDefault(0), 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[16]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].AccelerationX.GetValueOrDefault(0), 2));
+          }
+
+          if (options.Axes.Contains(DataAxis.DataAxes[17]))
+          {
+            columns.Add(Math.Round(sample.Object[objectIndex].AccelerationY.GetValueOrDefault(0), 2));
+          }
+        }
+
+        exportArray.Add(columns);
+      }
+
+      return exportArray;
+    }
+
+    /// <summary>
     /// The write cell value.
     /// </summary>
     /// <param name="writer">
-    /// The writer. 
+    /// The writer.
     /// </param>
     /// <param name="cellType">
-    /// The cell type. 
+    /// The cell type.
     /// </param>
     /// <param name="cellValue">
-    /// The cell value. 
+    /// The cell value.
     /// </param>
     private static void WriteCellValue(XmlTextWriter writer, string cellType, object cellValue)
     {
@@ -411,95 +545,24 @@ namespace VianaNET.Modules.DataGrid
     }
 
     /// <summary>
-    /// The write to file with separator.
+    /// Writes to file with separator.
     /// </summary>
-    /// <param name="dataSource">
-    /// The data source. 
-    /// </param>
-    /// <param name="fileName">
-    /// The file name. 
-    /// </param>
-    /// <param name="separator">
-    /// The separator. 
-    /// </param>
-    private static void WriteToFileWithSeparator(DataCollection dataSource, string fileName, string separator)
+    /// <param name="arrays">The arrays.</param>
+    /// <param name="fileName">Name of the file.</param>
+    /// <param name="separator">The separator.</param>
+    private static void WriteToFileWithSeparator(List<List<object>> arrays, string fileName, string separator)
     {
       using (var sw = new StreamWriter(fileName))
       {
-        sw.Write(Labels.DataGridFramenumber);
-        sw.Write(separator);
-        sw.Write(Labels.DataGridTimestamp);
-        sw.Write(separator);
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        foreach (var row in arrays)
         {
-          string title = Labels.DataGridObjectPrefix + i.ToString(CultureInfo.InvariantCulture) + " ";
-          sw.Write(title + Labels.DataGridXPosition);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridYPosition);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridDistance);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridXDistance);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridYDistance);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridLength);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridXLength);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridYLength);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridVelocity);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridXVelocity);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridYVelocity);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridAcceleration);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridXAcceleration);
-          sw.Write(separator);
-          sw.Write(title + Labels.DataGridYAcceleration);
-          sw.WriteLine();
-        }
-
-        foreach (TimeSample sample in dataSource)
-        {
-          sw.Write(sample.Framenumber);
-          sw.Write(separator);
-          sw.Write(sample.Object[0].Time);
-          sw.Write(separator);
-          for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+          foreach (var column in row)
           {
-            sw.Write(sample.Object[i].PositionX);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].PositionY);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].Distance);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].DistanceX);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].DistanceY);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].Length);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].LengthX);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].LengthY);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].Velocity);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].VelocityX);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].VelocityY);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].Acceleration);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].AccelerationX);
-            sw.Write(separator);
-            sw.Write(sample.Object[i].AccelerationY);
+            sw.Write(column);
             sw.Write(separator);
           }
+
+          sw.WriteLine();
         }
       }
     }

@@ -3139,6 +3139,60 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ExportDialogTopFrameTitle.
+        /// </summary>
+        internal static string ExportDialogTopFrameTitle {
+            get {
+                return ResourceManager.GetString("ExportDialogTopFrameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExportOptionsDialogColumnGroupHeader.
+        /// </summary>
+        internal static string ExportOptionsDialogColumnGroupHeader {
+            get {
+                return ResourceManager.GetString("ExportOptionsDialogColumnGroupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExportOptionsDialogObjectGroupHeader.
+        /// </summary>
+        internal static string ExportOptionsDialogObjectGroupHeader {
+            get {
+                return ResourceManager.GetString("ExportOptionsDialogObjectGroupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExportOptionsDialogSelectAll.
+        /// </summary>
+        internal static string ExportOptionsDialogSelectAll {
+            get {
+                return ResourceManager.GetString("ExportOptionsDialogSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExportOptionsDialogTitle.
+        /// </summary>
+        internal static string ExportOptionsDialogTitle {
+            get {
+                return ResourceManager.GetString("ExportOptionsDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ExportOptionsDialogUnselectAll.
+        /// </summary>
+        internal static string ExportOptionsDialogUnselectAll {
+            get {
+                return ResourceManager.GetString("ExportOptionsDialogUnselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ExportWhereToSaveFile.
         /// </summary>
         internal static string ExportWhereToSaveFile {

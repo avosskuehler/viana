@@ -1632,4 +1632,22 @@
   <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
     <value>@ChartWindowEnableTrackerCheckBox</value>
   </data>
+  <data name="ExportDialogTopFrameTitle" xml:space="preserve">
+    <value>@ExportDialogTopFrameTitle</value>
+  </data>
+  <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
+    <value>@ExportOptionsDialogColumnGroupHeader</value>
+  </data>
+  <data name="ExportOptionsDialogObjectGroupHeader" xml:space="preserve">
+    <value>@ExportOptionsDialogObjectGroupHeader</value>
+  </data>
+  <data name="ExportOptionsDialogSelectAll" xml:space="preserve">
+    <value>@ExportOptionsDialogSelectAll</value>
+  </data>
+  <data name="ExportOptionsDialogTitle" xml:space="preserve">
+    <value>@ExportOptionsDialogTitle</value>
+  </data>
+  <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
+    <value>@ExportOptionsDialogUnselectAll</value>
+  </data>
 </root>
