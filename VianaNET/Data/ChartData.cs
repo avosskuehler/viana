@@ -2,7 +2,7 @@
 // <copyright file="ChartData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,16 +23,15 @@
 namespace VianaNET.Data
 {
   using System;
+  using System.ComponentModel;
   using System.Reflection;
 
   using OxyPlot;
-  using OxyPlot.Annotations;
   using OxyPlot.Axes;
   using OxyPlot.Series;
 
   using VianaNET.Application;
   using VianaNET.Data.Collections;
-  using VianaNET.Data.Filter;
   using VianaNET.Resources;
 
   /// <summary>
@@ -48,87 +47,19 @@ namespace VianaNET.Data
     /// </summary>
     public ChartData()
     {
-      this.ChartDataModel = new PlotModel();
-      this.ChartDataModel.Title = Labels.ChartWindowChartTitle;
-      this.ChartDataModel.LegendPlacement = LegendPlacement.Inside;
-      this.ChartDataModel.LegendSymbolLength = 24;
-      this.ChartDataModel.LegendBackground = OxyColor.FromArgb(200, 255, 255, 255);
-      this.ChartDataModel.LegendBorder = OxyColors.LightGray;
-      this.ChartDataModel.SelectionColor = Viana.Project.CurrentFilterData.SelectionColor;
-
-      //var range = new RectangleAnnotation { Fill = OxyColor.FromAColor(120, OxyColors.SkyBlue), MinimumX = 0, MaximumX = 0 };
-      //this.ChartDataModel.Annotations.Add(range);
-
-      //double startx = double.NaN;
-
-      //this.ChartDataModel.MouseDown += (s, e) =>
-      //{
-      //  if (e.ChangedButton == OxyMouseButton.Left)
-      //  {
-      //    startx = range.InverseTransform(e.Position).X;
-      //    range.MinimumX = startx;
-      //    range.MaximumX = startx;
-      //    this.ChartDataModel.InvalidatePlot(true);
-      //    e.Handled = true;
-      //  }
-      //};
-      //this.ChartDataModel.MouseMove += (s, e) =>
-      //{
-      //  if (!double.IsNaN(startx))
-      //  {
-      //    var x = range.InverseTransform(e.Position).X;
-      //    range.MinimumX = Math.Min(x, startx);
-      //    range.MaximumX = Math.Max(x, startx);
-      //    range.Text = string.Format("∫ cos(x) dx =  {0:0.00}", Math.Sin(range.MaximumX) - Math.Sin(range.MinimumX));
-      //    this.ChartDataModel.Subtitle = string.Format("Integrating from {0:0.00} to {1:0.00}", range.MinimumX, range.MaximumX);
-      //    this.ChartDataModel.InvalidatePlot(true);
-      //    e.Handled = true;
-      //  }
-      //};
-
-      //this.ChartDataModel.MouseUp += (s, e) =>
-      //{
-      //  startx = double.NaN;
-      //};
-
+      this.ChartDataModel = new PlotModel
+                              {
+                                Title = Labels.ChartWindowChartTitle,
+                                LegendPlacement = LegendPlacement.Inside,
+                                LegendSymbolLength = 24,
+                                LegendBackground = OxyColor.FromArgb(200, 255, 255, 255),
+                                LegendBorder = OxyColors.LightGray,
+                                SelectionColor = Viana.Project.CurrentFilterData.SelectionColor
+                              };
 
       this.DataScatterSeries = new ScatterSeries();
       this.DataLineSeries = new LineSeries();
       this.InterpolationSeries = new LineSeries();
-      this.RegressionSeries = new LineSeries();
-      this.TheorySeries = new LineSeries();
-
-      //this.DataScatterSeries.MouseDown += (s, e) =>
-      //{
-      //  var index = (int)e.HitTestResult.Index;
-
-      //  // Toggle the selection state for this item
-      //  if (this.DataScatterSeries.IsItemSelected(index))
-      //  {
-      //    this.DataScatterSeries.UnselectItem(index);
-      //  }
-      //  else
-      //  {
-      //    this.DataScatterSeries.SelectItem(index);
-      //  }
-
-      //  this.ChartDataModel.InvalidatePlot(false);
-      //  e.Handled = true;
-      //};
-
-      //this.ChartDataModel.MouseDown += (s, e) =>
-      //{
-      //  this.DataScatterSeries.ClearSelection();
-      //  this.ChartDataModel.InvalidatePlot(false);
-      //  e.Handled = true;
-      //};
-
-      this.DataScatterSeries.SelectionMode = SelectionMode.Multiple;
-      this.DataScatterSeries.TrackerKey = "DefaultTracker";
-      this.DataLineSeries.TrackerKey = "EmptyTracker";
-      this.InterpolationSeries.TrackerKey = "DefaultTracker";
-      this.RegressionSeries.TrackerKey = "DefaultTracker";
-      this.TheorySeries.TrackerKey = "DefaultTracker";
 
       this.XAxis = new LinearAxis();
       this.XAxis.Position = AxisPosition.Bottom;
@@ -136,8 +67,9 @@ namespace VianaNET.Data
       this.XAxis.ExtraGridlines[0] = 0;
       this.XAxis.ExtraGridlineThickness = 2;
       this.XAxis.ExtraGridlineColor = OxyColors.Gray;
-      //this.XAxis.PositionAtZeroCrossing = true;
-      //this.XAxis.TickStyle = TickStyle.Crossing;
+
+      // this.XAxis.PositionAtZeroCrossing = true;
+      // this.XAxis.TickStyle = TickStyle.Crossing;
       this.XAxis.MaximumPadding = 0.05;
       this.XAxis.MinimumPadding = 0.05;
 
@@ -147,18 +79,26 @@ namespace VianaNET.Data
       this.YAxis.ExtraGridlines[0] = 0;
       this.YAxis.ExtraGridlineThickness = 2;
       this.YAxis.ExtraGridlineColor = OxyColors.Gray;
-      //this.YAxis.PositionAtZeroCrossing = true;
-      //this.YAxis.TickStyle = TickStyle.Crossing;
+
+      // this.YAxis.PositionAtZeroCrossing = true;
+      // this.YAxis.TickStyle = TickStyle.Crossing;
       this.YAxis.MaximumPadding = 0.05;
       this.YAxis.MinimumPadding = 0.05;
 
       this.ChartDataModel.Series.Add(this.DataScatterSeries);
       this.ChartDataModel.Series.Add(this.DataLineSeries);
       this.ChartDataModel.Series.Add(this.InterpolationSeries);
-      this.ChartDataModel.Series.Add(this.RegressionSeries);
-      this.ChartDataModel.Series.Add(this.TheorySeries);
+      this.ChartDataModel.Series.Add(new FunctionSeries());
+      this.ChartDataModel.Series.Add(new FunctionSeries());
       this.ChartDataModel.Axes.Add(this.XAxis);
       this.ChartDataModel.Axes.Add(this.YAxis);
+
+      this.DataScatterSeries.SelectionMode = SelectionMode.Multiple;
+      this.DataScatterSeries.TrackerKey = "DefaultTracker";
+      this.DataLineSeries.TrackerKey = "EmptyTracker";
+      this.InterpolationSeries.TrackerKey = "DefaultTracker";
+      this.RegressionSeries.TrackerKey = "DefaultTracker";
+      this.TheorySeries.TrackerKey = "DefaultTracker";
 
       // Property info of target object
       this.DataScatterSeries.Mapping =
@@ -166,9 +106,6 @@ namespace VianaNET.Data
       this.DataLineSeries.Mapping =
         item => new DataPoint(GetTargetValue(item, "PositionX"), GetTargetValue(item, "PositionY"));
       this.InterpolationSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-      this.RegressionSeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-      this.TheorySeries.Mapping = item => new DataPoint(((XYSample)item).ValueX, ((XYSample)item).ValueY);
-
 
       this.UpdateModel();
       this.UpdateAppearance();
@@ -189,20 +126,20 @@ namespace VianaNET.Data
     public PlotModel ChartDataModel { get; private set; }
 
     /// <summary>
-    ///   Gets or sets the default scatter series which is selectable
-    /// </summary>
-    /// <value>
-    ///   The default series.
-    /// </value>
-    public ScatterSeries DataScatterSeries { get; set; }
-
-    /// <summary>
     ///   Gets or sets the default series.
     /// </summary>
     /// <value>
     ///   The default series.
     /// </value>
     public LineSeries DataLineSeries { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the default scatter series which is selectable
+    /// </summary>
+    /// <value>
+    ///   The default series.
+    /// </value>
+    public ScatterSeries DataScatterSeries { get; set; }
 
     /// <summary>
     ///   Gets or sets the interpolation series.
@@ -213,20 +150,32 @@ namespace VianaNET.Data
     public LineSeries InterpolationSeries { get; set; }
 
     /// <summary>
-    ///   Gets or sets the regression series.
+    ///   Gets the regression series.
     /// </summary>
     /// <value>
     ///   The regression series.
     /// </value>
-    public LineSeries RegressionSeries { get; set; }
+    public FunctionSeries RegressionSeries
+    {
+      get
+      {
+        return this.ChartDataModel.Series[3] as FunctionSeries;
+      }
+    }
 
     /// <summary>
-    ///   Gets or sets the theory series.
+    ///   Gets the theory series.
     /// </summary>
     /// <value>
     ///   The theory series.
     /// </value>
-    public LineSeries TheorySeries { get; set; }
+    public FunctionSeries TheorySeries
+    {
+      get
+      {
+        return this.ChartDataModel.Series[4] as FunctionSeries;
+      }
+    }
 
     /// <summary>
     ///   Gets or sets the x axis.
@@ -249,21 +198,8 @@ namespace VianaNET.Data
     #region Public Methods and Operators
 
     /// <summary>
-    /// Updates the model.
+    ///   Updates the appearance of the different data series.
     /// </summary>
-    public void UpdateModel()
-    {
-      this.DataScatterSeries.ItemsSource = Viana.Project.VideoData.Samples;
-      this.DataLineSeries.ItemsSource = Viana.Project.VideoData.Samples;
-      this.InterpolationSeries.ItemsSource = Viana.Project.CurrentFilterData.InterpolationSeries;
-      this.RegressionSeries.ItemsSource = Viana.Project.CurrentFilterData.RegressionSeries;
-      this.TheorySeries.ItemsSource = Viana.Project.CurrentFilterData.TheorySeries;
-      this.InterpolationSeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingInterpolationSeries;
-      this.RegressionSeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingRegressionSeries;
-      this.TheorySeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingTheorySeries;
-      this.ChartDataModel.InvalidatePlot(true);
-    }
-
     public void UpdateAppearance()
     {
       this.DataScatterSeries.Title = Labels.ChartWindowDataSeriesLabel;
@@ -293,6 +229,7 @@ namespace VianaNET.Data
       this.RegressionSeries.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
       this.RegressionSeries.Color = Viana.Project.CurrentFilterData.RegressionLineColor;
       this.RegressionSeries.StrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
+      this.RegressionSeries.Smooth = true;
 
       this.TheorySeries.Title = Labels.ChartWindowTheorySeriesLabel;
       this.TheorySeries.MarkerSize = Viana.Project.CurrentFilterData.TheoryLineThickness + 2;
@@ -301,34 +238,9 @@ namespace VianaNET.Data
       this.TheorySeries.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
       this.TheorySeries.Color = Viana.Project.CurrentFilterData.TheoryLineColor;
       this.TheorySeries.StrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
+      this.TheorySeries.Smooth = true;
 
       this.ChartDataModel.InvalidatePlot(false);
-    }
-
-    /// <summary>
-    /// Sets the marker stroke for the given line series.
-    /// </summary>
-    /// <param name="type">The type to be set.</param>
-    /// <param name="series">The series to set the marker type for</param>
-    private void SetMarkerStroke(MarkerType type, LineSeries series)
-    {
-      switch (type)
-      {
-        case MarkerType.Circle:
-        case MarkerType.Square:
-        case MarkerType.Diamond:
-        case MarkerType.Triangle:
-          series.MarkerStroke = OxyColors.White;
-          break;
-        case MarkerType.Cross:
-        case MarkerType.Plus:
-        case MarkerType.Star:
-        case MarkerType.Custom:
-          series.MarkerStroke = OxyColors.Black;
-          break;
-      }
-
-      series.MarkerStrokeThickness = 1.5;
     }
 
     /// <summary>
@@ -348,20 +260,57 @@ namespace VianaNET.Data
         item => new DataPoint(GetTargetValue(item, propertyX), GetTargetValue(item, propertyY));
     }
 
+    /// <summary>
+    ///   Updates the chart data model.
+    /// </summary>
+    public void UpdateModel()
+    {
+      this.DataScatterSeries.ItemsSource = Viana.Project.VideoData.Samples;
+      this.DataLineSeries.ItemsSource = Viana.Project.VideoData.Samples;
+      this.InterpolationSeries.ItemsSource = Viana.Project.CurrentFilterData.InterpolationSeries;
+
+      this.InterpolationSeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingInterpolationSeries;
+      this.RegressionSeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingRegressionSeries;
+      this.TheorySeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingTheorySeries;
+
+      if (Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion != null
+          && Viana.Project.CurrentFilterData.IsShowingRegressionSeries)
+      {
+        this.ChartDataModel.Series[3] =
+          new FunctionSeries(
+            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion, 
+            this.DataScatterSeries.MinX, 
+            this.DataScatterSeries.MaxX, 
+            Viana.Project.VideoData.Samples.Count * 2);
+      }
+
+      if (Viana.Project.CurrentFilterData.HasTheoryFunction && Viana.Project.CurrentFilterData.IsShowingTheorySeries)
+      {
+        if (Viana.Project.VideoData.Samples.Count > 0)
+        {
+          this.ChartDataModel.Series[4] = new FunctionSeries(
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
+            this.DataScatterSeries.MinX, 
+            this.DataScatterSeries.MaxX, 
+            Viana.Project.VideoData.Samples.Count * 2);
+        }
+        else
+        {
+          this.ChartDataModel.Series[4] = new FunctionSeries(
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
+            this.XAxis.ActualMinimum, 
+            this.XAxis.ActualMaximum, 
+            this.XAxis.FractionUnit);
+        }
+      }
+
+      this.UpdateAppearance();
+      this.ChartDataModel.InvalidatePlot(true);
+    }
+
     #endregion
 
     #region Methods
-
-    /// <summary>
-    /// Current filter data property changed.
-    /// We need to update unbound model properties
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
-    private void CurrentFilterDataPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-      this.UpdateModel();
-    }
 
     /// <summary>
     /// Gets the target value.
@@ -383,6 +332,51 @@ namespace VianaNET.Data
       object test = propertyValue[Viana.Project.ProcessingData.IndexOfObject];
       object result = targetPropertyInfo.GetValue(test);
       return result != null ? (double)result : 0;
+    }
+
+    /// <summary>
+    /// Current filter data property changed.
+    ///   We need to update unbound model properties
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void CurrentFilterDataPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      this.UpdateModel();
+    }
+
+    /// <summary>
+    /// Sets the marker stroke for the given line series.
+    /// </summary>
+    /// <param name="type">
+    /// The type to be set.
+    /// </param>
+    /// <param name="series">
+    /// The series to set the marker type for
+    /// </param>
+    private void SetMarkerStroke(MarkerType type, LineSeries series)
+    {
+      switch (type)
+      {
+        case MarkerType.Circle:
+        case MarkerType.Square:
+        case MarkerType.Diamond:
+        case MarkerType.Triangle:
+          series.MarkerStroke = OxyColors.White;
+          break;
+        case MarkerType.Cross:
+        case MarkerType.Plus:
+        case MarkerType.Star:
+        case MarkerType.Custom:
+          series.MarkerStroke = OxyColors.Black;
+          break;
+      }
+
+      series.MarkerStrokeThickness = 1.5;
     }
 
     #endregion

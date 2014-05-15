@@ -416,8 +416,8 @@
                          LargeImageSource="/VianaNET;component/Images/VideoDeviceOptions32.png" 
                          SmallImageSource="/VianaNET;component/Images/VideoDeviceOptions16.png" 
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipTitle}" 
-                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" 
-                         IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>
+                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" />
+                         <!--IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>-->
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}">
           <RibbonCheckBox Name="ShowCalibrationCheckbox"  

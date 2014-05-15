@@ -201,8 +201,8 @@ namespace VianaNET.Modules.Chart
       }
 
       // Whenever changing the axes, the theory formula will be odd, so hide it
-      Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
-      this.UpdateTheoryFormula();
+      //Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
+      //this.UpdateTheoryFormula();
 
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
       var axisY = (DataAxis)this.YAxisContent.SelectedItem;
@@ -228,6 +228,8 @@ namespace VianaNET.Modules.Chart
       Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
       Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
       this.RefreshRegressionFuctionTerm();
+      this.UpdateTheoryFormula();
+      Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
       Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
 
       this.ChartData.UpdateModel();
@@ -792,8 +794,7 @@ namespace VianaNET.Modules.Chart
     private void RefreshTheorieFunctionTerm()
     {
       // Only if we have a formula and should display the theory series
-      if (Viana.Project.CurrentFilterData.TheoryFunctionTexFormula != null
-          && Viana.Project.CurrentFilterData.IsShowingTheorySeries)
+      if (Viana.Project.CurrentFilterData.TheoryFunctionTexFormula != null)
       {
         // Render formula to visual.
         var visual = new DrawingVisual();
@@ -813,6 +814,8 @@ namespace VianaNET.Modules.Chart
         // Formula is empty
         this.TheorieFormulaContainerElement.Visual = null;
       }
+
+      Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
     }
 
     /// <summary>
@@ -960,7 +963,6 @@ namespace VianaNET.Modules.Chart
     {
       Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
       this.UpdateTheoryFormula();
-      this.RefreshTheorieFunctionTerm();
       this.ChartData.UpdateModel();
     }
 
@@ -976,8 +978,8 @@ namespace VianaNET.Modules.Chart
     private void ShowTheorieCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
       Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
-      Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
-      this.RefreshTheorieFunctionTerm();
+      //Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
+      //this.RefreshTheorieFunctionTerm();
       this.ChartData.UpdateModel();
     }
 
@@ -995,9 +997,9 @@ namespace VianaNET.Modules.Chart
       var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
       fktEditor.buttonX.Content = string.Concat(this.axisName);
       Constants.varName = string.Concat(this.axisName);
-      if (Viana.Project.CurrentFilterData.TheoreticalFunction != null)
+      if (Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree != null)
       {
-        fktEditor.textBox1.Text = Viana.Project.CurrentFilterData.TheoreticalFunction.Name;
+        fktEditor.textBox1.Text = Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
         fktEditor.textBox1.SelectAll();
       }
 
@@ -1005,7 +1007,8 @@ namespace VianaNET.Modules.Chart
 
       if (fktEditor.DialogResult.GetValueOrDefault(false))
       {
-        Viana.Project.CurrentFilterData.TheoreticalFunction = fktEditor.GetFunktion();
+        Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree = fktEditor.GetFunktion();
+        Viana.Project.CurrentFilterData.IsShowingTheorySeries = true;
         this.UpdateTheoryFormula();
       }
     }
@@ -1227,7 +1230,6 @@ namespace VianaNET.Modules.Chart
       if (this.RegressionCheckBox.IsChecked.GetValueOrDefault(false))
       {
         Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
-        Viana.Project.CurrentFilterData.RegressionFilter.UpdateLinefitFunctionData(neuBerechnen);
         this.RefreshRegressionFuctionTerm();
       }
     }
@@ -1239,12 +1241,12 @@ namespace VianaNET.Modules.Chart
     {
       try
       {
-        if (Viana.Project.CurrentFilterData.TheoreticalFunction == null)
+        if (Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
         {
           return;
         }
 
-        string functionString = Viana.Project.CurrentFilterData.TheoreticalFunction.Name;
+        string functionString = Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
         functionString = functionString.Replace("*", "{\\cdot}");
         functionString = functionString.Replace("(", "{(");
         functionString = functionString.Replace(")", ")}");
@@ -1435,12 +1437,6 @@ namespace VianaNET.Modules.Chart
       }
 
       // Remove selection in VideoData
-      //var selectedIndizes = this.ChartData.DataScatterSeries.GetSelectedItems();
-      //foreach (var selectedIndex in selectedIndizes)
-      //{
-      //  Viana.Project.VideoData.Samples[selectedIndex].IsSelected = false;
-      //}
-
       foreach (var sample in Viana.Project.VideoData.Samples)
       {
         sample.IsSelected = false;
