@@ -27,9 +27,10 @@
 
 namespace VianaNET.Data.Filter.Theory
 {
-  using Application;
-  using Collections;
-  using CustomStyles.Types;
+  using System;
+  using System.Xml.Serialization;
+
+  using VianaNET.Application;
 
   /// <summary>
   /// This class is a filter implementing FilterBase which is used to
@@ -37,38 +38,34 @@ namespace VianaNET.Data.Filter.Theory
   /// </summary>
   public class TheoryFilter : FilterBase
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Static Fields
-
-    #endregion
-
-    #region Fields
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    /////////////////////////////////////////////////////////////////////////////// 
-    #region Constructors and Destructors
+    /// <summary>
+    /// The theoretical function calculator tree
+    /// </summary>
+    private FunctionCalcTree theoreticalFunctionCalculatorTree;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="TheoryFilter"/> class.
+    ///   Gets or sets the theory funktion.
     /// </summary>
-    public TheoryFilter()
+    [XmlIgnore]
+    public Func<double, double> TheoryFunction { get; set; }
+
+    /// <summary>
+    /// Gets or sets the theoretical function as a calculator tree
+    /// </summary>
+    public FunctionCalcTree TheoreticalFunctionCalculatorTree
     {
+      get
+      {
+        return this.theoreticalFunctionCalculatorTree;
+      }
+
+      set
+      {
+        this.theoreticalFunctionCalculatorTree = value;
+        this.CalculateFilterValues();
+        Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
+      }
     }
-
-    #endregion
-
-    #region Delegates
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
-    #endregion
 
     #region Public Methods and Operators
 
@@ -77,75 +74,10 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public override void CalculateFilterValues()
     {
-      base.CalculateFilterValues();
-
-      var fittedSamples = new SortedObservableCollection<XYSample>();
-      var fx = Viana.Project.CurrentFilterData.TheoreticalFunction;
-      if (fx == null)
-      {
-        return;
-      }
-
-      double x;
-      XYSample p;
-      var tempParser = new Parse();
-
-      // Nur wenn gar keine Daten da sind...
-      if (this.WertX.Count == 0)
-      {
-        /*    p = new XYSample(-10, tempParser.FreierFktWert(fx, -10));
-          fittedSamples.Add(p);
-          p = new XYSample(10, tempParser.FreierFktWert(fx, 10));
-          fittedSamples.Add(p);
-          return; */
-        x = -10;
-        while (x <= 10)
-        {
-          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-          fittedSamples.Add(p);
-          x = x + 0.2;
-        }
-
-        return;
-      }
-
-      if (tempParser.isLinearFunction(fx))
-      {
-        // zwei Punkte genügen bei x-y-Diagramm
-        x = this.WertX[0]; // wertX[] - originale x-Werte der Wertepaare 
-        p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-        fittedSamples.Add(p);
-        x = this.WertX[this.anzahl - 1];
-        p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-        fittedSamples.Add(p);
-      }
-      else
-      {
-        // endPixelX und startPixelX sowie startX,endX und stepX 
-        // wurden in CopySampleColumnsToArrays(int aktObjectNr, DataCollection originalSamples) bestimmt
-        // besser wäre Festlegung durch den (Pixel)Abstand auf der aktuellen Chart 
-        int k;
-        var anzahlPixel = (int)(this.endPixelX - this.startPixelX);
-        x = this.startX;
-
-        for (k = 0; k <= anzahlPixel; k++)
-        {
-          // Punkte im PixelAbstand (waagerecht) werden mit der theoretischen Funktion bestimmt.
-          p = new XYSample(x, tempParser.FreierFktWert(fx, x));
-          fittedSamples.Add(p);
-          x = x + this.stepX;
-        }
-      }
-
-      Viana.Project.CurrentFilterData.TheorySeries = fittedSamples;
+      var parser = new Parse();
+      this.TheoryFunction = x => parser.FreierFktWert(this.TheoreticalFunctionCalculatorTree, x);
     }
 
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Methods
     #endregion
   }
 }

@@ -135,10 +135,10 @@ namespace VianaNET.Data.Filter
       "TheoryLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
-    /// The RegressionObject property.
+    /// The RegressionFilter property.
     /// </summary>
-    public static readonly DependencyProperty RegressionObjectProperty = DependencyProperty.Register(
-      "RegressionObject", typeof(RegressionFilter), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty RegressionFilterProperty = DependencyProperty.Register(
+      "RegressionFilter", typeof(RegressionFilter), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The InterpolationFilter property.
@@ -149,14 +149,8 @@ namespace VianaNET.Data.Filter
     /// <summary>
     /// The InterpolationObject property.
     /// </summary>
-    public static readonly DependencyProperty TheoryObjectProperty = DependencyProperty.Register(
-      "TheoryObjectProperty", typeof(TheoryFilter), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The TheoreticalFunction property.
-    /// </summary>
-    public static readonly DependencyProperty TheoreticalFunctionProperty = DependencyProperty.Register(
-      "TheoreticalFunction", typeof(FunctionCalcTree), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty TheoryFilterProperty = DependencyProperty.Register(
+      "TheoryFilter", typeof(TheoryFilter), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The NumericPrecision property.
@@ -193,18 +187,6 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty InterpolationSeriesProperty = DependencyProperty.Register(
       "InterpolationSeries", typeof(SortedObservableCollection<XYSample>), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The RegressionSeries property.
-    /// </summary>
-    public static readonly DependencyProperty RegressionSeriesProperty = DependencyProperty.Register(
-      "RegressionSeries", typeof(SortedObservableCollection<XYSample>), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The TheorySeries property.
-    /// </summary>
-    public static readonly DependencyProperty TheorySeriesProperty = DependencyProperty.Register(
-      "TheorySeries", typeof(SortedObservableCollection<XYSample>), typeof(FilterData), new UIPropertyMetadata(null));
 
     /// <summary>
     /// The AxisX property.
@@ -247,8 +229,6 @@ namespace VianaNET.Data.Filter
     {
       this.NumericPrecision = 2;
       this.InterpolationSeries = new SortedObservableCollection<XYSample>();
-      this.RegressionSeries = new SortedObservableCollection<XYSample>();
-      this.TheorySeries = new SortedObservableCollection<XYSample>();
       this.SelectionColor = OxyColors.Blue;
       this.DataLineColor = OxyColors.LightBlue;
       this.InterpolationLineColor = OxyColors.Brown;
@@ -509,18 +489,18 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the RegressionObject
+    /// Gets or sets the RegressionFilter
     /// </summary>
     public RegressionFilter RegressionFilter
     {
       get
       {
-        return (RegressionFilter)this.GetValue(RegressionObjectProperty);
+        return (RegressionFilter)this.GetValue(RegressionFilterProperty);
       }
 
       set
       {
-        this.SetValue(RegressionObjectProperty, value);
+        this.SetValue(RegressionFilterProperty, value);
       }
     }
 
@@ -547,38 +527,12 @@ namespace VianaNET.Data.Filter
     {
       get
       {
-        return (TheoryFilter)this.GetValue(TheoryObjectProperty);
+        return (TheoryFilter)this.GetValue(TheoryFilterProperty);
       }
 
       set
       {
-        this.SetValue(TheoryObjectProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the theoretical function.
-    /// </summary>
-    public FunctionCalcTree TheoreticalFunction
-    {
-      get
-      {
-        return (FunctionCalcTree)this.GetValue(TheoreticalFunctionProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoreticalFunctionProperty, value);
-        if (this.IsShowingTheorySeries)
-        {
-          this.CalculateTheorySeriesDataPoints();
-        }
-        else
-        {
-          this.TheorySeries.Clear();
-        }
-
-        this.OnPropertyChanged("HasTheoryFunction");
+        this.SetValue(TheoryFilterProperty, value);
       }
     }
 
@@ -592,7 +546,12 @@ namespace VianaNET.Data.Filter
     {
       get
       {
-        return this.TheoreticalFunction != null;
+        if (this.TheoryFilter == null)
+        {
+          return false;
+        }
+
+        return this.TheoryFilter.TheoreticalFunctionCalculatorTree != null;
       }
     }
 
@@ -695,41 +654,6 @@ namespace VianaNET.Data.Filter
       set
       {
         this.SetValue(InterpolationSeriesProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the RegressionSeries.
-    /// </summary>
-    [XmlIgnore]
-    public SortedObservableCollection<XYSample> RegressionSeries
-    {
-      get
-      {
-        return (SortedObservableCollection<XYSample>)this.GetValue(RegressionSeriesProperty);
-      }
-
-      set
-      {
-        this.SetValue(RegressionSeriesProperty, value);
-        this.OnPropertyChanged("RegressionSeries");
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the TheorySeries.
-    /// </summary>
-    [XmlIgnore]
-    public SortedObservableCollection<XYSample> TheorySeries
-    {
-      get
-      {
-        return (SortedObservableCollection<XYSample>)this.GetValue(TheorySeriesProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheorySeriesProperty, value);
       }
     }
 
@@ -875,11 +799,7 @@ namespace VianaNET.Data.Filter
       if (this.IsShowingRegressionSeries)
       {
         this.RegressionFilter.CalculateFilterValues();
-        this.RegressionFilter.UpdateLinefitFunctionData(true);
-      }
-      else
-      {
-        this.RegressionSeries.Clear();
+        this.RegressionFilter.UpdateLinefitFunctionData();
       }
     }
 
@@ -888,23 +808,19 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public void CalculateTheorySeriesDataPoints()
     {
-      if (this.TheoreticalFunction == null)
-      {
-        return;
-      }
-
       if (this.TheoryFilter == null)
       {
         this.TheoryFilter = new TheoryFilter();
       }
 
+      if (this.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
+      {
+        return;
+      }
+
       if (this.IsShowingTheorySeries)
       {
         this.TheoryFilter.CalculateFilterValues();
-      }
-      else
-      {
-        this.TheorySeries.Clear();
       }
     }
 
@@ -929,6 +845,14 @@ namespace VianaNET.Data.Filter
     #endregion
 
     /// <summary>
+    /// Notifies the theory term change.
+    /// </summary>
+    public void NotifyTheoryTermChange()
+    {
+      this.OnPropertyChanged("HasTheoryFunction");
+    }
+
+    /// <summary>
     /// Notifies changes of all properties, so that
     /// the data bindings to the view were updated.
     /// </summary>
@@ -947,15 +871,12 @@ namespace VianaNET.Data.Filter
       this.OnPropertyChanged("RegressionFilter");
       this.OnPropertyChanged("InterpolationFilter");
       this.OnPropertyChanged("TheoryFilter");
-      this.OnPropertyChanged("TheoreticalFunction");
       this.OnPropertyChanged("IsShowingDataSeries");
       this.OnPropertyChanged("IsShowingInterpolationSeries");
       this.OnPropertyChanged("IsShowingRegressionSeries");
       this.OnPropertyChanged("IsShowingTheorySeries");
       this.OnPropertyChanged("NumericPrecision");
       this.OnPropertyChanged("InterpolationSeries");
-      this.OnPropertyChanged("RegressionSeries");
-      this.OnPropertyChanged("TheorySeries");
       this.OnPropertyChanged("AxisX");
       this.OnPropertyChanged("AxisY");
       this.OnPropertyChanged("RegressionFunctionTexFormula");

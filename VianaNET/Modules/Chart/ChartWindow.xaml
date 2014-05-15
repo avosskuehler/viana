@@ -19,7 +19,7 @@
   </UserControl.Resources>
   <Grid Name="ParentGrid">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" MinWidth="250"/>
+      <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="Auto"/>
     </Grid.ColumnDefinitions>
@@ -199,7 +199,7 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Center"/>
               <vianaNet:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"
-              Visibility="{Binding Path=CurrentFilterData.IsShowingTheorySeries, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
+              Visibility="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
               <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
             </Grid>
           </GroupBox>

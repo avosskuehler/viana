@@ -233,7 +233,8 @@ namespace VianaNET.MainWindow
       Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
       Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
       Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
-      Viana.Project.CurrentFilterData.TheoreticalFunction = openedProject.CurrentFilterData.TheoreticalFunction;
+      Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
+        openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
       Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
       Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
       Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;

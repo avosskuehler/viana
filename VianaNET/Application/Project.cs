@@ -177,14 +177,11 @@ namespace VianaNET.Application
       target.RegressionFunctionTexFormula = source.RegressionFunctionTexFormula;
       target.RegressionLineColor = source.RegressionLineColor;
       target.RegressionLineThickness = source.RegressionLineThickness;
-      target.RegressionSeries = source.RegressionSeries;
       target.SelectionColor = source.SelectionColor;
-      target.TheoreticalFunction = source.TheoreticalFunction;
       target.TheoryFilter = source.TheoryFilter;
       target.TheoryFunctionTexFormula = source.TheoryFunctionTexFormula;
       target.TheoryLineColor = source.TheoryLineColor;
       target.TheoryLineThickness = source.TheoryLineThickness;
-      target.TheorySeries = source.TheorySeries;
     }
 
     /// <summary>

@@ -24,13 +24,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-using VianaNET.Application;
-
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Collections.Generic;
   using System.Windows.Controls;
+  using System.Xml.Serialization;
+
+  using VianaNET.Application;
 
   /// <summary>
   ///   The exponential smooth filter.
