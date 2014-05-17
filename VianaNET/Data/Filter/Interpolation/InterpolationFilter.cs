@@ -35,7 +35,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// <summary>
   ///   The exponential smooth filter.
   /// </summary>
-  public class InterpolationFilter : FilterBase
+  public abstract class InterpolationFilter : FilterBase
   {
     #region Constructors and Destructors
 
@@ -52,13 +52,6 @@ namespace VianaNET.Data.Filter.Interpolation
         };
     }
 
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="InterpolationFilter" /> class.
-    /// </summary>
-    public InterpolationFilter()
-    {
-    }
-
     #endregion
 
     #region Public Properties
@@ -69,10 +62,10 @@ namespace VianaNET.Data.Filter.Interpolation
     public static Dictionary<InterpolationFilterTypes, InterpolationFilter> Filter { get; private set; }
 
     /// <summary>
-    ///   Gets or sets the custom user control.
+    ///   Gets the custom user control.
     /// </summary>
     [XmlIgnore]
-    public UserControl CustomUserControl { get; set; }
+    public abstract UserControl CustomUserControl { get; }
 
     /// <summary>
     /// Gets or sets the interpolation filter type.

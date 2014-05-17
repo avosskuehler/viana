@@ -26,6 +26,8 @@
 
 namespace VianaNET.Data.Filter.Interpolation
 {
+  using System.Windows.Controls;
+
   using Application;
   using Collections;
   using CustomStyles.Types;
@@ -45,12 +47,22 @@ namespace VianaNET.Data.Filter.Interpolation
       this.InterpolationFilterType = InterpolationFilterTypes.ExponentialSmooth;
       this.NumberOfSamplesToInterpolate = 2;
       this.SmoothingFactor = 0.7f;
-      this.CustomUserControl = new ExponentialSmoothControl(this);
     }
 
     #endregion
 
     #region Public Properties
+
+    /// <summary>
+    /// Gets the ExponentialSmoothControl.
+    /// </summary>
+    public override UserControl CustomUserControl
+    {
+      get
+      {
+        return new ExponentialSmoothControl(this);
+      }
+    }
 
     /// <summary>
     ///   Gets or sets the smoothing factor.

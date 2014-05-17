@@ -2,7 +2,7 @@
 // <copyright file="VideoCapturer.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,17 +19,7 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   This is the main class for the DirectShow interop.
-//   It creates a graph that pushes video frames from a Video Input Device
-//   through the filter chain to a SampleGrabber, from which the
-//   frames can be catched and send into the processing tree of
-//   the application.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-
 namespace VianaNET.Modules.Video.Control
 {
   using System;
@@ -39,6 +29,7 @@ namespace VianaNET.Modules.Video.Control
 
   using DirectShowLib;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
 
@@ -51,13 +42,6 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class VideoCapturer : VideoBase
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
     /// <summary>
@@ -75,11 +59,6 @@ namespace VianaNET.Modules.Video.Control
     #region Fields
 
     /// <summary>
-    ///   This member holds the <see cref="IBaseFilter" /> of the capture device filter.
-    /// </summary>
-    private IBaseFilter captureFilter;
-
-    /// <summary>
     ///   Saves the framerate of the video stream
     /// </summary>
     private int fps;
@@ -90,93 +69,21 @@ namespace VianaNET.Modules.Video.Control
     private Stopwatch frameTimer;
 
     /// <summary>
-    ///   The IAMVideoControl interface controls certain video capture operations 
+    ///   The IAMVideoControl interface controls certain video capture operations
     ///   such as enumerating available frame rates and image orientation.
     /// </summary>
     private IAMVideoControl videoControl;
 
     /// <summary>
-    ///   The IAMStreamConfig interface sets the output format on certain capture 
-    ///   and compression filters, for both audio and video. Applications can use 
-    ///   this interface to set format properties, such as the output dimensions and 
+    ///   The IAMStreamConfig interface sets the output format on certain capture
+    ///   and compression filters, for both audio and video. Applications can use
+    ///   this interface to set format properties, such as the output dimensions and
     ///   frame rate (for video) or the sample rate and number of channels (for audio).
     /// </summary>
     private IAMStreamConfig videoStreamConfig;
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
-
-    /// <summary>
-    ///   Initializes a new instance of the VideoCapturer class.
-    ///   Use capture device zero, default frame rate and size
-    /// </summary>
-    public VideoCapturer()
-    {
-      //this.VideoCaptureDevice = Video.Instance.VideoInputDevices[0];
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the VideoCapturer class.
-    ///   Use specified capture device, default frame rate and size
-    /// </summary>
-    /// <param name="device">
-    /// The <see cref="DsDevice"/> to use. 
-    /// </param>
-    public VideoCapturer(DsDevice device)
-    {
-      this.NewCamera(device, 0, 0, 0);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="VideoCapturer"/> class. 
-    ///   Initializes a new instance of the Capture class.
-    ///   Use specified capture device, specified frame rate and default size
-    /// </summary>
-    /// <param name="device">
-    /// The <see cref="DsDevice"/> to use. 
-    /// </param>
-    /// <param name="frameRate">
-    /// The framerate for the capturing. 
-    /// </param>
-    public VideoCapturer(DsDevice device, int frameRate)
-    {
-      this.NewCamera(device, frameRate, 0, 0);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the VideoCapturer class.
-    ///   Use specified capture device, specified frame rate and size
-    /// </summary>
-    /// <param name="device">
-    /// The <see cref="DsDevice"/> to use. 
-    /// </param>
-    /// <param name="frameRate">
-    /// The framerate for the capturing. 
-    /// </param>
-    /// <param name="width">
-    /// The width of the video stream. 
-    /// </param>
-    /// <param name="height">
-    /// The height of the video stream. 
-    /// </param>
-    public VideoCapturer(DsDevice device, int frameRate, int width, int height)
-    {
-      this.NewCamera(device, frameRate, width, height);
-    }
-
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -187,6 +94,17 @@ namespace VianaNET.Modules.Video.Control
       get
       {
         return this.fps;
+      }
+    }
+
+    /// <summary>
+    ///   Gets a value indicating whether this capturer is in the PlayState.Running state.
+    /// </summary>
+    public bool IsRunning
+    {
+      get
+      {
+        return this.CurrentState == PlayState.Running;
       }
     }
 
@@ -207,15 +125,10 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets a value indicating whether this capturer is in the PlayState.Running state.
+    ///   Gets the selected video device
     /// </summary>
-    public bool IsRunning
-    {
-      get
-      {
-        return this.CurrentState == PlayState.Running;
-      }
-    }
+    public IBaseFilter VideoDeviceFilter { get; private set; }
+
     #endregion
 
     #region Public Methods and Operators
@@ -228,13 +141,13 @@ namespace VianaNET.Modules.Video.Control
     {
       this.Stop();
 
-      if (this.captureFilter != null)
-      {
-        Marshal.ReleaseComObject(this.captureFilter);
-        this.captureFilter = null;
-        this.videoControl = null;
-        this.videoStreamConfig = null;
-      }
+      //if (this.VideoDeviceFilter != null)
+      //{
+      //  Marshal.ReleaseComObject(this.VideoDeviceFilter);
+      //  this.VideoDeviceFilter = null;
+      //  this.videoControl = null;
+      //  this.videoStreamConfig = null;
+      //}
 
       base.Dispose();
     }
@@ -243,19 +156,16 @@ namespace VianaNET.Modules.Video.Control
     /// This method creates a new graph for the given capture device and
     ///   properties.
     /// </summary>
-    /// <param name="device">
-    /// The device. 
-    /// </param>
     /// <param name="frameRate">
-    /// The framerate to use. 
+    /// The framerate to use.
     /// </param>
     /// <param name="width">
-    /// The width to use. 
+    /// The width to use.
     /// </param>
     /// <param name="height">
-    /// The height to use. 
+    /// The height to use.
     /// </param>
-    public void NewCamera(DsDevice device, int frameRate, int width, int height)
+    public void NewCamera(int frameRate, int width, int height)
     {
       this.Dispose();
 
@@ -265,7 +175,7 @@ namespace VianaNET.Modules.Video.Control
       try
       {
         // Set up the capture graph
-        if (!this.SetupGraph(device, frameRate, width, height))
+        if (!this.SetupGraph(frameRate, width, height))
         {
           Video.Instance.HasVideo = false;
           return;
@@ -309,9 +219,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public void ShowPropertyPageOfVideoDevice()
     {
-      if (this.captureFilter != null)
+      if (this.VideoDeviceFilter != null)
       {
-        DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.captureFilter);
+        DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.VideoDeviceFilter);
       }
     }
 
@@ -320,19 +230,22 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Stop()
     {
-      int hr = 0;
       try
       {
         // To stop the capture filter before stopping the media control
         // seems to solve the problem described in the next comment.
         // sancta simplicitas...
-        if (this.captureFilter != null)
+        if (this.VideoDeviceFilter != null)
         {
-          hr = this.captureFilter.Stop();
-          this.frameTimer.Stop();
+          int hr = this.VideoDeviceFilter.Stop();
           if (hr != 0)
           {
             ErrorLogger.WriteLine("Error while stopping capture filter. Message: " + DsError.GetErrorText(hr));
+          }
+
+          if (this.frameTimer != null)
+          {
+            this.frameTimer.Stop();
           }
         }
       }
@@ -346,13 +259,6 @@ namespace VianaNET.Modules.Video.Control
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
@@ -368,59 +274,66 @@ namespace VianaNET.Modules.Video.Control
     /// The on video capture device property changed.
     /// </summary>
     /// <param name="obj">
-    /// The obj. 
+    /// The obj.
     /// </param>
     /// <param name="args">
-    /// The args. 
+    /// The args.
     /// </param>
     private static void OnVideoCaptureDevicePropertyChanged(
-      DependencyObject obj, DependencyPropertyChangedEventArgs args)
+      DependencyObject obj,
+      DependencyPropertyChangedEventArgs args)
     {
       if (args.NewValue as DsDevice == null)
       {
         return;
       }
 
-      if (Video.Instance.VideoMode != VideoMode.Capture)
-      {
-        return;
-      }
+      //if (Video.Instance.VideoMode != VideoMode.Capture)
+      //{
+      //  return;
+      //}
 
       var videoCapturer = obj as VideoCapturer;
       if (videoCapturer != null)
       {
-        videoCapturer.NewCamera(args.NewValue as DsDevice, 0, 0, 0);
+        var device = args.NewValue as DsDevice;
+        if (videoCapturer.VideoDeviceFilter != null)
+        {
+          Marshal.ReleaseComObject(videoCapturer.VideoDeviceFilter);
+        }
+
+        videoCapturer.VideoDeviceFilter = DShowUtils.CreateFilter(FilterCategory.VideoInputDevice, device.Name);
+        if (Video.Instance.VideoMode == VideoMode.Capture)
+        {
+          videoCapturer.NewCamera(0, 0, 0);
+        }
       }
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     /// Set the Framerate, and video size
     /// </summary>
     /// <param name="capGraph">
-    /// The <see cref="ICaptureGraphBuilder2"/> interface. 
+    /// The <see cref="ICaptureGraphBuilder2"/> interface.
     /// </param>
     /// <param name="capFilter">
-    /// The <see cref="IBaseFilter"/> of the capture device. 
+    /// The <see cref="IBaseFilter"/> of the capture device.
     /// </param>
     /// <param name="frameRate">
-    /// The new framerate to be used. 
+    /// The new framerate to be used.
     /// </param>
     /// <param name="width">
-    /// The new video width to be used. 
+    /// The new video width to be used.
     /// </param>
     /// <param name="height">
-    /// The new video height to be used. 
+    /// The new video height to be used.
     /// </param>
     private void SetConfigParms(
-      ICaptureGraphBuilder2 capGraph, IBaseFilter capFilter, int frameRate, int width, int height)
+      ICaptureGraphBuilder2 capGraph,
+      IBaseFilter capFilter,
+      int frameRate,
+      int width,
+      int height)
     {
       int hr;
       object o;
@@ -428,13 +341,17 @@ namespace VianaNET.Modules.Video.Control
 
       // Find the stream config interface
       hr = capGraph.FindInterface(PinCategory.Capture, MediaType.Video, capFilter, typeof(IAMStreamConfig).GUID, out o);
+      if (hr != 0)
+      {
+        ErrorLogger.WriteLine("Could not FindInterface in SetConfigParms. Message: " + DsError.GetErrorText(hr));
+      }
 
       this.videoControl = capFilter as IAMVideoControl;
       this.videoStreamConfig = o as IAMStreamConfig;
 
       if (this.videoStreamConfig == null)
       {
-        ErrorLogger.WriteLine("Error in Capture.SetConfigParams(). Failed to get IAMStreamConfig");
+        ErrorLogger.WriteLine("Error in SetConfigParams(). Failed to get IAMStreamConfig");
       }
 
       // Get the existing format block
@@ -442,7 +359,7 @@ namespace VianaNET.Modules.Video.Control
 
       if (hr != 0)
       {
-        ErrorLogger.WriteLine("Could not SetConfigParms in Camera.Capture. Message: " + DsError.GetErrorText(hr));
+        ErrorLogger.WriteLine("Could not GetFormat in SetConfigParms. Message: " + DsError.GetErrorText(hr));
       }
 
       // copy out the videoinfoheader
@@ -482,7 +399,7 @@ namespace VianaNET.Modules.Video.Control
       if (hr != 0)
       {
         ErrorLogger.WriteLine(
-          "Error while setting new camera format (videoStreamConfig) in Camera.Capture. Message: "
+          "Error while getting new camera format (videoStreamConfig) in Camera.Capture. Message: "
           + DsError.GetErrorText(hr));
       }
 
@@ -497,28 +414,23 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     /// Build the capture graph for grabber.
     /// </summary>
-    /// <param name="dev">
-    /// The index of the new capture device. 
-    /// </param>
     /// <param name="frameRate">
-    /// The framerate to use. 
+    /// The framerate to use.
     /// </param>
     /// <param name="width">
-    /// The width to use. 
+    /// The width to use.
     /// </param>
     /// <param name="height">
-    /// The height to use. 
+    /// The height to use.
     /// </param>
     /// <returns>
-    /// True, if succesfull, otherwise false. 
+    /// True, if succesfull, otherwise false.
     /// </returns>
-    private bool SetupGraph(DsDevice dev, int frameRate, int width, int height)
+    private bool SetupGraph(int frameRate, int width, int height)
     {
       int hr;
 
       this.fps = frameRate; // Not measured, only to expose FPS externally 
-
-      this.captureFilter = null;
 
       // Get the graphbuilder object
       this.filterGraph = (IFilterGraph2)new FilterGraph();
@@ -545,16 +457,24 @@ namespace VianaNET.Modules.Video.Control
         this.rotEntry = new DsROTEntry(this.filterGraph);
 
         // #endif
-
-        // Add the video device
-        hr = this.filterGraph.AddSourceFilterForMoniker(dev.Mon, null, "Video input", out this.captureFilter);
-        if (hr != 0)
+        if (this.VideoDeviceFilter != null)
         {
-          ErrorLogger.WriteLine(
-            "Error in m_graphBuilder.AddSourceFilterForMoniker(). Could not add source filter. Message: "
-            + DsError.GetErrorText(hr));
+          hr = this.filterGraph.AddFilter(this.VideoDeviceFilter, "Video input");
+          DsError.ThrowExceptionForHR(hr);
+        }
+        else
+        {
+          return false;
         }
 
+        //// Add the video device
+        // hr = this.filterGraph.AddSourceFilterForMoniker(dev.Mon, null, "Video input", out this.captureFilter);
+        // if (hr != 0)
+        // {
+        // ErrorLogger.WriteLine(
+        // "Error in m_graphBuilder.AddSourceFilterForMoniker(). Could not add source filter. Message: "
+        // + DsError.GetErrorText(hr));
+        // }
         var baseGrabFlt = (IBaseFilter)this.sampleGrabber;
 
         this.ConfigureSampleGrabber(this.sampleGrabber);
@@ -570,10 +490,10 @@ namespace VianaNET.Modules.Video.Control
         // If any of the default config items are set
         if (frameRate + height + width > 0)
         {
-          this.SetConfigParms(captureGraphBuilder, this.captureFilter, frameRate, width, height);
+          this.SetConfigParms(captureGraphBuilder, this.VideoDeviceFilter, frameRate, width, height);
         }
 
-        hr = captureGraphBuilder.RenderStream(null, null, this.captureFilter, null, baseGrabFlt);
+        hr = captureGraphBuilder.RenderStream(null, null, this.VideoDeviceFilter, null, baseGrabFlt);
         string error = DsError.GetErrorText(hr);
 
         // Check for succesful rendering, if this failed the class cannot be used, so dispose the resources and return false.
@@ -614,11 +534,7 @@ namespace VianaNET.Modules.Video.Control
       }
       finally
       {
-        if (captureGraphBuilder != null)
-        {
-          Marshal.ReleaseComObject(captureGraphBuilder);
-          captureGraphBuilder = null;
-        }
+        Marshal.ReleaseComObject(captureGraphBuilder);
       }
 
       return true;
@@ -634,9 +550,5 @@ namespace VianaNET.Modules.Video.Control
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

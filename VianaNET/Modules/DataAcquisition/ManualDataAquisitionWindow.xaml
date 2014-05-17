@@ -9,8 +9,8 @@
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
-  Loaded="Window_Loaded" 
-  PreviewKeyDown="Window_PreviewKeyDown">
+  Loaded="WindowLoaded" 
+  PreviewKeyDown="WindowPreviewKeyDown">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -18,8 +18,8 @@
     <Grid.RenderTransform>
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}" MouseDown="player_MouseDown" MouseMove="player_MouseMove" />
-    <Canvas Name="WindowCanvas" MouseMove="windowCanvas_MouseMove" PreviewMouseMove="windowCanvas_MouseMove">
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
+    <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
       <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
@@ -93,10 +93,11 @@
             IsSelectionRangeEnabled="True" 
             TickPlacement="BottomRight" 
             Interval="1" 
-            TickDownClicked="timelineSlider_TickDownClicked" 
-            TickUpClicked="timelineSlider_TickUpClicked"
-            Thumb.DragStarted="timelineSlider_DragStarted"
-            Thumb.DragCompleted="timelineSlider_DragCompleted"/>
+            Height="20"
+            TickDownClicked="TimelineSliderTickDownClicked" 
+            TickUpClicked="TimelineSliderTickUpClicked"
+            Thumb.DragStarted="TimelineSliderDragStarted"
+            Thumb.DragCompleted="TimelineSliderDragCompleted"/>
           <Separator/>
           <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReady_Click" />
           <Expander IsExpanded="False">

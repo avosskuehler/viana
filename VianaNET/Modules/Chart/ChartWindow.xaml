@@ -119,7 +119,7 @@
 
           <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowInterpolationHeader}"
                       Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="InterpolationGrid">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -143,7 +143,7 @@
           </GroupBox>
           <GroupBox Header="{lex:Loc VianaNET:Labels:RegressionLineLabel}"
                       Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="RegressionGrid">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -174,7 +174,7 @@
           </GroupBox>
           <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowTheorieLabel}"
                       Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="TheoryGrid">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -223,7 +223,7 @@
             <ControlTemplate>
               <oxy:TrackerControl Position="{Binding Position}" ShowPointer="False" CornerRadius="8" BorderEdgeMode="Unspecified" BorderBrush="{Binding Series.ActualColor, Converter={StaticResource OxyColorConverter}}"  LineExtents="{Binding PlotModel.PlotArea}">
                 <oxy:TrackerControl.Content>
-                  <Grid Canvas.Left="{Binding Position.X}" Canvas.Top="{Binding Position.Y}" Margin="7">
+                  <Grid Name="TrackerGrid" Canvas.Left="{Binding Position.X}" Canvas.Top="{Binding Position.Y}" Margin="7">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto"/>
                       <ColumnDefinition Width="*"/>
@@ -298,7 +298,7 @@
           <StackPanel Style="{StaticResource SpacerStyle}"/>
           <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowTitlesHeader}"
                     Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="TitlesGrid">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -351,7 +351,7 @@
           <StackPanel Style="{StaticResource SpacerStyle}"/>
           <GroupBox Name="XAxisOptions" Header="{lex:Loc VianaNET:Labels:ChartWindowXAxisHeader}"
                     Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="AxesGrid">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -374,7 +374,7 @@
           </GroupBox>
           <GroupBox Name="YAxisOptions" Header="{lex:Loc VianaNET:Labels:ChartWindowYAxisHeader}"
                     Style="{StaticResource GroupBoxStyle}">
-            <Grid>
+            <Grid Name="YAxisGrid">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

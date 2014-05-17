@@ -1241,7 +1241,7 @@ namespace VianaNET.Modules.Chart
     {
       try
       {
-        if (Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
+        if (Viana.Project.CurrentFilterData.TheoryFilter == null || Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
         {
           return;
         }

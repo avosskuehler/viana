@@ -26,11 +26,11 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Drawing;
   using System.IO;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
@@ -39,7 +39,6 @@ namespace VianaNET.Modules.Video.Control
 
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
 
   /// <summary>
   ///   The video.
@@ -110,7 +109,7 @@ namespace VianaNET.Modules.Video.Control
       // properties to work.
       this.videoPlayerElement = new VideoPlayer();
       this.videoCaptureElement = new VideoCapturer();
-      this.videoCaptureElement.VideoAvailable += this.videoCaptureElement_VideoAvailable;
+      this.videoCaptureElement.VideoAvailable += this.VideoCaptureElementVideoAvailable;
       this.videoElement = this.videoPlayerElement;
       this.videoMode = VideoMode.None;
     }
@@ -481,15 +480,11 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// The on property changed.
+    /// Called when property changed.
     /// </summary>
-    /// <param name="obj">
-    /// The obj. 
-    /// </param>
-    /// <param name="args">
-    /// The args. 
-    /// </param>
-    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    /// <param name="obj">The object.</param>
+    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       (obj as Video).OnPropertyChanged(args);
     }
@@ -518,60 +513,47 @@ namespace VianaNET.Modules.Video.Control
         return;
       }
 
-      this.videoElement.VideoFrameChanged -= this.videoElement_VideoFrameChanged;
+      this.videoElement.VideoFrameChanged -= this.VideoElementVideoFrameChanged;
       this.videoMode = newVideoMode;
 
       switch (this.videoMode)
       {
         case VideoMode.File:
         case VideoMode.None:
-
-          // this.videoCaptureElement.Stop();
           this.videoCaptureElement.Dispose();
           this.videoElement = this.videoPlayerElement;
           break;
         case VideoMode.Capture:
-          List<DsDevice> videoDevices = DShowUtils.GetVideoInputDevices();
-          if (videoDevices.Count > 0)
+          if (DShowUtils.GetVideoInputDevices().Any())
           {
             this.videoElement = this.videoCaptureElement;
-
-            // this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 5, 320, 240);
-            this.videoCaptureElement.NewCamera(this.VideoCapturerElement.VideoCaptureDevice, 0, 0, 0);
+            this.videoCaptureElement.NewCamera(0, 0, 0);
           }
 
           break;
       }
 
-      this.videoElement.VideoFrameChanged += this.videoElement_VideoFrameChanged;
+      this.videoElement.VideoFrameChanged += this.VideoElementVideoFrameChanged;
       this.VideoSource = this.videoElement.ImageSource;
     }
 
     /// <summary>
-    /// The video capture element_ video available.
+    /// Handles the VideoAvailable event of the videoCaptureElement control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void videoCaptureElement_VideoAvailable(object sender, EventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void VideoCaptureElementVideoAvailable(object sender, EventArgs e)
     {
       this.VideoSource = this.videoElement.ImageSource;
       this.videoElement.Play();
     }
 
     /// <summary>
-    /// The video element_ video frame changed.
+    /// Handles the VideoFrameChanged event of the videoElement control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void videoElement_VideoFrameChanged(object sender, EventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void VideoElementVideoFrameChanged(object sender, EventArgs e)
     {
       this.OnVideoFrameChanged();
     }

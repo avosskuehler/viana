@@ -27,10 +27,12 @@
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Linq;
+  using System.Windows.Controls;
+
   using Application;
   using Collections;
   using CustomStyles.Types;
-  
+
   /// <summary>
   ///   The moving average filter.
   /// </summary>
@@ -45,10 +47,20 @@ namespace VianaNET.Data.Filter.Interpolation
     {
       this.InterpolationFilterType = InterpolationFilterTypes.MovingAverage;
       this.NumberOfSamplesToInterpolate = 3;
-      this.CustomUserControl = new MovingAverageUserControl(this);
     }
 
     #endregion
+
+    /// <summary>
+    /// Gets or sets the MovingAverageUserControl
+    /// </summary>
+    public override UserControl CustomUserControl
+    {
+      get
+      {
+        return new MovingAverageUserControl(this);
+      }
+    }
 
     #region Public Methods and Operators
 

@@ -19,14 +19,14 @@
   <RibbonWindow.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </RibbonWindow.Resources>
-  <Grid>
+  <Grid Name="MainGrid">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <Ribbon Grid.Row="0"
-              Title="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type RibbonWindow}},Path=Title}" 
+              Title="{lex:Loc VianaNET:Labels:ApplicationTitle}" 
               x:Name="MainRibbon">
       <Ribbon.ApplicationMenu>
         <RibbonApplicationMenu SmallImageSource="/VianaNET;component/Images/VianaNET_32.png" KeyTip="S" Label="Datei" IsMainMenu="True">
@@ -141,7 +141,7 @@
                          IsEnabled="{Binding Path=HasData, Source={x:Static application:Viana.Project}}"/>
           </RibbonApplicationSplitMenuItem>
           <RibbonApplicationMenu.AuxiliaryPaneContent>
-            <Grid>
+            <Grid Name="AuxPaneGrid">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="5" />
@@ -159,7 +159,7 @@
                     <Border x:Name="MainBorder" 
                                                 BorderThickness="1"
                                                 Padding="5,2,5,2">
-                      <Grid>
+                      <Grid Name="MainBorderGrid">
                         <Grid.ColumnDefinitions>
                           <ColumnDefinition Width="Auto" />
                           <ColumnDefinition Width="5" />
@@ -181,7 +181,7 @@
             </Grid>
           </RibbonApplicationMenu.AuxiliaryPaneContent>
           <RibbonApplicationMenu.FooterPaneContent>
-            <Grid>
+            <Grid Name="FooterGrid">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
@@ -339,7 +339,7 @@
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonSelectObjectToolTipTitle}"
             ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonSelectObjectToolTipDescription}" 
             IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
-          <Grid>
+          <Grid Name="SliderGrid">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -404,20 +404,29 @@
                          LargeImageSource="/VianaNET;component/Images/VideoWindow32.png" />
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoSelectDeviceLabelTitle}">
-          <Label Content="{lex:Loc VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
-          <RibbonComboBox SelectionBoxWidth="120" IsEditable="True" IsReadOnly="True" >
-            <RibbonGallery Name="VideoInputDeviceCombo"
-                             SelectedItem="{Binding Source={x:Static control:Video.Instance}, Path=VideoCapturerElement.VideoCaptureDevice, Mode=TwoWay}">
-              <RibbonGalleryCategory Name="VideoSourceGalleryCategory" ItemsSource="{Binding Source={x:Static control:Video.Instance}, Path=VideoInputDevices}" DisplayMemberPath="Name"/>
-            </RibbonGallery>
-          </RibbonComboBox>
-          <RibbonButton Click="VideoCaptureDevicePropertiesButtonClick" 
+          <Grid Name="VideoDeviceGrid">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
+            <RibbonComboBox Grid.Row="1" Grid.Column="0" MinWidth="200" SelectionBoxWidth="150" IsEditable="True" IsReadOnly="True" >
+              <RibbonGallery Name="VideoInputDeviceCombo" SelectionChanged="VideoInputDeviceCombo_OnSelectionChanged">
+                <RibbonGalleryCategory Name="VideoSourceGalleryCategory"/>
+              </RibbonGallery>
+            </RibbonComboBox>
+            <RibbonButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Click="VideoCaptureDevicePropertiesButtonClick" 
                          Label="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/VideoDeviceOptions32.png" 
                          SmallImageSource="/VianaNET;component/Images/VideoDeviceOptions16.png" 
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesToolTipDescription}" />
-                         <!--IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>-->
+            <!--IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>-->
+          </Grid>
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}">
           <RibbonCheckBox Name="ShowCalibrationCheckbox"  

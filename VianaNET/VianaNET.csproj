@@ -157,6 +157,7 @@
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
     <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
     <Compile Include="Data\ChartData.cs" />
+    <Compile Include="Logging\TraceListener.cs" />
     <Compile Include="Modules\DataGrid\ExportOptions.cs" />
     <Compile Include="Modules\DataGrid\ExportOptionsDialog.xaml.cs">
       <DependentUpon>ExportOptionsDialog.xaml</DependentUpon>
