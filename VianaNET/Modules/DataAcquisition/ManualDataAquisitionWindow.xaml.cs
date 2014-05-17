@@ -47,22 +47,15 @@ namespace VianaNET.Modules.DataAcquisition
   /// </summary>
   public partial class ManualDataAquisitionWindow : Window
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
     /// </summary>
     public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair", 
-      typeof(SolidColorBrush), 
-      typeof(ManualDataAquisitionWindow), 
+      "BrushOfCossHair",
+      typeof(SolidColorBrush),
+      typeof(ManualDataAquisitionWindow),
       new FrameworkPropertyMetadata(ProcessingData.TrackObjectColors[0], OnPropertyChanged));
 
     /// <summary>
@@ -70,9 +63,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject", 
-        typeof(int), 
-        typeof(ManualDataAquisitionWindow), 
+        "IndexOfTrackedObject",
+        typeof(int),
+        typeof(ManualDataAquisitionWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -116,9 +109,6 @@ namespace VianaNET.Modules.DataAcquisition
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -139,19 +129,8 @@ namespace VianaNET.Modules.DataAcquisition
 
       this.timesliderUpdateTimer = new DispatcherTimer();
       this.timesliderUpdateTimer.Interval = TimeSpan.FromMilliseconds(200);
-      this.timesliderUpdateTimer.Tick += this.timesliderUpdateTimer_Tick;
+      this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
 
-      // this.videoSurfaceClone = Video.Instance.VideoElement.CloneD3DRenderer();
-      // this.videoSurfaceClone.MouseDown += new MouseButtonEventHandler(player_MouseDown);
-      // this.videoSurfaceClone.MouseMove += new MouseEventHandler(player_MouseMove);
-      // this.playerContainerGrid.Children.Insert(0, this.videoSurfaceClone);
-      // this.videoSurfaceClone.InvalidateVideoImage();
-      // VideoPlayer.Instance.AttachToControl(this.playerContainerGrid);
-      // VideoPlayer.Instance.MouseDown += new MouseButtonEventHandler(player_MouseDown);
-      // VideoPlayer.Instance.MouseMove += new MouseEventHandler(player_MouseMove);
-
-      // this.timelineSlider.SelectionStart = 0;
-      // this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
       if (Video.Instance.VideoMode == VideoMode.Capture)
       {
         this.FramePanel.Visibility = Visibility.Hidden;
@@ -159,25 +138,8 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    /// <summary>
-    ///   Finalizes an instance of the <see cref="ManualDataAquisitionWindow" /> class.
-    /// </summary>
-    ~ManualDataAquisitionWindow()
-    {
-      //// Unregister event listeners.
-      // VideoPlayer.Instance.MouseDown -= new MouseButtonEventHandler(player_MouseDown);
-      // VideoPlayer.Instance.MouseMove -= new MouseEventHandler(player_MouseMove);
-    }
-
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -214,13 +176,6 @@ namespace VianaNET.Modules.DataAcquisition
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
@@ -247,57 +202,39 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The button ready_ click.
+    /// Handles the Click event of the ButtonReady control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void ButtonReady_Click(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
-    /// The control panel_ mouse enter.
+    /// Handles the MouseEnter event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
     private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(false);
     }
 
     /// <summary>
-    /// The control panel_ mouse leave.
+    /// Handles the MouseLeave event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
     private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(true);
     }
 
     /// <summary>
-    /// The create visual data points.
+    /// This method creates circles for the last few data points
     /// </summary>
-    /// <param name="count">
-    /// The count. 
-    /// </param>
+    /// <param name="count">The number of points to be shown. </param>
     private void CreateVisualDataPoints(int count)
     {
       this.visualDataPointRingBufferSize = count;
@@ -345,14 +282,10 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The drag window mouse down.
+    /// Drag window mouse down.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="args">
-    /// The args. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="args">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void DragWindowMouseDown(object sender, MouseButtonEventArgs args)
     {
       this.mouseDownLocation = args.GetPosition(this.WindowCanvas);
@@ -360,42 +293,30 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The drag window mouse up.
+    /// Drag window mouse up.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void DragWindowMouseUp(object sender, MouseButtonEventArgs e)
     {
       this.GridTop.ReleaseMouseCapture();
     }
 
     /// <summary>
-    /// The hide window.
+    /// Hides the window.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void HideWindow(object sender, RoutedEventArgs e)
     {
       this.ControlPanel.Visibility = Visibility.Collapsed;
     }
 
     /// <summary>
-    /// The minimize window.
+    /// Minimizes the window.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void MinimizeWindow(object sender, MouseButtonEventArgs e)
     {
       if (this.HelpText.Visibility == Visibility.Visible)
@@ -409,29 +330,19 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The recent point count_ value changed.
+    /// Handles the ValueChanged event of the RecentPointCount control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.</param>
     private void RecentPointCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
     {
       this.CreateVisualDataPoints((int)e.NewValue);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
-    /// The show hide cursor sharp.
+    /// Show or hide cursor sharp.
     /// </summary>
-    /// <param name="show">
-    /// The show. 
-    /// </param>
+    /// <param name="show">True, if cursor should be shown otherwise false.</param>
     private void ShowHideCursorSharp(bool show)
     {
       Visibility vis = show ? Visibility.Visible : Visibility.Collapsed;
@@ -465,15 +376,11 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The window_ loaded.
+    /// Handles the Loaded event of the Window control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Window_Loaded(object sender, RoutedEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void WindowLoaded(object sender, RoutedEventArgs e)
     {
       this.HorizontalCursorLineLeft.X2 = this.WindowCanvas.ActualWidth;
       this.HorizontalCursorLineRight.X2 = this.WindowCanvas.ActualWidth;
@@ -484,33 +391,36 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The window_ preview key down.
+    /// Handles the PreviewKeyDown event of the Window control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+    private void WindowPreviewKeyDown(object sender, KeyEventArgs e)
     {
       if (e.Key == Key.Enter || e.Key == Key.Escape)
       {
         e.Handled = true;
         this.Close();
       }
+      else if (e.Key == Key.Right)
+      {
+        e.Handled = true;
+        this.StepOneFrameForward();
+      }
+      else if (e.Key == Key.Left)
+      {
+        e.Handled = true;
+        this.StepOneFrameBackward();
+      }
     }
 
     /// <summary>
-    /// The player_ mouse down.
+    /// Handles the MouseDown event of the player control.
+    /// This captures the click location and transforms to video coordinates
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void player_MouseDown(object sender, MouseButtonEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void PlayerMouseDown(object sender, MouseButtonEventArgs e)
     {
       if (e.ChangedButton == MouseButton.Left)
       {
@@ -536,11 +446,11 @@ namespace VianaNET.Modules.DataAcquisition
         if (this.visualDataPointRingBufferSize > 0)
         {
           Canvas.SetTop(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
             canvasPosY - this.visualDataPointRadius);
 
           Canvas.SetLeft(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
             canvasPosX - this.visualDataPointRadius);
 
           this.indexOfVisualDataPointRingBuffer++;
@@ -560,15 +470,11 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The player_ mouse move.
+    /// Handles the MouseMove event of the player control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void player_MouseMove(object sender, MouseEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void PlayerMouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
 
@@ -589,15 +495,11 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The timeline slider_ drag completed.
+    /// Handles the DragCompleted event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timelineSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="DragCompletedEventArgs"/> instance containing the event data.</param>
+    private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
         (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
@@ -605,93 +507,57 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The timeline slider_ drag delta.
+    /// Handles the DragStarted event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
-    {
-      // Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
-    }
-
-    /// <summary>
-    /// The timeline slider_ drag started.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="DragStartedEventArgs"/> instance containing the event data.</param>
+    private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
     {
       this.isDragging = true;
     }
 
     /// <summary>
-    /// The timeline slider_ tick down clicked.
+    /// Handles the TickDownClicked event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timelineSlider_TickDownClicked(object sender, EventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void TimelineSliderTickDownClicked(object sender, EventArgs e)
     {
       this.StepOneFrameBackward();
     }
 
     /// <summary>
-    /// The timeline slider_ tick up clicked.
+    /// Handles the TickUpClicked event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timelineSlider_TickUpClicked(object sender, EventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void TimelineSliderTickUpClicked(object sender, EventArgs e)
     {
       this.StepOneFrameForward();
     }
 
     /// <summary>
-    /// The timeslider update timer_ tick.
+    /// Handles the Tick event of the timesliderUpdateTimer control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void timesliderUpdateTimer_Tick(object sender, EventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void TimesliderUpdateTimerTick(object sender, EventArgs e)
     {
       if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
       {
         double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
-
-        // double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
-        // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
         this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
         Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       }
     }
 
     /// <summary>
-    /// The window canvas_ mouse move.
+    /// Handles the MouseMove event of the windowCanvas control
+    /// by moving the control panel.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void windowCanvas_MouseMove(object sender, MouseEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void WindowCanvasMouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
 

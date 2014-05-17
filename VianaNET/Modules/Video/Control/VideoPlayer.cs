@@ -220,7 +220,7 @@ namespace VianaNET.Modules.Video.Control
       {
         if (this.mediaSeeking == null)
         {
-          throw new ArgumentNullException("MediaSeekingInterface not implemented");
+          return;
         }
 
         long currentPosition = (long)(value / Viana.Project.VideoData.FramerateFactor);

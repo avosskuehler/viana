@@ -102,16 +102,6 @@ namespace VianaNET.MainWindow
       }
     }
 
-    /// <summary>
-    ///   Sets the viana icon.
-    /// </summary>
-    public ImageSource VianaIcon
-    {
-      set
-      {
-        this.topFrame.Icon = value;
-      }
-    }
 
     /// <summary>
     ///   Sets the viana title.
@@ -120,7 +110,7 @@ namespace VianaNET.MainWindow
     {
       set
       {
-        this.topFrame.Title = value;
+        this.TopFrame.Title = value;
       }
     }
 
@@ -153,8 +143,8 @@ namespace VianaNET.MainWindow
 
     private void DontSaveAndCloseButtonClick(object sender, RoutedEventArgs e)
     {
-        this.DialogResult = false;
-        this.Close();
+      this.DialogResult = false;
+      this.Close();
     }
     #endregion
   }

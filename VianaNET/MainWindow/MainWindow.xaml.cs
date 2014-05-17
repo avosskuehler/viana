@@ -27,9 +27,11 @@
 namespace VianaNET.MainWindow
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
   using System.IO;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
@@ -42,6 +44,7 @@ namespace VianaNET.MainWindow
   using Microsoft.Win32;
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.Logging;
   using VianaNET.Resources;
   using VianaNET.Modules.Chart;
   using VianaNET.Modules.DataAcquisition;
@@ -57,12 +60,6 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class MainWindow
   {
-    #region Fields
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -70,15 +67,19 @@ namespace VianaNET.MainWindow
     /// </summary>
     public MainWindow()
     {
+      //BindingErrorTraceListener.SetTrace();
       this.InitializeComponent();
 
       this.MainRibbon.DataContext = this;
       Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
+      var devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
+
+      this.VideoSourceGalleryCategory.ItemsSource = devices;
       if (Video.Instance.VideoInputDevices.Count > 0)
       {
-        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0];
+        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0].Name;
       }
 
       this.Show();
@@ -991,5 +992,23 @@ namespace VianaNET.MainWindow
     }
 
     #endregion
+
+    /// <summary>
+    /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.
+    /// Updates the video capturer with the new device.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
+    private void VideoInputDeviceCombo_OnSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+      foreach (var videoInputDevice in Video.Instance.VideoInputDevices)
+      {
+        if (videoInputDevice.Name == this.VideoInputDeviceCombo.SelectedItem.ToString())
+        {
+          Video.Instance.VideoCapturerElement.VideoCaptureDevice = videoInputDevice;
+          break;
+        }
+      }
+    }
   }
 }

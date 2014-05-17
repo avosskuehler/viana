@@ -2,7 +2,7 @@
 // <copyright file="InterpolationOptionsDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The interpolation options dialog.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Filter.Interpolation
 {
@@ -34,25 +31,6 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public partial class InterpolationOptionsDialog
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-    #region Fields
-
-    /// <summary>
-    /// Gets or sets the current interpolation filter.
-    /// </summary>
-    public InterpolationFilter CurrentInterpolationFilter { get; set; }
-
-    #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -66,13 +44,6 @@ namespace VianaNET.Data.Filter.Interpolation
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -92,30 +63,20 @@ namespace VianaNET.Data.Filter.Interpolation
       }
     }
 
+    /// <summary>
+    ///   Gets or sets the current interpolation filter.
+    /// </summary>
+    public InterpolationFilter CurrentInterpolationFilter { get; set; }
+
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
-    /// The cancel_ click.
+    /// Cancel click.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
@@ -125,10 +86,10 @@ namespace VianaNET.Data.Filter.Interpolation
     /// The dialog_ closing.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void DialogClosing(object sender, CancelEventArgs e)
     {
@@ -139,10 +100,10 @@ namespace VianaNET.Data.Filter.Interpolation
     /// The interpolation filter combo_ selection changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void InterpolationFilterComboSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -161,10 +122,10 @@ namespace VianaNET.Data.Filter.Interpolation
     /// The o k_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
@@ -194,9 +155,5 @@ namespace VianaNET.Data.Filter.Interpolation
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }
