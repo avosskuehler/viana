@@ -1969,6 +1969,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonSkipPointsLabelTitle.
+        /// </summary>
+        internal static string ButtonSkipPointsLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonSkipPointsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSkipPointsToolTipDescription.
+        /// </summary>
+        internal static string ButtonSkipPointsToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonSkipPointsToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonSkipPointsToolTipTitle.
+        /// </summary>
+        internal static string ButtonSkipPointsToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonSkipPointsToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonSwitchTimeUnitLabelTitle.
         /// </summary>
         internal static string ButtonSwitchTimeUnitLabelTitle {
@@ -3427,6 +3454,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ManualDataAcquisitionSkipPointCount.
+        /// </summary>
+        internal static string ManualDataAcquisitionSkipPointCount {
+            get {
+                return ResourceManager.GetString("ManualDataAcquisitionSkipPointCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ManualDataAcquisitionTrackItemNumberHeader.
         /// </summary>
         internal static string ManualDataAcquisitionTrackItemNumberHeader {
@@ -4399,6 +4435,24 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SkipPointsDialogDescription.
+        /// </summary>
+        internal static string SkipPointsDialogDescription {
+            get {
+                return ResourceManager.GetString("SkipPointsDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @SkipPointsDialogTitle.
+        /// </summary>
+        internal static string SkipPointsDialogTitle {
+            get {
+                return ResourceManager.GetString("SkipPointsDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @StatusBarReady.
         /// </summary>
         internal static string StatusBarReady {
@@ -4647,6 +4701,15 @@ namespace VianaNET.Resources {
         internal static string WindowWithHelpButtonDoneLabel {
             get {
                 return ResourceManager.GetString("WindowWithHelpButtonDoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @WindowWithHelpOptionsExpanderHeader.
+        /// </summary>
+        internal static string WindowWithHelpOptionsExpanderHeader {
+            get {
+                return ResourceManager.GetString("WindowWithHelpOptionsExpanderHeader", resourceCulture);
             }
         }
         

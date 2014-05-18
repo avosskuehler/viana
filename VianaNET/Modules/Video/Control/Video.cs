@@ -434,11 +434,30 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// The step one frame.
+    /// This method steps the video the given number of frames in the given direction
     /// </summary>
-    /// <param name="forward">
-    /// The forward. 
-    /// </param>
+    /// <param name="forward">True, if we should go forward in the video stream. 
+    /// False to go backwards. </param>
+    /// <param name="count">The number of frames to move</param>
+    public void StepFrames(bool forward, int count)
+    {
+      switch (this.videoMode)
+      {
+        case VideoMode.File:
+          this.videoPlayerElement.StepFrames(forward, count);
+          break;
+        case VideoMode.Capture:
+
+          // Do nothing
+          break;
+      }
+    }
+
+    /// <summary>
+    /// This method steps the video one frame in the given direction
+    /// </summary>
+    /// <param name="forward">True, if we should go forward in the video stream. 
+    /// False to go backwards. </param>
     public void StepOneFrame(bool forward)
     {
       switch (this.videoMode)

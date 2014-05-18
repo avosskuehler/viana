@@ -57,7 +57,7 @@
             Foreground="White"/>
         </StackPanel>
       </Border>
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Border.RenderTransform>
@@ -85,6 +85,7 @@
             Margin="5" 
             IsShowingTimes="Collapsed" 
             x:Name="TimelineSlider"  
+            Style="{StaticResource MediaSliderStyle}"
             FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
             Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
             SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
@@ -99,12 +100,22 @@
             Thumb.DragStarted="TimelineSliderDragStarted"
             Thumb.DragCompleted="TimelineSliderDragCompleted"/>
           <Separator/>
-          <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReady_Click" />
-          <Expander IsExpanded="False">
-            <StackPanel Orientation="Horizontal" Margin="5">
-              <Label Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionRecentPointCount}" VerticalAlignment="Center"/>
-              <vianaNet:NumericUpDown x:Name="RecentPointCount" Width="50" Margin="5,0,0,0" Maximum="20" Value="7" ValueChanged="RecentPointCount_ValueChanged" />
-            </StackPanel>
+          <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReadyClick" />
+          <Expander IsExpanded="False" Header="{lex:Loc VianaNET:Labels:WindowWithHelpOptionsExpanderHeader}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionRecentPointCount}" VerticalAlignment="Center"/>
+              <vianaNet:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="RecentPointCount" Width="50" Margin="5,0,0,0" Minimum="0" Maximum="20" Value="7" ValueChanged="RecentPointCountValueChanged" />
+              <TextBlock Grid.Row="1" Grid.Column="0" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionSkipPointCount}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+              <vianaNet:NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="SkipPointCountNumericUpDown" Width="50" Margin="5,0,0,0" Minimum="0" Value="0" ValueChanged="SkipPointCount_OnValueChanged" />
+            </Grid>
           </Expander>
         </StackPanel>
       </Border>

@@ -16,12 +16,24 @@
     Name="DataGrid"
     Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
     ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:Viana.Project}}" 
-      HorizontalGridLinesBrush="Gray" 
-      VerticalGridLinesBrush="Gray" 
-      RowHeaderWidth="20" 
-      AlternationCount="1" 
-      CanUserDeleteRows="False"
-      CanUserResizeColumns="True">
+    HorizontalGridLinesBrush="Gray" 
+    VerticalGridLinesBrush="Gray" 
+    RowHeaderWidth="20" 
+    CanUserDeleteRows="False"
+    CanUserResizeColumns="True">
+    <DataGrid.RowStyle>
+      <Style TargetType="DataGridRow">
+        <Setter Property="Background" Value="GhostWhite" />
+        <Setter Property="Foreground" Value="LightGray"/>
+        <Style.Triggers>
+          <Trigger Property="AlternationIndex" Value="0">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+    </DataGrid.RowStyle>
+
     <!--VirtualizingStackPanel.IsVirtualizing="True"
       EnableRowVirtualization="True"
       EnableColumnVirtualization="True"-->

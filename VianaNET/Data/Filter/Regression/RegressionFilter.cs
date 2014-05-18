@@ -105,7 +105,6 @@ namespace VianaNET.Data.Filter.Regression
     {
       this.RegressionType = RegressionType.Linear;
       param = new double[3];
-      TexFormulaParser.Initialize();
       this.formulaParser = new TexFormulaParser();
     }
 

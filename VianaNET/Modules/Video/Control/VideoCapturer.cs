@@ -56,6 +56,20 @@ namespace VianaNET.Modules.Video.Control
 
     #endregion
 
+    /// <summary>
+    /// Finalizes an instance of the <see cref="VideoCapturer"/> class.
+    /// </summary>
+    ~VideoCapturer()
+    {
+      if (this.VideoDeviceFilter != null)
+      {
+        Marshal.ReleaseComObject(this.VideoDeviceFilter);
+        this.VideoDeviceFilter = null;
+        this.videoControl = null;
+        this.videoStreamConfig = null;
+      }
+    }
+
     #region Fields
 
     /// <summary>
@@ -140,15 +154,6 @@ namespace VianaNET.Modules.Video.Control
     public override void Dispose()
     {
       this.Stop();
-
-      //if (this.VideoDeviceFilter != null)
-      //{
-      //  Marshal.ReleaseComObject(this.VideoDeviceFilter);
-      //  this.VideoDeviceFilter = null;
-      //  this.videoControl = null;
-      //  this.videoStreamConfig = null;
-      //}
-
       base.Dispose();
     }
 

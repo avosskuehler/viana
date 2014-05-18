@@ -28,7 +28,7 @@
               Text="{lex:Loc VianaNET:Labels:InterpolationDialogNumberOfSamplesToUse}"
               Width="150"
               BorderThickness="0"/>
-            <xctk:IntegerUpDown
+            <vianaNet:NumericUpDown
               x:Name="NumberOfPointsNumeric" 
               Minimum="0"
               Maximum="10"

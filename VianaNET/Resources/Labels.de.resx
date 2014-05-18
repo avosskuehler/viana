@@ -1648,4 +1648,25 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
     <value>Alle abwählen</value>
   </data>
+  <data name="ManualDataAcquisitionSkipPointCount" xml:space="preserve">
+    <value>Anzahl an Bildern zwischen zwei Datenpunkten, die übersprungen werden sollen</value>
+  </data>
+  <data name="WindowWithHelpOptionsExpanderHeader" xml:space="preserve">
+    <value>Weitere Einstellungen</value>
+  </data>
+  <data name="ButtonSkipPointsLabelTitle" xml:space="preserve">
+    <value>Zwischenpunkte überspringen</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um die Anzahl an Datenpunkten zwischen zwei Werten anzugeben, die nicht in die Auswertung mit aufgenommen werden sollen (Downsampling).</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipTitle" xml:space="preserve">
+    <value>Zwischenpunkte überspringen</value>
+  </data>
+  <data name="SkipPointsDialogDescription" xml:space="preserve">
+    <value>Jeder wievielte Wert soll nur in die Auswertung mit aufgenommen werden?</value>
+  </data>
+  <data name="SkipPointsDialogTitle" xml:space="preserve">
+    <value>Zwischenpunkte überspringen</value>
+  </data>
 </root>

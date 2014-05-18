@@ -25,12 +25,14 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Collections
 {
+  using System;
+
   using VianaNET.CustomStyles.Types;
 
   /// <summary>
   ///   The data collection.
   /// </summary>
-  public class DataCollection : SortedObservableCollection<TimeSample>
+  public class DataCollection : SortedObservableCollection<TimeSample>, ICloneable
   {
     #region Constructors and Destructors
 
@@ -106,5 +108,22 @@ namespace VianaNET.Data.Collections
     }
 
     #endregion
+
+    /// <summary>
+    /// Creates a new object that is a copy of the current instance.
+    /// </summary>
+    /// <returns>
+    /// A new object that is a copy of this instance.
+    /// </returns>
+    public object Clone()
+    {
+      var returnCollection = new DataCollection();
+      foreach (var sample in this)
+      {
+        returnCollection.Add(sample);
+      }
+
+      return returnCollection;
+    }
   }
 }
