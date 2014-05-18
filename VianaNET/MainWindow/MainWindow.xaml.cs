@@ -468,7 +468,7 @@ namespace VianaNET.MainWindow
         var optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToCsv(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToCsv(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -497,7 +497,7 @@ namespace VianaNET.MainWindow
         var optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToTxt(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToTxt(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -512,7 +512,7 @@ namespace VianaNET.MainWindow
       var optionsDialog = new ExportOptionsDialog();
       if (optionsDialog.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToXls(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions);
+        ExportData.ToXls(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions);
       }
     }
 
@@ -540,7 +540,7 @@ namespace VianaNET.MainWindow
         var optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToXml(Viana.Project.VideoData.Samples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToXml(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -810,8 +810,6 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void Refresh()
     {
-      Viana.Project.OnPropertyChanged("HasData");
-
       // Update data grid
       Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
@@ -1009,6 +1007,17 @@ namespace VianaNET.MainWindow
           break;
         }
       }
+    }
+
+    /// <summary>
+    /// Skip points button click.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void SkipPointsButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new SkipPointsDialog();
+      dlg.ShowDialog();
     }
   }
 }

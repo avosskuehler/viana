@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MovingAverageControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="SkipPointsDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,59 +19,64 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The moving average user control.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace VianaNET.Data.Filter.Interpolation
+namespace VianaNET.Modules.DataGrid
 {
   using System.Windows;
-  using System.Windows.Controls;
+
+  using VianaNET.Application;
 
   /// <summary>
-  ///   The moving average user control.
+  ///   The length dialog.
   /// </summary>
-  public partial class MovingAverageUserControl : UserControl
+  public partial class SkipPointsDialog
   {
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the MovingAverageUserControl class.
+    ///   Initializes a new instance of the <see cref="SkipPointsDialog" /> class.
     /// </summary>
-    /// <param name="filter">
-    /// The filter. 
-    /// </param>
-    public MovingAverageUserControl(MovingAverageFilter filter)
+    public SkipPointsDialog()
     {
       this.InitializeComponent();
-      this.Filter = filter;
-      this.NumberOfPointsNumeric.Value = this.Filter.NumberOfSamplesToInterpolate;
+      this.UseEveryNthPointNumericUpDown.Focus();
+      this.UseEveryNthPointNumericUpDown.Value = Viana.Project.VideoData.UseEveryNthPoint;
     }
-
-    #endregion
-
-    #region Public Properties
-
-    /// <summary>
-    ///   Gets the filter.
-    /// </summary>
-    public MovingAverageFilter Filter { get; private set; }
 
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Handles the OnValueChanged event of the NumberOfPointsNumeric control.
+    /// Handles the Click event of the Cancel control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
-    private void NumberOfPointsNumeric_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void CancelClick(object sender, RoutedEventArgs e)
     {
-      this.Filter.NumberOfSamplesToInterpolate = (int)this.NumberOfPointsNumeric.Value;
+      this.Close();
+    }
+
+    /// <summary>
+    /// Handles the Click event of the OK control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void OkClick(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = true;
+      Viana.Project.VideoData.UseEveryNthPoint = (int)this.UseEveryNthPointNumericUpDown.Value;
+      this.Close();
     }
 
     #endregion
-
   }
 }

@@ -162,6 +162,9 @@
     <Compile Include="Modules\DataGrid\ExportOptionsDialog.xaml.cs">
       <DependentUpon>ExportOptionsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
+      <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Labels.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -420,6 +423,10 @@
     <Page Include="Modules\Base\WindowWithHelp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataGrid\SkipPointsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -875,6 +882,10 @@
   <ItemGroup>
     <Resource Include="Images\VideoInfo16.png" />
     <Resource Include="Images\VideoInfo32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SkipPoints16.png" />
+    <Resource Include="Images\SkipPoints32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

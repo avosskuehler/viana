@@ -85,8 +85,8 @@ namespace VianaNET.Data
       this.YAxis.MaximumPadding = 0.05;
       this.YAxis.MinimumPadding = 0.05;
 
-      this.ChartDataModel.Series.Add(this.DataScatterSeries);
       this.ChartDataModel.Series.Add(this.DataLineSeries);
+      this.ChartDataModel.Series.Add(this.DataScatterSeries);
       this.ChartDataModel.Series.Add(this.InterpolationSeries);
       this.ChartDataModel.Series.Add(new FunctionSeries());
       this.ChartDataModel.Series.Add(new FunctionSeries());
@@ -94,11 +94,6 @@ namespace VianaNET.Data
       this.ChartDataModel.Axes.Add(this.YAxis);
 
       this.DataScatterSeries.SelectionMode = SelectionMode.Multiple;
-      this.DataScatterSeries.TrackerKey = "DefaultTracker";
-      this.DataLineSeries.TrackerKey = "EmptyTracker";
-      this.InterpolationSeries.TrackerKey = "DefaultTracker";
-      this.RegressionSeries.TrackerKey = "DefaultTracker";
-      this.TheorySeries.TrackerKey = "DefaultTracker";
 
       // Property info of target object
       this.DataScatterSeries.Mapping =
@@ -265,8 +260,8 @@ namespace VianaNET.Data
     /// </summary>
     public void UpdateModel()
     {
-      this.DataScatterSeries.ItemsSource = Viana.Project.VideoData.Samples;
-      this.DataLineSeries.ItemsSource = Viana.Project.VideoData.Samples;
+      this.DataScatterSeries.ItemsSource = Viana.Project.VideoData.FilteredSamples;
+      this.DataLineSeries.ItemsSource = Viana.Project.VideoData.FilteredSamples;
       this.InterpolationSeries.ItemsSource = Viana.Project.CurrentFilterData.InterpolationSeries;
 
       this.InterpolationSeries.IsVisible = Viana.Project.CurrentFilterData.IsShowingInterpolationSeries;
@@ -278,28 +273,28 @@ namespace VianaNET.Data
       {
         this.ChartDataModel.Series[3] =
           new FunctionSeries(
-            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion, 
-            this.DataScatterSeries.MinX, 
-            this.DataScatterSeries.MaxX, 
-            Viana.Project.VideoData.Samples.Count * 2);
+            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion,
+            this.DataScatterSeries.MinX,
+            this.DataScatterSeries.MaxX,
+            Viana.Project.VideoData.FilteredSamples.Count * 2);
       }
 
       if (Viana.Project.CurrentFilterData.HasTheoryFunction && Viana.Project.CurrentFilterData.IsShowingTheorySeries)
       {
-        if (Viana.Project.VideoData.Samples.Count > 0)
+        if (Viana.Project.VideoData.FilteredSamples.Count > 0)
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
-            this.DataScatterSeries.MinX, 
-            this.DataScatterSeries.MaxX, 
-            Viana.Project.VideoData.Samples.Count * 2);
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
+            this.DataScatterSeries.MinX,
+            this.DataScatterSeries.MaxX,
+            Viana.Project.VideoData.FilteredSamples.Count * 2);
         }
         else
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
-            this.XAxis.ActualMinimum, 
-            this.XAxis.ActualMaximum, 
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
+            this.XAxis.ActualMinimum,
+            this.XAxis.ActualMaximum,
             this.XAxis.FractionUnit);
         }
       }
@@ -330,6 +325,7 @@ namespace VianaNET.Data
       PropertyInfo targetPropertyInfo = typeof(DataSample).GetProperty(propertyString);
       var propertyValue = (object[])objectPropertyInfo.GetValue(item);
       object test = propertyValue[Viana.Project.ProcessingData.IndexOfObject];
+      if (test == null) return 0;
       object result = targetPropertyInfo.GetValue(test);
       return result != null ? (double)result : 0;
     }

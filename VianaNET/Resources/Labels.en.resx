@@ -1663,4 +1663,25 @@ Click OK or press Enter, when ready.</value>
   <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
     <value>Unselect all</value>
   </data>
+  <data name="ManualDataAcquisitionSkipPointCount" xml:space="preserve">
+    <value>Number of images to skip (between data points)</value>
+  </data>
+  <data name="WindowWithHelpOptionsExpanderHeader" xml:space="preserve">
+    <value>Further options</value>
+  </data>
+  <data name="ButtonSkipPointsLabelTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipDescription" xml:space="preserve">
+    <value>Click, here to specify the number of points between two data samples that are ignored for analysis.</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
+  <data name="SkipPointsDialogDescription" xml:space="preserve">
+    <value>Each n.th sample should be used for analysis.</value>
+  </data>
+  <data name="SkipPointsDialogTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
 </root>

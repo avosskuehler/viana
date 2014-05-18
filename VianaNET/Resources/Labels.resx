@@ -1650,4 +1650,25 @@
   <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
     <value>@ExportOptionsDialogUnselectAll</value>
   </data>
+  <data name="ManualDataAcquisitionSkipPointCount" xml:space="preserve">
+    <value>@ManualDataAcquisitionSkipPointCount</value>
+  </data>
+  <data name="WindowWithHelpOptionsExpanderHeader" xml:space="preserve">
+    <value>@WindowWithHelpOptionsExpanderHeader</value>
+  </data>
+  <data name="ButtonSkipPointsLabelTitle" xml:space="preserve">
+    <value>@ButtonSkipPointsLabelTitle</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipDescription" xml:space="preserve">
+    <value>@ButtonSkipPointsToolTipDescription</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipTitle" xml:space="preserve">
+    <value>@ButtonSkipPointsToolTipTitle</value>
+  </data>
+  <data name="SkipPointsDialogDescription" xml:space="preserve">
+    <value>@SkipPointsDialogDescription</value>
+  </data>
+  <data name="SkipPointsDialogTitle" xml:space="preserve">
+    <value>@SkipPointsDialogTitle</value>
+  </data>
 </root>

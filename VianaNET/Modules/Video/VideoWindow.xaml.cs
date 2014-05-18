@@ -325,20 +325,11 @@ namespace VianaNET.Modules.Video
       Video.Instance.IsDataAcquisitionRunning = false;
       this.cancelCalculation = false;
 
-      // if (Video.Instance.VideoMode == VideoMode.File)
-      // {
-      // Video.Instance.VideoPlayerElement.StepComplete -=
-      // new EventHandler(VideoPlayerElement_StepComplete);
-      // Video.Instance.VideoPlayerElement.FileComplete -=
-      // new EventHandler(VideoPlayerElement_FileComplete);
-      // }
-
       // Reset Statusbar
       StatusBarContent.Instance.StatusLabel = Labels.StatusBarReady;
       StatusBarContent.Instance.ProgressBarValue = 0;
 
       // Recalculate dependent data values
-      Viana.Project.OnPropertyChanged("HasData");
       Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 

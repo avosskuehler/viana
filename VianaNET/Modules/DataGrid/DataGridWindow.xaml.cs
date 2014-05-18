@@ -120,13 +120,14 @@ namespace VianaNET.Modules.DataGrid
       {
         this.Refresh();
       }
-      else
+      else if (e.PropertyName == "NumberOfTrackedObjects")
       {
-        if (e.PropertyName == "NumberOfTrackedObjects")
-        {
-          this.PopulateDataGridWithColumns();
-          this.Refresh();
-        }
+        this.PopulateDataGridWithColumns();
+        this.Refresh();
+      }
+      else if (e.PropertyName == "UseEveryNthPoint")
+      {
+        this.DataGrid.AlternationCount = Viana.Project.VideoData.UseEveryNthPoint;
       }
     }
 

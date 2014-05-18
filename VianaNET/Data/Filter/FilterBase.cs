@@ -198,7 +198,7 @@ namespace VianaNET.Data.Filter
       this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (var sample in Viana.Project.VideoData.Samples)
+      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
       {
         if (!sample.IsSelected)
         {

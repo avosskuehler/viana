@@ -148,6 +148,7 @@ namespace VianaNET.Modules.Chart
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
       Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      Viana.Project.UpdateChartRequested += this.ProjectUpdateChartRequested;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
       this.PopulateAxesFromChartSelection();
@@ -274,6 +275,16 @@ namespace VianaNET.Modules.Chart
       {
         window.Refresh();
       }
+    }
+
+    /// <summary>
+    /// Handles the UpdateChartRequested event of the Project control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    private void ProjectUpdateChartRequested(object sender, EventArgs e)
+    {
+      this.Refresh();
     }
 
     /// <summary>
@@ -1437,7 +1448,7 @@ namespace VianaNET.Modules.Chart
       }
 
       // Remove selection in VideoData
-      foreach (var sample in Viana.Project.VideoData.Samples)
+      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
       {
         sample.IsSelected = false;
       }
@@ -1469,7 +1480,7 @@ namespace VianaNET.Modules.Chart
 
         // Create current point list
         var actualDataPoints = new List<ScatterPoint>();
-        foreach (var item in Viana.Project.VideoData.Samples)
+        foreach (var item in Viana.Project.VideoData.FilteredSamples)
         {
           actualDataPoints.Add(this.ChartData.DataScatterSeries.Mapping(item));
         }
@@ -1489,7 +1500,7 @@ namespace VianaNET.Modules.Chart
           {
             var index = actualDataPoints.IndexOf(dataPoint);
             this.ChartData.DataScatterSeries.UnselectItem(index);
-            Viana.Project.VideoData.Samples[index].IsSelected = false;
+            Viana.Project.VideoData.FilteredSamples[index].IsSelected = false;
           }
         }
         else
@@ -1498,14 +1509,14 @@ namespace VianaNET.Modules.Chart
           {
             var index = actualDataPoints.IndexOf(dataPoint);
             this.ChartData.DataScatterSeries.SelectItem(index);
-            Viana.Project.VideoData.Samples[index].IsSelected = true;
+            Viana.Project.VideoData.FilteredSamples[index].IsSelected = true;
           }
         }
 
         // Reset selection to whole series, if no point is selected
         if (!selectedDataPoints.Any())
         {
-          foreach (var sample in Viana.Project.VideoData.Samples)
+          foreach (var sample in Viana.Project.VideoData.FilteredSamples)
           {
             sample.IsSelected = true;
           }
@@ -1593,7 +1604,7 @@ namespace VianaNET.Modules.Chart
     {
       this.isSelectionEnabled = false;
       this.ChartData.DataScatterSeries.ClearSelection();
-      foreach (var sample in Viana.Project.VideoData.Samples)
+      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
       {
         sample.IsSelected = true;
       }

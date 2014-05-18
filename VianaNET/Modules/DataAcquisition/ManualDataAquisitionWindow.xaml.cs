@@ -123,6 +123,7 @@ namespace VianaNET.Modules.DataAcquisition
 
       this.indexOfVisualDataPointRingBuffer = 0;
       this.CreateVisualDataPoints(7);
+      this.SkipPointCount = 1;
 
       this.CursorEllipse.Width = 2 * this.visualDataPointRadius;
       this.CursorEllipse.Height = 2 * this.visualDataPointRadius;
@@ -174,6 +175,8 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
+    public int SkipPointCount { get; set; }
+
     #endregion
 
     #region Methods
@@ -206,7 +209,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void ButtonReady_Click(object sender, RoutedEventArgs e)
+    private void ButtonReadyClick(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
@@ -216,7 +219,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
+    private void ControlPanelMouseEnter(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(false);
     }
@@ -226,7 +229,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
+    private void ControlPanelMouseLeave(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(true);
     }
@@ -334,7 +337,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.</param>
-    private void RecentPointCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    private void RecentPointCountValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
     {
       this.CreateVisualDataPoints((int)e.NewValue);
     }
@@ -360,7 +363,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepOneFrame(false);
+        Video.Instance.StepFrames(false, this.SkipPointCount);
       }
     }
 
@@ -371,7 +374,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepOneFrame(true);
+        Video.Instance.StepFrames(true, this.SkipPointCount);
       }
     }
 
@@ -577,5 +580,15 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     #endregion
+
+    /// <summary>
+    /// Handles the OnValueChanged event of the SkipPointCount control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.</param>
+    private void SkipPointCount_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    {
+      this.SkipPointCount = (int)e.NewValue + 1;
+    }
   }
 }

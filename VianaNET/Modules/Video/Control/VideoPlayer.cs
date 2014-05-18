@@ -404,11 +404,42 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// The step one frame.
+    /// This method steps the video the given number of frames in the given direction
     /// </summary>
-    /// <param name="forward">
-    /// The forward. 
-    /// </param>
+    /// <param name="forward">True, if we should go forward in the video stream. 
+    /// False to go backwards. </param>
+    /// <param name="count">The number of frames to move</param>
+    public void StepFrames(bool forward, int count)
+    {
+      if (forward)
+      {
+        if (!this.isFrameTimeCapable || Video.Instance.IsDataAcquisitionRunning)
+        {
+          this.StepFrames(count);
+        }
+        else
+        {
+          this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds * count;
+        }
+      }
+      else
+      {
+        if (this.timeFormat == TimeFormat.Frame)
+        {
+          this.MediaPositionFrameIndex = this.MediaPositionFrameIndex - count;
+        }
+        else
+        {
+          this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds * count;
+        }
+      }
+    }
+
+    /// <summary>
+    /// This method steps the video one frame in the given direction
+    /// </summary>
+    /// <param name="forward">True, if we should go forward in the video stream. 
+    /// False to go backwards. </param>
     public void StepOneFrame(bool forward)
     {
       if (forward)
@@ -421,9 +452,6 @@ namespace VianaNET.Modules.Video.Control
         {
           this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds;
         }
-
-        // this.MediaPositionInNanoSeconds =
-        // (long)(this.MediaPositionInMilliSeconds / NanoSecsToMilliSecs + this.FrameTimeInNanoSeconds);
       }
       else
       {
@@ -434,9 +462,6 @@ namespace VianaNET.Modules.Video.Control
         else
         {
           this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds;
-
-          // this.MediaPositionInNanoSeconds =
-          // (long)(this.MediaPositionInMilliSeconds / NanoSecsToMilliSecs - this.FrameTimeInNanoSeconds);
         }
       }
     }
@@ -756,13 +781,13 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     /// The step frames.
     /// </summary>
-    /// <param name="nFramesToStep">
+    /// <param name="numberOfFramesToStep">
     /// The n frames to step. 
     /// </param>
     /// <returns>
     /// The <see cref="int"/> . 
     /// </returns>
-    private int StepFrames(int nFramesToStep)
+    private int StepFrames(int numberOfFramesToStep)
     {
       int hr = 0;
 
@@ -772,7 +797,7 @@ namespace VianaNET.Modules.Video.Control
         // The renderer may not support frame stepping for more than one
         // frame at a time, so check for support.  S_OK indicates that the
         // renderer can step nFramesToStep successfully.
-        hr = this.frameStep.CanStep(nFramesToStep, null);
+        hr = this.frameStep.CanStep(numberOfFramesToStep, null);
         if (hr == 0)
         {
           // The graph must be paused for frame stepping to work
@@ -782,35 +807,11 @@ namespace VianaNET.Modules.Video.Control
           }
 
           // Step the requested number of frames, if supported
-          hr = this.frameStep.Step(nFramesToStep, null);
+          hr = this.frameStep.Step(numberOfFramesToStep, null);
         }
       }
 
       this.UpdateFrameIndex();
-
-      return hr;
-    }
-
-    /// <summary>
-    ///   The step one frame.
-    /// </summary>
-    /// <returns> The <see cref="int" /> . </returns>
-    private int StepOneFrame()
-    {
-      int hr = 0;
-
-      // If the Frame Stepping interface exists, use it to step one frame
-      if (this.frameStep != null)
-      {
-        // The graph must be paused for frame stepping to work
-        if (this.CurrentState != PlayState.Paused)
-        {
-          this.Pause();
-        }
-
-        // Step the requested number of frames, if supported
-        hr = this.frameStep.Step(1, null);
-      }
 
       return hr;
     }

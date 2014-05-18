@@ -1,0 +1,36 @@
+﻿<Window x:Class="VianaNET.Modules.DataGrid.SkipPointsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:application="clr-namespace:VianaNET.Application"
+        xmlns:vianaNet="clr-namespace:VianaNET"
+        lex:LocalizeDictionary.DesignCulture="de"
+    ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+    Height="185" MaxWidth="250" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:Loc VianaNET:Labels:SkipPointsDialogTitle}" SizeToContent="Width" ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico" Topmost="True">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Border Grid.Row="0" Background="{StaticResource MainBackgroundBrush}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
+          <TextBlock Name="Description" FontWeight="Bold" TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:SkipPointsDialogDescription}"/>
+          <vianaNet:NumericUpDown Margin="5" x:Name="UseEveryNthPointNumericUpDown" Minimum="1"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+      <Button Name="OK" Height="23" Width="80" IsDefault="True" Margin="5" Content="{lex:Loc VianaNET:Labels:OK}" Click="OkClick" />
+      <Button Name="Cancel" Height="23" Width="80" IsDefault="False" Margin="5" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
+    </StackPanel>
+  </Grid>
+</Window>
