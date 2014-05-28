@@ -546,6 +546,35 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// The button export data to ods executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ExportDataToOdsButtonClick(object sender, RoutedEventArgs e)
+    {
+      // Create new SaveFileDialog object
+      var sfd = new SaveFileDialog
+      {
+        DefaultExt = "ods",
+        Filter = Labels.OdsFilter,
+        AddExtension = true,
+        RestoreDirectory = true,
+        Title = Labels.ExportWhereToSaveFile,
+        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+      };
+
+      // Show the dialog and process the result
+      if (sfd.ShowDialog().GetValueOrDefault())
+      {
+        var optionsDialog = new ExportOptionsDialog();
+        if (optionsDialog.ShowDialog().GetValueOrDefault())
+        {
+          ExportData.ToOds(Viana.Project.VideoData.FilteredSamples, sfd.FileName, optionsDialog.ExportOptions);
+        }
+      }
+    }
+
+    /// <summary>
     /// The button record video command_ executed.
     /// </summary>
     /// <param name="sender">Source of the event.</param>

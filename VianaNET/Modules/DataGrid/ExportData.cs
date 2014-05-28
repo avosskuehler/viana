@@ -26,9 +26,12 @@ namespace VianaNET.Modules.DataGrid
   using System.Collections.Generic;
   using System.Globalization;
   using System.IO;
+  using System.Reflection;
   using System.Text;
   using System.Windows.Input;
   using System.Xml;
+
+  using Ionic.Zip;
 
   using Microsoft.Office.Interop.Excel;
 
@@ -45,40 +48,230 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public class ExportData
   {
+    #region Static Fields
+
+    /// <summary>
+    /// Namespaces. We need this to initialize XmlNamespaceManager so that we can search XmlDocument.
+    /// Used for Ods Export.
+    /// </summary>
+    private static readonly string[,] Namespaces =
+    {
+      { "table", "urn:oasis:names:tc:opendocument:xmlns:table:1.0" }, 
+      { "office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0" }, 
+      { "style", "urn:oasis:names:tc:opendocument:xmlns:style:1.0" }, 
+      { "text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0" }, 
+      { "draw", "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" }, 
+      {
+        "fo", 
+        "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+      }, 
+      { "dc", "http://purl.org/dc/elements/1.1/" }, 
+      { "meta", "urn:oasis:names:tc:opendocument:xmlns:meta:1.0" }, 
+      { "number", "urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" }, 
+      {
+        "presentation", 
+        "urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
+      }, 
+      {
+        "svg", "urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+      }, 
+      { "chart", "urn:oasis:names:tc:opendocument:xmlns:chart:1.0" }, 
+      { "dr3d", "urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" }, 
+      { "math", "http://www.w3.org/1998/Math/MathML" }, 
+      { "form", "urn:oasis:names:tc:opendocument:xmlns:form:1.0" }, 
+      { "script", "urn:oasis:names:tc:opendocument:xmlns:script:1.0" }, 
+      { "ooo", "http://openoffice.org/2004/office" }, 
+      { "ooow", "http://openoffice.org/2004/writer" }, 
+      { "oooc", "http://openoffice.org/2004/calc" }, 
+      { "dom", "http://www.w3.org/2001/xml-events" }, 
+      { "xforms", "http://www.w3.org/2002/xforms" }, 
+      { "xsd", "http://www.w3.org/2001/XMLSchema" }, 
+      { "xsi", "http://www.w3.org/2001/XMLSchema-instance" }, 
+      { "rpt", "http://openoffice.org/2005/report" }, 
+      { "of", "urn:oasis:names:tc:opendocument:xmlns:of:1.2" }, 
+      { "rdfa", "http://docs.oasis-open.org/opendocument/meta/rdfa#" }, 
+      { "config", "urn:oasis:names:tc:opendocument:xmlns:config:1.0" }
+    };
+
+    #endregion
+
     #region Public Methods and Operators
 
     /// <summary>
     /// This method exports the given datasource with the given options to the given file
-    /// in csv format.
+    ///   in csv format.
     /// </summary>
-    /// <param name="dataSource">The data source.</param>
-    /// <param name="options">The options.</param>
-    /// <param name="fileName">Name of the file.</param>
+    /// <param name="dataSource">
+    /// The data source.
+    /// </param>
+    /// <param name="options">
+    /// The options.
+    /// </param>
+    /// <param name="fileName">
+    /// Name of the file.
+    /// </param>
     public static void ToCsv(DataCollection dataSource, ExportOptions options, string fileName)
     {
-      var arrays = GenerateExportArray(dataSource, options);
+      List<List<object>> arrays = GenerateExportArray(dataSource, options);
       WriteToFileWithSeparator(arrays, fileName, ";");
     }
 
     /// <summary>
-    /// This method exports the given datasource with the given options to the given file
-    /// in txt format.
+    /// Writes DataCollection as .ods file.
     /// </summary>
-    /// <param name="dataSource">The data source.</param>
-    /// <param name="options">The options.</param>
-    /// <param name="fileName">Name of the file.</param>
+    /// <param name="dataSource">
+    /// The data source.
+    /// </param>
+    /// <param name="outputFilePath">
+    /// The name of the file to save to.
+    /// </param>
+    /// <param name="options">
+    /// The options.
+    /// </param>
+    public static void ToOds(DataCollection dataSource, string outputFilePath, ExportOptions options)
+    {
+      // Generate arrays
+      var arrays = GenerateExportArray(dataSource, options);
+
+      var templateFile =
+        ZipFile.Read(
+          Assembly.GetExecutingAssembly().GetManifestResourceStream("VianaNET.Modules.DataGrid.template.ods"));
+      var contentXml = GetContentXmlFile(templateFile);
+      var nmsManager = new XmlNamespaceManager(contentXml.NameTable);
+
+      for (int i = 0; i < Namespaces.GetLength(0); i++)
+      {
+        nmsManager.AddNamespace(Namespaces[i, 0], Namespaces[i, 1]);
+      }
+
+      var tableNodes =
+        contentXml.SelectNodes("/office:document-content/office:body/office:spreadsheet/table:table", nmsManager);
+      var sheetsRootNode = tableNodes.Item(0).ParentNode;
+
+      // remove sheets from template file
+      foreach (XmlNode tableNode in tableNodes)
+      {
+        sheetsRootNode.RemoveChild(tableNode);
+      }
+
+      // Save data
+      var ownerDocument = sheetsRootNode.OwnerDocument;
+
+      XmlNode sheetNode = ownerDocument.CreateElement("table:table", GetNamespaceUri("table"));
+
+      var sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
+      sheetName.Value = Viana.Project.ProjectFilename;
+      sheetNode.Attributes.Append(sheetName);
+
+      // SaveColumnDefinition
+      var columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
+      var columnsCount = ownerDocument.CreateAttribute(
+        "table:number-columns-repeated", 
+        GetNamespaceUri("table"));
+      columnsCount.Value = arrays[0].Count.ToString(CultureInfo.InvariantCulture);
+      columnDefinition.Attributes.Append(columnsCount);
+      sheetNode.AppendChild(columnDefinition);
+
+      // Save rows
+      foreach (var row in arrays)
+      {
+        XmlNode rowNode = ownerDocument.CreateElement("table:table-row", GetNamespaceUri("table"));
+        foreach (object column in row)
+        {
+          XmlElement cellNode = ownerDocument.CreateElement("table:table-cell", GetNamespaceUri("table"));
+
+          if (column is string)
+          {
+            // We save values as text (string)
+            XmlAttribute valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            valueType.Value = "string";
+            cellNode.Attributes.Append(valueType);
+
+            XmlElement cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            cellValue.InnerText = column.ToString();
+            cellNode.AppendChild(cellValue);
+          }
+          else if (column is double)
+          {
+            // We save values as text (string)
+            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            valueType.Value = "float";
+            cellNode.Attributes.Append(valueType);
+
+            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            var doubleValue = (double)column;
+            value.Value = doubleValue.ToString("N2", new CultureInfo("en-US"));
+            cellNode.Attributes.Append(value);
+
+            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            cellValue.InnerText = column.ToString();
+            cellNode.AppendChild(cellValue);
+          }
+          else if (column is int)
+          {
+            // We save values as text (string)
+            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            valueType.Value = "float";
+            cellNode.Attributes.Append(valueType);
+
+            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            value.Value = column.ToString();
+            cellNode.Attributes.Append(value);
+
+            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            cellValue.InnerText = column.ToString();
+            cellNode.AppendChild(cellValue);
+          }
+
+          rowNode.AppendChild(cellNode);
+        }
+
+        sheetNode.AppendChild(rowNode);
+      }
+
+      sheetsRootNode.AppendChild(sheetNode);
+
+      // SaveContentXml
+      templateFile.RemoveEntry("content.xml");
+
+      var memStream = new MemoryStream();
+      contentXml.Save(memStream);
+      memStream.Seek(0, SeekOrigin.Begin);
+
+      templateFile.AddEntry("content.xml", memStream);
+      contentXml.WriteContentTo(new XmlTextWriter(@"C:\Users\Adrian\Documents\test.xml", Encoding.ASCII));
+      templateFile.Save(outputFilePath);
+    }
+
+    /// <summary>
+    /// This method exports the given datasource with the given options to the given file
+    ///   in txt format.
+    /// </summary>
+    /// <param name="dataSource">
+    /// The data source.
+    /// </param>
+    /// <param name="options">
+    /// The options.
+    /// </param>
+    /// <param name="fileName">
+    /// Name of the file.
+    /// </param>
     public static void ToTxt(DataCollection dataSource, ExportOptions options, string fileName)
     {
-      var arrays = GenerateExportArray(dataSource, options);
+      List<List<object>> arrays = GenerateExportArray(dataSource, options);
       WriteToFileWithSeparator(arrays, fileName, "\t");
     }
 
     /// <summary>
-    /// This method exports the given datasource with the given options directly to 
-    /// excel, if it is installed
+    /// This method exports the given datasource with the given options directly to
+    ///   excel, if it is installed
     /// </summary>
-    /// <param name="dataSource">The data source.</param>
-    /// <param name="options">The options.</param>
+    /// <param name="dataSource">
+    /// The data source.
+    /// </param>
+    /// <param name="options">
+    /// The options.
+    /// </param>
     public static void ToXls(DataCollection dataSource, ExportOptions options)
     {
       Application.Current.MainWindow.Cursor = Cursors.Wait;
@@ -90,14 +283,14 @@ namespace VianaNET.Modules.DataGrid
 
         var ws = (Worksheet)xla.ActiveSheet;
 
-        var arrays = GenerateExportArray(dataSource, options);
+        List<List<object>> arrays = GenerateExportArray(dataSource, options);
 
-        for (var i = 1; i <= arrays.Count; i++)
+        for (int i = 1; i <= arrays.Count; i++)
         {
-          var row = arrays[i - 1];
-          for (var j = 1; j <= row.Count; j++)
+          List<object> row = arrays[i - 1];
+          for (int j = 1; j <= row.Count; j++)
           {
-            var column = row[j - 1];
+            object column = row[j - 1];
             ws.Cells[i, j] = column;
           }
         }
@@ -115,9 +308,15 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Erzeugt aus einer DataTable ein Excel-XML-Dokument mit SpreadsheetML.
     /// </summary>
-    /// <param name="dataSource"> Datenquelle, die in Excel exportiert werden soll </param>
-    /// <param name="options">Die Exporteinstellungen</param>
-    /// <param name="fileName"> Dateiname der Ausgabe-XML-Datei</param>
+    /// <param name="dataSource">
+    /// Datenquelle, die in Excel exportiert werden soll 
+    /// </param>
+    /// <param name="options">
+    /// Die Exporteinstellungen
+    /// </param>
+    /// <param name="fileName">
+    /// Dateiname der Ausgabe-XML-Datei
+    /// </param>
     public static void ToXml(DataCollection dataSource, ExportOptions options, string fileName)
     {
       // XML-Schreiber erzeugen
@@ -136,10 +335,10 @@ namespace VianaNET.Modules.DataGrid
       writer.WriteStartElement("Workbook", "urn:schemas-microsoft-com:office:spreadsheet");
 
       // Definition der Namensräume schreiben 
-      writer.WriteAttributeString("xmlns", "o", null, "urn:schemas-microsoft-com:office:office");
-      writer.WriteAttributeString("xmlns", "x", null, "urn:schemas-microsoft-com:office:excel");
-      writer.WriteAttributeString("xmlns", "ss", null, "urn:schemas-microsoft-com:office:spreadsheet");
-      writer.WriteAttributeString("xmlns", "html", null, "http://www.w3.org/TR/REC-html40");
+      writer.WriteAttributeString("xmlns", "o", string.Empty, "urn:schemas-microsoft-com:office:office");
+      writer.WriteAttributeString("xmlns", "x", string.Empty, "urn:schemas-microsoft-com:office:excel");
+      writer.WriteAttributeString("xmlns", "ss", string.Empty, "urn:schemas-microsoft-com:office:spreadsheet");
+      writer.WriteAttributeString("xmlns", "html", string.Empty, "http://www.w3.org/TR/REC-html40");
 
       // <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
       writer.WriteStartElement("DocumentProperties", "urn:schemas-microsoft-com:office:office");
@@ -173,12 +372,12 @@ namespace VianaNET.Modules.DataGrid
 
       // <Style ss:ID="Default" ss:Name="Normal">
       writer.WriteStartElement("Style");
-      writer.WriteAttributeString("ss", "ID", null, "Default");
-      writer.WriteAttributeString("ss", "Name", null, "Normal");
+      writer.WriteAttributeString("ss", "ID", string.Empty, "Default");
+      writer.WriteAttributeString("ss", "Name", string.Empty, "Normal");
 
       // <Alignment ss:Vertical="Bottom"/>
       writer.WriteStartElement("Alignment");
-      writer.WriteAttributeString("ss", "Vertical", null, "Bottom");
+      writer.WriteAttributeString("ss", "Vertical", string.Empty, "Bottom");
       writer.WriteEndElement();
 
       // Verbleibende Sytle-Eigenschaften leer schreiben
@@ -196,21 +395,21 @@ namespace VianaNET.Modules.DataGrid
 
       // <Worksheet ss:Name="xxx">
       writer.WriteStartElement("Worksheet");
-      writer.WriteAttributeString("ss", "Name", null, "VianaNET Data");
+      writer.WriteAttributeString("ss", "Name", string.Empty, "VianaNET Data");
 
       // <Table x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="60">
       writer.WriteStartElement("Table");
-      writer.WriteAttributeString("x", "FullColumns", null, "1");
-      writer.WriteAttributeString("x", "FullRows", null, "1");
-      writer.WriteAttributeString("ss", "DefaultColumnWidth", null, "60");
+      writer.WriteAttributeString("x", "FullColumns", string.Empty, "1");
+      writer.WriteAttributeString("x", "FullRows", string.Empty, "1");
+      writer.WriteAttributeString("ss", "DefaultColumnWidth", string.Empty, "60");
 
-      var arrays = GenerateExportArray(dataSource, options);
+      List<List<object>> arrays = GenerateExportArray(dataSource, options);
       foreach (var row in arrays)
       {
         // <Row>
         writer.WriteStartElement("Row");
 
-        foreach (var column in row)
+        foreach (object column in row)
         {
           WriteCellValue(writer, "Number", column);
         }
@@ -228,16 +427,16 @@ namespace VianaNET.Modules.DataGrid
       // Seiteneinstellungen schreiben
       writer.WriteStartElement("PageSetup");
       writer.WriteStartElement("Header");
-      writer.WriteAttributeString("x", "Margin", null, "0.4921259845");
+      writer.WriteAttributeString("x", "Margin", string.Empty, "0.4921259845");
       writer.WriteEndElement();
       writer.WriteStartElement("Footer");
-      writer.WriteAttributeString("x", "Margin", null, "0.4921259845");
+      writer.WriteAttributeString("x", "Margin", string.Empty, "0.4921259845");
       writer.WriteEndElement();
       writer.WriteStartElement("PageMargins");
-      writer.WriteAttributeString("x", "Bottom", null, "0.984251969");
-      writer.WriteAttributeString("x", "Left", null, "0.78740157499999996");
-      writer.WriteAttributeString("x", "Right", null, "0.78740157499999996");
-      writer.WriteAttributeString("x", "Top", null, "0.984251969");
+      writer.WriteAttributeString("x", "Bottom", string.Empty, "0.984251969");
+      writer.WriteAttributeString("x", "Left", string.Empty, "0.78740157499999996");
+      writer.WriteAttributeString("x", "Right", string.Empty, "0.78740157499999996");
+      writer.WriteAttributeString("x", "Top", string.Empty, "0.984251969");
       writer.WriteEndElement();
       writer.WriteEndElement();
 
@@ -315,8 +514,10 @@ namespace VianaNET.Modules.DataGrid
 
       foreach (int objectIndex in options.Objects)
       {
-        var oneBased = objectIndex + 1;
-        string title = options.Objects.Count > 1 ? Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": " : string.Empty;
+        int oneBased = objectIndex + 1;
+        string title = options.Objects.Count > 1
+                         ? Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": "
+                         : string.Empty;
         if (options.Axes.Contains(DataAxis.DataAxes[2]))
         {
           header.Add(title + DataAxis.DataAxes[2].Description + " [" + Viana.Project.CalibrationData.PixelUnit + "]");
@@ -369,38 +570,44 @@ namespace VianaNET.Modules.DataGrid
 
         if (options.Axes.Contains(DataAxis.DataAxes[12]))
         {
-          header.Add(title + DataAxis.DataAxes[12].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[12].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[13]))
         {
-          header.Add(title + DataAxis.DataAxes[13].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[13].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[14]))
         {
-          header.Add(title + DataAxis.DataAxes[14].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[14].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[15]))
         {
-          header.Add(title + DataAxis.DataAxes[15].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[15].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[16]))
         {
-          header.Add(title + DataAxis.DataAxes[16].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[16].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[17]))
         {
-          header.Add(title + DataAxis.DataAxes[17].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+          header.Add(
+            title + DataAxis.DataAxes[17].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
         }
       }
 
       exportArray.Add(header);
 
-      foreach (var sample in dataSource)
+      foreach (TimeSample sample in dataSource)
       {
         var columns = new List<object>();
         if (options.Axes.Contains(DataAxis.DataAxes[0]))
@@ -410,7 +617,7 @@ namespace VianaNET.Modules.DataGrid
 
         if (options.Axes.Contains(DataAxis.DataAxes[1]))
         {
-          var timeunit = Viana.Project.CalibrationData.TimeUnit;
+          TimeUnit timeunit = Viana.Project.CalibrationData.TimeUnit;
           switch (timeunit)
           {
             case TimeUnit.ms:
@@ -514,6 +721,57 @@ namespace VianaNET.Modules.DataGrid
     }
 
     /// <summary>
+    /// The get content xml file.
+    /// </summary>
+    /// <param name="zipFile">
+    /// The zip file.
+    /// </param>
+    /// <returns>
+    /// The <see cref="XmlDocument"/>.
+    /// </returns>
+    private static XmlDocument GetContentXmlFile(ZipFile zipFile)
+    {
+      // Get file(in zip archive) that contains data ("content.xml").
+      ZipEntry contentZipEntry = zipFile["content.xml"];
+
+      // Extract that file to MemoryStream.
+      Stream contentStream = new MemoryStream();
+      contentZipEntry.Extract(contentStream);
+      contentStream.Seek(0, SeekOrigin.Begin);
+
+      // Create XmlDocument from MemoryStream (MemoryStream contains content.xml).
+      var contentXml = new XmlDocument();
+      contentXml.Load(contentStream);
+
+      return contentXml;
+    }
+
+    /// <summary>
+    /// Gets the namespace URI.
+    /// </summary>
+    /// <param name="prefix">
+    /// The prefix.
+    /// </param>
+    /// <returns>
+    /// The string with the namespace uri
+    /// </returns>
+    /// <exception cref="System.InvalidOperationException">
+    /// Can't find that namespace URI
+    /// </exception>
+    private static string GetNamespaceUri(string prefix)
+    {
+      for (int i = 0; i < Namespaces.GetLength(0); i++)
+      {
+        if (Namespaces[i, 0] == prefix)
+        {
+          return Namespaces[i, 1];
+        }
+      }
+
+      throw new InvalidOperationException("Can't find that namespace URI");
+    }
+
+    /// <summary>
     /// The write cell value.
     /// </summary>
     /// <param name="writer">
@@ -532,7 +790,7 @@ namespace VianaNET.Modules.DataGrid
 
       // <Data ss:Type="String">xxx</Data>
       writer.WriteStartElement("Data");
-      writer.WriteAttributeString("ss", "Type", null, cellType);
+      writer.WriteAttributeString("ss", "Type", string.Empty, cellType);
 
       // Zelleninhalt schreiben
       writer.WriteValue(cellValue ?? string.Empty);
@@ -547,16 +805,22 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Writes to file with separator.
     /// </summary>
-    /// <param name="arrays">The arrays.</param>
-    /// <param name="fileName">Name of the file.</param>
-    /// <param name="separator">The separator.</param>
+    /// <param name="arrays">
+    /// The arrays.
+    /// </param>
+    /// <param name="fileName">
+    /// Name of the file.
+    /// </param>
+    /// <param name="separator">
+    /// The separator.
+    /// </param>
     private static void WriteToFileWithSeparator(List<List<object>> arrays, string fileName, string separator)
     {
       using (var sw = new StreamWriter(fileName))
       {
         foreach (var row in arrays)
         {
-          foreach (var column in row)
+          foreach (object column in row)
           {
             sw.Write(column);
             sw.Write(separator);

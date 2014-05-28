@@ -1321,6 +1321,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonExportDataToOdsLabelTitle.
+        /// </summary>
+        internal static string ButtonExportDataToOdsLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonExportDataToOdsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonExportDataToOdsToolTipDescription.
+        /// </summary>
+        internal static string ButtonExportDataToOdsToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonExportDataToOdsToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonExportDataToOdsToolTipTitle.
+        /// </summary>
+        internal static string ButtonExportDataToOdsToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonExportDataToOdsToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonExportDataToolTipDescription.
         /// </summary>
         internal static string ButtonExportDataToolTipDescription {
@@ -3477,6 +3504,15 @@ namespace VianaNET.Resources {
         internal static string MovingAverageDialogTitle {
             get {
                 return ResourceManager.GetString("MovingAverageDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @OdsFilter.
+        /// </summary>
+        internal static string OdsFilter {
+            get {
+                return ResourceManager.GetString("OdsFilter", resourceCulture);
             }
         }
         

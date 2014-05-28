@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(sys.CURRENTDIR)Config.wxi?>
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="DesktopFolder" SourceName="User's Desktop">
-        <Component Id="C_ShortCutDesktop" Guid="{D8DFF141-B56E-41C8-8A41-3E967B1494E2}" Transitive="yes" Win64="$(var.Win64)">
+        <!--<Component Id="C_ShortCutDesktop" Guid="{D8DFF141-B56E-41C8-8A41-3E967B1494E2}" Transitive="yes" Win64="$(var.Win64)">
           <Shortcut Id="ShortCutDesktop" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
-        </Component>
+        </Component>-->
       </Directory>
 
       <Directory Id="ProgramMenuFolder" SourceName="User's Programs Menu">
@@ -43,18 +44,26 @@
             <Shortcut Id="_A2BF88A82C6947B294A261A87EBACFC4" Directory="VianaNET" Name="VianaNET" Description="Launches VianaNET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
           </Component>
           <Component Id="C_VianaNETConfig" Guid="{A5DCF465-A9B5-4B96-341F-66BC43F8B985}" Win64="$(var.Win64)">
-            <File Id="_7262B43160C9C2035D3C73BFF21D58A1" Name="VianaNET.exe.config" KeyPath="yes" DiskId="1"
+            <File Id="VianaNETConfig" Name="VianaNET.exe.config" KeyPath="yes" DiskId="1"
                   Source="$(var.VianaNET.TargetDir)" />
           </Component>
+          <Component Id="C_VianaNETShaderEffectLibrary" Guid="{DC40C5DD-00BF-4807-A542-1A95FE9C9340}" Win64="$(var.Win64)">
+            <File Id="VianaNETShaderEffectLibrary" Name="VianaNETShaderEffectLibrary.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNETShaderEffectLibrary" AssemblyApplication="VianaNETShaderEffectLibrary"
+                  DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+          </Component>
+
         </Directory>
       </Directory>
     </Directory>
+    
+    <Icon Id="VianaNET.ico" SourceFile="$(var.SolutionDir)VianaNET\Images\VianaNET.ico" />
 
     <Feature Id='VianaMainApplicationFeature' Title='Viana.Net application' Description='Installs viana.net core components.' Level='1'>
       <ComponentRef Id='C_VianaNETExe' />
-      <ComponentRef Id="C_ShortCutDesktop" />
+      <!--<ComponentRef Id="C_ShortCutDesktop" />-->
       <ComponentRef Id="C_ShortCutMenu" />
       <ComponentRef Id="C_VianaNETConfig" />
+      <ComponentRef Id='C_VianaNETShaderEffectLibrary' />
     </Feature>
   </Fragment>
 </Wix>

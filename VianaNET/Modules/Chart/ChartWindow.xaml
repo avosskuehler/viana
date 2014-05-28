@@ -215,9 +215,9 @@
         </StackPanel>
       </ScrollViewer>
     </Expander>
-    <oxy:Plot Name="DataChart" Grid.Column="1" Model="{Binding ChartDataModel}" PreviewMouseMove="PlotAreaMouseMove" MouseEnter="PlotAreaMouseEnter" MouseLeave="PlotAreaMouseLeave"
+    <oxy:PlotView Name="DataChart" Grid.Column="1" Model="{Binding ChartDataModel}" PreviewMouseMove="PlotAreaMouseMove" MouseEnter="PlotAreaMouseEnter" MouseLeave="PlotAreaMouseLeave"
               PreviewMouseLeftButtonDown="PlotAreaMouseLeftButtonDown" PreviewMouseLeftButtonUp="PlotAreaMouseLeftButtonUp">
-      <oxy:Plot.DefaultTrackerTemplate>
+      <oxy:PlotView.DefaultTrackerTemplate>
         <ControlTemplate>
           <oxy:TrackerControl Position="{Binding Position}" ShowPointer="False" CornerRadius="8" BorderEdgeMode="Unspecified" BorderBrush="{Binding Series.ActualColor, Converter={StaticResource OxyColorConverter}}"  LineExtents="{Binding PlotModel.PlotArea}">
             <oxy:TrackerControl.Content>
@@ -243,7 +243,7 @@
             </oxy:TrackerControl.Content>
           </oxy:TrackerControl>
         </ControlTemplate>
-      </oxy:Plot.DefaultTrackerTemplate>
+      </oxy:PlotView.DefaultTrackerTemplate>
       <!--<oxy:Plot.TrackerDefinitions>
         <oxy:TrackerDefinition TrackerKey="RegressionTracker">
           <oxy:TrackerDefinition.TrackerTemplate>
@@ -284,7 +284,7 @@
         </oxy:TrackerDefinition>
       </oxy:Plot.TrackerDefinitions>-->
 
-    </oxy:Plot>
+    </oxy:PlotView>
     <Canvas Grid.Column="1" Name="MyCanvas" 
             Width="{Binding ElementName=DataChart, Path=ActualWidth}"
             Height="{Binding ElementName=DataChart, Path=ActualHeight}">

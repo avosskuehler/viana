@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(sys.CURRENTDIR)Config.wxi?>
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="C_WPFLocalizeExtension" Guid="{2C2C5A8F-6DFD-4EFA-9801-B68A91676337}" Win64="$(var.Win64)">
+        <File Id="WPFLocalizeExtension" Name="WPFLocalizeExtension.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="WPFLocalizeExtension" AssemblyApplication="WPFLocalizeExtension" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_XAMLMarkupExtensions" Guid="{E0E1C759-CD75-4D89-A7F6-665FF48484E6}" Win64="$(var.Win64)">
+        <File Id="XAMLMarkupExtensions" Name="XAMLMarkupExtensions.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="XAMLMarkupExtensions" AssemblyApplication="XAMLMarkupExtensions" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      <Directory Id="de" Name="de">
+        <Component Id="C_VianaNET.resources.DE" Guid="{8952B8D6-3FFC-489B-BE94-04A8520EFC85}" Win64="$(var.Win64)">
+          <File Id="VianaNET.resources.DE" Name="VianaNET.resources.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.resources.DE" AssemblyApplication="VianaNET.resources.DE"
+                DiskId="1" Source="$(var.VianaNET.TargetDir)de\" />
+
+        </Component>
+      </Directory>
+      
+      <Directory Id="en" Name="en">
+        <Component Id="C_VianaNET.resources.EN" Guid="{13C293C4-92AB-4956-981E-25656E38FC28}" Win64="$(var.Win64)">
+          <File Id="VianaNET.resources.EN" Name="VianaNET.resources.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.resources.EN" AssemblyApplication="VianaNET.resources.EN"
+                DiskId="1" Source="$(var.VianaNET.TargetDir)en\" />
+
+        </Component>
+      </Directory>
+    </DirectoryRef>
+
+    <Feature Id='LanguageFeature' Title='Languages' Description='Installs multilanguage support for the application.' Level='1'>
+      <ComponentRef Id='C_WPFLocalizeExtension' />
+      <ComponentRef Id='C_XAMLMarkupExtensions' />
+      <ComponentRef Id='C_VianaNET.resources.DE' />
+      <ComponentRef Id='C_VianaNET.resources.EN' />
+    </Feature>
+  </Fragment>
+</Wix>
