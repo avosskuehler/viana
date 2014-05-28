@@ -759,5 +759,21 @@ namespace VianaNET.Data
     }
 
     #endregion
+
+    public void UpdatePoint(int frameIndex, int objectIndex, Point newLocation)
+    {
+      var sample = this.Samples.GetSampleByFrameindex(frameIndex);
+      if (sample != null)
+      {
+        sample.Object[objectIndex].PixelX = newLocation.X;
+        sample.Object[objectIndex].PixelY = newLocation.Y;
+        this.OnPropertyChanged("Samples");
+      }
+      else
+      {
+        // Add point if not already detected.
+        this.AddPoint(objectIndex, newLocation);
+      }
+    }
   }
 }

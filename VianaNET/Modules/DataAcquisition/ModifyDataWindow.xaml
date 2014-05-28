@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="VianaNET.Modules.DataAcquisition.ManualDataAquisitionWindow"
+    x:Class="VianaNET.Modules.DataAcquisition.ModifyDataWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -24,7 +24,8 @@
       <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Ellipse Name="CursorEllipse" Stroke="Red" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="True" />
+      <Ellipse Name="VisualDataPoint" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
@@ -73,7 +74,7 @@
             <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
           </Grid>
           <Separator/>
-          <TextBlock Name="HelpText" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionDescription}" TextWrapping="Wrap" />
+          <TextBlock Name="HelpText" Padding="5" Text="{lex:Loc VianaNET:Labels:ModifyDataDescription}" TextWrapping="Wrap" />
           <StackPanel Name="FramePanel" Orientation="Horizontal" Margin="5">
             <Label Padding="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionFrameLabel}" VerticalAlignment="Center"/>
             <Label Name="FrameIndex" Width="40" Padding="0"
@@ -102,22 +103,6 @@
             IsSnapToTickEnabled="True"/>
           <Separator/>
           <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReadyClick" />
-          <Expander IsExpanded="False" Header="{lex:Loc VianaNET:Labels:WindowWithHelpOptionsExpanderHeader}">
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-              </Grid.RowDefinitions>
-              <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionRecentPointCount}" VerticalAlignment="Center"/>
-              <vianaNet:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="RecentPointCount" Width="50" Margin="5,0,0,0" Minimum="0" Maximum="20" Value="7" ValueChanged="RecentPointCountValueChanged" />
-              <TextBlock Grid.Row="1" Grid.Column="0" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionSkipPointCount}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-              <vianaNet:NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="SkipPointCountNumericUpDown" Width="50" Margin="5,0,0,0" Minimum="0" Value="0" ValueChanged="SkipPointCount_OnValueChanged" />
-            </Grid>
-          </Expander>
         </StackPanel>
       </Border>
     </Canvas>

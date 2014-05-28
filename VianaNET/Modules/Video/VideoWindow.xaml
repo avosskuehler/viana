@@ -136,7 +136,8 @@
         Minimum="0"
         Thumb.DragStarted="TimelineSliderDragStarted"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
-        Thumb.DragDelta="TimelineSliderDragDelta"/>
+        Thumb.DragDelta="TimelineSliderDragDelta"
+        IsSnapToTickEnabled="True"/>
     </Grid>
   </Grid>
 </UserControl>

@@ -26,6 +26,7 @@
 namespace VianaNET.Data.Collections
 {
   using System;
+  using System.Linq;
 
   using VianaNET.CustomStyles.Types;
 
@@ -124,6 +125,11 @@ namespace VianaNET.Data.Collections
       }
 
       return returnCollection;
+    }
+
+    public TimeSample GetSampleByFrameindex(int framenumber)
+    {
+      return this.FirstOrDefault(timesample => timesample.Framenumber == framenumber);
     }
   }
 }

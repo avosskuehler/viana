@@ -299,6 +299,13 @@
                         ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonManualDataAquisitionToolTipTitle}"
                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonManualDataAquisitionToolTipDescription}"
                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+          <RibbonButton Click="ModifyDataButtonClick" HorizontalAlignment="Center"
+                        Label="{lex:Loc VianaNET:Labels:ButtonModifyDataLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/ModifyData32.png"
+                        SmallImageSource="/VianaNET;component/Images/ModifyData16.png"
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonModifyDataToolTipTitle}"
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonModifyDataToolTipDescription}"
+                        IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupAutomaticAquisitionLabelTitle}">
           <RibbonButton Click="SelectColorButtonClick" 

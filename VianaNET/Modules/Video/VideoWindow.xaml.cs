@@ -194,9 +194,9 @@ namespace VianaNET.Modules.Video
         Video.Instance.Revert();
         this.automaticDataAquisitionCurrentFrameCount = 0;
         this.automaticDataAquisitionTotalFrameCount =
-          (int)
-          ((this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart)
+          (int)Math.Round((this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart)
            / (this.TimelineSlider.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs));
+        this.ProcessImage();
 
         Video.Instance.StepOneFrame(true);
       }
@@ -453,13 +453,7 @@ namespace VianaNET.Modules.Video
       return !double.IsInfinity(scaleX) && !double.IsNaN(scaleX);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
+    //private bool isFrameProcessed = false;
 
     /// <summary>
     /// The image processing_ frame processed.
@@ -472,6 +466,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void ProcessingDataFrameProcessed(object sender, EventArgs e)
     {
+      //this.isFrameProcessed = true;
       double scaleX;
       double scaleY;
 
@@ -673,7 +668,11 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
-      this.ProcessImage();
+      // In Acquisition mode the processing is done in the StepCompleted event handler
+      if (!Video.Instance.IsDataAcquisitionRunning)
+      {
+        this.ProcessImage();
+      }
     }
 
     /// <summary>
@@ -681,43 +680,24 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void ProcessImage()
     {
-      if (Video.Instance.IsDataAcquisitionRunning)
-      {
-        Viana.Project.ProcessingData.ProcessImage();
-      }
-      else
-      {
-        this.Dispatcher.BeginInvoke((ThreadStart)(() => Viana.Project.ProcessingData.ProcessImage()));
-      }
+      this.Dispatcher.BeginInvoke((ThreadStart)(() => Viana.Project.ProcessingData.ProcessImage()));
     }
 
     /// <summary>
-    /// The overlay canvas_ size changed.
+    /// Overlay canvas size changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void OverlayCanvasSizeChanged(object sender, SizeChangedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
+     private void OverlayCanvasSizeChanged(object sender, SizeChangedEventArgs e)
     {
       this.PlaceCalibration();
       this.PlaceClippingRegion();
       this.ProcessImage();
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    /// <summary>
-    ///   The place calibration.
-    /// </summary>
+     /// <summary>
+     /// Places the calibration.
+     /// </summary>
     private void PlaceCalibration()
     {
       double scaleX;
@@ -887,18 +867,18 @@ namespace VianaNET.Modules.Video
     }
 
     /// <summary>
-    /// The video player element_ step complete.
+    /// Video player element step complete.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void VideoPlayerElementStepComplete(object sender, EventArgs e)
     {
-      // Do Events
-      this.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
+      // Process Image
+      this.Dispatcher.Invoke(
+        (ThreadStart)delegate
+          {
+            Viana.Project.ProcessingData.ProcessImage();
+          });
 
       // Run next sample
       this.Dispatcher.Invoke(

@@ -154,7 +154,6 @@ namespace VianaNET.Application
     {
       this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
       LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("de");
-      TexFormulaParser.Initialize();
       this.MainWindow = new MainWindow();
     }
 
