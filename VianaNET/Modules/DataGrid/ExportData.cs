@@ -239,7 +239,6 @@ namespace VianaNET.Modules.DataGrid
       memStream.Seek(0, SeekOrigin.Begin);
 
       templateFile.AddEntry("content.xml", memStream);
-      contentXml.WriteContentTo(new XmlTextWriter(@"C:\Users\Adrian\Documents\test.xml", Encoding.ASCII));
       templateFile.Save(outputFilePath);
     }
 

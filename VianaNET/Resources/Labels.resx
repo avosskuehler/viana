@@ -1683,4 +1683,16 @@
   <data name="OdsFilter" xml:space="preserve">
     <value>@OdsFilter</value>
   </data>
+  <data name="ButtonModifyDataLabelTitle" xml:space="preserve">
+    <value>@ButtonModifyDataLabelTitle</value>
+  </data>
+  <data name="ButtonModifyDataToolTipDescription" xml:space="preserve">
+    <value>@ButtonModifyDataToolTipDescription</value>
+  </data>
+  <data name="ButtonModifyDataToolTipTitle" xml:space="preserve">
+    <value>@ButtonModifyDataToolTipTitle</value>
+  </data>
+  <data name="ModifyDataDescription" xml:space="preserve">
+    <value>@ModifyDataDescription</value>
+  </data>
 </root>

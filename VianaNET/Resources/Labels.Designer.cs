@@ -1618,6 +1618,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonModifyDataLabelTitle.
+        /// </summary>
+        internal static string ButtonModifyDataLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonModifyDataLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonModifyDataToolTipDescription.
+        /// </summary>
+        internal static string ButtonModifyDataToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonModifyDataToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonModifyDataToolTipTitle.
+        /// </summary>
+        internal static string ButtonModifyDataToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonModifyDataToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonNewLabelDescription.
         /// </summary>
         internal static string ButtonNewLabelDescription {
@@ -3495,6 +3522,15 @@ namespace VianaNET.Resources {
         internal static string ManualDataAcquisitionTrackItemNumberHeader {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionTrackItemNumberHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ModifyDataDescription.
+        /// </summary>
+        internal static string ModifyDataDescription {
+            get {
+                return ResourceManager.GetString("ModifyDataDescription", resourceCulture);
             }
         }
         

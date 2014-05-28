@@ -55,6 +55,8 @@ namespace VianaNET.MainWindow
 
   using WPFLocalizeExtension.Engine;
 
+  using WPFMath;
+
   /// <summary>
   ///   The main window.
   /// </summary>
@@ -67,6 +69,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public MainWindow()
     {
+      TexFormulaParser.Initialize();
       //BindingErrorTraceListener.SetTrace();
       this.InitializeComponent();
 
@@ -835,6 +838,18 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// Modifiy data button click.
+    /// Start the modify control.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void ModifyDataButtonClick(object sender, RoutedEventArgs e)
+    {
+      var modifyDataWindow = new ModifyDataWindow();
+      modifyDataWindow.ShowDialog();
+    }
+
+    /// <summary>
     ///   The refresh.
     /// </summary>
     private void Refresh()
@@ -1048,5 +1063,6 @@ namespace VianaNET.MainWindow
       var dlg = new SkipPointsDialog();
       dlg.ShowDialog();
     }
+
   }
 }

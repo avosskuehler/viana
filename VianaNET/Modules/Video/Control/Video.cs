@@ -159,6 +159,7 @@ namespace VianaNET.Modules.Video.Control
     {
       get
       {
+        this.videoPlayerElement.UpdateFrameIndex();
         return this.videoElement.MediaPositionFrameIndex;
       }
     }

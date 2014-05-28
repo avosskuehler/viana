@@ -1681,4 +1681,18 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="OdsFilter" xml:space="preserve">
     <value>Open Document Spreadsheet Datei (*.ods)|*.ods</value>
   </data>
+  <data name="ButtonModifyDataLabelTitle" xml:space="preserve">
+    <value>Datenpunkte ändern</value>
+  </data>
+  <data name="ButtonModifyDataToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um die Position einzelner Datenpunkte anzupassen.</value>
+  </data>
+  <data name="ButtonModifyDataToolTipTitle" xml:space="preserve">
+    <value>Position der Datenpunkte ändern.</value>
+  </data>
+  <data name="ModifyDataDescription" xml:space="preserve">
+    <value>1. Bitte klicken Sie mit der linken Maustaste den neuen Mittelpunkt des zu verfolgenden Objekts an.
+2. Bilder vor und zurück gelangt man mit den Pfeiltasten.
+3. Wenn die Änderungen abgeschlossen sind, die ENTER-Taste drücken.</value>
+  </data>
 </root>

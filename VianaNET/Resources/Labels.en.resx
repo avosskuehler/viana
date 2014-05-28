@@ -1696,4 +1696,18 @@ Click OK or press Enter, when ready.</value>
   <data name="OdsFilter" xml:space="preserve">
     <value>Open Document Spreadsheet (*.ods)|*.ods</value>
   </data>
+  <data name="ButtonModifyDataLabelTitle" xml:space="preserve">
+    <value>Move data points</value>
+  </data>
+  <data name="ButtonModifyDataToolTipDescription" xml:space="preserve">
+    <value>Click here to adapt the location of single data points</value>
+  </data>
+  <data name="ButtonModifyDataToolTipTitle" xml:space="preserve">
+    <value>Change data point location</value>
+  </data>
+  <data name="ModifyDataDescription" xml:space="preserve">
+    <value>1. Please left click on the new object location.
+2. Go forward and backward using the arrow keys.
+3. When ready, click RETURN.</value>
+  </data>
 </root>

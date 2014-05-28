@@ -461,6 +461,7 @@ namespace VianaNET.Data
     /// <returns> The <see cref="bool" /> . </returns>
     public bool ProcessImage()
     {
+      Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
       // Skip if no target color is available
       if (!this.IsTargetColorSet)
       {
