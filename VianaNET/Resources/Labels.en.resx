@@ -1684,4 +1684,16 @@ Click OK or press Enter, when ready.</value>
   <data name="SkipPointsDialogTitle" xml:space="preserve">
     <value>Downsampling</value>
   </data>
+  <data name="ButtonExportDataToOdsLabelTitle" xml:space="preserve">
+    <value>Export data to ods</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipDescription" xml:space="preserve">
+    <value>Exports the data into an open document spreadsheet file.</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipTitle" xml:space="preserve">
+    <value>Export to ods</value>
+  </data>
+  <data name="OdsFilter" xml:space="preserve">
+    <value>Open Document Spreadsheet (*.ods)|*.ods</value>
+  </data>
 </root>

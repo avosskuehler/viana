@@ -3,19 +3,57 @@
   <?include $(sys.CURRENTDIR)Config.wxi?>
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="C_DirectShowLib_2005" Guid="{F688A329-9CA0-4E79-8048-242F2DB0F44F}" Win64="$(var.Win64)">
+        <File Id="DirectShowLib_2005" Name="DirectShowLib-2005.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="DirectShowLib_2005" AssemblyApplication="DirectShowLib_2005" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_MediaInfo" Guid="{C3669411-8F51-4AD8-A66C-F0D64DC1DD9E}" Win64="$(var.Win64)">
+        <File Id="MediaInfo" Name="MediaInfo.dll" KeyPath="yes" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_MediaInfoNET" Guid="{8E4B5273-3AD8-4D4B-8CBC-B75F2EE5528B}" Win64="$(var.Win64)">
+        <File Id="MediaInfoNET" Name="MediaInfoNET.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="MediaInfoNET" AssemblyApplication="MediaInfoNET" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_WPFMath" Guid="{E6587ADB-BC1C-4552-ADC7-B97B113B6D96}" Win64="$(var.Win64)">
+        <File Id="WPFMath" Name="WPFMath.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="WPFMath" AssemblyApplication="WPFMath" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_Xceed.Wpf.Toolkit" Guid="{AD76D4FC-1F76-4119-AA45-3D46D166A35C}" Win64="$(var.Win64)">
+        <File Id="Xceed.Wpf.Toolkit" Name="Xceed.Wpf.Toolkit.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Xceed.Wpf.Toolkit" AssemblyApplication="Xceed.Wpf.Toolkit" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_GMFBridge" Guid="{2DE3408E-D135-43E2-9BA5-4CBE78AA4CCF}" Win64="$(var.Win64)">
+        <File Id="GMFBridge" Name="GMFBridge.dll" KeyPath="yes" DiskId="1" SelfRegCost="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      <Component Id="C_OxyPlot" Guid="{118B787C-250B-49F4-9C7E-D26E2727766A}" Win64="$(var.Win64)">
+        <File Id="OxyPlot" Name="OxyPlot.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot" AssemblyApplication="OxyPlot" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_OxyPlot.Wpf" Guid="{9E0AD0DE-AE9C-498B-B21C-46E1A708B0A3}" Win64="$(var.Win64)">
+        <File Id="OxyPlot.Wpf" Name="OxyPlot.Wpf.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot.Wpf" AssemblyApplication="OxyPlot.Wpf" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      
+
     </DirectoryRef>
 
     <Feature Id='LibsFeature' Title='Libs' Description='Installs libraries for the application.' Level='1'>
-      <Feature Id='OpenCVFeature' Title='OpenCV' Description='Installs opencv libraries for the application.' Level='1'>
-        <ComponentRef Id='C_Emgu.CV.UI' />
+      <Feature Id='OxyPlotFeature' Title='OxyPlot' Description='Installs oxyplot libraries for the application.' Level='1'>
+        <ComponentRef Id='C_OxyPlot' />
+        <ComponentRef Id='C_OxyPlot.Wpf' />
       </Feature>
 
       <Feature Id='ExternalLibsFeature' Title='ExternalLibs' Description='Installs external libraries for the application.' Level='1'>
-        <ComponentRef Id='C_AxShockwaveFlashObjects' />
-      </Feature>
-
-      <Feature Id='AForgeFeature' Title='AForge' Description='Installs AForge libraries for the application.' Level='1'>
-        <ComponentRef Id='C_AForge' />
+        <ComponentRef Id='C_DirectShowLib_2005' />
+        <ComponentRef Id='C_MediaInfo' />
+        <ComponentRef Id='C_MediaInfoNET' />
+        <ComponentRef Id='C_WPFMath' />
+        <ComponentRef Id='C_Xceed.Wpf.Toolkit' />
+        <ComponentRef Id='C_GMFBridge' />
       </Feature>
 
     </Feature>

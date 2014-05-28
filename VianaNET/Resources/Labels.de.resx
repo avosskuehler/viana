@@ -1669,4 +1669,16 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="SkipPointsDialogTitle" xml:space="preserve">
     <value>Zwischenpunkte überspringen</value>
   </data>
+  <data name="ButtonExportDataToOdsLabelTitle" xml:space="preserve">
+    <value>Export in ods Datei</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipDescription" xml:space="preserve">
+    <value>Hier klicken um die Daten in eine Open Document Spreadsheet Datei zu exportieren.</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipTitle" xml:space="preserve">
+    <value>Export in ods Datei</value>
+  </data>
+  <data name="OdsFilter" xml:space="preserve">
+    <value>Open Document Spreadsheet Datei (*.ods)|*.ods</value>
+  </data>
 </root>

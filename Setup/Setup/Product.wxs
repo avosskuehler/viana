@@ -29,7 +29,8 @@
     <Feature Id="DefaultFeature" ConfigurableDirectory="TARGETDIR" Level="1">
       <FeatureRef Id="VianaMainApplicationFeature" />
       <FeatureRef Id='LibsFeature'/>
-		</Feature>
+      <FeatureRef Id='LanguageFeature'/>
+    </Feature>
 
   </Product>
 </Wix>

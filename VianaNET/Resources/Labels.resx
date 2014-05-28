@@ -1671,4 +1671,16 @@
   <data name="SkipPointsDialogTitle" xml:space="preserve">
     <value>@SkipPointsDialogTitle</value>
   </data>
+  <data name="ButtonExportDataToOdsLabelTitle" xml:space="preserve">
+    <value>@ButtonExportDataToOdsLabelTitle</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipDescription" xml:space="preserve">
+    <value>@ButtonExportDataToOdsToolTipDescription</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipTitle" xml:space="preserve">
+    <value>@ButtonExportDataToOdsToolTipTitle</value>
+  </data>
+  <data name="OdsFilter" xml:space="preserve">
+    <value>@OdsFilter</value>
+  </data>
 </root>
