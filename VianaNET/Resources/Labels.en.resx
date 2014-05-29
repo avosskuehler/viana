@@ -1710,4 +1710,10 @@ Click OK or press Enter, when ready.</value>
 2. Go forward and backward using the arrow keys.
 3. When ready, click RETURN.</value>
   </data>
+  <data name="ModifyDataWindowControlTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
+    <value>Modify object: </value>
+  </data>
 </root>

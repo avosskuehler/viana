@@ -1695,4 +1695,10 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
 2. Bilder vor und zurück gelangt man mit den Pfeiltasten.
 3. Wenn die Änderungen abgeschlossen sind, die ENTER-Taste drücken.</value>
   </data>
+  <data name="ModifyDataWindowControlTitle" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
+    <value>Ändere Objekt: </value>
+  </data>
 </root>

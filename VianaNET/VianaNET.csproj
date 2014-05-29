@@ -143,6 +143,8 @@
     <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
     <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
     <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Controls\ArrowPointer.cs" />
+    <Compile Include="CustomStyles\Controls\Arrow.cs" />
     <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
       <DependentUpon>LineStyleControl.xaml</DependentUpon>
     </Compile>

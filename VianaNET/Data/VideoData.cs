@@ -767,7 +767,6 @@ namespace VianaNET.Data
       {
         sample.Object[objectIndex].PixelX = newLocation.X;
         sample.Object[objectIndex].PixelY = newLocation.Y;
-        this.OnPropertyChanged("Samples");
       }
       else
       {

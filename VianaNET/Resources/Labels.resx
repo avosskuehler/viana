@@ -1695,4 +1695,10 @@
   <data name="ModifyDataDescription" xml:space="preserve">
     <value>@ModifyDataDescription</value>
   </data>
+  <data name="ModifyDataWindowControlTitle" xml:space="preserve">
+    <value>@ModifyDataWindowControlTitle</value>
+  </data>
+  <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
+    <value>@ModifyDataWindowTrackItemNumberHeader</value>
+  </data>
 </root>

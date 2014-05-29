@@ -3535,6 +3535,24 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ModifyDataWindowControlTitle.
+        /// </summary>
+        internal static string ModifyDataWindowControlTitle {
+            get {
+                return ResourceManager.GetString("ModifyDataWindowControlTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ModifyDataWindowTrackItemNumberHeader.
+        /// </summary>
+        internal static string ModifyDataWindowTrackItemNumberHeader {
+            get {
+                return ResourceManager.GetString("ModifyDataWindowTrackItemNumberHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @MovingAverageDialogTitle.
         /// </summary>
         internal static string MovingAverageDialogTitle {
