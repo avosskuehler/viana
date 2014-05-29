@@ -5,7 +5,8 @@
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
     xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
-    lex:LocalizeDictionary.DesignCulture="de"
+  xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
+  lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
@@ -18,21 +19,20 @@
     <Grid.RenderTransform>
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove"/>
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
-      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="Red" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="True" />
-      <Ellipse Name="VisualDataPoint" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Line Name="VerticalCursorLineTop" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="HorizontalCursorLineLeft" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="VerticalCursorLineBottom" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Line Name="HorizontalCursorLineRight" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
+      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Width="15" Height="15" />
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 
               Canvas.Left="{Binding ElementName=WindowCanvas,Path=ActualWidth}"
-              CornerRadius="10" Height="80" Width="80">
+              CornerRadius="10" Height="85" Width="80">
         <Border.RenderTransform>
           <TransformGroup>
             <TranslateTransform 
@@ -43,17 +43,19 @@
         </Border.RenderTransform>
         <StackPanel>
           <TextBox 
+            Name="ObjectIndexTextBox"
             TextWrapping="Wrap" 
             Background="Transparent"
-            Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
+            Text="{lex:Loc VianaNET:Labels:ModifyDataWindowTrackItemNumberHeader}"
             BorderThickness="0"
             Padding="0 4 0 0"
             TextAlignment="Center"/>
           <Label 
+            
             Content="{Binding IndexOfTrackedObject, StringFormat=N0}" 
             FontSize="38" 
             Margin="0"
-            Padding="0"
+            Padding="0,0,0,5"
             HorizontalAlignment="Center"
             Foreground="White"/>
         </StackPanel>
@@ -69,7 +71,7 @@
               <ColumnDefinition Width="20"/>
               <ColumnDefinition Width="20"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionControlTitle}" HorizontalAlignment="Center" x:Name="LabelTitle" Panel.ZIndex="2" FontFamily="Segoe UI Symbol" VerticalAlignment="Top" Height="30.29"/>
+            <Label Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ModifyDataWindowControlTitle}" HorizontalAlignment="Center" x:Name="LabelTitle" Panel.ZIndex="2" FontFamily="Segoe UI Symbol" VerticalAlignment="Top" Height="30.29"/>
             <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
             <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
           </Grid>
