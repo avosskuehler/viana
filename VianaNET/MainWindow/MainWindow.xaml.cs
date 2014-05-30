@@ -847,6 +847,7 @@ namespace VianaNET.MainWindow
     {
       var modifyDataWindow = new ModifyDataWindow();
       modifyDataWindow.ShowDialog();
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>

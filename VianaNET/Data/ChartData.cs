@@ -56,8 +56,8 @@ namespace VianaNET.Data
                                 LegendBorder = OxyColors.LightGray,
                                 SelectionColor = Viana.Project.CurrentFilterData.SelectionColor
                               };
-
       this.DataScatterSeries = new ScatterSeries();
+      this.DataScatterSeries.MouseDown += DataScatterSeries_MouseDown;
       this.DataLineSeries = new LineSeries();
       this.InterpolationSeries = new LineSeries();
 
@@ -106,6 +106,11 @@ namespace VianaNET.Data
       this.UpdateAppearance();
 
       Viana.Project.CurrentFilterData.PropertyChanged += this.CurrentFilterDataPropertyChanged;
+    }
+
+    void DataScatterSeries_MouseDown(object sender, OxyMouseDownEventArgs e)
+    {
+      var result = e.HitTestResult;
     }
 
     #endregion

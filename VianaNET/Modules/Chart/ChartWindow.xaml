@@ -212,11 +212,16 @@
                               ImageSource="/VianaNET;component/Images/InterpolateData16.png"
                                 Click="FilterPrecisionButtonClick"/>
           </StackPanel>
+          <StackPanel Style="{StaticResource SpacerStyle}"/>
+          <vianaNet:ImageButton Margin="3" Content="{lex:Loc VianaNET:Labels:ChartWindowHelpHeader}"
+                              ImageSource="/VianaNET;component/Images/Help16.png"
+                                Click="ShortCutHelpButtonClick"/>
         </StackPanel>
       </ScrollViewer>
     </Expander>
     <oxy:PlotView Name="DataChart" Grid.Column="1" Model="{Binding ChartDataModel}" PreviewMouseMove="PlotAreaMouseMove" MouseEnter="PlotAreaMouseEnter" MouseLeave="PlotAreaMouseLeave"
-              PreviewMouseLeftButtonDown="PlotAreaMouseLeftButtonDown" PreviewMouseLeftButtonUp="PlotAreaMouseLeftButtonUp">
+              PreviewMouseLeftButtonDown="PlotAreaMouseLeftButtonDown" PreviewMouseLeftButtonUp="PlotAreaMouseLeftButtonUp"
+                  MouseDoubleClick="DataChart_OnMouseDoubleClick">
       <oxy:PlotView.DefaultTrackerTemplate>
         <ControlTemplate>
           <oxy:TrackerControl Position="{Binding Position}" ShowPointer="False" CornerRadius="8" BorderEdgeMode="Unspecified" BorderBrush="{Binding Series.ActualColor, Converter={StaticResource OxyColorConverter}}"  LineExtents="{Binding PlotModel.PlotArea}">

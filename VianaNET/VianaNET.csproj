@@ -161,6 +161,9 @@
     <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
     <Compile Include="Data\ChartData.cs" />
     <Compile Include="Logging\TraceListener.cs" />
+    <Compile Include="Modules\Chart\ChartHelpDialog.xaml.cs">
+      <DependentUpon>ChartHelpDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DataAcquisition\ModifyDataWindow.xaml.cs">
       <DependentUpon>ModifyDataWindow.xaml</DependentUpon>
     </Compile>
@@ -432,6 +435,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Modules\Chart\ChartHelpDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Modules\DataAcquisition\ModifyDataWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -633,13 +640,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot, Version=2014.1.308.1, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+    <Reference Include="OxyPlot, Version=2014.1.312.1, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Core.2014.1.308.1\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+      <HintPath>..\packages\OxyPlot.Core.2014.1.312.1\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot.Wpf, Version=2014.1.308.1, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+    <Reference Include="OxyPlot.Wpf, Version=2014.1.312.1, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Wpf.2014.1.308.1\lib\NET45\OxyPlot.Wpf.dll</HintPath>
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.312.1\lib\NET45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Xps">
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.312.1\lib\NET45\OxyPlot.Xps.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

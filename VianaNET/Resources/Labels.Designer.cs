@@ -2374,6 +2374,60 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogDataGroupHeader.
+        /// </summary>
+        internal static string ChartHelpDialogDataGroupHeader {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogDataGroupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogDataGroupText.
+        /// </summary>
+        internal static string ChartHelpDialogDataGroupText {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogDataGroupText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogShortCutGroupHeader.
+        /// </summary>
+        internal static string ChartHelpDialogShortCutGroupHeader {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogShortCutGroupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogShortCutGroupText.
+        /// </summary>
+        internal static string ChartHelpDialogShortCutGroupText {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogShortCutGroupText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogTitle.
+        /// </summary>
+        internal static string ChartHelpDialogTitle {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartHelpDialogTopFrameTitle.
+        /// </summary>
+        internal static string ChartHelpDialogTopFrameTitle {
+            get {
+                return ResourceManager.GetString("ChartHelpDialogTopFrameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ChartWindowAxesHeader.
         /// </summary>
         internal static string ChartWindowAxesHeader {
@@ -2532,6 +2586,15 @@ namespace VianaNET.Resources {
         internal static string ChartWindowEnableTrackerCheckBox {
             get {
                 return ResourceManager.GetString("ChartWindowEnableTrackerCheckBox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ChartWindowHelpHeader.
+        /// </summary>
+        internal static string ChartWindowHelpHeader {
+            get {
+                return ResourceManager.GetString("ChartWindowHelpHeader", resourceCulture);
             }
         }
         
