@@ -807,7 +807,7 @@ namespace VianaNET.Modules.Video.Control
     /// </returns>
     private int StepFrames(int numberOfFramesToStep)
     {
-      Console.WriteLine("StepFrames: #" + Video.Instance.FrameIndex);
+      //Console.WriteLine("StepFrames: #" + Video.Instance.FrameIndex);
       int hr = 0;
 
       // If the Frame Stepping interface exists, use it to step frames

@@ -2,7 +2,7 @@
 // <copyright file="VideoData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,21 +19,17 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The video data.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data
 {
   using System;
   using System.ComponentModel;
   using System.Windows;
-  using Application;
-  using Collections;
-  using Modules.Video.Control;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.Data.Collections;
+  using VianaNET.Modules.Video.Control;
 
   /// <summary>
   ///   The video data.
@@ -44,59 +40,80 @@ namespace VianaNET.Data
     #region Static Fields
 
     /// <summary>
-    ///   The last point property.
-    /// </summary>
-    public static readonly DependencyProperty LastPointProperty = DependencyProperty.Register(
-      "LastPoint", typeof(Point[]), typeof(VideoData), new UIPropertyMetadata(null));
-
-    /// <summary>
     ///   The ActiveObject property.
     /// </summary>
     public static readonly DependencyProperty ActiveObjectProperty = DependencyProperty.Register(
-      "ActiveObject", typeof(int), typeof(VideoData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="UseEveryNthPoint" />.
-    /// </summary>
-    public static readonly DependencyProperty UseEveryNthPointProperty = DependencyProperty.Register(
-      "UseEveryNthPoint", typeof(int), typeof(VideoData), new UIPropertyMetadata(1));
-
-    /// <summary>
-    ///   The samples property.
-    /// </summary>
-    public static readonly DependencyProperty SamplesProperty = DependencyProperty.Register(
-      "Samples", typeof(DataCollection), typeof(VideoData), new UIPropertyMetadata(null));
+      "ActiveObject",
+      typeof(int),
+      typeof(VideoData),
+      new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The Filtered samples property.
     /// </summary>
     public static readonly DependencyProperty FilteredSamplesProperty = DependencyProperty.Register(
-      "FilteredSamples", typeof(DataCollection), typeof(VideoData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    ///   The selection end property.
-    /// </summary>
-    public static readonly DependencyProperty SelectionEndProperty = DependencyProperty.Register(
-      "SelectionEnd", typeof(double), typeof(VideoData));
-
-    /// <summary>
-    ///   The selection start property.
-    /// </summary>
-    public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
-      "SelectionStart", typeof(double), typeof(VideoData));
+      "FilteredSamples",
+      typeof(DataCollection),
+      typeof(VideoData),
+      new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The selection start property.
     /// </summary>
     public static readonly DependencyProperty FramerateFactorProperty = DependencyProperty.Register(
-      "FramerateFactor", typeof(double), typeof(VideoData));
+      "FramerateFactor",
+      typeof(double),
+      typeof(VideoData));
+
+    /// <summary>
+    ///   The last point property.
+    /// </summary>
+    public static readonly DependencyProperty LastPointProperty = DependencyProperty.Register(
+      "LastPoint",
+      typeof(Point[]),
+      typeof(VideoData),
+      new UIPropertyMetadata(null));
+
+    /// <summary>
+    ///   The samples property.
+    /// </summary>
+    public static readonly DependencyProperty SamplesProperty = DependencyProperty.Register(
+      "Samples",
+      typeof(DataCollection),
+      typeof(VideoData),
+      new UIPropertyMetadata(null));
+
+    /// <summary>
+    ///   The selection end property.
+    /// </summary>
+    public static readonly DependencyProperty SelectionEndProperty = DependencyProperty.Register(
+      "SelectionEnd",
+      typeof(double),
+      typeof(VideoData));
+
+    /// <summary>
+    ///   The selection start property.
+    /// </summary>
+    public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
+      "SelectionStart",
+      typeof(double),
+      typeof(VideoData));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="UseEveryNthPoint" />.
+    /// </summary>
+    public static readonly DependencyProperty UseEveryNthPointProperty = DependencyProperty.Register(
+      "UseEveryNthPoint",
+      typeof(int),
+      typeof(VideoData),
+      new UIPropertyMetadata(1));
 
     #endregion
 
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="VideoData"/> class. 
+    ///   Initializes a new instance of the <see cref="VideoData" /> class.
     /// </summary>
     public VideoData()
     {
@@ -120,22 +137,6 @@ namespace VianaNET.Data
     #region Public Properties
 
     /// <summary>
-    ///   Gets or sets the last point.
-    /// </summary>
-    public Point[] LastPoint
-    {
-      get
-      {
-        return (Point[])this.GetValue(LastPointProperty);
-      }
-
-      set
-      {
-        this.SetValue(LastPointProperty, value);
-      }
-    }
-
-    /// <summary>
     ///   Gets or sets the active object. This is zero-based.
     /// </summary>
     public int ActiveObject
@@ -152,28 +153,8 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// Gets or sets the complete sample collection containing all originally detected samples.
-    /// It can be filtered (downsampled) by the <see cref="UseEveryNthPoint"/> value
-    /// to fill the <see cref="FilteredSamples"/> collection.
-    /// </summary>
-    public DataCollection Samples
-    {
-      get
-      {
-        return (DataCollection)this.GetValue(SamplesProperty);
-      }
-
-      set
-      {
-        this.SetValue(SamplesProperty, value);
-        //this.FilterSamples();
-        //this.OnPropertyChanged("Samples");
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the filtered sample collection containing the detected samples
-    /// downsampled by the <see cref="UseEveryNthPoint"/> value.
+    ///   Gets or sets the filtered sample collection containing the detected samples
+    ///   downsampled by the <see cref="UseEveryNthPoint" /> value.
     /// </summary>
     public DataCollection FilteredSamples
     {
@@ -189,48 +170,8 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// Gets or sets the time position in milliseconds, where
-    /// the video time should be zero.
-    /// </summary>
-    public long TimeZeroPositionInMs { get; set; }
-
-    /// <summary>
-    /// Gets or sets the ending position of the video selection
-    /// in milliseconds
-    /// </summary>
-    public double SelectionEnd
-    {
-      get
-      {
-        return (double)this.GetValue(SelectionEndProperty);
-      }
-
-      set
-      {
-        this.SetValue(SelectionEndProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the starting position of the video selection
-    /// in milliseconds
-    /// </summary>
-    public double SelectionStart
-    {
-      get
-      {
-        return (double)this.GetValue(SelectionStartProperty);
-      }
-
-      set
-      {
-        this.SetValue(SelectionStartProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the frame rate of the video
-    /// This can be automatically set or manually defined.
+    ///   Gets or sets the frame rate of the video
+    ///   This can be automatically set or manually defined.
     /// </summary>
     public double FramerateFactor
     {
@@ -246,10 +187,98 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// Gets or sets the skip point count.
-    /// This value indicates how many samples the video transporter should
-    /// advance or go back on one frame step.
-    /// This is a kind of downsampling
+    ///   Gets a value indicating whether there is at least one data sample
+    /// </summary>
+    public bool HasSamples
+    {
+      get
+      {
+        return this.Samples.Count > 0;
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the last point.
+    /// </summary>
+    public Point[] LastPoint
+    {
+      get
+      {
+        return (Point[])this.GetValue(LastPointProperty);
+      }
+
+      set
+      {
+        this.SetValue(LastPointProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the complete sample collection containing all originally detected samples.
+    ///   It can be filtered (downsampled) by the <see cref="UseEveryNthPoint" /> value
+    ///   to fill the <see cref="FilteredSamples" /> collection.
+    /// </summary>
+    public DataCollection Samples
+    {
+      get
+      {
+        return (DataCollection)this.GetValue(SamplesProperty);
+      }
+
+      set
+      {
+        this.SetValue(SamplesProperty, value);
+
+        // this.FilterSamples();
+        // this.OnPropertyChanged("Samples");
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the ending position of the video selection
+    ///   in milliseconds
+    /// </summary>
+    public double SelectionEnd
+    {
+      get
+      {
+        return (double)this.GetValue(SelectionEndProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionEndProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the starting position of the video selection
+    ///   in milliseconds
+    /// </summary>
+    public double SelectionStart
+    {
+      get
+      {
+        return (double)this.GetValue(SelectionStartProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionStartProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the time position in milliseconds, where
+    ///   the video time should be zero.
+    /// </summary>
+    public long TimeZeroPositionInMs { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the skip point count.
+    ///   This value indicates how many samples the video transporter should
+    ///   advance or go back on one frame step.
+    ///   This is a kind of downsampling
     /// </summary>
     public int UseEveryNthPoint
     {
@@ -265,52 +294,32 @@ namespace VianaNET.Data
       }
     }
 
-    /// <summary>
-    /// Gets a value indicating whether there is at least one data sample
-    /// </summary>
-    public bool HasSamples
-    {
-      get
-      {
-        return this.Samples.Count > 0;
-      }
-    }
-
     #endregion
 
     #region Public Methods and Operators
 
     /// <summary>
-    /// Notifies the loading.
-    /// </summary>
-    public void NotifyLoading()
-    {
-      // Recalculate dependent data values
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-
-      // Update dependencies
-      this.OnPropertyChanged("Samples");
-    }
-
-    /// <summary>
     /// The add point.
     /// </summary>
     /// <param name="objectIndex">
-    /// The object index. 
+    /// The object index.
     /// </param>
     /// <param name="newSamplePosition">
-    /// The new sample position. 
+    /// The new sample position.
     /// </param>
-    public void AddPoint(int objectIndex, Point newSamplePosition)
+    public void AddPoint(int objectIndex, Point? newSamplePosition)
     {
-      this.LastPoint[objectIndex] = newSamplePosition;
+      if (newSamplePosition.HasValue)
+      {
+        this.LastPoint[objectIndex] = newSamplePosition.Value;
+      }
 
       var timeSample = new TimeSample
-        {
-          Framenumber = Video.Instance.FrameIndex,
-          Timestamp = Video.Instance.FrameTimestampInMs,
-          IsSelected = true
-        };
+                         {
+                           Framenumber = Video.Instance.FrameIndex,
+                           Timestamp = Video.Instance.FrameTimestampInMs,
+                           IsSelected = true
+                         };
 
       double newTime = Video.Instance.FrameTimestampInMs;
       switch (Viana.Project.CalibrationData.TimeUnit)
@@ -324,26 +333,54 @@ namespace VianaNET.Data
           throw new ArgumentOutOfRangeException("TimeUnit not given");
       }
 
-      var newObjectSample = new DataSample
+      DataSample newObjectSample = null;
+      if (newSamplePosition.HasValue)
       {
-        Time = newTime,
-        PixelX = newSamplePosition.X,
-        PixelY = newSamplePosition.Y
-      };
+        newObjectSample = new DataSample
+                            {
+                              Time = newTime,
+                              PixelX = newSamplePosition.Value.X,
+                              PixelY = newSamplePosition.Value.Y
+                            };
+      }
 
       // Add new point
       int index;
       if (this.Samples.Contains(timeSample, out index))
       {
-        this.Samples[index].Object[objectIndex] = newObjectSample;
+        if (newObjectSample != null)
+        {
+          this.Samples[index].Object[objectIndex] = newObjectSample;
+        }
       }
       else
       {
-        timeSample.Object[objectIndex] = newObjectSample;
+        if (newObjectSample != null)
+        {
+          if (timeSample.Object == null)
+          {
+            timeSample.Object = new DataSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+          }
+
+          timeSample.Object[objectIndex] = newObjectSample;
+        }
+
         this.Samples.Add(timeSample);
       }
 
       this.OnPropertyChanged("LastPoint");
+    }
+
+    /// <summary>
+    ///   Notifies the loading.
+    /// </summary>
+    public void NotifyLoading()
+    {
+      // Recalculate dependent data values
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+
+      // Update dependencies
+      this.OnPropertyChanged("Samples");
     }
 
     /// <summary>
@@ -358,6 +395,11 @@ namespace VianaNET.Data
       {
         for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
+          if (timeSample.Object == null)
+          {
+            continue;
+          }
+
           DataSample currentSample = timeSample.Object[j];
           if (currentSample == null)
           {
@@ -366,7 +408,7 @@ namespace VianaNET.Data
 
           validSamples[j]++;
 
-          Point calibratedPoint = CalibrateSample(currentSample);
+          var calibratedPoint = CalibrateSample(currentSample);
           currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
           currentSample.PositionX = calibratedPoint.X;
           currentSample.PositionY = calibratedPoint.Y;
@@ -418,10 +460,10 @@ namespace VianaNET.Data
     /// The remove point.
     /// </summary>
     /// <param name="timeStamp">
-    /// The time stamp. 
+    /// The time stamp.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool RemovePoint(long timeStamp)
     {
@@ -441,6 +483,33 @@ namespace VianaNET.Data
       this.OnPropertyChanged("Samples");
     }
 
+    /// <summary>
+    /// The update point.
+    /// </summary>
+    /// <param name="frameIndex">
+    /// The frame index.
+    /// </param>
+    /// <param name="objectIndex">
+    /// The object index.
+    /// </param>
+    /// <param name="newLocation">
+    /// The new location.
+    /// </param>
+    public void UpdatePoint(int frameIndex, int objectIndex, Point newLocation)
+    {
+      TimeSample sample = this.Samples.GetSampleByFrameindex(frameIndex);
+      if (sample != null)
+      {
+        sample.Object[objectIndex].PixelX = newLocation.X;
+        sample.Object[objectIndex].PixelY = newLocation.Y;
+      }
+      else
+      {
+        // Add point if not already detected.
+        this.AddPoint(objectIndex, newLocation);
+      }
+    }
+
     #endregion
 
     #region Methods
@@ -449,7 +518,7 @@ namespace VianaNET.Data
     /// The on property changed.
     /// </summary>
     /// <param name="propertyName">
-    /// The property name. 
+    /// The property name.
     /// </param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
@@ -463,10 +532,10 @@ namespace VianaNET.Data
     /// The calibrate sample.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <returns>
-    /// The <see cref="Point"/> . 
+    /// The <see cref="Point"/> .
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
@@ -476,7 +545,9 @@ namespace VianaNET.Data
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(-Viana.Project.CalibrationData.OriginInPixel.X, -Viana.Project.CalibrationData.OriginInPixel.Y);
+      calibratedPoint.Offset(
+        -Viana.Project.CalibrationData.OriginInPixel.X,
+        -Viana.Project.CalibrationData.OriginInPixel.Y);
       calibratedPoint.X = calibratedPoint.X * Viana.Project.CalibrationData.ScalePixelToUnit;
       calibratedPoint.Y = calibratedPoint.Y * Viana.Project.CalibrationData.ScalePixelToUnit;
 
@@ -487,31 +558,69 @@ namespace VianaNET.Data
     /// The get acceleration.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <param name="timedifference">
-    /// The timedifference. 
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
     {
-
       double value = (newSample.Velocity.Value - previousSample.Velocity.Value) / timedifference * GetTimeFactor();
       return value;
     }
 
     /// <summary>
-    /// Returns the factor to convert sample with milliseconds in the current time unit;
+    /// The get distance.
+    /// </summary>
+    /// <param name="newSample">
+    /// The new sample.
+    /// </param>
+    /// <param name="previousSample">
+    /// The previous sample.
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> .
+    /// </returns>
+    private static double GetDistance(DataSample newSample, DataSample previousSample)
+    {
+      double distance =
+        Math.Sqrt(
+          Math.Pow(newSample.PositionY - previousSample.PositionY, 2)
+          + Math.Pow(newSample.PositionX - previousSample.PositionX, 2));
+      return distance;
+    }
+
+    /// <summary>
+    /// The get length.
+    /// </summary>
+    /// <param name="newSample">
+    /// The new sample.
+    /// </param>
+    /// <param name="previousSample">
+    /// The previous sample.
+    /// </param>
+    /// <returns>
+    /// The <see cref="double"/> .
+    /// </returns>
+    private static double GetLength(DataSample newSample, DataSample previousSample)
+    {
+      double length = previousSample.Length + newSample.Distance;
+      return length;
+    }
+
+    /// <summary>
+    ///   Returns the factor to convert sample with milliseconds in the current time unit;
     /// </summary>
     /// <returns>The factor to multiply with</returns>
     private static int GetTimeFactor()
     {
-      var timefactor = 1;
+      int timefactor = 1;
       switch (Viana.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
@@ -528,58 +637,36 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The get distance.
+    /// The get velocity.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
-    /// <param name="previousSample">
-    /// The previous sample. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="double"/> . 
-    /// </returns>
-    private static double GetDistance(DataSample newSample, DataSample previousSample)
-    {
-      double distance =
-        Math.Sqrt(
-          Math.Pow(newSample.PositionY - previousSample.PositionY, 2)
-          + Math.Pow(newSample.PositionX - previousSample.PositionX, 2));
-      return distance;
-    }
-
-    /// <summary>
-    /// The get length.
-    /// </summary>
-    /// <param name="newSample">
-    /// The new sample. 
-    /// </param>
-    /// <param name="previousSample">
-    /// The previous sample. 
+    /// <param name="timedifference">
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
-    private static double GetLength(DataSample newSample, DataSample previousSample)
+    private static double GetVelocity(DataSample newSample, long timedifference)
     {
-      double length = previousSample.Length + newSample.Distance;
-      return length;
+      return newSample.Distance / timedifference * GetTimeFactor();
     }
 
     /// <summary>
     /// The get x acceleration.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <param name="timedifference">
-    /// The timedifference. 
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetXAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
     {
@@ -590,13 +677,13 @@ namespace VianaNET.Data
     /// The get x distance.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetXDistance(DataSample newSample, DataSample previousSample)
     {
@@ -608,13 +695,13 @@ namespace VianaNET.Data
     /// The get x length.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetXLength(DataSample newSample, DataSample previousSample)
     {
@@ -623,36 +710,19 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The get velocity.
-    /// </summary>
-    /// <param name="newSample">
-    /// The new sample. 
-    /// </param>
-    /// <param name="timedifference">
-    /// The timedifference. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="double"/> . 
-    /// </returns>
-    private static double GetVelocity(DataSample newSample, long timedifference)
-    {
-      return newSample.Distance / timedifference * GetTimeFactor();
-    }
-
-    /// <summary>
     /// The get x velocity.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <param name="timedifference">
-    /// The timedifference. 
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetXVelocity(DataSample newSample, DataSample previousSample, long timedifference)
     {
@@ -663,16 +733,16 @@ namespace VianaNET.Data
     /// The get y acceleration.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <param name="timedifference">
-    /// The timedifference. 
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetYAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
     {
@@ -683,13 +753,13 @@ namespace VianaNET.Data
     /// The get y distance.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetYDistance(DataSample newSample, DataSample previousSample)
     {
@@ -701,13 +771,13 @@ namespace VianaNET.Data
     /// The get y length.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetYLength(DataSample newSample, DataSample previousSample)
     {
@@ -719,16 +789,16 @@ namespace VianaNET.Data
     /// The get y velocity.
     /// </summary>
     /// <param name="newSample">
-    /// The new sample. 
+    /// The new sample.
     /// </param>
     /// <param name="previousSample">
-    /// The previous sample. 
+    /// The previous sample.
     /// </param>
     /// <param name="timedifference">
-    /// The timedifference. 
+    /// The timedifference.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double GetYVelocity(DataSample newSample, DataSample previousSample, long timedifference)
     {
@@ -736,7 +806,7 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// Filters the samples by using only every <see cref="UseEveryNthPoint"/>s sample.
+    ///   Filters the samples by using only every <see cref="UseEveryNthPoint" />s sample.
     /// </summary>
     private void FilterSamples()
     {
@@ -745,7 +815,11 @@ namespace VianaNET.Data
       {
         if (i % this.UseEveryNthPoint == 0)
         {
-          this.FilteredSamples.Add(this.Samples[i - 1]);
+          var sampleToAdd = this.Samples[i - 1];
+          if (sampleToAdd.Object != null)
+          {
+            this.FilteredSamples.Add(sampleToAdd);
+          }
         }
       }
 
@@ -759,20 +833,5 @@ namespace VianaNET.Data
     }
 
     #endregion
-
-    public void UpdatePoint(int frameIndex, int objectIndex, Point newLocation)
-    {
-      var sample = this.Samples.GetSampleByFrameindex(frameIndex);
-      if (sample != null)
-      {
-        sample.Object[objectIndex].PixelX = newLocation.X;
-        sample.Object[objectIndex].PixelY = newLocation.Y;
-      }
-      else
-      {
-        // Add point if not already detected.
-        this.AddPoint(objectIndex, newLocation);
-      }
-    }
   }
 }

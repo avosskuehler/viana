@@ -324,6 +324,7 @@ namespace VianaNET.Data
       PropertyInfo objectPropertyInfo = typeof(TimeSample).GetProperty("Object");
       PropertyInfo targetPropertyInfo = typeof(DataSample).GetProperty(propertyString);
       var propertyValue = (object[])objectPropertyInfo.GetValue(item);
+      if (propertyValue == null) return 0;
       object test = propertyValue[Viana.Project.ProcessingData.IndexOfObject];
       if (test == null) return 0;
       object result = targetPropertyInfo.GetValue(test);

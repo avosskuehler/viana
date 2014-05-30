@@ -461,7 +461,7 @@ namespace VianaNET.Data
     /// <returns> The <see cref="bool" /> . </returns>
     public bool ProcessImage()
     {
-      Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
+      //Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
       // Skip if no target color is available
       if (!this.IsTargetColorSet)
       {
@@ -515,17 +515,16 @@ namespace VianaNET.Data
             && (foundSegment.Width < (this.colorAndCropFilter.ImageWidth - 10)))
         {
           this.CurrentBlobCenter[i] = new Point(foundSegment.Center.X, foundSegment.Center.Y);
-
-          if (Video.Instance.IsDataAcquisitionRunning)
-          {
-            Viana.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i].Value);
-          }
-
           objectsFound = true;
         }
         else
         {
           this.CurrentBlobCenter[i] = null;
+        }
+
+        if (Video.Instance.IsDataAcquisitionRunning)
+        {
+          Viana.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i]);
         }
       }
 
