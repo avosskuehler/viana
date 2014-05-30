@@ -20,9 +20,11 @@
     VerticalGridLinesBrush="Gray" 
     RowHeaderWidth="20" 
     CanUserDeleteRows="False"
-    CanUserResizeColumns="True">
+    CanUserResizeColumns="True"
+    >
     <DataGrid.RowStyle>
       <Style TargetType="DataGridRow">
+        <EventSetter Event="MouseDoubleClick" Handler="DataGridRowMouseDoubleClick"/>
         <Setter Property="Background" Value="GhostWhite" />
         <Setter Property="Foreground" Value="LightGray"/>
         <Style.Triggers>
@@ -33,10 +35,5 @@
         </Style.Triggers>
       </Style>
     </DataGrid.RowStyle>
-
-    <!--VirtualizingStackPanel.IsVirtualizing="True"
-      EnableRowVirtualization="True"
-      EnableColumnVirtualization="True"-->
   </DataGrid>
-  <!--</ScrollViewer>-->
 </UserControl>

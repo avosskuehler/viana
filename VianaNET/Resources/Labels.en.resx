@@ -1716,4 +1716,31 @@ Click OK or press Enter, when ready.</value>
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>Modify object: </value>
   </data>
+  <data name="ChartHelpDialogDataGroupHeader" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
+    <value>Display coordinates - left mouse button
+Modify coordinates - left mouse button double click on data point
+Select points - drag rectangle with left mouse button (needs to be activated in properties)</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupText" xml:space="preserve">
+    <value>Pan - right mouse button
+Zoom - mouse wheel
+Zoom by rectangle - Ctrl + right mouse button
+Reset axes - 'a'
+Copy bitmap - Ctrl + c</value>
+  </data>
+  <data name="ChartHelpDialogTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ChartHelpDialogTopFrameTitle" xml:space="preserve">
+    <value>Shortcut info for the diagram module.</value>
+  </data>
+  <data name="ChartWindowHelpHeader" xml:space="preserve">
+    <value>Shortcut info</value>
+  </data>
 </root>

@@ -2,7 +2,7 @@
 // <copyright file="DataGridWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,11 +19,7 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The data grid window.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
@@ -32,7 +28,11 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Data;
-  using Application;
+  using System.Windows.Input;
+
+  using VianaNET.Application;
+  using VianaNET.Data.Collections;
+  using VianaNET.Modules.DataAcquisition;
   using VianaNET.Resources;
 
   /// <summary>
@@ -56,8 +56,10 @@ namespace VianaNET.Modules.DataGrid
 
     #endregion
 
+    #region Public Methods and Operators
+
     /// <summary>
-    /// Update the datagrids items source
+    ///   Update the datagrids items source
     /// </summary>
     public void Refresh()
     {
@@ -65,54 +67,77 @@ namespace VianaNET.Modules.DataGrid
       this.DataGrid.ItemsSource = Viana.Project.VideoData.Samples;
     }
 
+    #endregion
+
     #region Methods
 
     /// <summary>
-    /// The create column.
+    /// Creates the column.
     /// </summary>
-    /// <param name="path">
-    /// The path. 
-    /// </param>
-    /// <param name="header">
-    /// The header. 
-    /// </param>
-    /// <param name="cellstyles">
-    /// The cellstyles. 
-    /// </param>
-    /// <param name="measurement">
-    /// The measurement. 
-    /// </param>
+    /// <param name="path">The path.</param>
+    /// <param name="header">The header.</param>
+    /// <param name="cellstyles">The cellstyles.</param>
+    /// <param name="measurement">The measurement.</param>
     private void CreateColumn(string path, string header, string[] cellstyles, string measurement)
     {
       var newColumn = new DataGridTextColumn
-        {
-          Header = header,
-          HeaderStyle = (Style)this.Resources[cellstyles[0]],
-          CellStyle = (Style)this.Resources[cellstyles[1]],
-          CanUserReorder = true,
-          IsReadOnly = true,
-          CanUserSort = false
-        };
+                        {
+                          Header = header,
+                          HeaderStyle = (Style)this.Resources[cellstyles[0]],
+                          CellStyle = (Style)this.Resources[cellstyles[1]],
+                          CanUserReorder = true,
+                          IsReadOnly = true,
+                          CanUserSort = false
+                        };
 
       // newColumn.SortMemberPath = path;
       var valueBinding = new Binding(path)
-        {
-          Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
-          ConverterParameter = this.Resources[measurement]
-        };
+                           {
+                             Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
+                             ConverterParameter = this.Resources[measurement]
+                           };
 
       newColumn.Binding = valueBinding;
       this.DataGrid.Columns.Add(newColumn);
     }
 
     /// <summary>
+    /// Data grid row mouse double click.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void DataGridRowMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      if (sender == null)
+      {
+        return;
+      }
+
+      var row = sender as DataGridRow;
+      if (row == null)
+      {
+        return;
+      }
+
+      var sample = row.Item as TimeSample;
+      var modifyWindow = new ModifyDataWindow();
+      if (sample != null)
+      {
+        modifyWindow.MoveToFrame(sample.Framenumber);
+      }
+
+      modifyWindow.ShowDialog();
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+    }
+
+    /// <summary>
     /// The data property changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void DataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -141,22 +166,22 @@ namespace VianaNET.Modules.DataGrid
 
       // Create style string arrays
       var cellStyles = new List<string[]>
-        {
-          new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" },
-          new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" },
-          new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" }
-        };
+                         {
+                           new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" }, 
+                           new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" }, 
+                           new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" }
+                         };
 
       // Create default framenumber colum
       var frameColumn = new DataGridTextColumn
-        {
-          Header = Labels.DataGridFramenumber,
-          HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
-          CellStyle = (Style)this.Resources["DataGridCellStyle"],
-          CanUserReorder = false,
-          IsReadOnly = true,
-          CanUserSort = false
-        };
+                          {
+                            Header = Labels.DataGridFramenumber,
+                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+                            CellStyle = (Style)this.Resources["DataGridCellStyle"],
+                            CanUserReorder = false,
+                            IsReadOnly = true,
+                            CanUserSort = false
+                          };
 
       // frameColumn.SortMemberPath = "Framenumber";
       var valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
@@ -165,21 +190,22 @@ namespace VianaNET.Modules.DataGrid
 
       // Create default time column
       var timeColumn = new DataGridTextColumn
-        {
-          Header = Labels.DataGridTimestamp,
-          HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
-          CellStyle = (Style)this.Resources["DataGridCellStyle"],
-          CanUserReorder = false,
-          IsReadOnly = true,
-          CanUserSort = false
-        };
+                         {
+                           Header = Labels.DataGridTimestamp,
+                           HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+                           CellStyle = (Style)this.Resources["DataGridCellStyle"],
+                           CanUserReorder = false,
+                           IsReadOnly = true,
+                           CanUserSort = false
+                         };
 
       // timeColumn.SortMemberPath = "Timestamp";
       var valueBindingTime = new Binding("Timestamp")
-        {
-          Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
-          ConverterParameter = this.Resources["TimeMeasurement"]
-        };
+                               {
+                                 Converter =
+                                   (IValueConverter)this.Resources["UnitDoubleStringConverter"],
+                                 ConverterParameter = this.Resources["TimeMeasurement"]
+                               };
 
       timeColumn.Binding = valueBindingTime;
       this.DataGrid.Columns.Add(timeColumn);
@@ -190,32 +216,35 @@ namespace VianaNET.Modules.DataGrid
         string prefix = Viana.Project.ProcessingData.NumberOfTrackedObjects > 1
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
-        var obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
+        string obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
         this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
         this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
         this.CreateColumn(obj + "PositionX", prefix + Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(obj + "PositionY", prefix + Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(
-          obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(
-          obj + "DistanceX", prefix + Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(
-          obj + "DistanceY", prefix + Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceX", prefix + Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceY", prefix + Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(obj + "Length", prefix + Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(obj + "LengthX", prefix + Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
         this.CreateColumn(obj + "LengthY", prefix + Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Velocity", prefix + Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
-          obj + "Velocity", prefix + Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
+          obj + "Acceleration",
+          prefix + Labels.DataGridAcceleration,
+          cellStyles[i],
+          "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
+          obj + "AccelerationX",
+          prefix + Labels.DataGridXAcceleration,
+          cellStyles[i],
+          "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
-        this.CreateColumn(
-                obj + "Acceleration", prefix + Labels.DataGridAcceleration, cellStyles[i], "AccelerationMeasurement");
-        this.CreateColumn(
-          obj + "AccelerationX", prefix + Labels.DataGridXAcceleration, cellStyles[i], "AccelerationMeasurement");
-        this.CreateColumn(
-          obj + "AccelerationY", prefix + Labels.DataGridYAcceleration, cellStyles[i], "AccelerationMeasurement");
+          obj + "AccelerationY",
+          prefix + Labels.DataGridYAcceleration,
+          cellStyles[i],
+          "AccelerationMeasurement");
       }
     }
 

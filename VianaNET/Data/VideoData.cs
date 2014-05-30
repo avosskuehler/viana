@@ -350,6 +350,11 @@ namespace VianaNET.Data
       {
         if (newObjectSample != null)
         {
+          if (this.Samples[index].Object == null)
+          {
+            this.Samples[index].Object = new DataSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+          }
+
           this.Samples[index].Object[objectIndex] = newObjectSample;
         }
       }

@@ -105,10 +105,10 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private IVideoFrameStep frameStep;
 
-    /// <summary>
-    ///   The is frame time capable.
-    /// </summary>
-    private bool isFrameTimeCapable;
+    ///// <summary>
+    /////   The is frame time capable.
+    ///// </summary>
+    //private bool isFrameTimeCapable;
 
     /// <summary>
     ///   The media event.
@@ -593,19 +593,19 @@ namespace VianaNET.Modules.Video.Control
       this.mediaPosition = (IMediaPosition)this.filterGraph;
       this.mediaEvent = (IMediaEvent)this.filterGraph;
 
-      hr = this.mediaSeeking.IsFormatSupported(TimeFormat.Frame);
-      if (hr != 0)
-      {
-        this.isFrameTimeCapable = false;
-      }
-      else
-      {
-        this.isFrameTimeCapable = true;
+      //hr = this.mediaSeeking.IsFormatSupported(TimeFormat.Frame);
+      //if (hr != 0)
+      //{
+      //  this.isFrameTimeCapable = false;
+      //}
+      //else
+      //{
+      //  this.isFrameTimeCapable = true;
 
         // string text = DsError.GetErrorText(hr);
         // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
         // text = DsError.GetErrorText(hr);
-      }
+      //}
 
       // hr = this.mediaSeeking.GetTimeFormat(out this.timeFormat);
       // DsError.ThrowExceptionForHR(hr);

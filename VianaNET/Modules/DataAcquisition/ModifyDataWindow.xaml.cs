@@ -98,6 +98,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private int visualDataPointRadius = 8;
 
+    /// <summary>
+    /// Indicates the visibility state of the sharp cursor
+    /// on entering the control panel
+    /// </summary>
+    private bool hadSharpCursorOnEnteringControlPanel;
+
     #endregion
 
     #region Constructors and Destructors
@@ -258,7 +264,11 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void ControlPanelMouseEnter(object sender, MouseEventArgs e)
     {
-      this.SetVisibilityOfSharpCursor(false);
+      if (this.CursorEllipse.Visibility == Visibility.Visible)
+      {
+        this.SetVisibilityOfSharpCursor(false);
+        this.hadSharpCursorOnEnteringControlPanel = true;
+      }
     }
 
     /// <summary>
@@ -272,7 +282,11 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void ControlPanelMouseLeave(object sender, MouseEventArgs e)
     {
-      //this.SetVisibilityOfSharpCursor(true);
+      if (this.hadSharpCursorOnEnteringControlPanel)
+      {
+        this.SetVisibilityOfSharpCursor(true);
+        this.hadSharpCursorOnEnteringControlPanel = false;
+      }
     }
 
     /// <summary>
@@ -537,7 +551,7 @@ namespace VianaNET.Modules.DataAcquisition
 
         for (int i = 1; i <= Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          if (sample.Object[i - 1] != null)
+          if (sample.Object != null && sample.Object[i - 1] != null)
           {
             var scaledX = sample.Object[i - 1].PixelX / factorX;
             var scaledY = sample.Object[i - 1].PixelY / factorY;

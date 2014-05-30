@@ -1701,4 +1701,31 @@ Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>Ändere Objekt: </value>
   </data>
+  <data name="ChartHelpDialogDataGroupHeader" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
+    <value>Koordinaten anzeigen - linke Maustaste
+Koordinaten ändern - Doppelklick linke Maustaste auf Datenpunkt
+Datenpunkte auswählen - linke Maustaste und Rechteck aufziehen (Funktion vorher aktivieren in Einstellungen)</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupText" xml:space="preserve">
+    <value>Pan - rechte Maustaste
+Zoom - Mausrad
+Rechteckzoom - Strg und rechte Maustaste
+Achsen zurücksetzen - 'a'
+Bild kopieren - Strg und c</value>
+  </data>
+  <data name="ChartHelpDialogTitle" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="ChartHelpDialogTopFrameTitle" xml:space="preserve">
+    <value>Tipps zu Tastenkombinationen im Diagramm.</value>
+  </data>
+  <data name="ChartWindowHelpHeader" xml:space="preserve">
+    <value>Tipps zu Tastenkombinationen</value>
+  </data>
 </root>

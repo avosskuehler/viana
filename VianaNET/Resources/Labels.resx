@@ -1701,4 +1701,25 @@
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>@ModifyDataWindowTrackItemNumberHeader</value>
   </data>
+  <data name="ChartHelpDialogDataGroupHeader" xml:space="preserve">
+    <value>@ChartHelpDialogDataGroupHeader</value>
+  </data>
+  <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
+    <value>@ChartHelpDialogDataGroupText</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
+    <value>@ChartHelpDialogShortCutGroupHeader</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupText" xml:space="preserve">
+    <value>@ChartHelpDialogShortCutGroupText</value>
+  </data>
+  <data name="ChartHelpDialogTitle" xml:space="preserve">
+    <value>@ChartHelpDialogTitle</value>
+  </data>
+  <data name="ChartHelpDialogTopFrameTitle" xml:space="preserve">
+    <value>@ChartHelpDialogTopFrameTitle</value>
+  </data>
+  <data name="ChartWindowHelpHeader" xml:space="preserve">
+    <value>@ChartWindowHelpHeader</value>
+  </data>
 </root>

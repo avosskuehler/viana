@@ -45,6 +45,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Filter;
   using VianaNET.Data.Filter.Regression;
   using VianaNET.Data.Filter.Theory;
+  using VianaNET.Modules.DataAcquisition;
   using VianaNET.Resources;
 
   using WPFMath;
@@ -1610,6 +1611,45 @@ namespace VianaNET.Modules.Chart
       }
 
       this.Refresh();
+    }
+
+    /// <summary>
+    /// Handles the OnMouseDoubleClick event of the DataChart control.
+    /// If we had a double click on a data point, show the modify data window to adapt the 
+    /// point location.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void DataChart_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      var point = e.GetPosition(this.DataChart);
+      var screenPoint = new ScreenPoint(point.X, point.Y);
+      var result = this.ChartData.DataScatterSeries.HitTest(new HitTestArguments(screenPoint, 20));
+      if (result == null)
+      {
+        return;
+      }
+
+      var sample = result.Item as TimeSample;
+      var modifyWindow = new ModifyDataWindow();
+      if (sample != null)
+      {
+        modifyWindow.MoveToFrame(sample.Framenumber);
+      }
+
+      modifyWindow.ShowDialog();
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+    }
+
+    /// <summary>
+    /// Shortcut help button was clicked, so show the dialog.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void ShortCutHelpButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dialog = new ChartHelpDialog();
+      dialog.ShowDialog();
     }
   }
 }
