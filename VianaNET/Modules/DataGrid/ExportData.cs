@@ -166,7 +166,7 @@ namespace VianaNET.Modules.DataGrid
       // SaveColumnDefinition
       var columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
       var columnsCount = ownerDocument.CreateAttribute(
-        "table:number-columns-repeated", 
+        "table:number-columns-repeated",
         GetNamespaceUri("table"));
       columnsCount.Value = arrays[0].Count.ToString(CultureInfo.InvariantCulture);
       columnDefinition.Attributes.Append(columnsCount);
@@ -620,10 +620,10 @@ namespace VianaNET.Modules.DataGrid
           switch (timeunit)
           {
             case TimeUnit.ms:
-              columns.Add(Math.Round(sample.Object[0].Time, 0));
+              columns.Add(sample.Timestamp);
               break;
             case TimeUnit.s:
-              columns.Add(Math.Round(sample.Object[0].Time, 4));
+              columns.Add(Math.Round(sample.Timestamp / 1000d, 4));
               break;
             default:
               throw new ArgumentOutOfRangeException("Wrong TimeUnit");
@@ -634,82 +634,194 @@ namespace VianaNET.Modules.DataGrid
         {
           if (options.Axes.Contains(DataAxis.DataAxes[2]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].PixelX, 0));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].PixelX, 0));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[3]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].PixelY, 0));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].PixelY, 0));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[4]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].PositionX, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].PositionX, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[5]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].PositionY, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].PositionY, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[6]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].Distance, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].Distance, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[7]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].DistanceX, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].DistanceX, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[8]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].DistanceY, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].DistanceY, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[9]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].Length, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].Length, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[10]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].LengthX, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].LengthX, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[11]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].LengthY, 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].LengthY, 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[12]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].Velocity.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].Velocity.GetValueOrDefault(0), 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[13]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].VelocityX.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].VelocityX.GetValueOrDefault(0), 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[14]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].VelocityY.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].VelocityY.GetValueOrDefault(0), 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[15]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].Acceleration.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].Acceleration.GetValueOrDefault(0), 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[16]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].AccelerationX.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].AccelerationX.GetValueOrDefault(0), 2));
+            }
           }
 
           if (options.Axes.Contains(DataAxis.DataAxes[17]))
           {
-            columns.Add(Math.Round(sample.Object[objectIndex].AccelerationY.GetValueOrDefault(0), 2));
+            if (sample.Object[objectIndex] == null)
+            {
+              columns.Add(string.Empty);
+            }
+            else
+            {
+              columns.Add(Math.Round(sample.Object[objectIndex].AccelerationY.GetValueOrDefault(0), 2));
+            }
           }
         }
 
