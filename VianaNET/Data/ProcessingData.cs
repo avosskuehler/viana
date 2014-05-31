@@ -2,7 +2,7 @@
 // <copyright file="ProcessingData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,13 +19,7 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The image processing.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-
 namespace VianaNET.Data
 {
   using System;
@@ -37,10 +31,12 @@ namespace VianaNET.Data
   using System.Windows;
   using System.Windows.Media;
 
-  using VianaNET.Resources;
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Filter;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The image processing.
@@ -100,7 +96,10 @@ namespace VianaNET.Data
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfObject" />.
     /// </summary>
     public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
-      "IndexOfObject", typeof(int), typeof(ProcessingData), new FrameworkPropertyMetadata(0, OnPropertyChanged));
+      "IndexOfObject",
+      typeof(int),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(0, OnPropertyChanged));
 
     /// <summary>
     ///   The is target color set property.
@@ -129,6 +128,15 @@ namespace VianaNET.Data
       typeof(ObservableCollection<Color>),
       typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
+
+    /// <summary>
+    ///   The difference quotient type property.
+    /// </summary>
+    public static readonly DependencyProperty DifferenceQuotientTypeProperty = DependencyProperty.Register(
+      "DifferenceQuotientType",
+      typeof(DifferenceQuotientType),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(DifferenceQuotientType.Central));
 
     #endregion
 
@@ -181,9 +189,6 @@ namespace VianaNET.Data
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -192,13 +197,13 @@ namespace VianaNET.Data
     static ProcessingData()
     {
       TrackObjectColors = new List<SolidColorBrush>
-        { 
-          Brushes.Red, 
-          Brushes.Green, 
-          Brushes.Blue, 
-          Brushes.Yellow, 
-          Brushes.Magenta 
-        };
+                            {
+                              Brushes.Red, 
+                              Brushes.Green, 
+                              Brushes.Blue, 
+                              Brushes.Yellow, 
+                              Brushes.Magenta
+                            };
     }
 
     /// <summary>
@@ -209,7 +214,8 @@ namespace VianaNET.Data
       this.ColorThreshold = new ObservableCollection<int>();
       this.BlobMinDiameter = new ObservableCollection<double>();
       this.BlobMaxDiameter = new ObservableCollection<double>();
-      //this.ResetProcessing(1);
+
+      // this.ResetProcessing(1);
       this.colorAndCropFilter = new ColorAndCropFilterRGB();
       this.colorRangeFilter = new ColorAndCropFilterYCbCr();
       this.histogrammFilter = new Histogram();
@@ -227,9 +233,6 @@ namespace VianaNET.Data
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Events
 
     /// <summary>
@@ -244,31 +247,12 @@ namespace VianaNET.Data
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
     ///   Gets or sets  a list of brushes for the different tracked objects
     /// </summary>
     public static List<SolidColorBrush> TrackObjectColors { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the target color.
-    /// </summary>
-    public ObservableCollection<Color> TargetColor
-    {
-      get
-      {
-        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(TargetColorProperty, value);
-      }
-    }
 
     /// <summary>
     ///   Gets or sets the blob max diameter.
@@ -398,6 +382,39 @@ namespace VianaNET.Data
       }
     }
 
+    /// <summary>
+    ///   Gets or sets the target color.
+    /// </summary>
+    public ObservableCollection<Color> TargetColor
+    {
+      get
+      {
+        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(TargetColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the DifferenceQuotientType
+    /// </summary>
+    public DifferenceQuotientType DifferenceQuotientType
+    {
+      get
+      {
+        return (DifferenceQuotientType)this.GetValue(DifferenceQuotientTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(DifferenceQuotientTypeProperty, value);
+      }
+    }
+
+
     #endregion
 
     #region Public Methods and Operators
@@ -461,7 +478,7 @@ namespace VianaNET.Data
     /// <returns> The <see cref="bool" /> . </returns>
     public bool ProcessImage()
     {
-      //Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
+      // Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
       // Skip if no target color is available
       if (!this.IsTargetColorSet)
       {
@@ -484,9 +501,8 @@ namespace VianaNET.Data
       {
         // Console.Write("BeforeColorFilte ");
         // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
-        if (this.TargetColor.Count <= i || this.ColorThreshold.Count <= i
-          || this.BlobMinDiameter.Count <= i || this.BlobMaxDiameter.Count <= i
-          || this.CurrentBlobCenter.Count <= i)
+        if (this.TargetColor.Count <= i || this.ColorThreshold.Count <= i || this.BlobMinDiameter.Count <= i
+            || this.BlobMaxDiameter.Count <= i || this.CurrentBlobCenter.Count <= i)
         {
           break;
         }
@@ -536,8 +552,9 @@ namespace VianaNET.Data
       this.counter++;
 
 #if DEBUG
-      //Console.Write("AverageProcessingTime: ");
-      //Console.WriteLine(this.totalProcessingTime / this.counter);
+
+      // Console.Write("AverageProcessingTime: ");
+      // Console.WriteLine(this.totalProcessingTime / this.counter);
 #endif
 
       this.isReady = true;
@@ -561,16 +578,13 @@ namespace VianaNET.Data
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
     /// The on property changed.
     /// </summary>
     /// <param name="args">
-    /// The args. 
+    /// The args.
     /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
@@ -580,18 +594,14 @@ namespace VianaNET.Data
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     /// The on property changed.
     /// </summary>
     /// <param name="obj">
-    /// The obj. 
+    /// The obj.
     /// </param>
     /// <param name="args">
-    /// The args. 
+    /// The args.
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
@@ -602,10 +612,10 @@ namespace VianaNET.Data
     /// The blob_ collection changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void BlobCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -619,10 +629,10 @@ namespace VianaNET.Data
     /// The hlsl params_ collection changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void HlslParamsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -634,13 +644,38 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    ///   The on frame processed.
+    /// </summary>
+    private void OnFrameProcessed()
+    {
+      if (this.FrameProcessed != null)
+      {
+        this.FrameProcessed(this, EventArgs.Empty);
+      }
+    }
+
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The property name.
+    /// </param>
+    private void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null && !this.doNotThrowPropertyChanged)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+
+    /// <summary>
     /// The image processing_ property changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -662,35 +697,10 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   The on frame processed.
-    /// </summary>
-    private void OnFrameProcessed()
-    {
-      if (this.FrameProcessed != null)
-      {
-        this.FrameProcessed(this, EventArgs.Empty);
-      }
-    }
-
-    /// <summary>
-    /// The on property changed.
-    /// </summary>
-    /// <param name="propertyName">
-    /// The property name. 
-    /// </param>
-    private void OnPropertyChanged(string propertyName)
-    {
-      if (this.PropertyChanged != null && !this.doNotThrowPropertyChanged)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
-    }
-
-    /// <summary>
     /// The reset processing.
     /// </summary>
     /// <param name="numberOfObjects">
-    /// The number of objects. 
+    /// The number of objects.
     /// </param>
     private void ResetProcessing(int numberOfObjects)
     {
@@ -721,10 +731,10 @@ namespace VianaNET.Data
     /// The target color_ collection changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void TargetColorCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -736,17 +746,5 @@ namespace VianaNET.Data
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

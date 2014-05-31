@@ -23,6 +23,7 @@
 namespace VianaNET.Data
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Windows;
 
@@ -107,6 +108,15 @@ namespace VianaNET.Data
       typeof(int),
       typeof(VideoData),
       new UIPropertyMetadata(1));
+
+    #endregion
+
+    #region Fields
+
+    /// <summary>
+    ///   The valid data samples for each object
+    /// </summary>
+    private List<TimeSample>[] validDataSamples;
 
     #endregion
 
@@ -393,67 +403,21 @@ namespace VianaNET.Data
     /// </summary>
     public void RefreshDistanceVelocityAcceleration()
     {
-      var previousSamples = new TimeSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
-      var validSamples = new int[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+      this.GeneratePositionDistanceLength();
 
-      foreach (TimeSample timeSample in this.Samples)
+      switch (Viana.Project.ProcessingData.DifferenceQuotientType)
       {
-        for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
-        {
-          if (timeSample.Object == null)
-          {
-            continue;
-          }
-
-          DataSample currentSample = timeSample.Object[j];
-          if (currentSample == null)
-          {
-            continue;
-          }
-
-          validSamples[j]++;
-
-          var calibratedPoint = CalibrateSample(currentSample);
-          currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
-          currentSample.PositionX = calibratedPoint.X;
-          currentSample.PositionY = calibratedPoint.Y;
-
-          if (validSamples[j] == 1)
-          {
-            currentSample.Distance = 0d;
-            currentSample.DistanceX = 0d;
-            currentSample.DistanceY = 0d;
-            currentSample.Length = 0d;
-            currentSample.LengthX = 0d;
-            currentSample.LengthY = 0d;
-            previousSamples[j] = timeSample;
-            continue;
-          }
-
-          DataSample previousSample = previousSamples[j].Object[j];
-          long timeTifference = timeSample.Timestamp - previousSamples[j].Timestamp;
-          currentSample.Distance = GetDistance(currentSample, previousSample);
-          currentSample.DistanceX = GetXDistance(currentSample, previousSample);
-          currentSample.DistanceY = GetYDistance(currentSample, previousSample);
-          currentSample.Length = GetLength(currentSample, previousSample);
-          currentSample.LengthX = GetXLength(currentSample, previousSample);
-          currentSample.LengthY = GetYLength(currentSample, previousSample);
-          currentSample.Velocity = GetVelocity(currentSample, timeTifference);
-          currentSample.VelocityX = GetXVelocity(currentSample, previousSample, timeTifference);
-          currentSample.VelocityY = GetYVelocity(currentSample, previousSample, timeTifference);
-
-          if (validSamples[j] == 2)
-          {
-            previousSamples[j] = timeSample;
-            continue;
-          }
-
-          currentSample.Acceleration = GetAcceleration(currentSample, previousSample, timeTifference);
-          currentSample.AccelerationX = GetXAcceleration(currentSample, previousSample, timeTifference);
-          currentSample.AccelerationY = GetYAcceleration(currentSample, previousSample, timeTifference);
-
-          previousSamples[j] = timeSample;
-        }
+        case DifferenceQuotientType.Forward:
+          this.CalculateWithForwardDifference();
+          break;
+        case DifferenceQuotientType.Backward:
+          this.CalculateWithBackwardDifference();
+          break;
+        case DifferenceQuotientType.Central:
+          this.CalculateWithCentralDifference();
+          break;
+        default:
+          throw new ArgumentOutOfRangeException();
       }
 
       // Refresh DataBinding to DataGrid.
@@ -462,13 +426,13 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The remove point.
+    /// Removes the point.
     /// </summary>
     /// <param name="timeStamp">
     /// The time stamp.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> .
+    /// True if succesfull
     /// </returns>
     public bool RemovePoint(long timeStamp)
     {
@@ -478,7 +442,7 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   The reset.
+    ///   Resets this instance.
     /// </summary>
     public void Reset()
     {
@@ -489,13 +453,14 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The update point.
+    /// Updates the point at given frameindex and object index with
+    ///   new location.
     /// </summary>
     /// <param name="frameIndex">
-    /// The frame index.
+    /// Index of the frame.
     /// </param>
     /// <param name="objectIndex">
-    /// The object index.
+    /// Index of the object.
     /// </param>
     /// <param name="newLocation">
     /// The new location.
@@ -560,24 +525,59 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The get acceleration.
+    /// Gets the acceleration.
+    ///   returns [Velocity(nextSample) - Velocity(currentSample)]/dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
+    /// <param name="currentSample">
+    /// The current sample.
     /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [Velocity(nextSample) - Velocity(currentSample)]/dt
+    /// </returns>
+    private static double? GetAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
+    {
+      // a(t) = [v(t + dt) - v(t)]/dt
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].Velocity - currentSample.Object[objectIndex].Velocity) / dt
+             * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the acceleration for central difference
+    ///   returns [Velocity(nextSample) - Velocity(previousSample)]/2dt
+    /// </summary>
     /// <param name="previousSample">
     /// The previous sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [Velocity(nextSample) - Velocity(previousSample)]/2dt
     /// </returns>
-    private static double GetAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
+    private static double? GetAcceleration(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
     {
-      double value = (newSample.Velocity.Value - previousSample.Velocity.Value) / timedifference * GetTimeFactor();
-      return value;
+      // a(t) = [v(t+dt) - v(t-dt)]/2dt
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].Velocity - previousSample.Object[objectIndex].Velocity)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
 
     /// <summary>
@@ -615,7 +615,7 @@ namespace VianaNET.Data
     /// </returns>
     private static double GetLength(DataSample newSample, DataSample previousSample)
     {
-      double length = previousSample.Length + newSample.Distance;
+      double length = previousSample.Length.Value + newSample.Distance.Value;
       return length;
     }
 
@@ -625,7 +625,7 @@ namespace VianaNET.Data
     /// <returns>The factor to multiply with</returns>
     private static int GetTimeFactor()
     {
-      int timefactor = 1;
+      int timefactor;
       switch (Viana.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
@@ -642,40 +642,113 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The get velocity.
+    /// Gets the velocity.
+    ///   returns [Distance(nextSample) - Distance(currentSample)]/dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
+    /// <param name="currentSample">
+    /// The current sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [Distance(nextSample) - Distance(currentSample)]/dt
     /// </returns>
-    private static double GetVelocity(DataSample newSample, long timedifference)
+    private static double? GetVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
-      return newSample.Distance / timedifference * GetTimeFactor();
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].Distance - currentSample.Object[objectIndex].Distance) / dt
+             * GetTimeFactor();
     }
 
     /// <summary>
-    /// The get x acceleration.
+    /// Gets the velocity for central difference
+    ///   returns [Distance(nextSample) - Distance(previousSample)]/2dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
-    /// </param>
     /// <param name="previousSample">
     /// The previous sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [Distance(nextSample) - Distance(previousSample)]/2dt
     /// </returns>
-    private static double GetXAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
+    private static double? GetVelocity(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
     {
-      return (newSample.VelocityX.Value - previousSample.VelocityX.Value) / timedifference * GetTimeFactor();
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].Distance - previousSample.Object[objectIndex].Distance)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the x acceleration.
+    ///   returns [VelocityX(nextSample) - VelocityX(currentSample)]/dt
+    /// </summary>
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [VelocityX(nextSample) - VelocityX(currentSample)]/dt
+    /// </returns>
+    private static double? GetXAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
+    {
+      // a(t) = [v(t + dt) - v(t)]/dt
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].VelocityX - currentSample.Object[objectIndex].VelocityX) / dt
+             * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the  x acceleration for central difference
+    ///   returns [VelocityX(nextSample) - VelocityX(previousSample)]/2dt
+    /// </summary>
+    /// <param name="previousSample">
+    /// The previous sample.
+    /// </param>
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [VelocityX(nextSample) - VelocityX(previousSample)]/2dt
+    /// </returns>
+    private static double? GetXAcceleration(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
+    {
+      // a(t) = [v(t+dt) - v(t-dt)]/2dt
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].VelocityX - previousSample.Object[objectIndex].VelocityX)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
 
     /// <summary>
@@ -692,7 +765,7 @@ namespace VianaNET.Data
     /// </returns>
     private static double GetXDistance(DataSample newSample, DataSample previousSample)
     {
-      double distance = Math.Abs(newSample.PositionX - previousSample.PositionX);
+      double distance = newSample.PositionX - previousSample.PositionX;
       return distance;
     }
 
@@ -710,48 +783,119 @@ namespace VianaNET.Data
     /// </returns>
     private static double GetXLength(DataSample newSample, DataSample previousSample)
     {
-      double lengthX = previousSample.LengthX + newSample.DistanceX;
+      double lengthX = previousSample.LengthX.Value + newSample.DistanceX.Value;
       return lengthX;
     }
 
     /// <summary>
-    /// The get x velocity.
+    /// Gets the X velocity.
+    ///   returns [DistanceX(nextSample) - DistanceX(currentSample)]/dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
+    /// <param name="currentSample">
+    /// The current sample.
     /// </param>
-    /// <param name="previousSample">
-    /// The previous sample.
+    /// <param name="nextSample">
+    /// The next sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [DistanceX(nextSample) - DistanceX(currentSample)]/dt
     /// </returns>
-    private static double GetXVelocity(DataSample newSample, DataSample previousSample, long timedifference)
+    private static double? GetXVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
-      return (newSample.PositionX - previousSample.PositionX) / timedifference * GetTimeFactor();
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].DistanceX - currentSample.Object[objectIndex].DistanceX) / dt
+             * GetTimeFactor();
     }
 
     /// <summary>
-    /// The get y acceleration.
+    /// Gets the x velocity for central difference
+    ///   returns [DistanceX(nextSample) - DistanceX(previousSample)]/2dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
-    /// </param>
     /// <param name="previousSample">
     /// The previous sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [DistanceX(nextSample) - DistanceX(previousSample)]/2dt
     /// </returns>
-    private static double GetYAcceleration(DataSample newSample, DataSample previousSample, long timedifference)
+    private static double? GetXVelocity(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
     {
-      return (newSample.VelocityY.Value - previousSample.VelocityY.Value) / timedifference * GetTimeFactor();
+      // v(t) = [s(t+dt) - s(t-dt)]/2dt
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].DistanceX - previousSample.Object[objectIndex].DistanceX)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the y acceleration.
+    ///   returns [VelocityY(nextSample) - VelocityY(currentSample)]/dt
+    /// </summary>
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [VelocityY(nextSample) - VelocityY(currentSample)]/dt
+    /// </returns>
+    private static double? GetYAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
+    {
+      // a(t) = [v(t + dt) - v(t)]/dt
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].VelocityY - currentSample.Object[objectIndex].VelocityY) / dt
+             * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the y acceleration for central difference
+    ///   returns [VelocityY(nextSample) - VelocityY(previousSample)]/2dt
+    /// </summary>
+    /// <param name="previousSample">
+    /// The previous sample.
+    /// </param>
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [VelocityY(nextSample) - VelocityY(previousSample)]/2dt
+    /// </returns>
+    private static double? GetYAcceleration(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
+    {
+      // a(t) = [v(t+dt) - v(t-dt)]/2dt
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].VelocityY - previousSample.Object[objectIndex].VelocityY)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
 
     /// <summary>
@@ -768,7 +912,7 @@ namespace VianaNET.Data
     /// </returns>
     private static double GetYDistance(DataSample newSample, DataSample previousSample)
     {
-      double distance = Math.Abs(newSample.PositionY - previousSample.PositionY);
+      double distance = newSample.PositionY - previousSample.PositionY;
       return distance;
     }
 
@@ -786,28 +930,182 @@ namespace VianaNET.Data
     /// </returns>
     private static double GetYLength(DataSample newSample, DataSample previousSample)
     {
-      double lengthY = previousSample.LengthY + newSample.DistanceY;
+      double lengthY = previousSample.LengthY.Value + newSample.DistanceY.Value;
       return lengthY;
     }
 
     /// <summary>
-    /// The get y velocity.
+    /// Gets the Y velocity.
+    ///   returns [DistanceY(nextSample) - DistanceY(currentSample)]/dt
     /// </summary>
-    /// <param name="newSample">
-    /// The new sample.
+    /// <param name="currentSample">
+    /// The current sample.
     /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
+    /// </param>
+    /// <returns>
+    /// [DistanceY(nextSample) - DistanceY(currentSample)]/dt
+    /// </returns>
+    private static double? GetYVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
+    {
+      // v(t) = [s(t + dt) - s(t)]/dt
+      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].DistanceY - currentSample.Object[objectIndex].DistanceY) / dt
+             * GetTimeFactor();
+    }
+
+    /// <summary>
+    /// Gets the y velocity for central difference
+    ///   returns [DistanceY(nextSample) - DistanceY(previousSample)]/2dt
+    /// </summary>
     /// <param name="previousSample">
     /// The previous sample.
     /// </param>
-    /// <param name="timedifference">
-    /// The timedifference.
+    /// <param name="currentSample">
+    /// The current sample.
+    /// </param>
+    /// <param name="nextSample">
+    /// The next sample.
+    /// </param>
+    /// <param name="objectIndex">
+    /// Index of the object.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> .
+    /// [DistanceY(nextSample) - DistanceY(previousSample)]/2dt
     /// </returns>
-    private static double GetYVelocity(DataSample newSample, DataSample previousSample, long timedifference)
+    private static double? GetYVelocity(
+      TimeSample previousSample,
+      TimeSample currentSample,
+      TimeSample nextSample,
+      int objectIndex)
     {
-      return (newSample.PositionY - previousSample.PositionY) / timedifference * GetTimeFactor();
+      // v(t) = [s(t+dt) - s(t-dt)]/2dt
+      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      return (nextSample.Object[objectIndex].DistanceY - previousSample.Object[objectIndex].DistanceY)
+             / (timeTifference1 + timeTifference2) * GetTimeFactor();
+    }
+
+    /// <summary>
+    ///   Calculates velocity and acceleration with backward difference.
+    ///   Formula: v(t) = [s(t) - s(t-dt)]/dt
+    ///   a(t) = [v(t) - v(t-dt)]/dt
+    /// </summary>
+    private void CalculateWithBackwardDifference()
+    {
+      for (var j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      {
+        for (var i = 1; i < this.validDataSamples[j].Count; i++)
+        {
+          var currentSample = this.validDataSamples[j][i];
+          var previousSample = this.validDataSamples[j][i - 1];
+
+          currentSample.Object[j].Velocity = GetVelocity(previousSample, currentSample, j);
+          currentSample.Object[j].VelocityX = GetXVelocity(previousSample, currentSample, j);
+          currentSample.Object[j].VelocityY = GetYVelocity(previousSample, currentSample, j);
+        }
+
+        for (var i = 1; i < this.validDataSamples[j].Count; i++)
+        {
+          var currentSample = this.validDataSamples[j][i];
+          var previousSample = this.validDataSamples[j][i - 1];
+
+          currentSample.Object[j].Acceleration = GetAcceleration(previousSample, currentSample, j);
+          currentSample.Object[j].AccelerationX = GetXAcceleration(previousSample, currentSample, j);
+          currentSample.Object[j].AccelerationY = GetYAcceleration(previousSample, currentSample, j);
+        }
+      }
+    }
+
+    /// <summary>
+    ///   Calculates velocity and acceleration with central difference.
+    ///   first point formula v(t) = [s(t+dt) - s(t)]/dt
+    ///   other points formula v(t) = [s(t+dt) - s(t-dt)]/2dt
+    ///   first point formula a(t) = [v(t+dt) - v(t)]/dt
+    ///   other points formula a(t) = [v(t+dt) - v(t-dt)]/2dt
+    /// </summary>
+    private void CalculateWithCentralDifference()
+    {
+      for (var j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      {
+        for (var i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        {
+          var currentSample = this.validDataSamples[j][i];
+          var nextSample = this.validDataSamples[j][i + 1];
+
+          // Calculate velocity except last point
+          if (i == 0)
+          {
+            currentSample.Object[j].Velocity = GetVelocity(currentSample, nextSample, j);
+            currentSample.Object[j].VelocityX = GetXVelocity(currentSample, nextSample, j);
+            currentSample.Object[j].VelocityY = GetYVelocity(currentSample, nextSample, j);
+          }
+          else if (i < this.Samples.Count - 1)
+          {
+            TimeSample previousSample = this.validDataSamples[j][i - 1];
+            currentSample.Object[j].Velocity = GetVelocity(previousSample, currentSample, nextSample, j);
+            currentSample.Object[j].VelocityX = GetXVelocity(previousSample, currentSample, nextSample, j);
+            currentSample.Object[j].VelocityY = GetYVelocity(previousSample, currentSample, nextSample, j);
+          }
+        }
+
+        // Calculate acceleration
+        for (var i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        {
+          var currentSample = this.validDataSamples[j][i];
+          var nextSample = this.validDataSamples[j][i + 1];
+
+          // Calculate acceleration except last point
+          if (i == 0)
+          {
+            currentSample.Object[j].Acceleration = GetAcceleration(currentSample, nextSample, j);
+            currentSample.Object[j].AccelerationX = GetXAcceleration(currentSample, nextSample, j);
+            currentSample.Object[j].AccelerationY = GetYAcceleration(currentSample, nextSample, j);
+          }
+          else if (i < this.Samples.Count - 1)
+          {
+            TimeSample previousSample = this.validDataSamples[j][i - 1];
+            currentSample.Object[j].Acceleration = GetAcceleration(previousSample, currentSample, nextSample, j);
+            currentSample.Object[j].AccelerationX = GetXAcceleration(previousSample, currentSample, nextSample, j);
+            currentSample.Object[j].AccelerationY = GetYAcceleration(previousSample, currentSample, nextSample, j);
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    ///   Calculates velocity and acceleration with forward difference.
+    ///   Formula: v(t) = [s(t+dt) - s(t)]/dt
+    ///   a(t) = [v(t+dt) - v(t)]/dt
+    /// </summary>
+    private void CalculateWithForwardDifference()
+    {
+      for (var j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      {
+        for (var i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        {
+          TimeSample currentSample = this.validDataSamples[j][i];
+          TimeSample nextSample = this.validDataSamples[j][i + 1];
+
+          currentSample.Object[j].Velocity = GetVelocity(currentSample, nextSample, j);
+          currentSample.Object[j].VelocityX = GetXVelocity(currentSample, nextSample, j);
+          currentSample.Object[j].VelocityY = GetYVelocity(currentSample, nextSample, j);
+        }
+
+        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        {
+          TimeSample currentSample = this.validDataSamples[j][i];
+          TimeSample nextSample = this.validDataSamples[j][i + 1];
+
+          currentSample.Object[j].Acceleration = GetAcceleration(currentSample, nextSample, j);
+          currentSample.Object[j].AccelerationX = GetXAcceleration(currentSample, nextSample, j);
+          currentSample.Object[j].AccelerationY = GetYAcceleration(currentSample, nextSample, j);
+        }
+      }
     }
 
     /// <summary>
@@ -820,7 +1118,7 @@ namespace VianaNET.Data
       {
         if (i % this.UseEveryNthPoint == 0)
         {
-          var sampleToAdd = this.Samples[i - 1];
+          TimeSample sampleToAdd = this.Samples[i - 1];
           if (sampleToAdd.Object != null)
           {
             this.FilteredSamples.Add(sampleToAdd);
@@ -835,6 +1133,74 @@ namespace VianaNET.Data
       this.OnPropertyChanged("FilteredSamples");
       this.OnPropertyChanged("HasSamples");
       this.OnPropertyChanged("UseEveryNthPoint");
+    }
+
+    /// <summary>
+    ///   Generates the position, distance and length values.
+    ///   Starting by adding the distance between point 1 and point 2 to point 1.
+    ///   The last point has no length and distance values.
+    /// </summary>
+    private void GeneratePositionDistanceLength()
+    {
+      this.validDataSamples = new List<TimeSample>[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+      for (var i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      {
+        this.validDataSamples[i] = new List<TimeSample>();
+      }
+
+      foreach (var timeSample in this.Samples)
+      {
+        for (var j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+        {
+          if (timeSample.Object == null)
+          {
+            continue;
+          }
+
+          var currentSample = timeSample.Object[j];
+          if (currentSample == null)
+          {
+            continue;
+          }
+
+          this.validDataSamples[j].Add(timeSample);
+
+          var calibratedPoint = CalibrateSample(currentSample);
+          currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
+          currentSample.PositionX = calibratedPoint.X;
+          currentSample.PositionY = calibratedPoint.Y;
+        }
+      }
+
+      for (var j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      {
+        for (var i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        {
+          var currentSample = this.validDataSamples[j][i].Object[j];
+          var nextSample = this.validDataSamples[j][i + 1].Object[j];
+
+          // Calculate distance and length except last point
+          if (i == 0)
+          {
+            currentSample.Distance = GetDistance(nextSample, currentSample);
+            currentSample.DistanceX = GetXDistance(nextSample, currentSample);
+            currentSample.DistanceY = GetYDistance(nextSample, currentSample);
+            currentSample.Length = currentSample.Distance;
+            currentSample.LengthX = currentSample.DistanceX;
+            currentSample.LengthY = currentSample.DistanceY;
+          }
+          else if (i < this.Samples.Count - 1)
+          {
+            var previousSample = this.validDataSamples[j][i - 1].Object[j];
+            currentSample.Distance = GetDistance(nextSample, currentSample);
+            currentSample.DistanceX = GetXDistance(nextSample, currentSample);
+            currentSample.DistanceY = GetYDistance(nextSample, currentSample);
+            currentSample.Length = GetLength(currentSample, previousSample);
+            currentSample.LengthX = GetXLength(currentSample, previousSample);
+            currentSample.LengthY = GetYLength(currentSample, previousSample);
+          }
+        }
+      }
     }
 
     #endregion

@@ -688,7 +688,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].Distance, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].Distance.GetValueOrDefault(0), 2));
             }
           }
 
@@ -700,7 +700,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].DistanceX, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].DistanceX.GetValueOrDefault(0), 2));
             }
           }
 
@@ -712,7 +712,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].DistanceY, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].DistanceY.GetValueOrDefault(0), 2));
             }
           }
 
@@ -724,7 +724,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].Length, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].Length.GetValueOrDefault(0), 2));
             }
           }
 
@@ -736,7 +736,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].LengthX, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].LengthX.GetValueOrDefault(0), 2));
             }
           }
 
@@ -748,7 +748,7 @@ namespace VianaNET.Modules.DataGrid
             }
             else
             {
-              columns.Add(Math.Round(sample.Object[objectIndex].LengthY, 2));
+              columns.Add(Math.Round(sample.Object[objectIndex].LengthY.GetValueOrDefault(0), 2));
             }
           }
 
