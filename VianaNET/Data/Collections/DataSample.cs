@@ -74,37 +74,37 @@ namespace VianaNET.Data.Collections
     ///   Gets or sets the distance.
     /// </summary>
     [XmlIgnore]
-    public double Distance { get; set; }
+    public double? Distance { get; set; }
 
     /// <summary>
     ///   Gets or sets the distance x.
     /// </summary>
     [XmlIgnore]
-    public double DistanceX { get; set; }
+    public double? DistanceX { get; set; }
 
     /// <summary>
     ///   Gets or sets the distance y.
     /// </summary>
     [XmlIgnore]
-    public double DistanceY { get; set; }
+    public double? DistanceY { get; set; }
 
     /// <summary>
     ///   Gets or sets the length.
     /// </summary>
     [XmlIgnore]
-    public double Length { get; set; }
+    public double? Length { get; set; }
 
     /// <summary>
     ///   Gets or sets the length x.
     /// </summary>
     [XmlIgnore]
-    public double LengthX { get; set; }
+    public double? LengthX { get; set; }
 
     /// <summary>
     ///   Gets or sets the length y.
     /// </summary>
     [XmlIgnore]
-    public double LengthY { get; set; }
+    public double? LengthY { get; set; }
 
     /// <summary>
     ///   Gets or sets the position x.
