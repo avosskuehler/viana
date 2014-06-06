@@ -40,14 +40,14 @@ namespace VianaNET.Data
   {
     #region Static Fields
 
-    /// <summary>
-    ///   The ActiveObject property.
-    /// </summary>
-    public static readonly DependencyProperty ActiveObjectProperty = DependencyProperty.Register(
-      "ActiveObject",
-      typeof(int),
-      typeof(VideoData),
-      new UIPropertyMetadata(null));
+    ///// <summary>
+    /////   The ActiveObject property.
+    ///// </summary>
+    //public static readonly DependencyProperty ActiveObjectProperty = DependencyProperty.Register(
+    //  "ActiveObject",
+    //  typeof(int),
+    //  typeof(VideoData),
+    //  new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The Filtered samples property.
@@ -129,7 +129,7 @@ namespace VianaNET.Data
     {
       this.FilteredSamples = new DataCollection();
       this.Samples = new DataCollection();
-      this.ActiveObject = 0;
+      //this.ActiveObject = 0;
       this.FramerateFactor = 1;
     }
 
@@ -146,21 +146,21 @@ namespace VianaNET.Data
 
     #region Public Properties
 
-    /// <summary>
-    ///   Gets or sets the active object. This is zero-based.
-    /// </summary>
-    public int ActiveObject
-    {
-      get
-      {
-        return (int)this.GetValue(ActiveObjectProperty);
-      }
+    ///// <summary>
+    /////   Gets or sets the active object. This is zero-based.
+    ///// </summary>
+    //public int ActiveObject
+    //{
+    //  get
+    //  {
+    //    return (int)this.GetValue(ActiveObjectProperty);
+    //  }
 
-      set
-      {
-        this.SetValue(ActiveObjectProperty, value);
-      }
-    }
+    //  set
+    //  {
+    //    this.SetValue(ActiveObjectProperty, value);
+    //  }
+    //}
 
     /// <summary>
     ///   Gets or sets the filtered sample collection containing the detected samples
@@ -1111,7 +1111,7 @@ namespace VianaNET.Data
     /// <summary>
     ///   Filters the samples by using only every <see cref="UseEveryNthPoint" />s sample.
     /// </summary>
-    private void FilterSamples()
+    public void FilterSamples()
     {
       this.FilteredSamples.Clear();
       for (int i = 1; i <= this.Samples.Count; i++)
@@ -1119,7 +1119,7 @@ namespace VianaNET.Data
         if (i % this.UseEveryNthPoint == 0)
         {
           TimeSample sampleToAdd = this.Samples[i - 1];
-          if (sampleToAdd.Object != null)
+          if (sampleToAdd.Object != null && sampleToAdd.Object[Viana.Project.ProcessingData.IndexOfObject] != null)
           {
             this.FilteredSamples.Add(sampleToAdd);
           }

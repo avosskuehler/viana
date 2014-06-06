@@ -39,7 +39,7 @@
               Name="ObjectSelectionCombo"
               Grid.Column="1" 
               Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
-              ItemsSource="{Binding Path=VideoData.ActiveObject, Source={x:Static application:Viana.Project}}"
+              ItemsSource="{Binding Path=ProcessingData.IndexOfObject, Source={x:Static application:Viana.Project}}"
               SelectionChanged="ObjectSelectionComboSelectionChanged" />
           </Grid>
           <TabControl Name="ChartContentTab">

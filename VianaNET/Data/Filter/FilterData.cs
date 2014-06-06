@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CurrentFilterData.cs" company="Freie Universität Berlin">
+// <copyright file="FilterData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,11 +19,7 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The video data.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter
 {
   using System;
@@ -32,14 +28,15 @@ namespace VianaNET.Data.Filter
   using System.Windows;
   using System.Windows.Media;
   using System.Xml.Serialization;
-  using Collections;
-  using CustomStyles.Types;
-  using Interpolation;
 
   using OxyPlot;
 
-  using Regression;
-  using Theory;
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.Data.Collections;
+  using VianaNET.Data.Filter.Interpolation;
+  using VianaNET.Data.Filter.Regression;
+  using VianaNET.Data.Filter.Theory;
+
   using WPFMath;
 
   /// <summary>
@@ -51,203 +48,287 @@ namespace VianaNET.Data.Filter
     #region Static Fields
 
     /// <summary>
+    ///   The AxisX property.
+    /// </summary>
+    public static readonly DependencyProperty AxisXProperty = DependencyProperty.Register(
+      "AxisX",
+      typeof(DataAxis),
+      typeof(FilterData),
+      new UIPropertyMetadata(null));
+
+    /// <summary>
+    ///   The AxisY property.
+    /// </summary>
+    public static readonly DependencyProperty AxisYProperty = DependencyProperty.Register(
+      "AxisY",
+      typeof(DataAxis),
+      typeof(FilterData),
+      new UIPropertyMetadata(null));
+
+    /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="CurrentFilter" />.
     /// </summary>
     public static readonly DependencyProperty CurrentFilterProperty = DependencyProperty.Register(
-      "CurrentFilter", typeof(FilterBase), typeof(FilterData), new UIPropertyMetadata(null));
+      "CurrentFilter",
+      typeof(FilterBase),
+      typeof(FilterData),
+      new UIPropertyMetadata(null));
 
     /// <summary>
-    /// The data line thickness property.
-    /// </summary>
-    public static readonly DependencyProperty DataLineThicknessProperty = DependencyProperty.Register(
-      "DataLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The data line color property.
-    /// </summary>
-    public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.Register(
-      "SelectionColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The data line color property.
+    ///   The data line color property.
     /// </summary>
     public static readonly DependencyProperty DataLineColorProperty = DependencyProperty.Register(
-      "DataLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+      "DataLineColor",
+      typeof(Color),
+      typeof(FilterData),
+      new UIPropertyMetadata(Colors.LightBlue));
 
     /// <summary>
-    /// The data line marker type property.
+    ///   The data line marker type property.
     /// </summary>
-    public static readonly DependencyProperty DataLineMarkerTypeProperty = DependencyProperty.Register(
-      "DataLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty DataLineMarkerTypeProperty =
+      DependencyProperty.Register(
+        "DataLineMarkerType",
+        typeof(MarkerType),
+        typeof(FilterData),
+        new UIPropertyMetadata(MarkerType.Circle));
 
     /// <summary>
-    /// The Regression line thickness property.
+    ///   The data line thickness property.
     /// </summary>
-    public static readonly DependencyProperty RegressionLineThicknessProperty = DependencyProperty.Register(
-      "RegressionLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty DataLineThicknessProperty =
+      DependencyProperty.Register(
+      "DataLineThickness", 
+      typeof(double), 
+      typeof(FilterData), 
+      new UIPropertyMetadata(2d));
 
     /// <summary>
-    /// The Regression line color property.
+    ///   The InterpolationFilter property.
     /// </summary>
-    public static readonly DependencyProperty RegressionLineColorProperty = DependencyProperty.Register(
-      "RegressionLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty InterpolationFilterProperty =
+      DependencyProperty.Register(
+        "InterpolationFilter",
+        typeof(InterpolationFilter),
+        typeof(FilterData),
+        new UIPropertyMetadata(null));
 
     /// <summary>
-    /// The Regression line marker type property.
+    ///   The Interpolation line color property.
     /// </summary>
-    public static readonly DependencyProperty RegressionLineMarkerTypeProperty = DependencyProperty.Register(
-      "RegressionLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty InterpolationLineColorProperty =
+      DependencyProperty.Register(
+        "InterpolationLineColor",
+        typeof(Color),
+        typeof(FilterData),
+        new UIPropertyMetadata(Colors.Brown));
 
     /// <summary>
-    /// The Interpolation line thickness property.
+    ///   The Interpolation line marker type property.
     /// </summary>
-    public static readonly DependencyProperty InterpolationLineThicknessProperty = DependencyProperty.Register(
-      "InterpolationLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty InterpolationLineMarkerTypeProperty =
+      DependencyProperty.Register(
+        "InterpolationLineMarkerType",
+        typeof(MarkerType),
+        typeof(FilterData),
+        new UIPropertyMetadata(MarkerType.None));
 
     /// <summary>
-    /// The Interpolation line color property.
+    ///   The Interpolation line thickness property.
     /// </summary>
-    public static readonly DependencyProperty InterpolationLineColorProperty = DependencyProperty.Register(
-      "InterpolationLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty InterpolationLineThicknessProperty =
+      DependencyProperty.Register(
+        "InterpolationLineThickness",
+        typeof(double),
+        typeof(FilterData),
+        new UIPropertyMetadata(2d));
 
     /// <summary>
-    /// The Interpolation line marker type property.
+    ///   The InterpolationSeries property.
     /// </summary>
-    public static readonly DependencyProperty InterpolationLineMarkerTypeProperty = DependencyProperty.Register(
-      "InterpolationLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty InterpolationSeriesProperty =
+      DependencyProperty.Register(
+        "InterpolationSeries",
+        typeof(SortedObservableCollection<XYSample>),
+        typeof(FilterData),
+        new UIPropertyMetadata(new SortedObservableCollection<XYSample>()));
 
     /// <summary>
-    /// The Theory line thickness property.
+    ///   The IsShowingDataSeries property.
     /// </summary>
-    public static readonly DependencyProperty TheoryLineThicknessProperty = DependencyProperty.Register(
-      "TheoryLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty IsShowingDataSeriesProperty =
+      DependencyProperty.Register(
+        "IsShowingDataSeries",
+        typeof(bool),
+        typeof(FilterData),
+        new FrameworkPropertyMetadata(true));
 
     /// <summary>
-    /// The Theory line color property.
+    ///   The IsShowingInterpolationSeries property.
     /// </summary>
-    public static readonly DependencyProperty TheoryLineColorProperty = DependencyProperty.Register(
-      "TheoryLineColor", typeof(OxyColor), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty IsShowingInterpolationSeriesProperty =
+      DependencyProperty.Register(
+        "IsShowingInterpolationSeries",
+        typeof(bool),
+        typeof(FilterData),
+        new FrameworkPropertyMetadata(false));
 
     /// <summary>
-    /// The Theory line marker type property.
+    ///   The IsShowingRegressionSeries property.
     /// </summary>
-    public static readonly DependencyProperty TheoryLineMarkerTypeProperty = DependencyProperty.Register(
-      "TheoryLineMarkerType", typeof(MarkerType), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty IsShowingRegressionSeriesProperty =
+      DependencyProperty.Register(
+        "IsShowingRegressionSeries",
+        typeof(bool),
+        typeof(FilterData),
+        new FrameworkPropertyMetadata(false));
 
     /// <summary>
-    /// The RegressionFilter property.
+    ///   The IsShowingTheorySeries property.
     /// </summary>
-    public static readonly DependencyProperty RegressionFilterProperty = DependencyProperty.Register(
-      "RegressionFilter", typeof(RegressionFilter), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty IsShowingTheorySeriesProperty =
+      DependencyProperty.Register(
+        "IsShowingTheorySeries",
+        typeof(bool),
+        typeof(FilterData),
+        new FrameworkPropertyMetadata(false));
 
     /// <summary>
-    /// The InterpolationFilter property.
-    /// </summary>
-    public static readonly DependencyProperty InterpolationFilterProperty = DependencyProperty.Register(
-      "InterpolationFilter", typeof(InterpolationFilter), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The InterpolationObject property.
-    /// </summary>
-    public static readonly DependencyProperty TheoryFilterProperty = DependencyProperty.Register(
-      "TheoryFilter", typeof(TheoryFilter), typeof(FilterData), new UIPropertyMetadata(null));
-
-    /// <summary>
-    /// The NumericPrecision property.
+    ///   The NumericPrecision property.
     /// </summary>
     public static readonly DependencyProperty NumericPrecisionProperty = DependencyProperty.Register(
-      "NumericPrecision", typeof(int), typeof(FilterData), new UIPropertyMetadata(null));
+      "NumericPrecision",
+      typeof(int),
+      typeof(FilterData),
+      new UIPropertyMetadata(2));
 
     /// <summary>
-    /// The IsShowingDataSeries property.
+    ///   Gets the Abweichung der Ausgleichsfunktion
     /// </summary>
-    public static readonly DependencyProperty IsShowingDataSeriesProperty = DependencyProperty.Register(
-      "IsShowingDataSeries", typeof(bool), typeof(FilterData), new FrameworkPropertyMetadata(true));
+    public static readonly DependencyProperty RegressionAberrationProperty =
+      DependencyProperty.Register(
+        "RegressionAberration",
+        typeof(double),
+        typeof(FilterData),
+        new UIPropertyMetadata(0d));
 
     /// <summary>
-    /// The IsShowingInterpolationSeries property.
+    ///   The RegressionFilter property.
     /// </summary>
-    public static readonly DependencyProperty IsShowingInterpolationSeriesProperty = DependencyProperty.Register(
-      "IsShowingInterpolationSeries", typeof(bool), typeof(FilterData), new FrameworkPropertyMetadata(false));
+    public static readonly DependencyProperty RegressionFilterProperty = DependencyProperty.Register(
+      "RegressionFilter",
+      typeof(RegressionFilter),
+      typeof(FilterData),
+      new UIPropertyMetadata(null));
 
     /// <summary>
-    /// The IsShowingRegressionSeries property.
+    ///   Gets the function termin für die Ausgleichsfunktion
     /// </summary>
-    public static readonly DependencyProperty IsShowingRegressionSeriesProperty = DependencyProperty.Register(
-      "IsShowingRegressionSeries", typeof(bool), typeof(FilterData), new FrameworkPropertyMetadata(false));
+    public static readonly DependencyProperty RegressionFunctionTexFormulaProperty =
+      DependencyProperty.Register(
+        "RegressionFunctionTexFormula",
+        typeof(TexFormula),
+        typeof(FilterData),
+        new UIPropertyMetadata(null));
 
     /// <summary>
-    /// The IsShowingTheorySeries property.
+    ///   The Regression line color property.
     /// </summary>
-    public static readonly DependencyProperty IsShowingTheorySeriesProperty = DependencyProperty.Register(
-      "IsShowingTheorySeries", typeof(bool), typeof(FilterData), new FrameworkPropertyMetadata(false));
+    public static readonly DependencyProperty RegressionLineColorProperty =
+      DependencyProperty.Register(
+        "RegressionLineColor",
+        typeof(Color),
+        typeof(FilterData),
+        new UIPropertyMetadata(Colors.Red));
 
     /// <summary>
-    /// The InterpolationSeries property.
+    ///   The Regression line marker type property.
     /// </summary>
-    public static readonly DependencyProperty InterpolationSeriesProperty = DependencyProperty.Register(
-      "InterpolationSeries", typeof(SortedObservableCollection<XYSample>), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty RegressionLineMarkerTypeProperty =
+      DependencyProperty.Register(
+        "RegressionLineMarkerType",
+        typeof(MarkerType),
+        typeof(FilterData),
+        new UIPropertyMetadata(MarkerType.None));
 
     /// <summary>
-    /// The AxisX property.
+    ///   The Regression line thickness property.
     /// </summary>
-    public static readonly DependencyProperty AxisXProperty = DependencyProperty.Register(
-      "AxisX", typeof(DataAxis), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty RegressionLineThicknessProperty =
+      DependencyProperty.Register(
+        "RegressionLineThickness",
+        typeof(double),
+        typeof(FilterData),
+        new UIPropertyMetadata(2d));
 
     /// <summary>
-    /// The AxisY property.
+    ///   The data line color property.
     /// </summary>
-    public static readonly DependencyProperty AxisYProperty = DependencyProperty.Register(
-      "AxisY", typeof(DataAxis), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.Register(
+      "SelectionColor",
+      typeof(Color),
+      typeof(FilterData),
+      new UIPropertyMetadata(Colors.Blue));
 
     /// <summary>
-    /// Gets the function termin für die Ausgleichsfunktion
+    ///   The InterpolationObject property.
     /// </summary>
-    public static readonly DependencyProperty RegressionFunctionTexFormulaProperty = DependencyProperty.Register(
-      "RegressionFunctionTexFormula", typeof(TexFormula), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty TheoryFilterProperty = DependencyProperty.Register(
+      "TheoryFilter",
+      typeof(TheoryFilter),
+      typeof(FilterData),
+      new UIPropertyMetadata(null));
 
     /// <summary>
-    /// Gets the function term for the theory function
+    ///   Gets the function term for the theory function
     /// </summary>
-    public static readonly DependencyProperty TheoryFunctionTexFormulaProperty = DependencyProperty.Register(
-      "TheoryFunctionTexFormula", typeof(TexFormula), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty TheoryFunctionTexFormulaProperty =
+      DependencyProperty.Register(
+        "TheoryFunctionTexFormula",
+        typeof(TexFormula),
+        typeof(FilterData),
+        new UIPropertyMetadata(null));
 
     /// <summary>
-    /// Gets the Abweichung der Ausgleichsfunktion
+    ///   The Theory line color property.
     /// </summary>
-    public static readonly DependencyProperty RegressionAberrationProperty = DependencyProperty.Register(
-      "RegressionAberration", typeof(double), typeof(FilterData), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty TheoryLineColorProperty = DependencyProperty.Register(
+      "TheoryLineColor",
+      typeof(Color),
+      typeof(FilterData),
+      new UIPropertyMetadata(Colors.GreenYellow));
+
+    /// <summary>
+    ///   The Theory line marker type property.
+    /// </summary>
+    public static readonly DependencyProperty TheoryLineMarkerTypeProperty =
+      DependencyProperty.Register(
+        "TheoryLineMarkerType",
+        typeof(MarkerType),
+        typeof(FilterData),
+        new UIPropertyMetadata(MarkerType.None));
+
+    /// <summary>
+    ///   The Theory line thickness property.
+    /// </summary>
+    public static readonly DependencyProperty TheoryLineThicknessProperty =
+      DependencyProperty.Register(
+        "TheoryLineThickness",
+        typeof(double),
+        typeof(FilterData),
+        new UIPropertyMetadata(2d));
 
     #endregion
 
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterData"/> class. 
+    ///   Initializes a new instance of the <see cref="FilterData" /> class.
     /// </summary>
     public FilterData()
     {
-      this.NumericPrecision = 2;
-      this.InterpolationSeries = new SortedObservableCollection<XYSample>();
-      this.SelectionColor = OxyColors.Blue;
-      this.DataLineColor = OxyColors.LightBlue;
-      this.InterpolationLineColor = OxyColors.Brown;
-      this.RegressionLineColor = OxyColors.Red;
-      this.TheoryLineColor = OxyColors.GreenYellow;
-      this.DataLineThickness = 2;
-      this.InterpolationLineThickness = 2;
-      this.RegressionLineThickness = 2;
-      this.TheoryLineThickness = 2;
-      this.DataLineMarkerType = MarkerType.Circle;
-      this.InterpolationLineMarkerType = MarkerType.None;
-      this.RegressionLineMarkerType = MarkerType.None;
-      this.TheoryLineMarkerType = MarkerType.None;
-      this.RegressionFilter = new RegressionFilter();
-      this.RegressionFunctionTexFormula = null;
-      this.RegressionAberration = 0d;
       this.InterpolationFilter = InterpolationFilter.Filter[InterpolationFilterTypes.MovingAverage];
-      this.IsShowingRegressionSeries = false;
-      this.IsShowingTheorySeries = false;
+      this.RegressionFilter = new RegressionFilter();
     }
 
     #endregion
@@ -262,6 +343,44 @@ namespace VianaNET.Data.Filter
     #endregion
 
     #region Public Properties
+
+    /// <summary>
+    ///   Gets or sets the x axis currently selected in the chart window.
+    /// </summary>
+    public DataAxis AxisX
+    {
+      get
+      {
+        return (DataAxis)this.GetValue(AxisXProperty);
+      }
+
+      set
+      {
+        if (this.AxisX != value)
+        {
+          this.SetValue(AxisXProperty, value);
+        }
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the y axis currently selected in the chart window.
+    /// </summary>
+    public DataAxis AxisY
+    {
+      get
+      {
+        return (DataAxis)this.GetValue(AxisYProperty);
+      }
+
+      set
+      {
+        if (this.AxisY != value)
+        {
+          this.SetValue(AxisYProperty, value);
+        }
+      }
+    }
 
     /// <summary>
     ///   Gets or sets a the interpolation filter to use for
@@ -281,45 +400,13 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the selection color.
+    ///   Gets or sets the data line color.
     /// </summary>
-    public OxyColor SelectionColor
+    public Color DataLineColor
     {
       get
       {
-        return (OxyColor)this.GetValue(SelectionColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(SelectionColorProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the data line thickness.
-    /// </summary>
-    public double DataLineThickness
-    {
-      get
-      {
-        return (double)this.GetValue(DataLineThicknessProperty);
-      }
-
-      set
-      {
-        this.SetValue(DataLineThicknessProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the data line color.
-    /// </summary>
-    public OxyColor DataLineColor
-    {
-      get
-      {
-        return (OxyColor)this.GetValue(DataLineColorProperty);
+        return (Color)this.GetValue(DataLineColorProperty);
       }
 
       set
@@ -329,7 +416,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the data line marker type.
+    ///   Gets or sets the data line marker type.
     /// </summary>
     public MarkerType DataLineMarkerType
     {
@@ -345,202 +432,26 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the Regression line thickness.
+    ///   Gets or sets the data line thickness.
     /// </summary>
-    public double RegressionLineThickness
+    public double DataLineThickness
     {
       get
       {
-        return (double)this.GetValue(RegressionLineThicknessProperty);
+        return (double)this.GetValue(DataLineThicknessProperty);
       }
 
       set
       {
-        this.SetValue(RegressionLineThicknessProperty, value);
+        this.SetValue(DataLineThicknessProperty, value);
       }
     }
 
     /// <summary>
-    /// Gets or sets the Regression line color.
-    /// </summary>
-    public OxyColor RegressionLineColor
-    {
-      get
-      {
-        return (OxyColor)this.GetValue(RegressionLineColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(RegressionLineColorProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the regression line marker type.
-    /// </summary>
-    public MarkerType RegressionLineMarkerType
-    {
-      get
-      {
-        return (MarkerType)this.GetValue(RegressionLineMarkerTypeProperty);
-      }
-
-      set
-      {
-        this.SetValue(RegressionLineMarkerTypeProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the Interpolation line  thickness.
-    /// </summary>
-    public double InterpolationLineThickness
-    {
-      get
-      {
-        return (double)this.GetValue(InterpolationLineThicknessProperty);
-      }
-
-      set
-      {
-        this.SetValue(InterpolationLineThicknessProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the Interpolation line color.
-    /// </summary>
-    public OxyColor InterpolationLineColor
-    {
-      get
-      {
-        return (OxyColor)this.GetValue(InterpolationLineColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(InterpolationLineColorProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the interpolation line marker type.
-    /// </summary>
-    public MarkerType InterpolationLineMarkerType
-    {
-      get
-      {
-        return (MarkerType)this.GetValue(InterpolationLineMarkerTypeProperty);
-      }
-
-      set
-      {
-        this.SetValue(InterpolationLineMarkerTypeProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the Theory line thickness.
-    /// </summary>
-    public double TheoryLineThickness
-    {
-      get
-      {
-        return (double)this.GetValue(TheoryLineThicknessProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoryLineThicknessProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the Theory line color.
-    /// </summary>
-    public OxyColor TheoryLineColor
-    {
-      get
-      {
-        return (OxyColor)this.GetValue(TheoryLineColorProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoryLineColorProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the theory line marker type.
-    /// </summary>
-    public MarkerType TheoryLineMarkerType
-    {
-      get
-      {
-        return (MarkerType)this.GetValue(TheoryLineMarkerTypeProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoryLineMarkerTypeProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the RegressionFilter
-    /// </summary>
-    public RegressionFilter RegressionFilter
-    {
-      get
-      {
-        return (RegressionFilter)this.GetValue(RegressionFilterProperty);
-      }
-
-      set
-      {
-        this.SetValue(RegressionFilterProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the InterpolationFilter
-    /// </summary>
-    public InterpolationFilter InterpolationFilter
-    {
-      get
-      {
-        return (InterpolationFilter)this.GetValue(InterpolationFilterProperty);
-      }
-
-      set
-      {
-        this.SetValue(InterpolationFilterProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the TheoryObject
-    /// </summary>
-    public TheoryFilter TheoryFilter
-    {
-      get
-      {
-        return (TheoryFilter)this.GetValue(TheoryFilterProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoryFilterProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets a value indicating whether this instance has theory function.
+    ///   Gets a value indicating whether this instance has theory function.
     /// </summary>
     /// <value>
-    /// <c>true</c> if this instance has theory function; otherwise, <c>false</c>.
+    ///   <c>true</c> if this instance has theory function; otherwise, <c>false</c>.
     /// </value>
     public bool HasTheoryFunction
     {
@@ -556,7 +467,88 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the chart should display the data series.
+    ///   Gets or sets the InterpolationFilter
+    /// </summary>
+    public InterpolationFilter InterpolationFilter
+    {
+      get
+      {
+        return (InterpolationFilter)this.GetValue(InterpolationFilterProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationFilterProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Interpolation line color.
+    /// </summary>
+    public Color InterpolationLineColor
+    {
+      get
+      {
+        return (Color)this.GetValue(InterpolationLineColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the interpolation line marker type.
+    /// </summary>
+    public MarkerType InterpolationLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(InterpolationLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationLineMarkerTypeProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Interpolation line  thickness.
+    /// </summary>
+    public double InterpolationLineThickness
+    {
+      get
+      {
+        return (double)this.GetValue(InterpolationLineThicknessProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationLineThicknessProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the InterpolationSeries.
+    /// </summary>
+    [XmlIgnore]
+    public SortedObservableCollection<XYSample> InterpolationSeries
+    {
+      get
+      {
+        return (SortedObservableCollection<XYSample>)this.GetValue(InterpolationSeriesProperty);
+      }
+
+      set
+      {
+        this.SetValue(InterpolationSeriesProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether the chart should display the data series.
     /// </summary>
     public bool IsShowingDataSeries
     {
@@ -572,7 +564,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the chart should display the interpolation series.
+    ///   Gets or sets a value indicating whether the chart should display the interpolation series.
     /// </summary>
     public bool IsShowingInterpolationSeries
     {
@@ -588,7 +580,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the chart should display the regression series.
+    ///   Gets or sets a value indicating whether the chart should display the regression series.
     /// </summary>
     public bool IsShowingRegressionSeries
     {
@@ -604,7 +596,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the chart should display the theory series.
+    ///   Gets or sets a value indicating whether the chart should display the theory series.
     /// </summary>
     public bool IsShowingTheorySeries
     {
@@ -620,7 +612,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the NumericPrecision.
+    ///   Gets or sets the NumericPrecision.
     /// </summary>
     public int NumericPrecision
     {
@@ -641,93 +633,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Gets or sets the InterpolationSeries.
-    /// </summary>
-    [XmlIgnore]
-    public SortedObservableCollection<XYSample> InterpolationSeries
-    {
-      get
-      {
-        return (SortedObservableCollection<XYSample>)this.GetValue(InterpolationSeriesProperty);
-      }
-
-      set
-      {
-        this.SetValue(InterpolationSeriesProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the x axis currently selected in the chart window.
-    /// </summary>
-    public DataAxis AxisX
-    {
-      get
-      {
-        return (DataAxis)this.GetValue(AxisXProperty);
-      }
-
-      set
-      {
-        if (this.GetValue(AxisXProperty) != value)
-        {
-          this.SetValue(AxisXProperty, value);
-        }
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the y axis currently selected in the chart window.
-    /// </summary>
-    public DataAxis AxisY
-    {
-      get
-      {
-        return (DataAxis)this.GetValue(AxisYProperty);
-      }
-
-      set
-      {
-        this.SetValue(AxisYProperty, value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the regression function tex formula.
-    /// </summary>
-    public TexFormula RegressionFunctionTexFormula
-    {
-      get
-      {
-        return (TexFormula)this.GetValue(RegressionFunctionTexFormulaProperty);
-      }
-
-      set
-      {
-        this.SetValue(RegressionFunctionTexFormulaProperty, value);
-        this.OnPropertyChanged("RegressionFunctionTexFormula");
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the Theory function tex formula.
-    /// </summary>
-    public TexFormula TheoryFunctionTexFormula
-    {
-      get
-      {
-        return (TexFormula)this.GetValue(TheoryFunctionTexFormulaProperty);
-      }
-
-      set
-      {
-        this.SetValue(TheoryFunctionTexFormulaProperty, value);
-        this.OnPropertyChanged("TheoryFunctionTexFormula");
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the regression aberration.
+    ///   Gets or sets the regression aberration.
     /// </summary>
     public double RegressionAberration
     {
@@ -746,28 +652,190 @@ namespace VianaNET.Data.Filter
       }
     }
 
+    /// <summary>
+    ///   Gets or sets the RegressionFilter
+    /// </summary>
+    public RegressionFilter RegressionFilter
+    {
+      get
+      {
+        return (RegressionFilter)this.GetValue(RegressionFilterProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionFilterProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the regression function tex formula.
+    /// </summary>
+    public TexFormula RegressionFunctionTexFormula
+    {
+      get
+      {
+        return (TexFormula)this.GetValue(RegressionFunctionTexFormulaProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionFunctionTexFormulaProperty, value);
+        this.OnPropertyChanged("RegressionFunctionTexFormula");
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Regression line color.
+    /// </summary>
+    public Color RegressionLineColor
+    {
+      get
+      {
+        return (Color)this.GetValue(RegressionLineColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the regression line marker type.
+    /// </summary>
+    public MarkerType RegressionLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(RegressionLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionLineMarkerTypeProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Regression line thickness.
+    /// </summary>
+    public double RegressionLineThickness
+    {
+      get
+      {
+        return (double)this.GetValue(RegressionLineThicknessProperty);
+      }
+
+      set
+      {
+        this.SetValue(RegressionLineThicknessProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the selection color.
+    /// </summary>
+    public Color SelectionColor
+    {
+      get
+      {
+        return (Color)this.GetValue(SelectionColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(SelectionColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the TheoryObject
+    /// </summary>
+    public TheoryFilter TheoryFilter
+    {
+      get
+      {
+        return (TheoryFilter)this.GetValue(TheoryFilterProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryFilterProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Theory function tex formula.
+    /// </summary>
+    public TexFormula TheoryFunctionTexFormula
+    {
+      get
+      {
+        return (TexFormula)this.GetValue(TheoryFunctionTexFormulaProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryFunctionTexFormulaProperty, value);
+        this.OnPropertyChanged("TheoryFunctionTexFormula");
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Theory line color.
+    /// </summary>
+    public Color TheoryLineColor
+    {
+      get
+      {
+        return (Color)this.GetValue(TheoryLineColorProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryLineColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the theory line marker type.
+    /// </summary>
+    public MarkerType TheoryLineMarkerType
+    {
+      get
+      {
+        return (MarkerType)this.GetValue(TheoryLineMarkerTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryLineMarkerTypeProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the Theory line thickness.
+    /// </summary>
+    public double TheoryLineThickness
+    {
+      get
+      {
+        return (double)this.GetValue(TheoryLineThicknessProperty);
+      }
+
+      set
+      {
+        this.SetValue(TheoryLineThicknessProperty, value);
+      }
+    }
+
     #endregion
 
     #region Public Methods and Operators
 
     /// <summary>
-    /// Returns a string that formatted the given value using
-    /// the current numeric precision value.
-    /// </summary>
-    /// <param name="a">A <see cref="double"/> which has to be converted to a string.</param>
-    /// <returns>The converted string, e.g. 0,003 or 300</returns>
-    public string GetFormattedString(double a)
-    {
-      if (a > -1 && a < 1)
-      {
-        return a.ToString("G" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture));
-      }
-
-      return a.ToString("N" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture));
-    }
-
-    /// <summary>
-    /// Calculates Interpolation series data points.
+    ///   Calculates Interpolation series data points.
     /// </summary>
     public void CalculateInterpolationSeriesDataPoints()
     {
@@ -787,7 +855,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Calculates regression series data points.
+    ///   Calculates regression series data points.
     /// </summary>
     public void CalculateRegressionSeriesDataPoints()
     {
@@ -804,7 +872,7 @@ namespace VianaNET.Data.Filter
     }
 
     /// <summary>
-    /// Calculates theory series data points.
+    ///   Calculates theory series data points.
     /// </summary>
     public void CalculateTheorySeriesDataPoints()
     {
@@ -824,37 +892,29 @@ namespace VianaNET.Data.Filter
       }
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
-    /// The on property changed.
+    /// Returns a string that formatted the given value using
+    ///   the current numeric precision value.
     /// </summary>
-    /// <param name="propertyName">
-    /// The property name. 
+    /// <param name="a">
+    /// A <see cref="double"/> which has to be converted to a string.
     /// </param>
-    protected virtual void OnPropertyChanged(string propertyName)
+    /// <returns>
+    /// The converted string, e.g. 0,003 or 300
+    /// </returns>
+    public string GetFormattedString(double a)
     {
-      if (this.PropertyChanged != null)
+      if (a > -1 && a < 1)
       {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        return a.ToString("G" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture));
       }
-    }
 
-    #endregion
-
-    /// <summary>
-    /// Notifies the theory term change.
-    /// </summary>
-    public void NotifyTheoryTermChange()
-    {
-      this.OnPropertyChanged("HasTheoryFunction");
+      return a.ToString("N" + this.NumericPrecision.ToString(CultureInfo.InvariantCulture));
     }
 
     /// <summary>
-    /// Notifies changes of all properties, so that
-    /// the data bindings to the view were updated.
+    ///   Notifies changes of all properties, so that
+    ///   the data bindings to the view were updated.
     /// </summary>
     public void NotifyChanges()
     {
@@ -883,5 +943,33 @@ namespace VianaNET.Data.Filter
       this.OnPropertyChanged("TheoryFunctionTexFormula");
       this.OnPropertyChanged("RegressionAberration");
     }
+
+    /// <summary>
+    ///   Notifies the theory term change.
+    /// </summary>
+    public void NotifyTheoryTermChange()
+    {
+      this.OnPropertyChanged("HasTheoryFunction");
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// The on property changed.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The property name.
+    /// </param>
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
+    }
+
+    #endregion
   }
 }

@@ -157,6 +157,7 @@
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
+    <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
     <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
     <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />

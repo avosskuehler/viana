@@ -191,7 +191,7 @@ namespace VianaNET.Data.Filter
         return;
       }
 
-      var aktObjectNr = Viana.Project.VideoData.ActiveObject;
+      var aktObjectNr = Viana.Project.ProcessingData.IndexOfObject;
       this.WertX.Clear();
       this.WertY.Clear();
       this.WertXMin = double.MaxValue;
@@ -268,6 +268,10 @@ namespace VianaNET.Data.Filter
     private double? GetValueFromSample(bool isXValue, int aktObjectNr, TimeSample sample)
     {
       double? value = null;
+      if (sample.Object[aktObjectNr] == null)
+      {
+        return null;
+      }
 
       switch (isXValue ? Viana.Project.CurrentFilterData.AxisX.Axis : Viana.Project.CurrentFilterData.AxisY.Axis)
       {

@@ -47,9 +47,9 @@ namespace VianaNET.Application
     #region Fields
 
     /// <summary>
-    ///   Gets or sets the filter data for the specific <see cref="ChartType" />
+    ///   The filter data for the specific <see cref="ChartType" />
     /// </summary>
-    private readonly Dictionary<ChartType, FilterData> filterData;
+    private Dictionary<ChartType, FilterData> filterData;
 
     /// <summary>
     ///   The current chart type
@@ -65,16 +65,30 @@ namespace VianaNET.Application
     /// </summary>
     public Project()
     {
+      TrackObjectColors = new List<SolidColorBrush>
+                              {
+                                Brushes.Red, 
+                                Brushes.Green, 
+                                Brushes.Blue, 
+                                Brushes.Yellow, 
+                                Brushes.Magenta
+                              };
+
       this.filterData = new Dictionary<ChartType, FilterData> { { ChartType.YoverX, new FilterData() } };
       this.CalibrationData = new CalibrationData();
       this.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
       this.ProcessingData = new ProcessingData();
       this.VideoData = new VideoData { LastPoint = new Point[this.ProcessingData.NumberOfTrackedObjects] };
-      this.CurrentFilterData = new FilterData();
+      this.CurrentFilterData = this.filterData[ChartType.YoverX];
 
       // this.ChartData = new ChartData();
       this.currentChartType = ChartType.YoverX;
     }
+
+    /// <summary>
+    ///   Gets or sets  a list of brushes for the different tracked objects
+    /// </summary>
+    public static List<SolidColorBrush> TrackObjectColors { get; set; }
 
     #endregion
 
@@ -97,37 +111,31 @@ namespace VianaNET.Application
     #region Public Properties
 
     /// <summary>
+    ///Gets or sets a value indicating whether we are in the deserialization process of a project.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is deserializing; otherwise, <c>false</c>.
+    /// </value>
+    public static bool IsDeserializing { get; set; }
+
+    /// <summary>
     ///   Gets or sets the calibration data.
     /// </summary>
     public CalibrationData CalibrationData { get; set; }
 
     /// <summary>
-    ///   Gets or sets the current selected <see cref="ChartType" /> in the charts module
+    ///   Gets or sets the filter data in a serializable manner.
     /// </summary>
-    public ChartType CurrentChartType
+    public DictionaryProxy<ChartType, FilterData> SerializableFilterData
     {
       get
       {
-        return this.currentChartType;
+        return new DictionaryProxy<ChartType, FilterData>(this.filterData);
       }
 
       set
       {
-        // Write modified values back to filterData dictionary
-        this.CopyFilterData(this.CurrentFilterData, this.filterData[this.currentChartType]);
-
-        // Go to new chart
-        this.currentChartType = value;
-
-        // Check if we already have this chart type used in this project
-        // if not create a new filterdata entry
-        if (!this.filterData.ContainsKey(this.currentChartType))
-        {
-          this.filterData.Add(this.currentChartType, new FilterData());
-        }
-
-        // Move filter data from dictionary to bindable currentfilterdata
-        this.CopyFilterData(this.filterData[this.currentChartType], this.CurrentFilterData);
+        this.filterData = value.ToDictionary();
       }
     }
 
@@ -137,6 +145,7 @@ namespace VianaNET.Application
     /// <value>
     ///   The current filter data.
     /// </value>
+    [XmlIgnore]
     public FilterData CurrentFilterData { get; set; }
 
     /// <summary>
@@ -173,6 +182,41 @@ namespace VianaNET.Application
     ///   Gets or sets the video mode.
     /// </summary>
     public VideoMode VideoMode { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the current selected <see cref="ChartType" /> in the charts module
+    /// </summary>
+    public ChartType CurrentChartType
+    {
+      get
+      {
+        return this.currentChartType;
+      }
+
+      set
+      {
+        if (!IsDeserializing)
+        {
+          // Write modified values back to filterData dictionary
+          // but not on deserialising, cause it would overwrite the loaded values
+          // with default values
+          this.CopyFilterData(this.CurrentFilterData, this.filterData[this.currentChartType]);
+        }
+
+        // Go to new chart
+        this.currentChartType = value;
+
+        // Check if we already have this chart type used in this project
+        // if not create a new filterdata entry
+        if (!this.filterData.ContainsKey(this.currentChartType))
+        {
+          this.filterData.Add(this.currentChartType, new FilterData());
+        }
+
+        // Move filter data from dictionary to bindable currentfilterdata
+        this.CopyFilterData(this.filterData[this.currentChartType], this.CurrentFilterData);
+      }
+    }
 
     #endregion
 
@@ -246,6 +290,9 @@ namespace VianaNET.Application
       {
         using (TextWriter writer = new StreamWriter(filePath))
         {
+          // Write modified values back to serialized filterData dictionary
+          projectToSerialize.CopyFilterData(projectToSerialize.CurrentFilterData, projectToSerialize.filterData[projectToSerialize.currentChartType]);
+
           // Create an instance of the XmlSerializer class;
           // specify the type of object to serialize 
           var serializer = new XmlSerializer(typeof(Project));

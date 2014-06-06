@@ -202,6 +202,9 @@ namespace VianaNET.MainWindow
     /// <param name="filename">The filename with full path to the project file</param>
     private void OpenGivenProject(string filename)
     {
+      // Note that we want to overwrite the defaults
+      Project.IsDeserializing = true;
+
       // Restore project settings
       var openedProject = Project.Deserialize(filename);
 
@@ -209,7 +212,7 @@ namespace VianaNET.MainWindow
       // so update all properties individually.
       // VianaNetApplication.Project = openedProject;
       Viana.Project.VideoData.Samples = openedProject.VideoData.Samples;
-      Viana.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
+      //Viana.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
       Viana.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
       Viana.Project.VideoData.TimeZeroPositionInMs = openedProject.VideoData.TimeZeroPositionInMs;
 
@@ -228,43 +231,66 @@ namespace VianaNET.MainWindow
       Viana.Project.CalibrationData.ScalePixelToUnit = openedProject.CalibrationData.ScalePixelToUnit;
       Viana.Project.CalibrationData.TimeUnit = openedProject.CalibrationData.TimeUnit;
 
-      Viana.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
-      Viana.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
-      Viana.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
-      Viana.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
-      Viana.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
-      Viana.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
-      Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
-      Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
-      Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
-      Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
-        openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
-      Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
-      Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
-      Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
-      Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
-      Viana.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
-      Viana.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
+      Viana.Project.SerializableFilterData = openedProject.SerializableFilterData;
+      Viana.Project.CurrentChartType = openedProject.CurrentChartType;
 
-      Viana.Project.ProcessingData.NumberOfTrackedObjects = openedProject.ProcessingData.NumberOfTrackedObjects;
-      Viana.Project.ProcessingData.Reset();
+      //Viana.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
+      //Viana.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
+      //Viana.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
+      //Viana.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
+      //Viana.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
+      //Viana.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
+      //Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
+      //Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
+      //Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
+      //Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
+      //  openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
+      //Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
+      //Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
+      //Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
+      //Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
+      //Viana.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
+      //Viana.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
+
+      //Viana.Project.ProcessingData.Reset();
       for (int i = 0; i < openedProject.ProcessingData.BlobMaxDiameter.Count; i++)
       {
-        Viana.Project.ProcessingData.BlobMaxDiameter[i] = openedProject.ProcessingData.BlobMaxDiameter[i];
-        Viana.Project.ProcessingData.BlobMinDiameter[i] = openedProject.ProcessingData.BlobMinDiameter[i];
-        Viana.Project.ProcessingData.ColorThreshold[i] = openedProject.ProcessingData.ColorThreshold[i];
+        if (Viana.Project.ProcessingData.BlobMaxDiameter.Count > i)
+        {
+          Viana.Project.ProcessingData.BlobMaxDiameter[i] = openedProject.ProcessingData.BlobMaxDiameter[i];
+          Viana.Project.ProcessingData.BlobMinDiameter[i] = openedProject.ProcessingData.BlobMinDiameter[i];
+          Viana.Project.ProcessingData.ColorThreshold[i] = openedProject.ProcessingData.ColorThreshold[i];
+        }
+        else
+        {
+          Viana.Project.ProcessingData.BlobMaxDiameter.Add(openedProject.ProcessingData.BlobMaxDiameter[i]);
+          Viana.Project.ProcessingData.BlobMinDiameter.Add(openedProject.ProcessingData.BlobMinDiameter[i]);
+          Viana.Project.ProcessingData.ColorThreshold.Add(openedProject.ProcessingData.ColorThreshold[i]);
+        }
       }
 
       Viana.Project.ProcessingData.CurrentBlobCenter = openedProject.ProcessingData.CurrentBlobCenter;
       Viana.Project.ProcessingData.DetectedBlob = openedProject.ProcessingData.DetectedBlob;
       Viana.Project.ProcessingData.IndexOfObject = openedProject.ProcessingData.IndexOfObject;
+
       Viana.Project.ProcessingData.IsTargetColorSet = openedProject.ProcessingData.IsTargetColorSet;
-      Viana.Project.ProcessingData.TargetColor = openedProject.ProcessingData.TargetColor;
+      for (int i = 0; i < openedProject.ProcessingData.TargetColor.Count - openedProject.ProcessingData.NumberOfTrackedObjects; i++)
+      {
+        Viana.Project.ProcessingData.TargetColor.RemoveAt(i);
+      }
+
+      Viana.Project.ProcessingData.NumberOfTrackedObjects = openedProject.ProcessingData.NumberOfTrackedObjects;
+
+      // Update button image source
+      this.CreateImageSourceForNumberOfObjects();
+
+      this.UpdateColorButton();
 
       Viana.Project.ProjectFilename = openedProject.ProjectFilename;
       Viana.Project.ProjectPath = openedProject.ProjectPath;
       Viana.Project.VideoFile = openedProject.VideoFile;
       Viana.Project.VideoMode = openedProject.VideoMode;
+      //this.VideoWindow.CreateCrossHairLines();
 
       // after updating series do calculation
       Viana.Project.CurrentFilterData.RegressionFilter = Viana.Project.CurrentFilterData.RegressionFilter;
@@ -286,6 +312,7 @@ namespace VianaNET.MainWindow
       Viana.Project.VideoData.SelectionStart = openedProject.VideoData.SelectionStart;
       Viana.Project.VideoData.SelectionEnd = openedProject.VideoData.SelectionEnd;
       this.VideoWindow.TimelineSlider.UpdateSelectionTimes();
+
       Video.Instance.Revert();
 
       // Update datagrid
@@ -299,6 +326,19 @@ namespace VianaNET.MainWindow
       this.Refresh();
       this.UpdateColorButton();
       this.UpdateSelectObjectImage();
+
+      if (openedProject.CalibrationData.HasClipRegion)
+      {
+        this.VideoWindow.UpdateClippingRegion();
+      }
+
+      if (openedProject.CalibrationData.IsVideoCalibrated)
+      {
+        this.VideoWindow.UpdateCalibration();
+      }
+
+      // Reset flag
+      Project.IsDeserializing = false;
     }
 
     /// <summary>

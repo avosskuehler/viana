@@ -363,7 +363,7 @@ namespace VianaNET.Modules.Video
     /// <summary>
     ///   The create cross hair lines.
     /// </summary>
-    private void CreateCrossHairLines()
+    public void CreateCrossHairLines()
     {
       if (this.blobHorizontalLines != null)
       {
@@ -390,7 +390,7 @@ namespace VianaNET.Modules.Video
         var newHorizontalLine = new Line
           {
             Visibility = Visibility.Hidden,
-            Stroke = ProcessingData.TrackObjectColors[i],
+            Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
             StrokeThickness = 2,
             X1 = 0,
             X2 = 0,
@@ -405,7 +405,7 @@ namespace VianaNET.Modules.Video
         var newVerticalLine = new Line
           {
             Visibility = Visibility.Hidden,
-            Stroke = ProcessingData.TrackObjectColors[i],
+            Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
             StrokeThickness = 2,
             X1 = 0,
             X2 = 0,
@@ -474,6 +474,11 @@ namespace VianaNET.Modules.Video
       {
         for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
+          if (Viana.Project.ProcessingData.CurrentBlobCenter.Count <= i)
+          {
+            continue;
+          }
+
           Point? blobCenter = Viana.Project.ProcessingData.CurrentBlobCenter[i];
           if (blobCenter.HasValue)
           {
@@ -688,16 +693,16 @@ namespace VianaNET.Modules.Video
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
-     private void OverlayCanvasSizeChanged(object sender, SizeChangedEventArgs e)
+    private void OverlayCanvasSizeChanged(object sender, SizeChangedEventArgs e)
     {
       this.PlaceCalibration();
       this.PlaceClippingRegion();
       this.ProcessImage();
     }
 
-     /// <summary>
-     /// Places the calibration.
-     /// </summary>
+    /// <summary>
+    /// Places the calibration.
+    /// </summary>
     private void PlaceCalibration()
     {
       double scaleX;
@@ -771,9 +776,13 @@ namespace VianaNET.Modules.Video
       double scaleY;
       if (this.GetScales(out scaleX, out scaleY))
       {
-        Rect clipRect = innerRect;
-        clipRect.Scale(1 / scaleX, 1 / scaleY);
-        Viana.Project.CalibrationData.ClipRegion = clipRect;
+        // it is zero during deserialization
+        if (scaleX != 0 && scaleY != 0)
+        {
+          Rect clipRect = innerRect;
+          clipRect.Scale(1 / scaleX, 1 / scaleY);
+          Viana.Project.CalibrationData.ClipRegion = clipRect;
+        }
       }
     }
 
@@ -840,8 +849,8 @@ namespace VianaNET.Modules.Video
     {
       for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.blobHorizontalLines[i].Stroke = ProcessingData.TrackObjectColors[i];
-        this.blobVerticalLines[i].Stroke = ProcessingData.TrackObjectColors[i];
+        this.blobHorizontalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+        this.blobVerticalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
       }
     }
 
