@@ -52,7 +52,7 @@ namespace VianaNET.Modules.DataAcquisition
       "BrushOfCossHair",
       typeof(SolidColorBrush),
       typeof(ModifyDataWindow),
-      new FrameworkPropertyMetadata(ProcessingData.TrackObjectColors[0], OnPropertyChanged));
+      new FrameworkPropertyMetadata(Project.TrackObjectColors[0], OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -126,7 +126,7 @@ namespace VianaNET.Modules.DataAcquisition
       {
         var pointer = new ArrowPointer();
         pointer.Name = "Object" + (i + 1).ToString(CultureInfo.InvariantCulture);
-        pointer.Stroke = ProcessingData.TrackObjectColors[i];
+        pointer.Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
         pointer.Fill = Brushes.Transparent;
         pointer.Length = 50;
         pointer.CenterSpace = 5;
@@ -228,14 +228,17 @@ namespace VianaNET.Modules.DataAcquisition
         return;
       }
 
-      // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
-      {
-        window.IndexOfTrackedObject = 1;
-      }
-
       // Update crosshair brush
-      window.BrushOfCossHair = ProcessingData.TrackObjectColors[window.IndexOfTrackedObject - 1];
+      if (args.Property == ModifyDataWindow.IndexOfTrackedObjectProperty)
+      {
+        // Reset index if appropriate
+        if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        {
+          window.IndexOfTrackedObject = 1;
+        }
+
+        window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+      }
     }
 
     /// <summary>
@@ -477,7 +480,7 @@ namespace VianaNET.Modules.DataAcquisition
       Canvas.SetLeft(this.CursorEllipse, newLocation.X - this.visualDataPointRadius);
 
       // Update crosshair brush
-      this.BrushOfCossHair = ProcessingData.TrackObjectColors[this.IndexOfTrackedObject - 1];
+      this.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
     }
 
     /// <summary>

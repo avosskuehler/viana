@@ -2,7 +2,7 @@
 // <copyright file="ChartWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -37,6 +37,7 @@ namespace VianaNET.Modules.Chart
 
   using OxyPlot;
   using OxyPlot.Series;
+  using OxyPlot.Wpf;
 
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
@@ -50,21 +51,13 @@ namespace VianaNET.Modules.Chart
 
   using WPFMath;
 
+  using HitTestResult = OxyPlot.HitTestResult;
+
   /// <summary>
   ///   The chart window.
   /// </summary>
   public partial class ChartWindow
   {
-    #region Constants
-
-    /// <summary>
-    ///   Determines maximum distance of two points (in pixel) given by mouse input
-    ///   that should be considered as different.
-    /// </summary>
-    private const int Maxdistancepoints = 10;
-
-    #endregion
-
     #region Static Fields
 
     /// <summary>
@@ -76,6 +69,16 @@ namespace VianaNET.Modules.Chart
         typeof(List<string>),
         typeof(ChartWindow),
         new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
+
+    #endregion
+
+    #region Constants
+
+    /// <summary>
+    ///   Determines maximum distance of two points (in pixel) given by mouse input
+    ///   that should be considered as different.
+    /// </summary>
+    private const int Maxdistancepoints = 10;
 
     #endregion
 
@@ -111,11 +114,6 @@ namespace VianaNET.Modules.Chart
     private char axisName = 'x';
 
     /// <summary>
-    ///   The end x value.
-    /// </summary>
-    private DataPoint mouseUpPositionInAxesCoordinates;
-
-    /// <summary>
     ///   Indicates whether data point selection is enabled.
     /// </summary>
     private bool isSelectionEnabled;
@@ -126,14 +124,19 @@ namespace VianaNET.Modules.Chart
     private bool mouseDown;
 
     /// <summary>
+    ///   The start x value.
+    /// </summary>
+    private DataPoint mouseDownPositionInAxesCoordinates;
+
+    /// <summary>
     ///   The start pos.
     /// </summary>
     private Point mouseDownPositionInCanvasCoordinates;
 
     /// <summary>
-    ///   The start x value.
+    ///   The end x value.
     /// </summary>
-    private DataPoint mouseDownPositionInAxesCoordinates;
+    private DataPoint mouseUpPositionInAxesCoordinates;
 
     #endregion
 
@@ -203,9 +206,8 @@ namespace VianaNET.Modules.Chart
       }
 
       // Whenever changing the axes, the theory formula will be odd, so hide it
-      //Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
-      //this.UpdateTheoryFormula();
-
+      // Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
+      // this.UpdateTheoryFormula();
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
       var axisY = (DataAxis)this.YAxisContent.SelectedItem;
 
@@ -279,16 +281,6 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
-    /// Handles the UpdateChartRequested event of the Project control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-    private void ProjectUpdateChartRequested(object sender, EventArgs e)
-    {
-      this.Refresh();
-    }
-
-    /// <summary>
     /// Axis x title text box text changed.
     /// </summary>
     /// <param name="sender">
@@ -335,6 +327,38 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// Handles the OnMouseDoubleClick event of the DataChart control.
+    ///   If we had a double click on a data point, show the modify data window to adapt the
+    ///   point location.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    private void DataChart_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      Point point = e.GetPosition(this.DataChart);
+      var screenPoint = new ScreenPoint(point.X, point.Y);
+      HitTestResult result = this.ChartData.DataScatterSeries.HitTest(new HitTestArguments(screenPoint, 20));
+      if (result == null)
+      {
+        return;
+      }
+
+      var sample = result.Item as TimeSample;
+      var modifyWindow = new ModifyDataWindow();
+      if (sample != null)
+      {
+        modifyWindow.MoveToFrame(sample.Framenumber);
+      }
+
+      modifyWindow.ShowDialog();
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+    }
+
+    /// <summary>
     /// Handles the OnTextChanged event of the DataSeriesTitleTextBox control.
     /// </summary>
     /// <param name="sender">
@@ -362,17 +386,52 @@ namespace VianaNET.Modules.Chart
     {
       var lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.DataLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.DataLineColor;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.DataLineColor.ToOxyColor();
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.DataLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
         Viana.Project.CurrentFilterData.DataLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.DataLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.DataLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
         Viana.Project.CurrentFilterData.DataLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
+    }
+
+    /// <summary>
+    /// Handles the OnChecked event of the EnableTrackerCheckBox control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void EnableTrackerCheckBox_OnChecked(object sender, RoutedEventArgs e)
+    {
+      this.isSelectionEnabled = true;
+    }
+
+    /// <summary>
+    /// Handles the OnUnchecked event of the EnableTrackerCheckBox control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void EnableTrackerCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+      this.isSelectionEnabled = false;
+      this.ChartData.DataScatterSeries.ClearSelection();
+      foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+      {
+        sample.IsSelected = true;
+      }
+
+      this.Refresh();
     }
 
     /// <summary>
@@ -428,7 +487,7 @@ namespace VianaNET.Modules.Chart
       var lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness =
         Viana.Project.CurrentFilterData.InterpolationLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.InterpolationLineColor;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.InterpolationLineColor.ToOxyColor();
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.InterpolationLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
@@ -436,7 +495,7 @@ namespace VianaNET.Modules.Chart
       {
         Viana.Project.CurrentFilterData.InterpolationLineThickness =
           lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
         Viana.Project.CurrentFilterData.InterpolationLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
@@ -535,7 +594,246 @@ namespace VianaNET.Modules.Chart
 
       var entry = (string)this.ObjectSelectionCombo.SelectedItem;
       Viana.Project.ProcessingData.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
-      Viana.Project.VideoData.ActiveObject = Viana.Project.ProcessingData.IndexOfObject;
+      //Viana.Project.VideoData.ActiveObject = Viana.Project.ProcessingData.IndexOfObject;
+    }
+
+    /// <summary>
+    /// Plot area mouse enter.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaMouseEnter(object sender, MouseEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        this.SelectRect.Visibility = Visibility.Visible;
+      }
+    }
+
+    /// <summary>
+    /// Plot area mouse leave.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaMouseLeave(object sender, MouseEventArgs e)
+    {
+      if (!this.mouseDown)
+      {
+        this.SelectRect.Visibility = Visibility.Collapsed;
+      }
+    }
+
+    /// <summary>
+    /// Plot area mouse left button down.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+      if (!this.isSelectionEnabled)
+      {
+        return;
+      }
+
+      this.mouseDown = true;
+      this.SelectRect.Width = 0;
+      this.SelectRect.Height = 0;
+
+      this.mouseDownPositionInCanvasCoordinates = new Point(
+        e.GetPosition(this.MyCanvas).X,
+        e.GetPosition(this.MyCanvas).Y);
+      this.SelectRect.SetValue(Canvas.LeftProperty, this.mouseDownPositionInCanvasCoordinates.X);
+      this.SelectRect.SetValue(Canvas.TopProperty, this.mouseDownPositionInCanvasCoordinates.Y);
+      this.mouseDownPositionInAxesCoordinates =
+        this.ChartData.DataScatterSeries.InverseTransform(
+          new ScreenPoint(this.mouseDownPositionInCanvasCoordinates.X, this.mouseDownPositionInCanvasCoordinates.Y));
+
+      this.SelectRect.Visibility = Visibility.Visible;
+
+      // Control button is pressed so more points are to be selected
+      if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        return;
+      }
+
+      // Remove selection in VideoData
+      foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+      {
+        sample.IsSelected = false;
+      }
+
+      // Remove selection in series
+      this.ChartData.DataScatterSeries.ClearSelection();
+    }
+
+    /// <summary>
+    /// Plot area mouse left button up.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        var currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
+        this.mouseUpPositionInAxesCoordinates =
+          this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(currentPos.X, currentPos.Y));
+
+        if (this.PointsAreNear(this.mouseDownPositionInCanvasCoordinates, currentPos))
+        {
+          this.mouseDownPositionInAxesCoordinates.X -= Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02;
+          this.mouseUpPositionInAxesCoordinates.X += Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02;
+          this.mouseDownPositionInAxesCoordinates.Y -= Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02;
+          this.mouseUpPositionInAxesCoordinates.Y += Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02;
+        }
+
+        // Create current point list
+        var actualDataPoints = new List<ScatterPoint>();
+        foreach (TimeSample item in Viana.Project.VideoData.FilteredSamples)
+        {
+          actualDataPoints.Add(this.ChartData.DataScatterSeries.Mapping(item));
+        }
+
+        // Get points in rectangle
+        IOrderedEnumerable<ScatterPoint> selectedDataPoints = from dp in actualDataPoints
+                                                              where
+                                                                (dp.X
+                                                                 >= Math.Min(
+                                                                   this.mouseDownPositionInAxesCoordinates.X,
+                                                                   this.mouseUpPositionInAxesCoordinates.X))
+                                                                && (dp.X
+                                                                    <= Math.Max(
+                                                                      this.mouseDownPositionInAxesCoordinates.X,
+                                                                      this.mouseUpPositionInAxesCoordinates.X))
+                                                                && (dp.Y
+                                                                    >= Math.Min(
+                                                                      this.mouseDownPositionInAxesCoordinates.Y,
+                                                                      this.mouseUpPositionInAxesCoordinates.Y))
+                                                                && (dp.Y
+                                                                    <= Math.Max(
+                                                                      this.mouseDownPositionInAxesCoordinates.Y,
+                                                                      this.mouseUpPositionInAxesCoordinates.Y))
+                                                              orderby dp.X
+                                                              select dp;
+
+        if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+        {
+          foreach (ScatterPoint dataPoint in selectedDataPoints)
+          {
+            int index = actualDataPoints.IndexOf(dataPoint);
+            this.ChartData.DataScatterSeries.UnselectItem(index);
+            Viana.Project.VideoData.FilteredSamples[index].IsSelected = false;
+          }
+        }
+        else
+        {
+          foreach (ScatterPoint dataPoint in selectedDataPoints)
+          {
+            int index = actualDataPoints.IndexOf(dataPoint);
+            this.ChartData.DataScatterSeries.SelectItem(index);
+            Viana.Project.VideoData.FilteredSamples[index].IsSelected = true;
+          }
+        }
+
+        // Reset selection to whole series, if no point is selected
+        if (!selectedDataPoints.Any())
+        {
+          foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+          {
+            sample.IsSelected = true;
+          }
+        }
+      }
+
+      this.mouseDown = false;
+      this.SelectRect.Visibility = Visibility.Collapsed;
+
+      this.Refresh();
+    }
+
+    /// <summary>
+    /// Plot area mouse move.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaMouseMove(object sender, MouseEventArgs e)
+    {
+      if (this.mouseDown)
+      {
+        var currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
+
+        this.SelectRect.Visibility = Visibility.Visible;
+        this.SelectRect.Width = Math.Abs(this.mouseDownPositionInCanvasCoordinates.X - currentPos.X);
+        this.SelectRect.Height = Math.Abs(this.mouseDownPositionInCanvasCoordinates.Y - currentPos.Y);
+        if (currentPos.X < this.mouseDownPositionInCanvasCoordinates.X)
+        {
+          this.SelectRect.SetValue(Canvas.LeftProperty, currentPos.X);
+        }
+
+        if (currentPos.Y < this.mouseDownPositionInCanvasCoordinates.Y)
+        {
+          this.SelectRect.SetValue(Canvas.TopProperty, currentPos.Y);
+        }
+      }
+      else
+      {
+        this.SelectRect.Visibility = Visibility.Collapsed;
+      }
+    }
+
+    /// <summary>
+    /// Handles the PreviewKeyDown event of the PlotArea control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="KeyEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+      if (Keyboard.Modifiers == ModifierKeys.Control)
+      {
+        this.DataChart.Cursor = this.plusCursor;
+      }
+      else if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
+      {
+        this.DataChart.Cursor = this.minusCursor;
+      }
+    }
+
+    /// <summary>
+    /// Handles the PreviewKeyUp event of the PlotArea control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="KeyEventArgs"/> instance containing the event data.
+    /// </param>
+    private void PlotAreaPreviewKeyUp(object sender, KeyEventArgs e)
+    {
+      this.DataChart.Cursor = Cursors.Arrow;
     }
 
     /// <summary>
@@ -759,6 +1057,27 @@ namespace VianaNET.Modules.Chart
     }
 
     /// <summary>
+    /// Handles the UpdateChartRequested event of the Project control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="EventArgs"/> instance containing the event data.
+    /// </param>
+    private void ProjectUpdateChartRequested(object sender, EventArgs e)
+    {
+      if (Project.IsDeserializing)
+      {
+        this.XAxisContent.SelectedValue = Viana.Project.CurrentFilterData.AxisX.Axis;
+        this.YAxisContent.SelectedValue = Viana.Project.CurrentFilterData.AxisY.Axis;
+        this.TabOther.IsSelected = true;
+      }
+
+      this.Refresh();
+    }
+
+    /// <summary>
     /// Rechners the button click.
     /// </summary>
     /// <param name="sender">
@@ -843,7 +1162,7 @@ namespace VianaNET.Modules.Chart
     {
       var lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.RegressionLineColor;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.RegressionLineColor.ToOxyColor();
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
@@ -851,7 +1170,7 @@ namespace VianaNET.Modules.Chart
       {
         Viana.Project.CurrentFilterData.RegressionLineThickness =
           lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
         Viana.Project.CurrentFilterData.RegressionLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
@@ -885,11 +1204,11 @@ namespace VianaNET.Modules.Chart
         Viana.Project.CurrentFilterData.RegressionFilter.GetBestRegressData(
           out bestRegression,
           regressionOptionsDialog.negFlag);
-        this.UpdateRegressionImageButtonAndLabels(bestRegression, false);
+        this.UpdateRegressionImageButtonAndLabels(bestRegression);
       }
       else
       {
-        this.UpdateRegressionImageButtonAndLabels(regressionOptionsDialog.RegressionType, true);
+        this.UpdateRegressionImageButtonAndLabels(regressionOptionsDialog.RegressionType);
       }
     }
 
@@ -906,6 +1225,21 @@ namespace VianaNET.Modules.Chart
     {
       this.ChartData.ChartDataModel.ResetAllAxes();
       this.ChartData.ChartDataModel.InvalidatePlot(false);
+    }
+
+    /// <summary>
+    /// Shortcut help button was clicked, so show the dialog.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void ShortCutHelpButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dialog = new ChartHelpDialog();
+      dialog.ShowDialog();
     }
 
     /// <summary>
@@ -990,8 +1324,9 @@ namespace VianaNET.Modules.Chart
     private void ShowTheorieCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
       Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
-      //Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
-      //this.RefreshTheorieFunctionTerm();
+
+      // Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
+      // this.RefreshTheorieFunctionTerm();
       this.ChartData.UpdateModel();
     }
 
@@ -1038,14 +1373,14 @@ namespace VianaNET.Modules.Chart
     {
       var lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.TheoryLineColor;
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.TheoryLineColor.ToOxyColor();
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
         Viana.Project.CurrentFilterData.TheoryLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor;
+        Viana.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
         Viana.Project.CurrentFilterData.TheoryLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
@@ -1195,10 +1530,7 @@ namespace VianaNET.Modules.Chart
     /// <param name="aktregressionType">
     /// The aktual selected regression type.
     /// </param>
-    /// <param name="neuBerechnen">
-    /// True, wenn die Regression neu berechnet werden soll
-    /// </param>
-    private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType, bool neuBerechnen)
+    private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType)
     {
       string bildsource;
       Viana.Project.CurrentFilterData.RegressionFilter.RegressionType = aktregressionType;
@@ -1253,7 +1585,8 @@ namespace VianaNET.Modules.Chart
     {
       try
       {
-        if (Viana.Project.CurrentFilterData.TheoryFilter == null || Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
+        if (Viana.Project.CurrentFilterData.TheoryFilter == null
+            || Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
         {
           return;
         }
@@ -1389,267 +1722,6 @@ namespace VianaNET.Modules.Chart
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
-    /// <summary>
-    /// Plot area mouse move.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaMouseMove(object sender, MouseEventArgs e)
-    {
-      if (this.mouseDown)
-      {
-        var currentPos = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
-
-        SelectRect.Visibility = Visibility.Visible;
-        SelectRect.Width = Math.Abs(this.mouseDownPositionInCanvasCoordinates.X - currentPos.X);
-        SelectRect.Height = Math.Abs(this.mouseDownPositionInCanvasCoordinates.Y - currentPos.Y);
-        if (currentPos.X < this.mouseDownPositionInCanvasCoordinates.X)
-        {
-          this.SelectRect.SetValue(Canvas.LeftProperty, currentPos.X);
-        }
-
-        if (currentPos.Y < this.mouseDownPositionInCanvasCoordinates.Y)
-        {
-          this.SelectRect.SetValue(Canvas.TopProperty, currentPos.Y);
-        }
-      }
-      else
-      {
-        SelectRect.Visibility = Visibility.Collapsed;
-      }
-    }
-
-    /// <summary>
-    /// Plot area mouse left button down.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      if (!this.isSelectionEnabled)
-      {
-        return;
-      }
-
-      this.mouseDown = true;
-      SelectRect.Width = 0;
-      SelectRect.Height = 0;
-
-      this.mouseDownPositionInCanvasCoordinates = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
-      SelectRect.SetValue(Canvas.LeftProperty, this.mouseDownPositionInCanvasCoordinates.X);
-      SelectRect.SetValue(Canvas.TopProperty, this.mouseDownPositionInCanvasCoordinates.Y);
-      this.mouseDownPositionInAxesCoordinates = this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(this.mouseDownPositionInCanvasCoordinates.X, this.mouseDownPositionInCanvasCoordinates.Y));
-
-      SelectRect.Visibility = Visibility.Visible;
-
-      // Control button is pressed so more points are to be selected
-      if ((Keyboard.Modifiers & ModifierKeys.Control) > 0)
-      {
-        return;
-      }
-
-      // Remove selection in VideoData
-      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
-      {
-        sample.IsSelected = false;
-      }
-
-      // Remove selection in series
-      this.ChartData.DataScatterSeries.ClearSelection();
-
-    }
-
-    /// <summary>
-    /// Plot area mouse left button up.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      if (this.mouseDown)
-      {
-        var currentPos = new Point(e.GetPosition(MyCanvas).X, e.GetPosition(MyCanvas).Y);
-        this.mouseUpPositionInAxesCoordinates = this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(currentPos.X, currentPos.Y));
-
-        if (this.PointsAreNear(this.mouseDownPositionInCanvasCoordinates, currentPos))
-        {
-          this.mouseDownPositionInAxesCoordinates.X -= Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02;
-          this.mouseUpPositionInAxesCoordinates.X += Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02;
-          this.mouseDownPositionInAxesCoordinates.Y -= Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02;
-          this.mouseUpPositionInAxesCoordinates.Y += Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02;
-        }
-
-        // Create current point list
-        var actualDataPoints = new List<ScatterPoint>();
-        foreach (var item in Viana.Project.VideoData.FilteredSamples)
-        {
-          actualDataPoints.Add(this.ChartData.DataScatterSeries.Mapping(item));
-        }
-
-        // Get points in rectangle
-        var selectedDataPoints = from dp in actualDataPoints
-                                 where (dp.X >= Math.Min(this.mouseDownPositionInAxesCoordinates.X, this.mouseUpPositionInAxesCoordinates.X))
-                                 && (dp.X <= Math.Max(this.mouseDownPositionInAxesCoordinates.X, this.mouseUpPositionInAxesCoordinates.X))
-                                 && (dp.Y >= Math.Min(this.mouseDownPositionInAxesCoordinates.Y, this.mouseUpPositionInAxesCoordinates.Y))
-                                 && (dp.Y <= Math.Max(this.mouseDownPositionInAxesCoordinates.Y, this.mouseUpPositionInAxesCoordinates.Y))
-                                 orderby dp.X
-                                 select dp;
-
-        if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
-        {
-          foreach (var dataPoint in selectedDataPoints)
-          {
-            var index = actualDataPoints.IndexOf(dataPoint);
-            this.ChartData.DataScatterSeries.UnselectItem(index);
-            Viana.Project.VideoData.FilteredSamples[index].IsSelected = false;
-          }
-        }
-        else
-        {
-          foreach (var dataPoint in selectedDataPoints)
-          {
-            var index = actualDataPoints.IndexOf(dataPoint);
-            this.ChartData.DataScatterSeries.SelectItem(index);
-            Viana.Project.VideoData.FilteredSamples[index].IsSelected = true;
-          }
-        }
-
-        // Reset selection to whole series, if no point is selected
-        if (!selectedDataPoints.Any())
-        {
-          foreach (var sample in Viana.Project.VideoData.FilteredSamples)
-          {
-            sample.IsSelected = true;
-          }
-        }
-      }
-
-
-      this.mouseDown = false;
-      SelectRect.Visibility = Visibility.Collapsed;
-
-      this.Refresh();
-    }
-
-    /// <summary>
-    /// Plot area mouse leave.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaMouseLeave(object sender, MouseEventArgs e)
-    {
-      if (!this.mouseDown)
-      {
-        SelectRect.Visibility = Visibility.Collapsed;
-      }
-    }
-
-    /// <summary>
-    /// Plot area mouse enter.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaMouseEnter(object sender, MouseEventArgs e)
-    {
-      if (this.mouseDown)
-      {
-        SelectRect.Visibility = Visibility.Visible;
-      }
-    }
-
-    /// <summary>
-    /// Handles the PreviewKeyDown event of the PlotArea control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaPreviewKeyDown(object sender, KeyEventArgs e)
-    {
-      if (Keyboard.Modifiers == ModifierKeys.Control)
-      {
-        this.DataChart.Cursor = this.plusCursor;
-      }
-      else if ((Keyboard.Modifiers & ModifierKeys.Shift) > 0 && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
-      {
-        this.DataChart.Cursor = this.minusCursor;
-      }
-    }
-
-    /// <summary>
-    /// Handles the PreviewKeyUp event of the PlotArea control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
-    private void PlotAreaPreviewKeyUp(object sender, KeyEventArgs e)
-    {
-      this.DataChart.Cursor = Cursors.Arrow;
-    }
-
     #endregion
-
-    /// <summary>
-    /// Handles the OnChecked event of the EnableTrackerCheckBox control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void EnableTrackerCheckBox_OnChecked(object sender, RoutedEventArgs e)
-    {
-      this.isSelectionEnabled = true;
-    }
-
-    /// <summary>
-    /// Handles the OnUnchecked event of the EnableTrackerCheckBox control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void EnableTrackerCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-    {
-      this.isSelectionEnabled = false;
-      this.ChartData.DataScatterSeries.ClearSelection();
-      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
-      {
-        sample.IsSelected = true;
-      }
-
-      this.Refresh();
-    }
-
-    /// <summary>
-    /// Handles the OnMouseDoubleClick event of the DataChart control.
-    /// If we had a double click on a data point, show the modify data window to adapt the 
-    /// point location.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    private void DataChart_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-      var point = e.GetPosition(this.DataChart);
-      var screenPoint = new ScreenPoint(point.X, point.Y);
-      var result = this.ChartData.DataScatterSeries.HitTest(new HitTestArguments(screenPoint, 20));
-      if (result == null)
-      {
-        return;
-      }
-
-      var sample = result.Item as TimeSample;
-      var modifyWindow = new ModifyDataWindow();
-      if (sample != null)
-      {
-        modifyWindow.MoveToFrame(sample.Framenumber);
-      }
-
-      modifyWindow.ShowDialog();
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-    }
-
-    /// <summary>
-    /// Shortcut help button was clicked, so show the dialog.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void ShortCutHelpButtonClick(object sender, RoutedEventArgs e)
-    {
-      var dialog = new ChartHelpDialog();
-      dialog.ShowDialog();
-    }
   }
 }

@@ -40,8 +40,6 @@ namespace VianaNET.Application
 
   using WPFLocalizeExtension.Engine;
 
-  using WPFMath;
-
   /// <summary>
   ///   This is the main entry point for the application and
   ///   represents the base for VianaNET.

@@ -58,7 +58,7 @@ namespace VianaNET.Modules.Video.BlobDetection
 
     #endregion
 
-     #region Constructors and Destructors
+    #region Constructors and Destructors
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="BlobsControl" /> class.
@@ -111,9 +111,14 @@ namespace VianaNET.Modules.Video.BlobDetection
       {
         for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
+          if (sample.Object == null || sample.Object[i] == null)
+          {
+            continue;
+          }
+
           var dataPoint = new Ellipse
             {
-              Stroke = ProcessingData.TrackObjectColors[i],
+              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
               StrokeThickness = 2,
               Width = 15,
               Height = 15
@@ -312,9 +317,11 @@ namespace VianaNET.Modules.Video.BlobDetection
         if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
             && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
         {
+          var fill = Viana.Project.ProcessingData.TargetColor.Count > i ? new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]) :
+          Brushes.Black;
           var blobEllipse = new Ellipse
             {
-              Fill = ProcessingData.TrackObjectColors[i],
+              Fill = fill,
               Stroke = Brushes.Black,
               StrokeThickness = 1,
               Width = blob.Width * scaleX,
@@ -366,7 +373,7 @@ namespace VianaNET.Modules.Video.BlobDetection
         {
           var dataPoint = new Ellipse
             {
-              Stroke = ProcessingData.TrackObjectColors[i],
+              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
               StrokeThickness = 2,
               Width = 15,
               Height = 15

@@ -173,7 +173,7 @@ namespace VianaNET.Modules.Video.Dialogs
         Color color = frame.GetPixel((int)originalX, (int)originalY);
         System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(255, color.R, color.G, color.B);
         Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
-        ProcessingData.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
+        //Project.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
       }
       catch (Exception)
       {

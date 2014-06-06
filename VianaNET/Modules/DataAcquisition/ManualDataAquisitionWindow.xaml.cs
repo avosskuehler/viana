@@ -56,7 +56,7 @@ namespace VianaNET.Modules.DataAcquisition
       "BrushOfCossHair",
       typeof(SolidColorBrush),
       typeof(ManualDataAquisitionWindow),
-      new FrameworkPropertyMetadata(ProcessingData.TrackObjectColors[0], OnPropertyChanged));
+      new FrameworkPropertyMetadata(Project.TrackObjectColors[0], OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -201,7 +201,7 @@ namespace VianaNET.Modules.DataAcquisition
       }
 
       // Update crosshair brush
-      window.BrushOfCossHair = ProcessingData.TrackObjectColors[window.IndexOfTrackedObject - 1];
+      window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
     }
 
     /// <summary>
@@ -273,7 +273,7 @@ namespace VianaNET.Modules.DataAcquisition
             var visualDataPoint = new Ellipse();
             visualDataPoint.Width = 2 * this.visualDataPointRadius;
             visualDataPoint.Height = 2 * this.visualDataPointRadius;
-            visualDataPoint.Stroke = ProcessingData.TrackObjectColors[j];
+            visualDataPoint.Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[j]);
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 

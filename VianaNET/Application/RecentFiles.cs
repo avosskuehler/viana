@@ -187,6 +187,11 @@ namespace VianaNET.Application
     {
       var fileIndex = this.FindFile(file);
       var bitmap = Video.Instance.CreateBitmapFromCurrentImageSource();
+      if (bitmap == null)
+      {
+        bitmap = new Bitmap(64, 64);
+      }
+
       bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
       var smallBitmap = ScaleImage(bitmap, 64, 64);
       var projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };

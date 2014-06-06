@@ -56,6 +56,15 @@ namespace VianaNET.Data
       new FrameworkPropertyMetadata(new ObservableCollection<double>()));
 
     /// <summary>
+    ///   The target color property.
+    /// </summary>
+    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
+      "TargetColor",
+      typeof(ObservableCollection<Color>),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
+
+    /// <summary>
     ///   The blob min diameter property.
     /// </summary>
     public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
@@ -121,15 +130,6 @@ namespace VianaNET.Data
         new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
-    ///   The target color property.
-    /// </summary>
-    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
-      "TargetColor",
-      typeof(ObservableCollection<Color>),
-      typeof(ProcessingData),
-      new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
-
-    /// <summary>
     ///   The difference quotient type property.
     /// </summary>
     public static readonly DependencyProperty DifferenceQuotientTypeProperty = DependencyProperty.Register(
@@ -191,20 +191,20 @@ namespace VianaNET.Data
 
     #region Constructors and Destructors
 
-    /// <summary>
-    ///   Initializes static members of the <see cref="ProcessingData" /> class.
-    /// </summary>
-    static ProcessingData()
-    {
-      TrackObjectColors = new List<SolidColorBrush>
-                            {
-                              Brushes.Red, 
-                              Brushes.Green, 
-                              Brushes.Blue, 
-                              Brushes.Yellow, 
-                              Brushes.Magenta
-                            };
-    }
+    ///// <summary>
+    /////   Initializes static members of the <see cref="ProcessingData" /> class.
+    ///// </summary>
+    //static ProcessingData()
+    //{
+    //  TrackObjectColors = new List<SolidColorBrush>
+    //                        {
+    //                          Brushes.Red, 
+    //                          Brushes.Green, 
+    //                          Brushes.Blue, 
+    //                          Brushes.Yellow, 
+    //                          Brushes.Magenta
+    //                        };
+    //}
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ProcessingData" /> class.
@@ -249,10 +249,6 @@ namespace VianaNET.Data
 
     #region Public Properties
 
-    /// <summary>
-    ///   Gets or sets  a list of brushes for the different tracked objects
-    /// </summary>
-    public static List<SolidColorBrush> TrackObjectColors { get; set; }
 
     /// <summary>
     ///   Gets or sets the blob max diameter.
@@ -523,6 +519,11 @@ namespace VianaNET.Data
         this.segmentator.MaxDiameter = this.BlobMaxDiameter[i];
 
         Segment foundSegment = this.segmentator.Process();
+        while (this.DetectedBlob.Count <= i)
+        {
+          this.DetectedBlob.Add(new Segment());
+        }
+
         this.DetectedBlob[i] = foundSegment;
 
         // Console.Write("AfterBlobDetection: ");
@@ -685,10 +686,18 @@ namespace VianaNET.Data
         {
           this.IndexOfObject = 0;
         }
+
+        if (!Project.IsDeserializing)
+        {
+          Viana.Project.VideoData.FilterSamples();
+        }
       }
       else if (e.PropertyName == "NumberOfTrackedObjects")
       {
-        this.Reset();
+        if (!Project.IsDeserializing)
+        {
+          this.Reset();
+        }
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
@@ -706,12 +715,13 @@ namespace VianaNET.Data
     {
       this.IndexOfObject = 0;
       this.doNotThrowPropertyChanged = true;
-      this.TargetColor.Clear();
       this.ColorThreshold.Clear();
       this.BlobMinDiameter.Clear();
       this.BlobMaxDiameter.Clear();
       this.CurrentBlobCenter.Clear();
       this.DetectedBlob.Clear();
+
+      this.TargetColor.Clear();
       for (int i = 0; i < numberOfObjects; i++)
       {
         this.TargetColor.Add(Colors.Red);
@@ -719,10 +729,11 @@ namespace VianaNET.Data
         this.BlobMinDiameter.Add(4);
         this.BlobMaxDiameter.Add(100);
         this.CurrentBlobCenter.Add(null);
-        this.DetectedBlob.Add(new Segment());
+        //this.DetectedBlob.Add(new Segment());
       }
 
       this.IsTargetColorSet = false;
+
       this.isReady = true;
       this.doNotThrowPropertyChanged = false;
     }
