@@ -1728,4 +1728,31 @@ Bild kopieren - Strg und c</value>
   <data name="ChartWindowHelpHeader" xml:space="preserve">
     <value>Tipps zu Tastenkombinationen</value>
   </data>
+  <data name="DifferenceQuotientBackwardTitle" xml:space="preserve">
+    <value>Rückwärts</value>
+  </data>
+  <data name="DifferenceQuotientCentralTitle" xml:space="preserve">
+    <value>Zentral</value>
+  </data>
+  <data name="DifferenceQuotientDialogDescription" xml:space="preserve">
+    <value>Bitte die Art der Ableitungsberechnung (des Differenzenquotienten) angeben.</value>
+  </data>
+  <data name="DifferenceQuotientDialogTitle" xml:space="preserve">
+    <value>Ableitungsberechnung ...</value>
+  </data>
+  <data name="DifferenceQuotientForwardTitle" xml:space="preserve">
+    <value>Vorwärts</value>
+  </data>
+  <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
+    <value>Ableitungsberechnung</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um die Art der Ableitungsberechnung, den Typ des Differenzenquotienten anzugeben.</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipTitle" xml:space="preserve">
+    <value>Ableitungsberechnung</value>
+  </data>
+  <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
+    <value>Please select your language</value>
+  </data>
 </root>

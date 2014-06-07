@@ -173,6 +173,9 @@
     <Compile Include="Modules\DataGrid\ExportOptionsDialog.xaml.cs">
       <DependentUpon>ExportOptionsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\DataGrid\DifferenceQuotientDialog.xaml.cs">
+      <DependentUpon>DifferenceQuotientDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
       <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
     </Compile>
@@ -442,6 +445,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\DataAcquisition\ModifyDataWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataGrid\DifferenceQuotientDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -922,6 +929,10 @@
   <ItemGroup>
     <Resource Include="Images\ModifyData16.png" />
     <Resource Include="Images\ModifyData32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DifferenceQuotient16.png" />
+    <Resource Include="Images\DifferenceQuotient32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

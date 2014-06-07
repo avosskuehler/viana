@@ -1169,6 +1169,18 @@ namespace VianaNET.Data
           currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
           currentSample.PositionX = calibratedPoint.X;
           currentSample.PositionY = calibratedPoint.Y;
+          currentSample.Acceleration = null;
+          currentSample.AccelerationX = null;
+          currentSample.AccelerationY = null;
+          currentSample.Velocity = null;
+          currentSample.VelocityX = null;
+          currentSample.VelocityY = null;
+          currentSample.Length = null;
+          currentSample.LengthX = null;
+          currentSample.LengthY = null;
+          currentSample.Distance= null;
+          currentSample.DistanceX = null;
+          currentSample.DistanceY = null;
         }
       }
 

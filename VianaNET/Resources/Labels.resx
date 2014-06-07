@@ -1722,4 +1722,31 @@
   <data name="ChartWindowHelpHeader" xml:space="preserve">
     <value>@ChartWindowHelpHeader</value>
   </data>
+  <data name="DifferenceQuotientCentralTitle" xml:space="preserve">
+    <value>@DifferenceQuotientCentralTitle</value>
+  </data>
+  <data name="DifferenceQuotientDialogDescription" xml:space="preserve">
+    <value>@DifferenceQuotientDialogDescription</value>
+  </data>
+  <data name="DifferenceQuotientDialogTitle" xml:space="preserve">
+    <value>@DifferenceQuotientDialogTitle</value>
+  </data>
+  <data name="DifferenceQuotientForwardTitle" xml:space="preserve">
+    <value>@DifferenceQuotientForwardTitle</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>@DifferenceQuotientBackwardTitle</value>
+  </data>
+  <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
+    <value>@ButtonDifferenceQuotientLabelTitle</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipDescription" xml:space="preserve">
+    <value>@ButtonDifferenceQuotientToolTipDescription</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipTitle" xml:space="preserve">
+    <value>@ButtonDifferenceQuotientToolTipTitle</value>
+  </data>
+  <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
+    <value>@RibbonSelectLanguageLabelTitle</value>
+  </data>
 </root>

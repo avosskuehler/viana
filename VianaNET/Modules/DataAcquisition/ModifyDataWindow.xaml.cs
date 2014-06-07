@@ -229,7 +229,7 @@ namespace VianaNET.Modules.DataAcquisition
       }
 
       // Update crosshair brush
-      if (args.Property == ModifyDataWindow.IndexOfTrackedObjectProperty)
+      if (args.Property == IndexOfTrackedObjectProperty)
       {
         // Reset index if appropriate
         if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)

@@ -194,14 +194,22 @@ namespace VianaNET.Modules.DataAcquisition
     {
       var window = obj as ManualDataAquisitionWindow;
 
-      // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+      if (window == null)
       {
-        window.IndexOfTrackedObject = 1;
+        return;
       }
 
       // Update crosshair brush
-      window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+      if (args.Property == IndexOfTrackedObjectProperty)
+      {
+        // Reset index if appropriate
+        if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        {
+          window.IndexOfTrackedObject = 1;
+        }
+
+        window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+      }
     }
 
     /// <summary>
