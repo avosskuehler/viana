@@ -1150,6 +1150,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonDifferenceQuotientLabelTitle.
+        /// </summary>
+        internal static string ButtonDifferenceQuotientLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonDifferenceQuotientLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonDifferenceQuotientToolTipDescription.
+        /// </summary>
+        internal static string ButtonDifferenceQuotientToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonDifferenceQuotientToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonDifferenceQuotientToolTipTitle.
+        /// </summary>
+        internal static string ButtonDifferenceQuotientToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonDifferenceQuotientToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonExportChartLabelTitle.
         /// </summary>
         internal static string ButtonExportChartLabelTitle {
@@ -3247,6 +3274,42 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientCentralTitle.
+        /// </summary>
+        internal static string DifferenceQuotientCentralTitle {
+            get {
+                return ResourceManager.GetString("DifferenceQuotientCentralTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientDialogDescription.
+        /// </summary>
+        internal static string DifferenceQuotientDialogDescription {
+            get {
+                return ResourceManager.GetString("DifferenceQuotientDialogDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientDialogTitle.
+        /// </summary>
+        internal static string DifferenceQuotientDialogTitle {
+            get {
+                return ResourceManager.GetString("DifferenceQuotientDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientForwardTitle.
+        /// </summary>
+        internal static string DifferenceQuotientForwardTitle {
+            get {
+                return ResourceManager.GetString("DifferenceQuotientForwardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @DirectShowErrorPreface.
         /// </summary>
         internal static string DirectShowErrorPreface {
@@ -4282,6 +4345,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @RibbonSelectLanguageLabelTitle.
+        /// </summary>
+        internal static string RibbonSelectLanguageLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonSelectLanguageLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @RibbonTabAnalysisLabel.
         /// </summary>
         internal static string RibbonTabAnalysisLabel {
@@ -4620,6 +4692,15 @@ namespace VianaNET.Resources {
         internal static string StatusIsCalculating {
             get {
                 return ResourceManager.GetString("StatusIsCalculating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientBackwardTitle.
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

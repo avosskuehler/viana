@@ -1743,4 +1743,31 @@ Copy bitmap - Ctrl + c</value>
   <data name="ChartWindowHelpHeader" xml:space="preserve">
     <value>Shortcut info</value>
   </data>
+  <data name="DifferenceQuotientBackwardTitle" xml:space="preserve">
+    <value>Backward</value>
+  </data>
+  <data name="DifferenceQuotientCentralTitle" xml:space="preserve">
+    <value>Central</value>
+  </data>
+  <data name="DifferenceQuotientDialogDescription" xml:space="preserve">
+    <value>Please specify the type of the difference quotient calculation.</value>
+  </data>
+  <data name="DifferenceQuotientDialogTitle" xml:space="preserve">
+    <value>Difference quotient calculation</value>
+  </data>
+  <data name="DifferenceQuotientForwardTitle" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
+    <value>Differentiation calculation</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipDescription" xml:space="preserve">
+    <value>Click here, to specify the differentiation, the difference quotient.</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipTitle" xml:space="preserve">
+    <value>Differentiation calculation</value>
+  </data>
+  <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
+    <value>Please select you language</value>
+  </data>
 </root>

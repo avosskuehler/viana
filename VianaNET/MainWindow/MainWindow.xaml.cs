@@ -411,6 +411,18 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// The difference quotient button click event handler.
+    /// Calls a dialog to change the difference quotient calculation type.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void DifferenceQuotientButtonClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new DifferenceQuotientDialog();
+      dlg.ShowDialog();
+    }
+
+    /// <summary>
     /// The button capture video command_ executed.
     /// </summary>
     /// <param name="sender">Source of the event.</param>

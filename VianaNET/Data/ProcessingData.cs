@@ -136,7 +136,7 @@ namespace VianaNET.Data
       "DifferenceQuotientType",
       typeof(DifferenceQuotientType),
       typeof(ProcessingData),
-      new FrameworkPropertyMetadata(DifferenceQuotientType.Central));
+      new FrameworkPropertyMetadata(DifferenceQuotientType.Forward));
 
     #endregion
 
