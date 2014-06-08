@@ -1770,4 +1770,13 @@ Copy bitmap - Ctrl + c</value>
   <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
     <value>Please select you language</value>
   </data>
+  <data name="ShowPixelLengthLabelTitle" xml:space="preserve">
+    <value>Display the length of a pixel</value>
+  </data>
+  <data name="ShowPixelLengthToolTipDescription" xml:space="preserve">
+    <value>Check this to display the length of a pixel.</value>
+  </data>
+  <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
+    <value>How long is a pixel?</value>
+  </data>
 </root>

@@ -265,6 +265,20 @@ namespace VianaNET.Modules.Video
     }
 
     /// <summary>
+    /// Show or hide the pixel length
+    /// </summary>
+    /// <param name="show">
+    /// The show. 
+    /// </param>
+    public void ShowPixelLength(bool show)
+    {
+      if (Viana.Project.CalibrationData.IsVideoCalibrated)
+      {
+        this.ShowOrHidePixelLength(show ? Visibility.Visible : Visibility.Collapsed);
+      }
+    }
+
+    /// <summary>
     /// The show clip region.
     /// </summary>
     /// <param name="show">
@@ -811,6 +825,17 @@ namespace VianaNET.Modules.Video
       this.OriginPath.Visibility = visibility;
       this.RulerLine.Visibility = visibility;
       this.RulerLabelBorder.Visibility = visibility;
+    }
+
+   /// <summary>
+    /// The show or hide PixelLabel.
+    /// </summary>
+    /// <param name="visibility">
+    /// The visibility. 
+    /// </param>
+    private void ShowOrHidePixelLength(Visibility visibility)
+    {
+      this.PixelLabelBorder.Visibility = visibility;
     }
 
     /// <summary>

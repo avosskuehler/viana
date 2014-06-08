@@ -40,43 +40,54 @@
                 StrokeThickness="2" Stroke="{Binding Path=ProcessingData.TargetColor[0], Source={x:Static application:Viana.Project}}"/>
           <Line X1="0" X2="0"  Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"
                 StrokeThickness="2" Stroke="{Binding Path=ProcessingData.TargetColor[0], Source={x:Static application:Viana.Project}}"/>-->
-            <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
-              <Path.Data>
-                <GeometryGroup FillRule="EvenOdd">
-                  <LineGeometry StartPoint="2,5" EndPoint="8,5" />
-                  <LineGeometry StartPoint="5,2" EndPoint="5,8" />
-                  <EllipseGeometry Center="5,5" RadiusX="5" RadiusY="5"/>
-                </GeometryGroup>
-              </Path.Data>
-            </Path>
-            <Label Name="FrameRateLabel"></Label>
-            <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1" Visibility="Hidden" />
-            <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
-              <Border.RenderTransform>
-                <ScaleTransform ScaleX="1" ScaleY="-1"/>
-              </Border.RenderTransform>
+          <Border RenderTransformOrigin="0.5,0.5" Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
+            <Border.RenderTransform>
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            </Border.RenderTransform>
+            <Label Name="PixelLabel" 
+                     Content="{Binding Path=CalibrationData.RulerValueInPixelUnits,
+              Source={x:Static application:Viana.Project}}"
+                 Visibility="Visible"/>
+          </Border>
+          <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
+            <Path.Data>
+              <GeometryGroup FillRule="EvenOdd">
+                <LineGeometry StartPoint="2,5" EndPoint="8,5" />
+                <LineGeometry StartPoint="5,2" EndPoint="5,8" />
+                <EllipseGeometry Center="5,5" RadiusX="5" RadiusY="5"/>
+              </GeometryGroup>
+            </Path.Data>
+          </Path>
+          <Label Name="FrameRateLabel"></Label>
+          <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1" Visibility="Hidden" />
+          <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
+            <Border.RenderTransform>
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            </Border.RenderTransform>
+            <StackPanel Orientation="Horizontal">
               <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
               Source={x:Static application:Viana.Project},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
-            </Border>
-            <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
-            <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-            <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-            <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-            <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
-              <Path.Data>
-                <CombinedGeometry GeometryCombineMode="Xor">
-                  <CombinedGeometry.Geometry1>
-                    <RectangleGeometry Rect="0,0,100,100"/>
-                  </CombinedGeometry.Geometry1>
-                  <CombinedGeometry.Geometry2>
-                    <RectangleGeometry Rect="10,10,80,80" />
-                  </CombinedGeometry.Geometry2>
-                </CombinedGeometry>
-              </Path.Data>
-            </Path>
+            </StackPanel>
+          </Border>
+          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
+          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
+            <Path.Data>
+              <CombinedGeometry GeometryCombineMode="Xor">
+                <CombinedGeometry.Geometry1>
+                  <RectangleGeometry Rect="0,0,100,100"/>
+                </CombinedGeometry.Geometry1>
+                <CombinedGeometry.Geometry2>
+                  <RectangleGeometry Rect="10,10,80,80" />
+                </CombinedGeometry.Geometry2>
+              </CombinedGeometry>
+            </Path.Data>
+          </Path>
         </Canvas>
       </Grid>
       <blobDetection:BlobsControl Width="Auto" 

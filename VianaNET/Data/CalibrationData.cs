@@ -29,6 +29,7 @@ namespace VianaNET.Data
 {
   using System;
   using System.ComponentModel;
+  using System.Globalization;
   using System.Windows;
   using System.Windows.Media;
 
@@ -43,7 +44,7 @@ namespace VianaNET.Data
   [Serializable]
   public class CalibrationData : DependencyObject, INotifyPropertyChanged
   {
-     #region Static Fields
+    #region Static Fields
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
@@ -76,6 +77,15 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty IsShowingUnitsProperty = DependencyProperty.Register(
       "IsShowingUnits",
+      typeof(bool),
+      typeof(CalibrationData),
+      new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingPixelLength" />.
+    /// </summary>
+    public static readonly DependencyProperty IsShowingPixelLengthProperty = DependencyProperty.Register(
+      "IsShowingPixelLength",
       typeof(bool),
       typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
@@ -142,7 +152,7 @@ namespace VianaNET.Data
 
     #endregion
 
-     #region Public Events
+    #region Public Events
 
     /// <summary>
     ///   Occurs when a property value changes.
@@ -221,6 +231,23 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    ///   Gets or sets a value indicating whether to display or hide 
+    /// the length of a pixel in length units
+    /// </summary>
+    public bool IsShowingPixelLength
+    {
+      get
+      {
+        return (bool)this.GetValue(IsShowingPixelLengthProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsShowingPixelLengthProperty, value);
+      }
+    }
+
+    /// <summary>
     ///   Gets or sets a value indicating whether the user has set an 
     ///   origin and a ruler measurement of a length.
     /// </summary>
@@ -234,6 +261,7 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(IsVideoCalibratedProperty, value);
+        this.OnPropertyChanged("RulerValueInPixelUnits");
       }
     }
 
@@ -360,6 +388,18 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(RulerValueInRulerUnitsProperty, value);
+        this.OnPropertyChanged("RulerValueInPixelUnits");
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the ruler value in ruler units.
+    /// </summary>
+    public string RulerValueInPixelUnits
+    {
+      get
+      {
+        return "1px = " + this.ScalePixelToUnit.ToString("N4") + this.LengthUnit;
       }
     }
 

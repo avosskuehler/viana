@@ -450,6 +450,13 @@
                             ToolTipDescription="{lex:Loc VianaNET:Labels:ShowCalibrationToolTipDescription}"
                             IsEnabled="{Binding Path=CalibrationData.IsVideoCalibrated, Source={x:Static application:Viana.Project}}" 
                             IsChecked="True"/>
+          <RibbonCheckBox Name="ShowPixelLengthCheckbox"  
+                            Click="CalibrationOptionsShowPixelLengthButtonClick" 
+                            Label="{lex:Loc VianaNET:Labels:ShowPixelLengthLabelTitle}"
+                            ToolTipTitle="{lex:Loc VianaNET:Labels:ShowPixelLengthToolTipTitle}" 
+                            ToolTipDescription="{lex:Loc VianaNET:Labels:ShowPixelLengthToolTipDescription}"
+                            IsEnabled="{Binding Path=CalibrationData.IsVideoCalibrated, Source={x:Static application:Viana.Project}}" 
+                            IsChecked="{Binding Path=CalibrationData.IsShowingPixelLength, Source={x:Static application:Viana.Project}}"/>
           <RibbonCheckBox Name="ShowClipRegionCheckbox" 
                             Click="CalibrationOptionsShowClipRegionButtonClick" 
                             Label="{lex:Loc VianaNET:Labels:ShowClipRegionLabelTitle}"
