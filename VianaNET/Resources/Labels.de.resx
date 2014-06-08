@@ -1755,4 +1755,13 @@ Bild kopieren - Strg und c</value>
   <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
     <value>Please select your language</value>
   </data>
+  <data name="ShowPixelLengthLabelTitle" xml:space="preserve">
+    <value>Die Länge eines Pixels anzeigen</value>
+  </data>
+  <data name="ShowPixelLengthToolTipDescription" xml:space="preserve">
+    <value>Auswählen, um die Länge eines Pixels anzuzeigen.</value>
+  </data>
+  <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
+    <value>Welcher Länge entspricht ein Pixel?</value>
+  </data>
 </root>

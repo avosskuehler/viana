@@ -69,7 +69,6 @@ namespace VianaNET.MainWindow
     /// </summary>
     public MainWindow()
     {
-      TexFormulaParser.Initialize();
       //BindingErrorTraceListener.SetTrace();
       this.InitializeComponent();
 
@@ -724,6 +723,16 @@ namespace VianaNET.MainWindow
     private void CalibrationOptionsShowCalibrationButtonClick(object sender, RoutedEventArgs e)
     {
       this.VideoWindow.ShowCalibration(this.ShowCalibrationCheckbox.IsChecked());
+    }
+
+    /// <summary>
+    /// The calibration options show calibration command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CalibrationOptionsShowPixelLengthButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.VideoWindow.ShowPixelLength(this.ShowPixelLengthCheckbox.IsChecked());
     }
 
     /// <summary>

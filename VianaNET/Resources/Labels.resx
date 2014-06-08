@@ -1749,4 +1749,13 @@
   <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
     <value>@RibbonSelectLanguageLabelTitle</value>
   </data>
+  <data name="ShowPixelLengthLabelTitle" xml:space="preserve">
+    <value>@ShowPixelLengthLabelTitle</value>
+  </data>
+  <data name="ShowPixelLengthToolTipDescription" xml:space="preserve">
+    <value>@ShowPixelLengthToolTipDescription</value>
+  </data>
+  <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
+    <value>@ShowPixelLengthToolTipTitle</value>
+  </data>
 </root>

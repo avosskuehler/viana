@@ -35,6 +35,8 @@ namespace VianaNET.Application
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
 
+  using WPFMath;
+
   /// <summary>
   ///   This class is a singleton encapsulating all settings for a viana.net project
   /// </summary>
@@ -65,6 +67,8 @@ namespace VianaNET.Application
     /// </summary>
     public Project()
     {
+      TexFormulaParser.Initialize();
+
       TrackObjectColors = new List<SolidColorBrush>
                               {
                                 Brushes.Red, 

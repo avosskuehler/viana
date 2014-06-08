@@ -4633,6 +4633,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ShowPixelLengthLabelTitle.
+        /// </summary>
+        internal static string ShowPixelLengthLabelTitle {
+            get {
+                return ResourceManager.GetString("ShowPixelLengthLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ShowPixelLengthToolTipDescription.
+        /// </summary>
+        internal static string ShowPixelLengthToolTipDescription {
+            get {
+                return ResourceManager.GetString("ShowPixelLengthToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ShowPixelLengthToolTipTitle.
+        /// </summary>
+        internal static string ShowPixelLengthToolTipTitle {
+            get {
+                return ResourceManager.GetString("ShowPixelLengthToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ShowVideoInfosButtonLabelTitle.
         /// </summary>
         internal static string ShowVideoInfosButtonLabelTitle {
