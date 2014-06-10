@@ -1069,6 +1069,17 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// The measure length button is clicked.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void MeasureLengthButtonClick(object sender, RoutedEventArgs e)
+    {
+      var measureLengthWindow = new MeasureLengthWindow();
+      measureLengthWindow.ShowDialog();
+    }
+
+    /// <summary>
     /// This method is called whenever a recent project is selected from the list.
     /// </summary>
     /// <param name="sender">Source of the event.</param>

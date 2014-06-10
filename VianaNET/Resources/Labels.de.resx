@@ -1764,4 +1764,28 @@ Bild kopieren - Strg und c</value>
   <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
     <value>Welcher Länge entspricht ein Pixel?</value>
   </data>
+  <data name="ButtonMeasureLengthLabelTitle" xml:space="preserve">
+    <value>Länge messen</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um Längen im Video zu vermessen.</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipTitle" xml:space="preserve">
+    <value>Länge messen</value>
+  </data>
+  <data name="MeasureLengthHelpControlTitle" xml:space="preserve">
+    <value>Hilfe zur Vermessung</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureDescription" xml:space="preserve">
+    <value>Die zu messende Strecke wird durch zwei Mausklicks festgelegt.</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureHeader" xml:space="preserve">
+    <value>Länge messen</value>
+  </data>
+  <data name="MeasureLengthWindowTitle" xml:space="preserve">
+    <value>Vermessung</value>
+  </data>
+  <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
+    <value>Vermessen</value>
+  </data>
 </root>

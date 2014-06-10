@@ -179,6 +179,7 @@
     <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
       <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.cs" />
     <Compile Include="Resources\Labels.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

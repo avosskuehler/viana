@@ -1758,4 +1758,28 @@
   <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
     <value>@ShowPixelLengthToolTipTitle</value>
   </data>
+  <data name="ButtonMeasureLengthLabelTitle" xml:space="preserve">
+    <value>@ButtonMeasureLengthLabelTitle</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipDescription" xml:space="preserve">
+    <value>@ButtonMeasureLengthToolTipDescription</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipTitle" xml:space="preserve">
+    <value>@ButtonMeasureLengthToolTipTitle</value>
+  </data>
+  <data name="MeasureLengthHelpControlTitle" xml:space="preserve">
+    <value>@MeasureLengthHelpControlTitle</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureDescription" xml:space="preserve">
+    <value>@MeasureLengthHowToMeasureDescription</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureHeader" xml:space="preserve">
+    <value>@MeasureLengthHowToMeasureHeader</value>
+  </data>
+  <data name="MeasureLengthWindowTitle" xml:space="preserve">
+    <value>@MeasureLengthWindowTitle</value>
+  </data>
+  <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoMeasureLabelTitle</value>
+  </data>
 </root>

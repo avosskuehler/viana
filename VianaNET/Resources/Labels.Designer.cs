@@ -1645,6 +1645,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureLengthLabelTitle.
+        /// </summary>
+        internal static string ButtonMeasureLengthLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonMeasureLengthLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureLengthToolTipDescription.
+        /// </summary>
+        internal static string ButtonMeasureLengthToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonMeasureLengthToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureLengthToolTipTitle.
+        /// </summary>
+        internal static string ButtonMeasureLengthToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonMeasureLengthToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonModifyDataLabelTitle.
         /// </summary>
         internal static string ButtonModifyDataLabelTitle {
@@ -3652,6 +3679,42 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @MeasureLengthHelpControlTitle.
+        /// </summary>
+        internal static string MeasureLengthHelpControlTitle {
+            get {
+                return ResourceManager.GetString("MeasureLengthHelpControlTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureLengthHowToMeasureDescription.
+        /// </summary>
+        internal static string MeasureLengthHowToMeasureDescription {
+            get {
+                return ResourceManager.GetString("MeasureLengthHowToMeasureDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureLengthHowToMeasureHeader.
+        /// </summary>
+        internal static string MeasureLengthHowToMeasureHeader {
+            get {
+                return ResourceManager.GetString("MeasureLengthHowToMeasureHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureLengthWindowTitle.
+        /// </summary>
+        internal static string MeasureLengthWindowTitle {
+            get {
+                return ResourceManager.GetString("MeasureLengthWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ModifyDataDescription.
         /// </summary>
         internal static string ModifyDataDescription {
@@ -4287,6 +4350,15 @@ namespace VianaNET.Resources {
         internal static string RibbonGroupVideoCalibrationOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoCalibrationOptionsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonGroupVideoMeasureLabelTitle.
+        /// </summary>
+        internal static string RibbonGroupVideoMeasureLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupVideoMeasureLabelTitle", resourceCulture);
             }
         }
         
