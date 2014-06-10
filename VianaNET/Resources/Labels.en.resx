@@ -1779,4 +1779,28 @@ Copy bitmap - Ctrl + c</value>
   <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
     <value>How long is a pixel?</value>
   </data>
+  <data name="ButtonMeasureLengthLabelTitle" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipDescription" xml:space="preserve">
+    <value>Click here, to measure different lengths in the video.</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipTitle" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="MeasureLengthHelpControlTitle" xml:space="preserve">
+    <value>How to measure</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureDescription" xml:space="preserve">
+    <value>The length to measure is defined via two mouse clicks.</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureHeader" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="MeasureLengthWindowTitle" xml:space="preserve">
+    <value>Survey</value>
+  </data>
+  <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
+    <value>Surveying</value>
+  </data>
 </root>

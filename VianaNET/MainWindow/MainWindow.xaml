@@ -442,6 +442,15 @@
             <!--IsEnabled="{Binding Path=VideoCapturerElement.IsRunning, Source={x:Static control:Video.Instance}}"/>-->
           </Grid>
         </RibbonGroup>
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoMeasureLabelTitle}" LargeImageSource="/VianaNET;component/Images/Calibrate32.png" >
+          <RibbonButton Click="MeasureLengthButtonClick" 
+                        Label="{lex:Loc VianaNET:Labels:ButtonMeasureLengthLabelTitle}"
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonMeasureLengthToolTipTitle}" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonMeasureLengthToolTipDescription}" 
+                        IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"
+                        SmallImageSource="/VianaNET;component/Images/Calibrate16.png" 
+                        LargeImageSource="/VianaNET;component/Images/Calibrate32.png" />
+        </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/Calibrate32.png" >
           <RibbonCheckBox Name="ShowCalibrationCheckbox"  
                             Click="CalibrationOptionsShowCalibrationButtonClick" 
