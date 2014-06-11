@@ -1803,4 +1803,25 @@ Copy bitmap - Ctrl + c</value>
   <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
     <value>Surveying</value>
   </data>
+  <data name="CoordinateSystemHelpControlTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="CoordinateSystemHowToDescription" xml:space="preserve">
+    <value>First specify the x-direction, then the y-direction.</value>
+  </data>
+  <data name="CoordinateSystemHowToHeader" xml:space="preserve">
+    <value>Define coordinate system</value>
+  </data>
+  <data name="CoordinateSystemWindowTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="ButtonCoordinateSystemLabelTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipDescription" xml:space="preserve">
+    <value>Click here, to specify position and orientation of the coordinate system.</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
 </root>

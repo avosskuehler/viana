@@ -716,6 +716,17 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// Coordinate system button click.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+     private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
+    {
+      var coordinateSystemWindow = new CoordinateSystemWindow();
+      coordinateSystemWindow.ShowDialog();
+    }
+
+    /// <summary>
     /// The calibration options show calibration command_ executed.
     /// </summary>
     /// <param name="sender">Source of the event.</param>

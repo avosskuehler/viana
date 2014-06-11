@@ -246,6 +246,13 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCalibrateVideoToolTipTitle}"
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCalibrateVideoToolTipDescription}"
                          IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+          <RibbonButton Click="CoordinateSystemButtonClick"
+                         Label="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemLabelTitle}"
+                         LargeImageSource="/VianaNET;component/Images/CoordinateSystem32.png"
+                         SmallImageSource="/VianaNET;component/Images/CoordinateSystem16.png"
+                         ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipTitle}"
+                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipDescription}"
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <RibbonButton Name="SelectNumberOfObjectsButton"
                          Click="SelectNumberOfObjectsButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 

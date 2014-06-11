@@ -26,6 +26,7 @@ namespace VianaNET.Data
   using System.Collections.Generic;
   using System.ComponentModel;
   using System.Windows;
+  using System.Windows.Media;
 
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
@@ -346,11 +347,12 @@ namespace VianaNET.Data
       DataSample newObjectSample = null;
       if (newSamplePosition.HasValue)
       {
+        var transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(newSamplePosition.Value);
         newObjectSample = new DataSample
                             {
                               Time = newTime,
-                              PixelX = newSamplePosition.Value.X,
-                              PixelY = newSamplePosition.Value.Y
+                              PixelX = transformedPoint.X,
+                              PixelY = transformedPoint.Y
                             };
       }
 
@@ -470,8 +472,9 @@ namespace VianaNET.Data
       TimeSample sample = this.Samples.GetSampleByFrameindex(frameIndex);
       if (sample != null)
       {
-        sample.Object[objectIndex].PixelX = newLocation.X;
-        sample.Object[objectIndex].PixelY = newLocation.Y;
+        var transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(newLocation);
+        sample.Object[objectIndex].PixelX = transformedPoint.X;
+        sample.Object[objectIndex].PixelY = transformedPoint.Y;
       }
       else
       {
