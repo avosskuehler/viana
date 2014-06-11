@@ -1782,4 +1782,25 @@
   <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
     <value>@RibbonGroupVideoMeasureLabelTitle</value>
   </data>
+  <data name="CoordinateSystemHelpControlTitle" xml:space="preserve">
+    <value>@CoordinateSystemHelpControlTitle</value>
+  </data>
+  <data name="CoordinateSystemHowToDescription" xml:space="preserve">
+    <value>@CoordinateSystemHowToDescription</value>
+  </data>
+  <data name="CoordinateSystemHowToHeader" xml:space="preserve">
+    <value>@CoordinateSystemHowToHeader</value>
+  </data>
+  <data name="CoordinateSystemWindowTitle" xml:space="preserve">
+    <value>@CoordinateSystemWindowTitle</value>
+  </data>
+  <data name="ButtonCoordinateSystemLabelTitle" xml:space="preserve">
+    <value>@ButtonCoordinateSystemLabelTitle</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipDescription" xml:space="preserve">
+    <value>@ButtonCoordinateSystemToolTipDescription</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
+    <value>@ButtonCoordinateSystemToolTipTitle</value>
+  </data>
 </root>

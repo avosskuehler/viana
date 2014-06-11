@@ -1078,6 +1078,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonCoordinateSystemLabelTitle.
+        /// </summary>
+        internal static string ButtonCoordinateSystemLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonCoordinateSystemLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonCoordinateSystemToolTipDescription.
+        /// </summary>
+        internal static string ButtonCoordinateSystemToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonCoordinateSystemToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonCoordinateSystemToolTipTitle.
+        /// </summary>
+        internal static string ButtonCoordinateSystemToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonCoordinateSystemToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonDatagridWindowLabelDescription.
         /// </summary>
         internal static string ButtonDatagridWindowLabelDescription {
@@ -3018,6 +3045,42 @@ namespace VianaNET.Resources {
         internal static string ClipVideoWindowTitle {
             get {
                 return ResourceManager.GetString("ClipVideoWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CoordinateSystemHelpControlTitle.
+        /// </summary>
+        internal static string CoordinateSystemHelpControlTitle {
+            get {
+                return ResourceManager.GetString("CoordinateSystemHelpControlTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CoordinateSystemHowToDescription.
+        /// </summary>
+        internal static string CoordinateSystemHowToDescription {
+            get {
+                return ResourceManager.GetString("CoordinateSystemHowToDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CoordinateSystemHowToHeader.
+        /// </summary>
+        internal static string CoordinateSystemHowToHeader {
+            get {
+                return ResourceManager.GetString("CoordinateSystemHowToHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @CoordinateSystemWindowTitle.
+        /// </summary>
+        internal static string CoordinateSystemWindowTitle {
+            get {
+                return ResourceManager.GetString("CoordinateSystemWindowTitle", resourceCulture);
             }
         }
         

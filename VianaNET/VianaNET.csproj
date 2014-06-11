@@ -179,6 +179,7 @@
     <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
       <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Dialogs\CoordinateSystemWindow.cs" />
     <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.cs" />
     <Compile Include="Resources\Labels.de.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -934,6 +935,10 @@
   <ItemGroup>
     <Resource Include="Images\DifferenceQuotient16.png" />
     <Resource Include="Images\DifferenceQuotient32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CoordinateSystem16.png" />
+    <Resource Include="Images\CoordinateSystem32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

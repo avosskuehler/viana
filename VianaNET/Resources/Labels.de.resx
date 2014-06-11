@@ -1788,4 +1788,25 @@ Bild kopieren - Strg und c</value>
   <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
     <value>Vermessen</value>
   </data>
+  <data name="CoordinateSystemHelpControlTitle" xml:space="preserve">
+    <value>Koordinatensystem</value>
+  </data>
+  <data name="CoordinateSystemHowToDescription" xml:space="preserve">
+    <value>Zuerst die x-Richtung angeben, dann die y-Richtung.</value>
+  </data>
+  <data name="CoordinateSystemHowToHeader" xml:space="preserve">
+    <value>Koordinatensystem definieren</value>
+  </data>
+  <data name="CoordinateSystemWindowTitle" xml:space="preserve">
+    <value>Koordinatensystem</value>
+  </data>
+  <data name="ButtonCoordinateSystemLabelTitle" xml:space="preserve">
+    <value>Koordinatensystem</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um Lage und Orientierung des Koordinatensystems festzulegen.</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
+    <value>Koordinatensystem</value>
+  </data>
 </root>

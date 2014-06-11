@@ -128,6 +128,15 @@ namespace VianaNET.Data
       typeof(CalibrationData),
       new FrameworkPropertyMetadata(TimeUnit.s, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="CoordinateTransform" />.
+    /// </summary>
+    public static readonly DependencyProperty CoordinateTransformProperty = DependencyProperty.Register(
+      "CoordinateTransform",
+      typeof(Matrix),
+      typeof(CalibrationData),
+      new FrameworkPropertyMetadata(Matrix.Identity, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
     #endregion
 
     #region Fields
@@ -408,6 +417,23 @@ namespace VianaNET.Data
     ///   convert pixels to unit values.
     /// </summary>
     public double ScalePixelToUnit { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the coordinate transform that performs the transformation between video pixels
+    /// and data calibration
+    /// </summary>
+    public Matrix CoordinateTransform
+    {
+      get
+      {
+        return (Matrix)this.GetValue(CoordinateTransformProperty);
+      }
+
+      set
+      {
+        this.SetValue(CoordinateTransformProperty, value);
+      }
+    }
 
     #endregion
 

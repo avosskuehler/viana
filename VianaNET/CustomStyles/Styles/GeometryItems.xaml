@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls">
 
   <!--Geometry items used in CalibrateVideoWindow-->
   <Path x:Key="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
@@ -18,6 +19,22 @@
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Border.RenderTransform>
     <Label Name="LengthLabel" Padding="1"/>
+  </Border>
+
+  <controls:Arrow Stroke="Red" Fill="Red" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowX"/>
+  <controls:Arrow Stroke="Green" Fill="Green" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowY" Visibility="Hidden"/>
+  
+  <Border RenderTransformOrigin="0.5,0.5" x:Key="XLabelBorder" Background="#99FFFFFF" CornerRadius="3">
+    <Border.RenderTransform>
+      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+    </Border.RenderTransform>
+    <Label Padding="1" Content="X"/>
+  </Border>
+  <Border RenderTransformOrigin="0.5,0.5" x:Key="YLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden">
+    <Border.RenderTransform>
+      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+    </Border.RenderTransform>
+    <Label Padding="1" Content="Y"/>
   </Border>
 
   <!--Geometry items used in ClipVideoWindow-->
