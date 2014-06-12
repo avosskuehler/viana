@@ -7,7 +7,9 @@
 	xmlns:blobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
-	xmlns:application="clr-namespace:VianaNET.Application" mc:Ignorable="d"
+	xmlns:application="clr-namespace:VianaNET.Application"
+	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
+	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">
   <UserControl.Resources>
@@ -23,6 +25,7 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
+      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
       <Grid Name="LeftVideoPanel" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
@@ -36,10 +39,6 @@
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
-          <!--<Line X1="0" X2="{Binding ElementName=VideoImage, Path=ActualWidth}"  Y1="0" Y2="0"
-                StrokeThickness="2" Stroke="{Binding Path=ProcessingData.TargetColor[0], Source={x:Static application:Viana.Project}}"/>
-          <Line X1="0" X2="0"  Y1="0" Y2="{Binding ElementName=VideoImage, Path=ActualHeight}"
-                StrokeThickness="2" Stroke="{Binding Path=ProcessingData.TargetColor[0], Source={x:Static application:Viana.Project}}"/>-->
           <Border RenderTransformOrigin="0.5,0.5" Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <Border.RenderTransform>
               <ScaleTransform ScaleX="1" ScaleY="-1"/>

@@ -24,7 +24,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
 
 namespace VianaNET.Modules.Video
 {
@@ -39,13 +38,13 @@ namespace VianaNET.Modules.Video
   using System.Windows.Media;
   using System.Windows.Shapes;
   using System.Windows.Threading;
-
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
-  using VianaNET.Resources;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The video window.
@@ -112,6 +111,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public VideoWindow()
     {
+      this.CoordinateSystem = Activator.CreateInstance<CoordinateSystem>(); 
       this.InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.CreateCrossHairLines();
