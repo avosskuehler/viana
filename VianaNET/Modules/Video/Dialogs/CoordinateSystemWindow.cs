@@ -117,7 +117,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.windowCanvas.Children.Add(this.directionY);
       this.windowCanvas.Children.Add(this.labelX);
       this.windowCanvas.Children.Add(this.labelY);
-      this.Loaded += this.CoordinateSystemWindow_Loaded;
+      this.Loaded += this.CoordinateSystemWindowLoaded;
     }
 
     #endregion
@@ -158,10 +158,12 @@ namespace VianaNET.Modules.Video.Dialogs
         var vectorDefault = new Vector(1, 0);
         var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
         var vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
-        var scaleY = Vector.AngleBetween(vectorXAxis, vectorYAxis) > 90 ? 1 : -1;
+        var angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
+        var scaleY = angle > 0 ? 1 : -1;
         var matrix = new Matrix();
-        matrix.Rotate(Vector.AngleBetween(vectorDefault, vectorXAxis));
+        var angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
         matrix.Scale(1, scaleY);
+        matrix.Rotate(-angleX);
 
         Viana.Project.CalibrationData.CoordinateTransform = matrix;
         this.Close();
@@ -211,93 +213,6 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// Calculates the intersection point of two lines given by four points
-    /// </summary>
-    /// <param name="line1Point1">
-    /// The line1 point1.
-    /// </param>
-    /// <param name="line1Point2">
-    /// The line1 point2.
-    /// </param>
-    /// <param name="line2Point1">
-    /// The line2 point1.
-    /// </param>
-    /// <param name="line2Point2">
-    /// The line2 point2.
-    /// </param>
-    /// <returns>
-    /// The intersection point
-    /// </returns>
-    /// <exception cref="System.Exception">
-    /// Lines are parallel
-    /// </exception>
-    private static Point LineIntersectionPoint(
-      Point line1Point1,
-      Point line1Point2,
-      Point line2Point1,
-      Point line2Point2)
-    {
-      // Get A,B,C of first line - points : line1Point1 to line1Point2
-      double a1 = line1Point2.Y - line1Point1.Y;
-      double b1 = line1Point1.X - line1Point2.X;
-      double c1 = a1 * line1Point1.X + b1 * line1Point1.Y;
-
-      // Get A,B,C of second line - points : line2Point1 to line2Point2
-      double a2 = line2Point2.Y - line2Point1.Y;
-      double b2 = line2Point1.X - line2Point2.X;
-      double c2 = a2 * line2Point1.X + b2 * line2Point1.Y;
-
-      // Get delta and check if the lines are parallel
-      double delta = a1 * b2 - a2 * b1;
-      if (Math.Abs(delta) < Epsilon)
-      {
-        throw new Exception("Lines are parallel");
-      }
-
-      // now return the intersection point
-      return new Point((b2 * c1 - b1 * c2) / delta, (a1 * c2 - a2 * c1) / delta);
-    }
-
-    /// <summary>
-    /// Calculates if a point lies in the given triangle.
-    /// </summary>
-    /// <param name="p">
-    /// The point to check
-    /// </param>
-    /// <param name="p0">
-    /// The first point of the triangle.
-    /// </param>
-    /// <param name="p1">
-    /// The second point of the triangle.
-    /// </param>
-    /// <param name="p2">
-    /// The third point of the triangle.
-    /// </param>
-    /// <returns>
-    /// True, if the given point lies in the given triangle, otherwise false.
-    /// </returns>
-    private static bool PointInTriangle(Point p, Point p0, Point p1, Point p2)
-    {
-      double s = p0.Y * p2.X - p0.X * p2.Y + (p2.Y - p0.Y) * p.X + (p0.X - p2.X) * p.Y;
-      double t = p0.X * p1.Y - p0.Y * p1.X + (p0.Y - p1.Y) * p.X + (p1.X - p0.X) * p.Y;
-
-      if ((s < 0) != (t < 0))
-      {
-        return false;
-      }
-
-      double area = -p1.Y * p2.X + p0.Y * (p2.X - p1.X) + p0.X * (p1.Y - p2.Y) + p1.X * p2.Y;
-      if (area < 0.0)
-      {
-        s = -s;
-        t = -t;
-        area = -area;
-      }
-
-      return s > 0 && t > 0 && (s + t) < area;
-    }
-
-    /// <summary>
     /// Handles the Loaded event of the CoordinateSystemWindow control.
     /// </summary>
     /// <param name="sender">
@@ -306,7 +221,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
     /// </param>
-    private void CoordinateSystemWindow_Loaded(object sender, RoutedEventArgs e)
+    private void CoordinateSystemWindowLoaded(object sender, RoutedEventArgs e)
     {
       double scaleX;
       double scaleY;
@@ -383,33 +298,27 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void SetYAxis(Point mouseLocation)
     {
-      var lineXStartpoint = new Point(this.directionX.X1, this.directionX.Y1);
       var lineXEndpoint = new Point(this.directionX.X2, this.directionX.Y2);
       this.SetLabelXPosition(lineXEndpoint);
 
-      Point leftIntersection = LineIntersectionPoint(lineXStartpoint, lineXEndpoint, new Point(0, 0), new Point(0, 1));
-      Point rightIntersection = LineIntersectionPoint(
-        lineXStartpoint,
-        lineXEndpoint,
-        new Point(this.VideoImage.ActualWidth, 0),
-        new Point(this.VideoImage.ActualWidth, 1));
-      var edge = new Point(0, rightIntersection.Y);
       double scaleX;
       double scaleY;
       if (this.GetScales(out scaleX, out scaleY))
       {
         double originXInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.X * scaleX;
         double originYInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.Y * scaleY;
-        var vectorX = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
 
+        var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
+        var vectorMouse = new Vector(mouseLocation.X - originXInScreenPixel, mouseLocation.Y - originYInScreenPixel);
+        var angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
         Vector vectorY;
-        if (PointInTriangle(mouseLocation, leftIntersection, rightIntersection, edge))
+        if (angleMouseXAxis >= 0 && angleMouseXAxis <= 180)
         {
-          vectorY = new Vector(vectorX.Y, -vectorX.X);
+          vectorY = new Vector(-vectorXAxis.Y, vectorXAxis.X);
         }
         else
         {
-          vectorY = new Vector(-vectorX.Y, vectorX.X);
+          vectorY = new Vector(vectorXAxis.Y, -vectorXAxis.X);
         }
 
         this.directionY.X2 = originXInScreenPixel + vectorY.X;

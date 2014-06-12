@@ -26,6 +26,7 @@ namespace VianaNET.Data
   using System.Collections.Generic;
   using System.ComponentModel;
   using System.Windows;
+  using System.Windows.Controls;
   using System.Windows.Media;
 
   using VianaNET.Application;
@@ -347,7 +348,10 @@ namespace VianaNET.Data
       DataSample newObjectSample = null;
       if (newSamplePosition.HasValue)
       {
-        var transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(newSamplePosition.Value);
+        var origin = Viana.Project.CalibrationData.OriginInPixel;
+        var transformedPoint = newSamplePosition.Value;
+        transformedPoint.Offset(-origin.X, -origin.Y);
+        transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         newObjectSample = new DataSample
                             {
                               Time = newTime,
@@ -472,7 +476,10 @@ namespace VianaNET.Data
       TimeSample sample = this.Samples.GetSampleByFrameindex(frameIndex);
       if (sample != null)
       {
-        var transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(newLocation);
+        var origin = Viana.Project.CalibrationData.OriginInPixel;
+        var transformedPoint = newLocation;
+        transformedPoint.Offset(-origin.X, -origin.Y);
+        transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         sample.Object[objectIndex].PixelX = transformedPoint.X;
         sample.Object[objectIndex].PixelY = transformedPoint.Y;
       }
@@ -518,9 +525,9 @@ namespace VianaNET.Data
       }
 
       var calibratedPoint = new Point(value.PixelX, value.PixelY);
-      calibratedPoint.Offset(
-        -Viana.Project.CalibrationData.OriginInPixel.X,
-        -Viana.Project.CalibrationData.OriginInPixel.Y);
+      //calibratedPoint.Offset(
+      //  -Viana.Project.CalibrationData.OriginInPixel.X,
+      //  -Viana.Project.CalibrationData.OriginInPixel.Y);
       calibratedPoint.X = calibratedPoint.X * Viana.Project.CalibrationData.ScalePixelToUnit;
       calibratedPoint.Y = calibratedPoint.Y * Viana.Project.CalibrationData.ScalePixelToUnit;
 
@@ -1181,7 +1188,7 @@ namespace VianaNET.Data
           currentSample.Length = null;
           currentSample.LengthX = null;
           currentSample.LengthY = null;
-          currentSample.Distance= null;
+          currentSample.Distance = null;
           currentSample.DistanceX = null;
           currentSample.DistanceY = null;
         }

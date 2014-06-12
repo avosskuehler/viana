@@ -21,8 +21,8 @@
     <Label Name="LengthLabel" Padding="1"/>
   </Border>
 
-  <controls:Arrow Stroke="Red" Fill="Red" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowX"/>
-  <controls:Arrow Stroke="Green" Fill="Green" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowY" Visibility="Hidden"/>
+  <controls:Arrow Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowX"/>
+  <controls:Arrow Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowY" Visibility="Hidden"/>
   
   <Border RenderTransformOrigin="0.5,0.5" x:Key="XLabelBorder" Background="#99FFFFFF" CornerRadius="3">
     <Border.RenderTransform>
