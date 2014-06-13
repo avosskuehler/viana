@@ -122,7 +122,7 @@
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
     <value>This software is intended to detect and analyse object movements in videos. It is based on the famous Viana version of Thomas Kerstinga t the Universität Essen. 
-We would like to have some feedback -&gt;</value>
+Would like to have feedback:</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
     <value>About Viana.NET</value>
@@ -550,13 +550,15 @@ We would like to have some feedback -&gt;</value>
     <value>Legend</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
-    <value>Please click with the left mouse button at the starting position of an object with known length and click again at the ending point of the object with known length.</value>
+    <value>Please click with the left mouse button at the starting position of an object with known length and click again at the ending point of the object with known length.
+F10: Clear measurement.</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
     <value>Specify known length</value>
   </data>
   <data name="CalibrateWindowSpecifyOriginDescription" xml:space="preserve">
-    <value>Please click with the left mouse button at the position in the video frame where the origin of the data points (0,0) should be located.</value>
+    <value>Please click with the left mouse button at the position in the video frame where the origin of the data points (0,0) should be located.
+F10: Reset origin and measurement.</value>
   </data>
   <data name="CalibrateWindowSpecifyOriginHeader" xml:space="preserve">
     <value>Specify origin</value>
@@ -634,7 +636,7 @@ We would like to have some feedback -&gt;</value>
     <value>Please enter a length value.</value>
   </data>
   <data name="CalibrationErrorMessage" xml:space="preserve">
-    <value> line in dialog along with the measurements unit.</value>
+    <value> Please enter the value without the unit and specify the measurements unit separately.</value>
   </data>
   <data name="CalibrationErrorTitle" xml:space="preserve">
     <value>Calibration error ...</value>
@@ -1807,10 +1809,11 @@ Copy bitmap - Ctrl + c</value>
     <value>Coordinate system</value>
   </data>
   <data name="CoordinateSystemHowToDescription" xml:space="preserve">
-    <value>First specify the x-direction, then the y-direction.</value>
+    <value>First specify the x-direction, then the y-direction.
+F10: Reset coordinate system.</value>
   </data>
   <data name="CoordinateSystemHowToHeader" xml:space="preserve">
-    <value>Define coordinate system</value>
+    <value>Howto define:</value>
   </data>
   <data name="CoordinateSystemWindowTitle" xml:space="preserve">
     <value>Coordinate system</value>

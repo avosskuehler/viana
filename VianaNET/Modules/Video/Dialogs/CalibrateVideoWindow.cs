@@ -24,7 +24,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
 
 namespace VianaNET.Modules.Video.Dialogs
 {
@@ -33,24 +32,16 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Input;
   using System.Windows.Shapes;
-
-  using VianaNET.Data;
-  using VianaNET.Resources;
+  using VianaNET.Application;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The calibrate video window.
   /// </summary>
   public class CalibrateVideoWindow : WindowWithHelp
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Fields
 
     /// <summary>
@@ -110,31 +101,37 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
+    /// <summary>
+    /// Mouse is the over control panel.
+    /// </summary>
+    /// <param name="isOver">if set to <c>true</c> is over.</param>
     protected override void MouseOverControlPanel(bool isOver)
     {
       base.MouseOverControlPanel(isOver);
       this.ignoreMouse = isOver;
     }
 
-    protected override void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    /// <summary>
+    /// Handles the MouseLeftButtonDown event of the Container control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
+    protected override void ContainerMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      base.Container_MouseLeftButtonDown(sender, e);
-      if (ignoreMouse)
+      base.ContainerMouseLeftButtonDown(sender, e);
+      if (this.ignoreMouse)
       {
         return;
       }
 
-      double scaledX = e.GetPosition(this.VideoImage).X;
-      double scaledY = e.GetPosition(this.VideoImage).Y;
-      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
-      double originalX = factorX * scaledX;
-      double originalY = factorY * scaledY;
+      var scaledX = e.GetPosition(this.VideoImage).X;
+      var scaledY = e.GetPosition(this.VideoImage).Y;
+      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      var originalX = factorX * scaledX;
+      var originalY = factorY * scaledY;
 
       if (!this.originIsSet)
       {
@@ -162,7 +159,7 @@ namespace VianaNET.Modules.Video.Dialogs
         this.endPoint = new Point(originalX, originalY);
 
         // Sicher gehen, dass Messpunkt nicht zu dicht liegen
-        double distance = Math.Sqrt(Math.Pow(endPoint.Y - startPoint.Y, 2) + Math.Pow(endPoint.X - startPoint.X, 2));
+        var distance = Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
         if (distance < 5)
         {
           var info = new VianaDialog(
@@ -192,7 +189,7 @@ namespace VianaNET.Modules.Video.Dialogs
           lengthVector = Vector.Add(
             lengthVector,
             new Vector(Viana.Project.CalibrationData.RulerEndPointInPixel.X, Viana.Project.CalibrationData.RulerEndPointInPixel.Y));
-          double length = lengthVector.Length;
+          var length = lengthVector.Length;
           Viana.Project.CalibrationData.ScalePixelToUnit = Viana.Project.CalibrationData.RulerValueInRulerUnits / length;
           Viana.Project.CalibrationData.IsVideoCalibrated = true;
           this.DialogResult = true;
@@ -203,45 +200,50 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// The container_ mouse left button up.
+    /// Handles the MouseMove event of the Container control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    protected override void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
+    protected override void ContainerMouseMove(object sender, MouseEventArgs e)
     {
-      base.Container_MouseLeftButtonUp(sender, e);
-    }
-
-    /// <summary>
-    /// The container_ mouse move.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    protected override void Container_MouseMove(object sender, MouseEventArgs e)
-    {
-      base.Container_MouseMove(sender, e);
-      if (ignoreMouse)
+      base.ContainerMouseMove(sender, e);
+      if (this.ignoreMouse)
       {
         return;
       }
 
       if (this.originIsSet && this.startPointIsSet)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
+        var scaledX = e.GetPosition(this.VideoImage).X;
+        var scaledY = e.GetPosition(this.VideoImage).Y;
         this.ruler.X2 = scaledX;
         this.ruler.Y2 = scaledY;
       }
     }
 
+    /// <summary>
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
+    /// in its route that is derived from this class. Implement this method to add class handling for this event.
+    /// Resets the calibration on F10.
+    /// </summary>
+    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+    protected override void OnPreviewKeyDown(KeyEventArgs e)
+    {
+      base.OnPreviewKeyDown(e);
+      if (e.SystemKey == Key.F10)
+      {
+        // Reset calibration
+        Viana.Project.CalibrationData.OriginInPixel = new Point();
+        Viana.Project.CalibrationData.RulerEndPointInPixel = new Point();
+        Viana.Project.CalibrationData.RulerStartPointInPixel = new Point();
+        Viana.Project.CalibrationData.ScalePixelToUnit = 1;
+        Viana.Project.CalibrationData.IsVideoCalibrated = false;
+
+        this.DialogResult = true;
+
+        this.Close();
+      }
+    }
 
     #endregion
   }

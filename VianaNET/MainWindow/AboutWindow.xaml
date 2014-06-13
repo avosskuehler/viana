@@ -10,7 +10,7 @@
         Providers:ResxLocalizationProvider.DefaultDictionary="Labels"
         ResizeMode="CanResizeWithGrip" 
         WindowStartupLocation="CenterScreen"
-    Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+    Height="380" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
     Icon="/VianaNET;component/Images/VianaNET.ico"
     Title="{lex:Loc VianaNET:Labels:AboutBoxTitle}">
   <Window.Resources>
@@ -26,7 +26,6 @@
       <StackPanel Orientation="Horizontal">
         <Image Width="64" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
         <StackPanel Orientation="Vertical">
-          <Label Content="{x:Static mainWindow:AboutWindow.AssemblyCompany}" Padding="0" Foreground="White"></Label>
           <Label Content="{x:Static mainWindow:AboutWindow.AssemblyProduct}" FontSize="24" Padding="0" Foreground="White"></Label>
           <StackPanel Orientation="Horizontal">
             <Label Foreground="White" FontSize="10" Padding="0,0,3,0">Version</Label>
@@ -43,8 +42,8 @@
           <StackPanel>
             <TextBlock TextWrapping="Wrap" Text="{lex:Loc Key=AboutBoxTextBlock}"/>
             <TextBlock>
-                        <Hyperlink NavigateUri="mailto:adrian.vosskuehler@fu-berlin.de">
-                           adrian.vosskuehler@fu-berlin.de
+                        <Hyperlink NavigateUri="mailto:adrian@vosskuehler.name">
+                           adrian@vosskuehler.name
                         </Hyperlink>
             </TextBlock>
           </StackPanel>

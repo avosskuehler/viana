@@ -122,7 +122,7 @@
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
     <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. Es ist eine komplett modernisierte Version der Software Viana von Thomas Kersting an der Universität Essen.
-Wir freuen uns über Feedback -&gt;</value>
+Ich freue mich über Feedback:</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
     <value>Über Viana.NET</value>
@@ -535,13 +535,15 @@ Wir freuen uns über Feedback -&gt;</value>
     <value>Legende</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
-    <value>Ziehen Sie mit der Maus eine Strecke bekannter Länge auf, indem Sie mit der linken Maustaste am Startpunkt und am Endpunkt klicken.</value>
+    <value>Ziehen Sie mit der Maus eine Strecke bekannter Länge auf, indem Sie mit der linken Maustaste am Startpunkt und am Endpunkt klicken.
+F10: Einmessung löschen.</value>
   </data>
   <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
     <value>Reale Länge angeben</value>
   </data>
   <data name="CalibrateWindowSpecifyOriginDescription" xml:space="preserve">
-    <value>Bitte klicken Sie mit der Maus auf den Ursprungspunkt im Video, d.h. an die Stelle mit den Koordinaten (0,0).</value>
+    <value>Bitte klicken Sie mit der Maus auf den Ursprungspunkt im Video, d.h. an die Stelle mit den Koordinaten (0,0).
+F10: Einmessung löschen.</value>
   </data>
   <data name="CalibrateWindowSpecifyOriginHeader" xml:space="preserve">
     <value>Ursprung festlegen</value>
@@ -668,7 +670,8 @@ Wir freuen uns über Feedback -&gt;</value>
   </data>
   <data name="ClipVideoDescriptionMessage" xml:space="preserve">
     <value>Bitte klicken und ziehen Sie die vier roten Ränder so,dass sie den Suchbereich für das Objekt festlegen.
-Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.</value>
+Wenn Sie fertig sind klicken Sie OK oder drücken Sie die Enter-Taste.
+F10: Suchbereichseingrenzung löschen.</value>
   </data>
   <data name="ClipVideoHelpControlTitle" xml:space="preserve">
     <value>Hilfe</value>
@@ -1744,7 +1747,7 @@ Bild kopieren - Strg und c</value>
     <value>Vorwärts</value>
   </data>
   <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
-    <value>Ableitungsberechnung</value>
+    <value>Ableitungs- berechnung</value>
   </data>
   <data name="ButtonDifferenceQuotientToolTipDescription" xml:space="preserve">
     <value>Hier klicken, um die Art der Ableitungsberechnung, den Typ des Differenzenquotienten anzugeben.</value>
@@ -1792,21 +1795,37 @@ Bild kopieren - Strg und c</value>
     <value>Koordinatensystem</value>
   </data>
   <data name="CoordinateSystemHowToDescription" xml:space="preserve">
-    <value>Zuerst die x-Richtung angeben, dann die y-Richtung.</value>
+    <value>Zuerst die x-Richtung angeben, dann die y-Richtung.
+F10: Koordinatensystem auf Standard zurücksetzen.</value>
   </data>
   <data name="CoordinateSystemHowToHeader" xml:space="preserve">
-    <value>Koordinatensystem definieren</value>
+    <value>Orientierung definieren</value>
   </data>
   <data name="CoordinateSystemWindowTitle" xml:space="preserve">
     <value>Koordinatensystem</value>
   </data>
   <data name="ButtonCoordinateSystemLabelTitle" xml:space="preserve">
-    <value>Koordinatensystem</value>
+    <value>Koordinaten- system</value>
   </data>
   <data name="ButtonCoordinateSystemToolTipDescription" xml:space="preserve">
     <value>Hier klicken, um Lage und Orientierung des Koordinatensystems festzulegen.</value>
   </data>
   <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
     <value>Koordinatensystem</value>
+  </data>
+  <data name="RibbonGroupLanguageLabelTitle" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelDescription" xml:space="preserve">
+    <value>Change the language of the application.</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelTitle" xml:space="preserve">
+    <value>Change language</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipDescription" xml:space="preserve">
+    <value>Click here to change the language of the application.</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipTitle" xml:space="preserve">
+    <value>Change language</value>
   </data>
 </root>

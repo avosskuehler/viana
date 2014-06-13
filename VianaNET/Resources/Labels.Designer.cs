@@ -927,9 +927,9 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Looks up a localized string similar to @ButtonChartWindowToolTipDescription.
         /// </summary>
-        internal static string ButtonChartWindowToolTipDescriptioButtonChartWindowToolTipDescription {
+        internal static string ButtonChartWindowToolTipDescription {
             get {
-                return ResourceManager.GetString("ButtonChartWindowToolTipDescriptioButtonChartWindowToolTipDescription", resourceCulture);
+                return ResourceManager.GetString("ButtonChartWindowToolTipDescription", resourceCulture);
             }
         }
         
@@ -1029,6 +1029,15 @@ namespace VianaNET.Resources {
         internal static string ButtonClipVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonClipVideoLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonClipVideoToolTipDescription.
+        /// </summary>
+        internal static string ButtonClipVideoToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonClipVideoToolTipDescription", resourceCulture);
             }
         }
         
@@ -1299,6 +1308,15 @@ namespace VianaNET.Resources {
         internal static string ButtonExportChartToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonExportChartToWordLabelDescription.
+        /// </summary>
+        internal static string ButtonExportChartToWordLabelDescription {
+            get {
+                return ResourceManager.GetString("ButtonExportChartToWordLabelDescription", resourceCulture);
             }
         }
         
@@ -3364,6 +3382,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @DifferenceQuotientBackwardTitle.
+        /// </summary>
+        internal static string DifferenceQuotientBackwardTitle {
+            get {
+                return ResourceManager.GetString("DifferenceQuotientBackwardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @DifferenceQuotientCentralTitle.
         /// </summary>
         internal static string DifferenceQuotientCentralTitle {
@@ -4678,6 +4705,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SelectColorWindowObjectIndexHeader.
+        /// </summary>
+        internal static string SelectColorWindowObjectIndexHeader {
+            get {
+                return ResourceManager.GetString("SelectColorWindowObjectIndexHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @SelectColorWindowTitle.
         /// </summary>
         internal static string SelectColorWindowTitle {
@@ -4854,15 +4890,6 @@ namespace VianaNET.Resources {
         internal static string StatusIsCalculating {
             get {
                 return ResourceManager.GetString("StatusIsCalculating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to @DifferenceQuotientBackwardTitle.
-        /// </summary>
-        internal static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

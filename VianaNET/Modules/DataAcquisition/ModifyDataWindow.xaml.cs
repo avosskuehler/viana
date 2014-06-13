@@ -540,6 +540,9 @@ namespace VianaNET.Modules.DataAcquisition
       this.UpdateDataPointLocation();
     }
 
+    /// <summary>
+    /// Updates the data point location.
+    /// </summary>
     private void UpdateDataPointLocation()
     {
       this.ObjectIndexTextBox.Text = Labels.ModifyDataWindowTrackItemNumberHeader;
@@ -556,8 +559,12 @@ namespace VianaNET.Modules.DataAcquisition
         {
           if (sample.Object != null && sample.Object[i - 1] != null)
           {
-            var scaledX = sample.Object[i - 1].PixelX / factorX;
-            var scaledY = sample.Object[i - 1].PixelY / factorY;
+            var location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
+            var origin = Viana.Project.CalibrationData.OriginInPixel;
+            location.Offset(origin.X, origin.Y);
+
+            var scaledX = location.X / factorX;
+            var scaledY = location.Y / factorY;
 
             var screenLocation = this.VideoImage.TranslatePoint(new Point(scaledX, scaledY), this.WindowCanvas);
 

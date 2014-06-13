@@ -892,9 +892,9 @@ namespace VianaNET.Modules.Chart
       {
         case ChartType.Custom:
           var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-          var axisY = (DataAxis)this.YAxisContent.SelectedItem;
-          this.XAxisContent.SelectedValue = axisX.Axis;
-          this.YAxisContent.SelectedValue = axisY.Axis;
+          //var axisY = (DataAxis)this.YAxisContent.SelectedItem;
+          //this.XAxisContent.SelectedValue = axisX.Axis;
+          //this.YAxisContent.SelectedValue = axisY.Axis;
           achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
           funcBez = 'y';
           break;
@@ -1637,7 +1637,8 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.Refresh();
+      this.PopulateAxesFromChartSelection();
+      //this.Refresh();
     }
 
     /// <summary>
@@ -1685,7 +1686,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.Refresh();
+      this.PopulateAxesFromChartSelection();
     }
 
     /// <summary>

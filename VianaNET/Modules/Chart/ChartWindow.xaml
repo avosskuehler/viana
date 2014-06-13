@@ -117,30 +117,6 @@
             </TabItem>
           </TabControl>
 
-          <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowInterpolationHeader}"
-                      Style="{StaticResource GroupBoxStyle}">
-            <Grid Name="InterpolationGrid">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <CheckBox Grid.Column="0"
-                      Margin="5"
-                      Name="InterpolationLineCheckBox"
-                      Content="{lex:Loc VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
-                      IsChecked="{Binding Path=CurrentFilterData.IsShowingInterpolationSeries, Source={x:Static application:Viana.Project}, Mode=TwoWay}" 
-                      Checked="ShowInterpolationCheckBoxCheckedChanged"
-                      Unchecked="ShowInterpolationCheckBoxCheckedChanged"
-                      HorizontalAlignment="Left"
-                   VerticalAlignment="Center"/>
-              <vianaNet:ImageButton x:Name="InterpolationOptionsButton" 
-                               Margin="1" Grid.Column="1"
-                               HorizontalAlignment="Right"
-                               ImageSource="/VianaNET;component/Images/InterpolateData16.png" 
-                               Click="InterpolationOptionsButtonClick" 
-                               Content="{lex:Loc VianaNET:Labels:ChartWindowInterpolationOptions}"/>
-            </Grid>
-          </GroupBox>
           <GroupBox Header="{lex:Loc VianaNET:Labels:RegressionLineLabel}"
                       Style="{StaticResource GroupBoxStyle}">
             <Grid Name="RegressionGrid">
@@ -169,7 +145,7 @@
               <vianaNet:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="FormulaContainerElement" SnapsToDevicePixels="True"
                                                Visibility="{Binding Path=CurrentFilterData.IsShowingRegressionSeries, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
               <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
-              <Label Grid.Column="0" Grid.Row="2" Content="{Binding Path=CurrentFilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:Viana.Project}}" Grid.ColumnSpan="2" />
+              <Label Grid.Column="0" Grid.Row="2"  MaxWidth="350" Content="{Binding Path=CurrentFilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:Viana.Project}}" Grid.ColumnSpan="2" />
             </Grid>
           </GroupBox>
           <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowTheorieLabel}"
@@ -201,6 +177,30 @@
               <vianaNet:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"
               Visibility="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
               <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
+            </Grid>
+          </GroupBox>
+          <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowInterpolationHeader}"
+                      Style="{StaticResource GroupBoxStyle}">
+            <Grid Name="InterpolationGrid">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+              </Grid.ColumnDefinitions>
+              <CheckBox Grid.Column="0"
+                      Margin="5"
+                      Name="InterpolationLineCheckBox"
+                      Content="{lex:Loc VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
+                      IsChecked="{Binding Path=CurrentFilterData.IsShowingInterpolationSeries, Source={x:Static application:Viana.Project}, Mode=TwoWay}" 
+                      Checked="ShowInterpolationCheckBoxCheckedChanged"
+                      Unchecked="ShowInterpolationCheckBoxCheckedChanged"
+                      HorizontalAlignment="Left"
+                   VerticalAlignment="Center"/>
+              <vianaNet:ImageButton x:Name="InterpolationOptionsButton" 
+                               Margin="1" Grid.Column="1"
+                               HorizontalAlignment="Right"
+                               ImageSource="/VianaNET;component/Images/InterpolateData16.png" 
+                               Click="InterpolationOptionsButtonClick" 
+                               Content="{lex:Loc VianaNET:Labels:ChartWindowInterpolationOptions}"/>
             </Grid>
           </GroupBox>
           <StackPanel Style="{StaticResource SpacerStyle}"/>

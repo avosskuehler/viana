@@ -20,9 +20,9 @@
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Dialogs
 {
-  using System;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
@@ -45,11 +45,6 @@ namespace VianaNET.Modules.Video.Dialogs
     ///   The padding.
     /// </summary>
     private const double AxisDescriptionPadding = 10d;
-
-    /// <summary>
-    ///   The epsilon to compare double values
-    /// </summary>
-    private const double Epsilon = 0.001d;
 
     #endregion
 
@@ -133,9 +128,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
     /// </param>
-    protected override void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    protected override void ContainerMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      base.Container_MouseLeftButtonDown(sender, e);
+      base.ContainerMouseLeftButtonDown(sender, e);
       if (this.ignoreMouse)
       {
         return;
@@ -179,9 +174,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The <see cref="MouseEventArgs"/> instance containing the event data.
     /// </param>
-    protected override void Container_MouseMove(object sender, MouseEventArgs e)
+    protected override void ContainerMouseMove(object sender, MouseEventArgs e)
     {
-      base.Container_MouseMove(sender, e);
+      base.ContainerMouseMove(sender, e);
       if (this.ignoreMouse)
       {
         return;
@@ -210,6 +205,24 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       base.MouseOverControlPanel(isOver);
       this.ignoreMouse = isOver;
+    }
+
+    /// <summary>
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
+    /// in its route that is derived from this class. Implement this method to add class handling for this event.
+    /// Resets the clipping on F10.
+    /// </summary>
+    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+    protected override void OnPreviewKeyDown(KeyEventArgs e)
+    {
+      base.OnPreviewKeyDown(e);
+      if (e.SystemKey == Key.F10)
+      {
+        // Reset coordinate system
+        Viana.Project.CalibrationData.CoordinateTransform = Matrix.Identity;
+        this.DialogResult = true;
+        this.Close();
+      }
     }
 
     /// <summary>

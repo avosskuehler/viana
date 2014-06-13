@@ -111,7 +111,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public VideoWindow()
     {
-      this.CoordinateSystem = Activator.CreateInstance<CoordinateSystem>(); 
+      this.CoordinateSystem = Activator.CreateInstance<CoordinateSystem>();
       this.InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.CreateCrossHairLines();
@@ -294,7 +294,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void UpdateCalibration()
     {
-      this.ShowOrHideCalibration(Visibility.Visible);
+      this.ShowOrHideCalibration(Viana.Project.CalibrationData.IsVideoCalibrated ? Visibility.Visible : Visibility.Hidden);
       this.PlaceCalibration();
     }
 
@@ -303,7 +303,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void UpdateClippingRegion()
     {
-      this.ShowOrHideClipRegion(Visibility.Visible);
+      this.ShowOrHideClipRegion(Viana.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden);
       this.PlaceClippingRegion();
     }
 
@@ -807,7 +807,7 @@ namespace VianaNET.Modules.Video
       this.RulerLabelBorder.Visibility = visibility;
     }
 
-   /// <summary>
+    /// <summary>
     /// The show or hide PixelLabel.
     /// </summary>
     /// <param name="visibility">

@@ -570,9 +570,6 @@
   <data name="ButtonChartWindowLabelTitle" xml:space="preserve">
     <value>@ButtonChartWindowLabelTitle</value>
   </data>
-  <data name="ButtonChartWindowToolTipDescriptioButtonChartWindowToolTipDescription" xml:space="preserve">
-    <value>@ButtonChartWindowToolTipDescription</value>
-  </data>
   <data name="ButtonChartWindowToolTipTitle" xml:space="preserve">
     <value>@ButtonChartWindowToolTipTitle</value>
   </data>
@@ -1734,9 +1731,6 @@
   <data name="DifferenceQuotientForwardTitle" xml:space="preserve">
     <value>@DifferenceQuotientForwardTitle</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>@DifferenceQuotientBackwardTitle</value>
-  </data>
   <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
     <value>@ButtonDifferenceQuotientLabelTitle</value>
   </data>
@@ -1802,5 +1796,20 @@
   </data>
   <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
     <value>@ButtonCoordinateSystemToolTipTitle</value>
+  </data>
+  <data name="DifferenceQuotientBackwardTitle" xml:space="preserve">
+    <value>@DifferenceQuotientBackwardTitle</value>
+  </data>
+  <data name="SelectColorWindowObjectIndexHeader" xml:space="preserve">
+    <value>@SelectColorWindowObjectIndexHeader</value>
+  </data>
+  <data name="ButtonExportChartToWordLabelDescription" xml:space="preserve">
+    <value>@ButtonExportChartToWordLabelDescription</value>
+  </data>
+  <data name="ButtonClipVideoToolTipDescription" xml:space="preserve">
+    <value>@ButtonClipVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonChartWindowToolTipDescription" xml:space="preserve">
+    <value>@ButtonChartWindowToolTipDescription</value>
   </data>
 </root>

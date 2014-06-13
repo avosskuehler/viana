@@ -101,9 +101,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
     /// </param>
-    protected override void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    protected override void ContainerMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      base.Container_MouseLeftButtonDown(sender, e);
+      base.ContainerMouseLeftButtonDown(sender, e);
       if (this.ignoreMouse)
       {
         return;
@@ -146,9 +146,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The <see cref="MouseEventArgs"/> instance containing the event data.
     /// </param>
-    protected override void Container_MouseMove(object sender, MouseEventArgs e)
+    protected override void ContainerMouseMove(object sender, MouseEventArgs e)
     {
-      base.Container_MouseMove(sender, e);
+      base.ContainerMouseMove(sender, e);
       if (this.ignoreMouse)
       {
         return;
