@@ -25,7 +25,6 @@
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
-      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
       <Grid Name="LeftVideoPanel" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
@@ -89,6 +88,7 @@
           </Path>
         </Canvas>
       </Grid>
+      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
                           Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"

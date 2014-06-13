@@ -2,7 +2,7 @@
 // <copyright file="ClipVideoWindow.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -24,18 +24,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
-
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Shapes;
-
-  using VianaNET.Data;
-  using VianaNET.Resources;
+  using VianaNET.Application;
   using VianaNET.Modules.Base;
+  using VianaNET.Resources;
 
   /// <summary>
   ///   The clip video window.
@@ -47,7 +44,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     ///   The margin.
     /// </summary>
-    private const int margin = 10;
+    private const int DefaultMargin = 10;
 
     #endregion
 
@@ -56,27 +53,27 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     ///   The bottom line.
     /// </summary>
-    private readonly Line BottomLine;
+    private readonly Line bottomLine;
 
     /// <summary>
     ///   The left line.
     /// </summary>
-    private readonly Line LeftLine;
+    private readonly Line leftLine;
 
     /// <summary>
     ///   The outer region.
     /// </summary>
-    private readonly Path OuterRegion;
+    private readonly Path outerRegion;
 
     /// <summary>
     ///   The right line.
     /// </summary>
-    private readonly Line RightLine;
+    private readonly Line rightLine;
 
     /// <summary>
     ///   The top line.
     /// </summary>
-    private readonly Line TopLine;
+    private readonly Line topLine;
 
     /// <summary>
     ///   The current line.
@@ -96,50 +93,50 @@ namespace VianaNET.Modules.Video.Dialogs
       this.LabelTitle.Content = Labels.ClipVideoHelpControlTitle;
       this.DescriptionTitle.Content = Labels.ClipVideoDescriptionTitle;
       this.DescriptionMessage.Text = Labels.ClipVideoDescriptionMessage;
-      this.TopLine = (Line)this.Resources["TopLine"];
-      this.TopLine.Name = "Top";
-      this.TopLine.MouseEnter += this.TopBottomLine_MouseEnter;
-      this.TopLine.MouseLeave += this.Line_MouseLeave;
-      this.TopLine.MouseLeftButtonDown += this.Line_MouseLeftButtonDown;
-      this.TopLine.MouseMove += this.Line_MouseMove;
-      this.TopLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
-      this.windowCanvas.Children.Insert(0, this.TopLine);
+      this.topLine = (Line)this.Resources["TopLine"];
+      this.topLine.Name = "Top";
+      this.topLine.MouseEnter += this.TopBottomLineMouseEnter;
+      this.topLine.MouseLeave += this.LineMouseLeave;
+      this.topLine.MouseLeftButtonDown += this.LineMouseLeftButtonDown;
+      this.topLine.MouseMove += this.LineMouseMove;
+      this.topLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
+      this.windowCanvas.Children.Insert(0, this.topLine);
 
-      this.LeftLine = (Line)this.Resources["LeftLine"];
+      this.leftLine = (Line)this.Resources["LeftLine"];
 
-      this.LeftLine.Name = "Left";
-      this.LeftLine.MouseEnter += this.LeftRightLine_MouseEnter;
-      this.LeftLine.MouseLeave += this.Line_MouseLeave;
-      this.LeftLine.MouseLeftButtonDown += this.Line_MouseLeftButtonDown;
-      this.LeftLine.MouseMove += this.Line_MouseMove;
-      this.LeftLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
-      this.windowCanvas.Children.Insert(0, this.LeftLine);
+      this.leftLine.Name = "Left";
+      this.leftLine.MouseEnter += this.LeftRightLineMouseEnter;
+      this.leftLine.MouseLeave += this.LineMouseLeave;
+      this.leftLine.MouseLeftButtonDown += this.LineMouseLeftButtonDown;
+      this.leftLine.MouseMove += this.LineMouseMove;
+      this.leftLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
+      this.windowCanvas.Children.Insert(0, this.leftLine);
 
-      this.BottomLine = (Line)this.Resources["BottomLine"];
+      this.bottomLine = (Line)this.Resources["BottomLine"];
 
-      this.BottomLine.Name = "Bottom";
-      this.BottomLine.MouseEnter += this.TopBottomLine_MouseEnter;
-      this.BottomLine.MouseLeave += this.Line_MouseLeave;
-      this.BottomLine.MouseLeftButtonDown += this.Line_MouseLeftButtonDown;
-      this.BottomLine.MouseMove += this.Line_MouseMove;
-      this.BottomLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
-      this.windowCanvas.Children.Insert(0, this.BottomLine);
+      this.bottomLine.Name = "Bottom";
+      this.bottomLine.MouseEnter += this.TopBottomLineMouseEnter;
+      this.bottomLine.MouseLeave += this.LineMouseLeave;
+      this.bottomLine.MouseLeftButtonDown += this.LineMouseLeftButtonDown;
+      this.bottomLine.MouseMove += this.LineMouseMove;
+      this.bottomLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
+      this.windowCanvas.Children.Insert(0, this.bottomLine);
 
-      this.RightLine = (Line)this.Resources["RightLine"];
+      this.rightLine = (Line)this.Resources["RightLine"];
 
-      this.RightLine.Name = "Right";
-      this.RightLine.MouseEnter += this.LeftRightLine_MouseEnter;
-      this.RightLine.MouseLeave += this.Line_MouseLeave;
-      this.RightLine.MouseLeftButtonDown += this.Line_MouseLeftButtonDown;
-      this.RightLine.MouseMove += this.Line_MouseMove;
-      this.RightLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
-      this.windowCanvas.Children.Insert(0, this.RightLine);
+      this.rightLine.Name = "Right";
+      this.rightLine.MouseEnter += this.LeftRightLineMouseEnter;
+      this.rightLine.MouseLeave += this.LineMouseLeave;
+      this.rightLine.MouseLeftButtonDown += this.LineMouseLeftButtonDown;
+      this.rightLine.MouseMove += this.LineMouseMove;
+      this.rightLine.MouseLeftButtonUp += this.Line_MouseLeftButtonUp;
+      this.windowCanvas.Children.Insert(0, this.rightLine);
 
-      this.OuterRegion = (Path)this.Resources["OuterRegion"];
+      this.outerRegion = (Path)this.Resources["OuterRegion"];
 
-      this.windowCanvas.Children.Insert(0, this.OuterRegion);
+      this.windowCanvas.Children.Insert(0, this.outerRegion);
 
-      this.Loaded += this.Window_Loaded;
+      this.Loaded += this.WindowLoaded;
     }
 
     #endregion
@@ -147,72 +144,71 @@ namespace VianaNET.Modules.Video.Dialogs
     #region Methods
 
     /// <summary>
-    /// The left right line_ mouse enter.
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
+    /// in its route that is derived from this class. Implement this method to add class handling for this event.
+    /// Resets the clipping on F10.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void LeftRightLine_MouseEnter(object sender, MouseEventArgs e)
+    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+    protected override void OnPreviewKeyDown(KeyEventArgs e)
+    {
+      base.OnPreviewKeyDown(e);
+      if (e.SystemKey == Key.F10)
+      {
+        // Reset clip region
+        Viana.Project.CalibrationData.ClipRegion = new Rect(0, 0, 0, 0);
+        Viana.Project.CalibrationData.HasClipRegion = false;
+        this.DialogResult = true;
+        this.Close();
+      }
+    }
+
+    /// <summary>
+    /// Handles the MouseEnter event of the LeftRightLine control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void LeftRightLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeWE;
     }
 
     /// <summary>
-    /// The line_ mouse leave.
+    /// Handles the MouseLeave event of the Line control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Line_MouseLeave(object sender, MouseEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void LineMouseLeave(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.Hand;
     }
 
     /// <summary>
-    /// The line_ mouse left button down.
+    /// Handles the MouseLeftButtonDown event of the Line control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Line_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    private void LineMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       this.currentLine = sender as Line;
       Mouse.Capture(this.currentLine);
     }
 
     /// <summary>
-    /// The line_ mouse left button up.
+    /// Handles the MouseLeftButtonUp event of the Line control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void Line_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
       Mouse.Capture(null);
     }
 
     /// <summary>
-    /// The line_ mouse move.
+    /// Handles the MouseMove event of the Line control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Line_MouseMove(object sender, MouseEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void LineMouseMove(object sender, MouseEventArgs e)
     {
       if (e.LeftButton == MouseButtonState.Pressed && this.currentLine != null)
       {
@@ -223,42 +219,42 @@ namespace VianaNET.Modules.Video.Dialogs
           switch (this.currentLine.Name)
           {
             case "Top":
-              if (newY + margin < this.BottomLine.Y1)
+              if (newY + DefaultMargin < this.bottomLine.Y1)
               {
                 this.currentLine.Y1 = newY;
                 this.currentLine.Y2 = newY;
-                this.LeftLine.Y1 = newY;
-                this.RightLine.Y1 = newY;
+                this.leftLine.Y1 = newY;
+                this.rightLine.Y1 = newY;
               }
 
               break;
             case "Bottom":
-              if (newY > this.TopLine.Y1 + margin)
+              if (newY > this.topLine.Y1 + DefaultMargin)
               {
                 this.currentLine.Y1 = newY;
                 this.currentLine.Y2 = newY;
-                this.LeftLine.Y2 = newY;
-                this.RightLine.Y2 = newY;
+                this.leftLine.Y2 = newY;
+                this.rightLine.Y2 = newY;
               }
 
               break;
             case "Left":
-              if (newX + margin < this.RightLine.X1)
+              if (newX + DefaultMargin < this.rightLine.X1)
               {
                 this.currentLine.X1 = newX;
                 this.currentLine.X2 = newX;
-                this.TopLine.X1 = newX;
-                this.BottomLine.X1 = newX;
+                this.topLine.X1 = newX;
+                this.bottomLine.X1 = newX;
               }
 
               break;
             case "Right":
-              if (newX > this.LeftLine.X1 + margin)
+              if (newX > this.leftLine.X1 + DefaultMargin)
               {
                 this.currentLine.X1 = newX;
                 this.currentLine.X2 = newX;
-                this.TopLine.X2 = newX;
-                this.BottomLine.X2 = newX;
+                this.topLine.X2 = newX;
+                this.bottomLine.X2 = newX;
               }
 
               break;
@@ -270,89 +266,96 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    ///   The reset outer region.
+    /// Resets the outer region.
     /// </summary>
     private void ResetOuterRegion()
     {
-      var geometry = this.OuterRegion.Data as CombinedGeometry;
+      var geometry = this.outerRegion.Data as CombinedGeometry;
+      if (geometry == null)
+      {
+        return;
+      }
+
       var outerRect = geometry.Geometry1 as RectangleGeometry;
-      outerRect.Rect = new Rect(0, 0, this.VideoImage.ActualWidth, this.VideoImage.ActualHeight);
+      if (outerRect != null)
+      {
+        outerRect.Rect = new Rect(0, 0, this.VideoImage.ActualWidth, this.VideoImage.ActualHeight);
+      }
+
       var innerRect = geometry.Geometry2 as RectangleGeometry;
-      innerRect.Rect = new Rect(
-        new Point(this.LeftLine.X1, this.TopLine.Y1), new Point(this.RightLine.X1, this.BottomLine.Y1));
+      if (innerRect != null)
+      {
+        innerRect.Rect = new Rect(
+          new Point(this.leftLine.X1, this.topLine.Y1), new Point(this.rightLine.X1, this.bottomLine.Y1));
+      }
 
-      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-      var rect = new Rect();
-      rect.Location = new Point(this.LeftLine.X1 * factorX, this.TopLine.Y1 * factorY);
-      rect.Width = (this.RightLine.X1 - this.LeftLine.X1) * factorX;
-      rect.Height = (this.BottomLine.Y1 - this.TopLine.Y1) * factorY;
+      var rect = new Rect
+                   {
+                     Location = new Point(this.leftLine.X1 * factorX, this.topLine.Y1 * factorY),
+                     Width = (this.rightLine.X1 - this.leftLine.X1) * factorX,
+                     Height = (this.bottomLine.Y1 - this.topLine.Y1) * factorY
+                   };
+
       Viana.Project.CalibrationData.ClipRegion = rect;
       Viana.Project.CalibrationData.HasClipRegion = true;
     }
 
     /// <summary>
-    /// The top bottom line_ mouse enter.
+    /// Handles the MouseEnter event of the TopBottomLine control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void TopBottomLine_MouseEnter(object sender, MouseEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    private void TopBottomLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeNS;
     }
 
     /// <summary>
-    /// The window_ loaded.
+    /// Handles the Loaded event of the Window control.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Window_Loaded(object sender, RoutedEventArgs e)
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void WindowLoaded(object sender, RoutedEventArgs e)
     {
       if (!Viana.Project.CalibrationData.HasClipRegion)
       {
-        this.TopLine.X1 = margin;
-        this.TopLine.X2 = this.VideoImage.ActualWidth - margin;
-        this.LeftLine.Y1 = margin;
-        this.LeftLine.Y2 = this.VideoImage.ActualHeight - margin;
-        this.BottomLine.X1 = margin;
-        this.BottomLine.Y1 = this.VideoImage.ActualHeight - margin;
-        this.BottomLine.X2 = this.VideoImage.ActualWidth - margin;
-        this.BottomLine.Y2 = this.VideoImage.ActualHeight - margin;
-        this.RightLine.X1 = this.VideoImage.ActualWidth - margin;
-        this.RightLine.Y1 = margin;
-        this.RightLine.X2 = this.VideoImage.ActualWidth - margin;
-        this.RightLine.Y2 = this.VideoImage.ActualHeight - margin;
+        this.topLine.X1 = DefaultMargin;
+        this.topLine.X2 = this.VideoImage.ActualWidth - DefaultMargin;
+        this.leftLine.Y1 = DefaultMargin;
+        this.leftLine.Y2 = this.VideoImage.ActualHeight - DefaultMargin;
+        this.bottomLine.X1 = DefaultMargin;
+        this.bottomLine.Y1 = this.VideoImage.ActualHeight - DefaultMargin;
+        this.bottomLine.X2 = this.VideoImage.ActualWidth - DefaultMargin;
+        this.bottomLine.Y2 = this.VideoImage.ActualHeight - DefaultMargin;
+        this.rightLine.X1 = this.VideoImage.ActualWidth - DefaultMargin;
+        this.rightLine.Y1 = DefaultMargin;
+        this.rightLine.X2 = this.VideoImage.ActualWidth - DefaultMargin;
+        this.rightLine.Y2 = this.VideoImage.ActualHeight - DefaultMargin;
       }
       else
       {
         double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-        this.TopLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.TopLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.TopLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.TopLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.LeftLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.LeftLine.X2 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.LeftLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.LeftLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.BottomLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.BottomLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.BottomLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.BottomLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.RightLine.X1 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.RightLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.RightLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.RightLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.topLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.topLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.topLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.topLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.leftLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.leftLine.X2 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.leftLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.leftLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.bottomLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.bottomLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.bottomLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.bottomLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.rightLine.X1 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.rightLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.rightLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.rightLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
         Viana.Project.CalibrationData.HasClipRegion = true;
       }
 

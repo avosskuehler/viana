@@ -2,7 +2,7 @@
 // <copyright file="WindowWithHelp.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,23 +19,18 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The window with help.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-
 namespace VianaNET.Modules.Base
 {
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
 
-  using VianaNET.Modules.Video.Control;
+  using VianaNET.Application;
 
   /// <summary>
-  ///   The window with help.
+  ///   The window with help is a base class for windows that display the video with some elements on it
+  ///   and a help window.
   /// </summary>
   public partial class WindowWithHelp : Window
   {
@@ -46,7 +41,10 @@ namespace VianaNET.Modules.Base
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject", typeof(int), typeof(WindowWithHelp), new FrameworkPropertyMetadata(1, OnPropertyChanged));
+        "IndexOfTrackedObject", 
+        typeof(int), 
+        typeof(WindowWithHelp), 
+        new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
 
@@ -96,27 +94,39 @@ namespace VianaNET.Modules.Base
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    protected virtual void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    protected virtual void ContainerMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
     }
 
     /// <summary>
     /// Handles the MouseLeftButtonUp event of the Container control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    protected virtual void Container_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    protected virtual void ContainerMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
     }
 
     /// <summary>
     /// Handles the MouseMove event of the Container control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    protected virtual void Container_MouseMove(object sender, MouseEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    protected virtual void ContainerMouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.windowCanvas);
 
@@ -138,37 +148,75 @@ namespace VianaNET.Modules.Base
     /// <summary>
     /// Mouse is the over control panel.
     /// </summary>
-    /// <param name="isOver">if set to <c>true</c> is over.</param>
+    /// <param name="isOver">
+    /// if set to <c>true</c> is over.
+    /// </param>
     protected virtual void MouseOverControlPanel(bool isOver)
     {
     }
 
     /// <summary>
-    /// Raises the <see cref="PropertyChanged"/> event.
+    /// Handles the PreviewKeyDown event of the Window control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="KeyEventArgs"/> instance containing the event data.
+    /// </param>
+    protected void WindowPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.Key == Key.Enter || e.Key == Key.Escape)
+      {
+        e.Handled = true;
+        this.Close();
+      }
+    }
+
+    /// <summary>
+    /// Raises the PropertyChanged event.
     /// </summary>
     /// <param name="obj">
-    /// The source of the event. This. 
+    /// The source of the event. This.
     /// </param>
     /// <param name="args">
-    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data.
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       var window = obj as WindowWithHelp;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+      if (window != null && window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }
     }
 
     /// <summary>
+    /// Handles the Click event of the btnDone control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void BtnDoneClick(object sender, RoutedEventArgs e)
+    {
+      this.Close();
+    }
+
+    /// <summary>
     /// Handles the MouseEnter event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    private void ControlPanelMouseEnter(object sender, MouseEventArgs e)
     {
       this.MouseOverControlPanel(true);
     }
@@ -176,9 +224,13 @@ namespace VianaNET.Modules.Base
     /// <summary>
     /// Handles the MouseLeave event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-    private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
+    private void ControlPanelMouseLeave(object sender, MouseEventArgs e)
     {
       this.MouseOverControlPanel(false);
     }
@@ -186,8 +238,12 @@ namespace VianaNET.Modules.Base
     /// <summary>
     /// Drag window mouse down.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="args">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="args">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void DragWindowMouseDown(object sender, MouseButtonEventArgs args)
     {
       this.mouseDownLocation = args.GetPosition(this.windowCanvas);
@@ -195,13 +251,13 @@ namespace VianaNET.Modules.Base
     }
 
     /// <summary>
-    /// The drag window mouse up.
+    /// Drag window mouse up event.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
     /// </param>
     private void DragWindowMouseUp(object sender, MouseButtonEventArgs e)
     {
@@ -209,13 +265,13 @@ namespace VianaNET.Modules.Base
     }
 
     /// <summary>
-    /// The hide window.
+    /// Hides the window.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void HideWindow(object sender, RoutedEventArgs e)
     {
@@ -223,13 +279,13 @@ namespace VianaNET.Modules.Base
     }
 
     /// <summary>
-    /// The minimize window.
+    /// Minimizes the window.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
     /// </param>
     private void MinimizeWindow(object sender, MouseButtonEventArgs e)
     {
@@ -241,30 +297,6 @@ namespace VianaNET.Modules.Base
       {
         this.DescriptionMessage.Visibility = Visibility.Visible;
       }
-    }
-
-    /// <summary>
-    /// Handles the PreviewKeyDown event of the Window control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
-     private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.Key == Key.Enter || e.Key == Key.Escape)
-      {
-        e.Handled = true;
-        this.Close();
-      }
-    }
-
-     /// <summary>
-     /// Handles the Click event of the btnDone control.
-     /// </summary>
-     /// <param name="sender">The source of the event.</param>
-     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void btnDone_Click(object sender, RoutedEventArgs e)
-    {
-      this.Close();
     }
 
     #endregion

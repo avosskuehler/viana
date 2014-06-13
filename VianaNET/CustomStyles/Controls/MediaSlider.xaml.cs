@@ -2,7 +2,7 @@
 // <copyright file="MediaSlider.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Interaction logic for MediaSlider.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET
 {
@@ -39,15 +36,12 @@ namespace VianaNET
   /// </summary>
   public class MediaSlider : Slider
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constants
 
     /// <summary>
     ///   The timeline mouse capture margin.
     /// </summary>
-    private const int timelineMouseCaptureMargin = 25;
+    private const int TimelineMouseCaptureMargin = 25;
 
     #endregion
 
@@ -58,9 +52,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty CurrentTimeStringProperty =
       DependencyProperty.Register(
-        "CurrentTimeString",
-        typeof(string),
-        typeof(MediaSlider),
+        "CurrentTimeString", 
+        typeof(string), 
+        typeof(MediaSlider), 
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -68,36 +62,36 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
       DependencyProperty.Register(
-        "FrameTimeInNanoSeconds",
-        typeof(long),
-        typeof(MediaSlider),
+        "FrameTimeInNanoSeconds", 
+        typeof(long), 
+        typeof(MediaSlider), 
         new UIPropertyMetadata(default(long), OnFrameTimeChanged));
 
     /// <summary>
     ///   The is showing times property.
     /// </summary>
     public static readonly DependencyProperty IsShowingTimesProperty = DependencyProperty.Register(
-      "IsShowingTimes",
-      typeof(Visibility),
-      typeof(MediaSlider),
+      "IsShowingTimes", 
+      typeof(Visibility), 
+      typeof(MediaSlider), 
       new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The maximum string property.
     /// </summary>
     public static readonly DependencyProperty MaximumStringProperty = DependencyProperty.Register(
-      "MaximumString",
-      typeof(string),
-      typeof(MediaSlider),
+      "MaximumString", 
+      typeof(string), 
+      typeof(MediaSlider), 
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The minimum string property.
     /// </summary>
     public static readonly DependencyProperty MinimumStringProperty = DependencyProperty.Register(
-      "MinimumString",
-      typeof(string),
-      typeof(MediaSlider),
+      "MinimumString", 
+      typeof(string), 
+      typeof(MediaSlider), 
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -105,9 +99,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionEndStringProperty =
       DependencyProperty.Register(
-        "SelectionEndString",
-        typeof(string),
-        typeof(MediaSlider),
+        "SelectionEndString", 
+        typeof(string), 
+        typeof(MediaSlider), 
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -115,9 +109,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionStartStringProperty =
       DependencyProperty.Register(
-        "SelectionStartString",
-        typeof(string),
-        typeof(MediaSlider),
+        "SelectionStartString", 
+        typeof(string), 
+        typeof(MediaSlider), 
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -144,10 +138,6 @@ namespace VianaNET
     /// </summary>
     private Canvas timelineSelectionCanvas;
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     ///   The timeline selection range.
     /// </summary>
@@ -170,9 +160,6 @@ namespace VianaNET
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -217,10 +204,6 @@ namespace VianaNET
     /// </summary>
     public event EventHandler SelectionStartReached;
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     ///   The tick down clicked.
     /// </summary>
@@ -243,17 +226,17 @@ namespace VianaNET
       /// <summary>
       ///   The none.
       /// </summary>
-      None,
+      None, 
 
       /// <summary>
       ///   The start.
       /// </summary>
-      Start,
+      Start, 
 
       /// <summary>
       ///   The end.
       /// </summary>
-      End,
+      End, 
     }
 
     #endregion
@@ -276,12 +259,8 @@ namespace VianaNET
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
-    ///   Time between frames in ms units.
+    ///   Gets or sets the Time between frames in ms units.
     /// </summary>
     public long FrameTimeInNanoSeconds
     {
@@ -378,17 +357,10 @@ namespace VianaNET
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
-    ///   The on apply template.
+    ///   Builds the visual tree for the <see cref="T:System.Windows.Controls.Slider" /> control.
     /// </summary>
     public override void OnApplyTemplate()
     {
@@ -414,6 +386,9 @@ namespace VianaNET
       this.SelectionEnd = this.Maximum;
     }
 
+    /// <summary>
+    ///   Updates the selection times.
+    /// </summary>
     public void UpdateSelectionTimes()
     {
       this.SelectionStartString = this.ConvertToTimeString(this.SelectionStart);
@@ -425,13 +400,16 @@ namespace VianaNET
     #region Methods
 
     /// <summary>
-    /// The on maximum changed.
+    /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/>
+    ///   property.
     /// </summary>
     /// <param name="oldMaximum">
-    /// The old maximum. 
+    /// The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/>
+    ///   property.
     /// </param>
     /// <param name="newMaximum">
-    /// The new maximum. 
+    /// The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/>
+    ///   property.
     /// </param>
     protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
     {
@@ -442,13 +420,16 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The on minimum changed.
+    /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/>
+    ///   property.
     /// </summary>
     /// <param name="oldMinimum">
-    /// The old minimum. 
+    /// The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/>
+    ///   property.
     /// </param>
     /// <param name="newMinimum">
-    /// The new minimum. 
+    /// The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/>
+    ///   property.
     /// </param>
     protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
     {
@@ -458,10 +439,11 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The on preview mouse left button down.
+    /// Provides class handling for the <see cref="E:System.Windows.ContentElement.PreviewMouseLeftButtonDown"/> routed
+    ///   event.
     /// </summary>
     /// <param name="e">
-    /// The e. 
+    /// The event data.
     /// </param>
     protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
     {
@@ -475,10 +457,13 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The on preview mouse left button up.
+    /// Invoked when an unhandled <see cref="E:System.Windows.UIElement.PreviewMouseLeftButtonUp"/> routed
+    ///   event reaches an element in its route that is derived from this class. Implement this method to add class handling
+    ///   for this event.
     /// </summary>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="T:System.Windows.Input.MouseButtonEventArgs"/> that contains the event data. The event
+    ///   data reports that the left mouse button was released.
     /// </param>
     protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
     {
@@ -493,10 +478,12 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The on preview mouse move.
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Mouse.PreviewMouseMove"/> attached event reaches an
+    ///   element
+    ///   in its route that is derived from this class. Implement this method to add class handling for this event.
     /// </summary>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="T:System.Windows.Input.MouseEventArgs"/> that contains the event data.
     /// </param>
     protected override void OnPreviewMouseMove(MouseEventArgs e)
     {
@@ -509,13 +496,16 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The on value changed.
+    /// Updates the current position of the <see cref="T:System.Windows.Controls.Slider"/> when the
+    ///   <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value"/> property changes.
     /// </summary>
     /// <param name="oldValue">
-    /// The old value. 
+    /// The old <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value"/> of the
+    ///   <see cref="T:System.Windows.Controls.Slider"/>.
     /// </param>
     /// <param name="newValue">
-    /// The new value. 
+    /// The new <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value"/> of the
+    ///   <see cref="T:System.Windows.Controls.Slider"/>.
     /// </param>
     protected override void OnValueChanged(double oldValue, double newValue)
     {
@@ -547,18 +537,14 @@ namespace VianaNET
       base.OnValueChanged(oldValue, newValue);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
-    /// The on frame time changed.
+    /// Called when frame time changed.
     /// </summary>
     /// <param name="obj">
-    /// The obj. 
+    /// The object.
     /// </param>
     /// <param name="args">
-    /// The args. 
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.
     /// </param>
     private static void OnFrameTimeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
@@ -569,18 +555,18 @@ namespace VianaNET
     /// The check which range end to change.
     /// </summary>
     /// <param name="mouseDownPosition">
-    /// The mouse down position. 
+    /// The mouse down position.
     /// </param>
     private void CheckWhichRangeEndToChange(Point mouseDownPosition)
     {
       if (this.IsMouseOver && !this.timelineThumb.IsMouseOver)
       {
-        if (mouseDownPosition.X > -timelineMouseCaptureMargin && mouseDownPosition.X < timelineMouseCaptureMargin)
+        if (mouseDownPosition.X > -TimelineMouseCaptureMargin && mouseDownPosition.X < TimelineMouseCaptureMargin)
         {
           this.currentRangeSelectionThumb = RangeSelectionThumb.Start;
         }
-        else if (mouseDownPosition.X > this.timelineSelectionRange.ActualWidth - timelineMouseCaptureMargin
-                 && mouseDownPosition.X < this.timelineSelectionRange.ActualWidth + timelineMouseCaptureMargin)
+        else if (mouseDownPosition.X > this.timelineSelectionRange.ActualWidth - TimelineMouseCaptureMargin
+                 && mouseDownPosition.X < this.timelineSelectionRange.ActualWidth + TimelineMouseCaptureMargin)
         {
           this.currentRangeSelectionThumb = RangeSelectionThumb.End;
         }
@@ -591,10 +577,10 @@ namespace VianaNET
     /// The convert to time string.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <returns>
-    /// The <see cref="string"/> . 
+    /// The <see cref="string"/> .
     /// </returns>
     private string ConvertToTimeString(double value)
     {
@@ -610,7 +596,7 @@ namespace VianaNET
     /// The on frame time changed.
     /// </summary>
     /// <param name="args">
-    /// The args. 
+    /// The args.
     /// </param>
     private void OnFrameTimeChanged(DependencyPropertyChangedEventArgs args)
     {
@@ -618,13 +604,13 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The tick down clicked command_ executed.
+    /// Handles the Executed event of the TickDownClickedCommand control.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The source of the event.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="ExecutedRoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void TickDownClickedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
@@ -632,32 +618,24 @@ namespace VianaNET
     }
 
     /// <summary>
-    /// The tick up clicked command_ executed.
+    /// Handles the Executed event of the TickUpClickedCommand control.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The source of the event.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The <see cref="ExecutedRoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void TickUpClickedCommand_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       this.TickUpClicked(this, e);
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     /// The update selection range.
     /// </summary>
     /// <param name="selectionPosition">
-    /// The selection position. 
+    /// The selection position.
     /// </param>
     private void UpdateSelectionRange(Point selectionPosition)
     {
@@ -706,14 +684,10 @@ namespace VianaNET
     private void UpdateTickStyle()
     {
       // Ggf. TODO
-      this.IsSnapToTickEnabled = false;
+      // this.IsSnapToTickEnabled = false;
       this.TickFrequency = this.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs;
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

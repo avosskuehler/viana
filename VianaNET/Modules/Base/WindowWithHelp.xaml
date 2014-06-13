@@ -8,11 +8,11 @@
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
-  PreviewKeyDown="Window_PreviewKeyDown" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection">
+  PreviewKeyDown="WindowPreviewKeyDown" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid RenderTransformOrigin="0.5,0.5" Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonDown="Container_MouseLeftButtonDown" MouseLeftButtonUp="Container_MouseLeftButtonUp">
+  <Grid RenderTransformOrigin="0.5,0.5" Name="playerContainerGrid" MouseMove="ContainerMouseMove" MouseLeftButtonDown="ContainerMouseLeftButtonDown" MouseLeftButtonUp="ContainerMouseLeftButtonUp">
     <Grid.RenderTransform>
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
@@ -60,7 +60,7 @@
         </StackPanel>
       </Border>
 
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Border.RenderTransform>
@@ -78,7 +78,7 @@
           <Separator/>
           <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description"/>
           <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap"/>
-          <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
+          <Button Name="btnDone" Width="80" IsDefault="True" Click="BtnDoneClick" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
         </StackPanel>
       </Border>
     </Canvas>
