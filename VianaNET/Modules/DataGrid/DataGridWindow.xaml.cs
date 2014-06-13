@@ -24,7 +24,9 @@ namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
   using System.ComponentModel;
+  using System.Data;
   using System.Globalization;
+  using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Data;
@@ -51,8 +53,10 @@ namespace VianaNET.Modules.DataGrid
       this.PopulateDataGridWithColumns();
       Viana.Project.CalibrationData.PropertyChanged += this.DataPropertyChanged;
       Viana.Project.VideoData.PropertyChanged += this.DataPropertyChanged;
+      //Viana.Project.VideoData.SelectionChanged += VideoData_SelectionChanged;
       Viana.Project.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
+
 
     #endregion
 
@@ -249,5 +253,69 @@ namespace VianaNET.Modules.DataGrid
     }
 
     #endregion
+
+    private void DataGrid_OnKeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.Key == Key.Delete)
+      {
+        //Viana.Project.VideoData.DeleteSelectedSamples();
+        if (this.DataGrid.SelectedItems.Count > 0)
+        {
+          var removeItems = (from object item in this.DataGrid.SelectedItems select item as TimeSample).ToList();
+
+          foreach (var removeItem in removeItems)
+          {
+            Viana.Project.VideoData.Samples.Remove(removeItem);
+          }
+        }
+
+        Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      }
+    }
+
+    //private bool isCallingItself;
+
+    //void VideoData_SelectionChanged(object sender, System.EventArgs e)
+    //{
+    //  if (this.isCallingItself)
+    //  {
+    //    return;
+    //  }
+
+    //  this.DataGrid.UnselectAll();
+    //  if (Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //  {
+    //    return;
+    //  }
+
+    //  foreach (var selectedSample in Viana.Project.VideoData.Samples.Select(o => o.IsSelected))
+    //  {
+    //    this.DataGrid.SelectedItems.Add(selectedSample);
+    //  }
+    //}
+
+    //private void DataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //  foreach (var item in e.AddedItems)
+    //  {
+    //    var sample = item as TimeSample;
+    //    if (sample != null)
+    //    {
+    //      sample.IsSelected = true;
+    //    }
+    //  }
+
+    //  foreach (var item in e.RemovedItems)
+    //  {
+    //    var sample = item as TimeSample;
+    //    if (sample != null)
+    //    {
+    //      sample.IsSelected = false;
+    //    }
+    //  }
+    //  this.isCallingItself = true;
+    //  Viana.Project.VideoData.OnSelectionChanged();
+    //  this.isCallingItself = false;
+    //}
   }
 }

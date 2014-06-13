@@ -1710,7 +1710,8 @@ F10: Suchbereichseingrenzung löschen.</value>
   <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
     <value>Koordinaten anzeigen - linke Maustaste
 Koordinaten ändern - Doppelklick linke Maustaste auf Datenpunkt
-Datenpunkte auswählen - linke Maustaste und Rechteck aufziehen (Funktion vorher aktivieren in Einstellungen)</value>
+Datenpunkte auswählen - linke Maustaste und Rechteck aufziehen (Funktion vorher aktivieren in Diagrammeigenschaften rechts)
+Markierte Datenpunkte löschen - 'Entf' Taste</value>
   </data>
   <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
     <value>Ansicht</value>
@@ -1848,5 +1849,14 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   </data>
   <data name="MeasureAngleWindowTitle" xml:space="preserve">
     <value>Winkelmessung</value>
+  </data>
+  <data name="AskDeleteDataMessage" xml:space="preserve">
+    <value>Sollen die markierten Datenpunkte wirklich gelöscht werden?</value>
+  </data>
+  <data name="AskDeleteDataMessageTitle" xml:space="preserve">
+    <value>Datenpunkte löschen?</value>
+  </data>
+  <data name="AskDeleteDataTitle" xml:space="preserve">
+    <value>Daten anpassen</value>
   </data>
 </root>

@@ -1833,4 +1833,13 @@
   <data name="MeasureAngleWindowTitle" xml:space="preserve">
     <value>@MeasureAngleWindowTitle</value>
   </data>
+  <data name="AskDeleteDataMessage" xml:space="preserve">
+    <value>@AskDeleteDataMessage</value>
+  </data>
+  <data name="AskDeleteDataMessageTitle" xml:space="preserve">
+    <value>@AskDeleteDataMessageTitle</value>
+  </data>
+  <data name="AskDeleteDataTitle" xml:space="preserve">
+    <value>@AskDeleteDataTitle</value>
+  </data>
 </root>

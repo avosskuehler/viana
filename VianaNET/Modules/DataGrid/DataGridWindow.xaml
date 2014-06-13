@@ -21,7 +21,7 @@
     RowHeaderWidth="20" 
     CanUserDeleteRows="False"
     CanUserResizeColumns="True"
-    >
+    PreviewKeyDown="DataGrid_OnKeyDown"    >
     <DataGrid.RowStyle>
       <Style TargetType="DataGridRow">
         <EventSetter Event="MouseDoubleClick" Handler="DataGridRowMouseDoubleClick"/>

@@ -124,6 +124,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @AskDeleteDataMessage.
+        /// </summary>
+        internal static string AskDeleteDataMessage {
+            get {
+                return ResourceManager.GetString("AskDeleteDataMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AskDeleteDataMessageTitle.
+        /// </summary>
+        internal static string AskDeleteDataMessageTitle {
+            get {
+                return ResourceManager.GetString("AskDeleteDataMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @AskDeleteDataTitle.
+        /// </summary>
+        internal static string AskDeleteDataTitle {
+            get {
+                return ResourceManager.GetString("AskDeleteDataTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @AskSaveProjectDialogDescription.
         /// </summary>
         internal static string AskSaveProjectDialogDescription {

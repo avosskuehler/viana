@@ -1724,7 +1724,8 @@ Click OK or press Enter, when ready.</value>
   <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
     <value>Display coordinates - left mouse button
 Modify coordinates - left mouse button double click on data point
-Select points - drag rectangle with left mouse button (needs to be activated in properties)</value>
+Select points - drag rectangle with left mouse button (needs to be activated in chart properties on the right)
+Delete selected points - 'Del' key</value>
   </data>
   <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
     <value>View</value>
@@ -1847,5 +1848,14 @@ F10: Reset coordinate system.</value>
   </data>
   <data name="MeasureAngleWindowTitle" xml:space="preserve">
     <value>Measure angles</value>
+  </data>
+  <data name="AskDeleteDataMessage" xml:space="preserve">
+    <value>Are you sure to delete all selected data points?</value>
+  </data>
+  <data name="AskDeleteDataMessageTitle" xml:space="preserve">
+    <value>Delete data points?</value>
+  </data>
+  <data name="AskDeleteDataTitle" xml:space="preserve">
+    <value>Adapt data</value>
   </data>
 </root>
