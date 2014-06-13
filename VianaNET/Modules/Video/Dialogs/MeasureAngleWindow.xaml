@@ -1,0 +1,91 @@
+﻿<Window
+    x:Class="VianaNET.Modules.Video.Dialogs.MeasureAngleWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+  xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
+    xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
+  xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
+  lex:LocalizeDictionary.DesignCulture="de"
+	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
+  WindowStartupLocation="CenterScreen"
+  Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
+  Loaded="WindowLoaded" 
+  PreviewKeyDown="WindowPreviewKeyDown"
+  Title="{lex:Loc VianaNET:Labels:MeasureAngleWindowTitle}">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid Name="PlayerContainerGrid" RenderTransformOrigin="0.5,0.5" MouseMove="ContainerMouseMove" MouseLeftButtonDown="ContainerMouseLeftButtonDown">
+    <Grid.RenderTransform>
+      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+    </Grid.RenderTransform>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}"/>
+    <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
+      <Canvas.Width>
+        <Binding ElementName="VideoImage" Path="ActualWidth" />
+      </Canvas.Width>
+      <Canvas.Height>
+        <Binding ElementName="VideoImage" Path="ActualHeight" />
+      </Canvas.Height>
+
+      <Line Name="Line1" Stroke="Green" StrokeThickness="2" Visibility="Hidden"/>
+      <Line Name="Line2" Stroke="Green" StrokeThickness="2" Visibility="Hidden"/>
+      <controls:Arc x:Name="Arc" Stroke="Green" SnapsToDevicePixels="True" Radius="30" Visibility="Hidden" />
+      <Border RenderTransformOrigin="0.5,0.5" Name="AngleLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
+        <Border.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Border.RenderTransform>
+        <Label Name="AngleLabel" Padding="1"/>
+      </Border>
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250">
+        <Border.RenderTransform>
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+        </Border.RenderTransform>
+        <StackPanel Orientation="Vertical">
+          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="{lex:Loc VianaNET:Labels:MeasureAngleHelpControlTitle}" HorizontalAlignment="Center" x:Name="LabelTitle" Panel.ZIndex="2" FontFamily="Segoe UI Symbol" VerticalAlignment="Top" Height="30.29"/>
+            <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
+            <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
+          </Grid>
+          <Separator/>
+          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="{lex:Loc VianaNET:Labels:MeasureAngleHowToMeasureHeader}" />
+          <TextBlock Name="HelpText" Padding="5" Text="{lex:Loc VianaNET:Labels:MeasureAngleHowToMeasureDescription}" TextWrapping="Wrap" />
+          <StackPanel Name="FramePanel" Orientation="Horizontal" Margin="5">
+            <Label Padding="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionFrameLabel}" VerticalAlignment="Center"/>
+            <Label Name="FrameIndex" Width="40" Padding="0"
+                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static control:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
+            <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+            <Label Name="FrameCount" Content="{Binding Path=VideoElement.FrameCount, Source={x:Static control:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+          </StackPanel>
+          <vianaNet:MediaSlider 
+            Margin="5" 
+            IsShowingTimes="Collapsed" 
+            x:Name="TimelineSlider"  
+            Style="{StaticResource MediaSliderStyle}"
+            FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
+            Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
+            SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
+            SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
+            SmallChange="1" 
+            IsSelectionRangeEnabled="True" 
+            TickPlacement="BottomRight" 
+            Interval="1" 
+            Height="20"
+            TickDownClicked="TimelineSliderTickDownClicked" 
+            TickUpClicked="TimelineSliderTickUpClicked"
+            Thumb.DragStarted="TimelineSliderDragStarted"
+            Thumb.DragCompleted="TimelineSliderDragCompleted"
+            IsSnapToTickEnabled="True"/>
+          <Separator/>
+          <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReadyClick" />
+        </StackPanel>
+      </Border>
+    </Canvas>
+  </Grid>
+</Window>

@@ -457,6 +457,13 @@
                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"
                         SmallImageSource="/VianaNET;component/Images/Calibrate16.png" 
                         LargeImageSource="/VianaNET;component/Images/Calibrate32.png" />
+          <RibbonButton Click="MeasureAngleButtonClick" 
+                        Label="{lex:Loc VianaNET:Labels:ButtonMeasureAngleLabelTitle}"
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonMeasureAngleToolTipTitle}" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonMeasureAngleToolTipDescription}" 
+                        IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"
+                        SmallImageSource="/VianaNET;component/Images/Angle16.png" 
+                        LargeImageSource="/VianaNET;component/Images/Angle32.png" />
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoCalibrationOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/Calibrate32.png" >
           <RibbonCheckBox Name="ShowCalibrationCheckbox"  

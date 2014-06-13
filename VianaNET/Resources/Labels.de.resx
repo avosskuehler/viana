@@ -1828,4 +1828,25 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="ButtonChangeLanguageToolTipTitle" xml:space="preserve">
     <value>Change language</value>
   </data>
+  <data name="ButtonMeasureAngleLabelTitle" xml:space="preserve">
+    <value>Winkel messen</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipDescription" xml:space="preserve">
+    <value>Hier klicken, um im Video Winkelmessungen vorzunehmen.</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipTitle" xml:space="preserve">
+    <value>Winkel messen</value>
+  </data>
+  <data name="MeasureAngleHelpControlTitle" xml:space="preserve">
+    <value>Winkelmessung</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureDescription" xml:space="preserve">
+    <value>Drei Punkte anklicken, die ein Dreieck aufspannen. Der innere Winkel wird gemessen.</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureHeader" xml:space="preserve">
+    <value>Anleitung</value>
+  </data>
+  <data name="MeasureAngleWindowTitle" xml:space="preserve">
+    <value>Winkelmessung</value>
+  </data>
 </root>

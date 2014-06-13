@@ -143,6 +143,7 @@
     <Compile Include="CustomStyles\Colors\OfficeColorPallet.cs" />
     <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
     <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
+    <Compile Include="CustomStyles\Controls\Arc.cs" />
     <Compile Include="CustomStyles\Controls\ArrowPointer.cs" />
     <Compile Include="CustomStyles\Controls\Arrow.cs" />
     <Compile Include="CustomStyles\Controls\CoordinateSystem.xaml.cs">
@@ -183,7 +184,12 @@
       <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Video\Dialogs\CoordinateSystemWindow.cs" />
-    <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\MeasureAngleWindow.xaml.cs">
+      <DependentUpon>MeasureAngleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.xaml.cs">
+      <DependentUpon>MeasureLengthWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Labels.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -532,6 +538,14 @@
     <Page Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\Dialogs\MeasureAngleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Video\Dialogs\MeasureLengthWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -948,6 +962,10 @@
   <ItemGroup>
     <Resource Include="Images\CoordinateSystem16.png" />
     <Resource Include="Images\CoordinateSystem32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Angle16.png" />
+    <Resource Include="Images\Angle32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

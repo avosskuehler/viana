@@ -1812,4 +1812,25 @@
   <data name="ButtonChartWindowToolTipDescription" xml:space="preserve">
     <value>@ButtonChartWindowToolTipDescription</value>
   </data>
+  <data name="ButtonMeasureAngleLabelTitle" xml:space="preserve">
+    <value>@ButtonMeasureAngleLabelTitle</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipDescription" xml:space="preserve">
+    <value>@ButtonMeasureAngleToolTipDescription</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipTitle" xml:space="preserve">
+    <value>@ButtonMeasureAngleToolTipTitle</value>
+  </data>
+  <data name="MeasureAngleHelpControlTitle" xml:space="preserve">
+    <value>@MeasureAngleHelpControlTitle</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureDescription" xml:space="preserve">
+    <value>@MeasureAngleHowToMeasureDescription</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureHeader" xml:space="preserve">
+    <value>@MeasureAngleHowToMeasureHeader</value>
+  </data>
+  <data name="MeasureAngleWindowTitle" xml:space="preserve">
+    <value>@MeasureAngleWindowTitle</value>
+  </data>
 </root>
