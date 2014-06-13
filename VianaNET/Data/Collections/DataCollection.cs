@@ -2,7 +2,7 @@
 // <copyright file="DataCollection.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,13 +19,11 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The data collection.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Collections
 {
   using System;
+  using System.Collections.Generic;
   using System.Linq;
 
   using VianaNET.CustomStyles.Types;
@@ -47,19 +45,58 @@ namespace VianaNET.Data.Collections
 
     #endregion
 
+    #region Public Events
+
+    #endregion
+
+    #region Public Properties
+
+    /// <summary>
+    ///   Gets a value indicating whether all samples are selected.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if all samples are selected otherwise, <c>false</c>.
+    /// </value>
+    public bool AllSamplesSelected
+    {
+      get
+      {
+        return this.All(timesample => timesample.IsSelected);
+      }
+    }
+
+    #endregion
+
     #region Public Methods and Operators
+
+    /// <summary>
+    ///   Creates a new object that is a copy of the current instance.
+    /// </summary>
+    /// <returns>
+    ///   A new object that is a copy of this instance.
+    /// </returns>
+    public object Clone()
+    {
+      var returnCollection = new DataCollection();
+      foreach (TimeSample sample in this)
+      {
+        returnCollection.Add(sample);
+      }
+
+      return returnCollection;
+    }
 
     /// <summary>
     /// The contains.
     /// </summary>
     /// <param name="sampleToCheck">
-    /// The sample to check. 
+    /// The sample to check.
     /// </param>
     /// <param name="index">
-    /// The index. 
+    /// The index.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool Contains(TimeSample sampleToCheck, out int index)
     {
@@ -76,14 +113,29 @@ namespace VianaNET.Data.Collections
       return false;
     }
 
+
+    /// <summary>
+    /// Gets the sample located at the given frameindex.
+    /// </summary>
+    /// <param name="framenumber">
+    /// The framenumber where to get the sample for.
+    /// </param>
+    /// <returns>
+    /// The <see cref="TimeSample"/> at the given frame
+    /// </returns>
+    public TimeSample GetSampleByFrameindex(int framenumber)
+    {
+      return this.FirstOrDefault(timesample => timesample.Framenumber == framenumber);
+    }
+
     /// <summary>
     /// The remove.
     /// </summary>
     /// <param name="timeStamp">
-    /// The time stamp. 
+    /// The time stamp.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool Remove(long timeStamp)
     {
@@ -102,34 +154,11 @@ namespace VianaNET.Data.Collections
         this.RemoveAt(index);
         return true;
       }
-      else
-      {
-        return false;
-      }
+
+      return false;
     }
 
     #endregion
 
-    /// <summary>
-    /// Creates a new object that is a copy of the current instance.
-    /// </summary>
-    /// <returns>
-    /// A new object that is a copy of this instance.
-    /// </returns>
-    public object Clone()
-    {
-      var returnCollection = new DataCollection();
-      foreach (var sample in this)
-      {
-        returnCollection.Add(sample);
-      }
-
-      return returnCollection;
-    }
-
-    public TimeSample GetSampleByFrameindex(int framenumber)
-    {
-      return this.FirstOrDefault(timesample => timesample.Framenumber == framenumber);
-    }
   }
 }

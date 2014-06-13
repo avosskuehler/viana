@@ -46,6 +46,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Filter;
   using VianaNET.Data.Filter.Regression;
   using VianaNET.Data.Filter.Theory;
+  using VianaNET.MainWindow;
   using VianaNET.Modules.DataAcquisition;
   using VianaNET.Resources;
 
@@ -153,6 +154,7 @@ namespace VianaNET.Modules.Chart
       this.PopulateObjectCombo();
       Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       Viana.Project.UpdateChartRequested += this.ProjectUpdateChartRequested;
+      //Viana.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
       this.PopulateAxesFromChartSelection();
@@ -211,6 +213,9 @@ namespace VianaNET.Modules.Chart
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
       var axisY = (DataAxis)this.YAxisContent.SelectedItem;
 
+      Viana.Project.CurrentFilterData.AxisX = axisX;
+      Viana.Project.CurrentFilterData.AxisY = axisY;
+
       string propertyX;
       string unitNameX;
       this.UpdateAxisMappings(axisX, out propertyX, out unitNameX);
@@ -236,6 +241,7 @@ namespace VianaNET.Modules.Chart
       Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
       Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
 
+      this.ChartData.ChartDataModel.ResetAllAxes();
       this.ChartData.UpdateModel();
     }
 
@@ -820,7 +826,44 @@ namespace VianaNET.Modules.Chart
       {
         this.DataChart.Cursor = this.minusCursor;
       }
+      else if (e.Key == Key.Delete)
+      {
+        if (Viana.Project.VideoData.Samples.AllSamplesSelected)
+        {
+          return;
+        }
+
+        var dlg = new VianaDialog(
+          Labels.AskDeleteDataTitle,
+          Labels.AskDeleteDataMessageTitle,
+          Labels.AskDeleteDataMessage,
+          false);
+        if (dlg.ShowDialog().GetValueOrDefault(false))
+        {
+          Viana.Project.VideoData.DeleteSelectedSamples();
+          this.ChartData.DataScatterSeries.ClearSelection();
+        }
+      }
     }
+
+    ///// <summary>
+    ///// Handles the SelectionChanged event of the Samples collection.
+    ///// </summary>
+    ///// <param name="sender">The source of the event.</param>
+    ///// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    //private void SamplesSelectionChanged(object sender, EventArgs e)
+    //{
+      //this.ChartData.DataScatterSeries.ClearSelection();
+
+      //if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
+      //{
+      //  foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
+      //  {
+      //    int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
+      //    this.ChartData.DataScatterSeries.SelectItem(index);
+      //  }
+      //}
+    //}
 
     /// <summary>
     /// Handles the PreviewKeyUp event of the PlotArea control.
@@ -881,23 +924,10 @@ namespace VianaNET.Modules.Chart
         var chart = (DataCharts)this.AxesContentPhaseSpace.SelectedItem;
         chartType = chart.Chart;
       }
-      else if (this.TabOther.IsSelected)
-      {
-        chartType = ChartType.Custom;
-      }
 
       Viana.Project.CurrentChartType = chartType;
-
       switch (chartType)
       {
-        case ChartType.Custom:
-          var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-          //var axisY = (DataAxis)this.YAxisContent.SelectedItem;
-          //this.XAxisContent.SelectedValue = axisX.Axis;
-          //this.YAxisContent.SelectedValue = axisY.Axis;
-          achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
-          funcBez = 'y';
-          break;
         case ChartType.YoverX:
           this.XAxisContent.SelectedValue = AxisType.PX;
           this.YAxisContent.SelectedValue = AxisType.PY;
@@ -1010,8 +1040,6 @@ namespace VianaNET.Modules.Chart
 
       this.axisName = achsBez;
       Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
-      Viana.Project.CurrentFilterData.AxisX = (DataAxis)this.XAxisContent.SelectedItem;
-      Viana.Project.CurrentFilterData.AxisY = (DataAxis)this.YAxisContent.SelectedItem;
       this.Refresh();
     }
 
@@ -1637,8 +1665,16 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.PopulateAxesFromChartSelection();
-      //this.Refresh();
+      //this.PopulateAxesFromChartSelection();
+
+      Viana.Project.CurrentChartType = ChartType.Custom;
+      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
+      var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
+      var funcBez = 'y';
+      this.axisName = achsBez;
+      Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
+
+      this.Refresh();
     }
 
     /// <summary>
@@ -1686,7 +1722,13 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      this.PopulateAxesFromChartSelection();
+      //this.PopulateAxesFromChartSelection();
+      Viana.Project.CurrentChartType = ChartType.Custom;
+      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
+      var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
+      var funcBez = 'y';
+      this.axisName = achsBez;
+      Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
     }
 
     /// <summary>
