@@ -1091,6 +1091,17 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// The measure angle button is clicked.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void MeasureAngleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var measureAngleWindow = new MeasureAngleWindow();
+      measureAngleWindow.ShowDialog();
+    }
+
+    /// <summary>
     /// This method is called whenever a recent project is selected from the list.
     /// </summary>
     /// <param name="sender">Source of the event.</param>

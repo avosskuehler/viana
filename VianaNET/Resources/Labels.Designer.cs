@@ -1690,6 +1690,33 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureAngleLabelTitle.
+        /// </summary>
+        internal static string ButtonMeasureAngleLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonMeasureAngleLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureAngleToolTipDescription.
+        /// </summary>
+        internal static string ButtonMeasureAngleToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonMeasureAngleToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonMeasureAngleToolTipTitle.
+        /// </summary>
+        internal static string ButtonMeasureAngleToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonMeasureAngleToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ButtonMeasureLengthLabelTitle.
         /// </summary>
         internal static string ButtonMeasureLengthLabelTitle {
@@ -3765,6 +3792,42 @@ namespace VianaNET.Resources {
         internal static string ManualDataAcquisitionTrackItemNumberHeader {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionTrackItemNumberHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureAngleHelpControlTitle.
+        /// </summary>
+        internal static string MeasureAngleHelpControlTitle {
+            get {
+                return ResourceManager.GetString("MeasureAngleHelpControlTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureAngleHowToMeasureDescription.
+        /// </summary>
+        internal static string MeasureAngleHowToMeasureDescription {
+            get {
+                return ResourceManager.GetString("MeasureAngleHowToMeasureDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureAngleHowToMeasureHeader.
+        /// </summary>
+        internal static string MeasureAngleHowToMeasureHeader {
+            get {
+                return ResourceManager.GetString("MeasureAngleHowToMeasureHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @MeasureAngleWindowTitle.
+        /// </summary>
+        internal static string MeasureAngleWindowTitle {
+            get {
+                return ResourceManager.GetString("MeasureAngleWindowTitle", resourceCulture);
             }
         }
         

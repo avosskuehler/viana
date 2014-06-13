@@ -1827,4 +1827,25 @@ F10: Reset coordinate system.</value>
   <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
     <value>Coordinate system</value>
   </data>
+  <data name="ButtonMeasureAngleLabelTitle" xml:space="preserve">
+    <value>Measure angle</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipDescription" xml:space="preserve">
+    <value>Click here, to measure angles in the video.</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipTitle" xml:space="preserve">
+    <value>Measure angle</value>
+  </data>
+  <data name="MeasureAngleHelpControlTitle" xml:space="preserve">
+    <value>Angle measurement</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureDescription" xml:space="preserve">
+    <value>The angle is measured in the middle of the triangle specified by three clicks.</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureHeader" xml:space="preserve">
+    <value>How to measure angles</value>
+  </data>
+  <data name="MeasureAngleWindowTitle" xml:space="preserve">
+    <value>Measure angles</value>
+  </data>
 </root>
