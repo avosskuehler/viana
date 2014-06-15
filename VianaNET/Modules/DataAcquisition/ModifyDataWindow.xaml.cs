@@ -560,9 +560,9 @@ namespace VianaNET.Modules.DataAcquisition
           if (sample.Object != null && sample.Object[i - 1] != null)
           {
             var location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
+            location = Viana.Project.CalibrationData.CoordinateTransform.Transform(location);
             var origin = Viana.Project.CalibrationData.OriginInPixel;
             location.Offset(origin.X, origin.Y);
-
             var scaledX = location.X / factorX;
             var scaledY = location.Y / factorY;
 
