@@ -190,6 +190,9 @@
     <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.xaml.cs">
       <DependentUpon>MeasureLengthWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Video\Filter\CropFilterRgb.cs" />
+    <Compile Include="Modules\Video\Filter\MotionHighlightingSpecial.cs" />
+    <Compile Include="Modules\Video\Filter\TwoFramesDifferenceDetectorSpecial.cs" />
     <Compile Include="Resources\Labels.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -317,7 +320,7 @@
     <Compile Include="Modules\Video\Dialogs\SelectColorWindow.xaml.cs">
       <DependentUpon>SelectColorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\Filter\ColorAndCropFilterRGB.cs" />
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilterRgb.cs" />
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
     <Compile Include="Modules\Video\Filter\FilterBase.cs" />
     <Compile Include="Modules\Video\Dialogs\CalibrateVideoWindow.cs" />
@@ -653,6 +656,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Vision, Version=2.2.5.0, Culture=neutral, PublicKeyToken=b612fa915eefaa06, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AForge.Vision.2.2.5\lib\AForge.Vision.dll</HintPath>
+    </Reference>
     <Reference Include="DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
@@ -898,12 +914,6 @@
     <Resource Include="Images\LineColor32.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VianaNETShaderEffectLibrary\VianaNETShaderEffectLibrary.csproj">
-      <Project>{6B7145E5-56DF-40DB-9AFB-0A14BAE1B36E}</Project>
-      <Name>VianaNETShaderEffectLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -962,6 +972,12 @@
   <ItemGroup>
     <Resource Include="Images\Angle16.png" />
     <Resource Include="Images\Angle32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ColorDetection16.png" />
+    <Resource Include="Images\ColorDetection32.png" />
+    <Resource Include="Images\MotionDetection16.png" />
+    <Resource Include="Images\MotionDetection32.png" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (

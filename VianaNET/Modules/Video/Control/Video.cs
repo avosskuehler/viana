@@ -54,13 +54,20 @@ namespace VianaNET.Modules.Video.Control
       DependencyProperty.Register(
         "IsDataAcquisitionRunning", typeof(bool), typeof(Video), new FrameworkPropertyMetadata(false, OnPropertyChanged));
 
-    /// <summary>
-    ///   The video source property.
-    /// </summary>
-    public static readonly DependencyProperty VideoSourceProperty = DependencyProperty.Register(
-      "VideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+    ///// <summary>
+    /////   The video source property.
+    ///// </summary>
+    //public static readonly DependencyProperty VideoSourceProperty = DependencyProperty.Register(
+    //  "VideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+
+    ///// <summary>
+    /////   The processed video source property.
+    ///// </summary>
+    //public static readonly DependencyProperty ProcessedVideoSourceProperty = DependencyProperty.Register(
+    //  "ProcessedVideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
 
     /// <summary>
+    /// 
     ///   The has video property.
     /// </summary>
     public static readonly DependencyProperty HasVideoProperty = DependencyProperty.Register(
@@ -270,21 +277,37 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    /// <summary>
-    ///   Gets or sets the video source.
-    /// </summary>
-    public ImageSource VideoSource
-    {
-      get
-      {
-        return (ImageSource)this.GetValue(VideoSourceProperty);
-      }
+    ///// <summary>
+    /////   Gets or sets the video source.
+    ///// </summary>
+    //public ImageSource VideoSource
+    //{
+    //  get
+    //  {
+    //    return (ImageSource)this.GetValue(VideoSourceProperty);
+    //  }
 
-      set
-      {
-        this.SetValue(VideoSourceProperty, value);
-      }
-    }
+    //  set
+    //  {
+    //    this.SetValue(VideoSourceProperty, value);
+    //  }
+    //}
+
+    ///// <summary>
+    /////   Gets or sets the video source of the processed video.
+    ///// </summary>
+    //public ImageSource ProcessedVideoSource
+    //{
+    //  get
+    //  {
+    //    return (ImageSource)this.GetValue(ProcessedVideoSourceProperty);
+    //  }
+
+    //  set
+    //  {
+    //    this.SetValue(ProcessedVideoSourceProperty, value);
+    //  }
+    //}
 
     /// <summary>
     /// Gets the video input devices.
@@ -390,7 +413,8 @@ namespace VianaNET.Modules.Video.Control
       {
         case VideoMode.File:
           success = this.videoPlayerElement.LoadMovie(filename);
-          this.VideoSource = this.videoElement.ImageSource;
+          //this.VideoSource = this.videoElement.ImageSource;
+          //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
           break;
         case VideoMode.Capture:
 
@@ -554,7 +578,8 @@ namespace VianaNET.Modules.Video.Control
       }
 
       this.videoElement.VideoFrameChanged += this.VideoElementVideoFrameChanged;
-      this.VideoSource = this.videoElement.ImageSource;
+      //this.VideoSource = this.videoElement.ImageSource;
+      //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
     }
 
     /// <summary>
@@ -564,7 +589,8 @@ namespace VianaNET.Modules.Video.Control
     /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void VideoCaptureElementVideoAvailable(object sender, EventArgs e)
     {
-      this.VideoSource = this.videoElement.ImageSource;
+      //this.VideoSource = this.videoElement.ImageSource;
+      //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
       this.videoElement.Play();
     }
 

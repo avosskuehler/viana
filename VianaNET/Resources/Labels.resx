@@ -1842,4 +1842,49 @@
   <data name="AskDeleteDataTitle" xml:space="preserve">
     <value>@AskDeleteDataTitle</value>
   </data>
+  <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
+    <value>@BlobsControlMotionProcessedImageHeader</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionLabelTitle" xml:space="preserve">
+    <value>@ButtonIsUsingColorDetectionLabelTitle</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipDescription" xml:space="preserve">
+    <value>@ButtonIsUsingColorDetectionToolTipDescription</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipTitle" xml:space="preserve">
+    <value>@ButtonIsUsingColorDetectionToolTipTitle</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionLabelTitle" xml:space="preserve">
+    <value>@ButtonIsUsingMotionDetectionLabelTitle</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipDescription" xml:space="preserve">
+    <value>@ButtonIsUsingMotionDetectionToolTipDescription</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipTitle" xml:space="preserve">
+    <value>@ButtonIsUsingMotionDetectionToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionColorOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoAutoDetectionColorOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionSelectObjectTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoAutoDetectionSelectObjectTitle</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionPixelThreshold" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionMotionPixelThreshold</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
+    <value>@RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription</value>
+  </data>
 </root>

@@ -349,9 +349,9 @@
                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonAutomaticDataAquisitionStopToolTipDescription}" 
                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
         </RibbonGroup>
-        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoAutoDetectionOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/Options32.png">
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoAutoDetectionSelectObjectTitle}" LargeImageSource="/VianaNET;component/Images/SelectObject32.png"
+                     Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
           <RibbonButton 
-            Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
             Name="ButtonSelectObject" 
             Click="SelectObjectButtonClick"
             Label="{lex:Loc VianaNET:Labels:ButtonSelectObjectLabelTitle}" 
@@ -360,7 +360,17 @@
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonSelectObjectToolTipTitle}"
             ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonSelectObjectToolTipDescription}" 
             IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
-          <Grid Name="SliderGrid">
+        </RibbonGroup>
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoAutoDetectionColorOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/ColorDetection32.png">
+          <RibbonToggleButton 
+            Name="ButtonIsUsingColorDetection" 
+            Label="{lex:Loc VianaNET:Labels:ButtonIsUsingColorDetectionLabelTitle}" 
+            LargeImageSource="/VianaNET;component/Images/ColorDetection32.png" 
+            SmallImageSource="/VianaNET;component/Images/ColorDetection16.png" 
+            ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonIsUsingColorDetectionToolTipTitle}"
+            ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonIsUsingColorDetectionToolTipDescription}" 
+            IsChecked="{Binding Path=ProcessingData.IsUsingColorDetection, Source={x:Static application:Viana.Project}}"/>
+          <Grid Name="ColorDetectionGrid" Margin="10,1,1,1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
               <ColumnDefinition/>
@@ -412,6 +422,53 @@
             SmallChange="1" 
             IsSnapToTickEnabled="True"
             IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+          </Grid>
+        </RibbonGroup>
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/MotionDetection32.png">
+          <RibbonToggleButton 
+            Name="ButtonIsUsingMotionDetection" 
+            Label="{lex:Loc VianaNET:Labels:ButtonIsUsingMotionDetectionLabelTitle}" 
+            LargeImageSource="/VianaNET;component/Images/MotionDetection32.png" 
+            SmallImageSource="/VianaNET;component/Images/MotionDetection16.png" 
+            ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonIsUsingMotionDetectionToolTipTitle}"
+            ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonIsUsingMotionDetectionToolTipDescription}" 
+            IsChecked="{Binding Path=ProcessingData.IsUsingMotionDetection, Source={x:Static application:Viana.Project}}"/>
+          <Grid Name="MotionDetectionGrid" Margin="10,1,1,1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition/>
+              <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" 
+                   Content="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionPixelThreshold}"
+                   Margin="0" Padding="1"/>
+            <vianaNet:SliderValue 
+              Grid.Row="0" Grid.Column="1"
+            x:Name="SliderMotionPixelThreshold"
+            MinWidth="100"
+            Height="20"                      
+            Minimum="0"
+            Maximum="255"
+            SmallChange="1" 
+            LargeChange="1" 
+            TickFrequency="1"             
+            IsSnapToTickEnabled="True" 
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+            <RibbonCheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="UsePositiveThresholdCheckbox" 
+                            Label="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle}"
+                            ToolTipTitle="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle}" 
+                            ToolTipDescription="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription}"
+                            HorizontalAlignment="Left"/>
+            <RibbonCheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Name="SuppressNoiseCheckbox" 
+                            Label="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle}"
+                            ToolTipTitle="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle}" 
+                            ToolTipDescription="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription}"
+                            HorizontalAlignment="Left"/>
           </Grid>
         </RibbonGroup>
       </RibbonTab>
@@ -634,7 +691,7 @@
               </RibbonGallery>
             </RibbonComboBox>
           </Grid>
-         </RibbonGroup>
+        </RibbonGroup>
         <!--<RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupStyleLabelTitle}">
           <RibbonButton Click="ChangeColorButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonChangeColorSchemeLabelTitle}"

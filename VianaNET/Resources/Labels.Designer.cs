@@ -583,6 +583,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @BlobsControlMotionProcessedImageHeader.
+        /// </summary>
+        internal static string BlobsControlMotionProcessedImageHeader {
+            get {
+                return ResourceManager.GetString("BlobsControlMotionProcessedImageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @BlobsControlProcessedImageHeader.
         /// </summary>
         internal static string BlobsControlProcessedImageHeader {
@@ -1641,6 +1650,60 @@ namespace VianaNET.Resources {
         internal static string ButtonIsInterpolatingDataToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonIsInterpolatingDataToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingColorDetectionLabelTitle.
+        /// </summary>
+        internal static string ButtonIsUsingColorDetectionLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingColorDetectionLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingColorDetectionToolTipDescription.
+        /// </summary>
+        internal static string ButtonIsUsingColorDetectionToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingColorDetectionToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingColorDetectionToolTipTitle.
+        /// </summary>
+        internal static string ButtonIsUsingColorDetectionToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingColorDetectionToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingMotionDetectionLabelTitle.
+        /// </summary>
+        internal static string ButtonIsUsingMotionDetectionLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingMotionDetectionLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingMotionDetectionToolTipDescription.
+        /// </summary>
+        internal static string ButtonIsUsingMotionDetectionToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingMotionDetectionToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @ButtonIsUsingMotionDetectionToolTipTitle.
+        /// </summary>
+        internal static string ButtonIsUsingMotionDetectionToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonIsUsingMotionDetectionToolTipTitle", resourceCulture);
             }
         }
         
@@ -4516,11 +4579,38 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @RibbonGroupVideoAutoDetectionColorOptionsLabelTitle.
+        /// </summary>
+        internal static string RibbonGroupVideoAutoDetectionColorOptionsLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupVideoAutoDetectionColorOptionsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle.
+        /// </summary>
+        internal static string RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @RibbonGroupVideoAutoDetectionOptionsLabelTitle.
         /// </summary>
         internal static string RibbonGroupVideoAutoDetectionOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoAutoDetectionOptionsLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonGroupVideoAutoDetectionSelectObjectTitle.
+        /// </summary>
+        internal static string RibbonGroupVideoAutoDetectionSelectObjectTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupVideoAutoDetectionSelectObjectTitle", resourceCulture);
             }
         }
         
@@ -4584,6 +4674,51 @@ namespace VianaNET.Resources {
         internal static string RibbonLabelAutoDetectionBlobMinDiameter {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionBlobMinDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonLabelAutoDetectionMotionPixelThreshold.
+        /// </summary>
+        internal static string RibbonLabelAutoDetectionMotionPixelThreshold {
+            get {
+                return ResourceManager.GetString("RibbonLabelAutoDetectionMotionPixelThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle.
+        /// </summary>
+        internal static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle {
+            get {
+                return ResourceManager.GetString("RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription.
+        /// </summary>
+        internal static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription {
+            get {
+                return ResourceManager.GetString("RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle.
+        /// </summary>
+        internal static string RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle {
+            get {
+                return ResourceManager.GetString("RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to @RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription.
+        /// </summary>
+        internal static string RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription {
+            get {
+                return ResourceManager.GetString("RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription", resourceCulture);
             }
         }
         

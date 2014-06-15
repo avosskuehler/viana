@@ -47,11 +47,6 @@
             <File Id="VianaNETConfig" Name="VianaNET.exe.config" KeyPath="yes" DiskId="1"
                   Source="$(var.VianaNET.TargetDir)" />
           </Component>
-          <Component Id="C_VianaNETShaderEffectLibrary" Guid="{DC40C5DD-00BF-4807-A542-1A95FE9C9340}" Win64="$(var.Win64)">
-            <File Id="VianaNETShaderEffectLibrary" Name="VianaNETShaderEffectLibrary.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNETShaderEffectLibrary" AssemblyApplication="VianaNETShaderEffectLibrary"
-                  DiskId="1" Source="$(var.VianaNET.TargetDir)" />
-          </Component>
-
         </Directory>
       </Directory>
     </Directory>
@@ -63,7 +58,6 @@
       <!--<ComponentRef Id="C_ShortCutDesktop" />-->
       <ComponentRef Id="C_ShortCutMenu" />
       <ComponentRef Id="C_VianaNETConfig" />
-      <ComponentRef Id='C_VianaNETShaderEffectLibrary' />
     </Feature>
   </Fragment>
 </Wix>

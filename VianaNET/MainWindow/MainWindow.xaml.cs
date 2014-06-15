@@ -1039,6 +1039,15 @@ namespace VianaNET.MainWindow
 
       var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
+
+      var motionThresholdBinding = new Binding("ProcessingData.MotionThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      this.SliderMotionPixelThreshold.SetBinding(RangeBase.ValueProperty, motionThresholdBinding);
+
+      var suppressNoiseBinding = new Binding("ProcessingData.SuppressNoise[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      this.SuppressNoiseCheckbox.SetBinding(ToggleButton.IsCheckedProperty, suppressNoiseBinding);
+
+      var positiveContrastBinding = new Binding("ProcessingData.PositiveContrast[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      this.UsePositiveThresholdCheckbox.SetBinding(ToggleButton.IsCheckedProperty, positiveContrastBinding);
     }
 
     /// <summary>
