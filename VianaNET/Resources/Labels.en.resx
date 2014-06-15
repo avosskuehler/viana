@@ -570,7 +570,7 @@ F10: Reset origin and measurement.</value>
     <value>Found Blobs</value>
   </data>
   <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
-    <value>Processed Image</value>
+    <value>Color detection</value>
   </data>
   <data name="ButtonChartWindowLabelDescription" xml:space="preserve">
     <value>Create data charts</value>
@@ -1857,5 +1857,50 @@ F10: Reset coordinate system.</value>
   </data>
   <data name="AskDeleteDataTitle" xml:space="preserve">
     <value>Adapt data</value>
+  </data>
+  <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
+    <value>Motion detection</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipDescription" xml:space="preserve">
+    <value>Activate this button to use color detection for searching the objects.</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipTitle" xml:space="preserve">
+    <value>Activate/deactivate color detection</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipDescription" xml:space="preserve">
+    <value>Activate this button to use motion detection for searching the objects. Can be used in combination with color detection.</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipTitle" xml:space="preserve">
+    <value>Activate/deactivate motion detection</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionColorOptionsLabelTitle" xml:space="preserve">
+    <value>Adapt color detection</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle" xml:space="preserve">
+    <value>Adapt motion detection</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionSelectObjectTitle" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionPixelThreshold" xml:space="preserve">
+    <value>Minimal motion (px)</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle" xml:space="preserve">
+    <value>Suppress noise</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription" xml:space="preserve">
+    <value>Applies a 3x3px erosion filter before motion detection.</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle" xml:space="preserve">
+    <value>Use positive contrast</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
+    <value>Switches between positive and negative contrast motion detection (just try it out).</value>
   </data>
 </root>

@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ColorAndCropFilterRGB.cs" company="Freie Universität Berlin">
+// <copyright file="CropFilterRgb.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The color and crop filter rgb.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Filter
 {
@@ -30,9 +27,9 @@ namespace VianaNET.Modules.Video.Filter
   using System.Windows.Media;
 
   /// <summary>
-  ///   The color and crop filter rgb.
+  ///   The crop rgb filter.
   /// </summary>
-  public class ColorAndCropFilterRgb : FilterBase
+  public class CropFilterRgb : FilterBase
   {
     #region Fields
 
@@ -75,16 +72,6 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public Rect CropRectangle { get; set; }
 
-    /// <summary>
-    ///   Gets or sets the target color.
-    /// </summary>
-    public Color TargetColor { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the threshold.
-    /// </summary>
-    public int Threshold { get; set; }
-
     #endregion
 
     #region Public Methods and Operators
@@ -105,37 +92,22 @@ namespace VianaNET.Modules.Video.Filter
     /// Process the filter on the specified image.
     /// </summary>
     /// <param name="image">
-    /// Source image data. 
+    /// Source image data.
     /// </param>
     public override unsafe void ProcessInPlace(IntPtr image)
     {
-      int t = this.Threshold;
       int ipx = this.ImagePixelSize;
-      Color target = this.TargetColor;
-      Color blank = this.BlankColor;
-      int rMin = target.R - t;
-      int rMax = target.R + t;
-      int gMin = target.G - t;
-      int gMax = target.G + t;
-      int bMin = target.B - t;
-      int bMax = target.B + t;
       Rect cropRect = this.CropRectangle;
       double xMin = cropRect.Left;
       double xMax = cropRect.Right;
       double yMin = cropRect.Top;
       double yMax = cropRect.Bottom;
-
-      // int startX = 0;
-      // int startY = 0;
-      // int stopX = startX + this.ImageWidth;
-      // int stopY = startY + this.ImageHeight;
-      // int offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
+      Color blank = this.BlankColor;
 
       // do the job
       var ptr = (byte*)image;
-      byte r, g, b;
 
-      // allign pointer to the first pixel to process
+      // align pointer to the first pixel to process
       ptr += this.startY * this.ImageStride + this.startX * ipx;
 
       // for each row
@@ -166,25 +138,6 @@ namespace VianaNET.Modules.Video.Filter
             ptr[R] = blank.R;
             ptr[G] = blank.G;
             ptr[B] = blank.B;
-          }
-          else
-          {
-            // Otherwise check for color range
-            r = ptr[R];
-            g = ptr[G];
-            b = ptr[B];
-
-            // check pixel
-            if ((r >= rMin) && (r <= rMax) && (g >= gMin) && (g <= gMax) && (b >= bMin) && (b <= bMax))
-            {
-              continue;
-            }
-            else
-            {
-              ptr[R] = blank.R;
-              ptr[G] = blank.G;
-              ptr[B] = blank.B;
-            }
           }
         }
 

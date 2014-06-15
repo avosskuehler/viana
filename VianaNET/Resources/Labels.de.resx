@@ -555,7 +555,7 @@ F10: Einmessung löschen.</value>
     <value>Detektierte Objekte</value>
   </data>
   <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
-    <value>Gefiltertes Bild</value>
+    <value>Farberkennung</value>
   </data>
   <data name="ButtonChartWindowLabelDescription" xml:space="preserve">
     <value>Öffnet Diagrammfenster</value>
@@ -1858,5 +1858,50 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   </data>
   <data name="AskDeleteDataTitle" xml:space="preserve">
     <value>Daten anpassen</value>
+  </data>
+  <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
+    <value>Bewegungserkennung</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionLabelTitle" xml:space="preserve">
+    <value>Aktivieren</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipDescription" xml:space="preserve">
+    <value>Button aktivieren, um die Farberkennung zu verwenden. Die Objekte werden dann nach Farbe gesucht.</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipTitle" xml:space="preserve">
+    <value>Farberkennung aktivieren/deaktivieren</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionLabelTitle" xml:space="preserve">
+    <value>Aktivieren</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipDescription" xml:space="preserve">
+    <value>Button aktivieren, um die Bewegungserkennung zu verwenden. Nur sich bewegende Objekte werden erkannt. (Kann auch zusammen mit Farberkennung verwendet werden)</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipTitle" xml:space="preserve">
+    <value>Bewegungserkennung aktivieren/deaktivieren</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionColorOptionsLabelTitle" xml:space="preserve">
+    <value>Farberkennung einstellen</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle" xml:space="preserve">
+    <value>Bewegungserkennung einstellen</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionSelectObjectTitle" xml:space="preserve">
+    <value>Objekt</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionPixelThreshold" xml:space="preserve">
+    <value>Minimalbewegung (px)</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle" xml:space="preserve">
+    <value>Rauschen unterdrücken</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription" xml:space="preserve">
+    <value>Wendet vor der Erkennung noch einen 3x3px Erosionsfilter an.</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle" xml:space="preserve">
+    <value>Positiven Kontrast nutzen</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
+    <value>Nutzt entweder positiven oder negativen Kontrast für die Bewegungserkennung (einfach ausprobieren, was besser passt.</value>
   </data>
 </root>

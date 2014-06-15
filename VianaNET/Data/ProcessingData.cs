@@ -23,13 +23,14 @@
 namespace VianaNET.Data
 {
   using System;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Collections.Specialized;
   using System.ComponentModel;
   using System.Diagnostics;
   using System.Windows;
   using System.Windows.Media;
+
+  using AForge.Vision.Motion;
 
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
@@ -102,6 +103,33 @@ namespace VianaNET.Data
       new FrameworkPropertyMetadata(new ObservableCollection<Segment>()));
 
     /// <summary>
+    ///   The motion threshold property.
+    /// </summary>
+    public static readonly DependencyProperty MotionThresholdProperty = DependencyProperty.Register(
+      "MotionThreshold",
+      typeof(ObservableCollection<int>),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(new ObservableCollection<int>()));
+
+    /// <summary>
+    ///   The is positive contrast property.
+    /// </summary>
+    public static readonly DependencyProperty PositiveContrastProperty = DependencyProperty.Register(
+      "PositiveContrast",
+      typeof(ObservableCollection<bool>),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(new ObservableCollection<bool>(), OnPropertyChanged));
+
+    /// <summary>
+    ///   The is the suppress noise property.
+    /// </summary>
+    public static readonly DependencyProperty SuppressNoiseProperty = DependencyProperty.Register(
+      "SuppressNoise",
+      typeof(ObservableCollection<bool>),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(new ObservableCollection<bool>(), OnPropertyChanged));
+
+    /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfObject" />.
     /// </summary>
     public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
@@ -138,6 +166,24 @@ namespace VianaNET.Data
       typeof(ProcessingData),
       new FrameworkPropertyMetadata(DifferenceQuotientType.Forward));
 
+    /// <summary>
+    /// The is using color detection property
+    /// </summary>
+    public static readonly DependencyProperty IsUsingColorDetectionProperty = DependencyProperty.Register(
+      "IsUsingColorDetection",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(true));
+
+    /// <summary>
+    /// The is using motion detection property
+    /// </summary>
+    public static readonly DependencyProperty IsUsingMotionDetectionProperty = DependencyProperty.Register(
+      "IsUsingMotionDetection",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(false));
+
     #endregion
 
     #region Fields
@@ -145,12 +191,12 @@ namespace VianaNET.Data
     /// <summary>
     ///   The color and crop filter.
     /// </summary>
-    private readonly ColorAndCropFilterRGB colorAndCropFilter;
+    private readonly ColorAndCropFilterRgb colorAndCropFilter;
 
     /// <summary>
-    ///   The color range filter.
+    ///   The crop filter.
     /// </summary>
-    private readonly ColorAndCropFilterYCbCr colorRangeFilter;
+    private readonly CropFilterRgb cropFilter;
 
     /// <summary>
     ///   The histogramm filter.
@@ -166,6 +212,11 @@ namespace VianaNET.Data
     ///   The watch.
     /// </summary>
     private readonly Stopwatch watch = new Stopwatch();
+
+    /// <summary>
+    /// The motion detector
+    /// </summary>
+    private readonly MotionDetector detector;
 
     /// <summary>
     ///   The counter.
@@ -191,33 +242,17 @@ namespace VianaNET.Data
 
     #region Constructors and Destructors
 
-    ///// <summary>
-    /////   Initializes static members of the <see cref="ProcessingData" /> class.
-    ///// </summary>
-    //static ProcessingData()
-    //{
-    //  TrackObjectColors = new List<SolidColorBrush>
-    //                        {
-    //                          Brushes.Red, 
-    //                          Brushes.Green, 
-    //                          Brushes.Blue, 
-    //                          Brushes.Yellow, 
-    //                          Brushes.Magenta
-    //                        };
-    //}
-
     /// <summary>
     ///   Initializes a new instance of the <see cref="ProcessingData" /> class.
     /// </summary>
     public ProcessingData()
     {
-      this.ColorThreshold = new ObservableCollection<int>();
-      this.BlobMinDiameter = new ObservableCollection<double>();
-      this.BlobMaxDiameter = new ObservableCollection<double>();
+      //this.ColorThreshold = new ObservableCollection<int>();
+      //this.BlobMinDiameter = new ObservableCollection<double>();
+      //this.BlobMaxDiameter = new ObservableCollection<double>();
 
-      // this.ResetProcessing(1);
-      this.colorAndCropFilter = new ColorAndCropFilterRGB();
-      this.colorRangeFilter = new ColorAndCropFilterYCbCr();
+      this.colorAndCropFilter = new ColorAndCropFilterRgb();
+      this.cropFilter = new CropFilterRgb();
       this.histogrammFilter = new Histogram();
       this.segmentator = new HistogramMinMaxSegmentator();
 
@@ -227,6 +262,12 @@ namespace VianaNET.Data
       this.ColorThreshold.CollectionChanged += this.HlslParamsCollectionChanged;
       this.BlobMinDiameter.CollectionChanged += this.HlslParamsCollectionChanged;
       this.BlobMaxDiameter.CollectionChanged += this.HlslParamsCollectionChanged;
+      var motionDetector = new TwoFramesDifferenceDetectorSpecial();
+      var motionProcessor = new MotionAreaHighlightingSpecial();
+      this.detector = new MotionDetector(motionDetector, motionProcessor);
+      this.MotionThreshold.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
+      this.SuppressNoise.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
+      this.PositiveContrast.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
 
       this.PropertyChanged += this.ProcessingDataPropertyChanged;
     }
@@ -331,6 +372,54 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    ///   Gets or sets the motion thresholds.
+    /// </summary>
+    public ObservableCollection<int> MotionThreshold
+    {
+      get
+      {
+        return (ObservableCollection<int>)this.GetValue(MotionThresholdProperty);
+      }
+
+      set
+      {
+        this.SetValue(MotionThresholdProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the positive contrast  values.
+    /// </summary>
+    public ObservableCollection<bool> PositiveContrast
+    {
+      get
+      {
+        return (ObservableCollection<bool>)this.GetValue(PositiveContrastProperty);
+      }
+
+      set
+      {
+        this.SetValue(PositiveContrastProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the suppress noise values.
+    /// </summary>
+    public ObservableCollection<bool> SuppressNoise
+    {
+      get
+      {
+        return (ObservableCollection<bool>)this.GetValue(SuppressNoiseProperty);
+      }
+
+      set
+      {
+        this.SetValue(SuppressNoiseProperty, value);
+      }
+    }
+
+    /// <summary>
     ///   Gets or sets the index of the currently tracked object
     /// </summary>
     public int IndexOfObject
@@ -410,6 +499,43 @@ namespace VianaNET.Data
       }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is using color detection.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is using color detection; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsUsingColorDetection
+    {
+      get
+      {
+        return (bool)this.GetValue(IsUsingColorDetectionProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsUsingColorDetectionProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is using motion detection.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is using motion detection; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsUsingMotionDetection
+    {
+      get
+      {
+        return (bool)this.GetValue(IsUsingMotionDetectionProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsUsingMotionDetectionProperty, value);
+      }
+    }
 
     #endregion
 
@@ -441,28 +567,34 @@ namespace VianaNET.Data
 
       this.colorAndCropFilter.Init();
 
-      this.colorRangeFilter.ImageWidth = videoWidth;
-      this.colorRangeFilter.ImageHeight = videoHeight;
-      this.colorRangeFilter.ImageStride = Video.Instance.VideoElement.Stride;
-      this.colorRangeFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
-      this.colorRangeFilter.BlankColor = Colors.Black;
-      this.colorRangeFilter.TargetColor = this.TargetColor[0];
-      this.colorRangeFilter.Threshold = this.ColorThreshold[0];
+      this.cropFilter.ImageWidth = videoWidth;
+      this.cropFilter.ImageHeight = videoHeight;
+      this.cropFilter.ImageStride = Video.Instance.VideoElement.Stride;
+      this.cropFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
+      this.cropFilter.BlankColor = Colors.Black;
       if (Viana.Project.CalibrationData.HasClipRegion)
       {
-        this.colorRangeFilter.CropRectangle = Viana.Project.CalibrationData.ClipRegion;
+        this.cropFilter.CropRectangle = Viana.Project.CalibrationData.ClipRegion;
       }
       else
       {
-        this.colorRangeFilter.CropRectangle = new Rect(0, 0, videoWidth, videoHeight);
+        this.cropFilter.CropRectangle = new Rect(0, 0, videoWidth, videoHeight);
       }
 
-      this.colorRangeFilter.Init();
+      this.cropFilter.Init();
 
       this.histogrammFilter.ImageWidth = videoWidth;
       this.histogrammFilter.ImageHeight = videoHeight;
       this.histogrammFilter.ImageStride = Video.Instance.VideoElement.Stride;
       this.histogrammFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
+
+      var algorithm = this.detector.MotionDetectionAlgorithm as TwoFramesDifferenceDetectorSpecial;
+      if (algorithm != null)
+      {
+        algorithm.DifferenceThreshold = Viana.Project.ProcessingData.MotionThreshold[0];
+        algorithm.IsPositiveThreshold = Viana.Project.ProcessingData.PositiveContrast[0];
+        algorithm.SuppressNoise = Viana.Project.ProcessingData.SuppressNoise[0];
+      }
 
       Video.Instance.RefreshProcessingMap();
       this.ProcessImage();
@@ -503,18 +635,55 @@ namespace VianaNET.Data
           break;
         }
 
+        // Get original picture
         Video.Instance.RefreshProcessingMap();
-        this.colorAndCropFilter.TargetColor = this.TargetColor[i];
-        this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
 
-        this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ProcessingMapping);
+        if (this.IsUsingColorDetection)
+        {
+          // Apply color and crop filter if applicable
+          this.colorAndCropFilter.TargetColor = this.TargetColor[i];
+          this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
+          this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
+        }
+        else
+        {
+          // Only apply crop filter
+          this.cropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
+        }
 
-        // this.colorRangeFilter.ProcessInPlace(Video.Instance.VideoElement.ProcessingMapping);
+        // Apply motion detection if applicable
+        if (this.IsUsingMotionDetection)
+        {
+          var algorithm = this.detector.MotionDetectionAlgorithm as TwoFramesDifferenceDetectorSpecial;
+          if (algorithm != null)
+          {
+            algorithm.DifferenceThreshold = Viana.Project.ProcessingData.MotionThreshold[i];
+            algorithm.IsPositiveThreshold = Viana.Project.ProcessingData.PositiveContrast[i];
+            algorithm.SuppressNoise = Viana.Project.ProcessingData.SuppressNoise[i];
+          }
 
-        // Segment
-        Histogram histogram = this.histogrammFilter.FromIntPtrMap(Video.Instance.VideoElement.ProcessingMapping);
+          Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
+          this.detector.ProcessFrame(Video.Instance.VideoElement.UnmanagedImage);
+          Video.Instance.VideoElement.CopyProcessedDataToProcessingMap();
+        }
+
+        // Send modified image to blobs control
+        Video.Instance.VideoElement.UpdateProcessedImageSource();
+
+        // Get blobs from filtered process
+        IntPtr mapToUse;
+        if (this.IsUsingColorDetection && !this.IsUsingMotionDetection)
+        {
+          mapToUse = Video.Instance.VideoElement.ColorProcessingMapping;
+        }
+        else
+        {
+          mapToUse = Video.Instance.VideoElement.MotionProcessingMapping;
+        }
+
+        var histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
         this.segmentator.Histogram = histogram;
-        this.segmentator.ThresholdLuminance = histogram.Max * 0.1f;
+        this.segmentator.ThresholdLuminance = histogram.Max * 0.5f;
         this.segmentator.MinDiameter = this.BlobMinDiameter[i];
         this.segmentator.MaxDiameter = this.BlobMaxDiameter[i];
 
@@ -610,14 +779,10 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The blob_ collection changed.
+    /// Blob collection changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
     private void BlobCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
@@ -627,14 +792,10 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    /// The hlsl params_ collection changed.
+    /// HLSL parameters collection changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
     private void HlslParamsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
@@ -643,6 +804,22 @@ namespace VianaNET.Data
         this.OnPropertyChanged("HLSLParams");
       }
     }
+
+    /// <summary>
+    /// Motion detection parameter collection changed.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+    /// <exception cref="System.NotImplementedException"></exception>
+    void MotionDetectionParameterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+      if (!this.doNotThrowPropertyChanged)
+      {
+        this.ProcessImage();
+        this.OnPropertyChanged("MotionDetectionParams");
+      }
+    }
+
 
     /// <summary>
     ///   The on frame processed.
@@ -699,8 +876,12 @@ namespace VianaNET.Data
           this.Reset();
         }
       }
-      else if (e.PropertyName == "IsTargetColorSet")
+      else if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection" || e.PropertyName == "IsTargetColorSet")
       {
+        this.detector.Reset();
+        Video.Instance.RefreshProcessingMap();
+        Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
+        Video.Instance.VideoElement.UpdateImageSources();
         this.ProcessImage();
       }
     }
@@ -720,8 +901,12 @@ namespace VianaNET.Data
       this.BlobMaxDiameter.Clear();
       this.CurrentBlobCenter.Clear();
       this.DetectedBlob.Clear();
-
+      this.detector.Reset();
+      this.MotionThreshold.Clear();
+      this.PositiveContrast.Clear();
+      this.SuppressNoise.Clear();
       this.TargetColor.Clear();
+
       for (int i = 0; i < numberOfObjects; i++)
       {
         this.TargetColor.Add(Colors.Red);
@@ -729,13 +914,19 @@ namespace VianaNET.Data
         this.BlobMinDiameter.Add(4);
         this.BlobMaxDiameter.Add(100);
         this.CurrentBlobCenter.Add(null);
-        //this.DetectedBlob.Add(new Segment());
+        this.MotionThreshold.Add(15);
+        this.PositiveContrast.Add(true);
+        this.SuppressNoise.Add(false);
       }
 
       this.IsTargetColorSet = false;
 
       this.isReady = true;
       this.doNotThrowPropertyChanged = false;
+
+      Video.Instance.RefreshProcessingMap();
+      Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
+      Video.Instance.VideoElement.UpdateImageSources();
     }
 
     /// <summary>

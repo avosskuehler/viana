@@ -18,7 +18,7 @@
     <Grid.RenderTransform>
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
       <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>

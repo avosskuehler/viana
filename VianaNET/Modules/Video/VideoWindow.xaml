@@ -32,7 +32,7 @@
 
         <Image Name="VideoImage" 
                HorizontalAlignment="Center" 
-               Source="{Binding Path=VideoSource, Source={x:Static control:Video.Instance}}"
+               Source="{Binding Path=VideoElement.ImageSource, Source={x:Static control:Video.Instance}}"
                >
         </Image>
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
