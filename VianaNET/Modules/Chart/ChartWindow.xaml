@@ -43,7 +43,7 @@
               SelectionChanged="ObjectSelectionComboSelectionChanged" />
           </Grid>
           <TabControl Name="ChartContentTab">
-            <TabItem Name="TabPositionSpace" Header="{lex:Loc VianaNET:Labels:ChartWindowPositionSpaceHeader}">
+            <TabItem Name="TabPositionSpace" Header="{lex:Loc VianaNET:Labels:ChartWindowPositionSpaceHeader}" IsSelected="True">
               <Grid Name="PositionSpaceGrid">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="80"/>

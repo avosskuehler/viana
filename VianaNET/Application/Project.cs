@@ -68,31 +68,14 @@ namespace VianaNET.Application
     public Project()
     {
       TexFormulaParser.Initialize();
-
-      TrackObjectColors = new List<SolidColorBrush>
-                              {
-                                Brushes.Red, 
-                                Brushes.Green, 
-                                Brushes.Blue, 
-                                Brushes.Yellow, 
-                                Brushes.Magenta
-                              };
-
       this.filterData = new Dictionary<ChartType, FilterData> { { ChartType.YoverX, new FilterData() } };
       this.CalibrationData = new CalibrationData();
       this.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
       this.ProcessingData = new ProcessingData();
       this.VideoData = new VideoData { LastPoint = new Point[this.ProcessingData.NumberOfTrackedObjects] };
-      this.CurrentFilterData = this.filterData[ChartType.YoverX];
-
-      // this.ChartData = new ChartData();
+      this.CurrentFilterData = new FilterData();
       this.currentChartType = ChartType.YoverX;
     }
-
-    /// <summary>
-    ///   Gets or sets  a list of brushes for the different tracked objects
-    /// </summary>
-    public static List<SolidColorBrush> TrackObjectColors { get; set; }
 
     #endregion
 
@@ -115,7 +98,7 @@ namespace VianaNET.Application
     #region Public Properties
 
     /// <summary>
-    ///Gets or sets a value indicating whether we are in the deserialization process of a project.
+    /// Gets or sets a value indicating whether we are in the deserialization process of a project.
     /// </summary>
     /// <value>
     /// <c>true</c> if this instance is deserializing; otherwise, <c>false</c>.

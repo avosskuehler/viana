@@ -51,11 +51,11 @@ namespace VianaNET.Data
     {
       this.ChartDataModel = new PlotModel
                               {
-                                Title = Labels.ChartWindowChartTitle, 
-                                LegendPlacement = LegendPlacement.Inside, 
-                                LegendSymbolLength = 24, 
-                                LegendBackground = OxyColor.FromArgb(200, 255, 255, 255), 
-                                LegendBorder = OxyColors.LightGray, 
+                                Title = Labels.ChartWindowChartTitle,
+                                LegendPlacement = LegendPlacement.Inside,
+                                LegendSymbolLength = 24,
+                                LegendBackground = OxyColor.FromArgb(200, 255, 255, 255),
+                                LegendBorder = OxyColors.LightGray,
                                 SelectionColor =
                                   ConverterExtensions.ToOxyColor(
                                     Viana.Project.CurrentFilterData.SelectionColor)
@@ -279,9 +279,9 @@ namespace VianaNET.Data
       {
         this.ChartDataModel.Series[3] =
           new FunctionSeries(
-            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion, 
-            this.DataScatterSeries.MinX, 
-            this.DataScatterSeries.MaxX, 
+            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion,
+            this.DataScatterSeries.MinX,
+            this.DataScatterSeries.MaxX,
             Viana.Project.VideoData.FilteredSamples.Count * 2);
       }
 
@@ -290,17 +290,17 @@ namespace VianaNET.Data
         if (Viana.Project.VideoData.FilteredSamples.Count > 0)
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
-            this.DataScatterSeries.MinX, 
-            this.DataScatterSeries.MaxX, 
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
+            this.DataScatterSeries.MinX,
+            this.DataScatterSeries.MaxX,
             Viana.Project.VideoData.FilteredSamples.Count * 2);
         }
         else
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
-            this.XAxis.ActualMinimum, 
-            this.XAxis.ActualMaximum, 
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
+            this.XAxis.ActualMinimum,
+            this.XAxis.ActualMaximum,
             this.XAxis.FractionUnit);
         }
       }

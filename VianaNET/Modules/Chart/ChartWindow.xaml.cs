@@ -120,6 +120,11 @@ namespace VianaNET.Modules.Chart
     private bool isSelectionEnabled;
 
     /// <summary>
+    /// Indicates setting default axis pair
+    /// </summary>
+    private bool isSettingDefaultAxisPair;
+
+    /// <summary>
     ///   Indicates whether the mouse button is pressed.
     /// </summary>
     private bool mouseDown;
@@ -149,6 +154,7 @@ namespace VianaNET.Modules.Chart
     public ChartWindow()
     {
       this.ChartData = new ChartData();
+      this.isSettingDefaultAxisPair = true;
       this.InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
@@ -157,6 +163,7 @@ namespace VianaNET.Modules.Chart
       //Viana.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
+      this.isSettingDefaultAxisPair = false;
       this.PopulateAxesFromChartSelection();
     }
 
@@ -600,7 +607,6 @@ namespace VianaNET.Modules.Chart
 
       var entry = (string)this.ObjectSelectionCombo.SelectedItem;
       Viana.Project.ProcessingData.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
-      //Viana.Project.VideoData.ActiveObject = Viana.Project.ProcessingData.IndexOfObject;
     }
 
     /// <summary>
@@ -853,16 +859,16 @@ namespace VianaNET.Modules.Chart
     ///// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     //private void SamplesSelectionChanged(object sender, EventArgs e)
     //{
-      //this.ChartData.DataScatterSeries.ClearSelection();
+    //this.ChartData.DataScatterSeries.ClearSelection();
 
-      //if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
-      //{
-      //  foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
-      //  {
-      //    int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
-      //    this.ChartData.DataScatterSeries.SelectItem(index);
-      //  }
-      //}
+    //if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //{
+    //  foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
+    //  {
+    //    int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
+    //    this.ChartData.DataScatterSeries.SelectItem(index);
+    //  }
+    //}
     //}
 
     /// <summary>
@@ -909,6 +915,8 @@ namespace VianaNET.Modules.Chart
       {
         return;
       }
+
+      this.isSettingDefaultAxisPair = true;
 
       var chartType = ChartType.YoverX;
       char achsBez = 'x';
@@ -1041,6 +1049,8 @@ namespace VianaNET.Modules.Chart
       this.axisName = achsBez;
       Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
       this.Refresh();
+
+      this.isSettingDefaultAxisPair = false;
     }
 
     /// <summary>
@@ -1665,7 +1675,10 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void XAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      //this.PopulateAxesFromChartSelection();
+      if (this.isSettingDefaultAxisPair)
+      {
+        return;
+      }
 
       Viana.Project.CurrentChartType = ChartType.Custom;
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
@@ -1722,7 +1735,11 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void YAxisContentSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      //this.PopulateAxesFromChartSelection();
+      if (this.isSettingDefaultAxisPair)
+      {
+        return;
+      }
+
       Viana.Project.CurrentChartType = ChartType.Custom;
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
       var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
