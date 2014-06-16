@@ -52,7 +52,7 @@ namespace VianaNET.Modules.DataAcquisition
       "BrushOfCossHair",
       typeof(SolidColorBrush),
       typeof(ModifyDataWindow),
-      new FrameworkPropertyMetadata(Project.TrackObjectColors[0], OnPropertyChanged));
+      new FrameworkPropertyMetadata(Colors.Red, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
