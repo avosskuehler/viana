@@ -101,7 +101,8 @@
                          QuickAccessToolBarImageSource="/VianaNET;component/Images/ExportToXml16.png" 
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"/>
+                         IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"
+                                       Visibility="Hidden"/>
             <RibbonApplicationMenuItem Click="ExportDataToXlsButtonClick" 
                          Header="{lex:Loc VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
                          ImageSource="/VianaNET;component/Images/ExportToXls32.png" 
@@ -612,7 +613,8 @@
                          SmallImageSource="/VianaNET;component/Images/ExportToXml16.png" 
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
-                         IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"/>
+                         IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"
+                        Visibility="Hidden"/>
           <RibbonButton Click="ExportDataToXlsButtonClick" 
                          Label="{lex:Loc VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
                          LargeImageSource="/VianaNET;component/Images/ExportToXls32.png" 
