@@ -39,9 +39,22 @@
         <File Id="Xceed.Wpf.Toolkit" Name="Xceed.Wpf.Toolkit.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Xceed.Wpf.Toolkit" AssemblyApplication="Xceed.Wpf.Toolkit" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
-
-
-      
+      <Component Id="C_AForge" Guid="{1889AC8E-60DD-4E3D-A755-ABE47E146F70}" Win64="$(var.Win64)">
+        <File Id="AForge" Name="AForge.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge" AssemblyApplication="AForge" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_AForge.Imaging" Guid="{01CBDF78-4841-407C-889D-B29CFDE3A4E9}" Win64="$(var.Win64)">
+        <File Id="AForge.Imaging" Name="AForge.Imaging.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge.Imaging" AssemblyApplication="AForge.Imaging" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_AForge.Math" Guid="{7F9CB79B-DC61-428F-80B4-F8813E9384AA}" Win64="$(var.Win64)">
+        <File Id="AForge.Math" Name="AForge.Math.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge.Math" AssemblyApplication="AForge.Math" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_AForge.Vision" Guid="{6307B52E-70AD-430D-B5E3-F55A4D1284D6}" Win64="$(var.Win64)">
+        <File Id="AForge.Vision" Name="AForge.Vision.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge.Vision" AssemblyApplication="AForge.Vision" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
 
     </DirectoryRef>
 
@@ -49,6 +62,13 @@
       <Feature Id='OxyPlotFeature' Title='OxyPlot' Description='Installs oxyplot libraries for the application.' Level='1'>
         <ComponentRef Id='C_OxyPlot' />
         <ComponentRef Id='C_OxyPlot.Wpf' />
+      </Feature>
+
+      <Feature Id='AForgeFeature' Title='AForge' Description='Installs AForge libraries for the application.' Level='1'>
+        <ComponentRef Id='C_AForge' />
+        <ComponentRef Id='C_AForge.Imaging' />
+        <ComponentRef Id='C_AForge.Math' />
+        <ComponentRef Id='C_AForge.Vision' />
       </Feature>
 
       <Feature Id='ExternalLibsFeature' Title='ExternalLibs' Description='Installs external libraries for the application.' Level='1'>

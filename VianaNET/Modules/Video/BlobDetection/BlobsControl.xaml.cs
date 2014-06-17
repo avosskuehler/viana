@@ -180,6 +180,11 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// </summary>
     private void ResetOuterRegion()
     {
+      if (this.Visibility != Visibility.Visible)
+      {
+        return;
+      }
+
       double scaleX;
       double scaleY;
       if (this.GetScalesForProcessedFrame(out scaleX, out scaleY))
@@ -344,6 +349,17 @@ namespace VianaNET.Modules.Video.BlobDetection
       }
     }
 
+    /// <summary>
+    /// Handles the OnSizeChanged event of the BlobsControl control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
+    private void BlobsControl_OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+      this.ResetOuterRegion();
+    }
+
     #endregion
+
   }
 }

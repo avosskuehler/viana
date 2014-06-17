@@ -6,7 +6,8 @@
              xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
              xmlns:application="clr-namespace:VianaNET.Application"
              Width="300" 
-             Height="400" IsVisibleChanged="BlobsControlIsVisibleChanged">
+             Height="400" IsVisibleChanged="BlobsControlIsVisibleChanged"
+             SizeChanged="BlobsControl_OnSizeChanged">
   <UserControl.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </UserControl.Resources>
@@ -23,7 +24,7 @@
         </Grid.RenderTransform>
         <Image Name="OriginalImageControl" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center"/>
         <Image Opacity="0.8" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoElement.ColorProcessedVideoSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center"/>
-        <Path Name="OuterRegion" Visibility="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}" Fill="#FFFFFFFF">
+        <Path Name="OuterRegion" Visibility="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}" Fill="#FFFFFFFF" HorizontalAlignment="Center">
           <Path.Data>
             <CombinedGeometry GeometryCombineMode="Xor">
               <CombinedGeometry.Geometry1>
