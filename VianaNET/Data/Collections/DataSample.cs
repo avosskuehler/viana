@@ -2,7 +2,7 @@
 // <copyright file="DataSample.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -36,6 +36,11 @@ namespace VianaNET.Data.Collections
   public class DataSample
   {
     #region Public Properties
+   
+    /// <summary>
+    ///   Gets or sets the frame number
+    /// </summary>
+    public int Framenumber { get; set; }
 
     /// <summary>
     ///   Gets or sets the time in units of the current time unit

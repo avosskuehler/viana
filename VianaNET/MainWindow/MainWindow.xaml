@@ -75,7 +75,7 @@
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
                          IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
           <RibbonSeparator/>
-          <RibbonApplicationSplitMenuItem
+          <!--<RibbonApplicationSplitMenuItem
             Header="{lex:Loc VianaNET:Labels:ButtonExportDataLabelTitle}"
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToolTipTitle}"
             ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportDataToolTipDescription}"
@@ -102,7 +102,7 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
                          IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"
-                                       Visibility="Hidden"/>
+                                       Visibility="Collapsed"/>
             <RibbonApplicationMenuItem Click="ExportDataToXlsButtonClick" 
                          Header="{lex:Loc VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
                          ImageSource="/VianaNET;component/Images/ExportToXls32.png" 
@@ -147,7 +147,7 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportChartToWordToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportChartToWordToolTipDescription}"
                          IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"/>
-          </RibbonApplicationSplitMenuItem>
+          </RibbonApplicationSplitMenuItem>-->
           <RibbonApplicationMenu.AuxiliaryPaneContent>
             <Grid Name="AuxPaneGrid">
               <Grid.RowDefinitions>
@@ -614,7 +614,7 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonExportDataToXmlToolTipDescription}"
                          IsEnabled="{Binding Path=VideoData.HasSamples, Source={x:Static application:Viana.Project}}"
-                        Visibility="Hidden"/>
+                        Visibility="Collapsed"/>
           <RibbonButton Click="ExportDataToXlsButtonClick" 
                          Label="{lex:Loc VianaNET:Labels:ButtonExportDataToXlsLabelTitle}" 
                          LargeImageSource="/VianaNET;component/Images/ExportToXls32.png" 

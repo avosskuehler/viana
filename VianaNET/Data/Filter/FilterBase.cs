@@ -275,6 +275,9 @@ namespace VianaNET.Data.Filter
 
       switch (isXValue ? Viana.Project.CurrentFilterData.AxisX.Axis : Viana.Project.CurrentFilterData.AxisY.Axis)
       {
+        case AxisType.I:
+          value = sample.Framenumber;
+          break;
         case AxisType.T:
           value = sample.Object[aktObjectNr].Time;
           break;

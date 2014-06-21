@@ -219,15 +219,15 @@ namespace VianaNET.Modules.Video.BlobDetection
       {
         if (Viana.Project.ProcessingData.IsUsingColorDetection && Viana.Project.ProcessingData.IsUsingMotionDetection)
         {
-          this.ProcessedImageControl.Source = Video.Instance.VideoElement.MotionProcessedVideoSource;
+          this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
         }
         else if (Viana.Project.ProcessingData.IsUsingColorDetection)
         {
-          this.ProcessedImageControl.Source = Video.Instance.VideoElement.ColorProcessedVideoSource;
+          this.ProcessedImageControl.Source = Video.Instance.ColorProcessedImageSource;
         }
         else if (Viana.Project.ProcessingData.IsUsingMotionDetection)
         {
-          this.ProcessedImageControl.Source = Video.Instance.VideoElement.MotionProcessedVideoSource;
+          this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
         }
       }
 

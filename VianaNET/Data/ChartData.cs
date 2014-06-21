@@ -342,7 +342,22 @@ namespace VianaNET.Data
       }
 
       object result = targetPropertyInfo.GetValue(test);
-      return result != null ? (double)result : 0;
+      if (result == null)
+      {
+        return 0;
+      }
+
+      if (result is double)
+      {
+        return (double)result;
+      }
+
+      if (result is int)
+      {
+        return (int)result;
+      }
+
+      return 0;
     }
 
     /// <summary>

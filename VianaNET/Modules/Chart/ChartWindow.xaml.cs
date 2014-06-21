@@ -1741,11 +1741,13 @@ namespace VianaNET.Modules.Chart
       }
 
       Viana.Project.CurrentChartType = ChartType.Custom;
-      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-      var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
+      var axisY = (DataAxis)this.YAxisContent.SelectedItem;
+      var achsBez = axisY.Axis == AxisType.T ? 't' : 'y';
       var funcBez = 'y';
       this.axisName = achsBez;
       Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
+
+      this.Refresh();
     }
 
     /// <summary>

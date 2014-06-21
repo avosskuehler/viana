@@ -90,24 +90,6 @@ namespace VianaNET.Modules.Video.Control
       DependencyProperty.Register(
         "MediaPositionFrameIndex", typeof(int), typeof(VideoBase), new UIPropertyMetadata(default(int)));
 
-    /// <summary>
-    ///   The image source property.
-    /// </summary>
-    public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
-      "ImageSource", typeof(ImageSource), typeof(VideoBase), new UIPropertyMetadata(null));
-
-    /// <summary>
-    ///   The color processed image source property.
-    /// </summary>
-    public static readonly DependencyProperty ColorProcessedVideoSourceProperty = DependencyProperty.Register(
-      "ColorProcessedVideoSource", typeof(ImageSource), typeof(VideoBase), new UIPropertyMetadata(null));
-
-    /// <summary>
-    ///   The motion processed image source property.
-    /// </summary>
-    public static readonly DependencyProperty MotionProcessedVideoSourceProperty = DependencyProperty.Register(
-      "MotionProcessedVideoSource", typeof(ImageSource), typeof(VideoBase), new UIPropertyMetadata(null));
-
     #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -162,7 +144,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private IntPtr motionProcessingSection;
 
-    // #if DEBUG
     /// <summary>
     ///   Helps showing capture graph in GraphBuilder
     /// </summary>
@@ -173,8 +154,6 @@ namespace VianaNET.Modules.Video.Control
     ///   It enables an application to retrieve individual media samples as they move through the filter graph.
     /// </summary>
     protected ISampleGrabber sampleGrabber;
-
-    // #endif
 
     /// <summary>
     ///   This indicates if the frames of the capture callback should be skipped.
@@ -300,55 +279,6 @@ namespace VianaNET.Modules.Video.Control
         this.SetValue(FrameTimeInNanoSecondsProperty, value);
       }
     }
-
-    /// <summary>
-    ///   Gets or sets the image source.
-    /// </summary>
-    public ImageSource ImageSource
-    {
-      get
-      {
-        return (ImageSource)this.GetValue(ImageSourceProperty);
-      }
-
-      set
-      {
-        this.SetValue(ImageSourceProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the image source of the color processed video.
-    /// </summary>
-    public ImageSource ColorProcessedVideoSource
-    {
-      get
-      {
-        return (ImageSource)this.GetValue(ColorProcessedVideoSourceProperty);
-      }
-
-      set
-      {
-        this.SetValue(ColorProcessedVideoSourceProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the image source of the motion processed video.
-    /// </summary>
-    public ImageSource MotionProcessedVideoSource
-    {
-      get
-      {
-        return (ImageSource)this.GetValue(MotionProcessedVideoSourceProperty);
-      }
-
-      set
-      {
-        this.SetValue(MotionProcessedVideoSourceProperty, value);
-      }
-    }
-
 
     /// <summary>
     ///   Gets or sets the media position frame index.
@@ -572,7 +502,7 @@ namespace VianaNET.Modules.Video.Control
         // Update ColorProcessedVideoSource
         this.Dispatcher.BeginInvoke(
           DispatcherPriority.Render,
-          (SendOrPostCallback)delegate { ((InteropBitmap)this.ColorProcessedVideoSource).Invalidate(); },
+          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate(); },
           null);
       }
 
@@ -581,7 +511,7 @@ namespace VianaNET.Modules.Video.Control
         // Update MotionProcessedVideoSource
         this.Dispatcher.BeginInvoke(
           DispatcherPriority.Render,
-          (SendOrPostCallback)delegate { ((InteropBitmap)this.MotionProcessedVideoSource).Invalidate(); },
+          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate(); },
           null);
       }
     }
@@ -592,10 +522,10 @@ namespace VianaNET.Modules.Video.Control
         DispatcherPriority.Render,
         (SendOrPostCallback)delegate
           {
-            if (this.ColorProcessedVideoSource != null && this.MotionProcessedVideoSource != null)
+            if (Video.Instance.ColorProcessedImageSource != null && Video.Instance.MotionProcessedImageSource != null)
             {
-              ((InteropBitmap)this.ColorProcessedVideoSource).Invalidate();
-              ((InteropBitmap)this.MotionProcessedVideoSource).Invalidate();
+              ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate();
+              ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate();
             }
           },
         null);
@@ -694,21 +624,11 @@ namespace VianaNET.Modules.Video.Control
               // This is fast and lasts less than 1 millisecond.
               CopyMemory(this.originalMapping, buffer, bufferLength);
 
-              //if (Viana.Project.ProcessingData.IsUsingColorDetection)
-              //{
-              //  CopyMemory(this.ColorProcessingMapping, buffer, bufferLength);
-              //}
-
-              //if (Viana.Project.ProcessingData.IsUsingMotionDetection)
-              //{
-              //  this.UnmanagedImage = new UnmanagedImage(buffer, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-              //}
-
               this.Dispatcher.BeginInvoke(
                 DispatcherPriority.Render,
                 (SendOrPostCallback)delegate
                   {
-                    ((InteropBitmap)this.ImageSource).Invalidate();
+                    ((InteropBitmap)Video.Instance.OriginalImageSource).Invalidate();
 
                     // Send new image to processing thread
                     this.OnVideoFrameChanged();
@@ -967,7 +887,7 @@ namespace VianaNET.Modules.Video.Control
       this.NaturalVideoHeight = videoInfoHeader.BmiHeader.Height;
 
       this.CreateMemoryMapping(4);
-      this.ImageSource =
+      Video.Instance.OriginalImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
           this.originalSection,
           (int)this.NaturalVideoWidth,
@@ -976,7 +896,7 @@ namespace VianaNET.Modules.Video.Control
           this.Stride,
           0) as InteropBitmap;
 
-      this.ColorProcessedVideoSource =
+      Video.Instance.ColorProcessedImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
           this.colorProcessingSection,
           (int)this.NaturalVideoWidth,
@@ -985,7 +905,7 @@ namespace VianaNET.Modules.Video.Control
           this.Stride,
           0) as InteropBitmap;
 
-      this.MotionProcessedVideoSource =
+      Video.Instance.MotionProcessedImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
           this.motionProcessingSection,
           (int)this.NaturalVideoWidth,

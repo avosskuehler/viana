@@ -262,6 +262,15 @@ namespace VianaNET.Modules.Video.Control
       base.Stop();
     }
 
+    /// <summary>
+    /// Resets the frame timing, sets frame counter to zero.
+    /// </summary>
+    public void ResetFrameTiming()
+    {
+      this.frameTimer.Restart();
+      this.frameCounter = 0;
+    }
+
     #endregion
 
     #region Methods

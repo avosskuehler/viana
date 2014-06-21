@@ -54,20 +54,25 @@ namespace VianaNET.Modules.Video.Control
       DependencyProperty.Register(
         "IsDataAcquisitionRunning", typeof(bool), typeof(Video), new FrameworkPropertyMetadata(false, OnPropertyChanged));
 
-    ///// <summary>
-    /////   The video source property.
-    ///// </summary>
-    //public static readonly DependencyProperty VideoSourceProperty = DependencyProperty.Register(
-    //  "VideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
-
-    ///// <summary>
-    /////   The processed video source property.
-    ///// </summary>
-    //public static readonly DependencyProperty ProcessedVideoSourceProperty = DependencyProperty.Register(
-    //  "ProcessedVideoSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+    /// <summary>
+    ///   The image source property.
+    /// </summary>
+    public static readonly DependencyProperty OriginalImageSourceProperty = DependencyProperty.Register(
+      "OriginalImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
 
     /// <summary>
-    /// 
+    ///   The color processed image source property.
+    /// </summary>
+    public static readonly DependencyProperty ColorProcessedImageSourceProperty = DependencyProperty.Register(
+      "ColorProcessedImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+
+    /// <summary>
+    ///   The motion processed image source property.
+    /// </summary>
+    public static readonly DependencyProperty MotionProcessedImageSourceProperty = DependencyProperty.Register(
+      "MotionProcessedImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+
+    /// <summary>
     ///   The has video property.
     /// </summary>
     public static readonly DependencyProperty HasVideoProperty = DependencyProperty.Register(
@@ -277,37 +282,53 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    ///// <summary>
-    /////   Gets or sets the video source.
-    ///// </summary>
-    //public ImageSource VideoSource
-    //{
-    //  get
-    //  {
-    //    return (ImageSource)this.GetValue(VideoSourceProperty);
-    //  }
+    /// <summary>
+    ///   Gets or sets the image source.
+    /// </summary>
+    public ImageSource OriginalImageSource
+    {
+      get
+      {
+        return (ImageSource)this.GetValue(OriginalImageSourceProperty);
+      }
 
-    //  set
-    //  {
-    //    this.SetValue(VideoSourceProperty, value);
-    //  }
-    //}
+      set
+      {
+        this.SetValue(OriginalImageSourceProperty, value);
+      }
+    }
 
-    ///// <summary>
-    /////   Gets or sets the video source of the processed video.
-    ///// </summary>
-    //public ImageSource ProcessedVideoSource
-    //{
-    //  get
-    //  {
-    //    return (ImageSource)this.GetValue(ProcessedVideoSourceProperty);
-    //  }
+    /// <summary>
+    ///   Gets or sets the image source of the color processed video.
+    /// </summary>
+    public ImageSource ColorProcessedImageSource
+    {
+      get
+      {
+        return (ImageSource)this.GetValue(ColorProcessedImageSourceProperty);
+      }
 
-    //  set
-    //  {
-    //    this.SetValue(ProcessedVideoSourceProperty, value);
-    //  }
-    //}
+      set
+      {
+        this.SetValue(ColorProcessedImageSourceProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the image source of the motion processed video.
+    /// </summary>
+    public ImageSource MotionProcessedImageSource
+    {
+      get
+      {
+        return (ImageSource)this.GetValue(MotionProcessedImageSourceProperty);
+      }
+
+      set
+      {
+        this.SetValue(MotionProcessedImageSourceProperty, value);
+      }
+    }
 
     /// <summary>
     /// Gets the video input devices.
@@ -360,7 +381,7 @@ namespace VianaNET.Modules.Video.Control
       var visual = new DrawingVisual();
       DrawingContext dc = visual.RenderOpen();
       dc.DrawImage(
-        this.videoElement.ImageSource,
+        this.OriginalImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
@@ -528,7 +549,7 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     /// <param name="obj">The object.</param>
     /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       (obj as Video).OnPropertyChanged(args);
     }
@@ -578,7 +599,7 @@ namespace VianaNET.Modules.Video.Control
       }
 
       this.videoElement.VideoFrameChanged += this.VideoElementVideoFrameChanged;
-      //this.VideoSource = this.videoElement.ImageSource;
+      //this.videoElement.ImageSource = this.videoElement.ImageSource;
       //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
     }
 

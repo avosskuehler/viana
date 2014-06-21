@@ -327,7 +327,7 @@ namespace VianaNET.Data
         Point transformedPoint = newSamplePosition.Value;
         transformedPoint.Offset(-origin.X, -origin.Y);
         transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
-        newObjectSample = new DataSample { Time = newTime, PixelX = transformedPoint.X, PixelY = transformedPoint.Y };
+        newObjectSample = new DataSample { Framenumber = timeSample.Framenumber, Time = newTime, PixelX = transformedPoint.X, PixelY = transformedPoint.Y };
       }
 
       // Add new point
@@ -1312,6 +1312,7 @@ namespace VianaNET.Data
           this.validDataSamples[j].Add(timeSample);
 
           Point calibratedPoint = CalibrateSample(currentSample);
+          currentSample.Framenumber = timeSample.Framenumber;
           currentSample.Time = (double)timeSample.Timestamp / GetTimeFactor();
           currentSample.PositionX = calibratedPoint.X;
           currentSample.PositionY = calibratedPoint.Y;

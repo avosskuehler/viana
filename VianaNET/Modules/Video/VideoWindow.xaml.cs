@@ -180,6 +180,10 @@ namespace VianaNET.Modules.Video
 
         Video.Instance.StepOneFrame(true);
       }
+      else
+      {
+        Video.Instance.VideoCapturerElement.ResetFrameTiming();
+      }
     }
 
     /// <summary>
@@ -328,14 +332,10 @@ namespace VianaNET.Modules.Video
     }
 
     /// <summary>
-    /// The bottom line_ mouse enter.
+    /// Bottom line mouse enter.
     /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
     private void BottomLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeNS;
@@ -668,7 +668,7 @@ namespace VianaNET.Modules.Video
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
       // In Acquisition mode the processing is done in the StepCompleted event handler
-      if (!Video.Instance.IsDataAcquisitionRunning)
+      if (!Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
       {
         this.ProcessImage();
       }
