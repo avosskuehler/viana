@@ -2,7 +2,7 @@
 // <copyright file="ManualDataAquisitionWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,13 +19,7 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Interaction logic for ReconstructionWindow.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-
 namespace VianaNET.Modules.DataAcquisition
 {
   using System;
@@ -38,8 +32,8 @@ namespace VianaNET.Modules.DataAcquisition
   using System.Windows.Shapes;
   using System.Windows.Threading;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
   using VianaNET.Modules.Video.Control;
 
   /// <summary>
@@ -53,9 +47,9 @@ namespace VianaNET.Modules.DataAcquisition
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
     /// </summary>
     public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair",
-      typeof(SolidColorBrush),
-      typeof(ManualDataAquisitionWindow),
+      "BrushOfCossHair", 
+      typeof(SolidColorBrush), 
+      typeof(ManualDataAquisitionWindow), 
       new FrameworkPropertyMetadata(Brushes.Red, OnPropertyChanged));
 
     /// <summary>
@@ -63,9 +57,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject",
-        typeof(int),
-        typeof(ManualDataAquisitionWindow),
+        "IndexOfTrackedObject", 
+        typeof(int), 
+        typeof(ManualDataAquisitionWindow), 
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -136,6 +130,7 @@ namespace VianaNET.Modules.DataAcquisition
       {
         this.FramePanel.Visibility = Visibility.Hidden;
         this.TimelineSlider.Visibility = Visibility.Hidden;
+        Video.Instance.VideoCapturerElement.ResetFrameTiming();
       }
     }
 
@@ -175,6 +170,9 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
+    /// <summary>
+    /// Gets or sets the skip point count.
+    /// </summary>
     public int SkipPointCount { get; set; }
 
     #endregion
@@ -185,10 +183,10 @@ namespace VianaNET.Modules.DataAcquisition
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="obj">
-    /// The source of the event. This. 
+    /// The source of the event. This.
     /// </param>
     /// <param name="args">
-    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data.
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
@@ -208,15 +206,20 @@ namespace VianaNET.Modules.DataAcquisition
           window.IndexOfTrackedObject = 1;
         }
 
-        window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+        window.BrushOfCossHair =
+          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
       }
     }
 
     /// <summary>
     /// Handles the Click event of the ButtonReady control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void ButtonReadyClick(object sender, RoutedEventArgs e)
     {
       this.Close();
@@ -225,8 +228,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the MouseEnter event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void ControlPanelMouseEnter(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(false);
@@ -235,8 +242,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the MouseLeave event of the ControlPanel control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void ControlPanelMouseLeave(object sender, MouseEventArgs e)
     {
       this.ShowHideCursorSharp(true);
@@ -245,7 +256,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// This method creates circles for the last few data points
     /// </summary>
-    /// <param name="count">The number of points to be shown. </param>
+    /// <param name="count">
+    /// The number of points to be shown. 
+    /// </param>
     private void CreateVisualDataPoints(int count)
     {
       this.visualDataPointRingBufferSize = count;
@@ -295,8 +308,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Drag window mouse down.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="args">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="args">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void DragWindowMouseDown(object sender, MouseButtonEventArgs args)
     {
       this.mouseDownLocation = args.GetPosition(this.WindowCanvas);
@@ -306,8 +323,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Drag window mouse up.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void DragWindowMouseUp(object sender, MouseButtonEventArgs e)
     {
       this.GridTop.ReleaseMouseCapture();
@@ -316,8 +337,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Hides the window.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void HideWindow(object sender, RoutedEventArgs e)
     {
       this.ControlPanel.Visibility = Visibility.Collapsed;
@@ -326,8 +351,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Minimizes the window.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void MinimizeWindow(object sender, MouseButtonEventArgs e)
     {
       if (this.HelpText.Visibility == Visibility.Visible)
@@ -341,96 +370,15 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// Handles the ValueChanged event of the RecentPointCount control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.</param>
-    private void RecentPointCountValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
-    {
-      this.CreateVisualDataPoints((int)e.NewValue);
-    }
-
-    /// <summary>
-    /// Show or hide cursor sharp.
-    /// </summary>
-    /// <param name="show">True, if cursor should be shown otherwise false.</param>
-    private void ShowHideCursorSharp(bool show)
-    {
-      Visibility vis = show ? Visibility.Visible : Visibility.Collapsed;
-      this.VerticalCursorLineBottom.Visibility = vis;
-      this.VerticalCursorLineTop.Visibility = vis;
-      this.HorizontalCursorLineLeft.Visibility = vis;
-      this.HorizontalCursorLineRight.Visibility = vis;
-      this.CursorEllipse.Visibility = vis;
-    }
-
-    /// <summary>
-    ///   The step one frame backward.
-    /// </summary>
-    private void StepOneFrameBackward()
-    {
-      if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
-      {
-        Video.Instance.StepFrames(false, this.SkipPointCount);
-      }
-    }
-
-    /// <summary>
-    ///   The step one frame forward.
-    /// </summary>
-    private void StepOneFrameForward()
-    {
-      if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
-      {
-        Video.Instance.StepFrames(true, this.SkipPointCount);
-      }
-    }
-
-    /// <summary>
-    /// Handles the Loaded event of the Window control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void WindowLoaded(object sender, RoutedEventArgs e)
-    {
-      this.HorizontalCursorLineLeft.X2 = this.WindowCanvas.ActualWidth;
-      this.HorizontalCursorLineRight.X2 = this.WindowCanvas.ActualWidth;
-      this.VerticalCursorLineTop.Y2 = this.WindowCanvas.ActualHeight;
-      this.VerticalCursorLineBottom.Y2 = this.WindowCanvas.ActualHeight;
-
-      this.timesliderUpdateTimer.Start();
-    }
-
-    /// <summary>
-    /// Handles the PreviewKeyDown event of the Window control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
-    private void WindowPreviewKeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.Key == Key.Enter || e.Key == Key.Escape)
-      {
-        e.Handled = true;
-        this.Close();
-      }
-      else if (e.Key == Key.Right)
-      {
-        e.Handled = true;
-        this.StepOneFrameForward();
-      }
-      else if (e.Key == Key.Left)
-      {
-        e.Handled = true;
-        this.StepOneFrameBackward();
-      }
-    }
-
-    /// <summary>
     /// Handles the MouseDown event of the player control.
-    /// This captures the click location and transforms to video coordinates
+    ///   This captures the click location and transforms to video coordinates
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void PlayerMouseDown(object sender, MouseButtonEventArgs e)
     {
       if (e.ChangedButton == MouseButton.Left)
@@ -457,11 +405,11 @@ namespace VianaNET.Modules.DataAcquisition
         if (this.visualDataPointRingBufferSize > 0)
         {
           Canvas.SetTop(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
             canvasPosY - this.visualDataPointRadius);
 
           Canvas.SetLeft(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
             canvasPosX - this.visualDataPointRadius);
 
           this.indexOfVisualDataPointRingBuffer++;
@@ -483,8 +431,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the MouseMove event of the player control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void PlayerMouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
@@ -506,10 +458,80 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
+    /// Handles the ValueChanged event of the RecentPointCount control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.
+    /// </param>
+    private void RecentPointCountValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    {
+      this.CreateVisualDataPoints((int)e.NewValue);
+    }
+
+    /// <summary>
+    /// Show or hide cursor sharp.
+    /// </summary>
+    /// <param name="show">
+    /// True, if cursor should be shown otherwise false.
+    /// </param>
+    private void ShowHideCursorSharp(bool show)
+    {
+      Visibility vis = show ? Visibility.Visible : Visibility.Collapsed;
+      this.VerticalCursorLineBottom.Visibility = vis;
+      this.VerticalCursorLineTop.Visibility = vis;
+      this.HorizontalCursorLineLeft.Visibility = vis;
+      this.HorizontalCursorLineRight.Visibility = vis;
+      this.CursorEllipse.Visibility = vis;
+    }
+
+    /// <summary>
+    /// Handles the OnValueChanged event of the SkipPointCount control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.
+    /// </param>
+    private void SkipPointCount_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    {
+      this.SkipPointCount = (int)e.NewValue + 1;
+    }
+
+    /// <summary>
+    ///   The step one frame backward.
+    /// </summary>
+    private void StepOneFrameBackward()
+    {
+      if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
+      {
+        Video.Instance.StepFrames(false, this.SkipPointCount);
+      }
+    }
+
+    /// <summary>
+    ///   The step one frame forward.
+    /// </summary>
+    private void StepOneFrameForward()
+    {
+      if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
+      {
+        Video.Instance.StepFrames(true, this.SkipPointCount);
+      }
+    }
+
+    /// <summary>
     /// Handles the DragCompleted event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="DragCompletedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="DragCompletedEventArgs"/> instance containing the event data.
+    /// </param>
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
@@ -520,8 +542,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the DragStarted event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="DragStartedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="DragStartedEventArgs"/> instance containing the event data.
+    /// </param>
     private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
     {
       this.isDragging = true;
@@ -530,8 +556,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the TickDownClicked event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="EventArgs"/> instance containing the event data.
+    /// </param>
     private void TimelineSliderTickDownClicked(object sender, EventArgs e)
     {
       this.StepOneFrameBackward();
@@ -540,8 +570,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the TickUpClicked event of the timelineSlider control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="EventArgs"/> instance containing the event data.
+    /// </param>
     private void TimelineSliderTickUpClicked(object sender, EventArgs e)
     {
       this.StepOneFrameForward();
@@ -550,8 +584,12 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Handles the Tick event of the timesliderUpdateTimer control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="EventArgs"/> instance containing the event data.
+    /// </param>
     private void TimesliderUpdateTimerTick(object sender, EventArgs e)
     {
       if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
@@ -564,10 +602,14 @@ namespace VianaNET.Modules.DataAcquisition
 
     /// <summary>
     /// Handles the MouseMove event of the windowCanvas control
-    /// by moving the control panel.
+    ///   by moving the control panel.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void WindowCanvasMouseMove(object sender, MouseEventArgs e)
     {
       Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
@@ -587,16 +629,53 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    #endregion
+    /// <summary>
+    /// Handles the Loaded event of the Window control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
+    private void WindowLoaded(object sender, RoutedEventArgs e)
+    {
+      this.HorizontalCursorLineLeft.X2 = this.WindowCanvas.ActualWidth;
+      this.HorizontalCursorLineRight.X2 = this.WindowCanvas.ActualWidth;
+      this.VerticalCursorLineTop.Y2 = this.WindowCanvas.ActualHeight;
+      this.VerticalCursorLineBottom.Y2 = this.WindowCanvas.ActualHeight;
+
+      this.timesliderUpdateTimer.Start();
+    }
 
     /// <summary>
-    /// Handles the OnValueChanged event of the SkipPointCount control.
+    /// Handles the PreviewKeyDown event of the Window control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Decimal}"/> instance containing the event data.</param>
-    private void SkipPointCount_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="KeyEventArgs"/> instance containing the event data.
+    /// </param>
+    private void WindowPreviewKeyDown(object sender, KeyEventArgs e)
     {
-      this.SkipPointCount = (int)e.NewValue + 1;
+      if (e.Key == Key.Enter || e.Key == Key.Escape)
+      {
+        e.Handled = true;
+        this.Close();
+      }
+      else if (e.Key == Key.Right)
+      {
+        e.Handled = true;
+        this.StepOneFrameForward();
+      }
+      else if (e.Key == Key.Left)
+      {
+        e.Handled = true;
+        this.StepOneFrameBackward();
+      }
     }
+
+    #endregion
   }
 }

@@ -3,7 +3,7 @@
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="de"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control"
+             xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
              xmlns:application="clr-namespace:VianaNET.Application"
              Width="300" 
              Height="400" IsVisibleChanged="BlobsControlIsVisibleChanged"
@@ -22,8 +22,8 @@
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Grid.RenderTransform>
-        <Image Name="OriginalImageControl" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center"/>
-        <Image Opacity="0.8" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=VideoElement.ColorProcessedVideoSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center"/>
+        <Image Name="OriginalImageControl" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
+        <Image Opacity="0.8" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=ColorProcessedImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
         <Path Name="OuterRegion" Visibility="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}" Fill="#FFFFFFFF" HorizontalAlignment="Center">
           <Path.Data>
             <CombinedGeometry GeometryCombineMode="Xor">
@@ -44,7 +44,7 @@
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Grid.RenderTransform>
-        <Image Name="OverlayImageControl" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Control:Video.Instance}}" HorizontalAlignment="Center">
+        <Image Name="OverlayImageControl" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center">
         </Image>
         <Canvas Name="OverlayCanvas" Opacity="0.7" Background="White"
                 Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"

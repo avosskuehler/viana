@@ -662,6 +662,11 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void SelectNumberOfObjectsButtonClick(object sender, RoutedEventArgs e)
     {
+      if (Video.Instance.IsDataAcquisitionRunning)
+      {
+        return;
+      }
+
       // Clear all data to correctly recreate data arrays.
       Viana.Project.VideoData.Reset();
 
@@ -720,7 +725,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-     private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
+    private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
     {
       var coordinateSystemWindow = new CoordinateSystemWindow();
       coordinateSystemWindow.ShowDialog();

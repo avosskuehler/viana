@@ -18,7 +18,7 @@
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
 
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static Control:Video.Instance}}"/>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static Control:Video.Instance}}"/>
     <Canvas Name="windowCanvas">
       <Canvas.Width>
         <Binding ElementName="VideoImage" Path="ActualWidth" />

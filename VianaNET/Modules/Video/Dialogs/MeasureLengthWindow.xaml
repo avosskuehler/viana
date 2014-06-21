@@ -19,7 +19,7 @@
     <Grid.RenderTransform>
       <ScaleTransform ScaleX="1" ScaleY="-1"/>
     </Grid.RenderTransform>
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=VideoElement.ImageSource, Source={x:Static control:Video.Instance}}"/>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"/>
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
       <Canvas.Width>
         <Binding ElementName="VideoImage" Path="ActualWidth" />
