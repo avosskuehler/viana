@@ -2,7 +2,7 @@
 // <copyright file="HSXColor.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -29,14 +29,7 @@ namespace VianaNET.CustomStyles.Colors
   ///   Contains a HSL or HSV color value.
   /// </summary>
   public struct HSXColor
-  {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
+{
     #region Fields
 
     /// <summary>
@@ -56,9 +49,6 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -66,7 +56,7 @@ namespace VianaNET.CustomStyles.Colors
     ///   Clone constructor
     /// </summary>
     /// <param name="clone">
-    /// The <see cref="HSXColor"/> to clone. 
+    /// The <see cref="HSXColor"/> to clone.
     /// </param>
     public HSXColor(HSXColor clone)
       : this(clone.Hue, clone.Saturation, clone.ValueLuminanceBrightness)
@@ -77,13 +67,13 @@ namespace VianaNET.CustomStyles.Colors
     /// Initializes a new instance of the HSXColor struct.
     /// </summary>
     /// <param name="hue">
-    /// A <see cref="float"/> hue value or null. 
+    /// A <see cref="float"/> hue value or null.
     /// </param>
     /// <param name="saturation">
-    /// The saturation value 
+    /// The saturation value
     /// </param>
     /// <param name="x">
-    /// The luminance or v value for the color. 
+    /// The luminance or v value for the color.
     /// </param>
     public HSXColor(float? hue, float saturation, float x)
     {
@@ -98,13 +88,6 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -178,13 +161,6 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
@@ -201,21 +177,5 @@ namespace VianaNET.CustomStyles.Colors
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

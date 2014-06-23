@@ -1,36 +1,36 @@
 ﻿<UserControl
-    x:Class="VianaNET.Modules.DataGrid.DataGridWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com"
-    lex:LocalizeDictionary.DesignCulture="de"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  x:Class="VianaNET.Modules.DataGrid.DataGridWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lex="http://wpflocalizeextension.codeplex.com"
+  lex:LocalizeDictionary.DesignCulture="de"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:application="clr-namespace:VianaNET.Application"
-    mc:Ignorable="d"
+  mc:Ignorable="d"
   d:DesignHeight="418" d:DesignWidth="770">
   <UserControl.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </UserControl.Resources>
-  <DataGrid 
-    AutoGenerateColumns="False" 
+  <DataGrid
+    AutoGenerateColumns="False"
     Name="DataGrid"
     Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
-    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:Viana.Project}}" 
-    HorizontalGridLinesBrush="Gray" 
-    VerticalGridLinesBrush="Gray" 
-    RowHeaderWidth="20" 
+    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:Viana.Project}}"
+    HorizontalGridLinesBrush="Gray"
+    VerticalGridLinesBrush="Gray"
+    RowHeaderWidth="20"
     CanUserDeleteRows="False"
     CanUserResizeColumns="True"
-    PreviewKeyDown="DataGrid_OnKeyDown"    >
+    PreviewKeyDown="DataGrid_OnKeyDown">
     <DataGrid.RowStyle>
       <Style TargetType="DataGridRow">
-        <EventSetter Event="MouseDoubleClick" Handler="DataGridRowMouseDoubleClick"/>
+        <EventSetter Event="MouseDoubleClick" Handler="DataGridRowMouseDoubleClick" />
         <Setter Property="Background" Value="GhostWhite" />
-        <Setter Property="Foreground" Value="LightGray"/>
+        <Setter Property="Foreground" Value="LightGray" />
         <Style.Triggers>
           <Trigger Property="AlternationIndex" Value="0">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black" />
           </Trigger>
         </Style.Triggers>
       </Style>

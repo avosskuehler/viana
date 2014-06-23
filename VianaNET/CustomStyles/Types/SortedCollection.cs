@@ -2,7 +2,7 @@
 // <copyright file="SortedCollection.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -34,8 +34,8 @@ namespace VianaNET.CustomStyles.Types
 
   /// <summary>
   /// Collections that holds elements in the specified order. The complexity and efficiency
-  ///   of the algorithm is comparable to the SortedList from .NET collections. In contrast 
-  ///   to the SortedList SortedCollection accepts redundant elements. If no comparer is 
+  ///   of the algorithm is comparable to the SortedList from .NET collections. In contrast
+  ///   to the SortedList SortedCollection accepts redundant elements. If no comparer is
   ///   is specified the list will use the default comparer for given type.
   /// </summary>
   /// <typeparam name="TValue">
@@ -111,7 +111,7 @@ namespace VianaNET.CustomStyles.Types
     /// Initializes a new instance of the <see cref="SortedCollection{TValue}"/> class.
     /// </summary>
     /// <param name="comparer">
-    /// The comparer. 
+    /// The comparer.
     /// </param>
     public SortedCollection(IComparer<TValue> comparer)
     {
@@ -192,12 +192,12 @@ namespace VianaNET.CustomStyles.Types
     /// The this.
     /// </summary>
     /// <param name="index">
-    /// The index. 
+    /// The index.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// </exception>
     /// <returns>
-    /// The <see cref="TValue"/> . 
+    /// The <see cref="TValue"/> .
     /// </returns>
     public virtual TValue this[int index]
     {
@@ -232,7 +232,7 @@ namespace VianaNET.CustomStyles.Types
     /// The add.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <exception cref="ArgumentException">
     /// </exception>
@@ -268,10 +268,10 @@ namespace VianaNET.CustomStyles.Types
     /// The contains.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool Contains(TValue value)
     {
@@ -282,10 +282,10 @@ namespace VianaNET.CustomStyles.Types
     /// The copy to.
     /// </summary>
     /// <param name="array">
-    /// The array. 
+    /// The array.
     /// </param>
     /// <param name="arrayIndex">
-    /// The array index. 
+    /// The array index.
     /// </param>
     public void CopyTo(TValue[] array, int arrayIndex)
     {
@@ -305,10 +305,10 @@ namespace VianaNET.CustomStyles.Types
     /// The index of.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     /// <exception cref="ArgumentException">
     /// </exception>
@@ -332,10 +332,10 @@ namespace VianaNET.CustomStyles.Types
     /// The insert.
     /// </summary>
     /// <param name="index">
-    /// The index. 
+    /// The index.
     /// </param>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <exception cref="ArgumentException">
     /// </exception>
@@ -372,10 +372,10 @@ namespace VianaNET.CustomStyles.Types
     /// The remove.
     /// </summary>
     /// <param name="value">
-    /// The value. 
+    /// The value.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool Remove(TValue value)
     {
@@ -393,7 +393,7 @@ namespace VianaNET.CustomStyles.Types
     /// The remove at.
     /// </summary>
     /// <param name="index">
-    /// The index. 
+    /// The index.
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// </exception>
@@ -431,7 +431,7 @@ namespace VianaNET.CustomStyles.Types
     /// The check capacity.
     /// </summary>
     /// <param name="min">
-    /// The min. 
+    /// The min.
     /// </param>
     private void CheckCapacity(int min)
     {
@@ -485,7 +485,7 @@ namespace VianaNET.CustomStyles.Types
       /// Initializes a new instance of the <see cref="SortedCollectionEnumerator"/> class.
       /// </summary>
       /// <param name="collection">
-      /// The collection. 
+      /// The collection.
       /// </param>
       internal SortedCollectionEnumerator(SortedCollection<TValue> collection)
       {

@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Enthält Hilfsfunktionen zum Erzeugen von Excel-Dateien mit SpreadsheetML.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.DataGrid
 {
@@ -51,47 +54,47 @@ namespace VianaNET.Modules.DataGrid
     #region Static Fields
 
     /// <summary>
-    /// Namespaces. We need this to initialize XmlNamespaceManager so that we can search XmlDocument.
-    /// Used for Ods Export.
+    ///   Namespaces. We need this to initialize XmlNamespaceManager so that we can search XmlDocument.
+    ///   Used for Ods Export.
     /// </summary>
     private static readonly string[,] Namespaces =
-    {
-      { "table", "urn:oasis:names:tc:opendocument:xmlns:table:1.0" }, 
-      { "office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0" }, 
-      { "style", "urn:oasis:names:tc:opendocument:xmlns:style:1.0" }, 
-      { "text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0" }, 
-      { "draw", "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" }, 
       {
-        "fo", 
-        "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
-      }, 
-      { "dc", "http://purl.org/dc/elements/1.1/" }, 
-      { "meta", "urn:oasis:names:tc:opendocument:xmlns:meta:1.0" }, 
-      { "number", "urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" }, 
-      {
-        "presentation", 
-        "urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
-      }, 
-      {
-        "svg", "urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
-      }, 
-      { "chart", "urn:oasis:names:tc:opendocument:xmlns:chart:1.0" }, 
-      { "dr3d", "urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" }, 
-      { "math", "http://www.w3.org/1998/Math/MathML" }, 
-      { "form", "urn:oasis:names:tc:opendocument:xmlns:form:1.0" }, 
-      { "script", "urn:oasis:names:tc:opendocument:xmlns:script:1.0" }, 
-      { "ooo", "http://openoffice.org/2004/office" }, 
-      { "ooow", "http://openoffice.org/2004/writer" }, 
-      { "oooc", "http://openoffice.org/2004/calc" }, 
-      { "dom", "http://www.w3.org/2001/xml-events" }, 
-      { "xforms", "http://www.w3.org/2002/xforms" }, 
-      { "xsd", "http://www.w3.org/2001/XMLSchema" }, 
-      { "xsi", "http://www.w3.org/2001/XMLSchema-instance" }, 
-      { "rpt", "http://openoffice.org/2005/report" }, 
-      { "of", "urn:oasis:names:tc:opendocument:xmlns:of:1.2" }, 
-      { "rdfa", "http://docs.oasis-open.org/opendocument/meta/rdfa#" }, 
-      { "config", "urn:oasis:names:tc:opendocument:xmlns:config:1.0" }
-    };
+        { "table", "urn:oasis:names:tc:opendocument:xmlns:table:1.0" }, 
+        { "office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0" }, 
+        { "style", "urn:oasis:names:tc:opendocument:xmlns:style:1.0" }, 
+        { "text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0" }, 
+        { "draw", "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" }, 
+        {
+          "fo", 
+          "urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+        }, 
+        { "dc", "http://purl.org/dc/elements/1.1/" }, 
+        { "meta", "urn:oasis:names:tc:opendocument:xmlns:meta:1.0" }, 
+        { "number", "urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" }, 
+        {
+          "presentation", 
+          "urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
+        }, 
+        {
+          "svg", "urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+        }, 
+        { "chart", "urn:oasis:names:tc:opendocument:xmlns:chart:1.0" }, 
+        { "dr3d", "urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" }, 
+        { "math", "http://www.w3.org/1998/Math/MathML" }, 
+        { "form", "urn:oasis:names:tc:opendocument:xmlns:form:1.0" }, 
+        { "script", "urn:oasis:names:tc:opendocument:xmlns:script:1.0" }, 
+        { "ooo", "http://openoffice.org/2004/office" }, 
+        { "ooow", "http://openoffice.org/2004/writer" }, 
+        { "oooc", "http://openoffice.org/2004/calc" }, 
+        { "dom", "http://www.w3.org/2001/xml-events" }, 
+        { "xforms", "http://www.w3.org/2002/xforms" }, 
+        { "xsd", "http://www.w3.org/2001/XMLSchema" }, 
+        { "xsi", "http://www.w3.org/2001/XMLSchema-instance" }, 
+        { "rpt", "http://openoffice.org/2005/report" }, 
+        { "of", "urn:oasis:names:tc:opendocument:xmlns:of:1.2" }, 
+        { "rdfa", "http://docs.oasis-open.org/opendocument/meta/rdfa#" }, 
+        { "config", "urn:oasis:names:tc:opendocument:xmlns:config:1.0" }
+      };
 
     #endregion
 
@@ -131,12 +134,12 @@ namespace VianaNET.Modules.DataGrid
     public static void ToOds(DataCollection dataSource, string outputFilePath, ExportOptions options)
     {
       // Generate arrays
-      var arrays = GenerateExportArray(dataSource, options);
+      List<List<object>> arrays = GenerateExportArray(dataSource, options);
 
-      var templateFile =
+      ZipFile templateFile =
         ZipFile.Read(
           Assembly.GetExecutingAssembly().GetManifestResourceStream("VianaNET.Modules.DataGrid.template.ods"));
-      var contentXml = GetContentXmlFile(templateFile);
+      XmlDocument contentXml = GetContentXmlFile(templateFile);
       var nmsManager = new XmlNamespaceManager(contentXml.NameTable);
 
       for (int i = 0; i < Namespaces.GetLength(0); i++)
@@ -144,9 +147,9 @@ namespace VianaNET.Modules.DataGrid
         nmsManager.AddNamespace(Namespaces[i, 0], Namespaces[i, 1]);
       }
 
-      var tableNodes =
+      XmlNodeList tableNodes =
         contentXml.SelectNodes("/office:document-content/office:body/office:spreadsheet/table:table", nmsManager);
-      var sheetsRootNode = tableNodes.Item(0).ParentNode;
+      XmlNode sheetsRootNode = tableNodes.Item(0).ParentNode;
 
       // remove sheets from template file
       foreach (XmlNode tableNode in tableNodes)
@@ -155,18 +158,18 @@ namespace VianaNET.Modules.DataGrid
       }
 
       // Save data
-      var ownerDocument = sheetsRootNode.OwnerDocument;
+      XmlDocument ownerDocument = sheetsRootNode.OwnerDocument;
 
       XmlNode sheetNode = ownerDocument.CreateElement("table:table", GetNamespaceUri("table"));
 
-      var sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
+      XmlAttribute sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
       sheetName.Value = Viana.Project.ProjectFilename;
       sheetNode.Attributes.Append(sheetName);
 
       // SaveColumnDefinition
-      var columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
-      var columnsCount = ownerDocument.CreateAttribute(
-        "table:number-columns-repeated",
+      XmlElement columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
+      XmlAttribute columnsCount = ownerDocument.CreateAttribute(
+        "table:number-columns-repeated", 
         GetNamespaceUri("table"));
       columnsCount.Value = arrays[0].Count.ToString(CultureInfo.InvariantCulture);
       columnDefinition.Attributes.Append(columnsCount);
@@ -194,31 +197,31 @@ namespace VianaNET.Modules.DataGrid
           else if (column is double)
           {
             // We save values as text (string)
-            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            XmlAttribute valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
             valueType.Value = "float";
             cellNode.Attributes.Append(valueType);
 
-            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            XmlAttribute value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
             var doubleValue = (double)column;
             value.Value = doubleValue.ToString("N2", new CultureInfo("en-US"));
             cellNode.Attributes.Append(value);
 
-            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            XmlElement cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
             cellValue.InnerText = column.ToString();
             cellNode.AppendChild(cellValue);
           }
           else if (column is int)
           {
             // We save values as text (string)
-            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            XmlAttribute valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
             valueType.Value = "float";
             cellNode.Attributes.Append(valueType);
 
-            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            XmlAttribute value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
             value.Value = column.ToString();
             cellNode.Attributes.Append(value);
 
-            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            XmlElement cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
             cellValue.InnerText = column.ToString();
             cellNode.AppendChild(cellValue);
           }
@@ -308,7 +311,7 @@ namespace VianaNET.Modules.DataGrid
     /// Erzeugt aus einer DataTable ein Excel-XML-Dokument mit SpreadsheetML.
     /// </summary>
     /// <param name="dataSource">
-    /// Datenquelle, die in Excel exportiert werden soll 
+    /// Datenquelle, die in Excel exportiert werden soll
     /// </param>
     /// <param name="options">
     /// Die Exporteinstellungen

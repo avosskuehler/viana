@@ -1,26 +1,27 @@
 ﻿<Window x:Class="VianaNET.Modules.Video.Dialogs.LengthDialog"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
-    lex:LocalizeDictionary.DesignCulture="de"
-    ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-    Height="185" Width="250" WindowStyle="ThreeDBorderWindow"
-    Title="{lex:Loc VianaNET:Labels:LengthDialogTitle}" SizeToContent="WidthAndHeight" ShowInTaskbar="True" Icon="/VianaNET;component/Images/VianaNET.ico" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection"
+        lex:LocalizeDictionary.DesignCulture="de"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Height="185" Width="250" WindowStyle="ThreeDBorderWindow"
+        Title="{lex:Loc VianaNET:Labels:LengthDialogTitle}" SizeToContent="WidthAndHeight" ShowInTaskbar="True"
+        Icon="/VianaNET;component/Images/VianaNET.ico" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection"
         xmlns:validation="clr-namespace:VianaNET.CustomStyles.Validation">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
   <Border Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="35"/>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="35" />
       </Grid.RowDefinitions>
       <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-        <TextBlock Name="description" 
-                   FontWeight="Bold" TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:LengthDialogDescription}"/>
+        <TextBlock Name="description"
+                   FontWeight="Bold" TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:LengthDialogDescription}" />
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <TextBox Name="txbLength"  Width="100" Height="25" Margin="5" >
+          <TextBox Name="txbLength" Width="100" Height="25" Margin="5">
             <TextBox.Text>
               <Binding Path="UnitValue" UpdateSourceTrigger="PropertyChanged">
                 <Binding.ValidationRules>
@@ -37,13 +38,13 @@
             <RadioButton Name="rdbMM" IsChecked="True">mm</RadioButton>
           </StackPanel>
         </StackPanel>
-        <TextBlock TextWrapping="Wrap" Name="message">
-
-        </TextBlock>
+        <TextBlock TextWrapping="Wrap" Name="message" />
       </StackPanel>
       <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-        <Button Name="OK" Height="23" Width="80" IsDefault="True" Margin="5" Content="{lex:Loc VianaNET:Labels:OK}" Click="OK_Click" />
-        <Button Name="Cancel" Height="23" Width="80" IsDefault="False" Margin="5" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="Cancel_Click" />
+        <Button Name="OK" Height="23" Width="80" IsDefault="True" Margin="5" Content="{lex:Loc VianaNET:Labels:OK}"
+                Click="OK_Click" />
+        <Button Name="Cancel" Height="23" Width="80" IsDefault="False" Margin="5"
+                Content="{lex:Loc VianaNET:Labels:Cancel}" Click="Cancel_Click" />
       </StackPanel>
     </Grid>
   </Border>

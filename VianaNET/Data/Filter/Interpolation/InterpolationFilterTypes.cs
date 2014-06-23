@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FitTypes.cs" company="Freie Universität Berlin">
+// <copyright file="InterpolationFilterTypes.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -18,10 +18,9 @@
 //   ************************************************************************
 // </copyright>
 // <summary>
-//   
+//   Enumerates the available interpolation filter types
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter.Interpolation
 {
   /// <summary>
@@ -30,14 +29,14 @@ namespace VianaNET.Data.Filter.Interpolation
   public enum InterpolationFilterTypes
   {
     /// <summary>
-    ///   Describes the moving average filter which averages 
+    ///   Describes the moving average filter which averages
     ///   a specific amount of surrounding sample values.
     /// </summary>
-    MovingAverage = 1,
+    MovingAverage = 1, 
 
     /// <summary>
     ///   Describes the exponential smoothing algorithm.
     /// </summary>
-    ExponentialSmooth = 2,
+    ExponentialSmooth = 2, 
   }
 }

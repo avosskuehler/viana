@@ -2,7 +2,7 @@
 // <copyright file="ErrorLogger.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,6 +19,12 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   This class is used to log errors and exceptions into a file that can
+//   be used for debug purposes of user systems. (Can be send to support)
+//   Its members are static so it can be called from every code line
+//   without instatiation.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Logging
 {

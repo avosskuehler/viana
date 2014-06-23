@@ -2,7 +2,7 @@
 // <copyright file="Coloration.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -35,13 +35,6 @@ namespace VianaNET.CustomStyles.Colors
   /// </summary>
   public class Coloration
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Fields
 
     /// <summary>
@@ -63,9 +56,6 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -74,10 +64,10 @@ namespace VianaNET.CustomStyles.Colors
     ///   colors.
     /// </summary>
     /// <param name="colorType">
-    /// The <see cref="ColorType"/> the pallets are defined in. 
+    /// The <see cref="ColorType"/> the pallets are defined in.
     /// </param>
     /// <param name="pallet">
-    /// An array of <see cref="Color"/> with the pallet. 
+    /// An array of <see cref="Color"/> with the pallet.
     /// </param>
     public Coloration(ColorType colorType, params Color[] pallet)
     {
@@ -92,13 +82,6 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Properties
 
     /// <summary>
@@ -115,28 +98,25 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
     /// Returns a colored pallet for the given hue and saturation.
     /// </summary>
     /// <param name="hue">
-    /// A <see cref="float"/> with the hue to use. 
+    /// A <see cref="float"/> with the hue to use.
     /// </param>
     /// <param name="hueConstraint">
-    /// A <see cref="float"/> with the hue constraint to use. 
+    /// A <see cref="float"/> with the hue constraint to use.
     /// </param>
     /// <param name="saturation">
-    /// A <see cref="float"/> with the saturation to use. 
+    /// A <see cref="float"/> with the saturation to use.
     /// </param>
     /// <param name="x">
-    /// A <see cref="float"/> with ??? 
+    /// A <see cref="float"/> with ???
     /// </param>
     /// <returns>
-    /// An array of colors defining the pallet. 
+    /// An array of colors defining the pallet.
     /// </returns>
     public Color[] GetColoredPallet(float hue, float hueConstraint, float saturation, float x)
     {
@@ -154,7 +134,12 @@ namespace VianaNET.CustomStyles.Colors
       float satAux;
 
       this.CalculateParameters(
-        saturation, this.palletInfo.SatMin, this.palletInfo.SatMax, out satDiff, out satConstraint, out satAux);
+        saturation, 
+        this.palletInfo.SatMin, 
+        this.palletInfo.SatMax, 
+        out satDiff, 
+        out satConstraint, 
+        out satAux);
 
       // X
       float diffX;
@@ -194,46 +179,36 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
     /// Calculates color parameters.
     /// </summary>
     /// <param name="value">
-    /// A <see cref="float"/> with the value 
+    /// A <see cref="float"/> with the value
     /// </param>
     /// <param name="min">
-    /// A <see cref="float"/> with the minimum for the value 
+    /// A <see cref="float"/> with the minimum for the value
     /// </param>
     /// <param name="max">
-    /// A <see cref="float"/> with the maximum for the value 
+    /// A <see cref="float"/> with the maximum for the value
     /// </param>
     /// <param name="diff">
-    /// Out. Returns the diff value. 
+    /// Out. Returns the diff value.
     /// </param>
     /// <param name="constraint">
-    /// Out. Returns the constraint. 
+    /// Out. Returns the constraint.
     /// </param>
     /// <param name="aux">
-    /// Out. Returns the aux value. 
+    /// Out. Returns the aux value.
     /// </param>
     private void CalculateParameters(
-      float value, float min, float max, out float diff, out float constraint, out float aux)
+      float value, 
+      float min, 
+      float max, 
+      out float diff, 
+      out float constraint, 
+      out float aux)
     {
       diff = value;
       constraint = 0F;
@@ -283,11 +258,11 @@ namespace VianaNET.CustomStyles.Colors
     }
 
     /// <summary>
-    /// Fills coloration class with color array to 
+    /// Fills coloration class with color array to
     ///   build pallet info.
     /// </summary>
     /// <param name="pallet">
-    /// An array of <see cref="Color"/> defining the pallet 
+    /// An array of <see cref="Color"/> defining the pallet
     /// </param>
     private void SetSourcePallet(Color[] pallet)
     {
@@ -360,10 +335,6 @@ namespace VianaNET.CustomStyles.Colors
     }
 
     #endregion
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     ///   A structure specifying Hue and Saturation

@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ColorAndCropFilterRGB.cs" company="Freie Universität Berlin">
+// <copyright file="ColorAndCropFilterRgb.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -105,7 +105,7 @@ namespace VianaNET.Modules.Video.Filter
     /// Process the filter on the specified image.
     /// </summary>
     /// <param name="image">
-    /// Source image data. 
+    /// Source image data.
     /// </param>
     public override unsafe void ProcessInPlace(IntPtr image)
     {
@@ -177,14 +177,11 @@ namespace VianaNET.Modules.Video.Filter
             // check pixel
             if ((r >= rMin) && (r <= rMax) && (g >= gMin) && (g <= gMax) && (b >= bMin) && (b <= bMax))
             {
-              continue;
             }
-            else
-            {
-              ptr[R] = blank.R;
-              ptr[G] = blank.G;
-              ptr[B] = blank.B;
-            }
+
+            ptr[R] = blank.R;
+            ptr[G] = blank.G;
+            ptr[B] = blank.B;
           }
         }
 

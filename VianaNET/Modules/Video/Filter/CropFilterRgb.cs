@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The crop rgb filter.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Filter
 {

@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Interaction logic for ReconstructionWindow.xaml
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.DataAcquisition
 {
@@ -171,7 +174,7 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// Gets or sets the skip point count.
+    ///   Gets or sets the skip point count.
     /// </summary>
     public int SkipPointCount { get; set; }
 
@@ -257,7 +260,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// This method creates circles for the last few data points
     /// </summary>
     /// <param name="count">
-    /// The number of points to be shown. 
+    /// The number of points to be shown.
     /// </param>
     private void CreateVisualDataPoints(int count)
     {

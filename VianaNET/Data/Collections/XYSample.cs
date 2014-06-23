@@ -2,7 +2,7 @@
 // <copyright file="XYSample.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,7 +23,6 @@
 //   The data sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Collections
 {
   using System;
@@ -33,9 +32,11 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class XYSample : IComparable
   {
+    #region Constructors and Destructors
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="XYSample"/> class.
-    /// This parameterless constructor is needed for serialization
+    ///   Initializes a new instance of the <see cref="XYSample" /> class.
+    ///   This parameterless constructor is needed for serialization
     /// </summary>
     public XYSample()
     {
@@ -44,13 +45,21 @@ namespace VianaNET.Data.Collections
     /// <summary>
     /// Initializes a new instance of the <see cref="XYSample"/> class.
     /// </summary>
-    /// <param name="valueX"> The value x. </param>
-    /// <param name="valueY">The value y.</param>
+    /// <param name="valueX">
+    /// The value x. 
+    /// </param>
+    /// <param name="valueY">
+    /// The value y.
+    /// </param>
     public XYSample(double valueX, double valueY)
     {
       this.ValueX = valueX;
       this.ValueY = valueY;
     }
+
+    #endregion
+
+    #region Public Properties
 
     /// <summary>
     ///   Gets or sets the x value for this data sample.
@@ -62,11 +71,19 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public double ValueY { get; set; }
 
+    #endregion
+
+    #region Public Methods and Operators
+
     /// <summary>
     /// Compares the current object with another object of the same type.
     /// </summary>
-    /// <param name="obj">An object to compare with this object.</param>
-    /// <returns>A value that indicates the relative order of the objects being compared. </returns>
+    /// <param name="obj">
+    /// An object to compare with this object.
+    /// </param>
+    /// <returns>
+    /// A value that indicates the relative order of the objects being compared. 
+    /// </returns>
     public int CompareTo(object obj)
     {
       var otherSample = obj as XYSample;
@@ -78,5 +95,6 @@ namespace VianaNET.Data.Collections
       throw new ArgumentException("Object is not a XYSample");
     }
 
+    #endregion
   }
 }

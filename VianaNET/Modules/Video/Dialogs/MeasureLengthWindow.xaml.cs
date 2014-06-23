@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Interaction logic for ModifyDataWindow.xaml
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Dialogs
 {
@@ -46,6 +49,11 @@ namespace VianaNET.Modules.Video.Dialogs
     private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
+    ///   The end point.
+    /// </summary>
+    private Point endPoint;
+
+    /// <summary>
     ///   Mausbewegungen ignorieren, da über Control panel
     /// </summary>
     private bool ignoreMouse;
@@ -64,11 +72,6 @@ namespace VianaNET.Modules.Video.Dialogs
     ///   The start point.
     /// </summary>
     private Point startPoint;
-
-    /// <summary>
-    ///   The end point.
-    /// </summary>
-    private Point endPoint;
 
     /// <summary>
     ///   The start point is set.
@@ -128,7 +131,7 @@ namespace VianaNET.Modules.Video.Dialogs
         this.LengthLabelBorder.Visibility = Visibility.Visible;
         this.startPointIsSet = true;
       }
-      else 
+      else
       {
         this.endPoint = new Point(originalX, originalY);
 

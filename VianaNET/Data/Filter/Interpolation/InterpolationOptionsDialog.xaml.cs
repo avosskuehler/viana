@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The interpolation options dialog.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Filter.Interpolation
 {
@@ -75,8 +78,12 @@ namespace VianaNET.Data.Filter.Interpolation
     /// <summary>
     /// Cancel click.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
@@ -132,14 +139,6 @@ namespace VianaNET.Data.Filter.Interpolation
       this.DialogResult = true;
       this.Close();
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     ///   The update ui with filter.

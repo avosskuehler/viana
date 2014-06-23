@@ -2,7 +2,7 @@
 // <copyright file="HistogramMinMaxSegmentator.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -170,10 +170,8 @@ namespace VianaNET.Modules.Video.Filter
         // lastSegment = foundSegment;
         // }
       }
-      else
-      {
-        return new Segment();
-      }
+
+      return new Segment();
     }
 
     #endregion
@@ -184,19 +182,19 @@ namespace VianaNET.Modules.Video.Filter
     /// The get index below threshold.
     /// </summary>
     /// <param name="start">
-    /// The start. 
+    /// The start.
     /// </param>
     /// <param name="step">
-    /// The step. 
+    /// The step.
     /// </param>
     /// <param name="hist">
-    /// The hist. 
+    /// The hist.
     /// </param>
     /// <param name="threshold">
-    /// The threshold. 
+    /// The threshold.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     private int GetIndexBelowThreshold(int start, int step, int[] hist, int threshold)
     {
@@ -218,19 +216,19 @@ namespace VianaNET.Modules.Video.Filter
     /// The get indices above threshold.
     /// </summary>
     /// <param name="start">
-    /// The start. 
+    /// The start.
     /// </param>
     /// <param name="step">
-    /// The step. 
+    /// The step.
     /// </param>
     /// <param name="hist">
-    /// The hist. 
+    /// The hist.
     /// </param>
     /// <param name="threshold">
-    /// The threshold. 
+    /// The threshold.
     /// </param>
     /// <returns>
-    /// The <see cref="List"/> . 
+    /// The <see cref="List"/> .
     /// </returns>
     private List<int> GetIndicesAboveThreshold(int start, int step, int[] hist, int threshold)
     {

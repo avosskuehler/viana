@@ -1,60 +1,67 @@
 ﻿<Window x:Class="VianaNET.Data.Filter.NumericalPrecisionDialog"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         lex:LocalizeDictionary.DesignCulture="de"
-   ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-    Icon="/VianaNET;component/Images/VianaNET.ico" 
-    WindowStyle="ThreeDBorderWindow"
-    Title="{lex:Loc VianaNET:Labels:InterpolationDialogTopTitle}" 
-        mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        Icon="/VianaNET;component/Images/VianaNET.ico"
+        WindowStyle="ThreeDBorderWindow"
+        Title="{lex:Loc VianaNET:Labels:InterpolationDialogTopTitle}"
+        mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vianaNet="clr-namespace:VianaNET"
         Height="263" Width="328">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <mainWindow:TopFrame x:Name="TopFrame" Title="{lex:Loc VianaNET:Labels:LineOptionsDialogTitle}"/>
-    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+    <mainWindow:TopFrame x:Name="TopFrame" Title="{lex:Loc VianaNET:Labels:LineOptionsDialogTitle}" />
+    <Border Name="DescriptionArea" Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
       <Grid>
         <Grid.RowDefinitions>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="30"/>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <Label Content="{lex:Loc VianaNET:Labels:RegressionNumberDigits}" Grid.Row="0" HorizontalAlignment="Left"
-             VerticalAlignment="Center" Margin="4" Padding="1" />
+                 VerticalAlignment="Center" Margin="4" Padding="1" />
           <vianaNet:SliderValue Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="8,0,8,0"
-              VerticalAlignment="Center" SmallChange="1"
-              Orientation="Horizontal"
-                  Minimum="0" Maximum="10"
-              TickPlacement="Both" IsSnapToTickEnabled="True" Value="{Binding Path=NumberOfDigits}" ValueChanged="SliderValue_ValueChanged" />
-          <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0" Name="LabelSmallNumber" VerticalAlignment="Center" FontSize="10" />
-          <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="4,0,0,0" Name="LabelBigNumber" VerticalAlignment="Center" FontSize="10" />
-          <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="12,0,0,0" Name="LabelFormatSmallNumber" VerticalAlignment="Center" />
-          <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="12,0,0,0" Name="LabelFormatBigNumber" VerticalAlignment="Center" />
+                                VerticalAlignment="Center" SmallChange="1"
+                                Orientation="Horizontal"
+                                Minimum="0" Maximum="10"
+                                TickPlacement="Both" IsSnapToTickEnabled="True" Value="{Binding Path=NumberOfDigits}"
+                                ValueChanged="SliderValue_ValueChanged" />
+          <Label Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0" Name="LabelSmallNumber"
+                 VerticalAlignment="Center" FontSize="10" />
+          <Label Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="4,0,0,0" Name="LabelBigNumber"
+                 VerticalAlignment="Center" FontSize="10" />
+          <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="12,0,0,0"
+                 Name="LabelFormatSmallNumber" VerticalAlignment="Center" />
+          <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="12,0,0,0" Name="LabelFormatBigNumber"
+                 VerticalAlignment="Center" />
         </Grid>
       </Grid>
     </Border>
     <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-      <Button Name="Ok" Margin="5" Height="23" Width="80" IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}" Click="OkClick" />
-      <Button Name="Cancel" Margin="5" Height="23" Width="80" IsDefault="False" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
+      <Button Name="Ok" Margin="5" Height="23" Width="80" IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}"
+              Click="OkClick" />
+      <Button Name="Cancel" Margin="5" Height="23" Width="80" IsDefault="False"
+              Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
     </StackPanel>
   </Grid>
 </Window>

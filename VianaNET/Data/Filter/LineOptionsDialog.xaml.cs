@@ -2,7 +2,7 @@
 // <copyright file="LineOptionsDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -29,38 +29,53 @@ namespace VianaNET.Data.Filter
   using System.Windows;
 
   /// <summary>
-  /// The line options dialog.
+  ///   The line options dialog.
   /// </summary>
   public partial class LineOptionsDialog
   {
+    #region Constructors and Destructors
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="LineOptionsDialog"/> class.
+    ///   Initializes a new instance of the <see cref="LineOptionsDialog" /> class.
     /// </summary>
     public LineOptionsDialog()
     {
       this.InitializeComponent();
     }
 
+    #endregion
+
+    #region Methods
+
     /// <summary>
     /// Cancel has been clicked.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
 
-
     /// <summary>
     /// Ok has been clicked.
     /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The sender.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
       this.Close();
     }
+
+    #endregion
   }
 }

@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The video data.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Filter
 {
@@ -51,36 +54,36 @@ namespace VianaNET.Data.Filter
     ///   The AxisX property.
     /// </summary>
     public static readonly DependencyProperty AxisXProperty = DependencyProperty.Register(
-      "AxisX",
-      typeof(DataAxis),
-      typeof(FilterData),
+      "AxisX", 
+      typeof(DataAxis), 
+      typeof(FilterData), 
       new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The AxisY property.
     /// </summary>
     public static readonly DependencyProperty AxisYProperty = DependencyProperty.Register(
-      "AxisY",
-      typeof(DataAxis),
-      typeof(FilterData),
+      "AxisY", 
+      typeof(DataAxis), 
+      typeof(FilterData), 
       new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="CurrentFilter" />.
     /// </summary>
     public static readonly DependencyProperty CurrentFilterProperty = DependencyProperty.Register(
-      "CurrentFilter",
-      typeof(FilterBase),
-      typeof(FilterData),
+      "CurrentFilter", 
+      typeof(FilterBase), 
+      typeof(FilterData), 
       new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The data line color property.
     /// </summary>
     public static readonly DependencyProperty DataLineColorProperty = DependencyProperty.Register(
-      "DataLineColor",
-      typeof(Color),
-      typeof(FilterData),
+      "DataLineColor", 
+      typeof(Color), 
+      typeof(FilterData), 
       new UIPropertyMetadata(Colors.LightBlue));
 
     /// <summary>
@@ -88,29 +91,25 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty DataLineMarkerTypeProperty =
       DependencyProperty.Register(
-        "DataLineMarkerType",
-        typeof(MarkerType),
-        typeof(FilterData),
+        "DataLineMarkerType", 
+        typeof(MarkerType), 
+        typeof(FilterData), 
         new UIPropertyMetadata(MarkerType.Circle));
 
     /// <summary>
     ///   The data line thickness property.
     /// </summary>
     public static readonly DependencyProperty DataLineThicknessProperty =
-      DependencyProperty.Register(
-      "DataLineThickness", 
-      typeof(double), 
-      typeof(FilterData), 
-      new UIPropertyMetadata(2d));
+      DependencyProperty.Register("DataLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(2d));
 
     /// <summary>
     ///   The InterpolationFilter property.
     /// </summary>
     public static readonly DependencyProperty InterpolationFilterProperty =
       DependencyProperty.Register(
-        "InterpolationFilter",
-        typeof(InterpolationFilter),
-        typeof(FilterData),
+        "InterpolationFilter", 
+        typeof(InterpolationFilter), 
+        typeof(FilterData), 
         new UIPropertyMetadata(null));
 
     /// <summary>
@@ -118,9 +117,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty InterpolationLineColorProperty =
       DependencyProperty.Register(
-        "InterpolationLineColor",
-        typeof(Color),
-        typeof(FilterData),
+        "InterpolationLineColor", 
+        typeof(Color), 
+        typeof(FilterData), 
         new UIPropertyMetadata(Colors.Brown));
 
     /// <summary>
@@ -128,9 +127,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty InterpolationLineMarkerTypeProperty =
       DependencyProperty.Register(
-        "InterpolationLineMarkerType",
-        typeof(MarkerType),
-        typeof(FilterData),
+        "InterpolationLineMarkerType", 
+        typeof(MarkerType), 
+        typeof(FilterData), 
         new UIPropertyMetadata(MarkerType.None));
 
     /// <summary>
@@ -138,9 +137,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty InterpolationLineThicknessProperty =
       DependencyProperty.Register(
-        "InterpolationLineThickness",
-        typeof(double),
-        typeof(FilterData),
+        "InterpolationLineThickness", 
+        typeof(double), 
+        typeof(FilterData), 
         new UIPropertyMetadata(2d));
 
     /// <summary>
@@ -148,9 +147,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty InterpolationSeriesProperty =
       DependencyProperty.Register(
-        "InterpolationSeries",
-        typeof(SortedObservableCollection<XYSample>),
-        typeof(FilterData),
+        "InterpolationSeries", 
+        typeof(SortedObservableCollection<XYSample>), 
+        typeof(FilterData), 
         new UIPropertyMetadata(new SortedObservableCollection<XYSample>()));
 
     /// <summary>
@@ -158,9 +157,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty IsShowingDataSeriesProperty =
       DependencyProperty.Register(
-        "IsShowingDataSeries",
-        typeof(bool),
-        typeof(FilterData),
+        "IsShowingDataSeries", 
+        typeof(bool), 
+        typeof(FilterData), 
         new FrameworkPropertyMetadata(true));
 
     /// <summary>
@@ -168,9 +167,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty IsShowingInterpolationSeriesProperty =
       DependencyProperty.Register(
-        "IsShowingInterpolationSeries",
-        typeof(bool),
-        typeof(FilterData),
+        "IsShowingInterpolationSeries", 
+        typeof(bool), 
+        typeof(FilterData), 
         new FrameworkPropertyMetadata(false));
 
     /// <summary>
@@ -178,9 +177,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty IsShowingRegressionSeriesProperty =
       DependencyProperty.Register(
-        "IsShowingRegressionSeries",
-        typeof(bool),
-        typeof(FilterData),
+        "IsShowingRegressionSeries", 
+        typeof(bool), 
+        typeof(FilterData), 
         new FrameworkPropertyMetadata(false));
 
     /// <summary>
@@ -188,18 +187,18 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty IsShowingTheorySeriesProperty =
       DependencyProperty.Register(
-        "IsShowingTheorySeries",
-        typeof(bool),
-        typeof(FilterData),
+        "IsShowingTheorySeries", 
+        typeof(bool), 
+        typeof(FilterData), 
         new FrameworkPropertyMetadata(false));
 
     /// <summary>
     ///   The NumericPrecision property.
     /// </summary>
     public static readonly DependencyProperty NumericPrecisionProperty = DependencyProperty.Register(
-      "NumericPrecision",
-      typeof(int),
-      typeof(FilterData),
+      "NumericPrecision", 
+      typeof(int), 
+      typeof(FilterData), 
       new UIPropertyMetadata(2));
 
     /// <summary>
@@ -207,18 +206,18 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty RegressionAberrationProperty =
       DependencyProperty.Register(
-        "RegressionAberration",
-        typeof(double),
-        typeof(FilterData),
+        "RegressionAberration", 
+        typeof(double), 
+        typeof(FilterData), 
         new UIPropertyMetadata(0d));
 
     /// <summary>
     ///   The RegressionFilter property.
     /// </summary>
     public static readonly DependencyProperty RegressionFilterProperty = DependencyProperty.Register(
-      "RegressionFilter",
-      typeof(RegressionFilter),
-      typeof(FilterData),
+      "RegressionFilter", 
+      typeof(RegressionFilter), 
+      typeof(FilterData), 
       new UIPropertyMetadata(null));
 
     /// <summary>
@@ -226,9 +225,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty RegressionFunctionTexFormulaProperty =
       DependencyProperty.Register(
-        "RegressionFunctionTexFormula",
-        typeof(TexFormula),
-        typeof(FilterData),
+        "RegressionFunctionTexFormula", 
+        typeof(TexFormula), 
+        typeof(FilterData), 
         new UIPropertyMetadata(null));
 
     /// <summary>
@@ -236,9 +235,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty RegressionLineColorProperty =
       DependencyProperty.Register(
-        "RegressionLineColor",
-        typeof(Color),
-        typeof(FilterData),
+        "RegressionLineColor", 
+        typeof(Color), 
+        typeof(FilterData), 
         new UIPropertyMetadata(Colors.Red));
 
     /// <summary>
@@ -246,9 +245,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty RegressionLineMarkerTypeProperty =
       DependencyProperty.Register(
-        "RegressionLineMarkerType",
-        typeof(MarkerType),
-        typeof(FilterData),
+        "RegressionLineMarkerType", 
+        typeof(MarkerType), 
+        typeof(FilterData), 
         new UIPropertyMetadata(MarkerType.None));
 
     /// <summary>
@@ -256,27 +255,27 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty RegressionLineThicknessProperty =
       DependencyProperty.Register(
-        "RegressionLineThickness",
-        typeof(double),
-        typeof(FilterData),
+        "RegressionLineThickness", 
+        typeof(double), 
+        typeof(FilterData), 
         new UIPropertyMetadata(2d));
 
     /// <summary>
     ///   The data line color property.
     /// </summary>
     public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.Register(
-      "SelectionColor",
-      typeof(Color),
-      typeof(FilterData),
+      "SelectionColor", 
+      typeof(Color), 
+      typeof(FilterData), 
       new UIPropertyMetadata(Colors.Blue));
 
     /// <summary>
     ///   The InterpolationObject property.
     /// </summary>
     public static readonly DependencyProperty TheoryFilterProperty = DependencyProperty.Register(
-      "TheoryFilter",
-      typeof(TheoryFilter),
-      typeof(FilterData),
+      "TheoryFilter", 
+      typeof(TheoryFilter), 
+      typeof(FilterData), 
       new UIPropertyMetadata(null));
 
     /// <summary>
@@ -284,18 +283,18 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty TheoryFunctionTexFormulaProperty =
       DependencyProperty.Register(
-        "TheoryFunctionTexFormula",
-        typeof(TexFormula),
-        typeof(FilterData),
+        "TheoryFunctionTexFormula", 
+        typeof(TexFormula), 
+        typeof(FilterData), 
         new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The Theory line color property.
     /// </summary>
     public static readonly DependencyProperty TheoryLineColorProperty = DependencyProperty.Register(
-      "TheoryLineColor",
-      typeof(Color),
-      typeof(FilterData),
+      "TheoryLineColor", 
+      typeof(Color), 
+      typeof(FilterData), 
       new UIPropertyMetadata(Colors.GreenYellow));
 
     /// <summary>
@@ -303,20 +302,16 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty TheoryLineMarkerTypeProperty =
       DependencyProperty.Register(
-        "TheoryLineMarkerType",
-        typeof(MarkerType),
-        typeof(FilterData),
+        "TheoryLineMarkerType", 
+        typeof(MarkerType), 
+        typeof(FilterData), 
         new UIPropertyMetadata(MarkerType.None));
 
     /// <summary>
     ///   The Theory line thickness property.
     /// </summary>
     public static readonly DependencyProperty TheoryLineThicknessProperty =
-      DependencyProperty.Register(
-        "TheoryLineThickness",
-        typeof(double),
-        typeof(FilterData),
-        new UIPropertyMetadata(2d));
+      DependencyProperty.Register("TheoryLineThickness", typeof(double), typeof(FilterData), new UIPropertyMetadata(2d));
 
     #endregion
 

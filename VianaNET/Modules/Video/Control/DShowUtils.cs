@@ -2,7 +2,7 @@
 // <copyright file="DShowUtils.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -36,7 +36,7 @@ namespace VianaNET.Modules.Video.Control
   using VianaNET.Logging;
 
   /// <summary>
-  ///   This class encapsulates often needed static methods for direct show 
+  ///   This class encapsulates often needed static methods for direct show
   ///   interfaces like enumeration of devices and filters.
   /// </summary>
   public class DShowUtils
@@ -44,17 +44,17 @@ namespace VianaNET.Modules.Video.Control
     #region Public Methods and Operators
 
     /// <summary>
-    /// Enumerates all filters of the selected category and returns the IBaseFilter for the 
+    /// Enumerates all filters of the selected category and returns the IBaseFilter for the
     ///   filter described in friendlyname
     /// </summary>
     /// <param name="category">
-    /// Category of the filter 
+    /// Category of the filter
     /// </param>
     /// <param name="friendlyname">
-    /// Friendly name of the filter 
+    /// Friendly name of the filter
     /// </param>
     /// <returns>
-    /// IBaseFilter for the device 
+    /// IBaseFilter for the device
     /// </returns>
     public static IBaseFilter CreateFilter(Guid category, string friendlyname)
     {
@@ -83,10 +83,10 @@ namespace VianaNET.Modules.Video.Control
     /// Displays a property page for a filter
     /// </summary>
     /// <param name="parentHandle">
-    /// An <see cref="IntPtr"/> with the handle for the parent window of the dialog. 
+    /// An <see cref="IntPtr"/> with the handle for the parent window of the dialog.
     /// </param>
     /// <param name="dev">
-    /// The <see cref="IBaseFilter"/> for which to display a property page. 
+    /// The <see cref="IBaseFilter"/> for which to display a property page.
     /// </param>
     public static void DisplayPropertyPage(IntPtr parentHandle, IBaseFilter dev)
     {
@@ -158,7 +158,17 @@ namespace VianaNET.Modules.Video.Control
       // Create and display the OlePropertyFrame
       object device = dev;
       hr = Oleaut32.OleCreatePropertyFrame(
-        parentHandle, 0, 0, filterInfo.achName, 1, ref device, captureGUID.cElems, captureGUID.pElems, 0, 0, IntPtr.Zero);
+        parentHandle, 
+        0, 
+        0, 
+        filterInfo.achName, 
+        1, 
+        ref device, 
+        captureGUID.cElems, 
+        captureGUID.pElems, 
+        0, 
+        0, 
+        IntPtr.Zero);
       DsError.ThrowExceptionForHR(hr);
 
       // Release COM objects
@@ -211,16 +221,16 @@ namespace VianaNET.Modules.Video.Control
     ///   That is a list of video sizes and a list of frame rates.
     /// </summary>
     /// <param name="videoDevice">
-    /// [in] A <see cref="IBaseFilter"/> thats properties should be received. 
+    /// [in] A <see cref="IBaseFilter"/> thats properties should be received.
     /// </param>
     /// <param name="videoSizes">
-    /// [out] A <see cref="List{Size}"/> with valid video sizes. 
+    /// [out] A <see cref="List{Size}"/> with valid video sizes.
     /// </param>
     /// <param name="frameRates">
-    /// [out] A <see cref="List{Int32}"/> with valid frame rates. 
+    /// [out] A <see cref="List{Int32}"/> with valid frame rates.
     /// </param>
     /// <returns>
-    /// <strong>True</strong> , if parsing was successfull, otherwise <strong>false</strong> 
+    /// <strong>True</strong> , if parsing was successfull, otherwise <strong>false</strong>
     /// </returns>
     public static bool GetVideoCaps(IBaseFilter videoDevice, out List<Size> videoSizes, out List<int> frameRates)
     {
@@ -255,7 +265,11 @@ namespace VianaNET.Modules.Video.Control
 
         // Find the stream config interface
         hr = captureGraphBuilder.FindInterface(
-          PinCategory.Capture, MediaType.Video, videoDevice, typeof(IAMStreamConfig).GUID, out o);
+          PinCategory.Capture, 
+          MediaType.Video, 
+          videoDevice, 
+          typeof(IAMStreamConfig).GUID, 
+          out o);
         DsError.ThrowExceptionForHR(hr);
 
         var videoStreamConfig = o as IAMStreamConfig;
@@ -390,22 +404,26 @@ namespace VianaNET.Modules.Video.Control
     /// Sets framerate and video size for the given <see cref="IBaseFilter"/>
     /// </summary>
     /// <param name="capGraph">
-    /// A <see cref="ICaptureGraphBuilder2"/> with the capture graph. 
+    /// A <see cref="ICaptureGraphBuilder2"/> with the capture graph.
     /// </param>
     /// <param name="capFilter">
-    /// A <see cref="IBaseFilter"/> with the video device filter. 
+    /// A <see cref="IBaseFilter"/> with the video device filter.
     /// </param>
     /// <param name="newFrameRate">
-    /// An <see cref="int"/> with the new framerate. 
+    /// An <see cref="int"/> with the new framerate.
     /// </param>
     /// <param name="newWidth">
-    /// An <see cref="int"/> with the new video width. 
+    /// An <see cref="int"/> with the new video width.
     /// </param>
     /// <param name="newHeight">
-    /// An <see cref="int"/> with the new video height. 
+    /// An <see cref="int"/> with the new video height.
     /// </param>
     public static void SetVideoConfigParms(
-      ICaptureGraphBuilder2 capGraph, IBaseFilter capFilter, int newFrameRate, int newWidth, int newHeight)
+      ICaptureGraphBuilder2 capGraph, 
+      IBaseFilter capFilter, 
+      int newFrameRate, 
+      int newWidth, 
+      int newHeight)
     {
       int hr;
       object o;
@@ -468,43 +486,49 @@ namespace VianaNET.Modules.Video.Control
     #region Public Methods and Operators
 
     /// <summary>
-    /// Invokes a new property frame, that is, a property sheet dialog box, whose parent is hwndOwner, where the dialog is positioned at the point (x,y) in the parent window and has the caption lpszCaption.
+    /// Invokes a new property frame, that is, a property sheet dialog box, whose parent is hwndOwner, where the dialog is
+    ///   positioned at the point (x,y) in the parent window and has the caption lpszCaption.
     /// </summary>
     /// <param name="hwndOwner">
-    /// [in] Parent window of the resulting property sheet dialog box. 
+    /// [in] Parent window of the resulting property sheet dialog box.
     /// </param>
     /// <param name="x">
-    /// [in] Reserved. Horizontal position for the dialog box relative to hwndOwner. 
+    /// [in] Reserved. Horizontal position for the dialog box relative to hwndOwner.
     /// </param>
     /// <param name="y">
-    /// [in] Reserved. Vertical position for the dialog box relative to hwndOwner. 
+    /// [in] Reserved. Vertical position for the dialog box relative to hwndOwner.
     /// </param>
     /// <param name="lpszCaption">
-    /// [in] Pointer to the string used for the caption of the dialog box. 
+    /// [in] Pointer to the string used for the caption of the dialog box.
     /// </param>
     /// <param name="cObjects">
-    /// [in] Number of object pointers passed in lplpUnk. 
+    /// [in] Number of object pointers passed in lplpUnk.
     /// </param>
     /// <param name="ppUnk">
-    /// [in] An array of IUnknown pointers on the objects for which this property sheet is being invoked. The number of elements in the array is specified by cObjects. These pointers are passed to each property page through IPropertyPage::SetObjects. 
+    /// [in] An array of IUnknown pointers on the objects for which this property sheet is being invoked. The number of
+    ///   elements in the array is specified by cObjects. These pointers are passed to each property page through
+    ///   IPropertyPage::SetObjects.
     /// </param>
     /// <param name="cPages">
-    /// [in] Number of property pages specified in lpPageCIsID. 
+    /// [in] Number of property pages specified in lpPageCIsID.
     /// </param>
     /// <param name="lpPageClsID">
-    /// [in] Array of size cPages containing the CLSIDs of each property page to display in the property sheet. 
+    /// [in] Array of size cPages containing the CLSIDs of each property page to display in the property sheet.
     /// </param>
     /// <param name="lcid">
-    /// [in] Locale identifier to use for the property sheet. Property pages can retrieve this identifier through IPropertyPageSite::GetLocaleID. 
+    /// [in] Locale identifier to use for the property sheet. Property pages can retrieve this identifier through
+    ///   IPropertyPageSite::GetLocaleID.
     /// </param>
     /// <param name="dwReserved">
-    /// [in] Reserved for future use; must be zero. 
+    /// [in] Reserved for future use; must be zero.
     /// </param>
     /// <param name="lpvReserved">
-    /// [in] Reserved for future use; must be NULL. 
+    /// [in] Reserved for future use; must be NULL.
     /// </param>
     /// <returns>
-    /// This function supports the standard return values E_INVALIDARG, E_OUTOFMEMORY, and E_UNEXPECTED, as well as the following: S_OK The dialog box was invoked and operated successfully. E_POINTER The address in lpszCaption, lplpUnk, or lpPageCIsID is not valid. For example, any one of them may be NULL. 
+    /// This function supports the standard return values E_INVALIDARG, E_OUTOFMEMORY, and E_UNEXPECTED, as well as the
+    ///   following: S_OK The dialog box was invoked and operated successfully. E_POINTER The address in lpszCaption, lplpUnk,
+    ///   or lpPageCIsID is not valid. For example, any one of them may be NULL.
     /// </returns>
     [DllImport(@"oleaut32.dll")]
     public static extern int OleCreatePropertyFrame(

@@ -1,16 +1,16 @@
 ﻿<Window x:Class="VianaNET.Data.Filter.Regression.RegressionOptionsDialog"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:MainWindow="clr-namespace:VianaNET.MainWindow" 
-        Title="{lex:Loc VianaNET:Labels:RegressionDialogTitle}" 
-        d:DesignHeight="526" d:DesignWidth="305" 
-        SizeToContent="WidthAndHeight" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d" xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:MainWindow="clr-namespace:VianaNET.MainWindow"
+        Title="{lex:Loc VianaNET:Labels:RegressionDialogTitle}"
+        d:DesignHeight="526" d:DesignWidth="305"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
 
   <Grid Background="{StaticResource MainBackgroundBrush}">
@@ -19,50 +19,89 @@
       <RowDefinition Height="*" />
       <RowDefinition Height="40" />
     </Grid.RowDefinitions>
-    <MainWindow:TopFrame DataContext="{Binding}" x:Name="topFrame" 
-                             Title="{lex:Loc VianaNET:Labels:RegressionDialogTitle}" Margin="-2,0" />
+    <MainWindow:TopFrame DataContext="{Binding}" x:Name="topFrame"
+                         Title="{lex:Loc VianaNET:Labels:RegressionDialogTitle}" Margin="-2,0" />
     <Border Grid.Row="1" Name="DescriptionArea">
       <Grid Grid.Row="1">
         <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="40"/>
-          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="40" />
+          <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image HorizontalAlignment="Center" Margin="2" Name="image1" Source="/VianaNET;component/Images/RegressionLinear32.png" Height="32" Width="32" VerticalAlignment="Center" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionLinear}" HorizontalAlignment="Left" IsChecked="True" Name="radioButtonLin" Tag="1" VerticalAlignment="Center" Grid.Column="1" Padding="2" Margin="6,0" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image2" Source="/VianaNET;component/Images/RegressionExponentialA32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="1" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionExp}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonExpSpez" Tag="2" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="2" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image3" Source="/VianaNET;component/Images/RegressionLogarithmus32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="2" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionLog}" HorizontalAlignment="Left" IsChecked="False" Margin="6,0" Name="radioButtonLog" Tag="3" VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="2" />
-        <Image Height="32" Margin="2" Name="image4" Source="/VianaNET;component/Images/RegressionPotentiell32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="3" HorizontalAlignment="Center" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionPot}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonPot" Tag="4" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" Padding="2" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image5" Source="/VianaNET;component/Images/RegressionQuadratisch32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="4" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionQuad}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonQuad" Tag="5" VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="4" VerticalContentAlignment="Top" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image6" Source="/VianaNET;component/Images/RegressionExponentialB32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="5" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionExpo}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonExp" Tag="6" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Padding="2" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image7" Source="/VianaNET;component/Images/RegressionSinus32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="6" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionSin}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonSin" Tag="7" VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="6" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image8" Source="/VianaNET;component/Images/RegressionSinusExponential32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="7" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionSinExp}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonSinExp" Tag="8" VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" />
-        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image9" Source="/VianaNET;component/Images/RegressionResonanz32.png" Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="8" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionResonanz}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonResonanz" Tag="9" VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="8" />
-        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionBestType}" HorizontalAlignment="Left" Margin="6,0" Name="radioButtonFindBestRegress" Tag="9" VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="9" />
+        <Image HorizontalAlignment="Center" Margin="2" Name="image1"
+               Source="/VianaNET;component/Images/RegressionLinear32.png" Height="32" Width="32"
+               VerticalAlignment="Center" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionLinear}"
+                     HorizontalAlignment="Left" IsChecked="True" Name="radioButtonLin" Tag="1"
+                     VerticalAlignment="Center" Grid.Column="1" Padding="2" Margin="6,0" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image2"
+               Source="/VianaNET;component/Images/RegressionExponentialA32.png" Stretch="Fill"
+               VerticalAlignment="Center" Width="32" Grid.Row="1" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionExp}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonExpSpez" Tag="2"
+                     VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="2" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image3"
+               Source="/VianaNET;component/Images/RegressionLogarithmus32.png" Stretch="Fill"
+               VerticalAlignment="Center" Width="32" Grid.Row="2" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionLog}"
+                     HorizontalAlignment="Left" IsChecked="False" Margin="6,0" Name="radioButtonLog" Tag="3"
+                     VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="2" />
+        <Image Height="32" Margin="2" Name="image4" Source="/VianaNET;component/Images/RegressionPotentiell32.png"
+               Stretch="Fill" VerticalAlignment="Center" Width="32" Grid.Row="3" HorizontalAlignment="Center" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionPot}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonPot" Tag="4" VerticalAlignment="Center"
+                     Grid.Column="1" Grid.Row="3" Padding="2" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image5"
+               Source="/VianaNET;component/Images/RegressionQuadratisch32.png" Stretch="Fill"
+               VerticalAlignment="Center" Width="32" Grid.Row="4" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionQuad}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonQuad" Tag="5" VerticalAlignment="Center"
+                     Padding="2" Grid.Column="1" Grid.Row="4" VerticalContentAlignment="Top" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image6"
+               Source="/VianaNET;component/Images/RegressionExponentialB32.png" Stretch="Fill"
+               VerticalAlignment="Center" Width="32" Grid.Row="5" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionExpo}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonExp" Tag="6" VerticalAlignment="Center"
+                     Grid.Column="1" Grid.Row="5" Padding="2" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image7"
+               Source="/VianaNET;component/Images/RegressionSinus32.png" Stretch="Fill" VerticalAlignment="Center"
+               Width="32" Grid.Row="6" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionSin}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonSin" Tag="7" VerticalAlignment="Center"
+                     Padding="2" Grid.Column="1" Grid.Row="6" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image8"
+               Source="/VianaNET;component/Images/RegressionSinusExponential32.png" Stretch="Fill"
+               VerticalAlignment="Center" Width="32" Grid.Row="7" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionSinExp}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonSinExp" Tag="8"
+                     VerticalAlignment="Center" Grid.Column="1" Grid.Row="7" />
+        <Image Height="32" HorizontalAlignment="Center" Margin="2" Name="image9"
+               Source="/VianaNET;component/Images/RegressionResonanz32.png" Stretch="Fill" VerticalAlignment="Center"
+               Width="32" Grid.Row="8" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionResonanz}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonResonanz" Tag="9"
+                     VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="8" />
+        <RadioButton Checked="ButtonRegressAuswahlChecked" Content="{lex:Loc VianaNET:Labels:RegressionBestType}"
+                     HorizontalAlignment="Left" Margin="6,0" Name="radioButtonFindBestRegress" Tag="9"
+                     VerticalAlignment="Center" Padding="2" Grid.Column="1" Grid.Row="9" />
       </Grid>
     </Border>
     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-      <Button Click="OkClick" Content="{lex:Loc VianaNET:Labels:OK}" Height="23" IsDefault="True" Margin="5" Name="OK" Width="80" />
-      <Button Click="CancelClick" Content="{lex:Loc VianaNET:Labels:Cancel}" Height="23" IsDefault="False" Margin="5" Name="Cancel" Width="80" />
+      <Button Click="OkClick" Content="{lex:Loc VianaNET:Labels:OK}" Height="23" IsDefault="True" Margin="5" Name="OK"
+              Width="80" />
+      <Button Click="CancelClick" Content="{lex:Loc VianaNET:Labels:Cancel}" Height="23" IsDefault="False" Margin="5"
+              Name="Cancel" Width="80" />
     </StackPanel>
   </Grid>
 </Window>

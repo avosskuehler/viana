@@ -3,7 +3,7 @@
   <?include $(sys.CURRENTDIR)Config.wxi?>
   <Product Id="*"
            Codepage="1252"
-           Language="!(loc.Property_ProductLanguage)"
+           Language="1031"
            Name="$(var.ProductName)"
            Version="$(var.ProductVersion)"
            Manufacturer="$(var.Manufactor)"
@@ -14,12 +14,12 @@
              InstallScope="perMachine"
              Compressed="yes"
              Description="$(var.SoftwareDescription)"
-             Languages="!(loc.Property_ProductLanguage)"
+             Languages="1031"
              Manufacturer="$(var.Manufactor)"/>
 
-    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <PropertyRef Id="NETFRAMEWORK45"/>
     <Condition Message="This application requires .NET Framework 4.5.1. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
     </Condition>
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />

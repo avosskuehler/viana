@@ -2,7 +2,7 @@
 // <copyright file="SelectColorWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,10 +23,6 @@
 //   The select color window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using VianaNET.Application;
-using VianaNET.Logging;
-
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System;
@@ -34,13 +30,11 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
-  using System.Windows.Media;
 
-  using VianaNET.Data;
+  using VianaNET.Application;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
 
-  using Color = System.Drawing.Color;
   using Point = System.Windows.Point;
 
   /// <summary>
@@ -48,13 +42,6 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public partial class SelectColorWindow : Window
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Static Fields
 
     /// <summary>
@@ -62,9 +49,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject",
-        typeof(int),
-        typeof(SelectColorWindow),
+        "IndexOfTrackedObject", 
+        typeof(int), 
+        typeof(SelectColorWindow), 
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -78,9 +65,6 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -94,13 +78,6 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -127,10 +104,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The container_ mouse left button down.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     protected void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -140,10 +117,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The container_ mouse left button up.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// </exception>
@@ -173,11 +150,16 @@ namespace VianaNET.Modules.Video.Dialogs
         Color color = frame.GetPixel((int)originalX, (int)originalY);
         System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(255, color.R, color.G, color.B);
         Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
-        //Project.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
+
+        // Project.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
       }
       catch (Exception)
       {
-        var error = new VianaDialog("Error", "No Color selected", "Could not detect the color at the given position", true);
+        var error = new VianaDialog(
+          "Error", 
+          "No Color selected", 
+          "Could not detect the color at the given position", 
+          true);
         error.ShowDialog();
       }
 
@@ -195,10 +177,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The container_ mouse move.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     protected void Container_MouseMove(object sender, MouseEventArgs e)
     {
@@ -223,7 +205,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The mouse over control panel.
     /// </summary>
     /// <param name="isOver">
-    /// The is over. 
+    /// The is over.
     /// </param>
     protected virtual void MouseOverControlPanel(bool isOver)
     {
@@ -233,10 +215,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="obj">
-    /// The source of the event. This. 
+    /// The source of the event. This.
     /// </param>
     /// <param name="args">
-    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data.
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
@@ -253,10 +235,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The control panel_ mouse enter.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
     {
@@ -267,10 +249,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The control panel_ mouse leave.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
     {
@@ -281,10 +263,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The drag window mouse down.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="args">
-    /// The args. 
+    /// The args.
     /// </param>
     private void DragWindowMouseDown(object sender, MouseButtonEventArgs args)
     {
@@ -296,10 +278,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The drag window mouse up.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void DragWindowMouseUp(object sender, MouseButtonEventArgs e)
     {
@@ -310,10 +292,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The hide window.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void HideWindow(object sender, RoutedEventArgs e)
     {
@@ -324,10 +306,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The minimize window.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void MinimizeWindow(object sender, MouseButtonEventArgs e)
     {
@@ -345,10 +327,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The window_ preview key down.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
     {
@@ -363,10 +345,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The btn done_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void btnDone_Click(object sender, RoutedEventArgs e)
     {
@@ -375,16 +357,5 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

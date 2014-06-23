@@ -1,121 +1,145 @@
 ﻿<Window
-    x:Class="VianaNET.Modules.DataAcquisition.ManualDataAquisitionWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+  x:Class="VianaNET.Modules.DataAcquisition.ManualDataAquisitionWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lex="http://wpflocalizeextension.codeplex.com"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
-    xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
-    lex:LocalizeDictionary.DesignCulture="de"
-	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
+  xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
+  lex:LocalizeDictionary.DesignCulture="de"
+  Height="418" Width="600" WindowState="Maximized" WindowStyle="None"
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
-  Loaded="WindowLoaded" 
+  Loaded="WindowLoaded"
   PreviewKeyDown="WindowPreviewKeyDown">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
   <Grid Name="PlayerContainerGrid" RenderTransformOrigin="0.5,0.5">
     <Grid.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+      <ScaleTransform ScaleX="1" ScaleY="-1" />
     </Grid.RenderTransform>
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
+    <Image Name="VideoImage" Stretch="Uniform"
+           Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"
+           MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
-      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
-      <Border Name="ObjectIndexPanel" 
+      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}" />
+      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}" />
+      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}" />
+      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}" />
+      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10"
+               IsEnabled="False" IsHitTestVisible="False" />
+      <Border Name="ObjectIndexPanel"
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"
-              Background="{StaticResource BannerBackgroundBrush}" 
+              Background="{StaticResource BannerBackgroundBrush}"
               Canvas.Left="{Binding ElementName=WindowCanvas,Path=ActualWidth}"
               CornerRadius="10" Height="80" Width="80">
         <Border.RenderTransform>
           <TransformGroup>
-            <TranslateTransform 
-              X="-90" 
-              Y="90"/>
-            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            <TranslateTransform
+              X="-90"
+              Y="90" />
+            <ScaleTransform ScaleX="1" ScaleY="-1" />
           </TransformGroup>
         </Border.RenderTransform>
         <StackPanel>
-          <TextBox 
-            TextWrapping="Wrap" 
+          <TextBox
+            TextWrapping="Wrap"
             Background="Transparent"
             Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
             BorderThickness="0"
             Padding="0 4 0 0"
-            TextAlignment="Center"/>
-          <Label 
-            Content="{Binding IndexOfTrackedObject, StringFormat=N0}" 
-            FontSize="38" 
+            TextAlignment="Center" />
+          <Label
+            Content="{Binding IndexOfTrackedObject, StringFormat=N0}"
+            FontSize="38"
             Margin="0"
             Padding="0"
             HorizontalAlignment="Center"
-            Foreground="White"/>
+            Foreground="White" />
         </StackPanel>
       </Border>
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD"
+              Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter"
+              MouseLeave="ControlPanelMouseLeave">
         <Border.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="-1" />
         </Border.RenderTransform>
         <StackPanel Orientation="Vertical">
-          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
+          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25"
+                MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="20"/>
-              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionControlTitle}" HorizontalAlignment="Center" x:Name="LabelTitle" Panel.ZIndex="2" FontFamily="Segoe UI Symbol" VerticalAlignment="Top" Height="30.29"/>
-            <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
-            <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
+            <Label Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionControlTitle}"
+                   HorizontalAlignment="Center" x:Name="LabelTitle" Panel.ZIndex="2" FontFamily="Segoe UI Symbol"
+                   VerticalAlignment="Top" Height="30.29" />
+            <Label Grid.Column="1" Padding="0,0,5,0" Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana"
+                   FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX" />
+            <Label Grid.Column="2" Padding="0,0,5,0" Content="x" MouseDown="HideWindow" FontFamily="Verdana"
+                   FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX" />
           </Grid>
-          <Separator/>
-          <TextBlock Name="HelpText" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionDescription}" TextWrapping="Wrap" />
+          <Separator />
+          <TextBlock Name="HelpText" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionDescription}"
+                     TextWrapping="Wrap" />
           <StackPanel Name="FramePanel" Orientation="Horizontal" Margin="5">
-            <Label Padding="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionFrameLabel}" VerticalAlignment="Center"/>
+            <Label Padding="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionFrameLabel}"
+                   VerticalAlignment="Center" />
             <Label Name="FrameIndex" Width="40" Padding="0"
-                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static control:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
-            <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
-            <Label Name="FrameCount" Content="{Binding Path=VideoElement.FrameCount, Source={x:Static control:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
+                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static control:Video.Instance}}"
+                   HorizontalContentAlignment="Right" VerticalAlignment="Center" />
+            <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center" />
+            <Label Name="FrameCount"
+                   Content="{Binding Path=VideoElement.FrameCount, Source={x:Static control:Video.Instance}}"
+                   Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center" />
           </StackPanel>
-          <vianaNet:MediaSlider 
-            Margin="5" 
-            IsShowingTimes="Collapsed" 
-            x:Name="TimelineSlider"  
+          <vianaNet:MediaSlider
+            Margin="5"
+            IsShowingTimes="Collapsed"
+            x:Name="TimelineSlider"
             Style="{StaticResource MediaSliderStyle}"
             FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
             Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
             SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
             SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
-            SmallChange="1" 
-            IsSelectionRangeEnabled="True" 
-            TickPlacement="BottomRight" 
-            Interval="1" 
+            SmallChange="1"
+            IsSelectionRangeEnabled="True"
+            TickPlacement="BottomRight"
+            Interval="1"
             Height="20"
-            TickDownClicked="TimelineSliderTickDownClicked" 
+            TickDownClicked="TimelineSliderTickDownClicked"
             TickUpClicked="TimelineSliderTickUpClicked"
             Thumb.DragStarted="TimelineSliderDragStarted"
             Thumb.DragCompleted="TimelineSliderDragCompleted"
-            IsSnapToTickEnabled="True"/>
-          <Separator/>
-          <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" Click="ButtonReadyClick" />
+            IsSnapToTickEnabled="True" />
+          <Separator />
+          <Button Name="ButtonReady" Width="60" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"
+                  Click="ButtonReadyClick" />
           <Expander IsExpanded="False" Header="{lex:Loc VianaNET:Labels:WindowWithHelpOptionsExpanderHeader}">
             <Grid>
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
               <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
-              <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionRecentPointCount}" VerticalAlignment="Center"/>
-              <vianaNet:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="RecentPointCount" Width="50" Margin="5,0,0,0" Minimum="0" Maximum="20" Value="7" ValueChanged="RecentPointCountValueChanged" />
-              <TextBlock Grid.Row="1" Grid.Column="0" Padding="5" Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionSkipPointCount}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-              <vianaNet:NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="SkipPointCountNumericUpDown" Width="50" Margin="5,0,0,0" Minimum="0" Value="0" ValueChanged="SkipPointCount_OnValueChanged" />
+              <Label Grid.Row="0" Grid.Column="0"
+                     Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionRecentPointCount}"
+                     VerticalAlignment="Center" />
+              <vianaNet:NumericUpDown Grid.Row="0" Grid.Column="1" x:Name="RecentPointCount" Width="50"
+                                      Margin="5,0,0,0" Minimum="0" Maximum="20" Value="7"
+                                      ValueChanged="RecentPointCountValueChanged" />
+              <TextBlock Grid.Row="1" Grid.Column="0" Padding="5"
+                         Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionSkipPointCount}"
+                         VerticalAlignment="Center" TextWrapping="Wrap" />
+              <vianaNet:NumericUpDown Grid.Row="1" Grid.Column="1" x:Name="SkipPointCountNumericUpDown" Width="50"
+                                      Margin="5,0,0,0" Minimum="0" Value="0"
+                                      ValueChanged="SkipPointCount_OnValueChanged" />
             </Grid>
           </Expander>
         </StackPanel>

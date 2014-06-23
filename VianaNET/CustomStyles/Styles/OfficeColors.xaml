@@ -1,6 +1,6 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Color x:Key="ForegroundOfficeColor1">#FF15428B</Color>
   <Color x:Key="ForegroundOfficeColor2">#FF7495C2</Color>

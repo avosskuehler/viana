@@ -17,8 +17,10 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
+// <summary>
+//   Defines the BindingErrorTraceListener type.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Logging
 {
   using System.Diagnostics;

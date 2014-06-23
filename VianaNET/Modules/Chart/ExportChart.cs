@@ -2,7 +2,7 @@
 // <copyright file="ExportChart.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -38,10 +38,12 @@ namespace VianaNET.Modules.Chart
   using OxyPlot;
   using OxyPlot.Wpf;
 
+  using VianaNET.Logging;
   using VianaNET.MainWindow;
   using VianaNET.Resources;
 
   using Application = Microsoft.Office.Interop.Word.Application;
+  using SvgExporter = OxyPlot.SvgExporter;
 
   /// <summary>
   ///   The export chart.
@@ -54,11 +56,15 @@ namespace VianaNET.Modules.Chart
     /// The to clipboard.
     /// </summary>
     /// <param name="chart">
-    /// The chart. 
+    /// The chart.
     /// </param>
     public static void ToClipboard(PlotModel chart)
     {
-      var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+      BitmapSource bitmap = PngExporter.ExportToBitmap(
+        chart, 
+        (int)chart.Width, 
+        (int)chart.Height, 
+        OxyColor.FromArgb(255, 255, 255, 255));
       Clipboard.SetImage(bitmap);
       StatusBarContent.Instance.MessagesLabel = Labels.ChartExportedToClipboardMessage;
     }
@@ -67,7 +73,7 @@ namespace VianaNET.Modules.Chart
     /// The to file.
     /// </summary>
     /// <param name="chart">
-    /// The chart. 
+    /// The chart.
     /// </param>
     public static void ToFile(PlotModel chart)
     {
@@ -107,11 +113,15 @@ namespace VianaNET.Modules.Chart
                 break;
               case ".svg":
                 var rc = new ShapesRenderContext(null);
-                var svg = OxyPlot.SvgExporter.ExportToString(chart, chart.Width, chart.Height, true, rc);
+                string svg = SvgExporter.ExportToString(chart, chart.Width, chart.Height, true, rc);
                 stream.Write(enc.GetBytes(svg), 0, svg.Length);
                 return;
               case ".xaml":
-                var xaml = XamlExporter.ExportToString(chart, chart.Width, chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+                string xaml = XamlExporter.ExportToString(
+                  chart, 
+                  chart.Width, 
+                  chart.Height, 
+                  OxyColor.FromArgb(255, 255, 255, 255));
                 stream.Write(enc.GetBytes(xaml), 0, xaml.Length);
                 return;
               case ".jpg":
@@ -121,7 +131,11 @@ namespace VianaNET.Modules.Chart
             }
           }
 
-          var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+          BitmapSource bitmap = PngExporter.ExportToBitmap(
+            chart, 
+            (int)chart.Width, 
+            (int)chart.Height, 
+            OxyColor.FromArgb(255, 255, 255, 255));
 
           // Save to file
           if (encoder != null)
@@ -137,7 +151,7 @@ namespace VianaNET.Modules.Chart
     /// The to word.
     /// </summary>
     /// <param name="chart">
-    /// The chart. 
+    /// The chart.
     /// </param>
     public static void ToWord(PlotModel chart)
     {
@@ -158,7 +172,7 @@ namespace VianaNET.Modules.Chart
       }
       catch (Exception ex)
       {
-        Logging.ErrorLogger.ProcessException(ex, true);
+        ErrorLogger.ProcessException(ex, true);
       }
     }
 

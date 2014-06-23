@@ -19,6 +19,13 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   This is the main class for the DirectShow interop.
+//   It creates a graph that pushes video frames from a Video Input Device
+//   through the filter chain to a SampleGrabber, from which the
+//   frames can be catched and send into the processing tree of
+//   the application.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Control
 {
@@ -49,26 +56,12 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public static readonly DependencyProperty VideoCaptureDeviceProperty =
       DependencyProperty.Register(
-        "VideoCaptureDevice",
-        typeof(DsDevice),
-        typeof(VideoCapturer),
+        "VideoCaptureDevice", 
+        typeof(DsDevice), 
+        typeof(VideoCapturer), 
         new PropertyMetadata(OnVideoCaptureDevicePropertyChanged));
 
     #endregion
-
-    /// <summary>
-    /// Finalizes an instance of the <see cref="VideoCapturer"/> class.
-    /// </summary>
-    ~VideoCapturer()
-    {
-      if (this.VideoDeviceFilter != null)
-      {
-        Marshal.ReleaseComObject(this.VideoDeviceFilter);
-        this.VideoDeviceFilter = null;
-        this.videoControl = null;
-        this.videoStreamConfig = null;
-      }
-    }
 
     #region Fields
 
@@ -95,6 +88,24 @@ namespace VianaNET.Modules.Video.Control
     ///   frame rate (for video) or the sample rate and number of channels (for audio).
     /// </summary>
     private IAMStreamConfig videoStreamConfig;
+
+    #endregion
+
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Finalizes an instance of the <see cref="VideoCapturer" /> class.
+    /// </summary>
+    ~VideoCapturer()
+    {
+      if (this.VideoDeviceFilter != null)
+      {
+        Marshal.ReleaseComObject(this.VideoDeviceFilter);
+        this.VideoDeviceFilter = null;
+        this.videoControl = null;
+        this.videoStreamConfig = null;
+      }
+    }
 
     #endregion
 
@@ -211,6 +222,15 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
+    ///   Resets the frame timing, sets frame counter to zero.
+    /// </summary>
+    public void ResetFrameTiming()
+    {
+      this.frameTimer.Restart();
+      this.frameCounter = 0;
+    }
+
+    /// <summary>
     ///   The revert.
     /// </summary>
     public override void Revert()
@@ -262,15 +282,6 @@ namespace VianaNET.Modules.Video.Control
       base.Stop();
     }
 
-    /// <summary>
-    /// Resets the frame timing, sets frame counter to zero.
-    /// </summary>
-    public void ResetFrameTiming()
-    {
-      this.frameTimer.Restart();
-      this.frameCounter = 0;
-    }
-
     #endregion
 
     #region Methods
@@ -294,7 +305,7 @@ namespace VianaNET.Modules.Video.Control
     /// The args.
     /// </param>
     private static void OnVideoCaptureDevicePropertyChanged(
-      DependencyObject obj,
+      DependencyObject obj, 
       DependencyPropertyChangedEventArgs args)
     {
       if (args.NewValue as DsDevice == null)
@@ -302,11 +313,10 @@ namespace VianaNET.Modules.Video.Control
         return;
       }
 
-      //if (Video.Instance.VideoMode != VideoMode.Capture)
-      //{
-      //  return;
-      //}
-
+      // if (Video.Instance.VideoMode != VideoMode.Capture)
+      // {
+      // return;
+      // }
       var videoCapturer = obj as VideoCapturer;
       if (videoCapturer != null)
       {
@@ -343,10 +353,10 @@ namespace VianaNET.Modules.Video.Control
     /// The new video height to be used.
     /// </param>
     private void SetConfigParms(
-      ICaptureGraphBuilder2 capGraph,
-      IBaseFilter capFilter,
-      int frameRate,
-      int width,
+      ICaptureGraphBuilder2 capGraph, 
+      IBaseFilter capFilter, 
+      int frameRate, 
+      int width, 
       int height)
     {
       int hr;
