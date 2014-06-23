@@ -1,17 +1,18 @@
 ﻿<UserControl x:Class="VianaNET.LabeledSlider"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="40"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Column="0">
-            <CheckBox x:Name="ElementCheckBox" Visibility="Collapsed" Checked="ElementCheckBox_Checked" Unchecked="ElementCheckBox_Checked"/>
-            <TextBlock x:Name="ElementLabel"/>
-        </StackPanel>
-        <Slider x:Name="ElementSlider" Grid.Column="1" ValueChanged="ElementSlider_ValueChanged"/>
-        <TextBlock x:Name="ElementValue" Grid.Column="2"/>
-    </Grid>
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="100" />
+      <ColumnDefinition Width="100" />
+      <ColumnDefinition Width="40" />
+    </Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal" Grid.Column="0">
+      <CheckBox x:Name="ElementCheckBox" Visibility="Collapsed" Checked="ElementCheckBox_Checked"
+                Unchecked="ElementCheckBox_Checked" />
+      <TextBlock x:Name="ElementLabel" />
+    </StackPanel>
+    <Slider x:Name="ElementSlider" Grid.Column="1" ValueChanged="ElementSlider_ValueChanged" />
+    <TextBlock x:Name="ElementValue" Grid.Column="2" />
+  </Grid>
 </UserControl>

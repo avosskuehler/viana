@@ -1,23 +1,25 @@
 ﻿<Window
-    x:Class="VianaNET.Modules.Base.WindowWithHelp"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:Data="clr-namespace:VianaNET.Data"
-    xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:application="clr-namespace:VianaNET.Application"
-    lex:LocalizeDictionary.DesignCulture="de"
-	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
+  x:Class="VianaNET.Modules.Base.WindowWithHelp"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:Data="clr-namespace:VianaNET.Data"
+  xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:application="clr-namespace:VianaNET.Application"
+  lex:LocalizeDictionary.DesignCulture="de"
+  Height="418" Width="600" WindowState="Maximized" WindowStyle="None"
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
   PreviewKeyDown="WindowPreviewKeyDown" xmlns:my="clr-namespace:VianaNET.Modules.Video.BlobDetection">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
-  <Grid RenderTransformOrigin="0.5,0.5" Name="playerContainerGrid" MouseMove="ContainerMouseMove" MouseLeftButtonDown="ContainerMouseLeftButtonDown" MouseLeftButtonUp="ContainerMouseLeftButtonUp">
+  <Grid RenderTransformOrigin="0.5,0.5" Name="playerContainerGrid" MouseMove="ContainerMouseMove"
+        MouseLeftButtonDown="ContainerMouseLeftButtonDown" MouseLeftButtonUp="ContainerMouseLeftButtonUp">
     <Grid.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
+      <ScaleTransform ScaleX="1" ScaleY="-1" />
     </Grid.RenderTransform>
 
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static Control:Video.Instance}}"/>
+    <Image Name="VideoImage" Stretch="Uniform"
+           Source="{Binding Path=OriginalImageSource, Source={x:Static Control:Video.Instance}}" />
     <Canvas Name="windowCanvas">
       <Canvas.Width>
         <Binding ElementName="VideoImage" Path="ActualWidth" />
@@ -25,60 +27,69 @@
       <Canvas.Height>
         <Binding ElementName="VideoImage" Path="ActualHeight" />
       </Canvas.Height>
-      <Border Name="ObjectIndexPanel" 
+      <Border Name="ObjectIndexPanel"
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=VideoImage,Path=ActualHeight}"
-              Background="{StaticResource BannerBackgroundBrush}" 
+              Background="{StaticResource BannerBackgroundBrush}"
               Canvas.Left="{Binding ElementName=VideoImage,Path=ActualWidth}"
               CornerRadius="10" Height="80" Width="80">
         <Border.RenderTransform>
           <TransformGroup>
-            <TranslateTransform 
-              X="-90" 
-              Y="90"/>
-            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+            <TranslateTransform
+              X="-90"
+              Y="90" />
+            <ScaleTransform ScaleX="1" ScaleY="-1" />
           </TransformGroup>
         </Border.RenderTransform>
         <StackPanel>
-          <TextBox 
+          <TextBox
             Name="ObjectIndexHeader"
-            TextWrapping="Wrap" 
+            TextWrapping="Wrap"
             Background="Transparent"
             Text="{lex:Loc VianaNET:Labels:ManualDataAcquisitionTrackItemNumberHeader}"
             BorderThickness="0"
             Padding="0 4 0 0"
-            TextAlignment="Center"/>
-          <Label 
+            TextAlignment="Center" />
+          <Label
             Name="ObjectIndexLabel"
-            Content="{Binding IndexOfTrackedObject, StringFormat=N0}" 
-            FontSize="38" 
+            Content="{Binding IndexOfTrackedObject, StringFormat=N0}"
+            FontSize="38"
             Margin="0"
             Padding="0"
             HorizontalAlignment="Center"
-            Foreground="White"/>
+            Foreground="White" />
         </StackPanel>
       </Border>
 
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
+      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD"
+              Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter"
+              MouseLeave="ControlPanelMouseLeave">
         <Border.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="-1" />
         </Border.RenderTransform>
         <StackPanel Orientation="Vertical">
-          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
+          <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25"
+                MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="20"/>
-              <ColumnDefinition Width="20"/>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" x:Name="LabelTitle" Cursor="SizeAll" HorizontalContentAlignment="Center" FontFamily="Segoe UI Symbol">Control Panel Title</Label>
-            <Label Grid.Column="1" Padding="0,0,5,0"  Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX"/>
-            <Label Grid.Column="2" Padding="0,0,5,0"  Content="x" MouseDown="HideWindow" FontFamily="Verdana" FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX"/>
+            <Label Grid.Column="0" x:Name="LabelTitle" Cursor="SizeAll" HorizontalContentAlignment="Center"
+                   FontFamily="Segoe UI Symbol">
+              Control Panel Title
+            </Label>
+            <Label Grid.Column="1" Padding="0,0,5,0" Content="_" MouseDown="MinimizeWindow" FontFamily="Verdana"
+                   FontSize="18" HorizontalAlignment="Right" x:Name="LabelCloseX" />
+            <Label Grid.Column="2" Padding="0,0,5,0" Content="x" MouseDown="HideWindow" FontFamily="Verdana"
+                   FontSize="18" HorizontalAlignment="Right" x:Name="LabelMinimizeX" />
           </Grid>
-          <Separator/>
-          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description"/>
-          <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap"/>
-          <Button Name="btnDone" Width="80" IsDefault="True" Click="BtnDoneClick" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
+          <Separator />
+          <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="Description" />
+          <TextBlock Name="DescriptionMessage" Padding="5" Text="Help Text" TextWrapping="Wrap" />
+          <Button Name="btnDone" Width="80" IsDefault="True" Click="BtnDoneClick" Margin="5"
+                  Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}" />
         </StackPanel>
       </Border>
     </Canvas>

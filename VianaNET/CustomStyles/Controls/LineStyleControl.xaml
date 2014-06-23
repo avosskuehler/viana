@@ -8,11 +8,11 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:VianaNET="clr-namespace:VianaNET"
              xmlns:engine="http://wpflocalizeextension.codeplex.com"
              xmlns:oxy="http://oxyplot.codeplex.com"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="362"
              DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
   <UserControl.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
@@ -26,18 +26,23 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:RegressionLineThickness}"
-                 VerticalAlignment="Center" />
-    <VianaNET:SliderValue x:Name="ThicknessSlider"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" ValueChanged="ThicknessSliderValueChanged"
-                  VerticalAlignment="Center" Minimum="1" TickPlacement="Both" Value="3" Margin="5"
-                  TickFrequency="1" Maximum="20" SmallChange="1"
-                  IsSnapToTickEnabled="True" />
+           VerticalAlignment="Center" />
+    <VianaNET:SliderValue x:Name="ThicknessSlider" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch"
+                          ValueChanged="ThicknessSliderValueChanged"
+                          VerticalAlignment="Center" Minimum="1" TickPlacement="Both" Value="3" Margin="5"
+                          TickFrequency="1" Maximum="20" SmallChange="1"
+                          IsSnapToTickEnabled="True" />
 
-    <Label  Grid.Column="0" Grid.Row="1" Content="{lex:Loc VianaNET:Labels:ChartWindowLineColorLabel}" VerticalAlignment="Center" />
-    <xctk:ColorPicker Name="ColorPicker" Grid.Row="1" Grid.Column="1" DisplayColorAndName="True" ShowRecentColors="True" 
+    <Label Grid.Column="0" Grid.Row="1" Content="{lex:Loc VianaNET:Labels:ChartWindowLineColorLabel}"
+           VerticalAlignment="Center" />
+    <xctk:ColorPicker Name="ColorPicker" Grid.Row="1" Grid.Column="1" DisplayColorAndName="True"
+                      ShowRecentColors="True"
                       SelectedColor="Red" Margin="5"
-                      SelectedColorChanged="ColorPickerSelectedColorChanged"/>
-    <Label Grid.Column="0" Grid.Row="2" Content="{lex:Loc VianaNET:Labels:LineStyleDisplayMarkerLabel}" VerticalAlignment="Center" />
-    <ComboBox Grid.Column="1" Grid.Row="2" Name="MarkerTypeComboBox" VerticalAlignment="Center" Margin="5" SelectionChanged="MarkerTypeComboBox_OnSelectionChanged"/>
-    <oxy:Plot Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Model="{Binding ChartModel}"></oxy:Plot>
+                      SelectedColorChanged="ColorPickerSelectedColorChanged" />
+    <Label Grid.Column="0" Grid.Row="2" Content="{lex:Loc VianaNET:Labels:LineStyleDisplayMarkerLabel}"
+           VerticalAlignment="Center" />
+    <ComboBox Grid.Column="1" Grid.Row="2" Name="MarkerTypeComboBox" VerticalAlignment="Center" Margin="5"
+              SelectionChanged="MarkerTypeComboBox_OnSelectionChanged" />
+    <oxy:Plot Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Model="{Binding ChartModel}" />
   </Grid>
 </UserControl>

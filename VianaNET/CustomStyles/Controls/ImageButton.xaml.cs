@@ -2,7 +2,7 @@
 // <copyright file="ImageButton.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -83,14 +83,16 @@ namespace VianaNET
         typeof(ImageSource), 
         typeof(ImageButton), 
         new FrameworkPropertyMetadata(
-          null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+          null, 
+          FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
       IsToolStyleProperty = DependencyProperty.Register(
         "IsToolStyle", 
         typeof(bool), 
         typeof(ImageButton), 
         new FrameworkPropertyMetadata(
-          false, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
+          false, 
+          FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
 
       ContentHorizontalAlignmentProperty = DependencyProperty.Register(
         "ContentHorizontalAlignment", 

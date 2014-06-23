@@ -1,6 +1,6 @@
 ﻿<Window x:Class="VianaNET.MainWindow.AboutWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
         xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
@@ -8,31 +8,36 @@
         Engine:LocalizeDictionary.DesignCulture="de"
         Providers:ResxLocalizationProvider.DefaultAssembly="VianaNET"
         Providers:ResxLocalizationProvider.DefaultDictionary="Labels"
-        ResizeMode="CanResizeWithGrip" 
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
-    Height="380" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
-    Icon="/VianaNET;component/Images/VianaNET.ico"
-    Title="{lex:Loc VianaNET:Labels:AboutBoxTitle}">
+        Height="380" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+        Icon="/VianaNET;component/Images/VianaNET.ico"
+        Title="{lex:Loc VianaNET:Labels:AboutBoxTitle}">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="80"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="80" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <Border Grid.Row="0" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80" Background="{StaticResource BannerBackgroundBrush}">
+    <Border Grid.Row="0" CornerRadius="2" BorderBrush="White" BorderThickness="1" Height="80"
+            Background="{StaticResource BannerBackgroundBrush}">
       <StackPanel Orientation="Horizontal">
         <Image Width="64" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
         <StackPanel Orientation="Vertical">
-          <Label Content="{x:Static mainWindow:AboutWindow.AssemblyProduct}" FontSize="24" Padding="0" Foreground="White"></Label>
+          <Label Content="{x:Static mainWindow:AboutWindow.AssemblyProduct}" FontSize="24" Padding="0"
+                 Foreground="White" />
           <StackPanel Orientation="Horizontal">
             <Label Foreground="White" FontSize="10" Padding="0,0,3,0">Version</Label>
-            <Label Padding="0,0,3,0" Foreground="White" Content="{x:Static mainWindow:AboutWindow.AssemblyVersionShort}" FontSize="10"></Label>
-            <Label Padding="0,0,3,0" Foreground="White" Content="{x:Static mainWindow:AboutWindow.AssemblyVersionLong}" FontSize="10"></Label>
+            <Label Padding="0,0,3,0" Foreground="White"
+                   Content="{x:Static mainWindow:AboutWindow.AssemblyVersionShort}" FontSize="10" />
+            <Label Padding="0,0,3,0" Foreground="White" Content="{x:Static mainWindow:AboutWindow.AssemblyVersionLong}"
+                   FontSize="10" />
           </StackPanel>
-          <Label Padding="0,0,3,0" Foreground="White" Content="{x:Static mainWindow:AboutWindow.AssemblyCopyright}" FontSize="10"></Label>
+          <Label Padding="0,0,3,0" Foreground="White" Content="{x:Static mainWindow:AboutWindow.AssemblyCopyright}"
+                 FontSize="10" />
         </StackPanel>
       </StackPanel>
     </Border>
@@ -40,17 +45,17 @@
       <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
         <GroupBox Header="{lex:Loc VianaNET:Labels:AboutBoxDescription}">
           <StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="{lex:Loc Key=AboutBoxTextBlock}"/>
+            <TextBlock TextWrapping="Wrap" Text="{lex:Loc Key=AboutBoxTextBlock}" />
             <TextBlock>
-                        <Hyperlink NavigateUri="mailto:adrian@vosskuehler.name">
-                           adrian@vosskuehler.name
-                        </Hyperlink>
+              <Hyperlink NavigateUri="mailto:adrian@vosskuehler.name">
+                adrian@vosskuehler.name
+              </Hyperlink>
             </TextBlock>
           </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:Loc VianaNET:Labels:AboutBoxCreditsHeader}">
           <StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:AboutBoxCredits}"/>
+            <TextBlock TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:AboutBoxCredits}" />
           </StackPanel>
         </GroupBox>
       </StackPanel>

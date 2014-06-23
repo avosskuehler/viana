@@ -2,7 +2,7 @@
 // <copyright file="LabeledSlider.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -43,12 +43,12 @@ namespace VianaNET
     /// <summary>
     ///   The _decimals.
     /// </summary>
-    private int _decimals;
+    private int decimals;
 
     /// <summary>
     ///   The _value.
     /// </summary>
-    private double _value;
+    private double value;
 
     #endregion
 
@@ -89,12 +89,12 @@ namespace VianaNET
     {
       get
       {
-        return this._decimals;
+        return this.decimals;
       }
 
       set
       {
-        this._decimals = value;
+        this.decimals = value;
         this.OnValueChanged(false);
       }
     }
@@ -189,7 +189,7 @@ namespace VianaNET
     {
       get
       {
-        return this._value;
+        return this.value;
       }
 
       set
@@ -206,10 +206,10 @@ namespace VianaNET
     /// The element check box_ checked.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void ElementCheckBox_Checked(object sender, RoutedEventArgs e)
     {
@@ -221,10 +221,10 @@ namespace VianaNET
     /// The element slider_ value changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void ElementSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
@@ -243,15 +243,15 @@ namespace VianaNET
     /// The on value changed.
     /// </summary>
     /// <param name="force">
-    /// The force. 
+    /// The force.
     /// </param>
     private void OnValueChanged(bool force)
     {
-      double oldValue = this._value;
-      this._value = Math.Round(this.ElementSlider.Value, this._decimals);
-      if ((oldValue != this._value) || force)
+      double oldValue = this.value;
+      this.value = Math.Round(this.ElementSlider.Value, this.decimals);
+      if ((oldValue != this.value) || force)
       {
-        this.ElementValue.Text = this._value.ToString(CultureInfo.CurrentCulture);
+        this.ElementValue.Text = this.value.ToString(CultureInfo.CurrentCulture);
         this.ValueChanged.InvokeEmpty(this);
       }
     }

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TheoryObject.cs" company="Freie Universität Berlin">
+// <copyright file="TheoryFilter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -20,11 +20,10 @@
 // <author>Herwig Niemeyer</author>
 // <email>hn_muenster@web.de</email>
 // <summary>
-// This class is a filter implementing FilterBase which is used to
-// display a theoretical function in the ChartWindow.
+//   This class is a filter implementing FilterBase which is used to
+//   display a theoretical function in the ChartWindow.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter.Theory
 {
   using System;
@@ -33,24 +32,24 @@ namespace VianaNET.Data.Filter.Theory
   using VianaNET.Application;
 
   /// <summary>
-  /// This class is a filter implementing FilterBase which is used to
-  /// display a theoretical function in the ChartWindow.
+  ///   This class is a filter implementing FilterBase which is used to
+  ///   display a theoretical function in the ChartWindow.
   /// </summary>
   public class TheoryFilter : FilterBase
   {
+    #region Fields
+
     /// <summary>
-    /// The theoretical function calculator tree
+    ///   The theoretical function calculator tree
     /// </summary>
     private FunctionCalcTree theoreticalFunctionCalculatorTree;
 
-    /// <summary>
-    ///   Gets or sets the theory funktion.
-    /// </summary>
-    [XmlIgnore]
-    public Func<double, double> TheoryFunction { get; set; }
+    #endregion
+
+    #region Public Properties
 
     /// <summary>
-    /// Gets or sets the theoretical function as a calculator tree
+    ///   Gets or sets the theoretical function as a calculator tree
     /// </summary>
     public FunctionCalcTree TheoreticalFunctionCalculatorTree
     {
@@ -67,10 +66,18 @@ namespace VianaNET.Data.Filter.Theory
       }
     }
 
+    /// <summary>
+    ///   Gets or sets the theory funktion.
+    /// </summary>
+    [XmlIgnore]
+    public Func<double, double> TheoryFunction { get; set; }
+
+    #endregion
+
     #region Public Methods and Operators
 
     /// <summary>
-    /// Calculates the theoretical function sample values
+    ///   Calculates the theoretical function sample values
     /// </summary>
     public override void CalculateFilterValues()
     {

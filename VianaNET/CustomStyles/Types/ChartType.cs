@@ -2,7 +2,7 @@
 // <copyright file="ChartType.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -31,10 +31,10 @@ namespace VianaNET.CustomStyles.Types
   public enum ChartType
   {
     /// <summary>
-    /// A custom, not predefined chart type
-    /// for which the filter properties are not saved.
+    ///   A custom, not predefined chart type
+    ///   for which the filter properties are not saved.
     /// </summary>
-    Custom,
+    Custom, 
 
     /// <summary>
     ///   The yover x.

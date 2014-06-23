@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   Interaction logic for MediaSlider.xaml
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET
 {

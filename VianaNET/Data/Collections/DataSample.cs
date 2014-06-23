@@ -23,39 +23,18 @@
 //   The data sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Collections
 {
   using System.Xml.Serialization;
 
   /// <summary>
-  /// This class is the container for the data samples without a time stamp.
-  /// The XmlIgnore attribute is used to reduce the data,
-  /// cause we can recalculate the values after loading.
+  ///   This class is the container for the data samples without a time stamp.
+  ///   The XmlIgnore attribute is used to reduce the data,
+  ///   cause we can recalculate the values after loading.
   /// </summary>
   public class DataSample
   {
     #region Public Properties
-   
-    /// <summary>
-    ///   Gets or sets the frame number
-    /// </summary>
-    public int Framenumber { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the time in units of the current time unit
-    /// </summary>
-    public double Time { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the pixel x.
-    /// </summary>
-    public double PixelX { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the pixel y.
-    /// </summary>
-    public double PixelY { get; set; }
 
     /// <summary>
     ///   Gets or sets the acceleration.
@@ -94,6 +73,11 @@ namespace VianaNET.Data.Collections
     public double? DistanceY { get; set; }
 
     /// <summary>
+    ///   Gets or sets the frame number
+    /// </summary>
+    public int Framenumber { get; set; }
+
+    /// <summary>
     ///   Gets or sets the length.
     /// </summary>
     [XmlIgnore]
@@ -112,6 +96,16 @@ namespace VianaNET.Data.Collections
     public double? LengthY { get; set; }
 
     /// <summary>
+    ///   Gets or sets the pixel x.
+    /// </summary>
+    public double PixelX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the pixel y.
+    /// </summary>
+    public double PixelY { get; set; }
+
+    /// <summary>
     ///   Gets or sets the position x.
     /// </summary>
     [XmlIgnore]
@@ -122,6 +116,11 @@ namespace VianaNET.Data.Collections
     /// </summary>
     [XmlIgnore]
     public double PositionY { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the time in units of the current time unit
+    /// </summary>
+    public double Time { get; set; }
 
     /// <summary>
     ///   Gets or sets the velocity.

@@ -1,4 +1,5 @@
-﻿<Window x:Class="VianaNET.Data.Filter.LineOptionsDialog" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window x:Class="VianaNET.Data.Filter.LineOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
@@ -12,25 +13,25 @@
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <mainWindow:TopFrame x:Name="TopFrame" Title="{lex:Loc VianaNET:Labels:LineStyleOptionsDialogTitle}"/>
-    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+    <mainWindow:TopFrame x:Name="TopFrame" Title="{lex:Loc VianaNET:Labels:LineStyleOptionsDialogTitle}" />
+    <Border Name="DescriptionArea" Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
       <Grid Margin="5">
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <vianaNet:LineStyleControl x:Name="LineStyleControl"/>
+        <vianaNet:LineStyleControl x:Name="LineStyleControl" />
       </Grid>
     </Border>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
-          <Button Name="Ok"  Width="80" Margin="5"
-            IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}" Click="OkClick" />
-          <Button Name="Cancel" Width="80" Margin="5"
-            IsDefault="False" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
-        </StackPanel>
+    <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+      <Button Name="Ok" Width="80" Margin="5"
+              IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}" Click="OkClick" />
+      <Button Name="Cancel" Width="80" Margin="5"
+              IsDefault="False" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
+    </StackPanel>
   </Grid>
 </Window>

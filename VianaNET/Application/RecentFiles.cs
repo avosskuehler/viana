@@ -2,7 +2,7 @@
 // <copyright file="RecentFiles.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -26,7 +26,6 @@
 //   if you call <code>RecentFiles.List</code>
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Application
 {
   using System;
@@ -49,21 +48,27 @@ namespace VianaNET.Application
   /// </summary>
   public class RecentFiles : DependencyObject, INotifyPropertyChanged
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
+    #region Constants
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    ///   Maximum length of file name for display in recent file list
+    /// </summary>
+    private const int MaxLengthDisplay = 40;
+
+    #endregion
+
     #region Static Fields
 
     /// <summary>
     ///   Represents the <see cref="DependencyProperty" /> for the
     ///   <see cref="RibbonList" />
     /// </summary>
-    public static readonly DependencyProperty RecentFilesCollectionProperty = DependencyProperty.Register(
-      "RecentFilesCollection", typeof(ObservableCollection<ProjectEntry>), typeof(RecentFiles), new UIPropertyMetadata());
+    public static readonly DependencyProperty RecentFilesCollectionProperty =
+      DependencyProperty.Register(
+        "RecentFilesCollection", 
+        typeof(ObservableCollection<ProjectEntry>), 
+        typeof(RecentFiles), 
+        new UIPropertyMetadata());
 
     /// <summary>
     ///   Maximum number of items in recent files list.
@@ -85,16 +90,8 @@ namespace VianaNET.Application
     /// </summary>
     private readonly Settings appSettings;
 
-    /// <summary>
-    ///   Maximum length of file name for display in recent file list
-    /// </summary>
-    private int maxLengthDisplay = 40;
-
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -115,9 +112,6 @@ namespace VianaNET.Application
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Events
 
     /// <summary>
@@ -127,9 +121,6 @@ namespace VianaNET.Application
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -138,7 +129,10 @@ namespace VianaNET.Application
     /// <value> A <see cref="RecentFiles" /> with the recent files. </value>
     public static RecentFiles Instance
     {
-      get { return recentFiles ?? (recentFiles = new RecentFiles()); }
+      get
+      {
+        return recentFiles ?? (recentFiles = new RecentFiles());
+      }
     }
 
     /// <summary>
@@ -159,8 +153,8 @@ namespace VianaNET.Application
     }
 
     /// <summary>
-    /// Gets the complete filename with path
-    /// to the settings file used to store recent file collection.
+    ///   Gets the complete filename with path
+    ///   to the settings file used to store recent file collection.
     /// </summary>
     public string SettingsFile
     {
@@ -172,28 +166,50 @@ namespace VianaNET.Application
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
+
+    /// <summary>
+    /// Scales the image.
+    /// </summary>
+    /// <param name="image">
+    /// The image.
+    /// </param>
+    /// <param name="maxWidth">
+    /// The maximum width.
+    /// </param>
+    /// <param name="maxHeight">
+    /// The maximum height.
+    /// </param>
+    /// <returns>
+    /// The scales image
+    /// </returns>
+    public static Bitmap ScaleImage(Bitmap image, int maxWidth, int maxHeight)
+    {
+      double ratioX = (double)maxWidth / image.Width;
+      double ratioY = (double)maxHeight / image.Height;
+      double ratio = Math.Min(ratioX, ratioY);
+
+      var newWidth = (int)(image.Width * ratio);
+      var newHeight = (int)(image.Height * ratio);
+
+      var newImage = new Bitmap(newWidth, newHeight);
+      Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
+      return newImage;
+    }
 
     /// <summary>
     /// Adds new filename to recent files list and saves list to application settings.
     /// </summary>
     /// <param name="file">
-    /// A <see cref="string"/> with full path and filename to recent file 
+    /// A <see cref="string"/> with full path and filename to recent file
     /// </param>
     public void Add(string file)
     {
-      var fileIndex = this.FindFile(file);
-      var bitmap = Video.Instance.CreateBitmapFromCurrentImageSource();
-      if (bitmap == null)
-      {
-        bitmap = new Bitmap(64, 64);
-      }
+      int fileIndex = this.FindFile(file);
+      Bitmap bitmap = Video.Instance.CreateBitmapFromCurrentImageSource() ?? new Bitmap(64, 64);
 
       bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
-      var smallBitmap = ScaleImage(bitmap, 64, 64);
+      Bitmap smallBitmap = ScaleImage(bitmap, 64, 64);
       var projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };
 
       if (fileIndex < 0)
@@ -212,7 +228,6 @@ namespace VianaNET.Application
       }
 
       this.Save();
-      this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -222,17 +237,16 @@ namespace VianaNET.Application
     {
       this.RecentFilesCollection.Clear();
       this.Save();
-      this.RebuildRibbonList();
     }
 
     /// <summary>
     /// Get display file name from full name.
     /// </summary>
     /// <param name="fullName">
-    /// Full file name 
+    /// Full file name
     /// </param>
     /// <returns>
-    /// A <see cref="string"/> with a short display name 
+    /// A <see cref="string"/> with a short display name
     /// </returns>
     public string GetDisplayName(string fullName)
     {
@@ -244,14 +258,14 @@ namespace VianaNET.Application
 
       if (fileInfo.DirectoryName == currentDirectory)
       {
-        return fileInfo.ToString().Substring(
-          0, fileInfo.ToString().Length > this.maxLengthDisplay ? this.maxLengthDisplay : fileInfo.ToString().Length);
+        return fileInfo.ToString()
+          .Substring(0, fileInfo.ToString().Length > MaxLengthDisplay ? MaxLengthDisplay : fileInfo.ToString().Length);
       }
 
       string filename = Path.GetFileName(fullName);
-      if (filename.Length > this.maxLengthDisplay)
+      if (filename != null && filename.Length > MaxLengthDisplay)
       {
-        filename = filename.Substring(0, this.maxLengthDisplay);
+        filename = filename.Substring(0, MaxLengthDisplay);
       }
 
       return filename;
@@ -261,7 +275,7 @@ namespace VianaNET.Application
     /// Removes filename from recent files list and saves list to application settings.
     /// </summary>
     /// <param name="file">
-    /// A <see cref="string"/> with full path and filename to recent file 
+    /// A <see cref="string"/> with full path and filename to recent file
     /// </param>
     public void Remove(string file)
     {
@@ -269,8 +283,6 @@ namespace VianaNET.Application
 
       if (fileIndex < 0)
       {
-        //this.appSettings.RecentProjectEntries.Insert(0, file);
-
         while (this.RecentFilesCollection.Count > maxNumItems)
         {
           this.RecentFilesCollection.RemoveAt(this.RecentFilesCollection.Count - 1);
@@ -282,7 +294,6 @@ namespace VianaNET.Application
       }
 
       this.Save();
-      this.RebuildRibbonList();
     }
 
     /// <summary>
@@ -299,20 +310,13 @@ namespace VianaNET.Application
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="propertyName">
-    /// A <see cref="string"/> with the property that has changed 
+    /// A <see cref="string"/> with the property that has changed
     /// </param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
@@ -322,18 +326,14 @@ namespace VianaNET.Application
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     /// Get index in recent file list from given file path.
     /// </summary>
     /// <param name="file">
-    /// Full path name of search file. 
+    /// Full path name of search file.
     /// </param>
     /// <returns>
-    /// Index in file list, if not found -1. 
+    /// Index in file list, if not found -1.
     /// </returns>
     private int FindFile(string file)
     {
@@ -357,7 +357,7 @@ namespace VianaNET.Application
       if (File.Exists(this.SettingsFile))
       {
         var fs = new FileStream(this.SettingsFile, FileMode.Open);
-        var reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
         var ser = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
 
         // Deserialize the data and read it from the instance.
@@ -365,54 +365,6 @@ namespace VianaNET.Application
         reader.Close();
         fs.Close();
       }
-
-      this.RebuildRibbonList();
-    }
-
-    /// <summary>
-    ///   This method creates a list of <see cref="RibbonHighlightingListItem" />
-    ///   to display the recent files in the ribbon of the application.
-    /// </summary>
-    private void RebuildRibbonList()
-    {
-      //var items = new List<RibbonApplicationMenuItem>((int)maxNumItems);
-      //if (this.appSettings.RecentProjectEntries == null)
-      //{
-      //  return;
-      //}
-
-      //foreach (ProjectEntry item in this.appSettings.RecentProjectEntries)
-      //{
-      //  if (!File.Exists(item.ProjectFile))
-      //  {
-      //    continue;
-      //  }
-
-      //  var ribbonItem = new RibbonApplicationMenuItem();
-      //  ribbonItem.Header = Path.GetFileName(item.ProjectFile);
-      //  ribbonItem.ImageSource = CreateBitmapSourceFromBitmap(item.ProjectIcon);
-      //  var itemToolTip = new ToolTip();
-      //  itemToolTip.Content = item.ProjectFile;
-      //  ribbonItem.ToolTip = itemToolTip;
-      //  items.Add(ribbonItem);
-      //}
-
-      //this.RecentFilesCollection = this.appSettings.RecentProjectEntries;
-      //this.OnPropertyChanged("RecentFilesCollection");
-    }
-
-    public static System.Drawing.Bitmap ScaleImage(System.Drawing.Bitmap image, int maxWidth, int maxHeight)
-    {
-      var ratioX = (double)maxWidth / image.Width;
-      var ratioY = (double)maxHeight / image.Height;
-      var ratio = Math.Min(ratioX, ratioY);
-
-      var newWidth = (int)(image.Width * ratio);
-      var newHeight = (int)(image.Height * ratio);
-
-      var newImage = new System.Drawing.Bitmap(newWidth, newHeight);
-      System.Drawing.Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
-      return newImage;
     }
 
     #endregion

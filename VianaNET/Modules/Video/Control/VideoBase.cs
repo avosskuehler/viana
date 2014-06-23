@@ -2,7 +2,7 @@
 // <copyright file="VideoBase.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -44,6 +44,8 @@ namespace VianaNET.Modules.Video.Control
   using VianaNET.Application;
   using VianaNET.Logging;
 
+  using PixelFormat = System.Drawing.Imaging.PixelFormat;
+
   /// <summary>
   ///   This is the main class for the DirectShow interop.
   ///   It creates a graph that pushes video frames from a Video Input Device
@@ -68,33 +70,42 @@ namespace VianaNET.Modules.Video.Control
     ///   The current state property.
     /// </summary>
     public static readonly DependencyProperty CurrentStateProperty = DependencyProperty.Register(
-      "CurrentState", typeof(PlayState), typeof(VideoBase), new UIPropertyMetadata(PlayState.Stopped));
+      "CurrentState", 
+      typeof(PlayState), 
+      typeof(VideoBase), 
+      new UIPropertyMetadata(PlayState.Stopped));
 
     /// <summary>
     ///   The frame count property.
     /// </summary>
     public static readonly DependencyProperty FrameCountProperty = DependencyProperty.Register(
-      "FrameCount", typeof(int), typeof(VideoBase), new UIPropertyMetadata(default(int)));
+      "FrameCount", 
+      typeof(int), 
+      typeof(VideoBase), 
+      new UIPropertyMetadata(default(int)));
 
     /// <summary>
     ///   The frame time in nano seconds property.
     /// </summary>
     public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
       DependencyProperty.Register(
-        "FrameTimeInNanoSeconds", typeof(long), typeof(VideoBase), new UIPropertyMetadata(default(long)));
+        "FrameTimeInNanoSeconds", 
+        typeof(long), 
+        typeof(VideoBase), 
+        new UIPropertyMetadata(default(long)));
 
     /// <summary>
     ///   The media position frame index property.
     /// </summary>
     public static readonly DependencyProperty MediaPositionFrameIndexProperty =
       DependencyProperty.Register(
-        "MediaPositionFrameIndex", typeof(int), typeof(VideoBase), new UIPropertyMetadata(default(int)));
+        "MediaPositionFrameIndex", 
+        typeof(int), 
+        typeof(VideoBase), 
+        new UIPropertyMetadata(default(int)));
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Fields
 
     /// <summary>
@@ -103,7 +114,7 @@ namespace VianaNET.Modules.Video.Control
     protected int bufferLength;
 
     /// <summary>
-    ///   This interface provides methods that enable an application to build a filter graph. 
+    ///   This interface provides methods that enable an application to build a filter graph.
     ///   The Filter Graph Manager implements this interface.
     /// </summary>
     protected IFilterGraph2 filterGraph;
@@ -119,30 +130,10 @@ namespace VianaNET.Modules.Video.Control
     // protected ICaptureGraphBuilder2 capGraph = null;
 
     /// <summary>
-    ///   The IMediaControl interface provides methods for controlling the 
+    ///   The IMediaControl interface provides methods for controlling the
     ///   flow of data through the filter graph. It includes methods for running, pausing, and stopping the graph.
     /// </summary>
     protected IMediaControl mediaControl;
-
-    /// <summary>
-    ///   This points to the starting address of the mapped view of the video frame.
-    /// </summary>
-    private IntPtr originalMapping;
-
-    /// <summary>
-    ///   This points to a file mapping of the video frames.
-    /// </summary>
-    private IntPtr originalSection;
-
-    /// <summary>
-    ///   This points to a file mapping of the video frames.
-    /// </summary>
-    private IntPtr colorProcessingSection;
-
-    /// <summary>
-    ///   This points to a file mapping of the video frames.
-    /// </summary>
-    private IntPtr motionProcessingSection;
 
     /// <summary>
     ///   Helps showing capture graph in GraphBuilder
@@ -160,11 +151,28 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected bool skipFrameMode = false;
 
+    /// <summary>
+    ///   This points to a file mapping of the video frames.
+    /// </summary>
+    private IntPtr colorProcessingSection;
+
+    /// <summary>
+    ///   This points to a file mapping of the video frames.
+    /// </summary>
+    private IntPtr motionProcessingSection;
+
+    /// <summary>
+    ///   This points to the starting address of the mapped view of the video frame.
+    /// </summary>
+    private IntPtr originalMapping;
+
+    /// <summary>
+    ///   This points to a file mapping of the video frames.
+    /// </summary>
+    private IntPtr originalSection;
+
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -180,9 +188,6 @@ namespace VianaNET.Modules.Video.Control
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Events
 
     /// <summary>
@@ -207,17 +212,17 @@ namespace VianaNET.Modules.Video.Control
       /// <summary>
       ///   The stopped.
       /// </summary>
-      Stopped,
+      Stopped, 
 
       /// <summary>
       ///   The paused.
       /// </summary>
-      Paused,
+      Paused, 
 
       /// <summary>
       ///   The running.
       /// </summary>
-      Running,
+      Running, 
 
       /// <summary>
       ///   The init.
@@ -227,10 +232,13 @@ namespace VianaNET.Modules.Video.Control
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
+
+    /// <summary>
+    ///   Gets or sets the starting address of the mapped view of the video frame.
+    ///   Used for the color processing.
+    /// </summary>
+    public IntPtr ColorProcessingMapping { get; set; }
 
     /// <summary>
     ///   Gets or sets the current state.
@@ -265,7 +273,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets or sets the time between frames in nanoseconds.
+    ///   Gets or sets the time between frames in nanoseconds.
     /// </summary>
     public long FrameTimeInNanoSeconds
     {
@@ -302,6 +310,12 @@ namespace VianaNET.Modules.Video.Control
     public virtual long MediaPositionInNanoSeconds { get; set; }
 
     /// <summary>
+    ///   Gets or sets the starting address of the mapped view of the video frame.
+    ///   Used for the motion processing.
+    /// </summary>
+    public IntPtr MotionProcessingMapping { get; set; }
+
+    /// <summary>
     ///   Gets or sets the natural video height.
     /// </summary>
     public double NaturalVideoHeight { get; set; }
@@ -312,22 +326,10 @@ namespace VianaNET.Modules.Video.Control
     public double NaturalVideoWidth { get; set; }
 
     /// <summary>
-    ///  Gets or sets the pixel size of the video stream.
+    ///   Gets or sets the pixel size of the video stream.
     ///   RGB24 = 3 bytes
     /// </summary>
     public int PixelSize { get; set; }
-
-    /// <summary>
-    ///  Gets or sets the starting address of the mapped view of the video frame.
-    /// Used for the motion processing.
-    /// </summary>
-    public IntPtr MotionProcessingMapping { get; set; }
-
-    /// <summary>
-    ///  Gets or sets the starting address of the mapped view of the video frame.
-    /// Used for the color processing.
-    /// </summary>
-    public IntPtr ColorProcessingMapping { get; set; }
 
     /// <summary>
     ///   Gets or sets the stride of the video stream
@@ -342,6 +344,28 @@ namespace VianaNET.Modules.Video.Control
     #endregion
 
     #region Public Methods and Operators
+
+    /// <summary>
+    /// The copy processed data to processing map.
+    /// </summary>
+    public void CopyProcessedDataToProcessingMap()
+    {
+      CopyMemory(this.MotionProcessingMapping, this.UnmanagedImage.ImageData, this.bufferLength);
+    }
+
+    /// <summary>
+    /// The copy processing map to unmanaged image.
+    /// </summary>
+    public void CopyProcessingMapToUnmanagedImage()
+    {
+      this.UnmanagedImage = new UnmanagedImage(
+        this.ColorProcessingMapping, 
+        (int)this.NaturalVideoWidth, 
+        (int)this.NaturalVideoHeight, 
+        this.Stride, 
+        PixelFormat.Format32bppRgb);
+      CopyMemory(this.UnmanagedImage.ImageData, this.ColorProcessingMapping, this.bufferLength);
+    }
 
     /// <summary>
     ///   Shut down capture.
@@ -362,13 +386,13 @@ namespace VianaNET.Modules.Video.Control
       lock (this)
       {
         this.Dispatcher.Invoke(
-          DispatcherPriority.Normal,
+          DispatcherPriority.Normal, 
           (SendOrPostCallback)delegate
             {
               Video.Instance.HasVideo = false;
               this.CurrentState = PlayState.Init;
               this.frameCounter = 0;
-            },
+            }, 
           null);
 
         if (this.originalMapping != IntPtr.Zero)
@@ -401,7 +425,6 @@ namespace VianaNET.Modules.Video.Control
           this.motionProcessingSection = IntPtr.Zero;
         }
 
-
         if (this.UnmanagedImage != null)
         {
           this.UnmanagedImage.Dispose();
@@ -432,7 +455,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   Pause the capture graph. Running the graph takes up a lot of resources.  
+    ///   Pause the capture graph. Running the graph takes up a lot of resources.
     ///   Pause it when it isn't needed.
     /// </summary>
     public virtual void Pause()
@@ -490,53 +513,6 @@ namespace VianaNET.Modules.Video.Control
       CopyMemory(this.ColorProcessingMapping, this.originalMapping, this.bufferLength);
     }
 
-    public void CopyProcessedDataToProcessingMap()
-    {
-      CopyMemory(this.MotionProcessingMapping, this.UnmanagedImage.ImageData, this.bufferLength);
-    }
-
-    public void UpdateProcessedImageSource()
-    {
-      if (Viana.Project.ProcessingData.IsUsingColorDetection)
-      {
-        // Update ColorProcessedVideoSource
-        this.Dispatcher.BeginInvoke(
-          DispatcherPriority.Render,
-          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate(); },
-          null);
-      }
-
-      if (Viana.Project.ProcessingData.IsUsingMotionDetection)
-      {
-        // Update MotionProcessedVideoSource
-        this.Dispatcher.BeginInvoke(
-          DispatcherPriority.Render,
-          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate(); },
-          null);
-      }
-    }
-
-    public void UpdateImageSources()
-    {
-      this.Dispatcher.BeginInvoke(
-        DispatcherPriority.Render,
-        (SendOrPostCallback)delegate
-          {
-            if (Video.Instance.ColorProcessedImageSource != null && Video.Instance.MotionProcessedImageSource != null)
-            {
-              ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate();
-              ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate();
-            }
-          },
-        null);
-    }
-
-    public void CopyProcessingMapToUnmanagedImage()
-    {
-      this.UnmanagedImage = new UnmanagedImage(this.ColorProcessingMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-      CopyMemory(this.UnmanagedImage.ImageData, this.ColorProcessingMapping, this.bufferLength);
-    }
-
     /// <summary>
     ///   The revert.
     /// </summary>
@@ -572,30 +548,69 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    /// <summary>
+    /// The update image sources.
+    /// </summary>
+    public void UpdateImageSources()
+    {
+      this.Dispatcher.BeginInvoke(
+        DispatcherPriority.Render, 
+        (SendOrPostCallback)delegate
+          {
+            if (Video.Instance.ColorProcessedImageSource != null && Video.Instance.MotionProcessedImageSource != null)
+            {
+              ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate();
+              ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate();
+            }
+          }, 
+        null);
+    }
+
+    /// <summary>
+    /// The update processed image source.
+    /// </summary>
+    public void UpdateProcessedImageSource()
+    {
+      if (Viana.Project.ProcessingData.IsUsingColorDetection)
+      {
+        // Update ColorProcessedVideoSource
+        this.Dispatcher.BeginInvoke(
+          DispatcherPriority.Render, 
+          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.ColorProcessedImageSource).Invalidate(); }, 
+          null);
+      }
+
+      if (Viana.Project.ProcessingData.IsUsingMotionDetection)
+      {
+        // Update MotionProcessedVideoSource
+        this.Dispatcher.BeginInvoke(
+          DispatcherPriority.Render, 
+          (SendOrPostCallback)delegate { ((InteropBitmap)Video.Instance.MotionProcessedImageSource).Invalidate(); }, 
+          null);
+      }
+    }
+
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Explicit Interface Methods
 
     /// <summary>
     /// The <see cref="ISampleGrabberCB.BufferCB{Double,IntPtr, Int32}"/> buffer callback method.
     ///   Gets called whenever a new frame arrives down the stream in the SampleGrabber.
-    ///   Updates the memory mapping of the OpenCV image and raises the 
+    ///   Updates the memory mapping of the OpenCV image and raises the
     ///   <see cref="FrameCaptureComplete"/> event.
     /// </summary>
     /// <param name="sampleTime">
-    /// Starting time of the sample, in seconds. 
+    /// Starting time of the sample, in seconds.
     /// </param>
     /// <param name="buffer">
-    /// Pointer to a buffer that contains the sample data. 
+    /// Pointer to a buffer that contains the sample data.
     /// </param>
     /// <param name="bufferLength">
-    /// Length of the buffer pointed to by pBuffer, in bytes. 
+    /// Length of the buffer pointed to by pBuffer, in bytes.
     /// </param>
     /// <returns>
-    /// Returns S_OK if successful, or an HRESULT error code otherwise. 
+    /// Returns S_OK if successful, or an HRESULT error code otherwise.
     /// </returns>
     int ISampleGrabberCB.BufferCB(double sampleTime, IntPtr buffer, int bufferLength)
     {
@@ -625,14 +640,14 @@ namespace VianaNET.Modules.Video.Control
               CopyMemory(this.originalMapping, buffer, bufferLength);
 
               this.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
+                DispatcherPriority.Render, 
                 (SendOrPostCallback)delegate
                   {
                     ((InteropBitmap)Video.Instance.OriginalImageSource).Invalidate();
 
                     // Send new image to processing thread
                     this.OnVideoFrameChanged();
-                  },
+                  }, 
                 null);
             }
           }
@@ -655,13 +670,13 @@ namespace VianaNET.Modules.Video.Control
     ///   NOT USED.
     /// </summary>
     /// <param name="sampleTime">
-    /// Starting time of the sample, in seconds. 
+    /// Starting time of the sample, in seconds.
     /// </param>
     /// <param name="sample">
-    /// Pointer to the IMediaSample interface of the sample. 
+    /// Pointer to the IMediaSample interface of the sample.
     /// </param>
     /// <returns>
-    /// Returns S_OK if successful, or an HRESULT error code otherwise. 
+    /// Returns S_OK if successful, or an HRESULT error code otherwise.
     /// </returns>
     int ISampleGrabberCB.SampleCB(double sampleTime, IMediaSample sample)
     {
@@ -677,29 +692,25 @@ namespace VianaNET.Modules.Video.Control
     /// Closes an open object handle.
     /// </summary>
     /// <param name="handle">
-    /// A valid handle to an open object. 
+    /// A valid handle to an open object.
     /// </param>
     /// <returns>
-    /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. 
+    /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.
     /// </returns>
     [DllImport("kernel32.dll", SetLastError = true)]
     protected static extern bool CloseHandle(IntPtr handle);
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     /// Copies a block of memory from one location to another.
     /// </summary>
     /// <param name="destination">
-    /// A pointer to the starting address of the copied block's destination. 
+    /// A pointer to the starting address of the copied block's destination.
     /// </param>
     /// <param name="source">
-    /// A pointer to the starting address of the block of memory to copy 
+    /// A pointer to the starting address of the block of memory to copy
     /// </param>
     /// <param name="length">
-    /// The size of the block of memory to copy, in bytes. 
+    /// The size of the block of memory to copy, in bytes.
     /// </param>
     [DllImport("Kernel32.dll", EntryPoint = "RtlMoveMemory")]
     protected static extern void CopyMemory(IntPtr destination, IntPtr source, int length);
@@ -708,63 +719,80 @@ namespace VianaNET.Modules.Video.Control
     /// Creates or opens a named or unnamed file mapping object for a specified file.
     /// </summary>
     /// <param name="file">
-    /// A handle to the file from which to create a file mapping object. 
+    /// A handle to the file from which to create a file mapping object.
     /// </param>
     /// <param name="fileMappingAttributes">
-    /// A pointer to a SECURITY_ATTRIBUTES structure that determines whether a returned handle can be inherited by child processes. 
+    /// A pointer to a SECURITY_ATTRIBUTES structure that determines whether a returned handle can be inherited by child
+    ///   processes.
     /// </param>
     /// <param name="protect">
-    /// The protection for the file view, when the file is mapped. 
+    /// The protection for the file view, when the file is mapped.
     /// </param>
     /// <param name="maximumSizeHigh">
-    /// The high-order DWORD of the maximum size of the file mapping object. 
+    /// The high-order DWORD of the maximum size of the file mapping object.
     /// </param>
     /// <param name="maximumSizeLow">
-    /// The low-order DWORD of the maximum size of the file mapping object. 
+    /// The low-order DWORD of the maximum size of the file mapping object.
     /// </param>
     /// <param name="name">
-    /// The name of the file mapping object. 
+    /// The name of the file mapping object.
     /// </param>
     /// <returns>
-    /// If the function succeeds, the return value is a handle to the file mapping object. If the object exists before the function call, the function returns a handle to the existing object (with its current size, not the specified size), and GetLastError returns ERROR_ALREADY_EXISTS. If the function fails, the return value is NULL. To get extended error information, call GetLastError. 
+    /// If the function succeeds, the return value is a handle to the file mapping object. If the object exists before the
+    ///   function call, the function returns a handle to the existing object (with its current size, not the specified size),
+    ///   and GetLastError returns ERROR_ALREADY_EXISTS. If the function fails, the return value is NULL. To get extended error
+    ///   information, call GetLastError.
     /// </returns>
     [DllImport("kernel32.dll", SetLastError = true)]
     protected static extern IntPtr CreateFileMapping(
-      IntPtr file, IntPtr fileMappingAttributes, uint protect, uint maximumSizeHigh, uint maximumSizeLow, string name);
+      IntPtr file, 
+      IntPtr fileMappingAttributes, 
+      uint protect, 
+      uint maximumSizeHigh, 
+      uint maximumSizeLow, 
+      string name);
 
     /// <summary>
     /// Maps a view of a file mapping into the address space of a calling process.
     /// </summary>
     /// <param name="fileMappingObject">
-    /// A handle to a file mapping object. The CreateFileMapping and OpenFileMapping functions return this handle. 
+    /// A handle to a file mapping object. The CreateFileMapping and OpenFileMapping functions return this handle.
     /// </param>
     /// <param name="desiredAccess">
-    /// The type of access to a file mapping object, which ensures the protection of the pages. 
+    /// The type of access to a file mapping object, which ensures the protection of the pages.
     /// </param>
     /// <param name="fileOffsetHigh">
-    /// A high-order DWORD of the file offset where the view begins. 
+    /// A high-order DWORD of the file offset where the view begins.
     /// </param>
     /// <param name="fileOffsetLow">
-    /// A low-order DWORD of the file offset where the view is to begin. The combination of the high and low offsets must specify an offset within the file mapping. They must also match the memory allocation granularity of the system. That is, the offset must be a multiple of the allocation granularity. 
+    /// A low-order DWORD of the file offset where the view is to begin. The combination of the high and low offsets must
+    ///   specify an offset within the file mapping. They must also match the memory allocation granularity of the system. That
+    ///   is, the offset must be a multiple of the allocation granularity.
     /// </param>
     /// <param name="numberOfBytesToMap">
-    /// The number of bytes of a file mapping to map to the view. 
+    /// The number of bytes of a file mapping to map to the view.
     /// </param>
     /// <returns>
-    /// If the function succeeds, the return value is the starting address of the mapped view. If the function fails, the return value is NULL. 
+    /// If the function succeeds, the return value is the starting address of the mapped view. If the function fails, the
+    ///   return value is NULL.
     /// </returns>
     [DllImport("kernel32.dll", SetLastError = true)]
     protected static extern IntPtr MapViewOfFile(
-      IntPtr fileMappingObject, uint desiredAccess, uint fileOffsetHigh, uint fileOffsetLow, uint numberOfBytesToMap);
+      IntPtr fileMappingObject, 
+      uint desiredAccess, 
+      uint fileOffsetHigh, 
+      uint fileOffsetLow, 
+      uint numberOfBytesToMap);
 
     /// <summary>
     /// Unmaps a mapped view of a file from the calling process's address space.
     /// </summary>
     /// <param name="map">
-    /// A pointer to the base address of the mapped view of a file that is to be unmapped. 
+    /// A pointer to the base address of the mapped view of a file that is to be unmapped.
     /// </param>
     /// <returns>
-    /// If the function succeeds, the return value is nonzero, and all dirty pages within the specified range are written "lazily" to disk. If the function fails, the return value is zero. 
+    /// If the function succeeds, the return value is nonzero, and all dirty pages within the specified range are written
+    ///   "lazily" to disk. If the function fails, the return value is zero.
     /// </returns>
     [DllImport("kernel32.dll", SetLastError = true)]
     protected static extern bool UnmapViewOfFile(IntPtr map);
@@ -773,7 +801,7 @@ namespace VianaNET.Modules.Video.Control
     /// Configure the sample grabber with default Video RGB24 mode.
     /// </summary>
     /// <param name="sampGrabber">
-    /// The <see cref="ISampleGrabber"/> to be configured. 
+    /// The <see cref="ISampleGrabber"/> to be configured.
     /// </param>
     protected void ConfigureSampleGrabber(ISampleGrabber sampGrabber)
     {
@@ -813,7 +841,7 @@ namespace VianaNET.Modules.Video.Control
     /// The create memory mapping.
     /// </summary>
     /// <param name="byteCountOfBitmap">
-    /// The byte count of bitmap. 
+    /// The byte count of bitmap.
     /// </param>
     protected void CreateMemoryMapping(int byteCountOfBitmap)
     {
@@ -825,13 +853,30 @@ namespace VianaNET.Modules.Video.Control
 
       // create memory sections and map for the image.
       this.originalSection = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x04, 0, (uint)this.bufferLength, null);
-      this.colorProcessingSection = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x04, 0, (uint)this.bufferLength, null);
-      this.motionProcessingSection = CreateFileMapping(new IntPtr(-1), IntPtr.Zero, 0x04, 0, (uint)this.bufferLength, null);
+      this.colorProcessingSection = CreateFileMapping(
+        new IntPtr(-1), 
+        IntPtr.Zero, 
+        0x04, 
+        0, 
+        (uint)this.bufferLength, 
+        null);
+      this.motionProcessingSection = CreateFileMapping(
+        new IntPtr(-1), 
+        IntPtr.Zero, 
+        0x04, 
+        0, 
+        (uint)this.bufferLength, 
+        null);
 
       this.originalMapping = MapViewOfFile(this.originalSection, 0xF001F, 0, 0, (uint)this.bufferLength);
       this.ColorProcessingMapping = MapViewOfFile(this.colorProcessingSection, 0xF001F, 0, 0, (uint)this.bufferLength);
       this.MotionProcessingMapping = MapViewOfFile(this.motionProcessingSection, 0xF001F, 0, 0, (uint)this.bufferLength);
-      this.UnmanagedImage = new UnmanagedImage(this.originalMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+      this.UnmanagedImage = new UnmanagedImage(
+        this.originalMapping, 
+        (int)this.NaturalVideoWidth, 
+        (int)this.NaturalVideoHeight, 
+        this.Stride, 
+        PixelFormat.Format32bppRgb);
     }
 
     /// <summary>
@@ -861,7 +906,7 @@ namespace VianaNET.Modules.Video.Control
     ///   and creates a file mapping for the captured frames.
     /// </summary>
     /// <param name="sampGrabber">
-    /// The <see cref="ISampleGrabber"/> from which to retreive the sample information. 
+    /// The <see cref="ISampleGrabber"/> from which to retreive the sample information.
     /// </param>
     protected void SaveSizeInfo(ISampleGrabber sampGrabber)
     {
@@ -889,29 +934,29 @@ namespace VianaNET.Modules.Video.Control
       this.CreateMemoryMapping(4);
       Video.Instance.OriginalImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
-          this.originalSection,
-          (int)this.NaturalVideoWidth,
-          (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
-          this.Stride,
+          this.originalSection, 
+          (int)this.NaturalVideoWidth, 
+          (int)this.NaturalVideoHeight, 
+          PixelFormats.Bgr32, 
+          this.Stride, 
           0) as InteropBitmap;
 
       Video.Instance.ColorProcessedImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
-          this.colorProcessingSection,
-          (int)this.NaturalVideoWidth,
-          (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
-          this.Stride,
+          this.colorProcessingSection, 
+          (int)this.NaturalVideoWidth, 
+          (int)this.NaturalVideoHeight, 
+          PixelFormats.Bgr32, 
+          this.Stride, 
           0) as InteropBitmap;
 
       Video.Instance.MotionProcessedImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
-          this.motionProcessingSection,
-          (int)this.NaturalVideoWidth,
-          (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
-          this.Stride,
+          this.motionProcessingSection, 
+          (int)this.NaturalVideoWidth, 
+          (int)this.NaturalVideoHeight, 
+          PixelFormats.Bgr32, 
+          this.Stride, 
           0) as InteropBitmap;
 
       DsUtils.FreeAMMediaType(media);

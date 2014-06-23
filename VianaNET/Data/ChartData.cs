@@ -19,6 +19,9 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   This class contains the view model for the charting module.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data
 {
@@ -33,8 +36,6 @@ namespace VianaNET.Data
   using VianaNET.Application;
   using VianaNET.Data.Collections;
   using VianaNET.Resources;
-
-  using ConverterExtensions = OxyPlot.Wpf.ConverterExtensions;
 
   /// <summary>
   ///   This class contains the view model for the charting module.
@@ -51,13 +52,13 @@ namespace VianaNET.Data
     {
       this.ChartDataModel = new PlotModel
                               {
-                                Title = Labels.ChartWindowChartTitle,
-                                LegendPlacement = LegendPlacement.Inside,
-                                LegendSymbolLength = 24,
-                                LegendBackground = OxyColor.FromArgb(200, 255, 255, 255),
-                                LegendBorder = OxyColors.LightGray,
+                                Title = Labels.ChartWindowChartTitle, 
+                                LegendPlacement = LegendPlacement.Inside, 
+                                LegendSymbolLength = 24, 
+                                LegendBackground = OxyColor.FromArgb(200, 255, 255, 255), 
+                                LegendBorder = OxyColors.LightGray, 
                                 SelectionColor =
-                                  ConverterExtensions.ToOxyColor(
+                                  OxyPlot.Wpf.ConverterExtensions.ToOxyColor(
                                     Viana.Project.CurrentFilterData.SelectionColor)
                               };
       this.DataScatterSeries = new ScatterSeries();
@@ -203,41 +204,41 @@ namespace VianaNET.Data
       this.DataScatterSeries.Title = Labels.ChartWindowDataSeriesLabel;
 
       this.DataScatterSeries.MarkerSize = Viana.Project.CurrentFilterData.DataLineThickness + 2;
-      this.DataScatterSeries.MarkerFill = ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.DataLineColor);
+      this.DataScatterSeries.MarkerFill = OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.DataLineColor);
       this.DataScatterSeries.MarkerStrokeThickness = 1.5;
       this.DataScatterSeries.MarkerType = Viana.Project.CurrentFilterData.DataLineMarkerType;
       this.DataScatterSeries.MarkerStroke = OxyColors.White;
 
       this.DataLineSeries.Title = string.Empty;
-      this.DataLineSeries.Color = ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.DataLineColor);
+      this.DataLineSeries.Color = OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.DataLineColor);
       this.DataLineSeries.StrokeThickness = Viana.Project.CurrentFilterData.DataLineThickness;
 
       this.InterpolationSeries.Title = Labels.ChartWindowInterpolationSeriesLabel;
       this.InterpolationSeries.MarkerSize = Viana.Project.CurrentFilterData.InterpolationLineThickness + 2;
       this.InterpolationSeries.MarkerFill =
-        ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.InterpolationLineColor);
+        OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.InterpolationLineColor);
       this.SetMarkerStroke(Viana.Project.CurrentFilterData.InterpolationLineMarkerType, this.InterpolationSeries);
       this.InterpolationSeries.MarkerType = Viana.Project.CurrentFilterData.InterpolationLineMarkerType;
       this.InterpolationSeries.Color =
-        ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.InterpolationLineColor);
+        OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.InterpolationLineColor);
       this.InterpolationSeries.StrokeThickness = Viana.Project.CurrentFilterData.InterpolationLineThickness;
 
       this.RegressionSeries.Title = Labels.ChartWindowRegressionSeriesLabel;
       this.RegressionSeries.MarkerSize = Viana.Project.CurrentFilterData.RegressionLineThickness + 2;
       this.RegressionSeries.MarkerFill =
-        ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.RegressionLineColor);
+        OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.RegressionLineColor);
       this.SetMarkerStroke(Viana.Project.CurrentFilterData.RegressionLineMarkerType, this.RegressionSeries);
       this.RegressionSeries.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
-      this.RegressionSeries.Color = ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.RegressionLineColor);
+      this.RegressionSeries.Color = OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.RegressionLineColor);
       this.RegressionSeries.StrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
       this.RegressionSeries.Smooth = true;
 
       this.TheorySeries.Title = Labels.ChartWindowTheorySeriesLabel;
       this.TheorySeries.MarkerSize = Viana.Project.CurrentFilterData.TheoryLineThickness + 2;
-      this.TheorySeries.MarkerFill = ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.TheoryLineColor);
+      this.TheorySeries.MarkerFill = OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.TheoryLineColor);
       this.SetMarkerStroke(Viana.Project.CurrentFilterData.TheoryLineMarkerType, this.TheorySeries);
       this.TheorySeries.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
-      this.TheorySeries.Color = ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.TheoryLineColor);
+      this.TheorySeries.Color = OxyPlot.Wpf.ConverterExtensions.ToOxyColor(Viana.Project.CurrentFilterData.TheoryLineColor);
       this.TheorySeries.StrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
       this.TheorySeries.Smooth = true;
 
@@ -279,9 +280,9 @@ namespace VianaNET.Data
       {
         this.ChartDataModel.Series[3] =
           new FunctionSeries(
-            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion,
-            this.DataScatterSeries.MinX,
-            this.DataScatterSeries.MaxX,
+            Viana.Project.CurrentFilterData.RegressionFilter.AusgleichsFunktion, 
+            this.DataScatterSeries.MinX, 
+            this.DataScatterSeries.MaxX, 
             Viana.Project.VideoData.FilteredSamples.Count * 2);
       }
 
@@ -290,17 +291,17 @@ namespace VianaNET.Data
         if (Viana.Project.VideoData.FilteredSamples.Count > 0)
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
-            this.DataScatterSeries.MinX,
-            this.DataScatterSeries.MaxX,
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
+            this.DataScatterSeries.MinX, 
+            this.DataScatterSeries.MaxX, 
             Viana.Project.VideoData.FilteredSamples.Count * 2);
         }
         else
         {
           this.ChartDataModel.Series[4] = new FunctionSeries(
-            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction,
-            this.XAxis.ActualMinimum,
-            this.XAxis.ActualMaximum,
+            Viana.Project.CurrentFilterData.TheoryFilter.TheoryFunction, 
+            this.XAxis.ActualMinimum, 
+            this.XAxis.ActualMaximum, 
             this.XAxis.FractionUnit);
         }
       }

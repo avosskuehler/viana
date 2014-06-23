@@ -2,7 +2,7 @@
 // <copyright file="FilterBase.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,15 +23,15 @@
 //   The interpolation base.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter
 {
   using System.Collections.Generic;
   using System.Windows;
   using System.Xml.Serialization;
-  using Application;
-  using Collections;
-  using CustomStyles.Types;
+
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.Data.Collections;
 
   /// <summary>
   ///   The interpolation base.
@@ -45,27 +45,34 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public static readonly DependencyProperty NumberOfSamplesToInterpolateProperty =
       DependencyProperty.Register(
-        "NumberOfSamplesToInterpolate",
-        typeof(int),
-        typeof(FilterBase),
+        "NumberOfSamplesToInterpolate", 
+        typeof(int), 
+        typeof(FilterBase), 
         new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsRender));
 
     #endregion
 
-    /// <summary>
-    /// Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
-    /// </summary>
-    protected int anzahl;
+    #region Fields
 
     /// <summary>
-    ///   minimaler pixel wert im chart für x.
+    ///   Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
     /// </summary>
-    protected double startPixelX;
+    protected int anzahl;
 
     /// <summary>
     ///   maximaler pixel wert im chart für x.
     /// </summary>
     protected double endPixelX;
+
+    /// <summary>
+    ///   maximaler Wert auf der x-Achse, der bei Messdaten auftritt
+    /// </summary>
+    protected double endX;
+
+    /// <summary>
+    ///   minimaler pixel wert im chart für x.
+    /// </summary>
+    protected double startPixelX;
 
     /// <summary>
     ///   minimaler Wert auf der x-Achse, der bei Messdaten auftritt.
@@ -77,13 +84,12 @@ namespace VianaNET.Data.Filter
     /// </summary>
     protected double stepX;
 
-    /// <summary>
-    ///   maximaler Wert auf der x-Achse, der bei Messdaten auftritt
-    /// </summary>
-    protected double endX;
+    #endregion
+
+    #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterBase"/> class.
+    ///   Initializes a new instance of the <see cref="FilterBase" /> class.
     /// </summary>
     protected FilterBase()
     {
@@ -91,33 +97,9 @@ namespace VianaNET.Data.Filter
       this.WertY = new List<double>();
     }
 
+    #endregion
+
     #region Public Properties
-
-    /// <summary>
-    /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
-    /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
-    /// </summary>
-    [XmlIgnore]
-    public List<double> WertX { get; set; }
-
-    /// <summary>
-    /// Gets or sets the minimal value of the WertX Array
-    /// </summary>
-    [XmlIgnore]
-    public double WertXMin { get; set; }
-
-    /// <summary>
-    /// Gets or sets the maximal value of the WertX Array
-    /// </summary>
-    [XmlIgnore]
-    public double WertXMax { get; set; }
-
-    /// <summary>
-    /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
-    /// auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion 
-    /// </summary>
-    [XmlIgnore]
-    public List<double> WertY { get; set; }
 
     /// <summary>
     ///   Gets or sets the number of samples to interpolate.
@@ -135,29 +117,65 @@ namespace VianaNET.Data.Filter
       }
     }
 
+    /// <summary>
+    ///   Gets or sets aus den Videodaten herausgelesene Messpaare -
+    ///   auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion
+    /// </summary>
+    [XmlIgnore]
+    public List<double> WertX { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the maximal value of the WertX Array
+    /// </summary>
+    [XmlIgnore]
+    public double WertXMax { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the minimal value of the WertX Array
+    /// </summary>
+    [XmlIgnore]
+    public double WertXMin { get; set; }
+
+    /// <summary>
+    ///   Gets or sets aus den Videodaten herausgelesene Messpaare -
+    ///   auf zwei Arrays aufgeteilt, Grunddaten der Berechnung der Ausgleichsfunktion
+    /// </summary>
+    [XmlIgnore]
+    public List<double> WertY { get; set; }
+
     #endregion
 
     #region Public Methods and Operators
 
     /// <summary>
-    /// This virtual method should be overridden from
-    /// a filter to calculate filtered values.
+    ///   This virtual method should be overridden from
+    ///   a filter to calculate filtered values.
     /// </summary>
     public virtual void CalculateFilterValues()
     {
       this.CopySampleColumnsToArrays();
     }
 
+    #endregion
+
+    #region Methods
+
     /// <summary>
     /// This method returns a list of samples beginning at the given
-    /// start index and with the length of the given numberOfSamplesToReturn
+    ///   start index and with the length of the given numberOfSamplesToReturn
     /// </summary>
-    /// <param name="startIndex">The start index.</param>
-    /// <param name="numberOfSamplesToReturn">The number of samples to return.</param>
+    /// <param name="startIndex">
+    /// The start index.
+    /// </param>
+    /// <param name="numberOfSamplesToReturn">
+    /// The number of samples to return.
+    /// </param>
     /// <returns>
-    /// The <see>
-    ///       <cref>List{double}</cref>
-    ///     </see> with the samples.
+    /// The
+    ///   <see>
+    ///     <cref>List{double}</cref>
+    ///   </see>
+    ///   with the samples.
     /// </returns>
     protected List<double> GetRangeAtPosition(int startIndex, int numberOfSamplesToReturn)
     {
@@ -178,11 +196,9 @@ namespace VianaNET.Data.Filter
       return sampleCollection;
     }
 
-    #endregion
-
     /// <summary>
-    /// Copies data sample columns to WertX and WertY arrays.
-    /// Both arrays are used to determine the filter values.
+    ///   Copies data sample columns to WertX and WertY arrays.
+    ///   Both arrays are used to determine the filter values.
     /// </summary>
     private void CopySampleColumnsToArrays()
     {
@@ -191,22 +207,22 @@ namespace VianaNET.Data.Filter
         return;
       }
 
-      var aktObjectNr = Viana.Project.ProcessingData.IndexOfObject;
+      int aktObjectNr = Viana.Project.ProcessingData.IndexOfObject;
       this.WertX.Clear();
       this.WertY.Clear();
       this.WertXMin = double.MaxValue;
       this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
+      foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
       {
         if (!sample.IsSelected)
         {
           continue;
         }
 
-        var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
-        var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
+        double? valueX = this.GetValueFromSample(true, aktObjectNr, sample);
+        double? valueY = this.GetValueFromSample(false, aktObjectNr, sample);
 
         if (valueX.HasValue && valueY.HasValue)
         {
@@ -259,12 +275,20 @@ namespace VianaNET.Data.Filter
 
     /// <summary>
     /// Returns the value from the given timesample that corresponds
-    /// to the given object and axis request.
+    ///   to the given object and axis request.
     /// </summary>
-    /// <param name="isXValue">True if should use xaxis, else uses yaxis</param>
-    /// <param name="aktObjectNr">The index of the used object</param>
-    /// <param name="sample">The time sample with the raw data</param>
-    /// <returns>The nullable <see cref="double"/> with the value, if there is one found.</returns>
+    /// <param name="isXValue">
+    /// True if should use xaxis, else uses yaxis
+    /// </param>
+    /// <param name="aktObjectNr">
+    /// The index of the used object
+    /// </param>
+    /// <param name="sample">
+    /// The time sample with the raw data
+    /// </param>
+    /// <returns>
+    /// The nullable <see cref="double"/> with the value, if there is one found.
+    /// </returns>
     private double? GetValueFromSample(bool isXValue, int aktObjectNr, TimeSample sample)
     {
       double? value = null;
@@ -333,5 +357,7 @@ namespace VianaNET.Data.Filter
 
       return value;
     }
+
+    #endregion
   }
 }

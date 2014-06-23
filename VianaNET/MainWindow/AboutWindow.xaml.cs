@@ -2,7 +2,7 @@
 // <copyright file="AboutWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -34,21 +34,10 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class AboutWindow : Window
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="AboutWindow" /> class. 
+    ///   Initializes a new instance of the <see cref="AboutWindow" /> class.
     ///   Initializes a new instance of the MainWindow class.
     /// </summary>
     public AboutWindow()
@@ -68,8 +57,8 @@ namespace VianaNET.MainWindow
       get
       {
         // Get all Company attributes on this assembly
-        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
-          typeof(AssemblyCompanyAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly()
+          .GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
 
         // If there aren't any Company attributes, return an empty string
         if (attributes.Length == 0)
@@ -90,8 +79,8 @@ namespace VianaNET.MainWindow
       get
       {
         // Get all Copyright attributes on this assembly
-        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
-          typeof(AssemblyCopyrightAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly()
+          .GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
 
         // If there aren't any Copyright attributes, return an empty string
         if (attributes.Length == 0)
@@ -104,14 +93,6 @@ namespace VianaNET.MainWindow
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
     /// <summary>
     ///   Gets assembly description.
     /// </summary>
@@ -120,8 +101,8 @@ namespace VianaNET.MainWindow
       get
       {
         // Get all Description attributes on this assembly
-        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
-          typeof(AssemblyDescriptionAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly()
+          .GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
 
         // If there aren't any Description attributes, return an empty string
         if (attributes.Length == 0)
@@ -142,8 +123,8 @@ namespace VianaNET.MainWindow
       get
       {
         // Get all Product attributes on this assembly
-        object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(
-          typeof(AssemblyProductAttribute), false);
+        object[] attributes = Assembly.GetExecutingAssembly()
+          .GetCustomAttributes(typeof(AssemblyProductAttribute), false);
 
         // If there aren't any Product attributes, return an empty string
         if (attributes.Length == 0)
@@ -214,10 +195,10 @@ namespace VianaNET.MainWindow
     /// The button_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender. 
+    /// The sender.
     /// </param>
     /// <param name="e">
-    /// The e. 
+    /// The e.
     /// </param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
@@ -226,28 +207,5 @@ namespace VianaNET.MainWindow
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

@@ -2,7 +2,7 @@
 // <copyright file="GMFBridge.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -71,16 +71,16 @@ namespace VianaNET.Modules.Video.Filter
     /// The add stream.
     /// </summary>
     /// <param name="bVideo">
-    /// The b video. 
+    /// The b video.
     /// </param>
     /// <param name="AllowedTypes">
-    /// The allowed types. 
+    /// The allowed types.
     /// </param>
     /// <param name="bDiscardUnconnected">
-    /// The b discard unconnected. 
+    /// The b discard unconnected.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int AddStream(
@@ -92,13 +92,13 @@ namespace VianaNET.Modules.Video.Filter
     /// The insert sink filter.
     /// </summary>
     /// <param name="pGraph">
-    /// The p graph. 
+    /// The p graph.
     /// </param>
     /// <param name="ppFilter">
-    /// The pp filter. 
+    /// The pp filter.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int InsertSinkFilter([In] IFilterGraph pGraph, out IBaseFilter ppFilter);
@@ -107,70 +107,76 @@ namespace VianaNET.Modules.Video.Filter
     /// The insert source filter.
     /// </summary>
     /// <param name="pUnkSourceGraphSinkFilter">
-    /// The p unk source graph sink filter. 
+    /// The p unk source graph sink filter.
     /// </param>
     /// <param name="pRenderGraph">
-    /// The p render graph. 
+    /// The p render graph.
     /// </param>
     /// <param name="ppFilter">
-    /// The pp filter. 
+    /// The pp filter.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int InsertSourceFilter(
-      [In] IBaseFilter pUnkSourceGraphSinkFilter, [In] IGraphBuilder pRenderGraph, out IBaseFilter ppFilter);
+      [In] IBaseFilter pUnkSourceGraphSinkFilter, 
+      [In] IGraphBuilder pRenderGraph, 
+      out IBaseFilter ppFilter);
 
     /// <summary>
     /// The create source graph.
     /// </summary>
     /// <param name="strFile">
-    /// The str file. 
+    /// The str file.
     /// </param>
     /// <param name="pGraph">
-    /// The p graph. 
+    /// The p graph.
     /// </param>
     /// <param name="pSinkFilter">
-    /// The p sink filter. 
+    /// The p sink filter.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int CreateSourceGraph(
-      [In] [MarshalAs(UnmanagedType.BStr)] string strFile, [In] IFilterGraph pGraph, out IBaseFilter pSinkFilter);
+      [In] [MarshalAs(UnmanagedType.BStr)] string strFile, 
+      [In] IFilterGraph pGraph, 
+      out IBaseFilter pSinkFilter);
 
     /// <summary>
     /// The create render graph.
     /// </summary>
     /// <param name="pSourceGraphSinkFilter">
-    /// The p source graph sink filter. 
+    /// The p source graph sink filter.
     /// </param>
     /// <param name="pRenderGraph">
-    /// The p render graph. 
+    /// The p render graph.
     /// </param>
     /// <param name="pRenderGraphSourceFilter">
-    /// The p render graph source filter. 
+    /// The p render graph source filter.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int CreateRenderGraph(
-      [In] IBaseFilter pSourceGraphSinkFilter, [In] IGraphBuilder pRenderGraph, out IBaseFilter pRenderGraphSourceFilter);
+      [In] IBaseFilter pSourceGraphSinkFilter, 
+      [In] IGraphBuilder pRenderGraph, 
+      out IBaseFilter pRenderGraphSourceFilter);
 
     /// <summary>
     /// The bridge graphs.
     /// </summary>
     /// <param name="pSourceGraphSinkFilter">
-    /// The p source graph sink filter. 
+    /// The p source graph sink filter.
     /// </param>
     /// <param name="pRenderGraphSourceFilter">
-    /// The p render graph source filter. 
+    /// The p render graph source filter.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int BridgeGraphs([In] IBaseFilter pSourceGraphSinkFilter, [In] IBaseFilter pRenderGraphSourceFilter);
@@ -179,13 +185,13 @@ namespace VianaNET.Modules.Video.Filter
     /// The set notify.
     /// </summary>
     /// <param name="hwnd">
-    /// The hwnd. 
+    /// The hwnd.
     /// </param>
     /// <param name="msg">
-    /// The msg. 
+    /// The msg.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int SetNotify([In] IntPtr hwnd, [In] int msg);
@@ -194,10 +200,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The set buffer minimum.
     /// </summary>
     /// <param name="nMillisecs">
-    /// The n millisecs. 
+    /// The n millisecs.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int SetBufferMinimum([In] int nMillisecs);
@@ -206,10 +212,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The get segment time.
     /// </summary>
     /// <param name="pdSeconds">
-    /// The pd seconds. 
+    /// The pd seconds.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int GetSegmentTime(out double pdSeconds);
@@ -225,10 +231,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The get segment offset.
     /// </summary>
     /// <param name="pdOffset">
-    /// The pd offset. 
+    /// The pd offset.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     [PreserveSig]
     int GetSegmentOffset(out double pdOffset);

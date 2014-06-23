@@ -5,30 +5,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
              xmlns:application="clr-namespace:VianaNET.Application"
-             Width="300" 
+             Width="300"
              Height="400" IsVisibleChanged="BlobsControlIsVisibleChanged"
              SizeChanged="BlobsControl_OnSizeChanged">
   <UserControl.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </UserControl.Resources>
   <Grid MinWidth="50" IsItemsHost="False">
     <Grid.RowDefinitions>
-      <RowDefinition/>
-      <RowDefinition/>
-      <RowDefinition/>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
     </Grid.RowDefinitions>
     <GroupBox Grid.Row="0" Header="{lex:Loc VianaNET:Labels:BlobsControlProcessedImageHeader}">
-      <Grid RenderTransformOrigin="0.5,0.5" >
+      <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="-1" />
         </Grid.RenderTransform>
-        <Image Name="OriginalImageControl" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
-        <Image Opacity="0.8" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5" Source="{Binding Path=ColorProcessedImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
-        <Path Name="OuterRegion" Visibility="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}" Fill="#FFFFFFFF" HorizontalAlignment="Center">
+        <Image Name="OriginalImageControl"
+               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"
+               HorizontalAlignment="Center" />
+        <Image Opacity="0.8" Name="ProcessedImageControl" RenderTransformOrigin="0.5,0.5"
+               Source="{Binding Path=ColorProcessedImageSource, Source={x:Static control:Video.Instance}}"
+               HorizontalAlignment="Center" />
+        <Path Name="OuterRegion"
+              Visibility="{Binding Path=CalibrationData.HasClipRegion, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"
+              Fill="#FFFFFFFF" HorizontalAlignment="Center">
           <Path.Data>
             <CombinedGeometry GeometryCombineMode="Xor">
               <CombinedGeometry.Geometry1>
-                <RectangleGeometry Rect="0,0,100,100"/>
+                <RectangleGeometry Rect="0,0,100,100" />
               </CombinedGeometry.Geometry1>
               <CombinedGeometry.Geometry2>
                 <RectangleGeometry Rect="10,10,80,80" />
@@ -40,26 +46,25 @@
       </Grid>
     </GroupBox>
     <GroupBox Grid.Row="1" Header="{lex:Loc VianaNET:Labels:BlobsControlFoundBlobsHeader}">
-      <Grid RenderTransformOrigin="0.5,0.5" >
+      <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="-1" />
         </Grid.RenderTransform>
-        <Image Name="OverlayImageControl" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center">
-        </Image>
+        <Image Name="OverlayImageControl"
+               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"
+               HorizontalAlignment="Center" />
         <Canvas Name="OverlayCanvas" Opacity="0.7" Background="White"
                 Width="{Binding ElementName=OverlayImageControl, Path=ActualWidth}"
-                Height="{Binding ElementName=OverlayImageControl, Path=ActualHeight}">
-        </Canvas>
+                Height="{Binding ElementName=OverlayImageControl, Path=ActualHeight}" />
       </Grid>
     </GroupBox>
     <GroupBox Grid.Row="2" Header="{lex:Loc VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
       <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
       <Grid RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="-1" />
         </Grid.RenderTransform>
-        <Canvas Name="CanvasDataPoints" SizeChanged="CanvasDataPointsSizeChanged">
-        </Canvas>
+        <Canvas Name="CanvasDataPoints" SizeChanged="CanvasDataPointsSizeChanged" />
       </Grid>
       <!--<Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
         <charting:Chart.Series>

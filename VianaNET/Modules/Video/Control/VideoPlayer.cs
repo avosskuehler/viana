@@ -2,7 +2,7 @@
 // <copyright file="VideoPlayer.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -26,7 +26,6 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.Globalization;
   using System.Threading;
   using System.Windows;
   using System.Windows.Threading;
@@ -74,7 +73,10 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public static readonly DependencyProperty MediaDurationInMSProperty =
       DependencyProperty.Register(
-        "MediaDurationInMS", typeof(double), typeof(VideoPlayer), new UIPropertyMetadata(default(double)));
+        "MediaDurationInMS", 
+        typeof(double), 
+        typeof(VideoPlayer), 
+        new UIPropertyMetadata(default(double)));
 
     #endregion
 
@@ -108,7 +110,7 @@ namespace VianaNET.Modules.Video.Control
     ///// <summary>
     /////   The is frame time capable.
     ///// </summary>
-    //private bool isFrameTimeCapable;
+    // private bool isFrameTimeCapable;
 
     /// <summary>
     ///   The media event.
@@ -154,11 +156,6 @@ namespace VianaNET.Modules.Video.Control
     #region Public Properties
 
     /// <summary>
-    /// Gets or sets the filename of the video file
-    /// </summary>
-    public string VideoFilename { get; set; }
-
-    /// <summary>
     ///   Gets or sets the media duration in ms.
     /// </summary>
     public double MediaDurationInMS
@@ -178,13 +175,13 @@ namespace VianaNET.Modules.Video.Control
     /////   Gets the video duration in ms, which is the media duration
     /////   times the framerate factor.
     ///// </summary>
-    //public double VideoDurationInMs
-    //{
-    //  get
-    //  {
-    //    return this.MediaDurationInMS * Viana.Project.VideoData.FramerateFactor;
-    //  }
-    //}
+    // public double VideoDurationInMs
+    // {
+    // get
+    // {
+    // return this.MediaDurationInMS * Viana.Project.VideoData.FramerateFactor;
+    // }
+    // }
 
     /// <summary>
     ///   Gets or sets the media position in nano seconds.
@@ -200,20 +197,23 @@ namespace VianaNET.Modules.Video.Control
         }
 
         long currentPosition;
-        //long stopPosition;
+
+        // long stopPosition;
         int hr = this.mediaSeeking.GetCurrentPosition(out currentPosition);
-        //hr = this.mediaSeeking.GetPositions(out currentPosition, out stopPosition);
+
+        // hr = this.mediaSeeking.GetPositions(out currentPosition, out stopPosition);
         DsError.ThrowExceptionForHR(hr);
 
-        //long milliSeconds = currentPosition;
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  return (long)(currentPosition * this.FrameTimeInNanoSeconds);
-        //}
-        //else
-        //{
+        // long milliSeconds = currentPosition;
+        // if (this.timeFormat == TimeFormat.Frame)
+        // {
+        // return (long)(currentPosition * this.FrameTimeInNanoSeconds);
+        // }
+        // else
+        // {
         return (long)(currentPosition * Viana.Project.VideoData.FramerateFactor);
-        //}
+
+        // }
       }
 
       set
@@ -223,22 +223,27 @@ namespace VianaNET.Modules.Video.Control
           return;
         }
 
-        long currentPosition = (long)(value / Viana.Project.VideoData.FramerateFactor);
+        var currentPosition = (long)(value / Viana.Project.VideoData.FramerateFactor);
         if (currentPosition < 0)
         {
           currentPosition = 0;
         }
 
         int hr = this.mediaSeeking.SetPositions(
-          new DsLong(currentPosition),
-          AMSeekingSeekingFlags.AbsolutePositioning,
-          null,
+          new DsLong(currentPosition), 
+          AMSeekingSeekingFlags.AbsolutePositioning, 
+          null, 
           AMSeekingSeekingFlags.NoPositioning);
         DsError.ThrowExceptionForHR(hr);
 
         this.UpdateFrameIndex();
       }
     }
+
+    /// <summary>
+    ///   Gets or sets the filename of the video file
+    /// </summary>
+    public string VideoFilename { get; set; }
 
     #endregion
 
@@ -305,10 +310,10 @@ namespace VianaNET.Modules.Video.Control
     /// The load movie.
     /// </summary>
     /// <param name="fileName">
-    /// The file name. 
+    /// The file name.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool LoadMovie(string fileName)
     {
@@ -388,7 +393,10 @@ namespace VianaNET.Modules.Video.Control
 
       // Seek to the beginning
       hr = this.mediaSeeking.SetPositions(
-        zeroPosition, AMSeekingSeekingFlags.AbsolutePositioning, null, AMSeekingSeekingFlags.NoPositioning);
+        zeroPosition, 
+        AMSeekingSeekingFlags.AbsolutePositioning, 
+        null, 
+        AMSeekingSeekingFlags.NoPositioning);
       if (hr != 0)
       {
         ErrorLogger.WriteLine("Error while revert video. Message: " + DsError.GetErrorText(hr));
@@ -406,46 +414,54 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     /// This method steps the video the given number of frames in the given direction
     /// </summary>
-    /// <param name="forward">True, if we should go forward in the video stream. 
-    /// False to go backwards. </param>
-    /// <param name="count">The number of frames to move</param>
+    /// <param name="forward">
+    /// True, if we should go forward in the video stream.
+    ///   False to go backwards.
+    /// </param>
+    /// <param name="count">
+    /// The number of frames to move
+    /// </param>
     public void StepFrames(bool forward, int count)
     {
       if (forward)
       {
-        //if (!this.isFrameTimeCapable || Video.Instance.IsDataAcquisitionRunning)
-        //{
-        //  this.StepFrames(count);
-        //}
-        //else
-        //{
+        // if (!this.isFrameTimeCapable || Video.Instance.IsDataAcquisitionRunning)
+        // {
+        // this.StepFrames(count);
+        // }
+        // else
+        // {
         this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds * count;
-        //}
+
+        // }
       }
       else
       {
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  this.MediaPositionFrameIndex = this.MediaPositionFrameIndex - count;
-        //}
-        //else
-        //{
+        // if (this.timeFormat == TimeFormat.Frame)
+        // {
+        // this.MediaPositionFrameIndex = this.MediaPositionFrameIndex - count;
+        // }
+        // else
+        // {
         this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds * count;
-        //}
+
+        // }
       }
 
       //// Throw event
-      //if (this.StepComplete != null)
-      //{
-      //  this.StepComplete(this, EventArgs.Empty);
-      //}
+      // if (this.StepComplete != null)
+      // {
+      // this.StepComplete(this, EventArgs.Empty);
+      // }
     }
 
     /// <summary>
     /// This method steps the video one frame in the given direction
     /// </summary>
-    /// <param name="forward">True, if we should go forward in the video stream. 
-    /// False to go backwards. </param>
+    /// <param name="forward">
+    /// True, if we should go forward in the video stream.
+    ///   False to go backwards.
+    /// </param>
     public void StepOneFrame(bool forward)
     {
       if (forward)
@@ -455,10 +471,10 @@ namespace VianaNET.Modules.Video.Control
           this.StepFrames(1);
         }
 
-        //if (!this.isFrameTimeCapable)// || Video.Instance.IsDataAcquisitionRunning)
-        //{
-        //  this.StepFrames(1);
-        //}
+          // if (!this.isFrameTimeCapable)// || Video.Instance.IsDataAcquisitionRunning)
+          // {
+          // this.StepFrames(1);
+          // }
         else
         {
           this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds;
@@ -466,22 +482,22 @@ namespace VianaNET.Modules.Video.Control
       }
       else
       {
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  this.MediaPositionFrameIndex--;
-        //}
-        //else
-        //{
+        // if (this.timeFormat == TimeFormat.Frame)
+        // {
+        // this.MediaPositionFrameIndex--;
+        // }
+        // else
+        // {
         this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds;
-        //}
+
+        // }
       }
 
       //// Throw event
-      //if (this.StepComplete != null)
-      //{
-      //  this.StepComplete(this, EventArgs.Empty);
-      //}
-
+      // if (this.StepComplete != null)
+      // {
+      // this.StepComplete(this, EventArgs.Empty);
+      // }
     }
 
     /// <summary>
@@ -497,7 +513,9 @@ namespace VianaNET.Modules.Video.Control
       if (this.mediaControl.Pause() >= 0)
       {
         this.Dispatcher.BeginInvoke(
-          DispatcherPriority.Normal, (SendOrPostCallback)delegate { this.CurrentState = PlayState.Paused; }, null);
+          DispatcherPriority.Normal, 
+          (SendOrPostCallback)delegate { this.CurrentState = PlayState.Paused; }, 
+          null);
       }
     }
 
@@ -593,19 +611,19 @@ namespace VianaNET.Modules.Video.Control
       this.mediaPosition = (IMediaPosition)this.filterGraph;
       this.mediaEvent = (IMediaEvent)this.filterGraph;
 
-      //hr = this.mediaSeeking.IsFormatSupported(TimeFormat.Frame);
-      //if (hr != 0)
-      //{
-      //  this.isFrameTimeCapable = false;
-      //}
-      //else
-      //{
-      //  this.isFrameTimeCapable = true;
+      // hr = this.mediaSeeking.IsFormatSupported(TimeFormat.Frame);
+      // if (hr != 0)
+      // {
+      // this.isFrameTimeCapable = false;
+      // }
+      // else
+      // {
+      // this.isFrameTimeCapable = true;
 
-        // string text = DsError.GetErrorText(hr);
-        // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
-        // text = DsError.GetErrorText(hr);
-      //}
+      // string text = DsError.GetErrorText(hr);
+      // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
+      // text = DsError.GetErrorText(hr);
+      // }
 
       // hr = this.mediaSeeking.GetTimeFormat(out this.timeFormat);
       // DsError.ThrowExceptionForHR(hr);
@@ -731,12 +749,11 @@ namespace VianaNET.Modules.Video.Control
       // Console.WriteLine("LoopExited");
     }
 
-
     /// <summary>
-    /// The get frame step interface.
-    /// Some video renderers support stepping media frame by frame with the
-    /// IVideoFrameStep interface.  See the interface documentation for more
-    /// details on frame stepping.
+    ///   The get frame step interface.
+    ///   Some video renderers support stepping media frame by frame with the
+    ///   IVideoFrameStep interface.  See the interface documentation for more
+    ///   details on frame stepping.
     /// </summary>
     /// <returns> True, if frame step interface is available, otherwise false </returns>
     private bool GetFrameStepInterface()
@@ -764,22 +781,22 @@ namespace VianaNET.Modules.Video.Control
     /////   The read video properties.
     ///// </summary>
     ///// <returns> The <see cref="int" /> . </returns>
-    //private int ReadVideoProperties()
-    //{
-    //  int hr = 0;
+    // private int ReadVideoProperties()
+    // {
+    // int hr = 0;
 
-    //  if (this.mediaSeeking == null)
-    //  {
-    //    return 0;
-    //  }
+    // if (this.mediaSeeking == null)
+    // {
+    // return 0;
+    // }
 
-    //  long mediaduration;
-    //  hr = this.mediaSeeking.GetDuration(out mediaduration);
-    //  DsError.ThrowExceptionForHR(hr);
-    //  this.MediaDurationInMS = mediaduration * NanoSecsToMilliSecs;
+    // long mediaduration;
+    // hr = this.mediaSeeking.GetDuration(out mediaduration);
+    // DsError.ThrowExceptionForHR(hr);
+    // this.MediaDurationInMS = mediaduration * NanoSecsToMilliSecs;
 
-    //  return hr;
-    //}
+    // return hr;
+    // }
 
     /// <summary>
     ///   The release event thread.
@@ -800,14 +817,14 @@ namespace VianaNET.Modules.Video.Control
     /// The step frames.
     /// </summary>
     /// <param name="numberOfFramesToStep">
-    /// The n frames to step. 
+    /// The n frames to step.
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> . 
+    /// The <see cref="int"/> .
     /// </returns>
     private int StepFrames(int numberOfFramesToStep)
     {
-      //Console.WriteLine("StepFrames: #" + Video.Instance.FrameIndex);
+      // Console.WriteLine("StepFrames: #" + Video.Instance.FrameIndex);
       int hr = 0;
 
       // If the Frame Stepping interface exists, use it to step frames

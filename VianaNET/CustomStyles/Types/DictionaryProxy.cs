@@ -17,8 +17,10 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
+// <summary>
+//   Proxy class to permit XML Serialization of generic dictionaries
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.CustomStyles.Types
 {
   using System.Collections.Generic;
@@ -40,7 +42,7 @@ namespace VianaNET.CustomStyles.Types
     #region Fields
 
     /// <summary>
-    /// The list.
+    ///   The list.
     /// </summary>
     private Collection<KeyAndValue> list;
 
@@ -49,6 +51,7 @@ namespace VianaNET.CustomStyles.Types
     #region Constructors and Destructors
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="DictionaryProxy{TK,TV}"/> class. 
     /// Initializes a new instance of the <see cref="DictionaryProxy{K,V}"/> class.
     /// </summary>
     /// <param name="original">
@@ -60,7 +63,8 @@ namespace VianaNET.CustomStyles.Types
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DictionaryProxy{K,V}"/> class. 
+    /// Initializes a new instance of the <see cref="DictionaryProxy{TK,TV}"/> class. 
+    ///   Initializes a new instance of the <see cref="DictionaryProxy{K,V}"/> class.
     ///   Default constructor so deserialization works
     /// </summary>
     public DictionaryProxy()
@@ -72,10 +76,10 @@ namespace VianaNET.CustomStyles.Types
     #region Public Properties
 
     /// <summary>
-    /// Gets the keys and values.
+    ///   Gets the keys and values.
     /// </summary>
     /// <remarks>
-    /// XmlElementAttribute is used to prevent extra nesting level. It's
+    ///   XmlElementAttribute is used to prevent extra nesting level. It's
     ///   not necessary.
     /// </remarks>
     [XmlElement]
@@ -107,7 +111,7 @@ namespace VianaNET.CustomStyles.Types
 
     /// <summary>
     ///   Gets or sets the dictionary.
-    ///  Use to set the dictionary if necessary, but don't serialize
+    ///   Use to set the dictionary if necessary, but don't serialize
     /// </summary>
     [XmlIgnore]
     public IDictionary<TK, TV> Original { get; set; }
@@ -117,10 +121,10 @@ namespace VianaNET.CustomStyles.Types
     #region Public Methods and Operators
 
     /// <summary>
-    /// Convenience method to return a dictionary from this proxy instance
+    ///   Convenience method to return a dictionary from this proxy instance
     /// </summary>
     /// <returns>
-    /// The <see cref="Dictionary"/>.
+    ///   The <see cref="Dictionary" />.
     /// </returns>
     public Dictionary<TK, TV> ToDictionary()
     {
@@ -137,12 +141,12 @@ namespace VianaNET.CustomStyles.Types
       #region Public Properties
 
       /// <summary>
-      /// Gets or sets the key.
+      ///   Gets or sets the key.
       /// </summary>
       public TK Key { get; set; }
 
       /// <summary>
-      /// Gets or sets the value.
+      ///   Gets or sets the value.
       /// </summary>
       public TV Value { get; set; }
 

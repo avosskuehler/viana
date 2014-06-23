@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DataSample.cs" company="Freie Universität Berlin">
+// <copyright file="ExportOptions.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,7 +23,6 @@
 //   The data sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace VianaNET.Modules.DataGrid
   using VianaNET.Data.Collections;
 
   /// <summary>
-  /// This class contains options for data export functionality
+  ///   This class contains options for data export functionality
   /// </summary>
   public class ExportOptions
   {

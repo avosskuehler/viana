@@ -1,24 +1,27 @@
 ﻿<UserControl x:Class="VianaNET.CustomStyles.Controls.CoordinateSystem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
              xmlns:application="clr-namespace:VianaNET.Application"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="100"
              Width="120"
              Height="120"
              DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
   <Canvas RenderTransformOrigin="0.5,0.5">
     <Canvas.RenderTransform>
-      <MatrixTransform Matrix="{Binding Path=CalibrationData.CoordinateTransform, Source={x:Static application:Viana.Project}}"/>
+      <MatrixTransform
+        Matrix="{Binding Path=CalibrationData.CoordinateTransform, Source={x:Static application:Viana.Project}}" />
       <!--<ScaleTransform ScaleY="{Binding Path=TransformY}"/>
         <RotateTransform Angle="{Binding Path=RotationAngle}"/>-->
     </Canvas.RenderTransform>
-    <controls:Arrow Canvas.Left="60" Canvas.Top="60" x:Name="ArrowX" Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="40" Y1="0" Y2="0"/>
+    <controls:Arrow Canvas.Left="60" Canvas.Top="60" x:Name="ArrowX" Stroke="DodgerBlue" Fill="DodgerBlue"
+                    HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="40" Y1="0" Y2="0" />
     <Label Content="X" Canvas.Left="105" Canvas.Top="52" Padding="0" />
-    <controls:Arrow Canvas.Left="60" Canvas.Top="20" x:Name="ArrowY"  Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="0" Y1="40" Y2="0"/>
+    <controls:Arrow Canvas.Left="60" Canvas.Top="20" x:Name="ArrowY" Stroke="DodgerBlue" Fill="DodgerBlue"
+                    HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="0" Y1="40" Y2="0" />
     <Label Content="Y" Canvas.Left="57" Canvas.Top="0" RenderTransformOrigin="0.5,0.5" Padding="0">
       <!--<Label.RenderTransform>
         <ScaleTransform ScaleY="{Binding Path=TransformY}"/>

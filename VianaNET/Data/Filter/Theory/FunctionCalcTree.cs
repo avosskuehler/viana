@@ -2,7 +2,7 @@
 // <copyright file="FunctionCalcTree.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -21,44 +21,49 @@
 //   The calculator function term.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter.Theory
 {
   /// <summary>
-  /// calculator tree for a function term.
+  ///   calculator tree for a function term.
   /// </summary>
   public class FunctionCalcTree
   {
+    #region Fields
+
     /// <summary>
-    /// Gets or sets the left functionCalcTree.
+    ///   Gets or sets the left functionCalcTree.
     /// </summary>
     public FunctionCalcTree Li;
 
     /// <summary>
-    /// Gets or sets the right functionCalcTree.
+    ///   Gets or sets the right functionCalcTree.
     /// </summary>
     public FunctionCalcTree Re;
 
+    #endregion
+
+    #region Public Properties
+
     /// <summary>
-    /// Gets or sets the symbol of operator.
+    ///   Gets or sets the symbol of operator.
     /// </summary>
     public symTyp Cwert { get; set; }
 
     /// <summary>
-    /// Gets or sets the string, containing the  term.
+    ///   Gets or sets the string, containing the  term.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the number of a variable.
+    ///   Gets or sets the number of a variable.
     /// </summary>
     public ushort Nr { get; set; }
 
-
-
     /// <summary>
-    /// Gets or sets the value, when node contains a number or constant.
+    ///   Gets or sets the value, when node contains a number or constant.
     /// </summary>
     public double Zwert { get; set; }
+
+    #endregion
   }
 }

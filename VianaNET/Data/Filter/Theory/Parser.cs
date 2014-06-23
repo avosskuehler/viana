@@ -2,7 +2,7 @@
 // <copyright file="Parser.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -26,6 +26,7 @@
 namespace VianaNET.Data.Filter.Theory
 {
   using System;
+
   using VianaNET.Resources;
 
   /// <summary>
@@ -33,32 +34,6 @@ namespace VianaNET.Data.Filter.Theory
   /// </summary>
   public class Constants
   {
-
-    /// <summary>
-    ///   The konst record.
-    /// </summary>
-    public struct KonstRec
-      {
-          #region Fields
-
-          /// <summary>
-          ///   long name of constant.
-          /// </summary>
-          public string titel;
-
-          /// <summary>
-          ///   short name of constant.
-          /// </summary>
-          public string bez;
-
-          /// <summary>
-          ///   value of constant.
-          /// </summary>
-          public double wert;
-
-          #endregion
-      }
-   
     #region Constants
 
     /// <summary>
@@ -76,33 +51,78 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public const double leerFeld = -1.1E32;
 
-    // public const double _max_Real = 1.7e38;
-    // public const int _Ln_max_Real = 88;
     #endregion
 
+    // public const double _max_Real = 1.7e38;
+    // public const int _Ln_max_Real = 88;
     #region Static Fields
-
-    /// <summary>
-    ///   spezial chars in shortnames of physical constants. 
-    ///   # next char symbolic font; _ underscript
-    /// </summary>
-    public static readonly string spezialChars =  "#_0123456789";
 
     /// <summary>
     ///   The konstante.
     /// </summary>
-    public static readonly KonstRec[] konstante = new[]
-      {
-        new KonstRec { titel = "PhysikKonstant_e", bez = "§e", wert = 1.6021E-19 }, 
-        new KonstRec { titel = "PhysikKonstant_epsilon", bez = "§#e_0", wert = 8.85419E-12 }, 
-        new KonstRec { titel = "PhysikKonstant_c", bez = "§c", wert = 2.99792458E8 }, 
-        new KonstRec { titel = "PhysikKonstant_mu", bez = "§#m_0", wert = 1.256637E-6 }, 
-        new KonstRec { titel = "PhysikKonstant_g", bez = "§g", wert = 9.80665 }, 
-        new KonstRec { titel = "PhysikKonstant_h", bez = "§h", wert = 6.6256E-34 }, 
-        new KonstRec { titel = "PhysikKonstant_me", bez = "§m_e", wert = 9.1093897E-31 }, 
-        new KonstRec { titel = "PhysikKonstant_f", bez = "§#g", wert = 6.67259E-11 }, 
-        new KonstRec { titel = "PhysikKonstant_Lambda0", bez = "§#l_c", wert = 2.43E-12 }
-      };
+    public static readonly KonstRec[] konstante =
+    {
+      new KonstRec
+        {
+          titel = "PhysikKonstant_e", 
+          bez = "§e", 
+          wert = 1.6021E-19
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_epsilon", 
+          bez = "§#e_0", 
+          wert = 8.85419E-12
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_c", 
+          bez = "§c", 
+          wert = 2.99792458E8
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_mu", 
+          bez = "§#m_0", 
+          wert = 1.256637E-6
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_g", 
+          bez = "§g", 
+          wert = 9.80665
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_h", 
+          bez = "§h", 
+          wert = 6.6256E-34
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_me", 
+          bez = "§m_e", 
+          wert = 9.1093897E-31
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_f", 
+          bez = "§#g", 
+          wert = 6.67259E-11
+        }, 
+      new KonstRec
+        {
+          titel = "PhysikKonstant_Lambda0", 
+          bez = "§#l_c", 
+          wert = 2.43E-12
+        }
+    };
+
+    /// <summary>
+    ///   spezial chars in shortnames of physical constants.
+    ///   # next char symbolic font; _ underscript
+    /// </summary>
+    public static readonly string spezialChars = "#_0123456789";
 
     /// <summary>
     ///   operator- or function names.
@@ -113,13 +133,38 @@ namespace VianaNET.Data.Filter.Theory
         "WURZEL", "SIGN", "ABS", "DELTA", "?"
       };
 
+    /// <summary>
+    /// The var name.
+    /// </summary>
     public static string varName = "x";
 
     #endregion
 
+    /// <summary>
+    ///   The konst record.
+    /// </summary>
+    public struct KonstRec
+    {
+      #region Fields
+
+      /// <summary>
+      ///   short name of constant.
+      /// </summary>
+      public string bez;
+
+      /// <summary>
+      ///   long name of constant.
+      /// </summary>
+      public string titel;
+
+      /// <summary>
+      ///   value of constant.
+      /// </summary>
+      public double wert;
+
+      #endregion
+    }
   }
-
-
 
   /// <summary>
   ///   Calcalator or function editor.
@@ -129,13 +174,14 @@ namespace VianaNET.Data.Filter.Theory
     /// <summary>
     ///   function editor.
     /// </summary>
-    formelRechner,
+    formelRechner, 
 
     /// <summary>
     ///   calculator.
     /// </summary>
     rechner
   }
+
   // end TRechnerArt
 
   /// <summary>
@@ -146,123 +192,124 @@ namespace VianaNET.Data.Filter.Theory
     /// <summary>
     ///   The udef.
     /// </summary>
-    udef,
+    udef, 
 
     /// <summary>
     ///   The oldfx.
     /// </summary>
-    oldfx,
+    oldfx, 
 
     /// <summary>
     ///   The ist zahl.
     /// </summary>
-    istZahl,
+    istZahl, 
 
     /// <summary>
     ///   The ist konst.
     /// </summary>
-    istKonst,
+    istKonst, 
 
     /// <summary>
     ///   The ident.
     /// </summary>
-    ident,
+    ident, 
 
     /// <summary>
     ///   The lklammer.
     /// </summary>
-    lklammer,
+    lklammer, 
 
     /// <summary>
     ///   The rklammer.
     /// </summary>
-    rklammer,
+    rklammer, 
 
     /// <summary>
     ///   The plus.
     /// </summary>
-    plus,
+    plus, 
 
     /// <summary>
     ///   The minus.
     /// </summary>
-    minus,
+    minus, 
 
     /// <summary>
     ///   The mal.
     /// </summary>
-    mal,
+    mal, 
 
     /// <summary>
     ///   The durch.
     /// </summary>
-    durch,
+    durch, 
 
     /// <summary>
     ///   The pot.
     /// </summary>
-    pot,
+    pot, 
 
     /// <summary>
     ///   The sinus function.
     /// </summary>
-    sinf,
+    sinf, 
 
     /// <summary>
     ///   The cosinus function.
     /// </summary>
-    cosf,
+    cosf, 
 
     /// <summary>
     ///   The tangens function.
     /// </summary>
-    tanf,
+    tanf, 
 
     /// <summary>
     ///   The ctgf.
     /// </summary>
-    ctgf,
+    ctgf, 
 
     /// <summary>
     ///   The exponential function.
     /// </summary>
-    expf,
+    expf, 
 
     /// <summary>
     ///   The logarithmic function.
     /// </summary>
-    lnf,
+    lnf, 
 
     /// <summary>
     ///   The squareroot function.
     /// </summary>
-    wurzf,
+    wurzf, 
 
     /// <summary>
     ///   The signum function.
     /// </summary>
-    sigf,
+    sigf, 
 
     /// <summary>
     ///   The absolute function.
     /// </summary>
-    absf,
+    absf, 
 
     /// <summary>
     ///   The delta function.
     /// </summary>
-    deltaf,
+    deltaf, 
 
     /// <summary>
     ///   The last function symbol - dummy function.
     /// </summary>
-    ffmax,
+    ffmax, 
 
     /// <summary>
     ///   The function string end.
     /// </summary>
     fstrEnd
   }
+
   // end symTyp
 
   /// <summary>
@@ -275,12 +322,12 @@ namespace VianaNET.Data.Filter.Theory
     /// <summary>
     ///   The function term/tree.
     /// </summary>
-      public FunctionCalcTree CalculatorFunctionTerm = new FunctionCalcTree();
+    public FunctionCalcTree CalculatorFunctionTerm = new FunctionCalcTree();
 
     /// <summary>
     ///   The fx.
     /// </summary>
-      public FunctionCalcTree fx;
+    public FunctionCalcTree fx;
 
     /// <summary>
     ///   The last error number.
@@ -405,16 +452,16 @@ namespace VianaNET.Data.Filter.Theory
     /// Error message.
     /// </summary>
     /// <param name="nr">
-    /// error number. 
+    /// error number.
     /// </param>
     /// <param name="s">
-    /// message string 
+    /// message string
     /// </param>
     public void ErrMsg(byte nr, ref string s)
     {
       switch (nr)
       {
-        case 1: 
+        case 1:
           s = Labels.ParseErrorBracketOpen;
           break;
         case 2:
@@ -442,13 +489,13 @@ namespace VianaNET.Data.Filter.Theory
     /// The fkt wert.
     /// </summary>
     /// <param name="fx">
-    /// function. 
+    /// function.
     /// </param>
     /// <param name="nr">
     /// number of variable - in this version unused
     /// </param>
     /// <returns>
-    /// value <see cref="double"/> . 
+    /// value <see cref="double"/> .
     /// </returns>
     public double FktWert(FunctionCalcTree fx, int nr)
     {
@@ -484,13 +531,13 @@ namespace VianaNET.Data.Filter.Theory
     /// Method of FktWert: calculate value.
     /// </summary>
     /// <param name="fx">
-    /// function 
+    /// function
     /// </param>
     /// <param name="nr">
-    /// The nr. 
+    /// The nr.
     /// </param>
     /// <returns>
-    /// value <see cref="double"/> . 
+    /// value <see cref="double"/> .
     /// </returns>
     public double FktWert_Berechne(FunctionCalcTree fx, int nr)
     {
@@ -507,7 +554,7 @@ namespace VianaNET.Data.Filter.Theory
           this.result = fx.Zwert;
           break;
         case symTyp.istKonst:
-          this.result = fx.Zwert; 
+          this.result = fx.Zwert;
           break;
         case symTyp.ident:
           this.result = this.varXwert;
@@ -694,13 +741,13 @@ namespace VianaNET.Data.Filter.Theory
     /// Method of FktWert: Calculates value of a potenz.
     /// </summary>
     /// <param name="bas">
-    /// base 
+    /// base
     /// </param>
     /// <param name="ex">
-    /// exponent - must be an integer. 
+    /// exponent - must be an integer.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     public double FktWert_WertIntPot(double bas, int ex)
     {
@@ -734,13 +781,13 @@ namespace VianaNET.Data.Filter.Theory
     /// Calculates the value of a function for a given number.
     /// </summary>
     /// <param name="fx">
-    /// function 
+    /// function
     /// </param>
     /// <param name="x">
-    /// given number 
+    /// given number
     /// </param>
     /// <returns>
-    /// calculateted value <see cref="double"/> . 
+    /// calculateted value <see cref="double"/> .
     /// </returns>
     public double FreierFktWert(FunctionCalcTree fx, double x)
     {
@@ -751,7 +798,7 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
-    ///   returns the scan result - 0 no error 
+    ///   returns the scan result - 0 no error
     /// </summary>
     /// <returns> error number <see cref="byte" /> . </returns>
     public byte GetScanResult()
@@ -766,7 +813,7 @@ namespace VianaNET.Data.Filter.Theory
     /// clears the function tree
     /// </summary>
     /// <param name="fx">
-    /// function tree 
+    /// function tree
     /// </param>
     public void Loesch(ref FunctionCalcTree fx)
     {
@@ -787,7 +834,7 @@ namespace VianaNET.Data.Filter.Theory
     /// function tree
     /// </param>
     /// <param name="funcStr0">
-    /// function string to scan 
+    /// function string to scan
     /// </param>
     public void ScanFkt(ref FunctionCalcTree fx0, string funcStr0)
     {
@@ -820,10 +867,48 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
+    ///   Method of the Scanfkt: reads a constant_identifier.
+    /// </summary>
+    public void ScanFkt_ConstantIdentifier()
+    {
+      string buf = string.Empty;
+      string buf1 = string.Empty;
+      ushort i;
+
+      do
+      {
+        buf = buf + this.ch;
+        buf1 = buf1 + this.ch_;
+        this.ScanFkt_GetCh();
+      }
+      while (((this.ch >= 'A') && (this.ch <= 'Z')) || (Constants.spezialChars.IndexOf(this.ch) >= 0));
+
+      i = 0;
+      while (i < Constants.konstante.Length)
+      {
+        if ((Constants.konstante[i].bez.ToLower().CompareTo(buf.ToLower()) == 0)
+            && (!this.noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
+        {
+          this.sym = symTyp.istKonst;
+          this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
+          this.kVar.Name = Constants.konstante[i].bez;
+          this.kVar.Nr = i;
+          this.kVar.Zwert = Constants.konstante[i].wert;
+          return;
+        }
+
+        i++;
+      }
+
+      // keine Konstantenbezeichnung gefunden
+      this.ScanFkt_Err(7);
+    }
+
+    /// <summary>
     /// Method of the Scanfkt: set error number and its position in the string.
     /// </summary>
     /// <param name="nr">
-    /// error number 
+    /// error number
     /// </param>
     public void ScanFkt_Err(byte nr)
     {
@@ -841,13 +926,12 @@ namespace VianaNET.Data.Filter.Theory
       this.Loesch(ref this.fx);
     }
 
-
     /// <summary>
     /// Method of the Scanfkt: get expression.
-    /// expression is a sum of terms or a term
+    ///   expression is a sum of terms or a term
     /// </summary>
     /// <param name="expr">
-    /// The expression 
+    /// The expression
     /// </param>
     public void ScanFkt_Expression(ref FunctionCalcTree expr)
     {
@@ -902,10 +986,10 @@ namespace VianaNET.Data.Filter.Theory
 
     /// <summary>
     /// Method of the Scanfkt: get term.
-    /// a term is a product or functionterm
+    ///   a term is a product or functionterm
     /// </summary>
     /// <param name="prod">
-    /// prod - the term. 
+    /// prod - the term.
     /// </param>
     public void ScanFkt_Expression_Term(ref FunctionCalcTree prod)
     {
@@ -926,10 +1010,10 @@ namespace VianaNET.Data.Filter.Theory
 
     /// <summary>
     /// Method of the Scanfkt: get functionterm.
-    /// a functionterm is function or a factor
+    ///   a functionterm is function or a factor
     /// </summary>
     /// <param name="fterm">
-    /// fterm - the functionterm. 
+    /// fterm - the functionterm.
     /// </param>
     public void ScanFkt_Expression_Term_FuncTerm(ref FunctionCalcTree fterm)
     {
@@ -978,11 +1062,11 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
-    ///  Method of the Scanfkt:  get factor.
-    ///  a factor is a variable, a constant, a number or an expression
+    /// Method of the Scanfkt:  get factor.
+    ///   a factor is a variable, a constant, a number or an expression
     /// </summary>
     /// <param name="fakt">
-    /// fakt - the factor. 
+    /// fakt - the factor.
     /// </param>
     public void ScanFkt_Expression_Term_FuncTerm_Faktor(ref FunctionCalcTree fakt)
     {
@@ -1016,7 +1100,7 @@ namespace VianaNET.Data.Filter.Theory
           this.ScanFkt_Err(4);
           return;
 
-        // break;
+          // break;
       }
 
       this.ScanFkt_GetSym();
@@ -1060,7 +1144,7 @@ namespace VianaNET.Data.Filter.Theory
       }
 
       this.oldChPos = this.chPos;
-      if (('A' <= this.ch) && (this.ch <= 'Z')) 
+      if (('A' <= this.ch) && (this.ch <= 'Z'))
       {
         this.ScanFkt_Identifier();
       }
@@ -1119,7 +1203,7 @@ namespace VianaNET.Data.Filter.Theory
         buf1 = buf1 + this.ch_;
         this.ScanFkt_GetCh();
       }
-      while ( (this.ch >= 'A') && (this.ch <= 'Z') ); 
+      while ((this.ch >= 'A') && (this.ch <= 'Z'));
 
       if (buf == "PI")
       {
@@ -1136,13 +1220,12 @@ namespace VianaNET.Data.Filter.Theory
           this.ScanFkt_GetCh();
           return;
         }
-        else
-        {
-          this.sym = symTyp.istZahl;
-          this.wert = Constants.eulerZahl;
-          return;
-        }
+
+        this.sym = symTyp.istZahl;
+        this.wert = Constants.eulerZahl;
+        return;
       }
+
       // teste auf Funktionsbezeichner
       this.sym = symTyp.sinf;
       while ((this.sym < symTyp.ffmax) && (buf != Constants.fnam[(int)this.sym - 5]))
@@ -1152,99 +1235,59 @@ namespace VianaNET.Data.Filter.Theory
 
       if (this.sym == symTyp.ffmax)
       {
-          if (buf.ToLower().CompareTo(Constants.varName.ToLower()) == 0)
-          {
-              this.sym = symTyp.ident;
-              if (this.xVar == null)
-              {
-                  this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
-                  this.xVar.Zwert = 0;
-                  this.xVar.Name = buf1;
-              }
-          }
-          else
-          {
-              ScanFkt_Err(7);
-          }
-      }   
-    }
-
-
-    /// <summary>
-    ///   Method of the Scanfkt: reads a constant_identifier.
-    /// </summary>
-    public void ScanFkt_ConstantIdentifier()
-    {
-        string buf = string.Empty;
-        string buf1 = string.Empty;
-        ushort i;
-
-        do
+        if (buf.ToLower().CompareTo(Constants.varName.ToLower()) == 0)
         {
-            buf = buf + this.ch;
-            buf1 = buf1 + this.ch_;
-            this.ScanFkt_GetCh();
+          this.sym = symTyp.ident;
+          if (this.xVar == null)
+          {
+            this.xVar = this.ScanFkt_MakeNode(null, symTyp.ident, null);
+            this.xVar.Zwert = 0;
+            this.xVar.Name = buf1;
+          }
         }
-        while (( (this.ch >= 'A') && (this.ch <= 'Z') ) || (Constants.spezialChars.IndexOf(this.ch) >= 0) );
-        
-        i = 0;
-        while (i < Constants.konstante.Length) 
+        else
         {
-            if ((Constants.konstante[i].bez.ToLower().CompareTo(buf.ToLower()) == 0)
-                    && (!this.noUpCase || (Constants.konstante[i].bez.CompareTo(buf1) == 0)))
-            {
-               this.sym = symTyp.istKonst;
-               this.kVar = this.ScanFkt_MakeNode(null, symTyp.istKonst, null);
-               this.kVar.Name = Constants.konstante[i].bez;
-               this.kVar.Nr = i;
-               this.kVar.Zwert = Constants.konstante[i].wert;
-               return;
-            }
-            i++;
+          this.ScanFkt_Err(7);
         }
-        // keine Konstantenbezeichnung gefunden
-        ScanFkt_Err(7);
+      }
     }
-
 
     /// <summary>
     /// Makes a node in the function tree.
     /// </summary>
     /// <param name="op1">
-    ///  op1 - left tree/operand 
+    /// op1 - left tree/operand
     /// </param>
     /// <param name="code">
-    ///  code - operator 
+    /// code - operator
     /// </param>
     /// <param name="op2">
-    /// op2 right tree/operand 
+    /// op2 right tree/operand
     /// </param>
     /// <returns>
-    /// The <see cref="CalculatorFunctionTerm"/> . 
+    /// The <see cref="CalculatorFunctionTerm"/> .
     /// </returns>
     public FunctionCalcTree ScanFkt_MakeNode(FunctionCalcTree op1, symTyp code, FunctionCalcTree op2)
     {
-        FunctionCalcTree result;
-        result = new FunctionCalcTree();
+      FunctionCalcTree result;
+      result = new FunctionCalcTree();
       result.Cwert = code;
       result.Li = op1;
       result.Re = op2;
       return result;
     }
 
-    
     /// <summary>
-    /// Method of the Scanfkt: set sym and reads next char 
+    /// Method of the Scanfkt: set sym and reads next char
     /// </summary>
     /// <param name="s">
-    /// s - symbol 
+    /// s - symbol
     /// </param>
     public void ScanFkt_MakeSym(symTyp s)
     {
       this.sym = s;
       this.ScanFkt_GetCh();
     }
-
 
     // Number
     /// <summary>
@@ -1292,14 +1335,14 @@ namespace VianaNET.Data.Filter.Theory
     /// Makes a node in the function tree, that contains a number
     /// </summary>
     /// <param name="r">
-    /// r - value of number. 
+    /// r - value of number.
     /// </param>
     /// <returns>
-    /// The <see cref="CalculatorFunctionTerm"/> . 
+    /// The <see cref="CalculatorFunctionTerm"/> .
     /// </returns>
     public FunctionCalcTree ScanFkt_Zahl(double r)
     {
-        FunctionCalcTree result;
+      FunctionCalcTree result;
       result = this.ScanFkt_MakeNode(null, symTyp.istZahl, null);
       result.Zwert = r;
       return result;
@@ -1309,10 +1352,10 @@ namespace VianaNET.Data.Filter.Theory
     /// Tests, if the given function is a linear function.
     /// </summary>
     /// <param name="fx">
-    /// fx - the function term to test. 
+    /// fx - the function term to test.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     public bool isLinearFunction(FunctionCalcTree fx)
     {
@@ -1351,7 +1394,7 @@ namespace VianaNET.Data.Filter.Theory
     #region Methods
 
     /// <summary>
-    /// Method of the Scanfkt: reads an integer.
+    ///   Method of the Scanfkt: reads an integer.
     /// </summary>
     private void ScanFkt_ReadInt()
     {
@@ -1366,10 +1409,10 @@ namespace VianaNET.Data.Filter.Theory
     /// Tests, if the function term contains no vars / only numbers and constants.
     /// </summary>
     /// <param name="fx">
-    /// fx - the function term to test. 
+    /// fx - the function term to test.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    /// The <see cref="bool"/> .
     /// </returns>
     private bool doesContainNoVar(FunctionCalcTree fx)
     {
@@ -1377,17 +1420,13 @@ namespace VianaNET.Data.Filter.Theory
       {
         return true;
       }
-      else
+
+      if (fx.Cwert == symTyp.ident)
       {
-        if (fx.Cwert == symTyp.ident)
-        {
-          return false;
-        }
-        else
-        {
-          return this.doesContainNoVar(fx.Li) && this.doesContainNoVar(fx.Re);
-        }
+        return false;
       }
+
+      return this.doesContainNoVar(fx.Li) && this.doesContainNoVar(fx.Re);
     }
 
     #endregion

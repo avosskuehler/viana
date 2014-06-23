@@ -2,7 +2,7 @@
 // <copyright file="InterpolationFilter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,7 +23,6 @@
 //   The exponential smooth filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Collections.Generic;
@@ -40,16 +39,23 @@ namespace VianaNET.Data.Filter.Interpolation
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes static members of the <see cref="InterpolationFilter"/> class.
+    ///   Initializes static members of the <see cref="InterpolationFilter" /> class.
     /// </summary>
     static InterpolationFilter()
     {
       // Populate predefined interpolation filters
       Filter = new Dictionary<InterpolationFilterTypes, InterpolationFilter>
-        {
-          { InterpolationFilterTypes.MovingAverage, new MovingAverageFilter() },
-          { InterpolationFilterTypes.ExponentialSmooth, new ExponentialSmoothFilter() },
-        };
+                 {
+                   {
+                     InterpolationFilterTypes.MovingAverage, 
+                     new MovingAverageFilter()
+                   }, 
+                   {
+                     InterpolationFilterTypes
+                     .ExponentialSmooth, 
+                     new ExponentialSmoothFilter()
+                   }, 
+                 };
     }
 
     #endregion
@@ -68,7 +74,7 @@ namespace VianaNET.Data.Filter.Interpolation
     public abstract UserControl CustomUserControl { get; }
 
     /// <summary>
-    /// Gets or sets the interpolation filter type.
+    ///   Gets or sets the interpolation filter type.
     /// </summary>
     public InterpolationFilterTypes InterpolationFilterType { get; set; }
 

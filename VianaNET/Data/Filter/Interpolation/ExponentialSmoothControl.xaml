@@ -1,34 +1,34 @@
 ﻿<UserControl x:Class="VianaNET.Data.Filter.Interpolation.ExponentialSmoothControl"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com"
-    xmlns:VianaNET="clr-namespace:VianaNET"
-    lex:LocalizeDictionary.DesignCulture="de">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:VianaNET="clr-namespace:VianaNET"
+             lex:LocalizeDictionary.DesignCulture="de">
   <UserControl.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
   </UserControl.Resources>
   <Grid>
     <Border Name="DescriptionArea" Background="Transparent">
       <StackPanel>
         <GroupBox Header="{lex:Loc VianaNET:Labels:ExponentialSmoothDialogTitle}">
-          <TextBox 
-            IsReadOnly="True" 
-            Background="Transparent" 
-            TextWrapping="Wrap" 
-            Text="{lex:Loc VianaNET:Labels:InterpolationExponentialSmoothDescription}" 
+          <TextBox
+            IsReadOnly="True"
+            Background="Transparent"
+            TextWrapping="Wrap"
+            Text="{lex:Loc VianaNET:Labels:InterpolationExponentialSmoothDescription}"
             BorderThickness="0" />
         </GroupBox>
         <GroupBox Header="{lex:Loc VianaNET:Labels:InterpolationPropertiesTitle}" FontWeight="Normal">
           <StackPanel Orientation="Horizontal">
-            <TextBox 
+            <TextBox
               IsReadOnly="True"
-              Background="Transparent" 
-              TextWrapping="Wrap" 
+              Background="Transparent"
+              TextWrapping="Wrap"
               Text="{lex:Loc VianaNET:Labels:ExponentialSmoothDialogSmoothingFactorLabel}"
               Width="150"
-              BorderThickness="0"/>
-            <VianaNET:NumericUpDown 
-              x:Name="SmoothingFactorNumeric" 
+              BorderThickness="0" />
+            <VianaNET:NumericUpDown
+              x:Name="SmoothingFactorNumeric"
               Minimum="0"
               Maximum="1"
               ValueChanged="SmoothingFactorNumericValueChanged" DecimalPlaces="2" Change="0.1" />

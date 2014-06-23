@@ -2,7 +2,7 @@
 // <copyright file="VianaDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -33,13 +33,10 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class VianaDialog
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="VianaDialog" /> class. 
+    ///   Initializes a new instance of the <see cref="VianaDialog" /> class.
     /// </summary>
     public VianaDialog()
     {
@@ -49,10 +46,18 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// Initializes a new instance of the VianaDialog class.
     /// </summary>
-    /// <param name="title">The title for the dialog.</param>
-    /// <param name="messageDescription">The message header.</param>
-    /// <param name="message">The message to be displayed.</param>
-    /// <param name="isOnlyOk">True, if only the OK button should be displayed.</param>
+    /// <param name="title">
+    /// The title for the dialog.
+    /// </param>
+    /// <param name="messageDescription">
+    /// The message header.
+    /// </param>
+    /// <param name="message">
+    /// The message to be displayed.
+    /// </param>
+    /// <param name="isOnlyOk">
+    /// True, if only the OK button should be displayed.
+    /// </param>
     public VianaDialog(string title, string messageDescription, string message, bool isOnlyOk)
     {
       this.InitializeComponent();
@@ -76,10 +81,6 @@ namespace VianaNET.MainWindow
         this.DescriptionArea.Background = value;
       }
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     ///   Sets the message.
@@ -127,33 +128,37 @@ namespace VianaNET.MainWindow
 
     #endregion
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
     #region Methods
 
     /// <summary>
     /// Event handler for the button click event.
-    /// OK is clicked, so set the dialog result to true and exit.
+    ///   Cancel is clicked, so set the dialog result to false and exit.
     /// </summary>
-    /// <param name="sender">Source of the event.</param>
-    /// <param name="e">Event arguments.</param>
-    private void OkButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// Source of the event.
+    /// </param>
+    /// <param name="e">
+    /// Event arguments.
+    /// </param>
+    private void CancelButtonClick(object sender, RoutedEventArgs e)
     {
-      this.DialogResult = true;
+      this.DialogResult = false;
       this.Close();
     }
 
     /// <summary>
     /// Event handler for the button click event.
-    /// Cancel is clicked, so set the dialog result to false and exit.
+    ///   OK is clicked, so set the dialog result to true and exit.
     /// </summary>
-    /// <param name="sender">Source of the event.</param>
-    /// <param name="e">Event arguments.</param>
-    private void CancelButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">
+    /// Source of the event.
+    /// </param>
+    /// <param name="e">
+    /// Event arguments.
+    /// </param>
+    private void OkButtonClick(object sender, RoutedEventArgs e)
     {
-      this.DialogResult = false;
+      this.DialogResult = true;
       this.Close();
     }
 

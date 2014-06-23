@@ -2,7 +2,7 @@
 // <copyright file="MatrixLibrary.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2014 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -39,7 +39,7 @@ namespace VianaNET.Data.Filter.Regression
     /// Initializes a new instance of the <see cref="MatrixLibraryExceptions"/> class.
     /// </summary>
     /// <param name="message">
-    /// The message. 
+    /// The message.
     /// </param>
     public MatrixLibraryExceptions(string message)
       : base(message)
@@ -169,16 +169,6 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   public class Matrix
   {
-    protected bool Equals(Matrix other)
-    {
-      return this.in_Mat == other.in_Mat;
-    }
-
-    public override int GetHashCode()
-    {
-      return (this.in_Mat != null ? this.in_Mat.GetHashCode() : 0);
-    }
-
     #region Fields
 
     /// <summary>
@@ -191,15 +181,15 @@ namespace VianaNET.Data.Filter.Regression
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix"/> class. 
+    /// Initializes a new instance of the <see cref="Matrix"/> class.
     ///   Matrix object constructor, constructs an empty
     ///   matrix with dimensions: rows = noRows and cols = noCols.
     /// </summary>
     /// <param name="noRows">
-    /// no. of rows in this matrix 
+    /// no. of rows in this matrix
     /// </param>
     /// <param name="noCols">
-    /// no. of columns in this matrix 
+    /// no. of columns in this matrix
     /// </param>
     public Matrix(int noRows, int noCols)
     {
@@ -207,12 +197,12 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Matrix"/> class. 
+    /// Initializes a new instance of the <see cref="Matrix"/> class.
     ///   Matrix object constructor, constructs a matrix from an
     ///   already defined array object.
     /// </summary>
     /// <param name="Mat">
-    /// the array the matrix will contain 
+    /// the array the matrix will contain
     /// </param>
     public Matrix(double[,] Mat)
     {
@@ -278,13 +268,13 @@ namespace VianaNET.Data.Filter.Regression
     /// Set or get an element from the matrix
     /// </summary>
     /// <param name="Row">
-    /// The Row. 
+    /// The Row.
     /// </param>
     /// <param name="Col">
-    /// The Col. 
+    /// The Col.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     public double this[int Row, int Col]
     {
@@ -304,18 +294,18 @@ namespace VianaNET.Data.Filter.Regression
     #region Public Methods and Operators
 
     /// <summary>
-    /// Returns the summation of two matrices with compatible 
+    /// Returns the summation of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First array in the summation 
+    /// First array in the summation
     /// </param>
     /// <param name="Mat2">
-    /// Second array in the summation 
+    /// Second array in the summation
     /// </param>
     /// <returns>
-    /// Sum of Mat1 and Mat2 as an array 
+    /// Sum of Mat1 and Mat2 as an array
     /// </returns>
     public static double[,] Add(double[,] Mat1, double[,] Mat2)
     {
@@ -354,18 +344,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the summation of two matrices with compatible 
+    /// Returns the summation of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First matrix in the summation 
+    /// First matrix in the summation
     /// </param>
     /// <param name="Mat2">
-    /// Second matrix in the summation 
+    /// Second matrix in the summation
     /// </param>
     /// <returns>
-    /// Sum of Mat1 and Mat2 as a Matrix object 
+    /// Sum of Mat1 and Mat2 as a Matrix object
     /// </returns>
     public static Matrix Add(Matrix Mat1, Matrix Mat2)
     {
@@ -378,13 +368,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First vector array (dimension [3]) in the cross product 
+    /// First vector array (dimension [3]) in the cross product
     /// </param>
     /// <param name="V2">
-    /// Second vector array (dimension [3]) in the cross product 
+    /// Second vector array (dimension [3]) in the cross product
     /// </param>
     /// <returns>
-    /// Cross product of V1 and V2 as an array (dimension [3]) 
+    /// Cross product of V1 and V2 as an array (dimension [3])
     /// </returns>
     public static double[] CrossProduct(double[] V1, double[] V2)
     {
@@ -430,13 +420,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First vector array (dimensions [3,1]) in the cross product 
+    /// First vector array (dimensions [3,1]) in the cross product
     /// </param>
     /// <param name="V2">
-    /// Second vector array (dimensions [3,1]) in the cross product 
+    /// Second vector array (dimensions [3,1]) in the cross product
     /// </param>
     /// <returns>
-    /// Cross product of V1 and V2 as an array (dimension [3,1]) 
+    /// Cross product of V1 and V2 as an array (dimension [3,1])
     /// </returns>
     public static double[,] CrossProduct(double[,] V1, double[,] V2)
     {
@@ -482,13 +472,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First Matrix (dimensions [3,1]) in the cross product 
+    /// First Matrix (dimensions [3,1]) in the cross product
     /// </param>
     /// <param name="V2">
-    /// Second Matrix (dimensions [3,1]) in the cross product 
+    /// Second Matrix (dimensions [3,1]) in the cross product
     /// </param>
     /// <returns>
-    /// Cross product of V1 and V2 as a matrix (dimension [3,1]) 
+    /// Cross product of V1 and V2 as a matrix (dimension [3,1])
     /// </returns>
     public static Matrix CrossProduct(Matrix V1, Matrix V2)
     {
@@ -500,10 +490,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Array with [n,n] dimension whose determinant is to be found 
+    /// Array with [n,n] dimension whose determinant is to be found
     /// </param>
     /// <returns>
-    /// Determinant of the array 
+    /// Determinant of the array
     /// </returns>
     public static double Det(double[,] Mat)
     {
@@ -544,14 +534,12 @@ namespace VianaNET.Data.Filter.Regression
           {
             return 0;
           }
-          else
+
+          for (i = k; i <= S; i++)
           {
-            for (i = k; i <= S; i++)
-            {
-              save = DArray[i, j];
-              DArray[i, j] = DArray[i, k];
-              DArray[i, k] = save;
-            }
+            save = DArray[i, j];
+            DArray[i, j] = DArray[i, k];
+            DArray[i, k] = save;
           }
 
           tmpDet = -tmpDet;
@@ -580,10 +568,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Matrix object with [n,n] dimension whose determinant is to be found 
+    /// Matrix object with [n,n] dimension whose determinant is to be found
     /// </param>
     /// <returns>
-    /// Determinant of the Matrix object 
+    /// Determinant of the Matrix object
     /// </returns>
     public static double Det(Matrix Mat)
     {
@@ -596,13 +584,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First vector array (dimension [3]) in the dot product 
+    /// First vector array (dimension [3]) in the dot product
     /// </param>
     /// <param name="V2">
-    /// Second vector array (dimension [3]) in the dot product 
+    /// Second vector array (dimension [3]) in the dot product
     /// </param>
     /// <returns>
-    /// Dot product of V1 and V2 
+    /// Dot product of V1 and V2
     /// </returns>
     public static double DotProduct(double[] V1, double[] V2)
     {
@@ -638,13 +626,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First vector array (dimension [3,1]) in the dot product 
+    /// First vector array (dimension [3,1]) in the dot product
     /// </param>
     /// <param name="V2">
-    /// Second vector array (dimension [3,1]) in the dot product 
+    /// Second vector array (dimension [3,1]) in the dot product
     /// </param>
     /// <returns>
-    /// Dot product of V1 and V2 
+    /// Dot product of V1 and V2
     /// </returns>
     public static double DotProduct(double[,] V1, double[,] V2)
     {
@@ -680,13 +668,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V1">
-    /// First Matrix object (dimension [3,1]) in the dot product 
+    /// First Matrix object (dimension [3,1]) in the dot product
     /// </param>
     /// <param name="V2">
-    /// Second Matrix object (dimension [3,1]) in the dot product 
+    /// Second Matrix object (dimension [3,1]) in the dot product
     /// </param>
     /// <returns>
-    /// Dot product of V1 and V2 
+    /// Dot product of V1 and V2
     /// </returns>
     public static double DotProduct(Matrix V1, Matrix V2)
     {
@@ -695,7 +683,7 @@ namespace VianaNET.Data.Filter.Regression
 
     /// <summary>
     /// Returns the Eigenvalues and Eigenvectors of a real symmetric
-    ///   matrix, which is of dimensions [n,n]. 
+    ///   matrix, which is of dimensions [n,n].
     ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'Eigenvalues and Eigenvectors of a TridiagonalMatrix'
     ///   section of Numerical Recipes in C by William H. Press,
@@ -703,13 +691,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat">
-    /// The array whose Eigenvalues and Eigenvectors are to be found 
+    /// The array whose Eigenvalues and Eigenvectors are to be found
     /// </param>
     /// <param name="d">
-    /// An array where the eigenvalues are returned 
+    /// An array where the eigenvalues are returned
     /// </param>
     /// <param name="v">
-    /// An array where the eigenvectors are returned 
+    /// An array where the eigenvectors are returned
     /// </param>
     public static void Eigen(double[,] Mat, out double[,] d, out double[,] v)
     {
@@ -864,13 +852,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat">
-    /// The Matrix object whose Eigenvalues and Eigenvectors are to be found 
+    /// The Matrix object whose Eigenvalues and Eigenvectors are to be found
     /// </param>
     /// <param name="d">
-    /// A Matrix object where the eigenvalues are returned 
+    /// A Matrix object where the eigenvalues are returned
     /// </param>
     /// <param name="v">
-    /// A Matrix object where the eigenvectors are returned 
+    /// A Matrix object where the eigenvectors are returned
     /// </param>
     public static void Eigen(Matrix Mat, out Matrix d, out Matrix v)
     {
@@ -884,10 +872,10 @@ namespace VianaNET.Data.Filter.Regression
     /// Returns an Identity matrix with dimensions [n,n] in the from of an array.
     /// </summary>
     /// <param name="n">
-    /// the no. of rows or no. cols in the matrix 
+    /// the no. of rows or no. cols in the matrix
     /// </param>
     /// <returns>
-    /// An identity Matrix with dimensions [n,n] in the form of an array 
+    /// An identity Matrix with dimensions [n,n] in the form of an array
     /// </returns>
     public static double[,] Identity(int n)
     {
@@ -901,15 +889,15 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the inverse of a matrix with [n,n] dimension 
+    /// Returns the inverse of a matrix with [n,n] dimension
     ///   and whose determinant is not zero.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Array with [n,n] dimension whose inverse is to be found 
+    /// Array with [n,n] dimension whose inverse is to be found
     /// </param>
     /// <returns>
-    /// Inverse of the array as an array 
+    /// Inverse of the array as an array
     /// </returns>
     public static double[,] Inverse(double[,] Mat)
     {
@@ -1003,15 +991,15 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the inverse of a matrix with [n,n] dimension 
+    /// Returns the inverse of a matrix with [n,n] dimension
     ///   and whose determinant is not zero.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Matrix object with [n,n] dimension whose inverse is to be found 
+    /// Matrix object with [n,n] dimension whose inverse is to be found
     /// </param>
     /// <returns>
-    /// Inverse of the matrix as a Matrix object 
+    /// Inverse of the matrix as a Matrix object
     /// </returns>
     public static Matrix Inverse(Matrix Mat)
     {
@@ -1023,13 +1011,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First array in equality check 
+    /// First array in equality check
     /// </param>
     /// <param name="Mat2">
-    /// Second array in equality check 
+    /// Second array in equality check
     /// </param>
     /// <returns>
-    /// If two matrices are equal or not 
+    /// If two matrices are equal or not
     /// </returns>
     public static bool IsEqual(double[,] Mat1, double[,] Mat2)
     {
@@ -1072,13 +1060,13 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First Matrix in equality check 
+    /// First Matrix in equality check
     /// </param>
     /// <param name="Mat2">
-    /// Second Matrix in equality check 
+    /// Second Matrix in equality check
     /// </param>
     /// <returns>
-    /// If two matrices are equal or not 
+    /// If two matrices are equal or not
     /// </returns>
     public static bool IsEqual(Matrix Mat1, Matrix Mat2)
     {
@@ -1086,7 +1074,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the LU Decomposition of a matrix. 
+    /// Returns the LU Decomposition of a matrix.
     ///   the output is: lower triangular matrix L, upper
     ///   triangular matrix U, and permutation matrix P so that
     ///   P*X = L*U.
@@ -1097,16 +1085,16 @@ namespace VianaNET.Data.Filter.Regression
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat">
-    /// Array which will be LU Decomposed 
+    /// Array which will be LU Decomposed
     /// </param>
     /// <param name="L">
-    /// An array where the lower traingular matrix is returned 
+    /// An array where the lower traingular matrix is returned
     /// </param>
     /// <param name="U">
-    /// An array where the upper traingular matrix is returned 
+    /// An array where the upper traingular matrix is returned
     /// </param>
     /// <param name="P">
-    /// An array where the permutation matrix is returned 
+    /// An array where the permutation matrix is returned
     /// </param>
     public static void LU(double[,] Mat, out double[,] L, out double[,] U, out double[,] P)
     {
@@ -1264,27 +1252,27 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the LU Decomposition of a matrix. 
+    /// Returns the LU Decomposition of a matrix.
     ///   the output is: lower triangular matrix L, upper
     ///   triangular matrix U, and permutation matrix P so that
     ///   P*X = L*U.
-    ///   In case of an error the error is raised as an exception. 
+    ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'LU Decomposition and Its Applications'
     ///   section of Numerical Recipes in C by William H. Press,
     ///   Saul A. Teukolsky, William T. Vetterling and Brian P. Flannery,
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat">
-    /// Matrix object which will be LU Decomposed 
+    /// Matrix object which will be LU Decomposed
     /// </param>
     /// <param name="L">
-    /// A Matrix object where the lower traingular matrix is returned 
+    /// A Matrix object where the lower traingular matrix is returned
     /// </param>
     /// <param name="U">
-    /// A Matrix object where the upper traingular matrix is returned 
+    /// A Matrix object where the upper traingular matrix is returned
     /// </param>
     /// <param name="P">
-    /// A Matrix object where the permutation matrix is returned 
+    /// A Matrix object where the permutation matrix is returned
     /// </param>
     public static void LU(Matrix Mat, out Matrix L, out Matrix U, out Matrix P)
     {
@@ -1296,18 +1284,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the multiplication of two matrices with compatible 
+    /// Returns the multiplication of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First array in multiplication 
+    /// First array in multiplication
     /// </param>
     /// <param name="Mat2">
-    /// Second array in multiplication 
+    /// Second array in multiplication
     /// </param>
     /// <returns>
-    /// Mat1 multiplied by Mat2 as an array 
+    /// Mat1 multiplied by Mat2 as an array
     /// </returns>
     public static double[,] Multiply(double[,] Mat1, double[,] Mat2)
     {
@@ -1351,18 +1339,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the multiplication of two matrices with compatible 
+    /// Returns the multiplication of two matrices with compatible
     ///   dimensions OR the cross-product of two vectors.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First matrix or vector (i.e: dimension [3,1]) object in multiplication 
+    /// First matrix or vector (i.e: dimension [3,1]) object in multiplication
     /// </param>
     /// <param name="Mat2">
-    /// Second matrix or vector (i.e: dimension [3,1]) object in multiplication 
+    /// Second matrix or vector (i.e: dimension [3,1]) object in multiplication
     /// </param>
     /// <returns>
-    /// Mat1 multiplied by Mat2 as a Matrix object 
+    /// Mat1 multiplied by Mat2 as a Matrix object
     /// </returns>
     public static Matrix Multiply(Matrix Mat1, Matrix Mat2)
     {
@@ -1370,22 +1358,20 @@ namespace VianaNET.Data.Filter.Regression
       {
         return new Matrix(CrossProduct(Mat1.in_Mat, Mat2.in_Mat));
       }
-      else
-      {
-        return new Matrix(Multiply(Mat1.in_Mat, Mat2.in_Mat));
-      }
+
+      return new Matrix(Multiply(Mat1.in_Mat, Mat2.in_Mat));
     }
 
     /// <summary>
     /// Returns the 2D form of a 1D array. i.e. array with
-    ///   dimension[n] is returned as an array with dimension [n,1]. 
+    ///   dimension[n] is returned as an array with dimension [n,1].
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// the array to convert, with dimesion [n] 
+    /// the array to convert, with dimesion [n]
     /// </param>
     /// <returns>
-    /// the same array but with [n,1] dimension 
+    /// the same array but with [n,1] dimension
     /// </returns>
     public static double[,] OneD_2_TwoD(double[] Mat)
     {
@@ -1418,10 +1404,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// An array whose pseudoinverse is to be found 
+    /// An array whose pseudoinverse is to be found
     /// </param>
     /// <returns>
-    /// The pseudoinverse of the array as an array 
+    /// The pseudoinverse of the array as an array
     /// </returns>
     public static double[,] PINV(double[,] Mat)
     {
@@ -1521,10 +1507,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// a Matrix object whose pseudoinverse is to be found 
+    /// a Matrix object whose pseudoinverse is to be found
     /// </param>
     /// <returns>
-    /// The pseudoinverse of the Matrix object as a Matrix Object 
+    /// The pseudoinverse of the Matrix object as a Matrix Object
     /// </returns>
     public static Matrix PINV(Matrix Mat)
     {
@@ -1537,10 +1523,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// The array to be viewed 
+    /// The array to be viewed
     /// </param>
     /// <returns>
-    /// The string view of the array 
+    /// The string view of the array
     /// </returns>
     public static string PrintMat(double[,] Mat)
     {
@@ -1637,10 +1623,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// The Matrix object to be viewed 
+    /// The Matrix object to be viewed
     /// </param>
     /// <returns>
-    /// The string view of the Matrix object 
+    /// The string view of the Matrix object
     /// </returns>
     public static string PrintMat(Matrix Mat)
     {
@@ -1652,10 +1638,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// An array whose rank is to be found 
+    /// An array whose rank is to be found
     /// </param>
     /// <returns>
-    /// The rank of the array 
+    /// The rank of the array
     /// </returns>
     public static int Rank(double[,] Mat)
     {
@@ -1690,10 +1676,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// a Matrix object whose rank is to be found 
+    /// a Matrix object whose rank is to be found
     /// </param>
     /// <returns>
-    /// The rank of the Matrix object 
+    /// The rank of the Matrix object
     /// </returns>
     public static int Rank(Matrix Mat)
     {
@@ -1701,26 +1687,26 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Evaluates the Singular Value Decomposition of a matrix, 
+    /// Evaluates the Singular Value Decomposition of a matrix,
     ///   returns the  matrices S, U and V. Such that a given
     ///   Matrix = U x S x V'.
-    ///   In case of an error the error is raised as an exception. 
+    ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'Singular Value Decomposition'
     ///   section of Numerical Recipes in C by William H. Press,
     ///   Saul A. Teukolsky, William T. Vetterling and Brian P. Flannery,
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat_">
-    /// Array whose SVD is to be computed 
+    /// Array whose SVD is to be computed
     /// </param>
     /// <param name="S_">
-    /// An array where the S matrix is returned 
+    /// An array where the S matrix is returned
     /// </param>
     /// <param name="U_">
-    /// An array where the U matrix is returned 
+    /// An array where the U matrix is returned
     /// </param>
     /// <param name="V_">
-    /// An array where the V matrix is returned 
+    /// An array where the V matrix is returned
     /// </param>
     public static void SVD(double[,] Mat_, out double[,] S_, out double[,] U_, out double[,] V_)
     {
@@ -2125,26 +2111,26 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Evaluates the Singular Value Decomposition of a matrix, 
+    /// Evaluates the Singular Value Decomposition of a matrix,
     ///   returns the  matrices S, U and V. Such that a given
     ///   Matrix = U x S x V'.
-    ///   In case of an error the error is raised as an exception. 
+    ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'Singular Value Decomposition'
     ///   section of Numerical Recipes in C by William H. Press,
     ///   Saul A. Teukolsky, William T. Vetterling and Brian P. Flannery,
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="Mat">
-    /// Matrix object whose SVD is to be computed 
+    /// Matrix object whose SVD is to be computed
     /// </param>
     /// <param name="S">
-    /// A Matrix object where the S matrix is returned 
+    /// A Matrix object where the S matrix is returned
     /// </param>
     /// <param name="U">
-    /// A Matrix object where the U matrix is returned 
+    /// A Matrix object where the U matrix is returned
     /// </param>
     /// <param name="V">
-    /// A Matrix object where the V matrix is returned 
+    /// A Matrix object where the V matrix is returned
     /// </param>
     public static void SVD(Matrix Mat, out Matrix S, out Matrix U, out Matrix V)
     {
@@ -2156,18 +2142,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the division of a matrix or a vector (i.e 
+    /// Returns the division of a matrix or a vector (i.e
     ///   dimension [3,1]) by a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Value">
-    /// The scalar value to divide the array with 
+    /// The scalar value to divide the array with
     /// </param>
     /// <param name="Mat">
-    /// Array which is to be divided by a scalar 
+    /// Array which is to be divided by a scalar
     /// </param>
     /// <returns>
-    /// The division of the array and the scalar as an array 
+    /// The division of the array and the scalar as an array
     /// </returns>
     public static double[,] ScalarDivide(double Value, double[,] Mat)
     {
@@ -2197,18 +2183,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the division of a matrix or a vector (i.e 
+    /// Returns the division of a matrix or a vector (i.e
     ///   dimension [3,1]) by a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Value">
-    /// The scalar value to divide the array with 
+    /// The scalar value to divide the array with
     /// </param>
     /// <param name="Mat">
-    /// Matrix which is to be divided by a scalar 
+    /// Matrix which is to be divided by a scalar
     /// </param>
     /// <returns>
-    /// The division of the array and the scalar as an array 
+    /// The division of the array and the scalar as an array
     /// </returns>
     public static Matrix ScalarDivide(double Value, Matrix Mat)
     {
@@ -2216,18 +2202,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the multiplication of a matrix or a vector (i.e 
+    /// Returns the multiplication of a matrix or a vector (i.e
     ///   dimension [3,1]) with a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Value">
-    /// The scalar value to multiply the array 
+    /// The scalar value to multiply the array
     /// </param>
     /// <param name="Mat">
-    /// Array which is to be multiplied by a scalar 
+    /// Array which is to be multiplied by a scalar
     /// </param>
     /// <returns>
-    /// The multiplication of the scalar and the array as an array 
+    /// The multiplication of the scalar and the array as an array
     /// </returns>
     public static double[,] ScalarMultiply(double Value, double[,] Mat)
     {
@@ -2257,18 +2243,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the multiplication of a matrix or a vector (i.e 
+    /// Returns the multiplication of a matrix or a vector (i.e
     ///   dimension [3,1]) with a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Value">
-    /// The scalar value to multiply the array 
+    /// The scalar value to multiply the array
     /// </param>
     /// <param name="Mat">
-    /// Matrix which is to be multiplied by a scalar 
+    /// Matrix which is to be multiplied by a scalar
     /// </param>
     /// <returns>
-    /// The multiplication of the scalar and the array as an array 
+    /// The multiplication of the scalar and the array as an array
     /// </returns>
     public static Matrix ScalarMultiply(double Value, Matrix Mat)
     {
@@ -2277,23 +2263,23 @@ namespace VianaNET.Data.Filter.Regression
 
     /// <summary>
     /// Solves a set of n linear equations A.X = B, and returns
-    ///   X, where A is [n,n] and B is [n,1]. 
+    ///   X, where A is [n,n] and B is [n,1].
     ///   In the same manner if you need to compute: inverse(A).B, it is
-    ///   better to use this method instead, as it is much faster.  
-    ///   In case of an error the error is raised as an exception. 
+    ///   better to use this method instead, as it is much faster.
+    ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'LU Decomposition and Its Applications'
     ///   section of Numerical Recipes in C by William H. Press,
     ///   Saul A. Teukolsky, William T. Vetterling and Brian P. Flannery,
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="MatA">
-    /// The array 'A' on the left side of the equations A.X = B 
+    /// The array 'A' on the left side of the equations A.X = B
     /// </param>
     /// <param name="MatB">
-    /// The array 'B' on the right side of the equations A.X = B 
+    /// The array 'B' on the right side of the equations A.X = B
     /// </param>
     /// <returns>
-    /// Array 'X' in the system of equations A.X = B 
+    /// Array 'X' in the system of equations A.X = B
     /// </returns>
     public static double[,] SolveLinear(double[,] MatA, double[,] MatB)
     {
@@ -2464,23 +2450,23 @@ namespace VianaNET.Data.Filter.Regression
 
     /// <summary>
     /// Solves a set of n linear equations A.X = B, and returns
-    ///   X, where A is [n,n] and B is [n,1]. 
+    ///   X, where A is [n,n] and B is [n,1].
     ///   In the same manner if you need to compute: inverse(A).B, it is
-    ///   better to use this method instead, as it is much faster.  
-    ///   In case of an error the error is raised as an exception. 
+    ///   better to use this method instead, as it is much faster.
+    ///   In case of an error the error is raised as an exception.
     ///   Note: This method is based on the 'LU Decomposition and Its Applications'
     ///   section of Numerical Recipes in C by William H. Press,
     ///   Saul A. Teukolsky, William T. Vetterling and Brian P. Flannery,
     ///   University of Cambridge Press 1992.
     /// </summary>
     /// <param name="MatA">
-    /// Matrix object 'A' on the left side of the equations A.X = B 
+    /// Matrix object 'A' on the left side of the equations A.X = B
     /// </param>
     /// <param name="MatB">
-    /// Matrix object 'B' on the right side of the equations A.X = B 
+    /// Matrix object 'B' on the right side of the equations A.X = B
     /// </param>
     /// <returns>
-    /// Matrix object 'X' in the system of equations A.X = B 
+    /// Matrix object 'X' in the system of equations A.X = B
     /// </returns>
     public static Matrix SolveLinear(Matrix MatA, Matrix MatB)
     {
@@ -2488,18 +2474,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the difference of two matrices with compatible 
+    /// Returns the difference of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First array in the subtraction 
+    /// First array in the subtraction
     /// </param>
     /// <param name="Mat2">
-    /// Second array in the subtraction 
+    /// Second array in the subtraction
     /// </param>
     /// <returns>
-    /// Difference of Mat1 and Mat2 as an array 
+    /// Difference of Mat1 and Mat2 as an array
     /// </returns>
     public static double[,] Subtract(double[,] Mat1, double[,] Mat2)
     {
@@ -2538,18 +2524,18 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// Returns the difference of two matrices with compatible 
+    /// Returns the difference of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat1">
-    /// First matrix in the subtraction 
+    /// First matrix in the subtraction
     /// </param>
     /// <param name="Mat2">
-    /// Second matrix in the subtraction 
+    /// Second matrix in the subtraction
     /// </param>
     /// <returns>
-    /// Difference of Mat1 and Mat2 as a Matrix object 
+    /// Difference of Mat1 and Mat2 as a Matrix object
     /// </returns>
     public static Matrix Subtract(Matrix Mat1, Matrix Mat2)
     {
@@ -2561,10 +2547,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Array whose transpose is to be found 
+    /// Array whose transpose is to be found
     /// </param>
     /// <returns>
-    /// Transpose of the array as an array 
+    /// Transpose of the array as an array
     /// </returns>
     public static double[,] Transpose(double[,] Mat)
     {
@@ -2598,10 +2584,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// Matrix object whose transpose is to be found 
+    /// Matrix object whose transpose is to be found
     /// </param>
     /// <returns>
-    /// Transpose of the Matrix object as a Matrix object 
+    /// Transpose of the Matrix object as a Matrix object
     /// </returns>
     public static Matrix Transpose(Matrix Mat)
     {
@@ -2610,14 +2596,14 @@ namespace VianaNET.Data.Filter.Regression
 
     /// <summary>
     /// Returns the 1D form of a 2D array. i.e. array with
-    ///   dimension[n,1] is returned as an array with dimension [n]. 
+    ///   dimension[n,1] is returned as an array with dimension [n].
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="Mat">
-    /// the array to convert, with dimesions [n,1] 
+    /// the array to convert, with dimesions [n,1]
     /// </param>
     /// <returns>
-    /// the same array but with [n] dimension 
+    /// the same array but with [n] dimension
     /// </returns>
     public static double[] TwoD_2_OneD(double[,] Mat)
     {
@@ -2654,10 +2640,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V">
-    /// The vector array (dimension [3]) whose magnitude is to be found 
+    /// The vector array (dimension [3]) whose magnitude is to be found
     /// </param>
     /// <returns>
-    /// The magnitude of the vector array 
+    /// The magnitude of the vector array
     /// </returns>
     public static double VectorMagnitude(double[] V)
     {
@@ -2685,10 +2671,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V">
-    /// The vector array (dimension [3,1]) whose magnitude is to be found 
+    /// The vector array (dimension [3,1]) whose magnitude is to be found
     /// </param>
     /// <returns>
-    /// The magnitude of the vector array 
+    /// The magnitude of the vector array
     /// </returns>
     public static double VectorMagnitude(double[,] V)
     {
@@ -2716,10 +2702,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   In case of an error the error is raised as an exception.
     /// </summary>
     /// <param name="V">
-    /// Matrix object (dimension [3,1]) whose magnitude is to be found 
+    /// Matrix object (dimension [3,1]) whose magnitude is to be found
     /// </param>
     /// <returns>
-    /// The magnitude of the Matrix object 
+    /// The magnitude of the Matrix object
     /// </returns>
     public static double VectorMagnitude(Matrix V)
     {
@@ -2727,7 +2713,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    ///   Returns the summation of two matrices with compatible 
+    ///   Returns the summation of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2740,7 +2726,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    ///   Returns the division of a matrix or a vector (i.e 
+    ///   Returns the division of a matrix or a vector (i.e
     ///   dimension [3,1]) by a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2777,7 +2763,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    ///   Returns the multiplication of two matrices with compatible 
+    ///   Returns the multiplication of two matrices with compatible
     ///   dimensions OR the cross-product of two vectors.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2790,14 +2776,12 @@ namespace VianaNET.Data.Filter.Regression
       {
         return new Matrix(CrossProduct(Mat1.in_Mat, Mat2.in_Mat));
       }
-      else
-      {
-        return new Matrix(Multiply(Mat1.in_Mat, Mat2.in_Mat));
-      }
+
+      return new Matrix(Multiply(Mat1.in_Mat, Mat2.in_Mat));
     }
 
     /// <summary>
-    ///   Returns the multiplication of a matrix or a vector (i.e 
+    ///   Returns the multiplication of a matrix or a vector (i.e
     ///   dimension [3,1]) with a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2810,7 +2794,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    ///   Returns the multiplication of a matrix or a vector (i.e 
+    ///   Returns the multiplication of a matrix or a vector (i.e
     ///   dimension [3,1]) with a scalar quantity.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2823,7 +2807,7 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    ///   Returns the difference of two matrices with compatible 
+    ///   Returns the difference of two matrices with compatible
     ///   dimensions.
     ///   In case of an error the error is raised as an exception.
     /// </summary>
@@ -2840,10 +2824,10 @@ namespace VianaNET.Data.Filter.Regression
     ///   object and is identical to this MatrixLibrary.Matrix object.
     /// </summary>
     /// <param name="obj">
-    /// The object to compare with the current object 
+    /// The object to compare with the current object
     /// </param>
     /// <returns>
-    /// This method returns true if obj is the specified Matrix object identical to this Matrix object; otherwise, false. 
+    /// This method returns true if obj is the specified Matrix object identical to this Matrix object; otherwise, false.
     /// </returns>
     public override bool Equals(object obj)
     {
@@ -2855,6 +2839,17 @@ namespace VianaNET.Data.Filter.Regression
       {
         return false;
       }
+    }
+
+    /// <summary>
+    /// The get hash code.
+    /// </summary>
+    /// <returns>
+    /// The <see cref="int"/>.
+    /// </returns>
+    public override int GetHashCode()
+    {
+      return this.in_Mat != null ? this.in_Mat.GetHashCode() : 0;
     }
 
     /// <summary>
@@ -2873,13 +2868,27 @@ namespace VianaNET.Data.Filter.Regression
     #region Methods
 
     /// <summary>
+    /// The equals.
+    /// </summary>
+    /// <param name="other">
+    /// The other.
+    /// </param>
+    /// <returns>
+    /// The <see cref="bool"/>.
+    /// </returns>
+    protected bool Equals(Matrix other)
+    {
+      return this.in_Mat == other.in_Mat;
+    }
+
+    /// <summary>
     /// The find_ r_ c.
     /// </summary>
     /// <param name="Mat">
-    /// The mat. 
+    /// The mat.
     /// </param>
     /// <param name="Row">
-    /// The row. 
+    /// The row.
     /// </param>
     private static void Find_R_C(double[] Mat, out int Row)
     {
@@ -2890,13 +2899,13 @@ namespace VianaNET.Data.Filter.Regression
     /// The find_ r_ c.
     /// </summary>
     /// <param name="Mat">
-    /// The mat. 
+    /// The mat.
     /// </param>
     /// <param name="Row">
-    /// The row. 
+    /// The row.
     /// </param>
     /// <param name="Col">
-    /// The col. 
+    /// The col.
     /// </param>
     private static void Find_R_C(double[,] Mat, out int Row, out int Col)
     {
@@ -2908,13 +2917,13 @@ namespace VianaNET.Data.Filter.Regression
     /// The pythag.
     /// </summary>
     /// <param name="a">
-    /// The a. 
+    /// The a.
     /// </param>
     /// <param name="b">
-    /// The b. 
+    /// The b.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double PYTHAG(double a, double b)
     {
@@ -2926,41 +2935,39 @@ namespace VianaNET.Data.Filter.Regression
       {
         return absa * Math.Sqrt(1.0 + SQR(absb / absa));
       }
-      else
-      {
-        return absb == 0.0 ? 0.0 : absb * Math.Sqrt(1.0 + SQR(absa / absb));
-      }
+
+      return absb == 0.0 ? 0.0 : absb * Math.Sqrt(1.0 + SQR(absa / absb));
     }
 
     /// <summary>
     /// The rot.
     /// </summary>
     /// <param name="g">
-    /// The g. 
+    /// The g.
     /// </param>
     /// <param name="h">
-    /// The h. 
+    /// The h.
     /// </param>
     /// <param name="s">
-    /// The s. 
+    /// The s.
     /// </param>
     /// <param name="tau">
-    /// The tau. 
+    /// The tau.
     /// </param>
     /// <param name="a">
-    /// The a. 
+    /// The a.
     /// </param>
     /// <param name="i">
-    /// The i. 
+    /// The i.
     /// </param>
     /// <param name="j">
-    /// The j. 
+    /// The j.
     /// </param>
     /// <param name="k">
-    /// The k. 
+    /// The k.
     /// </param>
     /// <param name="l">
-    /// The l. 
+    /// The l.
     /// </param>
     private static void ROT(double g, double h, double s, double tau, double[,] a, int i, int j, int k, int l)
     {
@@ -2974,10 +2981,10 @@ namespace VianaNET.Data.Filter.Regression
     /// The sqr.
     /// </summary>
     /// <param name="a">
-    /// The a. 
+    /// The a.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double SQR(double a)
     {
@@ -2988,13 +2995,13 @@ namespace VianaNET.Data.Filter.Regression
     /// The sign.
     /// </summary>
     /// <param name="a">
-    /// The a. 
+    /// The a.
     /// </param>
     /// <param name="b">
-    /// The b. 
+    /// The b.
     /// </param>
     /// <returns>
-    /// The <see cref="double"/> . 
+    /// The <see cref="double"/> .
     /// </returns>
     private static double Sign(double a, double b)
     {
@@ -3002,23 +3009,21 @@ namespace VianaNET.Data.Filter.Regression
       {
         return Math.Abs(a);
       }
-      else
-      {
-        return -Math.Abs(a);
-      }
+
+      return -Math.Abs(a);
     }
 
     /// <summary>
     /// The swap rows.
     /// </summary>
     /// <param name="Mat">
-    /// The mat. 
+    /// The mat.
     /// </param>
     /// <param name="Row">
-    /// The row. 
+    /// The row.
     /// </param>
     /// <param name="toRow">
-    /// The to row. 
+    /// The to row.
     /// </param>
     private static void SwapRows(double[,] Mat, int Row, int toRow)
     {

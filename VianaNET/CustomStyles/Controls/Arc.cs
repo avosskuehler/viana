@@ -17,10 +17,12 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
+// <summary>
+//   The arc is a part of a circle with start and end angle
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.CustomStyles.Controls
 {
-
   using System;
   using System.Collections.Generic;
   using System.Windows;
@@ -28,55 +30,55 @@ namespace VianaNET.CustomStyles.Controls
   using System.Windows.Shapes;
 
   /// <summary>
-  /// The arc is a part of a circle with start and end angle
+  ///   The arc is a part of a circle with start and end angle
   /// </summary>
   public sealed class Arc : Shape
   {
     #region Static Fields
 
     /// <summary>
-    /// The center property.
+    ///   The center property.
     /// </summary>
     public static readonly DependencyProperty CenterProperty = DependencyProperty.Register(
-      "Center",
-      typeof(Point),
-      typeof(Arc),
+      "Center", 
+      typeof(Point), 
+      typeof(Arc), 
       new FrameworkPropertyMetadata(new Point(0, 0), FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
-    /// The end angle property.
+    ///   The end angle property.
     /// </summary>
     public static readonly DependencyProperty EndAngleProperty = DependencyProperty.Register(
-      "EndAngle",
-      typeof(double),
-      typeof(Arc),
+      "EndAngle", 
+      typeof(double), 
+      typeof(Arc), 
       new FrameworkPropertyMetadata(180d, FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
-    /// The radius property.
+    ///   The radius property.
     /// </summary>
     public static readonly DependencyProperty RadiusProperty = DependencyProperty.Register(
-      "Radius",
-      typeof(double),
-      typeof(Arc),
+      "Radius", 
+      typeof(double), 
+      typeof(Arc), 
       new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
-    /// The small angle property.
+    ///   The small angle property.
     /// </summary>
     public static readonly DependencyProperty SmallAngleProperty = DependencyProperty.Register(
-      "SmallAngle",
-      typeof(bool),
-      typeof(Arc),
+      "SmallAngle", 
+      typeof(bool), 
+      typeof(Arc), 
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
-    /// The start angle property.
+    ///   The start angle property.
     /// </summary>
     public static readonly DependencyProperty StartAngleProperty = DependencyProperty.Register(
-      "StartAngle",
-      typeof(double),
-      typeof(Arc),
+      "StartAngle", 
+      typeof(double), 
+      typeof(Arc), 
       new FrameworkPropertyMetadata(0.0d, FrameworkPropertyMetadataOptions.AffectsRender));
 
     #endregion
@@ -84,7 +86,7 @@ namespace VianaNET.CustomStyles.Controls
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes static members of the <see cref="Arc"/> class.
+    ///   Initializes static members of the <see cref="Arc" /> class.
     /// </summary>
     static Arc()
     {
@@ -96,7 +98,7 @@ namespace VianaNET.CustomStyles.Controls
     #region Public Properties
 
     /// <summary>
-    /// Gets or sets the center.
+    ///   Gets or sets the center.
     /// </summary>
     public Point Center
     {
@@ -112,7 +114,7 @@ namespace VianaNET.CustomStyles.Controls
     }
 
     /// <summary>
-    /// Gets or sets the end angle in degrees
+    ///   Gets or sets the end angle in degrees
     /// </summary>
     public double EndAngle
     {
@@ -128,7 +130,7 @@ namespace VianaNET.CustomStyles.Controls
     }
 
     /// <summary>
-    /// Gets or sets the radius.
+    ///   Gets or sets the radius.
     /// </summary>
     public double Radius
     {
@@ -144,7 +146,7 @@ namespace VianaNET.CustomStyles.Controls
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether small angle.
+    ///   Gets or sets a value indicating whether small angle.
     /// </summary>
     public bool SmallAngle
     {
@@ -160,7 +162,7 @@ namespace VianaNET.CustomStyles.Controls
     }
 
     /// <summary>
-    /// Gets or sets the start angle in degrees
+    ///   Gets or sets the start angle in degrees
     /// </summary>
     public double StartAngle
     {
@@ -180,17 +182,17 @@ namespace VianaNET.CustomStyles.Controls
     #region Properties
 
     /// <summary>
-    /// Gets the defining geometry.
+    ///   Gets the defining geometry.
     /// </summary>
     protected override Geometry DefiningGeometry
     {
       get
       {
-        var start = this.StartAngle * Math.PI / 180; // 0
-        var end = this.EndAngle * Math.PI / 180;     // PI/2
+        double start = this.StartAngle * Math.PI / 180; // 0
+        double end = this.EndAngle * Math.PI / 180; // PI/2
 
         double a0 = start < 0 ? start + 2 * Math.PI : start; // 0
-        double a1 = end < 0 ? end + 2 * Math.PI : end;       // PI/2
+        double a1 = end < 0 ? end + 2 * Math.PI : end; // PI/2
 
         if (a1 < a0)
         {

@@ -23,13 +23,13 @@
 //   The clip video window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Shapes;
+
   using VianaNET.Application;
   using VianaNET.Modules.Base;
   using VianaNET.Resources;
@@ -144,11 +144,14 @@ namespace VianaNET.Modules.Video.Dialogs
     #region Methods
 
     /// <summary>
-    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
-    /// in its route that is derived from this class. Implement this method to add class handling for this event.
-    /// Resets the clipping on F10.
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown"/> attached event reaches an
+    ///   element
+    ///   in its route that is derived from this class. Implement this method to add class handling for this event.
+    ///   Resets the clipping on F10.
     /// </summary>
-    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
+    /// <param name="e">
+    /// The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.
+    /// </param>
     protected override void OnPreviewKeyDown(KeyEventArgs e)
     {
       base.OnPreviewKeyDown(e);
@@ -165,8 +168,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the MouseEnter event of the LeftRightLine control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void LeftRightLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeWE;
@@ -175,8 +182,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the MouseLeave event of the Line control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void LineMouseLeave(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.Hand;
@@ -185,8 +196,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Line control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
     private void LineMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       this.currentLine = sender as Line;
@@ -194,20 +209,14 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// Handles the MouseLeftButtonUp event of the Line control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
-    private void Line_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      Mouse.Capture(null);
-    }
-
-    /// <summary>
     /// Handles the MouseMove event of the Line control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void LineMouseMove(object sender, MouseEventArgs e)
     {
       if (e.LeftButton == MouseButtonState.Pressed && this.currentLine != null)
@@ -266,7 +275,21 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// Resets the outer region.
+    /// Handles the MouseLeftButtonUp event of the Line control.
+    /// </summary>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+    /// </param>
+    private void Line_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+      Mouse.Capture(null);
+    }
+
+    /// <summary>
+    ///   Resets the outer region.
     /// </summary>
     private void ResetOuterRegion()
     {
@@ -286,16 +309,17 @@ namespace VianaNET.Modules.Video.Dialogs
       if (innerRect != null)
       {
         innerRect.Rect = new Rect(
-          new Point(this.leftLine.X1, this.topLine.Y1), new Point(this.rightLine.X1, this.bottomLine.Y1));
+          new Point(this.leftLine.X1, this.topLine.Y1), 
+          new Point(this.rightLine.X1, this.bottomLine.Y1));
       }
 
-      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
       var rect = new Rect
                    {
-                     Location = new Point(this.leftLine.X1 * factorX, this.topLine.Y1 * factorY),
-                     Width = (this.rightLine.X1 - this.leftLine.X1) * factorX,
+                     Location = new Point(this.leftLine.X1 * factorX, this.topLine.Y1 * factorY), 
+                     Width = (this.rightLine.X1 - this.leftLine.X1) * factorX, 
                      Height = (this.bottomLine.Y1 - this.topLine.Y1) * factorY
                    };
 
@@ -306,8 +330,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the MouseEnter event of the TopBottomLine control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="MouseEventArgs"/> instance containing the event data.
+    /// </param>
     private void TopBottomLineMouseEnter(object sender, MouseEventArgs e)
     {
       this.Cursor = Cursors.SizeNS;
@@ -316,8 +344,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the Loaded event of the Window control.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    /// <param name="sender">
+    /// The source of the event.
+    /// </param>
+    /// <param name="e">
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
+    /// </param>
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
       if (!Viana.Project.CalibrationData.HasClipRegion)

@@ -1,14 +1,17 @@
 ﻿<UserControl x:Class="VianaNET.DualTextBox"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="140"/>
-        </Grid.ColumnDefinitions>
-        <CheckBox x:Name="ElementCheckBox" Grid.Column="0" VerticalAlignment="Center" Checked="ElementCheckBox_Checked" Unchecked="ElementCheckBox_Checked"/>
-        <TextBox x:Name="ElementTextBoxA" Grid.Column="1" TextChanged="ElementTextBox_TextChanged" GotFocus="ElementTextBox_GotFocus"/>
-        <TextBox x:Name="ElementTextBoxB" Grid.Column="2" TextChanged="ElementTextBox_TextChanged" GotFocus="ElementTextBox_GotFocus"/>
-    </Grid>
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="140" />
+    </Grid.ColumnDefinitions>
+    <CheckBox x:Name="ElementCheckBox" Grid.Column="0" VerticalAlignment="Center" Checked="ElementCheckBox_Checked"
+              Unchecked="ElementCheckBox_Checked" />
+    <TextBox x:Name="ElementTextBoxA" Grid.Column="1" TextChanged="ElementTextBox_TextChanged"
+             GotFocus="ElementTextBox_GotFocus" />
+    <TextBox x:Name="ElementTextBoxB" Grid.Column="2" TextChanged="ElementTextBox_TextChanged"
+             GotFocus="ElementTextBox_GotFocus" />
+  </Grid>
 </UserControl>
