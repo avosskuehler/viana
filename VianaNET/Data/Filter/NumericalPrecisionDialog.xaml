@@ -11,7 +11,7 @@
         mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:vianaNet="clr-namespace:VianaNET"
-        Height="263" Width="328">
+        Height="319.667" Width="328">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -30,9 +30,9 @@
         </Grid.RowDefinitions>
         <Grid>
           <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90" />
