@@ -2,7 +2,7 @@
 // <copyright file="UnitDoubleStringConverter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,6 +23,7 @@
 //   The unit double string converter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.CustomStyles.Converter
 {
   using System;
@@ -42,26 +43,16 @@ namespace VianaNET.CustomStyles.Converter
 
     /// <summary>
     /// Converts a value from double to string using the given
-    ///   MeasurementType
+    /// MeasurementType
     /// </summary>
-    /// <param name="value">
-    /// The value produced by the binding source.
-    /// </param>
-    /// <param name="targetType">
-    /// The type of the binding target property.
-    /// </param>
-    /// <param name="parameter">
-    /// The converter parameter to use.
-    /// </param>
-    /// <param name="culture">
-    /// The culture to use in the converter.
-    /// </param>
+    /// <param name="value">The value produced by the binding source.</param>
+    /// <param name="targetType">The type of the binding target property.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
-    /// <exception cref="System.ArgumentOutOfRangeException">
-    /// Wrong TimeUnit
-    /// </exception>
+    /// <exception cref="System.ArgumentOutOfRangeException">Wrong TimeUnit</exception>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       double valueToConvert = 0;
@@ -89,7 +80,7 @@ namespace VianaNET.CustomStyles.Converter
       switch (param)
       {
         case MeasurementType.Time:
-          TimeUnit timeunit = Viana.Project.CalibrationData.TimeUnit;
+          var timeunit = Viana.Project.CalibrationData.TimeUnit;
           switch (timeunit)
           {
             case TimeUnit.ms:
@@ -135,18 +126,10 @@ namespace VianaNET.CustomStyles.Converter
     /// <summary>
     /// Converts a value.
     /// </summary>
-    /// <param name="value">
-    /// The value that is produced by the binding target.
-    /// </param>
-    /// <param name="targetType">
-    /// The type to convert to.
-    /// </param>
-    /// <param name="parameter">
-    /// The converter parameter to use.
-    /// </param>
-    /// <param name="culture">
-    /// The culture to use in the converter.
-    /// </param>
+    /// <param name="value">The value that is produced by the binding target.</param>
+    /// <param name="targetType">The type to convert to.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>

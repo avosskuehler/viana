@@ -1,70 +1,68 @@
 ﻿<Window x:Class="VianaNET.Modules.Video.Dialogs.VideoInfoDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         lex:LocalizeDictionary.DesignCulture="de"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Height="500" Width="350" WindowStyle="ThreeDBorderWindow"
-        Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTitle}"
-        SizeToContent="Height"
-        ShowInTaskbar="True"
-        Icon="/VianaNET;component/Images/VianaNET.ico"
+    ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+    Height="500" Width="350" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTitle}" 
+        SizeToContent="Height" 
+        ShowInTaskbar="True" 
+        Icon="/VianaNET;component/Images/VianaNET.ico" 
         Topmost="True">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <mainWindow:TopFrame Icon="/VianaNET;component/Images/VideoInfo32.png"
-                         Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTopFrameTitle}" />
+    <mainWindow:TopFrame Icon="/VianaNET;component/Images/VideoInfo32.png" 
+                         Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTopFrameTitle}"/>
     <Border Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
       <StackPanel Margin="10">
         <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
           </Grid.RowDefinitions>
-          <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFilenameLabel}" />
-          <Label Grid.Row="0" Grid.Column="1" Content="{Binding Filename}" />
-          <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoDurationLabel}" />
-          <Label Grid.Row="1" Grid.Column="1" Content="{Binding Duration}" />
-          <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFPSLabel}" />
+          <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFilenameLabel}"/>
+          <Label Grid.Row="0" Grid.Column="1" Content="{Binding Filename}"/>
+          <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoDurationLabel}"/>
+          <Label Grid.Row="1" Grid.Column="1" Content="{Binding Duration}"/>
+          <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFPSLabel}"/>
           <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{Binding DefaultFrameRate}" ContentStringFormat="F2" />
-            <Label Content="{lex:Loc VianaNET:Labels:VideoInfoFPSDefaultLabel}" />
-            <xctk:DoubleUpDown Value="{Binding FrameRate}" Increment="1" Minimum="1" Maximum="500000" FormatString="F2" />
+            <Label Content="{Binding DefaultFrameRate}" ContentStringFormat="F2"/>
+            <Label Content="{lex:Loc VianaNET:Labels:VideoInfoFPSDefaultLabel}"/>
+            <xctk:DoubleUpDown Value="{Binding FrameRate}" Increment="1" Minimum="1" Maximum="500000" FormatString="F2"/>
           </StackPanel>
-          <Label Grid.Row="3" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameCountLabel}" />
-          <Label Grid.Row="3" Grid.Column="1" Content="{Binding FrameCount}" />
-          <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameSizeLabel}" />
-          <Label Grid.Row="4" Grid.Column="1" Content="{Binding FrameSize}" />
-          <Label Grid.Row="5" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoCodecLabel}" />
-          <Label Grid.Row="5" Grid.Column="1" Content="{Binding Codec}" />
-          <Label Grid.Row="6" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoBitrateLabel}" />
-          <Label Grid.Row="6" Grid.Column="1" Content="{Binding Bitrate}" />
+          <Label Grid.Row="3" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameCountLabel}"/>
+          <Label Grid.Row="3" Grid.Column="1" Content="{Binding FrameCount}"/>
+          <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameSizeLabel}"/>
+          <Label Grid.Row="4" Grid.Column="1" Content="{Binding FrameSize}"/>
+          <Label Grid.Row="5" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoCodecLabel}"/>
+          <Label Grid.Row="5" Grid.Column="1" Content="{Binding Codec}"/>
+          <Label Grid.Row="6" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoBitrateLabel}"/>
+          <Label Grid.Row="6" Grid.Column="1" Content="{Binding Bitrate}"/>
         </Grid>
       </StackPanel>
     </Border>
     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-      <Button Name="OK" Height="23" Width="80" IsDefault="True" Margin="5" Content="{lex:Loc VianaNET:Labels:OK}"
-              Click="OkClick" />
-      <Button Name="Cancel" Height="23" Width="80" IsDefault="False" Margin="5"
-              Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
+      <Button Name="OK" Height="23" Width="80" IsDefault="True" Margin="5" Content="{lex:Loc VianaNET:Labels:OK}" Click="OkClick" />
+      <Button Name="Cancel" Height="23" Width="80" IsDefault="False" Margin="5" Content="{lex:Loc VianaNET:Labels:Cancel}" Click="CancelClick" />
     </StackPanel>
   </Grid>
 </Window>

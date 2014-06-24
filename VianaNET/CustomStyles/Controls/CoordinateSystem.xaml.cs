@@ -17,10 +17,8 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   Interaction logic for CoordinateSystem.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.CustomStyles.Controls
 {
   using System.Windows.Controls;
@@ -39,6 +37,10 @@ namespace VianaNET.CustomStyles.Controls
     {
       this.InitializeComponent();
     }
+
+    #endregion
+
+    #region Public Properties
 
     #endregion
   }

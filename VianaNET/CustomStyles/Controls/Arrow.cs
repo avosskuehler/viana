@@ -17,14 +17,13 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   This class encapsulates an arrow shape with a head and a description
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.CustomStyles.Controls
 {
   using System;
   using System.ComponentModel;
+  using System.Threading;
   using System.Windows;
   using System.Windows.Media;
   using System.Windows.Shapes;
@@ -242,7 +241,7 @@ namespace VianaNET.CustomStyles.Controls
         // Create a StreamGeometry for describing the shape
         var geometry = new StreamGeometry { FillRule = FillRule.EvenOdd };
 
-        using (StreamGeometryContext context = geometry.Open())
+        using (var context = geometry.Open())
         {
           this.InternalDrawArrowGeometry(context);
         }
@@ -266,9 +265,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </param>
     private void InternalDrawArrowGeometry(StreamGeometryContext context)
     {
-      double theta = Math.Atan2(this.Y1 - this.Y2, this.X1 - this.X2);
-      double sint = Math.Sin(theta);
-      double cost = Math.Cos(theta);
+      var theta = Math.Atan2(this.Y1 - this.Y2, this.X1 - this.X2);
+      var sint = Math.Sin(theta);
+      var cost = Math.Cos(theta);
 
       var pt1 = new Point(this.X1, this.Y1);
       var pt2 = new Point(this.X2, this.Y2);

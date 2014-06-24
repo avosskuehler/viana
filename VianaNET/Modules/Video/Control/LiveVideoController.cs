@@ -2,7 +2,7 @@
 // <copyright file="LiveVideoController.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -193,8 +193,7 @@ namespace VianaNET.Modules.Video.Control
 
         // Create the filter for the selected video compressor
         this.videoCompressorFilter = DShowUtils.CreateFilter(
-          FilterCategory.VideoCompressorCategory, 
-          this.videoCompressorFilterName);
+          FilterCategory.VideoCompressorCategory, this.videoCompressorFilterName);
       }
     }
 
@@ -224,10 +223,10 @@ namespace VianaNET.Modules.Video.Control
     /// The select device.
     /// </summary>
     /// <param name="videoInputDevice">
-    /// The video input device.
+    /// The video input device. 
     /// </param>
     /// <param name="panel">
-    /// The panel.
+    /// The panel. 
     /// </param>
     public void SelectDevice(DsDevice videoInputDevice, Panel panel)
     {
@@ -256,10 +255,7 @@ namespace VianaNET.Modules.Video.Control
 
         // Add the requested device
         hr = ((IFilterGraph2)this.sourceFilterGraph).AddSourceFilterForMoniker(
-          videoInputDevice.Mon, 
-          null, 
-          videoInputDevice.Name, 
-          out inputDeviceFilter);
+          videoInputDevice.Mon, null, videoInputDevice.Name, out inputDeviceFilter);
         DsError.ThrowExceptionForHR(hr);
 
         // Add the sink filter to the source graph
@@ -280,22 +276,12 @@ namespace VianaNET.Modules.Video.Control
         // connect capture output to the pseudo-sink filter,
         // where it will be discarded until required
         hr = sourceCaptureGraphBuilder.RenderStream(
-          PinCategory.Capture, 
-          MediaType.Video, 
-          inputDeviceFilter, 
-          null, 
-          this.m_pSourceGraphSinkFilter);
+          PinCategory.Capture, MediaType.Video, inputDeviceFilter, null, this.m_pSourceGraphSinkFilter);
         DsError.ThrowExceptionForHR(hr);
 
         // turn off capture stream if possible except when capturing
         hr = sourceCaptureGraphBuilder.FindPin(
-          inputDeviceFilter, 
-          PinDirection.Output, 
-          PinCategory.Capture, 
-          MediaType.Video, 
-          false, 
-          0, 
-          out this.m_pCapOutput);
+          inputDeviceFilter, PinDirection.Output, PinCategory.Capture, MediaType.Video, false, 0, out this.m_pCapOutput);
         if (hr >= 0)
         {
           var pSC = (IAMStreamControl)this.m_pCapOutput;
@@ -336,7 +322,7 @@ namespace VianaNET.Modules.Video.Control
     /// The set next filename.
     /// </summary>
     /// <param name="localFilename">
-    /// The local filename.
+    /// The local filename. 
     /// </param>
     /// <exception cref="Exception">
     /// </exception>
@@ -361,9 +347,7 @@ namespace VianaNET.Modules.Video.Control
 
             // Use the bridge to add the sourcefilter to the graph
             hr = this.gmfBridgeController.InsertSourceFilter(
-              this.m_pSourceGraphSinkFilter, 
-              this.filterGraph, 
-              out this.captureGraphSourceFilter);
+              this.m_pSourceGraphSinkFilter, this.filterGraph, out this.captureGraphSourceFilter);
             DsError.ThrowExceptionForHR(hr);
 
             // use capture graph builder to create mux/writer stage
@@ -374,10 +358,7 @@ namespace VianaNET.Modules.Video.Control
 
             // create the mux/writer
             hr = captureGraphBuilder.SetOutputFileName(
-              MediaSubType.Avi, 
-              localFilename, 
-              out muxFilter, 
-              out fileSinkFilter);
+              MediaSubType.Avi, localFilename, out muxFilter, out fileSinkFilter);
             DsError.ThrowExceptionForHR(hr);
 
             // Add video compressor filter
@@ -389,11 +370,7 @@ namespace VianaNET.Modules.Video.Control
 
             // render source output to mux
             hr = captureGraphBuilder.RenderStream(
-              null, 
-              null, 
-              this.captureGraphSourceFilter, 
-              this.videoCompressorFilter, 
-              muxFilter);
+              null, null, this.captureGraphSourceFilter, this.videoCompressorFilter, muxFilter);
             DsError.ThrowExceptionForHR(hr);
 
             // Store the file name for later use
@@ -631,10 +608,10 @@ namespace VianaNET.Modules.Video.Control
     /// The video panel_ resize.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void videoPanel_Resize(object sender, EventArgs e)
     {

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Freie Universität Berlin" file="TwoFramesDifferenceDetectorSpecial.cs">
+// <copyright company="Freie Universität Berlin" file="DifferenceDetector.cs">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
 //   Copyright (C) 2014 Dr. Adrian Voßkühler  
@@ -17,12 +17,7 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   Motion detector based on two continues frames difference. Is a clone of
-//   <see cref="TwoFramesDifferenceDetectorSpecial" />
-//   with adaptions for viana.
-//   All credits to AForge.NET
-// </summary>
+// 
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Filter
 {
@@ -35,10 +30,9 @@ namespace VianaNET.Modules.Video.Filter
   using AForge.Vision.Motion;
 
   /// <summary>
-  ///   Motion detector based on two continues frames difference. Is a clone of
-  ///   <see cref="TwoFramesDifferenceDetectorSpecial" />
-  ///   with adaptions for viana.
-  ///   All credits to AForge.NET
+  ///   Motion detector based on two continues frames difference. Is a clone of <see cref="TwoFramesDifferenceDetectorSpecial"/>
+  /// with adaptions for viana.
+  /// All credits to AForge.NET
   /// </summary>
   /// <seealso cref="MotionDetector" />
   public class TwoFramesDifferenceDetectorSpecial : IMotionDetector
@@ -46,62 +40,62 @@ namespace VianaNET.Modules.Video.Filter
     #region Fields
 
     /// <summary>
-    ///   The erosion filter.
+    /// The erosion filter.
     /// </summary>
     private readonly BinaryErosion3x3 erosionFilter = new BinaryErosion3x3();
 
     /// <summary>
-    ///   dummy object to lock for synchronization
+    /// dummy object to lock for synchronization
     /// </summary>
     private readonly object sync = new object();
 
     /// <summary>
-    ///   The difference threshold.
+    /// The difference threshold.
     /// </summary>
     private int differenceThreshold = 15;
 
     /// <summary>
-    ///   The difference threshold neg.
+    /// The difference threshold neg.
     /// </summary>
     private int differenceThresholdNeg = -15;
 
     /// <summary>
-    ///   The frame size.
+    /// The frame size.
     /// </summary>
     private int frameSize;
 
     /// <summary>
-    ///   The height.
+    /// The height.
     /// </summary>
     private int height;
 
     /// <summary>
-    ///   The current frame of video sream.
+    /// The current frame of video sream.
     /// </summary>
     private UnmanagedImage motionFrame;
 
     /// <summary>
-    ///   The number of pixels changed in the new frame of video stream
+    /// The number of pixels changed in the new frame of video stream
     /// </summary>
     private int pixelsChanged;
 
     /// <summary>
-    ///   The previous frame of video stream
+    /// The previous frame of video stream
     /// </summary>
     private UnmanagedImage previousFrame;
 
     /// <summary>
-    ///   The suppress noise.
+    /// The suppress noise.
     /// </summary>
     private bool suppressNoise = true;
 
     /// <summary>
-    ///   Temporary buffer used for suppressing noise
+    /// Temporary buffer used for suppressing noise
     /// </summary>
     private UnmanagedImage tempFrame;
 
     /// <summary>
-    ///   The width.
+    /// The width.
     /// </summary>
     private int width;
 
@@ -133,7 +127,7 @@ namespace VianaNET.Modules.Video.Filter
     #region Public Properties
 
     /// <summary>
-    ///   Gets or sets the difference threshold value, [1, 255].
+    ///  Gets or sets the difference threshold value, [1, 255].
     /// </summary>
     /// <remarks>
     ///   <para>
@@ -160,13 +154,13 @@ namespace VianaNET.Modules.Video.Filter
     }
 
     /// <summary>
-    ///   Gets or sets a value indicating whether the positive threshold is used,
+    ///  Gets or sets a value indicating whether the positive threshold is used,
     ///   otherwise the negative threshold is used.
     /// </summary>
     public bool IsPositiveThreshold { get; set; }
 
     /// <summary>
-    ///   Gets the motion frame containing detected areas of motion.
+    ///  Gets the motion frame containing detected areas of motion.
     /// </summary>
     /// <remarks>
     ///   <para>
@@ -269,7 +263,7 @@ namespace VianaNET.Modules.Video.Filter
     /// <remarks>
     /// <para>
     /// Processes new frame from video source and detects motion in it.
-    ///   </para>
+    /// </para>
     /// <para>
     /// Check <see cref="MotionLevel"/> property to get information about amount of motion
     ///     (changes) in the processed frame.
@@ -358,6 +352,23 @@ namespace VianaNET.Modules.Video.Filter
     }
 
     /// <summary>
+    /// Get grayscale image out of the specified one
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="destination">The destination.</param>
+    private static void ConvertToGrayscale(UnmanagedImage source, UnmanagedImage destination)
+    {
+      if (source.PixelFormat != PixelFormat.Format8bppIndexed)
+      {
+        Grayscale.CommonAlgorithms.BT709.Apply(source, destination);
+      }
+      else
+      {
+        source.Copy(destination);
+      }
+    }
+
+    /// <summary>
     ///   Reset motion detector to initial state.
     /// </summary>
     /// <remarks>
@@ -388,31 +399,6 @@ namespace VianaNET.Modules.Video.Filter
           this.tempFrame.Dispose();
           this.tempFrame = null;
         }
-      }
-    }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// Get grayscale image out of the specified one
-    /// </summary>
-    /// <param name="source">
-    /// The source.
-    /// </param>
-    /// <param name="destination">
-    /// The destination.
-    /// </param>
-    private static void ConvertToGrayscale(UnmanagedImage source, UnmanagedImage destination)
-    {
-      if (source.PixelFormat != PixelFormat.Format8bppIndexed)
-      {
-        Grayscale.CommonAlgorithms.BT709.Apply(source, destination);
-      }
-      else
-      {
-        source.Copy(destination);
       }
     }
 

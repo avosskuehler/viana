@@ -2,7 +2,7 @@
 // <copyright file="CalibrateVideoWindow.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,6 +23,8 @@
 //   The calibrate video window.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System;
@@ -30,7 +32,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Input;
   using System.Windows.Shapes;
-
   using VianaNET.Application;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
@@ -59,11 +60,6 @@ namespace VianaNET.Modules.Video.Dialogs
     private Point endPoint;
 
     /// <summary>
-    ///   Mausbewegungen ignorieren, da über Control panel
-    /// </summary>
-    private bool ignoreMouse;
-
-    /// <summary>
     ///   The origin is set.
     /// </summary>
     private bool originIsSet;
@@ -77,6 +73,11 @@ namespace VianaNET.Modules.Video.Dialogs
     ///   The start point is set.
     /// </summary>
     private bool startPointIsSet;
+
+    /// <summary>
+    /// Mausbewegungen ignorieren, da über Control panel
+    /// </summary>
+    private bool ignoreMouse;
 
     #endregion
 
@@ -103,14 +104,20 @@ namespace VianaNET.Modules.Video.Dialogs
     #region Methods
 
     /// <summary>
+    /// Mouse is the over control panel.
+    /// </summary>
+    /// <param name="isOver">if set to <c>true</c> is over.</param>
+    protected override void MouseOverControlPanel(bool isOver)
+    {
+      base.MouseOverControlPanel(isOver);
+      this.ignoreMouse = isOver;
+    }
+
+    /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs" /> instance containing the event data.</param>
     protected override void ContainerMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       base.ContainerMouseLeftButtonDown(sender, e);
@@ -119,12 +126,12 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      double scaledX = e.GetPosition(this.VideoImage).X;
-      double scaledY = e.GetPosition(this.VideoImage).Y;
-      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
-      double originalX = factorX * scaledX;
-      double originalY = factorY * scaledY;
+      var scaledX = e.GetPosition(this.VideoImage).X;
+      var scaledY = e.GetPosition(this.VideoImage).Y;
+      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      var originalX = factorX * scaledX;
+      var originalY = factorY * scaledY;
 
       if (!this.originIsSet)
       {
@@ -152,14 +159,13 @@ namespace VianaNET.Modules.Video.Dialogs
         this.endPoint = new Point(originalX, originalY);
 
         // Sicher gehen, dass Messpunkt nicht zu dicht liegen
-        double distance =
-          Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
+        var distance = Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
         if (distance < 5)
         {
           var info = new VianaDialog(
-            Labels.CalibrationLengthToShortTitle, 
-            Labels.CalibrationLengthToShortDescription, 
-            Labels.CalibrationLengthToShortMessage, 
+            Labels.CalibrationLengthToShortTitle,
+            Labels.CalibrationLengthToShortDescription,
+            Labels.CalibrationLengthToShortMessage,
             true);
           info.ShowDialog();
           this.startPointIsSet = false;
@@ -177,17 +183,13 @@ namespace VianaNET.Modules.Video.Dialogs
 
           var lengthVector = new Vector();
           lengthVector = Vector.Add(
-            lengthVector, 
-            new Vector(
-              Viana.Project.CalibrationData.RulerStartPointInPixel.X, 
-              Viana.Project.CalibrationData.RulerStartPointInPixel.Y));
+            lengthVector,
+            new Vector(Viana.Project.CalibrationData.RulerStartPointInPixel.X, Viana.Project.CalibrationData.RulerStartPointInPixel.Y));
           lengthVector.Negate();
           lengthVector = Vector.Add(
-            lengthVector, 
-            new Vector(
-              Viana.Project.CalibrationData.RulerEndPointInPixel.X, 
-              Viana.Project.CalibrationData.RulerEndPointInPixel.Y));
-          double length = lengthVector.Length;
+            lengthVector,
+            new Vector(Viana.Project.CalibrationData.RulerEndPointInPixel.X, Viana.Project.CalibrationData.RulerEndPointInPixel.Y));
+          var length = lengthVector.Length;
           Viana.Project.CalibrationData.ScalePixelToUnit = Viana.Project.CalibrationData.RulerValueInRulerUnits / length;
           Viana.Project.CalibrationData.IsVideoCalibrated = true;
           this.DialogResult = true;
@@ -200,12 +202,8 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Handles the MouseMove event of the Container control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
     protected override void ContainerMouseMove(object sender, MouseEventArgs e)
     {
       base.ContainerMouseMove(sender, e);
@@ -216,34 +214,19 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (this.originIsSet && this.startPointIsSet)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
+        var scaledX = e.GetPosition(this.VideoImage).X;
+        var scaledY = e.GetPosition(this.VideoImage).Y;
         this.ruler.X2 = scaledX;
         this.ruler.Y2 = scaledY;
       }
     }
 
     /// <summary>
-    /// Mouse is the over control panel.
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
+    /// in its route that is derived from this class. Implement this method to add class handling for this event.
+    /// Resets the calibration on F10.
     /// </summary>
-    /// <param name="isOver">
-    /// if set to <c>true</c> is over.
-    /// </param>
-    protected override void MouseOverControlPanel(bool isOver)
-    {
-      base.MouseOverControlPanel(isOver);
-      this.ignoreMouse = isOver;
-    }
-
-    /// <summary>
-    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown"/> attached event reaches an
-    ///   element
-    ///   in its route that is derived from this class. Implement this method to add class handling for this event.
-    ///   Resets the calibration on F10.
-    /// </summary>
-    /// <param name="e">
-    /// The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.
-    /// </param>
+    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
     protected override void OnPreviewKeyDown(KeyEventArgs e)
     {
       base.OnPreviewKeyDown(e);

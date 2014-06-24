@@ -1,29 +1,30 @@
 <ResourceDictionary
-  x:Class="VianaNET.CustomStyles.Styles.VianaStyle"
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	x:Class="VianaNET.CustomStyles.Styles.VianaStyle"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	>
 
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="OfficeColors.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/CheckBox.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ComboBox.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ImageButton.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RadioButton.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollBar.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollViewer.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/Slider.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/SliderValue.xaml" />
+    <ResourceDictionary Source="OfficeColors.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/CheckBox.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ComboBox.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ImageButton.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RadioButton.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollBar.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollViewer.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/Slider.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/SliderValue.xaml"/>
     <!--<ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RibbonSliderValue.xaml"/>-->
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/MediaSlider.xaml" />
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/NumericUpDown.xaml" />
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/MediaSlider.xaml"/>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/NumericUpDown.xaml"/>
     <!--<ResourceDictionary Source="DataGridStyles.xaml"/>-->
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Converter/Converter.xaml" />
-    <ResourceDictionary Source="BackgroundStyles.xaml" />
-    <ResourceDictionary Source="GeometryItems.xaml" />
-    <ResourceDictionary Source="SliderStyles.xaml" />
-    <ResourceDictionary Source="EnumStyles.xaml" />
-    <ResourceDictionary Source="DataGridStyle.xaml" />
-    <ResourceDictionary Source="TextBoxStyles.xaml" />
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Converter/Converter.xaml"/>
+    <ResourceDictionary Source="BackgroundStyles.xaml"/>
+    <ResourceDictionary Source="GeometryItems.xaml"/>
+    <ResourceDictionary Source="SliderStyles.xaml"/>
+    <ResourceDictionary Source="EnumStyles.xaml"/>
+    <ResourceDictionary Source="DataGridStyle.xaml"/>
+    <ResourceDictionary Source="TextBoxStyles.xaml"/>
   </ResourceDictionary.MergedDictionaries>
   <!-- Dummy Style, anything you won't use goes, otherwise all styling is lost... see
   http://stackoverflow.com/questions/1229395/trouble-referencing-a-resource-dictionary-that-contains-a-merged-dictionary

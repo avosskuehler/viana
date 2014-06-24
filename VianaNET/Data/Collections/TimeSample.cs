@@ -2,7 +2,7 @@
 // <copyright file="TimeSample.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,26 +23,38 @@
 //   The time sample.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using VianaNET.Application;
+
 namespace VianaNET.Data.Collections
 {
   using System.Collections.Generic;
+
+  using VianaNET.Modules.Video.Control;
 
   /// <summary>
   ///   The time sample.
   /// </summary>
   public class TimeSample
   {
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="TimeSample" /> class.
+    /// </summary>
+    public TimeSample()
+    {
+      //this.Object = new DataSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+    }
+
+    #endregion
+
     #region Public Properties
 
     /// <summary>
     ///   Gets or sets the framenumber.
     /// </summary>
     public int Framenumber { get; set; }
-
-    /// <summary>
-    ///   Gets or sets a value indicating whether this sample is selected
-    /// </summary>
-    public bool IsSelected { get; set; }
 
     /// <summary>
     ///   Gets or sets the object.
@@ -53,6 +65,11 @@ namespace VianaNET.Data.Collections
     ///   Gets or sets the timestamp.
     /// </summary>
     public long Timestamp { get; set; }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether this sample is selected
+    /// </summary>
+    public bool IsSelected { get; set; }
 
     #endregion
 
@@ -67,13 +84,13 @@ namespace VianaNET.Data.Collections
       /// The compare.
       /// </summary>
       /// <param name="x">
-      /// The x.
+      /// The x. 
       /// </param>
       /// <param name="y">
-      /// The y.
+      /// The y. 
       /// </param>
       /// <returns>
-      /// The <see cref="int"/> .
+      /// The <see cref="int"/> . 
       /// </returns>
       public int Compare(TimeSample x, TimeSample y)
       {

@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Interaction logic for BlobsControl.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.BlobDetection
 {
@@ -83,9 +80,9 @@ namespace VianaNET.Modules.Video.BlobDetection
 
           var dataPoint = new Ellipse
                             {
-                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]), 
-                              StrokeThickness = 2, 
-                              Width = 15, 
+                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+                              StrokeThickness = 2,
+                              Width = 15,
                               Height = 15
                             };
           var location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
@@ -105,7 +102,9 @@ namespace VianaNET.Modules.Video.BlobDetection
       Viana.Project.VideoData.PropertyChanged += this.VideoDataPropertyChanged;
       Viana.Project.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
       Video.Instance.PropertyChanged += this.VideoPropertyChanged;
+
     }
+
 
     #endregion
 
@@ -126,44 +125,6 @@ namespace VianaNET.Modules.Video.BlobDetection
     }
 
     /// <summary>
-    /// Handles the OnSizeChanged event of the BlobsControl control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="SizeChangedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void BlobsControl_OnSizeChanged(object sender, SizeChangedEventArgs e)
-    {
-      this.ResetOuterRegion();
-    }
-
-    /// <summary>
-    /// Calibration data property changed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="PropertyChangedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void CalibrationDataPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "ClipRegion")
-      {
-        this.ResetOuterRegion();
-      }
-
-      if (e.PropertyName == "HasClipRegion")
-      {
-        this.OuterRegion.Visibility = Viana.Project.CalibrationData.HasClipRegion
-                                        ? Visibility.Visible
-                                        : Visibility.Hidden;
-      }
-    }
-
-    /// <summary>
     /// Canvas data points size changed.
     /// </summary>
     /// <param name="sender">
@@ -178,7 +139,7 @@ namespace VianaNET.Modules.Video.BlobDetection
                                     {
                                       ScaleX =
                                         this.CanvasDataPoints.ActualWidth
-                                        / Video.Instance.VideoElement.NaturalVideoWidth, 
+                                        / Video.Instance.VideoElement.NaturalVideoWidth,
                                       ScaleY =
                                         this.CanvasDataPoints.ActualHeight
                                         / Video.Instance.VideoElement.NaturalVideoHeight
@@ -189,15 +150,9 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <summary>
     /// Gets the scales.
     /// </summary>
-    /// <param name="scaleX">
-    /// The scale x.
-    /// </param>
-    /// <param name="scaleY">
-    /// The scale y.
-    /// </param>
-    /// <returns>
-    /// True if successfull
-    /// </returns>
+    /// <param name="scaleX">The scale x.</param>
+    /// <param name="scaleY">The scale y.</param>
+    /// <returns>True if successfull</returns>
     private bool GetScales(out double scaleX, out double scaleY)
     {
       scaleX = this.OverlayImageControl.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
@@ -209,21 +164,44 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// <summary>
     /// Gets the scales for processed frame.
     /// </summary>
-    /// <param name="scaleX">
-    /// The scale x.
-    /// </param>
-    /// <param name="scaleY">
-    /// The scale y.
-    /// </param>
-    /// <returns>
-    /// True if successfull
-    /// </returns>
+    /// <param name="scaleX">The scale x.</param>
+    /// <param name="scaleY">The scale y.</param>
+    /// <returns>True if successfull</returns>
     private bool GetScalesForProcessedFrame(out double scaleX, out double scaleY)
     {
       scaleX = this.OriginalImageControl.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
       scaleY = this.OriginalImageControl.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
 
       return !double.IsInfinity(scaleX) && !double.IsNaN(scaleX);
+    }
+
+    /// <summary>
+    ///   The reset outer region.
+    /// </summary>
+    private void ResetOuterRegion()
+    {
+      if (this.Visibility != Visibility.Visible)
+      {
+        return;
+      }
+
+      double scaleX;
+      double scaleY;
+      if (this.GetScalesForProcessedFrame(out scaleX, out scaleY))
+      {
+        // it is zero during deserialization
+        if (scaleX != 0 && scaleY != 0)
+        {
+          var geometry = this.OuterRegion.Data as CombinedGeometry;
+          var outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
+          outerRectangleGeometry.Rect = new Rect(0, 0, this.OriginalImageControl.ActualWidth, this.OriginalImageControl.ActualHeight);
+          var innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
+          var innerRect = new Rect(
+            new Point(Viana.Project.CalibrationData.ClipRegion.Left * scaleX, Viana.Project.CalibrationData.ClipRegion.Top * scaleY),
+            new Point(Viana.Project.CalibrationData.ClipRegion.Right * scaleX, Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY));
+          innerRectangleGeometry.Rect = innerRect;
+        }
+      }
     }
 
     /// <summary>
@@ -257,40 +235,20 @@ namespace VianaNET.Modules.Video.BlobDetection
     }
 
     /// <summary>
-    ///   The reset outer region.
+    /// Calibration data property changed.
     /// </summary>
-    private void ResetOuterRegion()
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    private void CalibrationDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (this.Visibility != Visibility.Visible)
+      if (e.PropertyName == "ClipRegion")
       {
-        return;
+        this.ResetOuterRegion();
       }
 
-      double scaleX;
-      double scaleY;
-      if (this.GetScalesForProcessedFrame(out scaleX, out scaleY))
+      if (e.PropertyName == "HasClipRegion")
       {
-        // it is zero during deserialization
-        if (scaleX != 0 && scaleY != 0)
-        {
-          var geometry = this.OuterRegion.Data as CombinedGeometry;
-          var outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
-          outerRectangleGeometry.Rect = new Rect(
-            0, 
-            0, 
-            this.OriginalImageControl.ActualWidth, 
-            this.OriginalImageControl.ActualHeight);
-          var innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
-          var innerRect =
-            new Rect(
-              new Point(
-                Viana.Project.CalibrationData.ClipRegion.Left * scaleX, 
-                Viana.Project.CalibrationData.ClipRegion.Top * scaleY), 
-              new Point(
-                Viana.Project.CalibrationData.ClipRegion.Right * scaleX, 
-                Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY));
-          innerRectangleGeometry.Rect = innerRect;
-        }
+        this.OuterRegion.Visibility = Viana.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden;
       }
     }
 
@@ -326,10 +284,10 @@ namespace VianaNET.Modules.Video.BlobDetection
                                    : Brushes.Black;
           var blobEllipse = new Ellipse
                               {
-                                Fill = fill, 
-                                Stroke = Brushes.Black, 
-                                StrokeThickness = 1, 
-                                Width = blob.Width * scaleX, 
+                                Fill = fill,
+                                Stroke = Brushes.Black,
+                                StrokeThickness = 1,
+                                Width = blob.Width * scaleX,
                                 Height = blob.Height * scaleY
                               };
 
@@ -358,9 +316,9 @@ namespace VianaNET.Modules.Video.BlobDetection
         {
           var dataPoint = new Ellipse
                             {
-                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]), 
-                              StrokeThickness = 2, 
-                              Width = 15, 
+                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+                              StrokeThickness = 2,
+                              Width = 15,
                               Height = 15
                             };
           Point location = Viana.Project.VideoData.LastPoint[i];
@@ -391,6 +349,17 @@ namespace VianaNET.Modules.Video.BlobDetection
       }
     }
 
+    /// <summary>
+    /// Handles the OnSizeChanged event of the BlobsControl control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
+    private void BlobsControl_OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+      this.ResetOuterRegion();
+    }
+
     #endregion
+
   }
 }

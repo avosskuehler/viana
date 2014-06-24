@@ -2,7 +2,7 @@
 // <copyright file="LengthDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,13 +23,14 @@
 //   The length dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
+  using Application;
+  using CustomStyles.Types;
+  using MainWindow;
 
-  using VianaNET.Application;
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.MainWindow;
   using VianaNET.Resources;
 
   /// <summary>
@@ -40,7 +41,7 @@ namespace VianaNET.Modules.Video.Dialogs
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="LengthDialog" /> class.
+    /// Initializes a new instance of the <see cref="LengthDialog" /> class. 
     /// </summary>
     public LengthDialog()
     {
@@ -51,14 +52,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
-    #region Public Properties
-
-    /// <summary>
-    /// Gets or sets the unit value.
-    /// </summary>
     public string UnitValue { get; set; }
-
-    #endregion
 
     #region Methods
 
@@ -66,10 +60,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The cancel_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Cancel_Click(object sender, RoutedEventArgs e)
     {
@@ -80,10 +74,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The o k_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void OK_Click(object sender, RoutedEventArgs e)
     {
@@ -120,9 +114,9 @@ namespace VianaNET.Modules.Video.Dialogs
       else
       {
         var dlg = new VianaDialog(
-          Labels.CalibrationErrorTitle, 
-          Labels.CalibrationErrorDescription, 
-          Labels.CalibrationErrorMessage, 
+          Labels.CalibrationErrorTitle,
+          Labels.CalibrationErrorDescription,
+          Labels.CalibrationErrorMessage,
           true);
 
         dlg.ShowDialog();

@@ -2,7 +2,7 @@
 // <copyright file="Histogram.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -82,10 +82,10 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="Histogram"/> class.
     /// </summary>
     /// <param name="histX">
-    /// The hist x.
+    /// The hist x. 
     /// </param>
     /// <param name="histY">
-    /// The hist y.
+    /// The hist y. 
     /// </param>
     public Histogram(int[] histX, int[] histY)
     {
@@ -153,10 +153,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The from int ptr map.
     /// </summary>
     /// <param name="map">
-    /// The map.
+    /// The map. 
     /// </param>
     /// <returns>
-    /// The <see cref="Histogram"/> .
+    /// The <see cref="Histogram"/> . 
     /// </returns>
     public unsafe Histogram FromIntPtrMap(IntPtr map)
     {
@@ -246,7 +246,7 @@ namespace VianaNET.Modules.Video.Filter
     /// The process in place.
     /// </summary>
     /// <param name="image">
-    /// The image.
+    /// The image. 
     /// </param>
     public override void ProcessInPlace(IntPtr image)
     {

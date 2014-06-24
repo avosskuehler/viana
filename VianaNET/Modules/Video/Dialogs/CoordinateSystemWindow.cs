@@ -19,10 +19,8 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The window to specify the coordinate system
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
@@ -155,10 +153,10 @@ namespace VianaNET.Modules.Video.Dialogs
         var vectorDefault = new Vector(1, 0);
         var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
         var vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
-        double angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
-        int scaleY = angle > 0 ? 1 : -1;
+        var angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
+        var scaleY = angle > 0 ? 1 : -1;
         var matrix = new Matrix();
-        double angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
+        var angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
         matrix.Scale(1, scaleY);
         matrix.Rotate(-angleX);
 
@@ -210,14 +208,11 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown"/> attached event reaches an
-    ///   element
-    ///   in its route that is derived from this class. Implement this method to add class handling for this event.
-    ///   Resets the clipping on F10.
+    /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
+    /// in its route that is derived from this class. Implement this method to add class handling for this event.
+    /// Resets the clipping on F10.
     /// </summary>
-    /// <param name="e">
-    /// The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.
-    /// </param>
+    /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
     protected override void OnPreviewKeyDown(KeyEventArgs e)
     {
       base.OnPreviewKeyDown(e);
@@ -328,7 +323,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
         var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
         var vectorMouse = new Vector(mouseLocation.X - originXInScreenPixel, mouseLocation.Y - originYInScreenPixel);
-        double angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
+        var angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
         Vector vectorY;
         if (angleMouseXAxis >= 0 && angleMouseXAxis <= 180)
         {

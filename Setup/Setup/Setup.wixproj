@@ -39,6 +39,9 @@
     <Content Include="Config.wxi" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="en-US.wxl" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\VianaNET\VianaNET.csproj">
       <Name>VianaNET</Name>
       <Project>{b78f89b8-61cf-4dba-9e96-bbd210848855}</Project>

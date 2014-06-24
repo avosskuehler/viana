@@ -2,7 +2,7 @@
 // <copyright file="ColorAndCropFilterYCbCr.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -190,7 +190,7 @@ namespace VianaNET.Modules.Video.Filter
     /// Process the filter on the specified image.
     /// </summary>
     /// <param name="image">
-    /// Source image data.
+    /// Source image data. 
     /// </param>
     public override unsafe void ProcessInPlace(IntPtr image)
     {
@@ -235,11 +235,14 @@ namespace VianaNET.Modules.Video.Filter
             && this.pixelColor.Cb <= highThresCb && this.pixelColor.Cr >= lowThresCr
             && this.pixelColor.Cr <= highThresCr)
         {
+          continue;
         }
-
-        ptr[R] = blank.R;
-        ptr[G] = blank.G;
-        ptr[B] = blank.B;
+        else
+        {
+          ptr[R] = blank.R;
+          ptr[G] = blank.G;
+          ptr[B] = blank.B;
+        }
 
         // ptr += offset;
       }
@@ -308,13 +311,13 @@ namespace VianaNET.Modules.Video.Filter
     /// The update pixel color from rgb.
     /// </summary>
     /// <param name="r">
-    /// The r.
+    /// The r. 
     /// </param>
     /// <param name="g">
-    /// The g.
+    /// The g. 
     /// </param>
     /// <param name="b">
-    /// The b.
+    /// The b. 
     /// </param>
     private void UpdatePixelColorFromRgb(byte r, byte g, byte b)
     {
@@ -337,14 +340,10 @@ namespace VianaNET.Modules.Video.Filter
       YCbCrColor targetColorInYCbCr = YCbCrColor.FromArgbColor(this.targetColor);
 
       this.LowerThreshold = new YCbCrColor(
-        0.1f, 
-        targetColorInYCbCr.Cb - this.threshold / 500f, 
-        targetColorInYCbCr.Cr - this.threshold / 500f);
+        0.1f, targetColorInYCbCr.Cb - this.threshold / 500f, targetColorInYCbCr.Cr - this.threshold / 500f);
 
       this.UpperThreshold = new YCbCrColor(
-        1.0f, 
-        targetColorInYCbCr.Cb + this.threshold / 500f, 
-        targetColorInYCbCr.Cr + this.threshold / 500f);
+        1.0f, targetColorInYCbCr.Cb + this.threshold / 500f, targetColorInYCbCr.Cr + this.threshold / 500f);
     }
 
     #endregion

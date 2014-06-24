@@ -2,7 +2,7 @@
 // <copyright file="YCbCrColor.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -46,13 +46,13 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="YCbCrColor"/> class.
     /// </summary>
     /// <param name="y">
-    /// The y.
+    /// The y. 
     /// </param>
     /// <param name="cb">
-    /// The cb.
+    /// The cb. 
     /// </param>
     /// <param name="cr">
-    /// The cr.
+    /// The cr. 
     /// </param>
     public YCbCrColor(float y, float cb, float cr)
     {
@@ -110,10 +110,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The from argb color.
     /// </summary>
     /// <param name="color">
-    /// The color.
+    /// The color. 
     /// </param>
     /// <returns>
-    /// The <see cref="YCbCrColor"/> .
+    /// The <see cref="YCbCrColor"/> . 
     /// </returns>
     public static YCbCrColor FromArgbColor(Color color)
     {
@@ -124,10 +124,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The from argb colori.
     /// </summary>
     /// <param name="color">
-    /// The color.
+    /// The color. 
     /// </param>
     /// <returns>
-    /// The <see cref="YCbCrColor"/> .
+    /// The <see cref="YCbCrColor"/> . 
     /// </returns>
     public static YCbCrColor FromArgbColori(int color)
     {
@@ -138,16 +138,16 @@ namespace VianaNET.Modules.Video.Filter
     /// The from rgb.
     /// </summary>
     /// <param name="r">
-    /// The r.
+    /// The r. 
     /// </param>
     /// <param name="g">
-    /// The g.
+    /// The g. 
     /// </param>
     /// <param name="b">
-    /// The b.
+    /// The b. 
     /// </param>
     /// <returns>
-    /// The <see cref="YCbCrColor"/> .
+    /// The <see cref="YCbCrColor"/> . 
     /// </returns>
     public static YCbCrColor FromRgb(byte r, byte g, byte b)
     {
@@ -168,20 +168,18 @@ namespace VianaNET.Modules.Video.Filter
     /// The interpolate.
     /// </summary>
     /// <param name="c2">
-    /// The c 2.
+    /// The c 2. 
     /// </param>
     /// <param name="amount">
-    /// The amount.
+    /// The amount. 
     /// </param>
     /// <returns>
-    /// The <see cref="YCbCrColor"/> .
+    /// The <see cref="YCbCrColor"/> . 
     /// </returns>
     public YCbCrColor Interpolate(YCbCrColor c2, float amount)
     {
       return new YCbCrColor(
-        this.Y + (c2.Y - this.Y) * amount, 
-        this.Cb + (c2.Cb - this.Cb) * amount, 
-        this.Cr + (c2.Cr - this.Cr) * amount);
+        this.Y + (c2.Y - this.Y) * amount, this.Cb + (c2.Cb - this.Cb) * amount, this.Cr + (c2.Cr - this.Cr) * amount);
     }
 
     /// <summary>

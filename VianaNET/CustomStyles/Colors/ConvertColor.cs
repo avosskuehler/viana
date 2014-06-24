@@ -2,7 +2,7 @@
 // <copyright file="ConvertColor.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -29,6 +29,8 @@ namespace VianaNET.CustomStyles.Colors
 {
   using System;
   using System.Windows.Media;
+
+  using OxyPlot;
 
   /// <summary>
   ///   Convert colors from RGB to HSL/HSV and vice-versa.
@@ -62,10 +64,10 @@ namespace VianaNET.CustomStyles.Colors
     /// HSL to RGB Color Converter
     /// </summary>
     /// <param name="hslColor">
-    /// HSL Color to be converted.
+    /// HSL Color to be converted. 
     /// </param>
     /// <returns>
-    /// The HSL color as a RGB <see cref="Color"/>
+    /// The HSL color as a RGB <see cref="Color"/> 
     /// </returns>
     public static Color HSLToRGB(HSXColor hslColor)
     {
@@ -76,16 +78,16 @@ namespace VianaNET.CustomStyles.Colors
     /// HSL to RGB Color Converter
     /// </summary>
     /// <param name="h">
-    /// The hue value
+    /// The hue value 
     /// </param>
     /// <param name="s">
-    /// The saturation value
+    /// The saturation value 
     /// </param>
     /// <param name="l">
-    /// The luminance value
+    /// The luminance value 
     /// </param>
     /// <returns>
-    /// The HSL color as a RGB <see cref="Color"/>
+    /// The HSL color as a RGB <see cref="Color"/> 
     /// </returns>
     public static Color HSLToRGB(float? h, float s, float l)
     {
@@ -140,10 +142,10 @@ namespace VianaNET.CustomStyles.Colors
     /// HSV to RGB Color Converter
     /// </summary>
     /// <param name="hsvColor">
-    /// HSV Color to be converted.
+    /// HSV Color to be converted. 
     /// </param>
     /// <returns>
-    /// The HSV color as a RGB <see cref="Color"/>
+    /// The HSV color as a RGB <see cref="Color"/> 
     /// </returns>
     public static Color HSVToRGB(HSXColor hsvColor)
     {
@@ -154,16 +156,16 @@ namespace VianaNET.CustomStyles.Colors
     /// HSV to RGB Color Converter
     /// </summary>
     /// <param name="h">
-    /// The hue value
+    /// The hue value 
     /// </param>
     /// <param name="s">
-    /// The saturation value
+    /// The saturation value 
     /// </param>
     /// <param name="v">
-    /// The XXX value
+    /// The XXX value 
     /// </param>
     /// <returns>
-    /// The HSV color as a RGB <see cref="Color"/>
+    /// The HSV color as a RGB <see cref="Color"/> 
     /// </returns>
     public static Color HSVToRGB(float? h, float s, float v)
     {
@@ -236,10 +238,10 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSL Color Converter
     /// </summary>
     /// <param name="color">
-    /// RGB Color to be converted
+    /// RGB Color to be converted 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSL(Color color)
     {
@@ -250,16 +252,16 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSL Color Converter
     /// </summary>
     /// <param name="r">
-    /// Red value (0 to 255).
+    /// Red value (0 to 255). 
     /// </param>
     /// <param name="g">
-    /// Green value (0 to 255).
+    /// Green value (0 to 255). 
     /// </param>
     /// <param name="b">
-    /// Blue value (0 to 255).
+    /// Blue value (0 to 255). 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSL(byte r, byte g, byte b)
     {
@@ -270,16 +272,16 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSL Color Converter
     /// </summary>
     /// <param name="r">
-    /// Red value (0 to 1).
+    /// Red value (0 to 1). 
     /// </param>
     /// <param name="g">
-    /// Green value (0 to 1).
+    /// Green value (0 to 1). 
     /// </param>
     /// <param name="b">
-    /// Blue value (0 to 1).
+    /// Blue value (0 to 1). 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSL(float r, float g, float b)
     {
@@ -337,10 +339,10 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSV Color Converter
     /// </summary>
     /// <param name="color">
-    /// RGB Color.
+    /// RGB Color. 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSV(Color color)
     {
@@ -351,16 +353,16 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSV Color Converter
     /// </summary>
     /// <param name="r">
-    /// Red value (0 to 255).
+    /// Red value (0 to 255). 
     /// </param>
     /// <param name="g">
-    /// Green value (0 to 255).
+    /// Green value (0 to 255). 
     /// </param>
     /// <param name="b">
-    /// Blue value (0 to 255).
+    /// Blue value (0 to 255). 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSV(byte r, byte g, byte b)
     {
@@ -371,16 +373,16 @@ namespace VianaNET.CustomStyles.Colors
     /// RGB to HSV Color Converter
     /// </summary>
     /// <param name="r">
-    /// Red value (0 to 1).
+    /// Red value (0 to 1). 
     /// </param>
     /// <param name="g">
-    /// Green value (0 to 1).
+    /// Green value (0 to 1). 
     /// </param>
     /// <param name="b">
-    /// Blue value (0 to 1).
+    /// Blue value (0 to 1). 
     /// </param>
     /// <returns>
-    /// The RGB color as a <see cref="HSXColor"/>
+    /// The RGB color as a <see cref="HSXColor"/> 
     /// </returns>
     public static HSXColor RBGToHSV(float r, float g, float b)
     {
@@ -435,16 +437,16 @@ namespace VianaNET.CustomStyles.Colors
     /// Converts colors. Don´t know exactly what it does.
     /// </summary>
     /// <param name="value">
-    /// r,g,b value
+    /// r,g,b value 
     /// </param>
     /// <param name="q">
-    /// q value (don´t know what that is)
+    /// q value (don´t know what that is) 
     /// </param>
     /// <param name="p">
-    /// p value (don´t know what that is)
+    /// p value (don´t know what that is) 
     /// </param>
     /// <returns>
-    /// A float with the r,g or b value.
+    /// A float with the r,g or b value. 
     /// </returns>
     private static float HSLToRGBAux(float value, float q, float p)
     {

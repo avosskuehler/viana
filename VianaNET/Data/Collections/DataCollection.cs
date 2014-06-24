@@ -19,13 +19,11 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The data collection.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Collections
 {
   using System;
+  using System.Collections.Generic;
   using System.Linq;
 
   using VianaNET.CustomStyles.Types;
@@ -44,6 +42,10 @@ namespace VianaNET.Data.Collections
       : base(new TimeSample.TimeComparer())
     {
     }
+
+    #endregion
+
+    #region Public Events
 
     #endregion
 
@@ -111,6 +113,7 @@ namespace VianaNET.Data.Collections
       return false;
     }
 
+
     /// <summary>
     /// Gets the sample located at the given frameindex.
     /// </summary>
@@ -156,5 +159,6 @@ namespace VianaNET.Data.Collections
     }
 
     #endregion
+
   }
 }

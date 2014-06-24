@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Interaction logic for ModifyDataWindow.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.DataAcquisition
 {
@@ -37,7 +34,7 @@ namespace VianaNET.Modules.DataAcquisition
   using VianaNET.Application;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
+  using VianaNET.Data;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Resources;
 
@@ -52,9 +49,9 @@ namespace VianaNET.Modules.DataAcquisition
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
     /// </summary>
     public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair", 
-      typeof(SolidColorBrush), 
-      typeof(ModifyDataWindow), 
+      "BrushOfCossHair",
+      typeof(SolidColorBrush),
+      typeof(ModifyDataWindow),
       new FrameworkPropertyMetadata(Brushes.Red, OnPropertyChanged));
 
     /// <summary>
@@ -62,9 +59,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject", 
-        typeof(int), 
-        typeof(ModifyDataWindow), 
+        "IndexOfTrackedObject",
+        typeof(int),
+        typeof(ModifyDataWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -72,30 +69,24 @@ namespace VianaNET.Modules.DataAcquisition
     #region Fields
 
     /// <summary>
-    ///   Stores the arrow pointers
-    /// </summary>
-    private readonly ArrowPointer[] arrowPointers;
-
-    /// <summary>
-    ///   Stores the dragging state of the (max) three objects
-    /// </summary>
-    private readonly bool[] isDraggingCursor;
-
-    /// <summary>
     ///   The timeslider update timer.
     /// </summary>
     private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
-    ///   Indicates the visibility state of the sharp cursor
-    ///   on entering the control panel
-    /// </summary>
-    private bool hadSharpCursorOnEnteringControlPanel;
-
-    /// <summary>
-    ///   Indicates the dragging of the time line thumb
+    /// Indicates the dragging of the time line thumb
     /// </summary>
     private bool isDraggingTimeLineThumb;
+
+    /// <summary>
+    /// Stores the dragging state of the (max) three objects
+    /// </summary>
+    private bool[] isDraggingCursor;
+
+    /// <summary>
+    /// Stores the arrow pointers
+    /// </summary>
+    private ArrowPointer[] arrowPointers;
 
     /// <summary>
     ///   The mouse down location.
@@ -107,13 +98,19 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private int visualDataPointRadius = 8;
 
+    /// <summary>
+    /// Indicates the visibility state of the sharp cursor
+    /// on entering the control panel
+    /// </summary>
+    private bool hadSharpCursorOnEnteringControlPanel;
+
     #endregion
 
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ModifyDataWindow" /> class.
-    ///   Initializes a new instance of the <see cref="ManualDataAquisitionWindow" /> class.
+    /// Initializes a new instance of the <see cref="ModifyDataWindow"/> class. 
+    ///   Initializes a new instance of the <see cref="ManualDataAquisitionWindow"/> class.
     /// </summary>
     public ModifyDataWindow()
     {
@@ -122,7 +119,7 @@ namespace VianaNET.Modules.DataAcquisition
       this.ObjectIndexPanel.DataContext = this;
       this.WindowCanvas.DataContext = this;
 
-      int arrowCount = Viana.Project.ProcessingData.NumberOfTrackedObjects;
+      var arrowCount = Viana.Project.ProcessingData.NumberOfTrackedObjects;
       this.isDraggingCursor = new bool[arrowCount];
       this.arrowPointers = new ArrowPointer[arrowCount];
       for (int i = 0; i < arrowCount; i++)
@@ -198,26 +195,20 @@ namespace VianaNET.Modules.DataAcquisition
 
     #endregion
 
-    #region Public Methods and Operators
+    #region Methods
 
     /// <summary>
     /// Moves to given frame index.
     /// </summary>
-    /// <param name="frameIndex">
-    /// Index of the frame.
-    /// </param>
+    /// <param name="frameIndex">Index of the frame.</param>
     public void MoveToFrame(int frameIndex)
     {
-      long newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInNanoSeconds * frameIndex;
+      var newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInNanoSeconds * frameIndex;
       Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds = newMediaPosition;
       this.TimelineSlider.Value = newMediaPosition * VideoBase.NanoSecsToMilliSecs;
       Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       this.UpdateDataPointLocation();
     }
-
-    #endregion
-
-    #region Methods
 
     /// <summary>
     /// Raises the PropertyChanged event.
@@ -246,45 +237,8 @@ namespace VianaNET.Modules.DataAcquisition
           window.IndexOfTrackedObject = 1;
         }
 
-        window.BrushOfCossHair =
-          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+        window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
       }
-    }
-
-    /// <summary>
-    /// The arrow shape mouse left button down.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void ArrowShapeMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      var arrowShape = sender as ArrowPointer;
-      if (arrowShape == null)
-      {
-        return;
-      }
-
-      string index = arrowShape.Name.Replace("Object", string.Empty);
-      this.IndexOfTrackedObject = int.Parse(index);
-
-      this.Cursor = Cursors.Hand;
-
-      for (int i = 0; i < this.isDraggingCursor.Length; i++)
-      {
-        this.isDraggingCursor[i] = false;
-      }
-
-      this.isDraggingCursor[this.IndexOfTrackedObject - 1] = true;
-
-      // Retrieve the coordinate of the mouse position.
-      Point pt = e.GetPosition((UIElement)sender);
-      this.MoveSharpCursorToScreenLocation(pt);
-      this.SetVisibilityOfSharpCursor(true);
-      this.MoveArrowCursorToScreenLocation(this.IndexOfTrackedObject, pt);
     }
 
     /// <summary>
@@ -339,55 +293,6 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The cursor ellipse_ on mouse left button up.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void CursorEllipse_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      if (this.Cursor == Cursors.Hand)
-      {
-        this.SetVisibilityOfSharpCursor(false);
-        this.Cursor = Cursors.Arrow;
-
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-        double originalX = factorX * scaledX;
-        double originalY = factorY * scaledY;
-
-        Viana.Project.VideoData.UpdatePoint(
-          Video.Instance.FrameIndex, 
-          this.IndexOfTrackedObject - 1, 
-          new Point(originalX, originalY));
-      }
-    }
-
-    /// <summary>
-    /// The cursor ellipse_ on mouse move.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void CursorEllipse_OnMouseMove(object sender, MouseEventArgs e)
-    {
-      if (Mouse.LeftButton == MouseButtonState.Pressed && this.Cursor == Cursors.Hand)
-      {
-        Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
-        this.MoveSharpCursorToScreenLocation(mouseMoveLocation);
-        this.MoveArrowCursorToScreenLocation(this.IndexOfTrackedObject, mouseMoveLocation);
-      }
-    }
-
-    /// <summary>
     /// Drag window mouse down.
     /// </summary>
     /// <param name="sender">
@@ -417,17 +322,6 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// The hide arrow pointer.
-    /// </summary>
-    /// <param name="i">
-    /// The i.
-    /// </param>
-    private void HideArrowPointer(int i)
-    {
-      this.arrowPointers[i - 1].Visibility = Visibility.Collapsed;
-    }
-
-    /// <summary>
     /// Hides the window.
     /// </summary>
     /// <param name="sender">
@@ -452,74 +346,25 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void MinimizeWindow(object sender, MouseButtonEventArgs e)
     {
-      this.HelpText.Visibility = this.HelpText.Visibility == Visibility.Visible
-                                   ? Visibility.Collapsed
-                                   : Visibility.Visible;
-    }
-
-    /// <summary>
-    /// The move arrow cursor to screen location.
-    /// </summary>
-    /// <param name="objectIndex">
-    /// The object index.
-    /// </param>
-    /// <param name="screenLocation">
-    /// The screen location.
-    /// </param>
-    private void MoveArrowCursorToScreenLocation(int objectIndex, Point screenLocation)
-    {
-      this.arrowPointers[objectIndex - 1].X = screenLocation.X;
-      this.arrowPointers[objectIndex - 1].Y = screenLocation.Y;
-    }
-
-    /// <summary>
-    /// The move sharp cursor to screen location.
-    /// </summary>
-    /// <param name="newLocation">
-    /// The new location.
-    /// </param>
-    private void MoveSharpCursorToScreenLocation(Point newLocation)
-    {
-      this.HorizontalCursorLineLeft.Y1 = newLocation.Y;
-      this.HorizontalCursorLineLeft.Y2 = newLocation.Y;
-      this.HorizontalCursorLineLeft.X2 = newLocation.X - this.visualDataPointRadius;
-      this.HorizontalCursorLineRight.Y1 = newLocation.Y;
-      this.HorizontalCursorLineRight.Y2 = newLocation.Y;
-      this.HorizontalCursorLineRight.X1 = newLocation.X + this.visualDataPointRadius;
-      this.VerticalCursorLineTop.X1 = newLocation.X;
-      this.VerticalCursorLineTop.X2 = newLocation.X;
-      this.VerticalCursorLineTop.Y2 = newLocation.Y - this.visualDataPointRadius;
-      this.VerticalCursorLineBottom.X1 = newLocation.X;
-      this.VerticalCursorLineBottom.X2 = newLocation.X;
-      this.VerticalCursorLineBottom.Y1 = newLocation.Y + this.visualDataPointRadius;
-      Canvas.SetTop(this.CursorEllipse, newLocation.Y - this.visualDataPointRadius);
-      Canvas.SetLeft(this.CursorEllipse, newLocation.X - this.visualDataPointRadius);
-
-      // Update crosshair brush
-      this.BrushOfCossHair = new SolidColorBrush(
-        Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
+      this.HelpText.Visibility = this.HelpText.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
     }
 
     /// <summary>
     /// Handles the MouseDown event of the player control.
-    ///   This captures the click location and transforms to video coordinates
+    /// This captures the click location and transforms to video coordinates
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void PlayerMouseDown(object sender, MouseButtonEventArgs e)
     {
       if (e.ChangedButton == MouseButton.Left)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-        double originalX = factorX * scaledX;
-        double originalY = factorY * scaledY;
+        var scaledX = e.GetPosition(this.VideoImage).X;
+        var scaledY = e.GetPosition(this.VideoImage).Y;
+        var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        var factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+        var originalX = factorX * scaledX;
+        var originalY = factorY * scaledY;
 
         Viana.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
@@ -538,6 +383,33 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
+    private void ArrowShapeMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+      var arrowShape = sender as ArrowPointer;
+      if (arrowShape == null)
+      {
+        return;
+      }
+
+      var index = arrowShape.Name.Replace("Object", string.Empty);
+      this.IndexOfTrackedObject = int.Parse(index);
+
+      this.Cursor = Cursors.Hand;
+
+      for (var i = 0; i < this.isDraggingCursor.Length; i++)
+      {
+        this.isDraggingCursor[i] = false;
+      }
+
+      this.isDraggingCursor[this.IndexOfTrackedObject - 1] = true;
+
+      // Retrieve the coordinate of the mouse position.
+      Point pt = e.GetPosition((UIElement)sender);
+      this.MoveSharpCursorToScreenLocation(pt);
+      this.SetVisibilityOfSharpCursor(true);
+      this.MoveArrowCursorToScreenLocation(this.IndexOfTrackedObject, pt);
+    }
+
     /// <summary>
     /// Handles the MouseMove event of the player control.
     /// </summary>
@@ -549,7 +421,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void PlayerMouseMove(object sender, MouseEventArgs e)
     {
-      Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
+      var mouseMoveLocation = e.GetPosition(this.WindowCanvas);
       this.MoveSharpCursorToScreenLocation(mouseMoveLocation);
 
       if (Mouse.LeftButton == MouseButtonState.Pressed && this.Cursor == Cursors.Hand)
@@ -558,31 +430,57 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    /// <summary>
-    /// The set visibility of arrow cursor.
-    /// </summary>
-    /// <param name="shouldShow">
-    /// The should show.
-    /// </param>
-    private void SetVisibilityOfArrowCursor(bool shouldShow)
+    private void CursorEllipse_OnMouseMove(object sender, MouseEventArgs e)
     {
-      if (shouldShow)
+      if (Mouse.LeftButton == MouseButtonState.Pressed && this.Cursor == Cursors.Hand)
       {
-        for (int i = 0; i < this.arrowPointers.Length; i++)
-        {
-          ArrowPointer pointer = this.arrowPointers[i];
-          pointer.Visibility = i < Viana.Project.ProcessingData.NumberOfTrackedObjects
-                                 ? Visibility.Visible
-                                 : Visibility.Hidden;
-        }
+        var mouseMoveLocation = e.GetPosition(this.WindowCanvas);
+        this.MoveSharpCursorToScreenLocation(mouseMoveLocation);
+        this.MoveArrowCursorToScreenLocation(this.IndexOfTrackedObject, mouseMoveLocation);
       }
-      else
+    }
+
+    private void CursorEllipse_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+      if (this.Cursor == Cursors.Hand)
       {
-        foreach (ArrowPointer arrowPointer in this.arrowPointers)
-        {
-          arrowPointer.Visibility = Visibility.Hidden;
-        }
+        this.SetVisibilityOfSharpCursor(false);
+        this.Cursor = Cursors.Arrow;
+
+        double scaledX = e.GetPosition(this.VideoImage).X;
+        double scaledY = e.GetPosition(this.VideoImage).Y;
+        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+        double originalX = factorX * scaledX;
+        double originalY = factorY * scaledY;
+
+        Viana.Project.VideoData.UpdatePoint(
+          Video.Instance.FrameIndex,
+          this.IndexOfTrackedObject - 1,
+          new Point(originalX, originalY));
+
       }
+    }
+
+    private void MoveSharpCursorToScreenLocation(Point newLocation)
+    {
+      this.HorizontalCursorLineLeft.Y1 = newLocation.Y;
+      this.HorizontalCursorLineLeft.Y2 = newLocation.Y;
+      this.HorizontalCursorLineLeft.X2 = newLocation.X - this.visualDataPointRadius;
+      this.HorizontalCursorLineRight.Y1 = newLocation.Y;
+      this.HorizontalCursorLineRight.Y2 = newLocation.Y;
+      this.HorizontalCursorLineRight.X1 = newLocation.X + this.visualDataPointRadius;
+      this.VerticalCursorLineTop.X1 = newLocation.X;
+      this.VerticalCursorLineTop.X2 = newLocation.X;
+      this.VerticalCursorLineTop.Y2 = newLocation.Y - this.visualDataPointRadius;
+      this.VerticalCursorLineBottom.X1 = newLocation.X;
+      this.VerticalCursorLineBottom.X2 = newLocation.X;
+      this.VerticalCursorLineBottom.Y1 = newLocation.Y + this.visualDataPointRadius;
+      Canvas.SetTop(this.CursorEllipse, newLocation.Y - this.visualDataPointRadius);
+      Canvas.SetLeft(this.CursorEllipse, newLocation.X - this.visualDataPointRadius);
+
+      // Update crosshair brush
+      this.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
     }
 
     /// <summary>
@@ -640,6 +538,88 @@ namespace VianaNET.Modules.DataAcquisition
         (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
       this.isDraggingTimeLineThumb = false;
       this.UpdateDataPointLocation();
+    }
+
+    /// <summary>
+    /// Updates the data point location.
+    /// </summary>
+    private void UpdateDataPointLocation()
+    {
+      this.ObjectIndexTextBox.Text = Labels.ModifyDataWindowTrackItemNumberHeader;
+      var sample = Viana.Project.VideoData.Samples.GetSampleByFrameindex(Video.Instance.FrameIndex);
+      var isSet = false;
+      if (sample != null)
+      {
+        this.SetVisibilityOfArrowCursor(true);
+
+        var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        var factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+
+        for (int i = 1; i <= Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        {
+          if (sample.Object != null && sample.Object[i - 1] != null)
+          {
+            var location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
+            location = Viana.Project.CalibrationData.CoordinateTransform.Transform(location);
+            var origin = Viana.Project.CalibrationData.OriginInPixel;
+            location.Offset(origin.X, origin.Y);
+            var scaledX = location.X / factorX;
+            var scaledY = location.Y / factorY;
+
+            var screenLocation = this.VideoImage.TranslatePoint(new Point(scaledX, scaledY), this.WindowCanvas);
+
+            this.MoveArrowCursorToScreenLocation(i, screenLocation);
+          }
+          else
+          {
+            this.HideArrowPointer(i);
+            this.SetVisibilityOfSharpCursor(true);
+            this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
+            if (!isSet)
+            {
+              this.IndexOfTrackedObject = i;
+              isSet = true;
+            }
+          }
+        }
+      }
+      else
+      {
+        this.IndexOfTrackedObject = 1;
+        this.SetVisibilityOfArrowCursor(false);
+        this.SetVisibilityOfSharpCursor(true);
+        this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
+      }
+    }
+
+    private void HideArrowPointer(int i)
+    {
+      this.arrowPointers[i - 1].Visibility = Visibility.Collapsed;
+    }
+
+    private void SetVisibilityOfArrowCursor(bool shouldShow)
+    {
+      if (shouldShow)
+      {
+        for (int i = 0; i < this.arrowPointers.Length; i++)
+        {
+          var pointer = this.arrowPointers[i];
+          pointer.Visibility = i < Viana.Project.ProcessingData.NumberOfTrackedObjects ? Visibility.Visible : Visibility.Hidden;
+        }
+      }
+      else
+      {
+        foreach (var arrowPointer in this.arrowPointers)
+        {
+          arrowPointer.Visibility = Visibility.Hidden;
+        }
+      }
+    }
+
+    private void MoveArrowCursorToScreenLocation(int objectIndex, Point screenLocation)
+    {
+      this.arrowPointers[objectIndex - 1].X = screenLocation.X;
+      this.arrowPointers[objectIndex - 1].Y = screenLocation.Y;
     }
 
     /// <summary>
@@ -704,58 +684,6 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    ///   Updates the data point location.
-    /// </summary>
-    private void UpdateDataPointLocation()
-    {
-      this.ObjectIndexTextBox.Text = Labels.ModifyDataWindowTrackItemNumberHeader;
-      TimeSample sample = Viana.Project.VideoData.Samples.GetSampleByFrameindex(Video.Instance.FrameIndex);
-      bool isSet = false;
-      if (sample != null)
-      {
-        this.SetVisibilityOfArrowCursor(true);
-
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-
-        for (int i = 1; i <= Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
-        {
-          if (sample.Object != null && sample.Object[i - 1] != null)
-          {
-            var location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
-            location = Viana.Project.CalibrationData.CoordinateTransform.Transform(location);
-            Point origin = Viana.Project.CalibrationData.OriginInPixel;
-            location.Offset(origin.X, origin.Y);
-            double scaledX = location.X / factorX;
-            double scaledY = location.Y / factorY;
-
-            Point screenLocation = this.VideoImage.TranslatePoint(new Point(scaledX, scaledY), this.WindowCanvas);
-
-            this.MoveArrowCursorToScreenLocation(i, screenLocation);
-          }
-          else
-          {
-            this.HideArrowPointer(i);
-            this.SetVisibilityOfSharpCursor(true);
-            this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
-            if (!isSet)
-            {
-              this.IndexOfTrackedObject = i;
-              isSet = true;
-            }
-          }
-        }
-      }
-      else
-      {
-        this.IndexOfTrackedObject = 1;
-        this.SetVisibilityOfArrowCursor(false);
-        this.SetVisibilityOfSharpCursor(true);
-        this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
-      }
-    }
-
-    /// <summary>
     /// Handles the MouseMove event of the windowCanvas control
     ///   by moving the control panel.
     /// </summary>
@@ -775,7 +703,7 @@ namespace VianaNET.Modules.DataAcquisition
         {
           var currentLocation = new Point
                                   {
-                                    X = Canvas.GetLeft(this.ControlPanel), 
+                                    X = Canvas.GetLeft(this.ControlPanel),
                                     Y = Canvas.GetTop(this.ControlPanel)
                                   };
 

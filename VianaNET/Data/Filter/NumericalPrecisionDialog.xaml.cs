@@ -2,7 +2,7 @@
 // <copyright file="NumericalPrecisionDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -21,54 +21,37 @@
 //   The interpolation options dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter
 {
   using System.Windows;
+    using System;
 
   /// <summary>
   ///   The interpolation options dialog.
   /// </summary>
   public partial class NumericalPrecisionDialog
   {
-    #region Fields
-
     /// <summary>
-    /// The big number.
-    /// </summary>
-    private readonly double bigNumber;
-
-    /// <summary>
-    /// The small number.
-    /// </summary>
-    private readonly double smallNumber;
-
-    #endregion
-
-    #region Constructors and Destructors
-
-    /// <summary>
-    ///   Initializes a new instance of the <see cref="NumericalPrecisionDialog" /> class.
+    /// Initializes a new instance of the <see cref="NumericalPrecisionDialog"/> class. 
     /// </summary>
     public NumericalPrecisionDialog()
     {
       this.InitializeComponent();
       this.DataContext = this;
-      this.smallNumber = 123456789E-12;
-      this.bigNumber = 98765432109E-5;
-      this.LabelBigNumber.Content = this.bigNumber.ToString("G0");
-      this.LabelSmallNumber.Content = this.smallNumber.ToString("G0");
+      smallNumber = 123456789E-12;
+      bigNumber = 98765432109E-5;
+      this.LabelBigNumber.Content = bigNumber.ToString("G0");
+      this.LabelSmallNumber.Content = smallNumber.ToString("G0");
     }
 
-    #endregion
-
-    #region Public Properties
-
     /// <summary>
-    ///   Gets or sets the number of digits.
+    /// Gets or sets the number of digits.
     /// </summary>
     public int NumberOfDigits { get; set; }
 
-    #endregion
+    private double smallNumber;
+    private double bigNumber;
 
     #region Methods
 
@@ -76,10 +59,10 @@ namespace VianaNET.Data.Filter
     /// Closes the dialog.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
@@ -90,10 +73,10 @@ namespace VianaNET.Data.Filter
     /// Closes the dialog with DialogResult.Ok
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
@@ -101,24 +84,15 @@ namespace VianaNET.Data.Filter
       this.Close();
     }
 
-    /// <summary>
-    /// The slider value_ value changed.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
+    
     private void SliderValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-      int n = this.NumberOfDigits;
-      string formatStr1 = string.Concat("G", n.ToString());
-      string formatStr2 = string.Concat("G", n.ToString());
-
-      // string formatStr2 = string.Concat("N", n.ToString());
-      this.LabelFormatSmallNumber.Content = this.smallNumber.ToString(formatStr1);
-      this.LabelFormatBigNumber.Content = this.bigNumber.ToString(formatStr2);
+        int n = this.NumberOfDigits;
+        string formatStr1 = string.Concat("G", n.ToString());
+        string formatStr2 = string.Concat("G", n.ToString());
+      //  string formatStr2 = string.Concat("N", n.ToString());
+        this.LabelFormatSmallNumber.Content =smallNumber.ToString(formatStr1);
+        this.LabelFormatBigNumber.Content = bigNumber.ToString(formatStr2);
     }
 
     #endregion

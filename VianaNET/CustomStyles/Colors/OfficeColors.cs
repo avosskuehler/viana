@@ -2,7 +2,7 @@
 // <copyright file="OfficeColors.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -34,6 +34,17 @@ namespace VianaNET.CustomStyles.Colors
   /// </summary>
   public static class OfficeColors
   {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -44,14 +55,21 @@ namespace VianaNET.CustomStyles.Colors
       RegistersTypes = new List<Type>();
 
       Pallets = new[]
-                  {
-                    new OfficePallet(typeof(Background)), new OfficePallet(typeof(Foreground)), 
-                    new OfficePallet(typeof(HighLight)), new OfficePallet(typeof(Disabled))
-                  };
+        {
+          new OfficePallet(typeof(Background)), new OfficePallet(typeof(Foreground)), 
+          new OfficePallet(typeof(HighLight)), new OfficePallet(typeof(Disabled))
+        };
     }
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -66,6 +84,10 @@ namespace VianaNET.CustomStyles.Colors
     public static List<Type> RegistersTypes { get; set; }
 
     #endregion
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     ///   The background.
@@ -776,5 +798,25 @@ namespace VianaNET.CustomStyles.Colors
 
       #endregion
     }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
   }
 }

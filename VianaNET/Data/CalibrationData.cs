@@ -2,7 +2,7 @@
 // <copyright file="CalibrationData.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -29,9 +29,11 @@ namespace VianaNET.Data
 {
   using System;
   using System.ComponentModel;
+  using System.Globalization;
   using System.Windows;
   using System.Windows.Media;
 
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
 
   /// <summary>
@@ -48,63 +50,44 @@ namespace VianaNET.Data
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty ClipRegionProperty = DependencyProperty.Register(
-      "ClipRegion", 
-      typeof(Rect), 
-      typeof(CalibrationData), 
-      new FrameworkPropertyMetadata(default(Rect), OnPropertyChanged));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="CoordinateTransform" />.
-    /// </summary>
-    public static readonly DependencyProperty CoordinateTransformProperty =
-      DependencyProperty.Register(
-        "CoordinateTransform", 
-        typeof(Matrix), 
-        typeof(CalibrationData), 
-        new FrameworkPropertyMetadata(
-          Matrix.Identity, 
-          FrameworkPropertyMetadataOptions.AffectsRender, 
-          OnPropertyChanged));
+      "ClipRegion", typeof(Rect), typeof(CalibrationData), new FrameworkPropertyMetadata(default(Rect), OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty GradientBackgroundProperty =
       DependencyProperty.Register(
-        "GradientBackground", 
-        typeof(LinearGradientBrush), 
-        typeof(CalibrationData), 
+        "GradientBackground",
+        typeof(LinearGradientBrush),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(
-          default(LinearGradientBrush), 
-          FrameworkPropertyMetadataOptions.AffectsRender, 
-          OnPropertyChanged));
+          default(LinearGradientBrush), FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="HasClipRegion" />.
     /// </summary>
     public static readonly DependencyProperty HasClipRegionProperty = DependencyProperty.Register(
-      "HasClipRegion", 
-      typeof(bool), 
-      typeof(CalibrationData), 
+      "HasClipRegion",
+      typeof(bool),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingPixelLength" />.
-    /// </summary>
-    public static readonly DependencyProperty IsShowingPixelLengthProperty =
-      DependencyProperty.Register(
-        "IsShowingPixelLength", 
-        typeof(bool), 
-        typeof(CalibrationData), 
-        new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
     /// </summary>
     public static readonly DependencyProperty IsShowingUnitsProperty = DependencyProperty.Register(
-      "IsShowingUnits", 
-      typeof(bool), 
-      typeof(CalibrationData), 
+      "IsShowingUnits",
+      typeof(bool),
+      typeof(CalibrationData),
+      new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingPixelLength" />.
+    /// </summary>
+    public static readonly DependencyProperty IsShowingPixelLengthProperty = DependencyProperty.Register(
+      "IsShowingPixelLength",
+      typeof(bool),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
@@ -112,18 +95,18 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty IsVideoCalibratedProperty =
       DependencyProperty.Register(
-        "IsVideoCalibrated", 
-        typeof(bool), 
-        typeof(CalibrationData), 
+        "IsVideoCalibrated",
+        typeof(bool),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="LengthUnit" />.
     /// </summary>
     public static readonly DependencyProperty LengthUnitProperty = DependencyProperty.Register(
-      "LengthUnit", 
-      typeof(LengthUnit), 
-      typeof(CalibrationData), 
+      "LengthUnit",
+      typeof(LengthUnit),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(LengthUnit.px, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
@@ -131,19 +114,28 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty RulerValueInRulerUnitsProperty =
       DependencyProperty.Register(
-        "RulerValueInRulerUnits", 
-        typeof(double), 
-        typeof(CalibrationData), 
+        "RulerValueInRulerUnits",
+        typeof(double),
+        typeof(CalibrationData),
         new FrameworkPropertyMetadata(default(double), OnPropertyChanged));
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="TimeUnit" />.
     /// </summary>
     public static readonly DependencyProperty TimeUnitProperty = DependencyProperty.Register(
-      "TimeUnit", 
-      typeof(TimeUnit), 
-      typeof(CalibrationData), 
+      "TimeUnit",
+      typeof(TimeUnit),
+      typeof(CalibrationData),
       new FrameworkPropertyMetadata(TimeUnit.s, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="CoordinateTransform" />.
+    /// </summary>
+    public static readonly DependencyProperty CoordinateTransformProperty = DependencyProperty.Register(
+      "CoordinateTransform",
+      typeof(Matrix),
+      typeof(CalibrationData),
+      new FrameworkPropertyMetadata(Matrix.Identity, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     #endregion
 
@@ -160,7 +152,7 @@ namespace VianaNET.Data
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="CalibrationData" /> class.
+    /// Initializes a new instance of the <see cref="CalibrationData"/> class. 
     /// </summary>
     public CalibrationData()
     {
@@ -181,17 +173,6 @@ namespace VianaNET.Data
     #region Public Properties
 
     /// <summary>
-    ///   Gets the acceleration unit string. (Pixel per second squared by default)
-    /// </summary>
-    public string AccelerationUnit
-    {
-      get
-      {
-        return string.Format("{0}/{1}²", this.LengthUnit, this.TimeUnit);
-      }
-    }
-
-    /// <summary>
     ///   Gets or sets the clip region.
     /// </summary>
     public Rect ClipRegion
@@ -204,23 +185,6 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(ClipRegionProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the coordinate transform that performs the transformation between video pixels
-    ///   and data calibration
-    /// </summary>
-    public Matrix CoordinateTransform
-    {
-      get
-      {
-        return (Matrix)this.GetValue(CoordinateTransformProperty);
-      }
-
-      set
-      {
-        this.SetValue(CoordinateTransformProperty, value);
       }
     }
 
@@ -259,23 +223,6 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   Gets or sets a value indicating whether to display or hide
-    ///   the length of a pixel in length units
-    /// </summary>
-    public bool IsShowingPixelLength
-    {
-      get
-      {
-        return (bool)this.GetValue(IsShowingPixelLengthProperty);
-      }
-
-      set
-      {
-        this.SetValue(IsShowingPixelLengthProperty, value);
-      }
-    }
-
-    /// <summary>
     ///   Gets or sets a value indicating whether to display or hide the units for
     ///   the measured values.
     /// </summary>
@@ -293,7 +240,24 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   Gets or sets a value indicating whether the user has set an
+    ///   Gets or sets a value indicating whether to display or hide 
+    /// the length of a pixel in length units
+    /// </summary>
+    public bool IsShowingPixelLength
+    {
+      get
+      {
+        return (bool)this.GetValue(IsShowingPixelLengthProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsShowingPixelLengthProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether the user has set an 
     ///   origin and a ruler measurement of a length.
     /// </summary>
     public bool IsVideoCalibrated
@@ -307,6 +271,41 @@ namespace VianaNET.Data
       {
         this.SetValue(IsVideoCalibratedProperty, value);
         this.OnPropertyChanged("RulerValueInPixelUnits");
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets a <see cref="Point" /> in video coordinates with
+    ///   the origin set for measuring length.
+    /// </summary>
+    public Point OriginInPixel { get; set; }
+
+    /// <summary>
+    ///   Gets the string for the pixel unit.
+    /// </summary>
+    public string PixelUnit
+    {
+      get
+      {
+        return LengthUnit.px.ToString();
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the string value
+    /// </summary>
+    public TimeUnit TimeUnit
+    {
+      get
+      {
+        return (TimeUnit)this.GetValue(TimeUnitProperty);
+      }
+
+      set
+      {
+        this.SetValue(TimeUnitProperty, value);
+        this.OnPropertyChanged("VelocityUnit");
+        this.OnPropertyChanged("AccelerationUnit");
       }
     }
 
@@ -329,19 +328,24 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   Gets or sets a <see cref="Point" /> in video coordinates with
-    ///   the origin set for measuring length.
+    ///   Gets the velocity unit string. (Pixel per second by default)
     /// </summary>
-    public Point OriginInPixel { get; set; }
-
-    /// <summary>
-    ///   Gets the string for the pixel unit.
-    /// </summary>
-    public string PixelUnit
+    public string VelocityUnit
     {
       get
       {
-        return LengthUnit.px.ToString();
+        return string.Format("{0}/{1}", this.LengthUnit, this.TimeUnit);
+      }
+    }
+
+    /// <summary>
+    ///   Gets the acceleration unit string. (Pixel per second squared by default)
+    /// </summary>
+    public string AccelerationUnit
+    {
+      get
+      {
+        return string.Format("{0}/{1}²", this.LengthUnit, this.TimeUnit);
       }
     }
 
@@ -383,17 +387,6 @@ namespace VianaNET.Data
     /// <summary>
     ///   Gets or sets the ruler value in ruler units.
     /// </summary>
-    public string RulerValueInPixelUnits
-    {
-      get
-      {
-        return "1px = " + this.ScalePixelToUnit.ToString("N4") + this.LengthUnit;
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the ruler value in ruler units.
-    /// </summary>
     public double RulerValueInRulerUnits
     {
       get
@@ -409,37 +402,36 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    ///   Gets or sets the ruler value in ruler units.
+    /// </summary>
+    public string RulerValueInPixelUnits
+    {
+      get
+      {
+        return "1px = " + this.ScalePixelToUnit.ToString("N4") + this.LengthUnit;
+      }
+    }
+
+    /// <summary>
     ///   Gets or sets <see cref="double" /> containing the scale factor to
     ///   convert pixels to unit values.
     /// </summary>
     public double ScalePixelToUnit { get; set; }
 
     /// <summary>
-    ///   Gets or sets the string value
+    ///   Gets or sets the coordinate transform that performs the transformation between video pixels
+    /// and data calibration
     /// </summary>
-    public TimeUnit TimeUnit
+    public Matrix CoordinateTransform
     {
       get
       {
-        return (TimeUnit)this.GetValue(TimeUnitProperty);
+        return (Matrix)this.GetValue(CoordinateTransformProperty);
       }
 
       set
       {
-        this.SetValue(TimeUnitProperty, value);
-        this.OnPropertyChanged("VelocityUnit");
-        this.OnPropertyChanged("AccelerationUnit");
-      }
-    }
-
-    /// <summary>
-    ///   Gets the velocity unit string. (Pixel per second by default)
-    /// </summary>
-    public string VelocityUnit
-    {
-      get
-      {
-        return string.Format("{0}/{1}", this.LengthUnit, this.TimeUnit);
+        this.SetValue(CoordinateTransformProperty, value);
       }
     }
 
@@ -463,7 +455,7 @@ namespace VianaNET.Data
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="args">
-    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data.
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
     /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
@@ -477,14 +469,28 @@ namespace VianaNET.Data
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="obj">
-    /// The source of the event. This.
+    /// The source of the event. This. 
     /// </param>
     /// <param name="args">
-    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data.
+    /// The <see cref="DependencyPropertyChangedEventArgs"/> with the event data. 
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
       (obj as CalibrationData).OnPropertyChanged(args);
+    }
+
+    /// <summary>
+    /// Raises the <see cref="PropertyChanged"/> event.
+    /// </summary>
+    /// <param name="propertyName">
+    /// The name of the property that changed
+    /// </param>
+    private void OnPropertyChanged(string propertyName)
+    {
+      if (this.PropertyChanged != null)
+      {
+        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+      }
     }
 
     /// <summary>
@@ -505,20 +511,6 @@ namespace VianaNET.Data
       this.LengthUnit = LengthUnit.px;
       this.TimeUnit = TimeUnit.s;
       this.IsShowingUnits = false;
-    }
-
-    /// <summary>
-    /// Raises the <see cref="PropertyChanged"/> event.
-    /// </summary>
-    /// <param name="propertyName">
-    /// The name of the property that changed
-    /// </param>
-    private void OnPropertyChanged(string propertyName)
-    {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
     }
 
     #endregion

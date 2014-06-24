@@ -2,7 +2,7 @@
 // <copyright file="DataCharts.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -53,7 +53,7 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
       "Description", 
-      typeof(string), 
+      typeof(string),
       typeof(DataCharts), 
       new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.AffectsRender));
 
@@ -72,8 +72,7 @@ namespace VianaNET.Data.Collections
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes static members of the <see cref="DataCharts"/> class. 
-    ///   Initializes static members of the <see cref="DataAxis"/> class.
+    ///   Initializes static members of the <see cref="DataAxis" /> class.
     /// </summary>
     static DataCharts()
     {
@@ -172,7 +171,7 @@ namespace VianaNET.Data.Collections
     /// Initializes a new instance of the <see cref="DataCharts"/> class.
     /// </summary>
     /// <param name="chart">
-    /// The chart type.
+    /// The chart type. 
     /// </param>
     public DataCharts(ChartType chart)
     {

@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DifferenceQuotientType.cs" company="Freie Universität Berlin">
+// <copyright file="LengthUnit.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -31,18 +31,18 @@ namespace VianaNET.CustomStyles.Types
   public enum DifferenceQuotientType
   {
     /// <summary>
-    ///   Forward difference ΔF(t) = F(t + Δt) − F(t);
+    /// Forward difference ΔF(t) = F(t + Δt) − F(t);
     /// </summary>
-    Forward, 
+    Forward,
 
     /// <summary>
-    ///   Backward difference ΔF(t) = F(t) − F(t − Δt).
+    /// Backward difference ΔF(t) = F(t) − F(t − Δt).
     /// </summary>
-    Backward, 
+    Backward,
 
     /// <summary>
-    ///   Central difference ΔF(t) = [F(t + Δt) − F(t − Δt)] / 2.
+    /// Central difference ΔF(t) = [F(t + Δt) − F(t − Δt)] / 2.
     /// </summary>
-    Central
+    Central 
   }
 }

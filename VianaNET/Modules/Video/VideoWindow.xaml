@@ -1,98 +1,84 @@
 ﻿<UserControl
-  x:Class="VianaNET.Modules.Video.VideoWindow"
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="VianaNET.Modules.Video.VideoWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:lex="http://wpflocalizeextension.codeplex.com"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
-  xmlns:blobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:blobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
-  xmlns:application="clr-namespace:VianaNET.Application"
-  xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
-  mc:Ignorable="d"
+	xmlns:application="clr-namespace:VianaNET.Application"
+	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
+	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">
   <UserControl.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="*" />
-      <RowDefinition Height="40" />
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel"
-          Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}">
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
       <Grid Name="LeftVideoPanel" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1" />
+          <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Grid.RenderTransform>
 
-        <Image Name="VideoImage"
-               HorizontalAlignment="Center"
-               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" />
+        <Image Name="VideoImage" 
+               HorizontalAlignment="Center" 
+               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"
+               >
+        </Image>
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
-          <Border RenderTransformOrigin="0.5,0.5" Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder"
-                  Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden">
+          <Border RenderTransformOrigin="0.5,0.5" Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <Border.RenderTransform>
-              <ScaleTransform ScaleX="1" ScaleY="-1" />
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
             </Border.RenderTransform>
-            <Label Name="PixelLabel"
-                   Content="{Binding Path=CalibrationData.RulerValueInPixelUnits,
+            <Label Name="PixelLabel" 
+                     Content="{Binding Path=CalibrationData.RulerValueInPixelUnits,
               Source={x:Static application:Viana.Project}}"
-                   Visibility="Visible" />
+                 Visibility="Visible"/>
           </Border>
           <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
             <Path.Data>
               <GeometryGroup FillRule="EvenOdd">
                 <LineGeometry StartPoint="2,5" EndPoint="8,5" />
                 <LineGeometry StartPoint="5,2" EndPoint="5,8" />
-                <EllipseGeometry Center="5,5" RadiusX="5" RadiusY="5" />
+                <EllipseGeometry Center="5,5" RadiusX="5" RadiusY="5"/>
               </GeometryGroup>
             </Path.Data>
           </Path>
-          <Label Name="FrameRateLabel" />
-          <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1"
-                Visibility="Hidden" />
-          <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3"
-                  Visibility="Hidden">
+          <Label Name="FrameRateLabel"></Label>
+          <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1" Visibility="Hidden" />
+          <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <Border.RenderTransform>
-              <ScaleTransform ScaleX="1" ScaleY="-1" />
+              <ScaleTransform ScaleX="1" ScaleY="-1"/>
             </Border.RenderTransform>
             <StackPanel Orientation="Horizontal">
-              <Label Name="RulerLabel" Padding="1"
-                     Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
+              <Label Name="RulerLabel" Padding="1" 
+                   Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
               Source={x:Static application:Viana.Project},
               Converter={StaticResource RulerUnitStringConverter}, 
-              ConverterParameter={StaticResource PositionMeasurement}}" />
+              ConverterParameter={StaticResource PositionMeasurement}}"/>
             </StackPanel>
           </Border>
-          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10"
-                Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave"
-                MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove"
-                MouseLeftButtonUp="LineMouseLeftButtonUp" />
-          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0"
-                Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave"
-                MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp"
-                MouseMove="LineMouseMove" />
-          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100"
-                Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave"
-                MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp"
-                MouseMove="LineMouseMove" />
-          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0"
-                Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave"
-                MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp"
-                MouseMove="LineMouseMove" />
+          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
+          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
           <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
             <Path.Data>
               <CombinedGeometry GeometryCombineMode="Xor">
                 <CombinedGeometry.Geometry1>
-                  <RectangleGeometry Rect="0,0,100,100" />
+                  <RectangleGeometry Rect="0,0,100,100"/>
                 </CombinedGeometry.Geometry1>
                 <CombinedGeometry.Geometry2>
                   <RectangleGeometry Rect="10,10,80,80" />
@@ -102,84 +88,70 @@
           </Path>
         </Canvas>
       </Grid>
-      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left"
-                                 VerticalAlignment="Bottom" />
-      <blobDetection:BlobsControl Width="Auto"
-                                  Height="Auto"
-                                  Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"
-                                  Grid.Column="1"
-                                  x:Name="BlobsControl" />
+      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+      <blobDetection:BlobsControl Width="Auto" 
+                          Height="Auto" 
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"
+                          Grid.Column="1" 
+                          x:Name="BlobsControl"/>
     </Grid>
     <Grid Grid.Row="1" Background="{StaticResource PropertiesBackgroundBrush}" VerticalAlignment="Bottom">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" MinWidth="100" />
-        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Margin="10,0,10,0">
-        <StackPanel Orientation="Horizontal">
-          <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowRecordButtonToolTip}">
+        <StackPanel Orientation="Horizontal"  >
+          <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowRecordButtonToolTip}">
             <Image Source="/VianaNET;component/Images/Record16.png" Width="16" />
           </Button>
-          <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
-            <Image Name="BtnPlayImage" Source="/VianaNET;component/Images/Start16.png" Width="16" />
+          <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
+            <Image Name="BtnPlayImage" Source="/VianaNET;component/Images/Start16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/Stop16.png" Width="16" />
+          <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
           </Button>
           <Rectangle Width="8" />
-          <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick"
-                  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekNextButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SeekNext16.png" Width="16" />
+          <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekNextButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/SeekNext16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick"
-                  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekPreviousButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SeekPrevious16.png" Width="16" />
+          <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekPreviousButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/SeekPrevious16.png" Width="16"/>
           </Button>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Name="SelectionPanel">
-          <Rectangle Width="22" />
-          <Button x:Name="BtnSetZeroTime" Click="BtnSetZeroTimeClick"
-                  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetZeroTimeButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SetZeroTime16.png" Width="16" />
+        <StackPanel Orientation="Horizontal" Name="SelectionPanel" >
+          <Rectangle Width="22"/>
+          <Button x:Name="BtnSetZeroTime" Click="BtnSetZeroTimeClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetZeroTimeButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/SetZeroTime16.png" Width="16"/>
           </Button>
           <Rectangle Width="8" />
-          <Button x:Name="BtnSetCutoutLeft" Click="BtnSetCutoutLeftClick"
-                  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutLeftButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SetCutoutLeft16.png" Width="16" />
+          <Button x:Name="BtnSetCutoutLeft" Click="BtnSetCutoutLeftClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutLeftButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/SetCutoutLeft16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnSetCutoutRight" Click="BtnSetCutoutRightClick"
-                  Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                  ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutRightButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SetCutoutRight16.png" Width="16" />
+          <Button x:Name="BtnSetCutoutRight" Click="BtnSetCutoutRightClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutRightButtonToolTip}">
+            <Image Source="/VianaNET;component/Images/SetCutoutRight16.png" Width="16"/>
           </Button>
         </StackPanel>
       </StackPanel>
       <vianaNet:MediaSlider
-        Grid.Column="1"
-        x:Name="TimelineSlider"
+        Grid.Column="1" 
+        x:Name="TimelineSlider" 
         Style="{StaticResource MediaSliderStyle}"
-        IsSelectionRangeEnabled="True"
+        IsSelectionRangeEnabled="True" 
         TickDownClicked="TimelineSliderTickDownClicked"
         TickUpClicked="TimelineSliderTickUpClicked"
         FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
         Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
         SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
         SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
-        SmallChange="1"
-        TickPlacement="BottomRight"
-        Interval="1"
+        SmallChange="1" 
+        TickPlacement="BottomRight" 
+        Interval="1" 
         Minimum="0"
         Thumb.DragStarted="TimelineSliderDragStarted"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
         Thumb.DragDelta="TimelineSliderDragDelta"
-        IsSnapToTickEnabled="True" />
+        IsSnapToTickEnabled="True"/>
     </Grid>
   </Grid>
 </UserControl>

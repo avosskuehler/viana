@@ -2,7 +2,7 @@
 // <copyright file="MovingAverageFilter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,15 +23,15 @@
 //   The moving average filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Interpolation
 {
-  using System.Collections.Generic;
   using System.Linq;
   using System.Windows.Controls;
 
-  using VianaNET.Application;
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
 
   /// <summary>
   ///   The moving average filter.
@@ -51,10 +51,8 @@ namespace VianaNET.Data.Filter.Interpolation
 
     #endregion
 
-    #region Public Properties
-
     /// <summary>
-    ///   Gets or sets the MovingAverageUserControl
+    /// Gets or sets the MovingAverageUserControl
     /// </summary>
     public override UserControl CustomUserControl
     {
@@ -64,12 +62,10 @@ namespace VianaNET.Data.Filter.Interpolation
       }
     }
 
-    #endregion
-
     #region Public Methods and Operators
 
     /// <summary>
-    ///   Calculate moving average values for the current data series.
+    /// Calculate moving average values for the current data series.
     /// </summary>
     public override void CalculateFilterValues()
     {
@@ -81,11 +77,8 @@ namespace VianaNET.Data.Filter.Interpolation
       // Calculate interpolation
       for (int i = startIndex; i < this.WertX.Count - startIndex; i++)
       {
-        List<double> samplesForInterpolation = this.GetRangeAtPosition(
-          i - startIndex, 
-          this.NumberOfSamplesToInterpolate);
-        fittedSamples.Add(
-          new XYSample(this.WertX[i], samplesForInterpolation.Sum() / this.NumberOfSamplesToInterpolate));
+        var samplesForInterpolation = this.GetRangeAtPosition(i - startIndex, this.NumberOfSamplesToInterpolate);
+        fittedSamples.Add(new XYSample(this.WertX[i], samplesForInterpolation.Sum() / this.NumberOfSamplesToInterpolate));
       }
 
       Viana.Project.CurrentFilterData.InterpolationSeries = fittedSamples;

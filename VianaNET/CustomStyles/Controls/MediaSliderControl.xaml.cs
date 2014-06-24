@@ -2,7 +2,7 @@
 // <copyright file="MediaSliderControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -25,6 +25,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET
 {
+  using System.Windows.Controls;
   using System.Windows.Input;
 
   /// <summary>
@@ -50,10 +51,10 @@ namespace VianaNET
     /// The media slider_ mouse left button down.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void MediaSlider_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -63,10 +64,10 @@ namespace VianaNET
     /// The media slider_ mouse left button up.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void MediaSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
@@ -76,10 +77,10 @@ namespace VianaNET
     /// The media slider_ mouse move.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void MediaSlider_MouseMove(object sender, MouseEventArgs e)
     {

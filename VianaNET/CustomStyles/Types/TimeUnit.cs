@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TimeUnit.cs" company="Freie Universität Berlin">
+// <copyright file="LengthUnit.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -31,12 +31,12 @@ namespace VianaNET.CustomStyles.Types
   public enum TimeUnit
   {
     /// <summary>
-    ///   The milliseconds unit
+    /// The milliseconds unit
     /// </summary>
-    ms, 
+    ms,
 
     /// <summary>
-    ///   The seconds unit
+    /// The seconds unit
     /// </summary>
     s
   }

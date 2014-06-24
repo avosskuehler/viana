@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RegressionType.cs" company="Freie Universität Berlin">
+// <copyright file="Regression.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -21,60 +21,61 @@
 //   Defines the Regression type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Regression
 {
   /// <summary>
-  ///   The regression enumeration
+  /// The regression enumeration
   /// </summary>
   public enum RegressionType
   {
     /// <summary>
-    ///   Optimale regression
+    /// Optimale regression
     /// </summary>
-    Best = 0, 
+    Best = 0,
 
     /// <summary>
-    ///   Lineare Regression, mx+n
+    /// Lineare Regression, mx+n
     /// </summary>
-    Linear = 1, 
+    Linear = 1,
 
     /// <summary>
-    ///   Regression mit Exponentialfunktion, a*exp(b*x)
+    /// Regression mit Exponentialfunktion, a*exp(b*x)
     /// </summary>
-    Exponentiell = 2, 
+    Exponentiell = 2,
 
     /// <summary>
-    ///   Regression mit Logarithmusfunktion, a*ln(b*x)
+    /// Regression mit Logarithmusfunktion, a*ln(b*x)
     /// </summary>
-    Logarithmisch = 3, 
+    Logarithmisch = 3,
 
     /// <summary>
-    ///   Regression mit Potenzfunktion, a*x^b
+    /// Regression mit Potenzfunktion, a*x^b
     /// </summary>
-    Potenz = 4, 
+    Potenz = 4,
 
     /// <summary>
-    ///   Regression mit quadratischer Funktion, ax²+bx+c
+    /// Regression mit quadratischer Funktion, ax²+bx+c
     /// </summary>
-    Quadratisch = 5, 
+    Quadratisch = 5,
 
     /// <summary>
-    ///   Regression mit Exponentialfunktion mit Konstante, a*exp(b*x) +c
+    /// Regression mit Exponentialfunktion mit Konstante, a*exp(b*x) +c
     /// </summary>
-    ExponentiellMitKonstante = 6, 
+    ExponentiellMitKonstante = 6,
 
     /// <summary>
-    ///   Regression mit Sinusfunktion, a*sin(bx+c)+d
+    /// Regression mit Sinusfunktion, a*sin(bx+c)+d
     /// </summary>
-    Sinus = 7, 
+    Sinus = 7,
 
     /// <summary>
-    ///   Regression mit gedämpfter Sinusfunktion, a*sin(bx)*exp(c*x)
+    /// Regression mit gedämpfter Sinusfunktion, a*sin(bx)*exp(c*x)
     /// </summary>
-    SinusGedämpft = 8, 
+    SinusGedämpft = 8,
 
     /// <summary>
-    ///   Regression mit Resonanzfunktion, a/sqrt(1+b(x-c/x))
+    /// Regression mit Resonanzfunktion, a/sqrt(1+b(x-c/x))
     /// </summary>
     Resonanz = 9
   }

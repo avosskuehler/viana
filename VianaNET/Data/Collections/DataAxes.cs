@@ -2,7 +2,7 @@
 // <copyright file="DataAxes.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -57,7 +57,7 @@ namespace VianaNET.Data.Collections
       typeof(DataAxis), 
       new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.AffectsRender));
 
-    /// <summary>
+     /// <summary>
     ///   The ShouldExport property.
     /// </summary>
     public static readonly DependencyProperty ShouldExportProperty = DependencyProperty.Register(
@@ -65,7 +65,7 @@ namespace VianaNET.Data.Collections
       typeof(bool), 
       typeof(DataAxis), 
       new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.None));
-
+     
     /// <summary>
     ///   The data axes.
     /// </summary>
@@ -153,27 +153,28 @@ namespace VianaNET.Data.Collections
       var locayAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirection");
       locayAxis.SetBinding(ayAxis, DescriptionProperty);
 
+
       DataAxes = new List<DataAxis>
-                   {
-                     iAxis, 
-                     tAxis, 
-                     xAxis, 
-                     yAxis, 
-                     pxAxis, 
-                     pyAxis, 
-                     dAxis, 
-                     dxAxis, 
-                     dyAxis, 
-                     sAxis, 
-                     sxAxis, 
-                     syAxis, 
-                     vAxis, 
-                     vxAxis, 
-                     vyAxis, 
-                     aAxis, 
-                     axAxis, 
-                     ayAxis, 
-                   };
+        {
+          iAxis,
+          tAxis,
+          xAxis,
+          yAxis,
+          pxAxis,
+          pyAxis,
+          dAxis,
+          dxAxis,
+          dyAxis,
+          sAxis,
+          sxAxis,
+          syAxis,
+          vAxis,
+          vxAxis,
+          vyAxis,
+          aAxis,
+          axAxis,
+          ayAxis,
+        };
     }
 
     /// <summary>
@@ -187,7 +188,7 @@ namespace VianaNET.Data.Collections
     /// Initializes a new instance of the <see cref="DataAxis"/> class.
     /// </summary>
     /// <param name="axis">
-    /// The axis.
+    /// The axis. 
     /// </param>
     public DataAxis(AxisType axis)
     {

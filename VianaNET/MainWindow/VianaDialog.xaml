@@ -1,34 +1,32 @@
 ﻿<Window x:Class="VianaNET.MainWindow.VianaDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         lex:LocalizeDictionary.DesignCulture="de"
-        ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
-        Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
-        Title="{lex:Loc VianaNET:Labels:VianaDialogTitle}" Icon="/VianaNET;component/Images/VianaNET.ico">
+   ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Height="350" Width="350" MinHeight="350" MinWidth="350" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:Loc VianaNET:Labels:VianaDialogTitle}" Icon="/VianaNET;component/Images/VianaNET.ico">
   <Window.Resources>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml" />
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="80" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
+      <RowDefinition Height="80"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <mainWindow:TopFrame x:Name="topFrame" />
-    <Border Name="DescriptionArea" Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+    <mainWindow:TopFrame x:Name="topFrame"/>
+    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
       <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
           <Label Name="Description" FontWeight="Bold">Description</Label>
-          <TextBlock TextWrapping="Wrap" Name="message" />
+          <TextBlock TextWrapping="Wrap" Name="message"/>
         </StackPanel>
       </ScrollViewer>
     </Border>
     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-      <Button Name="OkButton" Width="80" Margin="5" Click="OkButtonClick" IsDefault="True"
-              Content="{lex:Loc VianaNET:Labels:OK}" />
-      <Button Name="CancelButton" Width="80" Margin="5" Click="CancelButtonClick" IsCancel="True"
-              Content="{lex:Loc VianaNET:Labels:Cancel}" />
+      <Button Name="OkButton" Width="80" Margin="5" Click="OkButtonClick" IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}"/>
+      <Button Name="CancelButton" Width="80" Margin="5" Click="CancelButtonClick" IsCancel="True" Content="{lex:Loc VianaNET:Labels:Cancel}"/>
     </StackPanel>
   </Grid>
 </Window>

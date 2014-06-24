@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   Interaction logic for MeasureAngleWindow.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Dialogs
 {
@@ -49,11 +46,6 @@ namespace VianaNET.Modules.Video.Dialogs
     private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
-    ///   The start point is set.
-    /// </summary>
-    private bool centerPointIsSet;
-
-    /// <summary>
     ///   Mausbewegungen ignorieren, da über Control panel
     /// </summary>
     private bool ignoreMouse;
@@ -72,6 +64,11 @@ namespace VianaNET.Modules.Video.Dialogs
     ///   The start point is set.
     /// </summary>
     private bool startPointIsSet;
+
+    /// <summary>
+    ///   The start point is set.
+    /// </summary>
+    private bool centerPointIsSet;
 
     #endregion
 
@@ -108,7 +105,7 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      Point location = e.GetPosition(this.VideoImage);
+      var location = e.GetPosition(this.VideoImage);
 
       if (!this.startPointIsSet)
       {
@@ -157,8 +154,8 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      double scaledX = e.GetPosition(this.VideoImage).X;
-      double scaledY = e.GetPosition(this.VideoImage).Y;
+      var scaledX = e.GetPosition(this.VideoImage).X;
+      var scaledY = e.GetPosition(this.VideoImage).Y;
 
       if (this.startPointIsSet && !this.centerPointIsSet)
       {
@@ -368,8 +365,8 @@ namespace VianaNET.Modules.Video.Dialogs
       var vecHor = new Vector(1, 0);
       var vec1 = new Vector(this.Line1.X1 - this.Line1.X2, this.Line1.Y1 - this.Line1.Y2);
       var vec2 = new Vector(this.Line2.X2 - this.Line2.X1, this.Line2.Y2 - this.Line2.Y1);
-      double startAngle = Vector.AngleBetween(vecHor, vec1);
-      double endAngle = Vector.AngleBetween(vecHor, vec2);
+      var startAngle = Vector.AngleBetween(vecHor, vec1);
+      var endAngle = Vector.AngleBetween(vecHor, vec2);
       this.Arc.EndAngle = endAngle;
       this.Arc.StartAngle = startAngle;
 
@@ -404,7 +401,7 @@ namespace VianaNET.Modules.Video.Dialogs
         {
           var currentLocation = new Point
                                   {
-                                    X = Canvas.GetLeft(this.ControlPanel), 
+                                    X = Canvas.GetLeft(this.ControlPanel),
                                     Y = Canvas.GetTop(this.ControlPanel)
                                   };
 

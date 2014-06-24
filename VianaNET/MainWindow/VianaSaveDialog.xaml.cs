@@ -2,7 +2,7 @@
 // <copyright file="VianaSaveDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -33,10 +33,13 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class VianaSaveDialog
   {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
-    ///   Initializes a new instance of the <see cref="VianaSaveDialog" /> class.
+    ///   Initializes a new instance of the <see cref="VianaSaveDialog" /> class. 
     /// </summary>
     public VianaSaveDialog()
     {
@@ -44,18 +47,12 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="VianaSaveDialog"/> class. 
     /// Initializes a new instance of the VianaDialog class.
     /// </summary>
-    /// <param name="title">
-    /// The title for the dialog.
-    /// </param>
-    /// <param name="messageDescription">
-    /// The message header.
-    /// </param>
-    /// <param name="message">
-    /// The message to be displayed.
-    /// </param>
+    /// <param name="title">The title for the dialog.</param>
+    /// <param name="messageDescription">The message header.</param>
+    /// <param name="message">The message to be displayed.</param>
+    /// <param name="isOnlyOk">True, if only the OK button should be displayed.</param>
     public VianaSaveDialog(string title, string messageDescription, string message)
     {
       this.InitializeComponent();
@@ -79,6 +76,10 @@ namespace VianaNET.MainWindow
       }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
+
     /// <summary>
     ///   Sets the message.
     /// </summary>
@@ -101,6 +102,7 @@ namespace VianaNET.MainWindow
       }
     }
 
+
     /// <summary>
     ///   Sets the viana title.
     /// </summary>
@@ -114,40 +116,36 @@ namespace VianaNET.MainWindow
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
     #region Methods
 
     /// <summary>
     /// Event handler for the button click event.
-    ///   DontSaveAndClose is clicked, so set the dialog result to false and exit.
+    /// SaveAndClose is clicked, so set the dialog result to true and exit.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments.
-    /// </param>
-    private void DontSaveAndCloseButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.DialogResult = false;
-      this.Close();
-    }
-
-    /// <summary>
-    /// Event handler for the button click event.
-    ///   SaveAndClose is clicked, so set the dialog result to true and exit.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments.
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments.</param>
     private void SaveAndCloseButtonClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
       this.Close();
     }
 
+    /// <summary>
+    /// Event handler for the button click event.
+    /// DontSaveAndClose is clicked, so set the dialog result to false and exit.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments.</param>
+
+    private void DontSaveAndCloseButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = false;
+      this.Close();
+    }
     #endregion
   }
 }

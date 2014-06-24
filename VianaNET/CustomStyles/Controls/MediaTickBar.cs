@@ -2,7 +2,7 @@
 // <copyright file="MediaTickBar.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -41,7 +41,7 @@ namespace VianaNET
     /// The on render.
     /// </summary>
     /// <param name="dc">
-    /// The dc.
+    /// The dc. 
     /// </param>
     protected override void OnRender(DrawingContext dc)
     {

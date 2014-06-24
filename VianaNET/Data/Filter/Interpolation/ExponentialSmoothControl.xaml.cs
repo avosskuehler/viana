@@ -2,7 +2,7 @@
 // <copyright file="ExponentialSmoothControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -32,13 +32,24 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public partial class ExponentialSmoothControl
   {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
     /// Initializes a new instance of the ExponentialSmoothControl class.
     /// </summary>
     /// <param name="filter">
-    /// The filter.
+    /// The filter. 
     /// </param>
     public ExponentialSmoothControl(ExponentialSmoothFilter filter)
     {
@@ -49,6 +60,13 @@ namespace VianaNET.Data.Filter.Interpolation
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -58,16 +76,27 @@ namespace VianaNET.Data.Filter.Interpolation
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Methods
 
     /// <summary>
     /// The smoothing factor numeric_ value changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void SmoothingFactorNumericValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
     {
@@ -76,5 +105,16 @@ namespace VianaNET.Data.Filter.Interpolation
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
   }
 }

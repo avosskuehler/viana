@@ -2,7 +2,7 @@
 // <copyright file="OfficePallet.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -89,7 +89,7 @@ namespace VianaNET.CustomStyles.Colors
     /// Initializes a new instance of the <see cref="OfficePallet"/> class.
     /// </summary>
     /// <param name="type">
-    /// The type.
+    /// The type. 
     /// </param>
     internal OfficePallet(Type type)
     {
@@ -251,10 +251,7 @@ namespace VianaNET.CustomStyles.Colors
       // Color[] colors = this.Coloration.GetColoredPallet(this._Hue,
       // this._HueConstraint, this._Saturation, this._Brightness).ToArray(); 
       Color[] colors = this.Coloration.GetColoredPallet(
-        this._Hue, 
-        this._HueConstraint, 
-        this._Saturation, 
-        this._Brightness);
+        this._Hue, this._HueConstraint, this._Saturation, this._Brightness);
 
       this.SetColors(colors);
     }
@@ -263,10 +260,10 @@ namespace VianaNET.CustomStyles.Colors
     /// The field info to color.
     /// </summary>
     /// <param name="fieldInfo">
-    /// The field info.
+    /// The field info. 
     /// </param>
     /// <returns>
-    /// The <see cref="Color"/> .
+    /// The <see cref="Color"/> . 
     /// </returns>
     private Color FieldInfoToColor(FieldInfo fieldInfo)
     {
@@ -318,10 +315,10 @@ namespace VianaNET.CustomStyles.Colors
     /// The retrieve colors.
     /// </summary>
     /// <param name="type">
-    /// The type.
+    /// The type. 
     /// </param>
     /// <returns>
-    /// The <see cref="Color[]"/> .
+    /// The <see cref="Color[]"/> . 
     /// </returns>
     private Color[] RetrieveColors(Type type)
     {
@@ -345,7 +342,7 @@ namespace VianaNET.CustomStyles.Colors
     /// The set colors.
     /// </summary>
     /// <param name="colors">
-    /// The colors.
+    /// The colors. 
     /// </param>
     private void SetColors(Color[] colors)
     {
@@ -364,7 +361,7 @@ namespace VianaNET.CustomStyles.Colors
     /// The startup.
     /// </summary>
     /// <param name="type">
-    /// The type.
+    /// The type. 
     /// </param>
     private void Startup(Type type)
     {

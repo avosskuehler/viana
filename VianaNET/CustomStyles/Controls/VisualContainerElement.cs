@@ -2,7 +2,7 @@
 // <copyright file="VisualContainerElement.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -21,102 +21,46 @@
 //   Defines the VisualContainerElement type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET
 {
   using System.Windows;
   using System.Windows.Media;
 
-  /// <summary>
-  /// The visual container element.
-  /// </summary>
   public class VisualContainerElement : FrameworkElement
   {
-    #region Fields
-
-    /// <summary>
-    /// The visual.
-    /// </summary>
     private DrawingVisual visual;
 
-    #endregion
-
-    #region Constructors and Destructors
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="VisualContainerElement"/> class.
-    /// </summary>
     public VisualContainerElement()
+      : base()
     {
       this.visual = null;
     }
 
-    #endregion
-
-    #region Public Properties
-
-    /// <summary>
-    /// Gets or sets the visual.
-    /// </summary>
     public DrawingVisual Visual
     {
-      get
-      {
-        return this.visual;
-      }
-
+      get { return this.visual; }
       set
       {
-        this.RemoveVisualChild(this.visual);
+        RemoveVisualChild(this.visual);
         this.visual = value;
-        this.AddVisualChild(this.visual);
+        AddVisualChild(this.visual);
 
-        this.InvalidateMeasure();
-        this.InvalidateVisual();
+        InvalidateMeasure();
+        InvalidateVisual();
       }
     }
 
-    #endregion
-
-    #region Properties
-
-    /// <summary>
-    /// Gets the visual children count.
-    /// </summary>
     protected override int VisualChildrenCount
     {
-      get
-      {
-        return 1;
-      }
+      get { return 1; }
     }
 
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// The get visual child.
-    /// </summary>
-    /// <param name="index">
-    /// The index.
-    /// </param>
-    /// <returns>
-    /// The <see cref="Visual"/>.
-    /// </returns>
     protected override Visual GetVisualChild(int index)
     {
       return this.visual;
     }
 
-    /// <summary>
-    /// The measure override.
-    /// </summary>
-    /// <param name="availableSize">
-    /// The available size.
-    /// </param>
-    /// <returns>
-    /// The <see cref="Size"/>.
-    /// </returns>
     protected override Size MeasureOverride(Size availableSize)
     {
       if (this.visual != null)
@@ -126,7 +70,5 @@ namespace VianaNET
 
       return base.MeasureOverride(availableSize);
     }
-
-    #endregion
   }
 }

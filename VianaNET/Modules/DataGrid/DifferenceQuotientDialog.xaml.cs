@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The length dialog.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.DataGrid
 {
@@ -50,14 +47,14 @@ namespace VianaNET.Modules.DataGrid
       this.InitializeComponent();
 
       var formulaParser = new TexFormulaParser();
-      TexFormula forwardFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t)}{\\Delta t}");
-      TexFormula centralFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t-\\Delta t )}{2\\cdot \\Delta t}");
-      TexFormula backwardFormula = formulaParser.Parse("v(t)=\\frac{s(t)-s(t-\\Delta t )}{\\Delta t}");
+      var forwardFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t)}{\\Delta t}");
+      var centralFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t-\\Delta t )}{2\\cdot \\Delta t}");
+      var backwardFormula = formulaParser.Parse("v(t)=\\frac{s(t)-s(t-\\Delta t )}{\\Delta t}");
 
       // Render formula to visual.
       var forwardVisual = new DrawingVisual();
-      TexRenderer forwardRenderer = forwardFormula.GetRenderer(TexStyle.Display, 14d);
-      using (DrawingContext drawingContext = forwardVisual.RenderOpen())
+      var forwardRenderer = forwardFormula.GetRenderer(TexStyle.Display, 14d);
+      using (var drawingContext = forwardVisual.RenderOpen())
       {
         forwardRenderer.Render(drawingContext, 0, 1);
       }
@@ -66,8 +63,8 @@ namespace VianaNET.Modules.DataGrid
 
       // Render formula to visual.
       var centralVisual = new DrawingVisual();
-      TexRenderer centralRenderer = centralFormula.GetRenderer(TexStyle.Display, 14d);
-      using (DrawingContext drawingContext = centralVisual.RenderOpen())
+      var centralRenderer = centralFormula.GetRenderer(TexStyle.Display, 14d);
+      using (var drawingContext = centralVisual.RenderOpen())
       {
         centralRenderer.Render(drawingContext, 0, 1);
       }
@@ -76,8 +73,8 @@ namespace VianaNET.Modules.DataGrid
 
       // Render formula to visual.
       var backwardVisual = new DrawingVisual();
-      TexRenderer backwardRenderer = backwardFormula.GetRenderer(TexStyle.Display, 14d);
-      using (DrawingContext drawingContext = backwardVisual.RenderOpen())
+      var backwardRenderer = backwardFormula.GetRenderer(TexStyle.Display, 14d);
+      using (var drawingContext = backwardVisual.RenderOpen())
       {
         backwardRenderer.Render(drawingContext, 0, 1);
       }

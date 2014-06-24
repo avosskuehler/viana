@@ -2,7 +2,7 @@
 // <copyright file="VectorInt.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -53,10 +53,10 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="VectorInt"/> struct.
     /// </summary>
     /// <param name="x">
-    /// The x.
+    /// The x. 
     /// </param>
     /// <param name="y">
-    /// The y.
+    /// The y. 
     /// </param>
     public VectorInt(int x, int y)
     {
@@ -68,7 +68,7 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="VectorInt"/> struct.
     /// </summary>
     /// <param name="point">
-    /// The point.
+    /// The point. 
     /// </param>
     public VectorInt(Point point)
       : this((int)point.X, (int)point.Y)
@@ -153,10 +153,10 @@ namespace VianaNET.Modules.Video.Filter
     /// Converts a radian into a degreee value.
     /// </summary>
     /// <param name="radians">
-    /// An angle in rad.
+    /// An angle in rad. 
     /// </param>
     /// <returns>
-    /// The angle converted to degress.
+    /// The angle converted to degress. 
     /// </returns>
     public static double ToDegrees(double radians)
     {
@@ -167,10 +167,10 @@ namespace VianaNET.Modules.Video.Filter
     /// Converts a degree into a radian value.
     /// </summary>
     /// <param name="degrees">
-    /// A angle in deg.
+    /// A angle in deg. 
     /// </param>
     /// <returns>
-    /// The angle converted to radians.
+    /// The angle converted to radians. 
     /// </returns>
     public static double ToRadians(double degrees)
     {
@@ -269,10 +269,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The angle deg.
     /// </summary>
     /// <param name="v2">
-    /// The v 2.
+    /// The v 2. 
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> .
+    /// The <see cref="int"/> . 
     /// </returns>
     public int AngleDeg(VectorInt v2)
     {
@@ -306,10 +306,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The dot.
     /// </summary>
     /// <param name="v2">
-    /// The v 2.
+    /// The v 2. 
     /// </param>
     /// <returns>
-    /// The <see cref="int"/> .
+    /// The <see cref="int"/> . 
     /// </returns>
     public int Dot(VectorInt v2)
     {
@@ -320,10 +320,10 @@ namespace VianaNET.Modules.Video.Filter
     /// The equals.
     /// </summary>
     /// <param name="obj">
-    /// The obj.
+    /// The obj. 
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> .
+    /// The <see cref="bool"/> . 
     /// </returns>
     public override bool Equals(object obj)
     {
@@ -348,13 +348,13 @@ namespace VianaNET.Modules.Video.Filter
     /// The interpolate.
     /// </summary>
     /// <param name="v2">
-    /// The v 2.
+    /// The v 2. 
     /// </param>
     /// <param name="amount">
-    /// The amount.
+    /// The amount. 
     /// </param>
     /// <returns>
-    /// The <see cref="VectorInt"/> .
+    /// The <see cref="VectorInt"/> . 
     /// </returns>
     public VectorInt Interpolate(VectorInt v2, float amount)
     {
