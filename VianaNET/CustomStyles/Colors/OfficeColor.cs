@@ -2,7 +2,7 @@
 // <copyright file="OfficeColor.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -32,12 +32,23 @@ namespace VianaNET.CustomStyles.Colors
   /// </summary>
   public class OfficeColor
   {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Fields
 
     /// <summary>
     ///   The b.
     /// </summary>
-    private readonly byte b;
+    public byte B;
 
     #endregion
 
@@ -47,16 +58,16 @@ namespace VianaNET.CustomStyles.Colors
     /// Initializes a new instance of the OfficeColor class.
     /// </summary>
     /// <param name="r">
-    /// The red component byte value.
+    /// The red component byte value. 
     /// </param>
     /// <param name="g">
-    /// The green component byte value.
+    /// The green component byte value. 
     /// </param>
     /// <param name="b">
-    /// The blue component byte value.
+    /// The blue component byte value. 
     /// </param>
     /// <param name="pallet">
-    /// The <see cref="OfficeColorPallet"/> this color is assigned to.
+    /// The <see cref="OfficeColorPallet"/> this color is assigned to. 
     /// </param>
     public OfficeColor(byte r, byte g, byte b, OfficeColorPallet pallet)
       : this(255, r, g, b, pallet)
@@ -67,10 +78,10 @@ namespace VianaNET.CustomStyles.Colors
     /// Initializes a new instance of the OfficeColor class.
     /// </summary>
     /// <param name="color">
-    /// The color that defines this office color.
+    /// The color that defines this office color. 
     /// </param>
     /// <param name="pallet">
-    /// The <see cref="OfficeColorPallet"/> this color is assigned to.
+    /// The <see cref="OfficeColorPallet"/> this color is assigned to. 
     /// </param>
     public OfficeColor(Color color, OfficeColorPallet pallet)
       : this(color.A, color.R, color.G, color.B, pallet)
@@ -82,7 +93,7 @@ namespace VianaNET.CustomStyles.Colors
     ///   without using a <see cref="OfficeColorPallet"/>.
     /// </summary>
     /// <param name="c">
-    /// The color that defines this office color.
+    /// The color that defines this office color. 
     /// </param>
     public OfficeColor(Color c)
       : this(c.A, c.R, c.G, c.B, OfficeColorPallet.None)
@@ -93,19 +104,19 @@ namespace VianaNET.CustomStyles.Colors
     /// Initializes a new instance of the OfficeColor class.
     /// </summary>
     /// <param name="a">
-    /// The alpha component of the color.
+    /// The alpha component of the color. 
     /// </param>
     /// <param name="r">
-    /// The red component of the color.
+    /// The red component of the color. 
     /// </param>
     /// <param name="g">
-    /// The green component of the color.
+    /// The green component of the color. 
     /// </param>
     /// <param name="b">
-    /// The blue component of the color.
+    /// The blue component of the color. 
     /// </param>
     /// <param name="pallet">
-    /// The <see cref="OfficeColorPallet"/> this color is assigned to.
+    /// The <see cref="OfficeColorPallet"/> this color is assigned to. 
     /// </param>
     public OfficeColor(byte a, byte r, byte g, byte b, OfficeColorPallet pallet)
     {
@@ -113,17 +124,17 @@ namespace VianaNET.CustomStyles.Colors
       this.A = a;
       this.R = r;
       this.G = g;
-      this.b = b;
+      this.B = b;
     }
 
     /// <summary>
     /// Initializes a new instance of the OfficeColor class.
     /// </summary>
     /// <param name="color">
-    /// The color that defines this office color.
+    /// The color that defines this office color. 
     /// </param>
     /// <param name="pallet">
-    /// The <see cref="OfficeColorPallet"/> this color is assigned to.
+    /// The <see cref="OfficeColorPallet"/> this color is assigned to. 
     /// </param>
     public OfficeColor(string color, OfficeColorPallet pallet)
     {
@@ -132,11 +143,18 @@ namespace VianaNET.CustomStyles.Colors
       this.A = c.A;
       this.R = c.R;
       this.G = c.G;
-      this.b = c.B;
+      this.B = c.B;
     }
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -161,6 +179,29 @@ namespace VianaNET.CustomStyles.Colors
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Public Methods and Operators
 
     /// <summary>
@@ -170,7 +211,7 @@ namespace VianaNET.CustomStyles.Colors
     /// <returns> </returns>
     public static implicit operator Color(OfficeColor oc)
     {
-      return Color.FromArgb(oc.A, oc.R, oc.G, oc.b);
+      return Color.FromArgb(oc.A, oc.R, oc.G, oc.B);
     }
 
     /// <summary>

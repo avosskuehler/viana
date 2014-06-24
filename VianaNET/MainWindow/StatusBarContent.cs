@@ -2,7 +2,7 @@
 // <copyright file="StatusBarContent.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -40,28 +40,19 @@ namespace VianaNET.MainWindow
     ///   The messages label property.
     /// </summary>
     public static readonly DependencyProperty MessagesLabelProperty = DependencyProperty.Register(
-      "MessagesLabel", 
-      typeof(string), 
-      typeof(StatusBarContent), 
-      new FrameworkPropertyMetadata(string.Empty));
+      "MessagesLabel", typeof(string), typeof(StatusBarContent), new FrameworkPropertyMetadata(string.Empty));
 
     /// <summary>
     ///   The progress bar value property.
     /// </summary>
     public static readonly DependencyProperty ProgressBarValueProperty = DependencyProperty.Register(
-      "ProgressBarValue", 
-      typeof(double), 
-      typeof(StatusBarContent), 
-      new FrameworkPropertyMetadata(default(double)));
+      "ProgressBarValue", typeof(double), typeof(StatusBarContent), new FrameworkPropertyMetadata(default(double)));
 
     /// <summary>
     ///   The status label property.
     /// </summary>
     public static readonly DependencyProperty StatusLabelProperty = DependencyProperty.Register(
-      "StatusLabel", 
-      typeof(string), 
-      typeof(StatusBarContent), 
-      new FrameworkPropertyMetadata("Ready"));
+      "StatusLabel", typeof(string), typeof(StatusBarContent), new FrameworkPropertyMetadata("Ready"));
 
     /// <summary>
     ///   Holds the instance of singleton

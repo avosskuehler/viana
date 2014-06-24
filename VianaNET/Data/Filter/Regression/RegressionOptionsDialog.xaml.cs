@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RegressionOptionsDialog.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="RegressionControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -33,12 +33,7 @@ namespace VianaNET.Data.Filter.Regression
   public partial class RegressionOptionsDialog
   {
     #region Fields
-
-    /// <summary>
-    /// The neg flag.
-    /// </summary>
-    public int negFlag;
-
+      public int negFlag;
     #endregion
 
     #region Constructors and Destructors
@@ -57,19 +52,11 @@ namespace VianaNET.Data.Filter.Regression
       double minX, minY, hilf;
       regressionFilter.GetMinMax(regressionFilter.WertX, out minX, out hilf);
       regressionFilter.GetMinMax(regressionFilter.WertY, out minY, out hilf);
-      bool negativeX = minX < 0;
-      bool negativeY = minY < 0;
-      this.negFlag = 0;
-      if (negativeX)
-      {
-        this.negFlag = 1;
-      }
-
-      if (negativeY)
-      {
-        this.negFlag = this.negFlag + 2;
-      }
-
+      var negativeX = minX < 0;
+      var negativeY = minY < 0;
+      negFlag = 0;
+      if (negativeX) { negFlag = 1; }
+      if (negativeY) { negFlag = negFlag+2; }
       this.radioButtonPot.IsEnabled = (!negativeX) & (!negativeY);
       if ((!this.radioButtonPot.IsEnabled) & (this.RegressionType == RegressionType.Potenz))
       {
@@ -122,14 +109,10 @@ namespace VianaNET.Data.Filter.Regression
 
     #endregion
 
-    #region Public Properties
-
     /// <summary>
     ///   Gets the filter.
     /// </summary>
     public RegressionType RegressionType { get; private set; }
-
-    #endregion
 
     #region Methods
 
@@ -137,10 +120,10 @@ namespace VianaNET.Data.Filter.Regression
     /// The button regress auswahl_checked.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonRegressAuswahlChecked(object sender, RoutedEventArgs e)
     {
@@ -191,27 +174,13 @@ namespace VianaNET.Data.Filter.Regression
     }
 
     /// <summary>
-    /// The cancel_ click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void CancelClick(object sender, RoutedEventArgs e)
-    {
-      this.Close();
-    }
-
-    /// <summary>
     /// The o k_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
@@ -219,6 +188,19 @@ namespace VianaNET.Data.Filter.Regression
       this.Close();
     }
 
+    /// <summary>
+    /// The cancel_ click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void CancelClick(object sender, RoutedEventArgs e)
+    {
+      this.Close();
+    }
     #endregion
   }
 }

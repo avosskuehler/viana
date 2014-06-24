@@ -2,7 +2,7 @@
 // <copyright file="NumericUpDown.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -75,72 +75,66 @@ namespace VianaNET
     ///   The change property.
     /// </summary>
     public static readonly DependencyProperty ChangeProperty = DependencyProperty.Register(
-      "Change", 
-      typeof(decimal), 
-      typeof(NumericUpDown), 
-      new FrameworkPropertyMetadata(DefaultChange, OnChangeChanged, CoerceChange), 
+      "Change",
+      typeof(decimal),
+      typeof(NumericUpDown),
+      new FrameworkPropertyMetadata(DefaultChange, OnChangeChanged, CoerceChange),
       ValidateChange);
 
     /// <summary>
     ///   The decimal places property.
     /// </summary>
     public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register(
-      "DecimalPlaces", 
-      typeof(int), 
-      typeof(NumericUpDown), 
-      new FrameworkPropertyMetadata(DefaultDecimalPlaces, OnDecimalPlacesChanged), 
+      "DecimalPlaces",
+      typeof(int),
+      typeof(NumericUpDown),
+      new FrameworkPropertyMetadata(DefaultDecimalPlaces, OnDecimalPlacesChanged),
       ValidateDecimalPlaces);
 
     /// <summary>
     ///   The maximum property.
     /// </summary>
     public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-      "Maximum", 
-      typeof(decimal), 
-      typeof(NumericUpDown), 
+      "Maximum",
+      typeof(decimal),
+      typeof(NumericUpDown),
       new FrameworkPropertyMetadata(DefaultMaxValue, OnMaximumChanged, CoerceMaximum));
 
     /// <summary>
     ///   The minimum property.
     /// </summary>
     public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-      "Minimum", 
-      typeof(decimal), 
-      typeof(NumericUpDown), 
+      "Minimum",
+      typeof(decimal),
+      typeof(NumericUpDown),
       new FrameworkPropertyMetadata(DefaultMinValue, OnMinimumChanged, CoerceMinimum));
 
     /// <summary>
     ///   Identifies the ValueChanged routed event.
     /// </summary>
     public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent(
-      "ValueChanged", 
-      RoutingStrategy.Bubble, 
-      typeof(RoutedPropertyChangedEventHandler<decimal>), 
-      typeof(NumericUpDown));
+      "ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<decimal>), typeof(NumericUpDown));
 
     /// <summary>
     ///   Identifies the Value dependency property.
     /// </summary>
     public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-      "Value", 
-      typeof(decimal), 
-      typeof(NumericUpDown), 
+      "Value",
+      typeof(decimal),
+      typeof(NumericUpDown),
       new FrameworkPropertyMetadata(DefaultValue, OnValueChanged, CoerceValue));
-
-    /// <summary>
-    ///   The value string property.
-    /// </summary>
-    public static readonly DependencyProperty ValueStringProperty = ValueStringPropertyKey.DependencyProperty;
 
     /// <summary>
     ///   The value string property key.
     /// </summary>
     private static readonly DependencyPropertyKey ValueStringPropertyKey =
       DependencyProperty.RegisterAttachedReadOnly(
-        "ValueString", 
-        typeof(string), 
-        typeof(NumericUpDown), 
-        new PropertyMetadata());
+        "ValueString", typeof(string), typeof(NumericUpDown), new PropertyMetadata());
+
+    /// <summary>
+    ///   The value string property.
+    /// </summary>
+    public static readonly DependencyProperty ValueStringProperty = ValueStringPropertyKey.DependencyProperty;
 
     /// <summary>
     ///   The _decrease command.
@@ -174,14 +168,10 @@ namespace VianaNET
 
       // Listen to MouseLeftButtonDown event to determine if NumericUpDown should move focus to itself
       EventManager.RegisterClassHandler(
-        typeof(NumericUpDown), 
-        Mouse.MouseDownEvent, 
-        new MouseButtonEventHandler(OnMouseLeftButtonDown), 
-        true);
+        typeof(NumericUpDown), Mouse.MouseDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
 
       DefaultStyleKeyProperty.OverrideMetadata(
-        typeof(NumericUpDown), 
-        new FrameworkPropertyMetadata(typeof(NumericUpDown)));
+        typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
     }
 
     /// <summary>
@@ -337,10 +327,10 @@ namespace VianaNET
     /// Throws an <see cref="ArgumentOutOfRangeException"/> if the provided truth is false.
     /// </summary>
     /// <param name="truth">
-    /// The value assumed to be true.
+    /// The value assumed to be true. 
     /// </param>
     /// <param name="parameterName">
-    /// The string for <see cref="ArgumentOutOfRangeException"/> , if thrown.
+    /// The string for <see cref="ArgumentOutOfRangeException"/> , if thrown. 
     /// </param>
     [DebuggerStepThrough]
     public static void RequireArgumentRange(bool truth, string parameterName)
@@ -360,10 +350,10 @@ namespace VianaNET
     ///   provided string is empty.
     /// </summary>
     /// <param name="stringParameter">
-    /// The object to test for null and empty.
+    /// The object to test for null and empty. 
     /// </param>
     /// <param name="parameterName">
-    /// The string for the ArgumentException parameter, if thrown.
+    /// The string for the ArgumentException parameter, if thrown. 
     /// </param>
     [DebuggerStepThrough]
     public static void RequireNotNullOrEmpty(string stringParameter, string parameterName)
@@ -372,8 +362,7 @@ namespace VianaNET
       {
         throw new ArgumentNullException(parameterName);
       }
-
-      if (stringParameter.Length == 0)
+      else if (stringParameter.Length == 0)
       {
         throw new ArgumentOutOfRangeException(parameterName);
       }
@@ -412,7 +401,7 @@ namespace VianaNET
     /// Raises the ValueChanged event.
     /// </summary>
     /// <param name="args">
-    /// Arguments associated with the ValueChanged event.
+    /// Arguments associated with the ValueChanged event. 
     /// </param>
     protected virtual void OnValueChanged(RoutedPropertyChangedEventArgs<decimal> args)
     {
@@ -423,13 +412,13 @@ namespace VianaNET
     /// The coerce change.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     private static object CoerceChange(DependencyObject element, object value)
     {
@@ -453,13 +442,13 @@ namespace VianaNET
     /// The coerce maximum.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     private static object CoerceMaximum(DependencyObject element, object value)
     {
@@ -472,13 +461,13 @@ namespace VianaNET
     /// The coerce minimum.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     private static object CoerceMinimum(DependencyObject element, object value)
     {
@@ -491,13 +480,13 @@ namespace VianaNET
     /// The coerce value.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     private static object CoerceValue(DependencyObject element, object value)
     {
@@ -517,29 +506,25 @@ namespace VianaNET
     {
       _increaseCommand = new RoutedCommand("IncreaseCommand", typeof(NumericUpDown));
       CommandManager.RegisterClassCommandBinding(
-        typeof(NumericUpDown), 
-        new CommandBinding(_increaseCommand, OnIncreaseCommand));
+        typeof(NumericUpDown), new CommandBinding(_increaseCommand, OnIncreaseCommand));
       CommandManager.RegisterClassInputBinding(
-        typeof(NumericUpDown), 
-        new InputBinding(_increaseCommand, new KeyGesture(Key.Up)));
+        typeof(NumericUpDown), new InputBinding(_increaseCommand, new KeyGesture(Key.Up)));
 
       _decreaseCommand = new RoutedCommand("DecreaseCommand", typeof(NumericUpDown));
       CommandManager.RegisterClassCommandBinding(
-        typeof(NumericUpDown), 
-        new CommandBinding(_decreaseCommand, OnDecreaseCommand));
+        typeof(NumericUpDown), new CommandBinding(_decreaseCommand, OnDecreaseCommand));
       CommandManager.RegisterClassInputBinding(
-        typeof(NumericUpDown), 
-        new InputBinding(_decreaseCommand, new KeyGesture(Key.Down)));
+        typeof(NumericUpDown), new InputBinding(_decreaseCommand, new KeyGesture(Key.Down)));
     }
 
     /// <summary>
     /// The on change changed.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="args">
-    /// The args.
+    /// The args. 
     /// </param>
     private static void OnChangeChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
     {
@@ -549,10 +534,10 @@ namespace VianaNET
     /// The on decimal places changed.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="args">
-    /// The args.
+    /// The args. 
     /// </param>
     private static void OnDecimalPlacesChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
     {
@@ -568,10 +553,10 @@ namespace VianaNET
     /// The on decrease command.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private static void OnDecreaseCommand(object sender, ExecutedRoutedEventArgs e)
     {
@@ -586,10 +571,10 @@ namespace VianaNET
     /// The on increase command.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private static void OnIncreaseCommand(object sender, ExecutedRoutedEventArgs e)
     {
@@ -604,10 +589,10 @@ namespace VianaNET
     /// The on maximum changed.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="args">
-    /// The args.
+    /// The args. 
     /// </param>
     private static void OnMaximumChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
     {
@@ -618,10 +603,10 @@ namespace VianaNET
     /// The on minimum changed.
     /// </summary>
     /// <param name="element">
-    /// The element.
+    /// The element. 
     /// </param>
     /// <param name="args">
-    /// The args.
+    /// The args. 
     /// </param>
     private static void OnMinimumChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
     {
@@ -654,10 +639,10 @@ namespace VianaNET
     /// The on value changed.
     /// </summary>
     /// <param name="obj">
-    /// The obj.
+    /// The obj. 
     /// </param>
     /// <param name="args">
-    /// The args.
+    /// The args. 
     /// </param>
     private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
@@ -683,10 +668,10 @@ namespace VianaNET
     /// The validate change.
     /// </summary>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> .
+    /// The <see cref="bool"/> . 
     /// </returns>
     private static bool ValidateChange(object value)
     {
@@ -698,10 +683,10 @@ namespace VianaNET
     /// The validate decimal places.
     /// </summary>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> .
+    /// The <see cref="bool"/> . 
     /// </returns>
     private static bool ValidateDecimalPlaces(object value)
     {
@@ -713,10 +698,10 @@ namespace VianaNET
     /// The smallest for decimal places.
     /// </summary>
     /// <param name="decimalPlaces">
-    /// The decimal places.
+    /// The decimal places. 
     /// </param>
     /// <returns>
-    /// The <see cref="decimal"/> .
+    /// The <see cref="decimal"/> . 
     /// </returns>
     private static decimal smallestForDecimalPlaces(int decimalPlaces)
     {
@@ -756,7 +741,7 @@ namespace VianaNET
     /// Initializes a new instance of the <see cref="NumericUpDownAutomationPeer"/> class.
     /// </summary>
     /// <param name="control">
-    /// The control.
+    /// The control. 
     /// </param>
     public NumericUpDownAutomationPeer(NumericUpDown control)
       : base(control)
@@ -856,10 +841,10 @@ namespace VianaNET
     /// The get pattern.
     /// </summary>
     /// <param name="patternInterface">
-    /// The pattern interface.
+    /// The pattern interface. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     public override object GetPattern(PatternInterface patternInterface)
     {
@@ -879,7 +864,7 @@ namespace VianaNET
     /// The set value.
     /// </summary>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <exception cref="ArgumentOutOfRangeException">
     /// </exception>
@@ -907,10 +892,10 @@ namespace VianaNET
     /// The raise value changed event.
     /// </summary>
     /// <param name="oldValue">
-    /// The old value.
+    /// The old value. 
     /// </param>
     /// <param name="newValue">
-    /// The new value.
+    /// The new value. 
     /// </param>
     internal void RaiseValueChangedEvent(decimal oldValue, decimal newValue)
     {

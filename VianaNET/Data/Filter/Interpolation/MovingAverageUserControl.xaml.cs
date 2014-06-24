@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MovingAverageUserControl.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="MovingAverageControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -39,7 +39,7 @@ namespace VianaNET.Data.Filter.Interpolation
     /// Initializes a new instance of the MovingAverageUserControl class.
     /// </summary>
     /// <param name="filter">
-    /// The filter.
+    /// The filter. 
     /// </param>
     public MovingAverageUserControl(MovingAverageFilter filter)
     {
@@ -64,17 +64,14 @@ namespace VianaNET.Data.Filter.Interpolation
     /// <summary>
     /// Handles the OnValueChanged event of the NumberOfPointsNumeric control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
     private void NumberOfPointsNumeric_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<decimal> e)
     {
       this.Filter.NumberOfSamplesToInterpolate = (int)this.NumberOfPointsNumeric.Value;
     }
 
     #endregion
+
   }
 }

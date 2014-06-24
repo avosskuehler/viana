@@ -17,9 +17,6 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   This class is a singleton encapsulating all settings for a viana.net project
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Application
 {
@@ -52,14 +49,14 @@ namespace VianaNET.Application
     #region Fields
 
     /// <summary>
-    ///   The current chart type
-    /// </summary>
-    private ChartType currentChartType;
-
-    /// <summary>
     ///   The filter data for the specific <see cref="ChartType" />
     /// </summary>
     private Dictionary<ChartType, FilterData> filterData;
+
+    /// <summary>
+    ///   The current chart type
+    /// </summary>
+    private ChartType currentChartType;
 
     #endregion
 
@@ -91,7 +88,7 @@ namespace VianaNET.Application
     public event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
-    ///   The update chart requested.
+    /// The update chart requested.
     /// </summary>
     [field: NonSerialized]
     public event EventHandler<EventArgs> UpdateChartRequested;
@@ -101,10 +98,10 @@ namespace VianaNET.Application
     #region Public Properties
 
     /// <summary>
-    ///   Gets or sets a value indicating whether we are in the deserialization process of a project.
+    /// Gets or sets a value indicating whether we are in the deserialization process of a project.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance is deserializing; otherwise, <c>false</c>.
+    /// <c>true</c> if this instance is deserializing; otherwise, <c>false</c>.
     /// </value>
     public static bool IsDeserializing { get; set; }
 
@@ -112,6 +109,66 @@ namespace VianaNET.Application
     ///   Gets or sets the calibration data.
     /// </summary>
     public CalibrationData CalibrationData { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the filter data in a serializable manner.
+    /// </summary>
+    public DictionaryProxy<ChartType, FilterData> SerializableFilterData
+    {
+      get
+      {
+        return new DictionaryProxy<ChartType, FilterData>(this.filterData);
+      }
+
+      set
+      {
+        this.filterData = value.ToDictionary();
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the current filter data.
+    /// </summary>
+    /// <value>
+    ///   The current filter data.
+    /// </value>
+    [XmlIgnore]
+    public FilterData CurrentFilterData { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the processing data.
+    /// </summary>
+    public ProcessingData ProcessingData { get; set; }
+
+    ///// <summary>
+    ///// Gets or sets the chart data
+    ///// </summary>
+    // public ChartData ChartData { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the filename.
+    /// </summary>
+    public string ProjectFilename { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the path.
+    /// </summary>
+    public string ProjectPath { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the video data.
+    /// </summary>
+    public VideoData VideoData { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the video file, if in player mode.
+    /// </summary>
+    public string VideoFile { get; set; }
+
+    /// <summary>
+    ///   Gets or sets the video mode.
+    /// </summary>
+    public VideoMode VideoMode { get; set; }
 
     /// <summary>
     ///   Gets or sets the current selected <see cref="ChartType" /> in the charts module
@@ -147,66 +204,6 @@ namespace VianaNET.Application
         this.CopyFilterData(this.filterData[this.currentChartType], this.CurrentFilterData);
       }
     }
-
-    /// <summary>
-    ///   Gets or sets the current filter data.
-    /// </summary>
-    /// <value>
-    ///   The current filter data.
-    /// </value>
-    [XmlIgnore]
-    public FilterData CurrentFilterData { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the processing data.
-    /// </summary>
-    public ProcessingData ProcessingData { get; set; }
-
-    ///// <summary>
-    ///// Gets or sets the chart data
-    ///// </summary>
-    // public ChartData ChartData { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the filename.
-    /// </summary>
-    public string ProjectFilename { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the path.
-    /// </summary>
-    public string ProjectPath { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the filter data in a serializable manner.
-    /// </summary>
-    public DictionaryProxy<ChartType, FilterData> SerializableFilterData
-    {
-      get
-      {
-        return new DictionaryProxy<ChartType, FilterData>(this.filterData);
-      }
-
-      set
-      {
-        this.filterData = value.ToDictionary();
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the video data.
-    /// </summary>
-    public VideoData VideoData { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the video file, if in player mode.
-    /// </summary>
-    public string VideoFile { get; set; }
-
-    /// <summary>
-    ///   Gets or sets the video mode.
-    /// </summary>
-    public VideoMode VideoMode { get; set; }
 
     #endregion
 
@@ -281,9 +278,7 @@ namespace VianaNET.Application
         using (TextWriter writer = new StreamWriter(filePath))
         {
           // Write modified values back to serialized filterData dictionary
-          projectToSerialize.CopyFilterData(
-            projectToSerialize.CurrentFilterData, 
-            projectToSerialize.filterData[projectToSerialize.currentChartType]);
+          projectToSerialize.CopyFilterData(projectToSerialize.CurrentFilterData, projectToSerialize.filterData[projectToSerialize.currentChartType]);
 
           // Create an instance of the XmlSerializer class;
           // specify the type of object to serialize 

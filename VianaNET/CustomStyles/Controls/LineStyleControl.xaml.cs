@@ -2,7 +2,7 @@
 // <copyright file="LineStyleControl.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -17,9 +17,6 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   Interaction logic for LineStyleControl.xaml
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET
 {
@@ -75,7 +72,7 @@ namespace VianaNET
     public PlotModel ChartModel { get; set; }
 
     /// <summary>
-    ///   Gets or sets the marker type.
+    /// Gets or sets the marker type.
     /// </summary>
     public MarkerType MarkerType
     {
@@ -190,10 +187,10 @@ namespace VianaNET
     }
 
     /// <summary>
-    ///   The create line series.
+    /// The create line series.
     /// </summary>
     /// <returns>
-    ///   The <see cref="PlotModel" />.
+    /// The <see cref="PlotModel"/>.
     /// </returns>
     private PlotModel CreateLineSeries()
     {

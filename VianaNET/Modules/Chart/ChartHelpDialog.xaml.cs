@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   A dialog to display help on the chart module.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Chart
 {
@@ -48,14 +45,10 @@ namespace VianaNET.Modules.Chart
 
     /// <summary>
     /// Event handler for the button click event.
-    ///   SaveAndClose is clicked, so set the dialog result to true and exit.
+    /// SaveAndClose is clicked, so set the dialog result to true and exit.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void SaveAndCloseButtonClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;

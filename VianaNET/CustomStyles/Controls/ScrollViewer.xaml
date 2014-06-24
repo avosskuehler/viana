@@ -1,11 +1,11 @@
 <ResourceDictionary
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}">
-    <Style.Resources>
-      <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
-    </Style.Resources>
-  </Style>
+    <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+        </Style.Resources>
+    </Style>
 
 </ResourceDictionary>

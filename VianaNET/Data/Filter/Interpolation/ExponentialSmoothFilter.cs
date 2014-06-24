@@ -2,7 +2,7 @@
 // <copyright file="ExponentialSmoothFilter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,13 +23,14 @@
 //   The exponential smooth filter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Windows.Controls;
 
-  using VianaNET.Application;
-  using VianaNET.CustomStyles.Types;
-  using VianaNET.Data.Collections;
+  using Application;
+  using Collections;
+  using CustomStyles.Types;
 
   /// <summary>
   ///   The exponential smooth filter.
@@ -53,7 +54,7 @@ namespace VianaNET.Data.Filter.Interpolation
     #region Public Properties
 
     /// <summary>
-    ///   Gets the ExponentialSmoothControl.
+    /// Gets the ExponentialSmoothControl.
     /// </summary>
     public override UserControl CustomUserControl
     {
@@ -73,7 +74,7 @@ namespace VianaNET.Data.Filter.Interpolation
     #region Public Methods and Operators
 
     /// <summary>
-    ///   Calculate exponential smoothed values for the current data series.
+    /// Calculate exponential smoothed values for the current data series.
     /// </summary>
     public override void CalculateFilterValues()
     {
@@ -81,9 +82,9 @@ namespace VianaNET.Data.Filter.Interpolation
 
       var fittedSamples = new SortedObservableCollection<XYSample>();
 
-      for (int i = 1; i < this.WertY.Count; i++)
+      for (var i = 1; i < this.WertY.Count; i++)
       {
-        double smoothValue = this.SmoothingFactor * this.WertY[i] + (1 - this.SmoothingFactor) * this.WertY[i - 1];
+        var smoothValue = this.SmoothingFactor * this.WertY[i] + (1 - this.SmoothingFactor) * this.WertY[i - 1];
         fittedSamples.Add(new XYSample(this.WertX[i], smoothValue));
       }
 

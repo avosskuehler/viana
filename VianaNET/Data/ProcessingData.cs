@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The image processing.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data
 {
@@ -54,27 +51,36 @@ namespace VianaNET.Data
     ///   The blob max diameter property.
     /// </summary>
     public static readonly DependencyProperty BlobMaxDiameterProperty = DependencyProperty.Register(
-      "BlobMaxDiameter", 
-      typeof(ObservableCollection<double>), 
-      typeof(ProcessingData), 
+      "BlobMaxDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<double>()));
+
+    /// <summary>
+    ///   The target color property.
+    /// </summary>
+    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
+      "TargetColor",
+      typeof(ObservableCollection<Color>),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
 
     /// <summary>
     ///   The blob min diameter property.
     /// </summary>
     public static readonly DependencyProperty BlobMinDiameterProperty = DependencyProperty.Register(
-      "BlobMinDiameter", 
-      typeof(ObservableCollection<double>), 
-      typeof(ProcessingData), 
+      "BlobMinDiameter",
+      typeof(ObservableCollection<double>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<double>()));
 
     /// <summary>
     ///   The color threshold property.
     /// </summary>
     public static readonly DependencyProperty ColorThresholdProperty = DependencyProperty.Register(
-      "ColorThreshold", 
-      typeof(ObservableCollection<int>), 
-      typeof(ProcessingData), 
+      "ColorThreshold",
+      typeof(ObservableCollection<int>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<int>()));
 
     /// <summary>
@@ -82,113 +88,101 @@ namespace VianaNET.Data
     /// </summary>
     public static readonly DependencyProperty CurrentBlobCenterProperty =
       DependencyProperty.Register(
-        "CurrentBlobCenter", 
-        typeof(ObservableCollection<Point?>), 
-        typeof(ProcessingData), 
+        "CurrentBlobCenter",
+        typeof(ObservableCollection<Point?>),
+        typeof(ProcessingData),
         new FrameworkPropertyMetadata(new ObservableCollection<Point?>()));
 
     /// <summary>
     ///   The detected blobs property.
     /// </summary>
     public static readonly DependencyProperty DetectedBlobsProperty = DependencyProperty.Register(
-      "DetectedBlob", 
-      typeof(ObservableCollection<Segment>), 
-      typeof(ProcessingData), 
+      "DetectedBlob",
+      typeof(ObservableCollection<Segment>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<Segment>()));
-
-    /// <summary>
-    ///   The difference quotient type property.
-    /// </summary>
-    public static readonly DependencyProperty DifferenceQuotientTypeProperty =
-      DependencyProperty.Register(
-        "DifferenceQuotientType", 
-        typeof(DifferenceQuotientType), 
-        typeof(ProcessingData), 
-        new FrameworkPropertyMetadata(DifferenceQuotientType.Forward));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfObject" />.
-    /// </summary>
-    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
-      "IndexOfObject", 
-      typeof(int), 
-      typeof(ProcessingData), 
-      new FrameworkPropertyMetadata(0, OnPropertyChanged));
-
-    /// <summary>
-    ///   The is target color set property.
-    /// </summary>
-    public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
-      "IsTargetColorSet", 
-      typeof(bool), 
-      typeof(ProcessingData), 
-      new FrameworkPropertyMetadata(false, OnPropertyChanged));
-
-    /// <summary>
-    ///   The is using color detection property
-    /// </summary>
-    public static readonly DependencyProperty IsUsingColorDetectionProperty =
-      DependencyProperty.Register(
-        "IsUsingColorDetection", 
-        typeof(bool), 
-        typeof(ProcessingData), 
-        new FrameworkPropertyMetadata(true));
-
-    /// <summary>
-    ///   The is using motion detection property
-    /// </summary>
-    public static readonly DependencyProperty IsUsingMotionDetectionProperty =
-      DependencyProperty.Register(
-        "IsUsingMotionDetection", 
-        typeof(bool), 
-        typeof(ProcessingData), 
-        new FrameworkPropertyMetadata(false));
 
     /// <summary>
     ///   The motion threshold property.
     /// </summary>
     public static readonly DependencyProperty MotionThresholdProperty = DependencyProperty.Register(
-      "MotionThreshold", 
-      typeof(ObservableCollection<int>), 
-      typeof(ProcessingData), 
+      "MotionThreshold",
+      typeof(ObservableCollection<int>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<int>()));
-
-    /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="NumberOfTrackedObjects" />.
-    /// </summary>
-    public static readonly DependencyProperty NumberOfTrackedObjectsProperty =
-      DependencyProperty.Register(
-        "NumberOfTrackedObjects", 
-        typeof(int), 
-        typeof(CalibrationData), 
-        new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
     /// <summary>
     ///   The is positive contrast property.
     /// </summary>
     public static readonly DependencyProperty PositiveContrastProperty = DependencyProperty.Register(
-      "PositiveContrast", 
-      typeof(ObservableCollection<bool>), 
-      typeof(ProcessingData), 
+      "PositiveContrast",
+      typeof(ObservableCollection<bool>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<bool>(), OnPropertyChanged));
 
     /// <summary>
     ///   The is the suppress noise property.
     /// </summary>
     public static readonly DependencyProperty SuppressNoiseProperty = DependencyProperty.Register(
-      "SuppressNoise", 
-      typeof(ObservableCollection<bool>), 
-      typeof(ProcessingData), 
+      "SuppressNoise",
+      typeof(ObservableCollection<bool>),
+      typeof(ProcessingData),
       new FrameworkPropertyMetadata(new ObservableCollection<bool>(), OnPropertyChanged));
 
     /// <summary>
-    ///   The target color property.
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfObject" />.
     /// </summary>
-    public static readonly DependencyProperty TargetColorProperty = DependencyProperty.Register(
-      "TargetColor", 
-      typeof(ObservableCollection<Color>), 
-      typeof(ProcessingData), 
-      new FrameworkPropertyMetadata(new ObservableCollection<Color>()));
+    public static readonly DependencyProperty IndexOfObjectProperty = DependencyProperty.Register(
+      "IndexOfObject",
+      typeof(int),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(0, OnPropertyChanged));
+
+    /// <summary>
+    ///   The is target color set property.
+    /// </summary>
+    public static readonly DependencyProperty IsTargetColorSetProperty = DependencyProperty.Register(
+      "IsTargetColorSet",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(false, OnPropertyChanged));
+
+    /// <summary>
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="NumberOfTrackedObjects" />.
+    /// </summary>
+    public static readonly DependencyProperty NumberOfTrackedObjectsProperty =
+      DependencyProperty.Register(
+        "NumberOfTrackedObjects",
+        typeof(int),
+        typeof(CalibrationData),
+        new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
+
+    /// <summary>
+    ///   The difference quotient type property.
+    /// </summary>
+    public static readonly DependencyProperty DifferenceQuotientTypeProperty = DependencyProperty.Register(
+      "DifferenceQuotientType",
+      typeof(DifferenceQuotientType),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(DifferenceQuotientType.Forward));
+
+    /// <summary>
+    /// The is using color detection property
+    /// </summary>
+    public static readonly DependencyProperty IsUsingColorDetectionProperty = DependencyProperty.Register(
+      "IsUsingColorDetection",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(true));
+
+    /// <summary>
+    /// The is using motion detection property
+    /// </summary>
+    public static readonly DependencyProperty IsUsingMotionDetectionProperty = DependencyProperty.Register(
+      "IsUsingMotionDetection",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(false));
 
     #endregion
 
@@ -205,11 +199,6 @@ namespace VianaNET.Data
     private readonly CropFilterRgb cropFilter;
 
     /// <summary>
-    ///   The motion detector
-    /// </summary>
-    private readonly MotionDetector detector;
-
-    /// <summary>
     ///   The histogramm filter.
     /// </summary>
     private readonly Histogram histogrammFilter;
@@ -223,6 +212,11 @@ namespace VianaNET.Data
     ///   The watch.
     /// </summary>
     private readonly Stopwatch watch = new Stopwatch();
+
+    /// <summary>
+    /// The motion detector
+    /// </summary>
+    private readonly MotionDetector detector;
 
     /// <summary>
     ///   The counter.
@@ -253,9 +247,10 @@ namespace VianaNET.Data
     /// </summary>
     public ProcessingData()
     {
-      // this.ColorThreshold = new ObservableCollection<int>();
-      // this.BlobMinDiameter = new ObservableCollection<double>();
-      // this.BlobMaxDiameter = new ObservableCollection<double>();
+      //this.ColorThreshold = new ObservableCollection<int>();
+      //this.BlobMinDiameter = new ObservableCollection<double>();
+      //this.BlobMaxDiameter = new ObservableCollection<double>();
+
       this.colorAndCropFilter = new ColorAndCropFilterRgb();
       this.cropFilter = new CropFilterRgb();
       this.histogrammFilter = new Histogram();
@@ -294,6 +289,7 @@ namespace VianaNET.Data
     #endregion
 
     #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the blob max diameter.
@@ -376,92 +372,6 @@ namespace VianaNET.Data
     }
 
     /// <summary>
-    ///   Gets or sets the DifferenceQuotientType
-    /// </summary>
-    public DifferenceQuotientType DifferenceQuotientType
-    {
-      get
-      {
-        return (DifferenceQuotientType)this.GetValue(DifferenceQuotientTypeProperty);
-      }
-
-      set
-      {
-        this.SetValue(DifferenceQuotientTypeProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the index of the currently tracked object
-    /// </summary>
-    public int IndexOfObject
-    {
-      get
-      {
-        return (int)this.GetValue(IndexOfObjectProperty);
-      }
-
-      set
-      {
-        this.SetValue(IndexOfObjectProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets a value indicating whether is target color set.
-    /// </summary>
-    public bool IsTargetColorSet
-    {
-      get
-      {
-        return (bool)this.GetValue(IsTargetColorSetProperty);
-      }
-
-      set
-      {
-        this.SetValue(IsTargetColorSetProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets a value indicating whether this instance is using color detection.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this instance is using color detection; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsUsingColorDetection
-    {
-      get
-      {
-        return (bool)this.GetValue(IsUsingColorDetectionProperty);
-      }
-
-      set
-      {
-        this.SetValue(IsUsingColorDetectionProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets a value indicating whether this instance is using motion detection.
-    /// </summary>
-    /// <value>
-    ///   <c>true</c> if this instance is using motion detection; otherwise, <c>false</c>.
-    /// </value>
-    public bool IsUsingMotionDetection
-    {
-      get
-      {
-        return (bool)this.GetValue(IsUsingMotionDetectionProperty);
-      }
-
-      set
-      {
-        this.SetValue(IsUsingMotionDetectionProperty, value);
-      }
-    }
-
-    /// <summary>
     ///   Gets or sets the motion thresholds.
     /// </summary>
     public ObservableCollection<int> MotionThreshold
@@ -474,22 +384,6 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(MotionThresholdProperty, value);
-      }
-    }
-
-    /// <summary>
-    ///   Gets or sets the number of tracked objects
-    /// </summary>
-    public int NumberOfTrackedObjects
-    {
-      get
-      {
-        return (int)this.GetValue(NumberOfTrackedObjectsProperty);
-      }
-
-      set
-      {
-        this.SetValue(NumberOfTrackedObjectsProperty, value);
       }
     }
 
@@ -526,6 +420,54 @@ namespace VianaNET.Data
     }
 
     /// <summary>
+    ///   Gets or sets the index of the currently tracked object
+    /// </summary>
+    public int IndexOfObject
+    {
+      get
+      {
+        return (int)this.GetValue(IndexOfObjectProperty);
+      }
+
+      set
+      {
+        this.SetValue(IndexOfObjectProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets a value indicating whether is target color set.
+    /// </summary>
+    public bool IsTargetColorSet
+    {
+      get
+      {
+        return (bool)this.GetValue(IsTargetColorSetProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsTargetColorSetProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the number of tracked objects
+    /// </summary>
+    public int NumberOfTrackedObjects
+    {
+      get
+      {
+        return (int)this.GetValue(NumberOfTrackedObjectsProperty);
+      }
+
+      set
+      {
+        this.SetValue(NumberOfTrackedObjectsProperty, value);
+      }
+    }
+
+    /// <summary>
     ///   Gets or sets the target color.
     /// </summary>
     public ObservableCollection<Color> TargetColor
@@ -538,6 +480,60 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(TargetColorProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the DifferenceQuotientType
+    /// </summary>
+    public DifferenceQuotientType DifferenceQuotientType
+    {
+      get
+      {
+        return (DifferenceQuotientType)this.GetValue(DifferenceQuotientTypeProperty);
+      }
+
+      set
+      {
+        this.SetValue(DifferenceQuotientTypeProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is using color detection.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is using color detection; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsUsingColorDetection
+    {
+      get
+      {
+        return (bool)this.GetValue(IsUsingColorDetectionProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsUsingColorDetectionProperty, value);
+      }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is using motion detection.
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is using motion detection; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsUsingMotionDetection
+    {
+      get
+      {
+        return (bool)this.GetValue(IsUsingMotionDetectionProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsUsingMotionDetectionProperty, value);
       }
     }
 
@@ -685,7 +681,7 @@ namespace VianaNET.Data
           mapToUse = Video.Instance.VideoElement.MotionProcessingMapping;
         }
 
-        Histogram histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
+        var histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
         this.segmentator.Histogram = histogram;
         this.segmentator.ThresholdLuminance = histogram.Max * 0.5f;
         this.segmentator.MinDiameter = this.BlobMinDiameter[i];
@@ -727,8 +723,8 @@ namespace VianaNET.Data
 
 #if DEBUG
 
-  // Console.Write("AverageProcessingTime: ");
-  // Console.WriteLine(this.totalProcessingTime / this.counter);
+      // Console.Write("AverageProcessingTime: ");
+      // Console.WriteLine(this.totalProcessingTime / this.counter);
 #endif
 
       this.isReady = true;
@@ -785,12 +781,8 @@ namespace VianaNET.Data
     /// <summary>
     /// Blob collection changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
     private void BlobCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
@@ -802,12 +794,8 @@ namespace VianaNET.Data
     /// <summary>
     /// HLSL parameters collection changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
     private void HlslParamsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
@@ -820,15 +808,10 @@ namespace VianaNET.Data
     /// <summary>
     /// Motion detection parameter collection changed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.
-    /// </param>
-    /// <exception cref="System.NotImplementedException">
-    /// </exception>
-    private void MotionDetectionParameterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+    /// <exception cref="System.NotImplementedException"></exception>
+    void MotionDetectionParameterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
       {
@@ -836,6 +819,7 @@ namespace VianaNET.Data
         this.OnPropertyChanged("MotionDetectionParams");
       }
     }
+
 
     /// <summary>
     ///   The on frame processed.
@@ -892,8 +876,7 @@ namespace VianaNET.Data
           this.Reset();
         }
       }
-      else if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection"
-               || e.PropertyName == "IsTargetColorSet")
+      else if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection" || e.PropertyName == "IsTargetColorSet")
       {
         this.detector.Reset();
         Video.Instance.RefreshProcessingMap();

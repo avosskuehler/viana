@@ -2,7 +2,7 @@
 // <copyright file="CalculatorAndFktEditor.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -27,9 +27,12 @@ namespace VianaNET.Data.Filter.Theory
 {
   using System;
   using System.Globalization;
+  using System.Reflection;
+  using System.Resources;
   using System.Windows;
   using System.Windows.Controls;
 
+  using VianaNET.Data.Filter.Regression;
   using VianaNET.Resources;
 
   using WPFLocalizeExtension.Extensions;
@@ -42,11 +45,6 @@ namespace VianaNET.Data.Filter.Theory
     #region Fields
 
     /// <summary>
-    /// The uses decimalkomma.
-    /// </summary>
-    public readonly bool usesDecimalkomma;
-
-    /// <summary>
     ///   The art.
     /// </summary>
     private readonly TRechnerArt art;
@@ -56,6 +54,8 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     private FunctionCalcTree scannedFkt;
 
+    public readonly bool usesDecimalkomma;
+
     #endregion
 
     #region Constructors and Destructors
@@ -64,7 +64,7 @@ namespace VianaNET.Data.Filter.Theory
     /// Initializes a new instance of the <see cref="CalculatorAndFktEditor"/> class.
     /// </summary>
     /// <param name="modus">
-    /// The modus.
+    /// The modus. 
     /// </param>
     public CalculatorAndFktEditor(TRechnerArt modus)
     {
@@ -74,7 +74,7 @@ namespace VianaNET.Data.Filter.Theory
       this.Ergebnis = string.Empty;
       this.art = modus;
       this.buttonTakeKonst.IsEnabled = true;
-      this.usesDecimalkomma = 15 == Convert.ToDouble("1.5");
+      this.usesDecimalkomma = (15 == Convert.ToDouble("1.5"));
       if (modus == TRechnerArt.rechner)
       {
         this.Title = Labels.CalculatorDialogTitleCalc;
@@ -102,14 +102,10 @@ namespace VianaNET.Data.Filter.Theory
 
     #endregion
 
-    #region Public Properties
-
     /// <summary>
-    ///   Gets or sets the ergebnis.
+    /// Gets or sets the ergebnis.
     /// </summary>
     public string Ergebnis { get; set; }
-
-    #endregion
 
     #region Public Methods and Operators
 
@@ -137,13 +133,39 @@ namespace VianaNET.Data.Filter.Theory
     #region Methods
 
     /// <summary>
+    /// The einfuegen.
+    /// </summary>
+    /// <param name="insertString">
+    /// The z str. 
+    /// </param>
+    private void Einfuegen(string insertString)
+    {
+      var caretPos = this.textBox1.CaretIndex;
+      var selLen = this.textBox1.SelectionLength;
+      if (caretPos > this.textBox1.SelectionStart)
+      {
+        caretPos = this.textBox1.SelectionStart;
+      }
+
+      if (selLen > 0)
+      {
+        this.textBox1.Text = this.textBox1.Text.Remove(caretPos, selLen);
+      }
+
+      this.textBox1.Text = this.textBox1.Text.Insert(caretPos, insertString);
+      this.textBox1.Focus();
+      this.textBox1.SelectionStart = caretPos + insertString.Length;
+      this.textBox1.SelectionLength = 0;
+    }
+
+    /// <summary>
     /// The button back_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonBackClick(object sender, RoutedEventArgs e)
     {
@@ -164,8 +186,8 @@ namespace VianaNET.Data.Filter.Theory
         offset = -1;
       }
 
-      int caretPos = this.textBox1.CaretIndex + offset;
-      int selLen = this.textBox1.SelectionLength;
+      var caretPos = this.textBox1.CaretIndex + offset;
+      var selLen = this.textBox1.SelectionLength;
       if (caretPos < 0)
       {
         return;
@@ -194,13 +216,27 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
+    /// The button ESC click.
+    /// </summary>
+    /// <param name="sender">
+    /// The sender. 
+    /// </param>
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ButtonEscClick(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = false;
+    }
+
+    /// <summary>
     /// The button END  click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonEndClick(object sender, RoutedEventArgs e)
     {
@@ -210,27 +246,13 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
-    /// The button ESC click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void ButtonEscClick(object sender, RoutedEventArgs e)
-    {
-      this.DialogResult = false;
-    }
-
-    /// <summary>
     /// The button Done click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonFertigClick(object sender, RoutedEventArgs e)
     {
@@ -239,34 +261,13 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
-    /// The button insert functionstring click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void ButtonFktClick(object sender, RoutedEventArgs e)
-    {
-      var button = sender as Button;
-      if (button == null)
-      {
-        return;
-      }
-
-      string stringValue = button.Content + "(";
-      this.Einfuegen(stringValue);
-    }
-
-    /// <summary>
     /// The button left click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonLeftClick(object sender, RoutedEventArgs e)
     {
@@ -283,10 +284,10 @@ namespace VianaNET.Data.Filter.Theory
     /// The button POS1 click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonPos1Click(object sender, RoutedEventArgs e)
     {
@@ -299,10 +300,10 @@ namespace VianaNET.Data.Filter.Theory
     /// The button right click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonRightClick(object sender, RoutedEventArgs e)
     {
@@ -319,10 +320,10 @@ namespace VianaNET.Data.Filter.Theory
     /// The button take constant click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonTakeKonstClick(object sender, RoutedEventArgs e)
     {
@@ -338,10 +339,10 @@ namespace VianaNET.Data.Filter.Theory
     /// The button ziffer_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ButtonZifferClick(object sender, RoutedEventArgs e)
     {
@@ -361,44 +362,39 @@ namespace VianaNET.Data.Filter.Theory
     }
 
     /// <summary>
-    /// The einfuegen.
+    /// The button insert functionstring click.
     /// </summary>
-    /// <param name="insertString">
-    /// The z str.
+    /// <param name="sender">
+    /// The sender. 
     /// </param>
-    private void Einfuegen(string insertString)
+    /// <param name="e">
+    /// The e. 
+    /// </param>
+    private void ButtonFktClick(object sender, RoutedEventArgs e)
     {
-      int caretPos = this.textBox1.CaretIndex;
-      int selLen = this.textBox1.SelectionLength;
-      if (caretPos > this.textBox1.SelectionStart)
+      var button = sender as Button;
+      if (button == null)
       {
-        caretPos = this.textBox1.SelectionStart;
+        return;
       }
 
-      if (selLen > 0)
-      {
-        this.textBox1.Text = this.textBox1.Text.Remove(caretPos, selLen);
-      }
-
-      this.textBox1.Text = this.textBox1.Text.Insert(caretPos, insertString);
-      this.textBox1.Focus();
-      this.textBox1.SelectionStart = caretPos + insertString.Length;
-      this.textBox1.SelectionLength = 0;
+      string stringValue = button.Content + "(";
+      this.Einfuegen(stringValue);
     }
 
     /// <summary>
     /// The textbox1 text changed_1.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void TextBox1TextChanged1(object sender, TextChangedEventArgs e)
     {
-      string formelStr = this.textBox1.Text;
-      if (this.usesDecimalkomma)
+      var formelStr = this.textBox1.Text;
+      if (usesDecimalkomma)
       {
         formelStr = formelStr.Replace('.', ',');
       }
@@ -406,7 +402,6 @@ namespace VianaNET.Data.Filter.Theory
       {
         formelStr = formelStr.Replace(',', '.');
       }
-
       string hilfStr = string.Empty;
       var aktParser = new Parse();
       this.scannedFkt = null;
@@ -421,16 +416,13 @@ namespace VianaNET.Data.Filter.Theory
         {
           this.textBoxErgebnis.Text = string.Empty;
         }
-
         aktParser.ErrMsg(aktParser.lastErrNr, ref hilfStr);
-
         // Fehlerposition anzeigen mit ^
         hilfStr = string.Concat("^ ", hilfStr);
         for (int i = 1; i <= aktParser.lastErrPos; i++)
         {
           hilfStr = string.Concat(" ", hilfStr);
         }
-
         this.textBoxErgebnis.Text = hilfStr;
       }
       else
@@ -442,7 +434,7 @@ namespace VianaNET.Data.Filter.Theory
         }
         else
         {
-          double wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
+          var wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
           this.textBoxErgebnis.Text = wert.ToString(CultureInfo.InvariantCulture);
         }
       }

@@ -2,7 +2,7 @@
 // <copyright file="MainWindow.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -19,7 +19,11 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
+// <summary>
+//   The main window.
+// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.MainWindow
 {
   using System;
@@ -37,21 +41,21 @@ namespace VianaNET.MainWindow
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
-  using DirectShowLib;
-
   using Microsoft.Win32;
-
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.Logging;
+  using VianaNET.Resources;
   using VianaNET.Modules.Chart;
   using VianaNET.Modules.DataAcquisition;
   using VianaNET.Modules.DataGrid;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
   using VianaNET.Properties;
-  using VianaNET.Resources;
 
   using WPFLocalizeExtension.Engine;
+
+  using WPFMath;
 
   /// <summary>
   ///   The main window.
@@ -65,14 +69,14 @@ namespace VianaNET.MainWindow
     /// </summary>
     public MainWindow()
     {
-      // BindingErrorTraceListener.SetTrace();
+      //BindingErrorTraceListener.SetTrace();
       this.InitializeComponent();
 
       this.MainRibbon.DataContext = this;
       Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
-      List<string> devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
+      var devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
 
       this.VideoSourceGalleryCategory.ItemsSource = devices;
       if (Video.Instance.VideoInputDevices.Count > 0)
@@ -88,25 +92,126 @@ namespace VianaNET.MainWindow
     #region Public Methods and Operators
 
     /// <summary>
+    ///   The reset color button.
+    /// </summary>
+    public void ResetColorButton()
+    {
+      var largeSource = new Uri(@"/VianaNET;component/Images/SelectColor32.png", UriKind.Relative);
+      this.SelectColorRibbonButton.LargeImageSource = new BitmapImage(largeSource);
+      var smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
+      this.SelectColorRibbonButton.SmallImageSource = new BitmapImage(smallSource);
+      this.SelectColorRibbonButton.Label = Labels.ButtonSelectColorLabelTitle;
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// This method saves the current project into a new file using
+    /// the file name give by the called save file dialog.
+    /// </summary>
+    private static void SaveProjectToNewFile()
+    {
+      var dlg = new SaveFileDialog
+      {
+        Filter = "Viana.NET projects|*.via",
+        Title = Labels.SaveProjectDialogTitle,
+        DefaultExt = "via"
+      };
+
+      if (dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        Project.Serialize(Viana.Project, dlg.FileName);
+
+        // Add project file to recent files list
+        RecentFiles.Instance.Add(dlg.FileName);
+      }
+    }
+
+    /// <summary>
+    /// The save project on click event handler.
+    /// Saves all settings of the project overwriting old values.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void SaveProjectClick(object sender, RoutedEventArgs e)
+    {
+      var filename = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
+
+      if (File.Exists(filename))
+      {
+        // Save file
+        Project.Serialize(Viana.Project, filename);
+
+        // Add project file to recent files list
+        RecentFiles.Instance.Add(filename);
+      }
+      else
+      {
+        // If filename is not valid ask for correct name.
+        SaveProjectToNewFile();
+      }
+    }
+
+    /// <summary>
+    /// The save project as on click event handler.
+    /// Calls a save file dialog and saves all settings of the project
+    /// into the given file
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void SaveProjectAsClick(object sender, RoutedEventArgs e)
+    {
+      SaveProjectToNewFile();
+    }
+
+    /// <summary>
+    /// The open project on click event handler.
+    /// Calls an open file dialog and restores all settings of the project
+    /// from the given file
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void OpenProjectOnClick(object sender, RoutedEventArgs e)
+    {
+      var dlg = new OpenFileDialog
+      {
+        Filter = "Viana.NET projects|*.via",
+        Title = Labels.OpenProjectDialogTitle,
+        DefaultExt = "via",
+        Multiselect = false
+      };
+
+      if (!dlg.ShowDialog().GetValueOrDefault(false))
+      {
+        return;
+      }
+
+      // first open project before adding to recentfilelist
+      this.OpenGivenProject(dlg.FileName);
+
+      // Add project file to recent files list
+      RecentFiles.Instance.Add(dlg.FileName);
+    }
+
+    /// <summary>
     /// This method opens the given project updating all modules.
     /// </summary>
-    /// <param name="filename">
-    /// The filename with full path to the project file
-    /// </param>
-    public void OpenGivenProject(string filename)
+    /// <param name="filename">The filename with full path to the project file</param>
+    private void OpenGivenProject(string filename)
     {
       // Note that we want to overwrite the defaults
       Project.IsDeserializing = true;
 
       // Restore project settings
-      Project openedProject = Project.Deserialize(filename);
+      var openedProject = Project.Deserialize(filename);
 
       // Direct overwrite of Project static instance will kill all xaml driven bindings...
       // so update all properties individually.
       // VianaNetApplication.Project = openedProject;
       Viana.Project.VideoData.Samples = openedProject.VideoData.Samples;
-
-      // Viana.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
+      //Viana.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
       Viana.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
       Viana.Project.VideoData.TimeZeroPositionInMs = openedProject.VideoData.TimeZeroPositionInMs;
 
@@ -128,25 +233,25 @@ namespace VianaNET.MainWindow
       Viana.Project.SerializableFilterData = openedProject.SerializableFilterData;
       Viana.Project.CurrentChartType = openedProject.CurrentChartType;
 
-      // Viana.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
-      // Viana.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
-      // Viana.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
-      // Viana.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
-      // Viana.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
-      // Viana.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
-      // Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
-      // Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
-      // Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
-      // Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
-      // openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
-      // Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
-      // Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
-      // Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
-      // Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
-      // Viana.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
-      // Viana.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
+      //Viana.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
+      //Viana.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
+      //Viana.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
+      //Viana.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
+      //Viana.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
+      //Viana.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
+      //Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
+      //Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
+      //Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
+      //Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
+      //  openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
+      //Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
+      //Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
+      //Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
+      //Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
+      //Viana.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
+      //Viana.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
 
-      // Viana.Project.ProcessingData.Reset();
+      //Viana.Project.ProcessingData.Reset();
       for (int i = 0; i < openedProject.ProcessingData.BlobMaxDiameter.Count; i++)
       {
         if (Viana.Project.ProcessingData.BlobMaxDiameter.Count > i)
@@ -168,9 +273,7 @@ namespace VianaNET.MainWindow
       Viana.Project.ProcessingData.IndexOfObject = openedProject.ProcessingData.IndexOfObject;
 
       Viana.Project.ProcessingData.IsTargetColorSet = openedProject.ProcessingData.IsTargetColorSet;
-      for (int i = 0;
-           i < openedProject.ProcessingData.TargetColor.Count - openedProject.ProcessingData.NumberOfTrackedObjects;
-           i++)
+      for (int i = 0; i < openedProject.ProcessingData.TargetColor.Count - openedProject.ProcessingData.NumberOfTrackedObjects; i++)
       {
         Viana.Project.ProcessingData.TargetColor.RemoveAt(i);
       }
@@ -186,8 +289,7 @@ namespace VianaNET.MainWindow
       Viana.Project.ProjectPath = openedProject.ProjectPath;
       Viana.Project.VideoFile = openedProject.VideoFile;
       Viana.Project.VideoMode = openedProject.VideoMode;
-
-      // this.VideoWindow.CreateCrossHairLines();
+      //this.VideoWindow.CreateCrossHairLines();
 
       // after updating series do calculation
       Viana.Project.CurrentFilterData.RegressionFilter = Viana.Project.CurrentFilterData.RegressionFilter;
@@ -198,7 +300,6 @@ namespace VianaNET.MainWindow
       switch (Viana.Project.VideoMode)
       {
         case VideoMode.File:
-
           // load video
           this.VideoWindow.LoadVideo(Viana.Project.VideoFile);
           break;
@@ -240,52 +341,10 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    ///   The reset color button.
-    /// </summary>
-    public void ResetColorButton()
-    {
-      var largeSource = new Uri(@"/VianaNET;component/Images/SelectColor32.png", UriKind.Relative);
-      this.SelectColorRibbonButton.LargeImageSource = new BitmapImage(largeSource);
-      var smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
-      this.SelectColorRibbonButton.SmallImageSource = new BitmapImage(smallSource);
-      this.SelectColorRibbonButton.Label = Labels.ButtonSelectColorLabelTitle;
-    }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    ///   This method saves the current project into a new file using
-    ///   the file name give by the called save file dialog.
-    /// </summary>
-    private static void SaveProjectToNewFile()
-    {
-      var dlg = new SaveFileDialog
-                  {
-                    Filter = "Viana.NET projects|*.via", 
-                    Title = Labels.SaveProjectDialogTitle, 
-                    DefaultExt = "via"
-                  };
-
-      if (dlg.ShowDialog().GetValueOrDefault(false))
-      {
-        Project.Serialize(Viana.Project, dlg.FileName);
-
-        // Add project file to recent files list
-        RecentFiles.Instance.Add(dlg.FileName);
-      }
-    }
-
-    /// <summary>
     /// The about command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void AboutButtonClick(object sender, RoutedEventArgs e)
     {
       var aboutWindow = new AboutWindow();
@@ -295,12 +354,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The automatic data aquisition command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void AutomaticDataAquisitionButtonClick(object sender, RoutedEventArgs e)
     {
       this.VideoWindow.RunAutomaticDataAquisition();
@@ -309,12 +364,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The automatic data aquisition stop command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void AutomaticDataAquisitionStopButtonClick(object sender, RoutedEventArgs e)
     {
       this.VideoWindow.StopAutomaticDataAquisition();
@@ -323,12 +374,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button calculate velocity command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void CalculateVelocityButtonClick(object sender, RoutedEventArgs e)
     {
       this.Cursor = Cursors.Wait;
@@ -337,76 +384,48 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The calibrate video command_ executed.
+    /// Shows the video infos and allows to change the time scale.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void CalibrateVideoButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void ShowVideoInfosButtonClick(object sender, RoutedEventArgs e)
     {
-      var calibrateWindow = new CalibrateVideoWindow();
-      if (calibrateWindow.ShowDialog().GetValueOrDefault())
-      {
-        this.VideoWindow.UpdateCalibration();
-      }
-
-      this.Refresh();
+      var dialog = new VideoInfoDialog(Viana.Project.VideoFile);
+      dialog.ShowDialog();
     }
 
     /// <summary>
-    /// The calibration options show calibration command_ executed.
+    /// The switch time unit button click event handler.
+    /// Calls a dialog to change the time unit.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void CalibrationOptionsShowCalibrationButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void SwitchTimeUnitButtonClick(object sender, RoutedEventArgs e)
     {
-      this.VideoWindow.ShowCalibration(this.ShowCalibrationCheckbox.IsChecked());
+      var dlg = new TimeUnitDialog();
+      dlg.ShowDialog();
+      this.Cursor = Cursors.Wait;
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      this.Cursor = Cursors.Arrow;
     }
 
     /// <summary>
-    /// The calibration options show clip region command_ executed.
+    /// The difference quotient button click event handler.
+    /// Calls a dialog to change the difference quotient calculation type.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void CalibrationOptionsShowClipRegionButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void DifferenceQuotientButtonClick(object sender, RoutedEventArgs e)
     {
-      this.VideoWindow.ShowClipRegion(this.ShowClipRegionCheckbox.IsChecked());
-    }
-
-    /// <summary>
-    /// The calibration options show calibration command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void CalibrationOptionsShowPixelLengthButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.VideoWindow.ShowPixelLength(this.ShowPixelLengthCheckbox.IsChecked());
+      var dlg = new DifferenceQuotientDialog();
+      dlg.ShowDialog();
     }
 
     /// <summary>
     /// The button capture video command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void CaptureVideoButtonClick(object sender, RoutedEventArgs e)
     {
       if (Video.Instance.VideoCapturerElement.VideoCaptureDevice == null)
@@ -418,149 +437,20 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The chart display options command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ChartDisplayOptionsButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.ChartWindow.PropertiesExpander.IsExpanded = true;
-    }
-
-    /// <summary>
-    /// The chart window command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ChartWindowButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.ChartTab.IsSelected = true;
-    }
-
-    /// <summary>
     /// The button choose automatic analysis command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ChooseAutomaticAnalysisButtonClick(object sender, RoutedEventArgs e)
     {
       this.RibbonTabAnalysis.IsSelected = true;
     }
 
     /// <summary>
-    /// The clip video command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ClipVideoButtonClick(object sender, RoutedEventArgs e)
-    {
-      var clipWindow = new ClipVideoWindow();
-      clipWindow.ShowDialog();
-      this.VideoWindow.UpdateClippingRegion();
-    }
-
-    /// <summary>
-    /// The close command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void CloseButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.Close();
-    }
-
-    /// <summary>
-    /// Coordinate system button click.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
-    {
-      var coordinateSystemWindow = new CoordinateSystemWindow();
-      coordinateSystemWindow.ShowDialog();
-    }
-
-    /// <summary>
-    ///   The create image source for number of objects.
-    /// </summary>
-    private void CreateImageSourceForNumberOfObjects()
-    {
-      var drawingVisual = new DrawingVisual();
-      DrawingContext drawingContext = drawingVisual.RenderOpen();
-      drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
-
-      var text = new FormattedText(
-        Viana.Project.ProcessingData.NumberOfTrackedObjects.ToString("N0"), 
-        LocalizeDictionary.Instance.Culture, 
-        FlowDirection.LeftToRight, 
-        new Typeface("Verdana"), 
-        24d, 
-        Brushes.Black);
-
-      drawingContext.DrawText(text, new Point(8, 1));
-
-      drawingContext.Close();
-      var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
-      bmp.Render(drawingVisual);
-      this.SelectNumberOfObjectsButton.LargeImageSource = bmp;
-
-      if (Viana.Project.ProcessingData.NumberOfTrackedObjects > 1)
-      {
-        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle2;
-      }
-      else
-      {
-        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle;
-      }
-    }
-
-    /// <summary>
-    /// The datagrid window command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void DatagridWindowButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.DatagridTab.IsSelected = true;
-    }
-
-    /// <summary>
     /// The button delete data command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void DeleteDataButtonClick(object sender, RoutedEventArgs e)
     {
       Viana.Project.VideoData.Reset();
@@ -568,30 +458,10 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The difference quotient button click event handler.
-    ///   Calls a dialog to change the difference quotient calculation type.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void DifferenceQuotientButtonClick(object sender, RoutedEventArgs e)
-    {
-      var dlg = new DifferenceQuotientDialog();
-      dlg.ShowDialog();
-    }
-
-    /// <summary>
     /// The button export chart to clipboard_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportChartToClipboardButtonClick(object sender, RoutedEventArgs e)
     {
       ExportChart.ToClipboard(this.ChartWindow.ChartData.ChartDataModel);
@@ -600,12 +470,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button export chart to file_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportChartToFileButtonClick(object sender, RoutedEventArgs e)
     {
       ExportChart.ToFile(this.ChartWindow.ChartData.ChartDataModel);
@@ -614,12 +480,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button export chart to word_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportChartToWordButtonClick(object sender, RoutedEventArgs e)
     {
       ExportChart.ToWord(this.ChartWindow.ChartData.ChartDataModel);
@@ -628,35 +490,31 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button export data to csv_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportDataToCsvButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
       var sfd = new SaveFileDialog
-                  {
-                    // Default file extension
-                    DefaultExt = "csv", 
+        {
+          // Default file extension
+          DefaultExt = "csv",
 
-                    // Available file extensions
-                    Filter = Labels.CsvFilter, 
+          // Available file extensions
+          Filter = Labels.CsvFilter,
 
-                    // Adds a extension if the user does not
-                    AddExtension = true, 
+          // Adds a extension if the user does not
+          AddExtension = true,
 
-                    // Restores the selected directory, next time
-                    RestoreDirectory = true, 
+          // Restores the selected directory, next time
+          RestoreDirectory = true,
 
-                    // Dialog title
-                    Title = Labels.ExportWhereToSaveFile, 
+          // Dialog title
+          Title = Labels.ExportWhereToSaveFile,
 
-                    // Startup directory
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                  };
+          // Startup directory
+          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
@@ -670,57 +528,20 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The button export data to ods executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ExportDataToOdsButtonClick(object sender, RoutedEventArgs e)
-    {
-      // Create new SaveFileDialog object
-      var sfd = new SaveFileDialog
-                  {
-                    DefaultExt = "ods", 
-                    Filter = Labels.OdsFilter, 
-                    AddExtension = true, 
-                    RestoreDirectory = true, 
-                    Title = Labels.ExportWhereToSaveFile, 
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                  };
-
-      // Show the dialog and process the result
-      if (sfd.ShowDialog().GetValueOrDefault())
-      {
-        var optionsDialog = new ExportOptionsDialog();
-        if (optionsDialog.ShowDialog().GetValueOrDefault())
-        {
-          ExportData.ToOds(Viana.Project.VideoData.FilteredSamples, sfd.FileName, optionsDialog.ExportOptions);
-        }
-      }
-    }
-
-    /// <summary>
     /// The button export data to txt_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportDataToTxtButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
       var sfd = new SaveFileDialog
                   {
-                    DefaultExt = "txt", 
-                    Filter = Labels.TxtFilter, 
-                    AddExtension = true, 
-                    RestoreDirectory = true, 
-                    Title = Labels.ExportWhereToSaveFile, 
+                    DefaultExt = "txt",
+                    Filter = Labels.TxtFilter,
+                    AddExtension = true,
+                    RestoreDirectory = true,
+                    Title = Labels.ExportWhereToSaveFile,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                   };
 
@@ -738,12 +559,8 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button export data to xls_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportDataToXlsButtonClick(object sender, RoutedEventArgs e)
     {
       var optionsDialog = new ExportOptionsDialog();
@@ -756,24 +573,20 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button export data to xml_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void ExportDataToXmlButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
       var sfd = new SaveFileDialog
-                  {
-                    DefaultExt = "xml", 
-                    Filter = Labels.XmlFilter, 
-                    AddExtension = true, 
-                    RestoreDirectory = true, 
-                    Title = Labels.ExportWhereToSaveFile, 
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                  };
+        {
+          DefaultExt = "xml",
+          Filter = Labels.XmlFilter,
+          AddExtension = true,
+          RestoreDirectory = true,
+          Title = Labels.ExportWhereToSaveFile,
+          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
@@ -787,247 +600,39 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The change language command_ executed.
+    /// The button export data to ods executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void LanguageComboSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ExportDataToOdsButtonClick(object sender, RoutedEventArgs e)
     {
-      switch (((RibbonGalleryItem)this.LanguageCombo.SelectedItem).Content.ToString())
+      // Create new SaveFileDialog object
+      var sfd = new SaveFileDialog
       {
-        case "Deutsch":
-          LocalizeDictionary.Instance.Culture = new CultureInfo("de");
-          break;
-        case "English":
-          LocalizeDictionary.Instance.Culture = new CultureInfo("en");
-          break;
-      }
-    }
+        DefaultExt = "ods",
+        Filter = Labels.OdsFilter,
+        AddExtension = true,
+        RestoreDirectory = true,
+        Title = Labels.ExportWhereToSaveFile,
+        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+      };
 
-    /// <summary>
-    /// The load video button click.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void LoadVideoButtonClick(object sender, RoutedEventArgs e)
-    {
-      this.ResetColorButton();
-      this.VideoWindow.SetVideoMode(VideoMode.File);
-      this.VideoWindow.LoadVideo(string.Empty);
-      this.UpdateSelectObjectImage();
-    }
-
-    /// <summary>
-    /// This method is called whenever the application is closed.
-    ///   So clean up and ask for saving project.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void MainWindowClosing(object sender, CancelEventArgs e)
-    {
-      Settings.Default.Save();
-      string currentProjectFile = Viana.Project.ProjectPath + Path.DirectorySeparatorChar
-                                  + Viana.Project.ProjectFilename;
-      string title = Labels.SaveProjectDialogTitle;
-      title = title.Replace("%1", Viana.Project.ProjectFilename);
-
-      if (File.Exists(currentProjectFile))
+      // Show the dialog and process the result
+      if (sfd.ShowDialog().GetValueOrDefault())
       {
-        string description = Labels.SaveProjectDialogDescription;
-        description = description.Replace("%1", Viana.Project.ProjectFilename);
-        var dlg = new VianaSaveDialog(title, description, Labels.SaveProjectDialogMessage);
-
-        if (dlg.ShowDialog().GetValueOrDefault(false))
+        var optionsDialog = new ExportOptionsDialog();
+        if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          Project.Serialize(Viana.Project, currentProjectFile);
+          ExportData.ToOds(Viana.Project.VideoData.FilteredSamples, sfd.FileName, optionsDialog.ExportOptions);
         }
       }
-      else
-      {
-        string description = Labels.AskSaveProjectDialogDescription;
-        description = description.Replace("%1", Viana.Project.ProjectFilename);
-        var dlg = new VianaSaveDialog(title, description, Labels.AskSaveProjectDialogMessage);
-
-        if (dlg.ShowDialog().GetValueOrDefault(false))
-        {
-          SaveProjectToNewFile();
-        }
-      }
-
-      Video.Instance.Cleanup();
-    }
-
-    /// <summary>
-    /// The manual data aquisition command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ManualDataAquisitionButtonClick(object sender, RoutedEventArgs e)
-    {
-      Viana.Project.VideoData.Reset();
-
-      var manualAquisitionWindow = new ManualDataAquisitionWindow();
-      manualAquisitionWindow.ShowDialog();
-
-      this.Refresh();
-
-      // Switch to datagrid window
-      this.DatagridTab.IsSelected = true;
-    }
-
-    /// <summary>
-    /// The measure angle button is clicked.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void MeasureAngleButtonClick(object sender, RoutedEventArgs e)
-    {
-      var measureAngleWindow = new MeasureAngleWindow();
-      measureAngleWindow.ShowDialog();
-    }
-
-    /// <summary>
-    /// The measure length button is clicked.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void MeasureLengthButtonClick(object sender, RoutedEventArgs e)
-    {
-      var measureLengthWindow = new MeasureLengthWindow();
-      measureLengthWindow.ShowDialog();
-    }
-
-    /// <summary>
-    /// Modifiy data button click.
-    ///   Start the modify control.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void ModifyDataButtonClick(object sender, RoutedEventArgs e)
-    {
-      var modifyDataWindow = new ModifyDataWindow();
-      modifyDataWindow.ShowDialog();
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-    }
-
-    /// <summary>
-    /// The open project on click event handler.
-    ///   Calls an open file dialog and restores all settings of the project
-    ///   from the given file
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void OpenProjectOnClick(object sender, RoutedEventArgs e)
-    {
-      var dlg = new OpenFileDialog
-                  {
-                    Filter = "Viana.NET projects|*.via", 
-                    Title = Labels.OpenProjectDialogTitle, 
-                    DefaultExt = "via", 
-                    Multiselect = false
-                  };
-
-      if (!dlg.ShowDialog().GetValueOrDefault(false))
-      {
-        return;
-      }
-
-      // first open project before adding to recentfilelist
-      this.OpenGivenProject(dlg.FileName);
-
-      // Add project file to recent files list
-      RecentFiles.Instance.Add(dlg.FileName);
-    }
-
-    /// <summary>
-    /// The image processing_ property changed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == "IndexOfObject" || e.PropertyName == "NumberOfTrackedObjects")
-      {
-        this.UpdateSelectObjectImage();
-      }
-    }
-
-    /// <summary>
-    /// This method is called whenever a recent project is selected from the list.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void RecentProjectMouseDown(object sender, RoutedEventArgs e)
-    {
-      var contentPresenter = sender as ContentPresenter;
-      if (contentPresenter == null)
-      {
-        return;
-      }
-
-      var projectEntry = contentPresenter.Content as ProjectEntry;
-
-      if (projectEntry == null)
-      {
-        return;
-      }
-
-      // now we got the projects filename and may load it.
-      this.OpenGivenProject(projectEntry.ProjectFile);
-
-      // Close the application menu
-      this.MainRibbon.ApplicationMenu.IsDropDownOpen = false;
     }
 
     /// <summary>
     /// The button record video command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void RecordVideoButtonClick(object sender, RoutedEventArgs e)
     {
       bool wasCapturing = false;
@@ -1038,7 +643,7 @@ namespace VianaNET.MainWindow
       }
 
       var saveVideoDialog = new SaveVideoDialog();
-      bool? showDialog = saveVideoDialog.ShowDialog();
+      var showDialog = saveVideoDialog.ShowDialog();
       if (showDialog != null && showDialog.Value)
       {
         this.VideoWindow.SetVideoMode(VideoMode.File);
@@ -1051,92 +656,10 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    ///   The refresh.
-    /// </summary>
-    private void Refresh()
-    {
-      // Update data grid
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-
-      // Update BlobsControl Dataview if visible
-      if (Viana.Project.ProcessingData.IsTargetColorSet)
-      {
-        this.VideoWindow.BlobsControl.UpdateDataPoints();
-      }
-    }
-
-    /// <summary>
-    /// The save project as on click event handler.
-    ///   Calls a save file dialog and saves all settings of the project
-    ///   into the given file
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void SaveProjectAsClick(object sender, RoutedEventArgs e)
-    {
-      SaveProjectToNewFile();
-    }
-
-    /// <summary>
-    /// The save project on click event handler.
-    ///   Saves all settings of the project overwriting old values.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void SaveProjectClick(object sender, RoutedEventArgs e)
-    {
-      string filename = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
-
-      if (File.Exists(filename))
-      {
-        // Save file
-        Project.Serialize(Viana.Project, filename);
-
-        // Add project file to recent files list
-        RecentFiles.Instance.Add(filename);
-      }
-      else
-      {
-        // If filename is not valid ask for correct name.
-        SaveProjectToNewFile();
-      }
-    }
-
-    /// <summary>
-    /// The select color command_ executed.
-    /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void SelectColorButtonClick(object sender, RoutedEventArgs e)
-    {
-      var fullScreenVideoWindow = new SelectColorWindow();
-      if (fullScreenVideoWindow.ShowDialog().GetValueOrDefault())
-      {
-        this.UpdateColorButton();
-      }
-    }
-
-    /// <summary>
     /// The button select number of objects command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void SelectNumberOfObjectsButtonClick(object sender, RoutedEventArgs e)
     {
       if (Video.Instance.IsDataAcquisitionRunning)
@@ -1164,68 +687,322 @@ namespace VianaNET.MainWindow
     /// <summary>
     /// The button select object command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
     private void SelectObjectButtonClick(object sender, RoutedEventArgs e)
     {
       Viana.Project.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
-    /// Shows the video infos and allows to change the time scale.
+    /// The button video capture device properties command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void ShowVideoInfosButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void VideoCaptureDevicePropertiesButtonClick(object sender, RoutedEventArgs e)
     {
-      var dialog = new VideoInfoDialog(Viana.Project.VideoFile);
-      dialog.ShowDialog();
+      Video.Instance.VideoCapturerElement.ShowPropertyPageOfVideoDevice();
     }
 
     /// <summary>
-    /// Skip points button click.
+    /// The calibrate video command_ executed.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void SkipPointsButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CalibrateVideoButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new SkipPointsDialog();
-      dlg.ShowDialog();
+      var calibrateWindow = new CalibrateVideoWindow();
+      if (calibrateWindow.ShowDialog().GetValueOrDefault())
+      {
+        this.VideoWindow.UpdateCalibration();
+      }
+
+      this.Refresh();
     }
 
     /// <summary>
-    /// The switch time unit button click event handler.
-    ///   Calls a dialog to change the time unit.
+    /// Coordinate system button click.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void SwitchTimeUnitButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new TimeUnitDialog();
-      dlg.ShowDialog();
-      this.Cursor = Cursors.Wait;
+      var coordinateSystemWindow = new CoordinateSystemWindow();
+      coordinateSystemWindow.ShowDialog();
+    }
+
+    /// <summary>
+    /// The calibration options show calibration command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CalibrationOptionsShowCalibrationButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.VideoWindow.ShowCalibration(this.ShowCalibrationCheckbox.IsChecked());
+    }
+
+    /// <summary>
+    /// The calibration options show calibration command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CalibrationOptionsShowPixelLengthButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.VideoWindow.ShowPixelLength(this.ShowPixelLengthCheckbox.IsChecked());
+    }
+
+    /// <summary>
+    /// The calibration options show clip region command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CalibrationOptionsShowClipRegionButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.VideoWindow.ShowClipRegion(this.ShowClipRegionCheckbox.IsChecked());
+    }
+
+    /// <summary>
+    /// The change language command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void LanguageComboSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+    {
+      switch (((RibbonGalleryItem)this.LanguageCombo.SelectedItem).Content.ToString())
+      {
+        case "Deutsch":
+          LocalizeDictionary.Instance.Culture = new CultureInfo("de");
+          break;
+        case "English":
+          LocalizeDictionary.Instance.Culture = new CultureInfo("en");
+          break;
+      }
+    }
+
+    /// <summary>
+    /// The chart display options command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ChartDisplayOptionsButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.ChartWindow.PropertiesExpander.IsExpanded = true;
+    }
+
+    /// <summary>
+    /// The chart window command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ChartWindowButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.ChartTab.IsSelected = true;
+    }
+
+    /// <summary>
+    /// The clip video command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ClipVideoButtonClick(object sender, RoutedEventArgs e)
+    {
+      var clipWindow = new ClipVideoWindow();
+      clipWindow.ShowDialog();
+      this.VideoWindow.UpdateClippingRegion();
+    }
+
+    /// <summary>
+    /// The close command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void CloseButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.Close();
+    }
+
+    /// <summary>
+    ///   The create image source for number of objects.
+    /// </summary>
+    private void CreateImageSourceForNumberOfObjects()
+    {
+      var drawingVisual = new DrawingVisual();
+      DrawingContext drawingContext = drawingVisual.RenderOpen();
+      drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
+
+      // drawingContext.DrawRoundedRectangle((Brush)this.Resources["DefaultOfficeBackgroundBrush"],
+      // new Pen(Brushes.White, 2f),
+      // new Rect(2, 2, 28, 28),
+      // 5,
+      // 5);
+      var text = new FormattedText(
+        Viana.Project.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
+        LocalizeDictionary.Instance.Culture,
+        FlowDirection.LeftToRight,
+        new Typeface("Verdana"),
+        24d,
+        Brushes.Black);
+
+      drawingContext.DrawText(text, new Point(8, 1));
+
+      drawingContext.Close();
+      var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      bmp.Render(drawingVisual);
+      this.SelectNumberOfObjectsButton.LargeImageSource = bmp;
+
+      if (Viana.Project.ProcessingData.NumberOfTrackedObjects > 1)
+      {
+        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle2;
+      }
+      else
+      {
+        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle;
+      }
+    }
+
+    /// <summary>
+    /// The datagrid window command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void DatagridWindowButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.DatagridTab.IsSelected = true;
+    }
+
+    /// <summary>
+    /// The image processing_ property changed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      if (e.PropertyName == "IndexOfObject" || e.PropertyName == "NumberOfTrackedObjects")
+      {
+        this.UpdateSelectObjectImage();
+      }
+    }
+
+    /// <summary>
+    /// The load video button click.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void LoadVideoButtonClick(object sender, RoutedEventArgs e)
+    {
+      this.ResetColorButton();
+      this.VideoWindow.SetVideoMode(VideoMode.File);
+      this.VideoWindow.LoadVideo(string.Empty);
+      this.UpdateSelectObjectImage();
+    }
+
+    /// <summary>
+    /// The manual data aquisition command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void ManualDataAquisitionButtonClick(object sender, RoutedEventArgs e)
+    {
+      Viana.Project.VideoData.Reset();
+
+      var manualAquisitionWindow = new ManualDataAquisitionWindow();
+      manualAquisitionWindow.ShowDialog();
+
+      this.Refresh();
+
+      // Switch to datagrid window
+      this.DatagridTab.IsSelected = true;
+    }
+
+    /// <summary>
+    /// Modifiy data button click.
+    /// Start the modify control.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void ModifyDataButtonClick(object sender, RoutedEventArgs e)
+    {
+      var modifyDataWindow = new ModifyDataWindow();
+      modifyDataWindow.ShowDialog();
       Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-      this.Cursor = Cursors.Arrow;
     }
 
     /// <summary>
-    ///   Updates the color button with the correct colors
+    ///   The refresh.
+    /// </summary>
+    private void Refresh()
+    {
+      // Update data grid
+      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+
+      // Update BlobsControl Dataview if visible
+      if (Viana.Project.ProcessingData.IsTargetColorSet)
+      {
+        this.VideoWindow.BlobsControl.UpdateDataPoints();
+      }
+    }
+
+    /// <summary>
+    /// This method is called whenever the application is closed.
+    /// So clean up and ask for saving project.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void MainWindowClosing(object sender, CancelEventArgs e)
+    {
+      Settings.Default.Save();
+      var currentProjectFile = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
+      var title = Labels.SaveProjectDialogTitle;
+      title = title.Replace("%1", Viana.Project.ProjectFilename);
+
+      if (File.Exists(currentProjectFile))
+      {
+        var description = Labels.SaveProjectDialogDescription;
+        description = description.Replace("%1", Viana.Project.ProjectFilename);
+        var dlg = new VianaSaveDialog(
+          title,
+          description,
+          Labels.SaveProjectDialogMessage);
+
+        if (dlg.ShowDialog().GetValueOrDefault(false))
+        {
+          Project.Serialize(Viana.Project, currentProjectFile);
+        }
+      }
+      else
+      {
+        var description = Labels.AskSaveProjectDialogDescription;
+        description = description.Replace("%1", Viana.Project.ProjectFilename);
+        var dlg = new VianaSaveDialog(
+          title,
+          description,
+          Labels.AskSaveProjectDialogMessage);
+
+        if (dlg.ShowDialog().GetValueOrDefault(false))
+        {
+          SaveProjectToNewFile();
+        }
+      }
+
+      Video.Instance.Cleanup();
+    }
+
+    /// <summary>
+    /// The select color command_ executed.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void SelectColorButtonClick(object sender, RoutedEventArgs e)
+    {
+      var fullScreenVideoWindow = new SelectColorWindow();
+      if (fullScreenVideoWindow.ShowDialog().GetValueOrDefault())
+      {
+        this.UpdateColorButton();
+      }
+    }
+
+    /// <summary>
+    /// Updates the color button with the correct colors
     /// </summary>
     private void UpdateColorButton()
     {
@@ -1239,8 +1016,8 @@ namespace VianaNET.MainWindow
       for (int i = 0; i < count; i++)
       {
         drawingContext.DrawRectangle(
-          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]), 
-          null, 
+          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          null,
           new Rect(3 + i * bandwidth, 3, bandwidth, 27));
       }
 
@@ -1259,58 +1036,22 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectBindings()
     {
-      var thresholdBinding =
-        new Binding("ProcessingData.ColorThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
 
-      var minDiameterBinding =
-        new Binding("ProcessingData.BlobMinDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
 
-      var maxDiameterBinding =
-        new Binding("ProcessingData.BlobMaxDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
 
-      var motionThresholdBinding =
-        new Binding("ProcessingData.MotionThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var motionThresholdBinding = new Binding("ProcessingData.MotionThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SliderMotionPixelThreshold.SetBinding(RangeBase.ValueProperty, motionThresholdBinding);
 
-      var suppressNoiseBinding =
-        new Binding("ProcessingData.SuppressNoise[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var suppressNoiseBinding = new Binding("ProcessingData.SuppressNoise[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.SuppressNoiseCheckbox.SetBinding(ToggleButton.IsCheckedProperty, suppressNoiseBinding);
 
-      var positiveContrastBinding =
-        new Binding("ProcessingData.PositiveContrast[" + Viana.Project.ProcessingData.IndexOfObject + "]")
-          {
-            Source =
-              Viana
-              .Project
-          };
+      var positiveContrastBinding = new Binding("ProcessingData.PositiveContrast[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
       this.UsePositiveThresholdCheckbox.SetBinding(ToggleButton.IsCheckedProperty, positiveContrastBinding);
     }
 
@@ -1325,11 +1066,11 @@ namespace VianaNET.MainWindow
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawImage(icon, new Rect(0, 0, 32, 32));
       var text = new FormattedText(
-        (Viana.Project.ProcessingData.IndexOfObject + 1).ToString("N0"), 
-        LocalizeDictionary.Instance.Culture, 
-        FlowDirection.LeftToRight, 
-        new Typeface("Verdana"), 
-        18d, 
+        (Viana.Project.ProcessingData.IndexOfObject + 1).ToString("N0"),
+        LocalizeDictionary.Instance.Culture,
+        FlowDirection.LeftToRight,
+        new Typeface("Verdana"),
+        18d,
         Brushes.Black);
 
       drawingContext.DrawText(text, new Point(10, 3));
@@ -1343,32 +1084,75 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The button video capture device properties command_ executed.
+    /// The video window is selected.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void VideoCaptureDevicePropertiesButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void VideoWindowButtonClick(object sender, RoutedEventArgs e)
     {
-      Video.Instance.VideoCapturerElement.ShowPropertyPageOfVideoDevice();
+      this.VideoTab.IsSelected = true;
     }
 
     /// <summary>
-    /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.
-    ///   Updates the video capturer with the new device.
+    /// The measure length button is clicked.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void MeasureLengthButtonClick(object sender, RoutedEventArgs e)
+    {
+      var measureLengthWindow = new MeasureLengthWindow();
+      measureLengthWindow.ShowDialog();
+    }
+
+    /// <summary>
+    /// The measure angle button is clicked.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void MeasureAngleButtonClick(object sender, RoutedEventArgs e)
+    {
+      var measureAngleWindow = new MeasureAngleWindow();
+      measureAngleWindow.ShowDialog();
+    }
+
+    /// <summary>
+    /// This method is called whenever a recent project is selected from the list.
+    /// </summary>
+    /// <param name="sender">Source of the event.</param>
+    /// <param name="e">Event arguments</param>
+    private void RecentProjectMouseDown(object sender, RoutedEventArgs e)
+    {
+      var contentPresenter = sender as ContentPresenter;
+      if (contentPresenter == null)
+      {
+        return;
+      }
+
+      var projectEntry = contentPresenter.Content as ProjectEntry;
+
+      if (projectEntry == null)
+      {
+        return;
+      }
+
+      // now we got the projects filename and may load it.
+      this.OpenGivenProject(projectEntry.ProjectFile);
+
+      // Close the application menu
+      this.MainRibbon.ApplicationMenu.IsDropDownOpen = false;
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.
+    /// Updates the video capturer with the new device.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
     private void VideoInputDeviceCombo_OnSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-      foreach (DsDevice videoInputDevice in Video.Instance.VideoInputDevices)
+      foreach (var videoInputDevice in Video.Instance.VideoInputDevices)
       {
         if (videoInputDevice.Name == this.VideoInputDeviceCombo.SelectedItem.ToString())
         {
@@ -1379,19 +1163,15 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
-    /// The video window is selected.
+    /// Skip points button click.
     /// </summary>
-    /// <param name="sender">
-    /// Source of the event.
-    /// </param>
-    /// <param name="e">
-    /// Event arguments
-    /// </param>
-    private void VideoWindowButtonClick(object sender, RoutedEventArgs e)
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void SkipPointsButtonClick(object sender, RoutedEventArgs e)
     {
-      this.VideoTab.IsSelected = true;
+      var dlg = new SkipPointsDialog();
+      dlg.ShowDialog();
     }
 
-    #endregion
   }
 }

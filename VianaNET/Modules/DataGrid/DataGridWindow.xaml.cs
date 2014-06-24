@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The data grid window.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.DataGrid
 {
@@ -55,10 +52,10 @@ namespace VianaNET.Modules.DataGrid
       this.PopulateDataGridWithColumns();
       Viana.Project.CalibrationData.PropertyChanged += this.DataPropertyChanged;
       Viana.Project.VideoData.PropertyChanged += this.DataPropertyChanged;
-
-      // Viana.Project.VideoData.SelectionChanged += VideoData_SelectionChanged;
+      //Viana.Project.VideoData.SelectionChanged += VideoData_SelectionChanged;
       Viana.Project.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
+
 
     #endregion
 
@@ -80,34 +77,26 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Creates the column.
     /// </summary>
-    /// <param name="path">
-    /// The path.
-    /// </param>
-    /// <param name="header">
-    /// The header.
-    /// </param>
-    /// <param name="cellstyles">
-    /// The cellstyles.
-    /// </param>
-    /// <param name="measurement">
-    /// The measurement.
-    /// </param>
+    /// <param name="path">The path.</param>
+    /// <param name="header">The header.</param>
+    /// <param name="cellstyles">The cellstyles.</param>
+    /// <param name="measurement">The measurement.</param>
     private void CreateColumn(string path, string header, string[] cellstyles, string measurement)
     {
       var newColumn = new DataGridTextColumn
                         {
-                          Header = header, 
-                          HeaderStyle = (Style)this.Resources[cellstyles[0]], 
-                          CellStyle = (Style)this.Resources[cellstyles[1]], 
-                          CanUserReorder = true, 
-                          IsReadOnly = true, 
+                          Header = header,
+                          HeaderStyle = (Style)this.Resources[cellstyles[0]],
+                          CellStyle = (Style)this.Resources[cellstyles[1]],
+                          CanUserReorder = true,
+                          IsReadOnly = true,
                           CanUserSort = false
                         };
 
       // newColumn.SortMemberPath = path;
       var valueBinding = new Binding(path)
                            {
-                             Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"], 
+                             Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
                              ConverterParameter = this.Resources[measurement]
                            };
 
@@ -118,12 +107,8 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Data grid row mouse double click.
     /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void DataGridRowMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
       if (sender == null)
@@ -146,35 +131,6 @@ namespace VianaNET.Modules.DataGrid
 
       modifyWindow.ShowDialog();
       Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-    }
-
-    /// <summary>
-    /// The data grid_ on key down.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender.
-    /// </param>
-    /// <param name="e">
-    /// The e.
-    /// </param>
-    private void DataGrid_OnKeyDown(object sender, KeyEventArgs e)
-    {
-      if (e.Key == Key.Delete)
-      {
-        // Viana.Project.VideoData.DeleteSelectedSamples();
-        if (this.DataGrid.SelectedItems.Count > 0)
-        {
-          List<TimeSample> removeItems =
-            (from object item in this.DataGrid.SelectedItems select item as TimeSample).ToList();
-
-          foreach (TimeSample removeItem in removeItems)
-          {
-            Viana.Project.VideoData.Samples.Remove(removeItem);
-          }
-        }
-
-        Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
-      }
     }
 
     /// <summary>
@@ -222,11 +178,11 @@ namespace VianaNET.Modules.DataGrid
       // Create default framenumber colum
       var frameColumn = new DataGridTextColumn
                           {
-                            Header = Labels.DataGridFramenumber, 
-                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"], 
-                            CellStyle = (Style)this.Resources["DataGridCellStyle"], 
-                            CanUserReorder = false, 
-                            IsReadOnly = true, 
+                            Header = Labels.DataGridFramenumber,
+                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+                            CellStyle = (Style)this.Resources["DataGridCellStyle"],
+                            CanUserReorder = false,
+                            IsReadOnly = true,
                             CanUserSort = false
                           };
 
@@ -238,11 +194,11 @@ namespace VianaNET.Modules.DataGrid
       // Create default time column
       var timeColumn = new DataGridTextColumn
                          {
-                           Header = Labels.DataGridTimestamp, 
-                           HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"], 
-                           CellStyle = (Style)this.Resources["DataGridCellStyle"], 
-                           CanUserReorder = false, 
-                           IsReadOnly = true, 
+                           Header = Labels.DataGridTimestamp,
+                           HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+                           CellStyle = (Style)this.Resources["DataGridCellStyle"],
+                           CanUserReorder = false,
+                           IsReadOnly = true,
                            CanUserSort = false
                          };
 
@@ -250,7 +206,7 @@ namespace VianaNET.Modules.DataGrid
       var valueBindingTime = new Binding("Timestamp")
                                {
                                  Converter =
-                                   (IValueConverter)this.Resources["UnitDoubleStringConverter"], 
+                                   (IValueConverter)this.Resources["UnitDoubleStringConverter"],
                                  ConverterParameter = this.Resources["TimeMeasurement"]
                                };
 
@@ -278,68 +234,87 @@ namespace VianaNET.Modules.DataGrid
         this.CreateColumn(obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
-          obj + "Acceleration", 
-          prefix + Labels.DataGridAcceleration, 
-          cellStyles[i], 
+          obj + "Acceleration",
+          prefix + Labels.DataGridAcceleration,
+          cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "AccelerationX", 
-          prefix + Labels.DataGridXAcceleration, 
-          cellStyles[i], 
+          obj + "AccelerationX",
+          prefix + Labels.DataGridXAcceleration,
+          cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
-          obj + "AccelerationY", 
-          prefix + Labels.DataGridYAcceleration, 
-          cellStyles[i], 
+          obj + "AccelerationY",
+          prefix + Labels.DataGridYAcceleration,
+          cellStyles[i],
           "AccelerationMeasurement");
       }
     }
 
     #endregion
 
-    // private bool isCallingItself;
+    private void DataGrid_OnKeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.Key == Key.Delete)
+      {
+        //Viana.Project.VideoData.DeleteSelectedSamples();
+        if (this.DataGrid.SelectedItems.Count > 0)
+        {
+          var removeItems = (from object item in this.DataGrid.SelectedItems select item as TimeSample).ToList();
 
-    // void VideoData_SelectionChanged(object sender, System.EventArgs e)
-    // {
-    // if (this.isCallingItself)
-    // {
-    // return;
-    // }
+          foreach (var removeItem in removeItems)
+          {
+            Viana.Project.VideoData.Samples.Remove(removeItem);
+          }
+        }
 
-    // this.DataGrid.UnselectAll();
-    // if (Viana.Project.VideoData.Samples.AllSamplesSelected)
-    // {
-    // return;
-    // }
+        Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      }
+    }
 
-    // foreach (var selectedSample in Viana.Project.VideoData.Samples.Select(o => o.IsSelected))
-    // {
-    // this.DataGrid.SelectedItems.Add(selectedSample);
-    // }
-    // }
+    //private bool isCallingItself;
 
-    // private void DataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    // {
-    // foreach (var item in e.AddedItems)
-    // {
-    // var sample = item as TimeSample;
-    // if (sample != null)
-    // {
-    // sample.IsSelected = true;
-    // }
-    // }
+    //void VideoData_SelectionChanged(object sender, System.EventArgs e)
+    //{
+    //  if (this.isCallingItself)
+    //  {
+    //    return;
+    //  }
 
-    // foreach (var item in e.RemovedItems)
-    // {
-    // var sample = item as TimeSample;
-    // if (sample != null)
-    // {
-    // sample.IsSelected = false;
-    // }
-    // }
-    // this.isCallingItself = true;
-    // Viana.Project.VideoData.OnSelectionChanged();
-    // this.isCallingItself = false;
-    // }
+    //  this.DataGrid.UnselectAll();
+    //  if (Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //  {
+    //    return;
+    //  }
+
+    //  foreach (var selectedSample in Viana.Project.VideoData.Samples.Select(o => o.IsSelected))
+    //  {
+    //    this.DataGrid.SelectedItems.Add(selectedSample);
+    //  }
+    //}
+
+    //private void DataGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    //{
+    //  foreach (var item in e.AddedItems)
+    //  {
+    //    var sample = item as TimeSample;
+    //    if (sample != null)
+    //    {
+    //      sample.IsSelected = true;
+    //    }
+    //  }
+
+    //  foreach (var item in e.RemovedItems)
+    //  {
+    //    var sample = item as TimeSample;
+    //    if (sample != null)
+    //    {
+    //      sample.IsSelected = false;
+    //    }
+    //  }
+    //  this.isCallingItself = true;
+    //  Viana.Project.VideoData.OnSelectionChanged();
+    //  this.isCallingItself = false;
+    //}
   }
 }

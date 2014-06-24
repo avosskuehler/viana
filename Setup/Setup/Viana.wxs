@@ -30,13 +30,18 @@
           <Component Id="C_VianaNETExe" Guid="{1246AC67-0A60-4224-8C33-8A4868FD3957}" Win64="$(var.Win64)">
             <File Id="VianaNETExe" Name="VianaNET.exe" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNETExe" AssemblyApplication="VianaNETExe" DiskId="1"
                   Source="$(var.VianaNET.TargetDir)" />
-            <ProgId Id="VianaNET" Description="Viana.NET xml-Projektdatei." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
-              <Extension Id="via" Advertise="yes">
+            <ProgId Id="VianaNETProject" Description="An xml file with project descriptions." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
+              <Extension Id="ois" Advertise="yes">
+                <Verb Id="nothing" Command="Internal" Sequence="1" />
+              </Extension>
+            </ProgId>
+            <ProgId Id="VianaNET" Description="VianaNET experiment description xml file." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
+              <Extension Id="oga" Advertise="yes">
                 <Verb Id="open" Command="&amp;Open" Argument="&quot;%1&quot;" Sequence="1" />
               </Extension>
             </ProgId>
-            <Shortcut Id="_A07C5294E7E24F4CB7D6F426AE6326AB" Directory="DesktopFolder" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
-            <Shortcut Id="_A2BF88A82C6947B294A261A87EBACFC4" Directory="VianaNET" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+            <Shortcut Id="_A07C5294E7E24F4CB7D6F426AE6326AB" Directory="DesktopFolder" Name="VianaNET" Description="Launches VianaNET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+            <Shortcut Id="_A2BF88A82C6947B294A261A87EBACFC4" Directory="VianaNET" Name="VianaNET" Description="Launches VianaNET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
           </Component>
           <Component Id="C_VianaNETConfig" Guid="{A5DCF465-A9B5-4B96-341F-66BC43F8B985}" Win64="$(var.Win64)">
             <File Id="VianaNETConfig" Name="VianaNET.exe.config" KeyPath="yes" DiskId="1"

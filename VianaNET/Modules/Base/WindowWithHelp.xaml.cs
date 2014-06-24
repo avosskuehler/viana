@@ -19,10 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The window with help is a base class for windows that display the video with some elements on it
-//   and a help window.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Base
 {

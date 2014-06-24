@@ -2,7 +2,7 @@
 // <copyright file="Settings.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -21,31 +21,29 @@
 //   Defines the Settings type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Properties
 {
+  using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.IO;
-  using System.Windows.Forms;
+  using System.Runtime.Serialization;
+  using System.Xml;
+  using Application;
 
   // This class allows you to handle specific events on the settings class:
-  // The SettingChanging event is raised before a setting's value is changed.
-  // The PropertyChanged event is raised after a setting's value is changed.
-  // The SettingsLoaded event is raised after the setting values are loaded.
-  // The SettingsSaving event is raised before the setting values are saved.
-  /// <summary>
-  /// The settings.
-  /// </summary>
+  //  The SettingChanging event is raised before a setting's value is changed.
+  //  The PropertyChanged event is raised after a setting's value is changed.
+  //  The SettingsLoaded event is raised after the setting values are loaded.
+  //  The SettingsSaving event is raised before the setting values are saved.
   internal sealed partial class Settings
   {
-    #region Constructors and Destructors
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Settings"/> class.
-    /// </summary>
     public Settings()
     {
       // Setup LogfilePath
-      this.SettingsPath = Application.UserAppDataPath + Path.DirectorySeparatorChar + "Settings"
-                          + Path.DirectorySeparatorChar;
+      this.SettingsPath = System.Windows.Forms.Application.UserAppDataPath +
+                          Path.DirectorySeparatorChar + "Settings" +
+                          Path.DirectorySeparatorChar;
 
       // Create directory if not already existing.
       if (!Directory.Exists(this.SettingsPath))
@@ -53,7 +51,5 @@ namespace VianaNET.Properties
         Directory.CreateDirectory(this.SettingsPath);
       }
     }
-
-    #endregion
   }
 }

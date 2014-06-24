@@ -2,7 +2,7 @@
 // <copyright file="SaveVideoDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -32,15 +32,23 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Forms;
 
+  using VianaNET.Resources;
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
-  using VianaNET.Resources;
 
   /// <summary>
   ///   The save video dialog.
   /// </summary>
   public partial class SaveVideoDialog : Window
   {
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Constants                                                        //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Variables, Enumerations, Events                                  //
+    ///////////////////////////////////////////////////////////////////////////////
+
     // An instance of the PreviewController class (where all the real work is done)
     #region Fields
 
@@ -62,6 +70,9 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Construction and Initializing methods                                     //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Constructors and Destructors
 
     /// <summary>
@@ -82,6 +93,13 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining events, enums, delegates                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Defining Properties                                                       //
+    ///////////////////////////////////////////////////////////////////////////////
     #region Public Properties
 
     /// <summary>
@@ -97,10 +115,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The compression options button_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void CompressionOptionsButton_Click(object sender, RoutedEventArgs e)
     {
@@ -111,10 +129,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The compressor combo box_ selection changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void CompressorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -128,10 +146,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The folder button_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void FolderButton_Click(object sender, RoutedEventArgs e)
     {
@@ -171,10 +189,7 @@ namespace VianaNET.Modules.Video.Dialogs
       do
       {
         sFileName = string.Format(
-          @"{0}\{1}{2}.avi", 
-          this.FolderTextBox.Text, 
-          this.FileNameTextBox.Text, 
-          ++this.fileIndex);
+          @"{0}\{1}{2}.avi", this.FolderTextBox.Text, this.FileNameTextBox.Text, ++this.fileIndex);
       }
       while (File.Exists(sFileName));
 
@@ -189,14 +204,26 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Public methods                                                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Inherited methods                                                         //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Eventhandler                                                              //
+    ///////////////////////////////////////////////////////////////////////////////
+
     /// <summary>
     /// The record_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Record_Click(object sender, RoutedEventArgs e)
     {
@@ -229,10 +256,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The run analysis button_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void RunAnalysisButton_Click(object sender, RoutedEventArgs e)
     {
@@ -244,10 +271,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The stop_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Stop_Click(object sender, RoutedEventArgs e)
     {
@@ -276,7 +303,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The switch controls enabled.
     /// </summary>
     /// <param name="isEnabled">
-    /// The is enabled.
+    /// The is enabled. 
     /// </param>
     private void SwitchControlsEnabled(bool isEnabled)
     {
@@ -299,14 +326,22 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods and Eventhandling for Background tasks                            //
+    ///////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Methods for doing main class job                                          //
+    ///////////////////////////////////////////////////////////////////////////////
+
     /// <summary>
     /// The window_ closing.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Window_Closing(object sender, CancelEventArgs e)
     {
@@ -321,10 +356,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The window_ loaded.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
@@ -335,5 +370,8 @@ namespace VianaNET.Modules.Video.Dialogs
 
     #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
   }
 }

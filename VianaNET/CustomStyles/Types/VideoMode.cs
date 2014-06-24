@@ -2,7 +2,7 @@
 // <copyright file="VideoMode.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -26,26 +26,26 @@
 namespace VianaNET.CustomStyles.Types
 {
   /// <summary>
-  ///   Enumerates the availanle video modes.
-  ///   Currently two: file, for file playback and capture for live streams
+  /// Enumerates the availanle video modes.
+  /// Currently two: file, for file playback and capture for live streams
   /// </summary>
   public enum VideoMode
   {
     /// <summary>
-    ///   No video mode selected.
+    /// No video mode selected.
     /// </summary>
-    None, 
+    None,
 
     /// <summary>
-    ///   File video mode.
-    ///   A video file is loaded from disk.
+    /// File video mode.
+    /// A video file is loaded from disk.
     /// </summary>
-    File, 
+    File,
 
     /// <summary>
-    ///   Capture file mode.
-    ///   A video is captured from a live stream.
+    /// Capture file mode.
+    /// A video is captured from a live stream.
     /// </summary>
-    Capture, 
+    Capture,
   }
 }

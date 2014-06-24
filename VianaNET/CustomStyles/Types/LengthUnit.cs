@@ -2,7 +2,7 @@
 // <copyright file="LengthUnit.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -33,26 +33,26 @@ namespace VianaNET.CustomStyles.Types
     /// <summary>
     ///   The px.
     /// </summary>
-    px, 
+    px,
 
     /// <summary>
     ///   The mm.
     /// </summary>
-    mm, 
+    mm,
 
     /// <summary>
     ///   The cm.
     /// </summary>
-    cm, 
+    cm,
 
     /// <summary>
     ///   The m.
     /// </summary>
-    m, 
+    m,
 
     /// <summary>
     ///   The km.
     /// </summary>
-    km, 
+    km,
   }
 }

@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="LineStyleToBooleanConverter.cs" company="Freie Universität Berlin">
+// <copyright file="BooleanToLineStyleConverter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -27,12 +27,13 @@ namespace VianaNET.CustomStyles.Converter
 {
   using System;
   using System.Globalization;
+  using System.Windows;
   using System.Windows.Data;
 
   using OxyPlot;
 
   /// <summary>
-  ///   Converts true to LineStyle.Solid and false to LineStyle.None
+  ///  Converts true to LineStyle.Solid and false to LineStyle.None
   /// </summary>
   [ValueConversion(typeof(LineStyle), typeof(bool))]
   public class LineStyleToBooleanConverter : IValueConverter
@@ -42,18 +43,10 @@ namespace VianaNET.CustomStyles.Converter
     /// <summary>
     /// Converts a value.
     /// </summary>
-    /// <param name="value">
-    /// The value produced by the binding source.
-    /// </param>
-    /// <param name="targetType">
-    /// The type of the binding target property.
-    /// </param>
-    /// <param name="parameter">
-    /// The converter parameter to use.
-    /// </param>
-    /// <param name="culture">
-    /// The culture to use in the converter.
-    /// </param>
+    /// <param name="value">The value produced by the binding source.</param>
+    /// <param name="targetType">The type of the binding target property.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
@@ -71,18 +64,10 @@ namespace VianaNET.CustomStyles.Converter
     /// <summary>
     /// Converts a value.
     /// </summary>
-    /// <param name="value">
-    /// The value that is produced by the binding target.
-    /// </param>
-    /// <param name="targetType">
-    /// The type to convert to.
-    /// </param>
-    /// <param name="parameter">
-    /// The converter parameter to use.
-    /// </param>
-    /// <param name="culture">
-    /// The culture to use in the converter.
-    /// </param>
+    /// <param name="value">The value that is produced by the binding target.</param>
+    /// <param name="targetType">The type to convert to.</param>
+    /// <param name="parameter">The converter parameter to use.</param>
+    /// <param name="culture">The culture to use in the converter.</param>
     /// <returns>
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>

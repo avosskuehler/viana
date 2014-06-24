@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TimeUnitDialog.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="LengthDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,19 +23,21 @@
 //   The length dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.DataGrid
 {
   using System.Windows;
+
+  using VianaNET.Application;
+  using VianaNET.CustomStyles.Types;
 
   /// <summary>
   ///   The length dialog.
   /// </summary>
   public partial class TimeUnitDialog
   {
-    #region Constructors and Destructors
-
     /// <summary>
-    ///   Initializes a new instance of the <see cref="TimeUnitDialog" /> class.
+    /// Initializes a new instance of the <see cref="TimeUnitDialog"/> class. 
     /// </summary>
     public TimeUnitDialog()
     {
@@ -43,18 +45,14 @@ namespace VianaNET.Modules.DataGrid
       this.ComboUnit.Focus();
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
     /// The cancel_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void Cancel_Click(object sender, RoutedEventArgs e)
     {
@@ -65,17 +63,15 @@ namespace VianaNET.Modules.DataGrid
     /// The o k_ click.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void OK_Click(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
       this.Close();
     }
-
-    #endregion
   }
 }

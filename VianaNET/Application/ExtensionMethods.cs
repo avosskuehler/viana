@@ -2,7 +2,7 @@
 // <copyright file="ExtensionMethods.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -30,7 +30,7 @@ namespace VianaNET.Application
   using System.Windows.Controls.Primitives;
 
   /// <summary>
-  ///   This class provides extension methods for ToggleButtons and
+  ///   This class provides extension methods for ToggleButtons and 
   ///   invoking of empty events.
   /// </summary>
   public static class ExtensionMethods
@@ -38,14 +38,14 @@ namespace VianaNET.Application
     #region Public Methods and Operators
 
     /// <summary>
-    /// Static. Invokes the given event with the given sender and
+    /// Static. Invokes the given event with the given sender and 
     ///   empty event arguments.
     /// </summary>
     /// <param name="eventHandler">
-    /// The <see cref="EventHandler"/> to be sent.
+    /// The <see cref="EventHandler"/> to be sent. 
     /// </param>
     /// <param name="sender">
-    /// The sender of the event.
+    /// The sender of the event. 
     /// </param>
     public static void InvokeEmpty(this EventHandler eventHandler, object sender)
     {
@@ -61,10 +61,10 @@ namespace VianaNET.Application
     ///   value for the given <see cref="ToggleButton"/>
     /// </summary>
     /// <param name="toggleButton">
-    /// The <see cref="ToggleButton"/> to check its value.
+    /// The <see cref="ToggleButton"/> to check its value. 
     /// </param>
     /// <returns>
-    /// <strong>True</strong> if button is checked, otherwise <strong>false</strong> or default value if is not set.
+    /// <strong>True</strong> if button is checked, otherwise <strong>false</strong> or default value if is not set. 
     /// </returns>
     public static bool IsChecked(this ToggleButton toggleButton)
     {

@@ -2,7 +2,7 @@
 // <copyright file="SortedObservableCollection.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -54,7 +54,7 @@ namespace VianaNET.CustomStyles.Types
     /// Initializes a new instance of the <see cref="SortedObservableCollection{TValue}"/> class.
     /// </summary>
     /// <param name="comparer">
-    /// The comparer.
+    /// The comparer. 
     /// </param>
     public SortedObservableCollection(IComparer<TValue> comparer)
       : base(comparer)
@@ -84,10 +84,10 @@ namespace VianaNET.CustomStyles.Types
     /// The this.
     /// </summary>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     /// <returns>
-    /// The <see cref="TValue"/> .
+    /// The <see cref="TValue"/> . 
     /// </returns>
     public override TValue this[int index]
     {
@@ -122,10 +122,10 @@ namespace VianaNET.CustomStyles.Types
     /// The insert.
     /// </summary>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     public override void Insert(int index, TValue value)
     {
@@ -139,7 +139,7 @@ namespace VianaNET.CustomStyles.Types
     /// The remove at.
     /// </summary>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     public override void RemoveAt(int index)
     {
@@ -158,7 +158,7 @@ namespace VianaNET.CustomStyles.Types
     /// The on collection changed.
     /// </summary>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
@@ -172,7 +172,7 @@ namespace VianaNET.CustomStyles.Types
     /// The on property changed.
     /// </summary>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
     {
@@ -186,13 +186,13 @@ namespace VianaNET.CustomStyles.Types
     /// The on collection changed.
     /// </summary>
     /// <param name="action">
-    /// The action.
+    /// The action. 
     /// </param>
     /// <param name="item">
-    /// The item.
+    /// The item. 
     /// </param>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
     {
@@ -203,16 +203,16 @@ namespace VianaNET.CustomStyles.Types
     /// The on collection changed.
     /// </summary>
     /// <param name="action">
-    /// The action.
+    /// The action. 
     /// </param>
     /// <param name="oldItem">
-    /// The old item.
+    /// The old item. 
     /// </param>
     /// <param name="newItem">
-    /// The new item.
+    /// The new item. 
     /// </param>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
     {
@@ -223,16 +223,16 @@ namespace VianaNET.CustomStyles.Types
     /// The on collection changed.
     /// </summary>
     /// <param name="action">
-    /// The action.
+    /// The action. 
     /// </param>
     /// <param name="item">
-    /// The item.
+    /// The item. 
     /// </param>
     /// <param name="index">
-    /// The index.
+    /// The index. 
     /// </param>
     /// <param name="oldIndex">
-    /// The old index.
+    /// The old index. 
     /// </param>
     private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index, int oldIndex)
     {
@@ -251,7 +251,7 @@ namespace VianaNET.CustomStyles.Types
     /// The on property changed.
     /// </summary>
     /// <param name="propertyName">
-    /// The property name.
+    /// The property name. 
     /// </param>
     private void OnPropertyChanged(string propertyName)
     {

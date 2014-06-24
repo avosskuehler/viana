@@ -20,9 +20,6 @@
 // <author>Herwig Niemeyer</author>
 // <email>hn_muenster@web.de</email>
 // <modifiedby>Adrian Voßkühler</modifiedby>
-// <summary>
-//   The line fit class.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Data.Filter.Regression
 {
@@ -32,6 +29,7 @@ namespace VianaNET.Data.Filter.Regression
   using System.Xml.Serialization;
 
   using VianaNET.Application;
+  using VianaNET.Resources;
 
   using WPFMath;
 
@@ -169,10 +167,10 @@ namespace VianaNET.Data.Filter.Regression
     /// Calculates the value of the Regression function at argument x, when the function is linear.
     /// </summary>
     /// <param name="x">
-    /// argument is x
+    /// argument is x  
     /// </param>
     /// <returns>
-    /// The calculated value <see cref="double"/> .
+    /// The calculated value <see cref="double"/> .  
     /// </returns>
     public static double AusgleichsGerade(double x)
     {
@@ -309,10 +307,10 @@ namespace VianaNET.Data.Filter.Regression
     /// Gets the best regression function type.
     /// </summary>
     /// <param name="bestRegTyp">
-    /// Type of best fit.
+    /// Type of best fit.  
     /// </param>
     /// <param name="negFlag">
-    /// The neg Flag.
+    /// The neg Flag. 
     /// </param>
     public void GetBestRegressData(out RegressionType bestRegTyp, int negFlag)
     {
@@ -612,6 +610,10 @@ namespace VianaNET.Data.Filter.Regression
       FitParameterMatrix[(int)RegressionType.Exponentiell, 2] = bestC;
       FitParameterMatrix[(int)RegressionType.Exponentiell, 5] = abw / this.anzahl;
     }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Small helping Methods                                                     //
+    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     ///   The bestimme exp spez fkt.

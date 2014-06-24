@@ -1,8 +1,8 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="VideoInfoDialog.xaml.cs" company="Freie Universität Berlin">
+// <copyright file="LengthDialog.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -23,6 +23,7 @@
 //   The length dialog.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Globalization;
@@ -31,21 +32,17 @@ namespace VianaNET.Modules.Video.Dialogs
   using MediaInfoNET;
 
   using VianaNET.Application;
-  using VianaNET.Modules.Video.Control;
+  using VianaNET.Logging;
 
   /// <summary>
   ///   Thid dialog displays video information
   /// </summary>
   public partial class VideoInfoDialog
   {
-    #region Constructors and Destructors
-
     /// <summary>
-    /// Initializes a new instance of the <see cref="VideoInfoDialog"/> class.
+    /// Initializes a new instance of the <see cref="VideoInfoDialog"/> class. 
     /// </summary>
-    /// <param name="videofile">
-    /// The videofile to be analyzed. 
-    /// </param>
+    /// <param name="videofile"> The videofile to be analyzed. </param>
     public VideoInfoDialog(string videofile)
     {
       this.InitializeComponent();
@@ -53,113 +50,64 @@ namespace VianaNET.Modules.Video.Dialogs
       this.ParseVideoFile(videofile);
     }
 
-    #endregion
-
-    #region Public Properties
-
     /// <summary>
-    ///   Gets the bitrate in kbps of the video file
-    /// </summary>
-    public string Bitrate { get; private set; }
-
-    /// <summary>
-    ///   Gets the codec of the video file
-    /// </summary>
-    public string Codec { get; private set; }
-
-    /// <summary>
-    ///   Gets or sets the framerate of the video file in fps
-    ///   that was automatical parsed
-    /// </summary>
-    public double DefaultFrameRate { get; set; }
-
-    /// <summary>
-    ///   Gets the duration of the video file as a long
-    /// </summary>
-    public long Duration { get; private set; }
-
-    /// <summary>
-    ///   Gets the duration of the video file in format hh:mm:ss.ms
-    /// </summary>
-    public string DurationString { get; private set; }
-
-    /// <summary>
-    ///   Gets the filename without path of the video file
+    /// Gets the filename without path of the video file
     /// </summary>
     public string Filename { get; private set; }
 
     /// <summary>
-    ///   Gets or sets the number of frames of the video file
+    /// Gets the duration of the video file in format hh:mm:ss.ms
     /// </summary>
-    public int FrameCount { get; private set; }
+    public string DurationString { get; private set; }
 
     /// <summary>
-    ///   Gets or sets the framerate of the video file in fps
-    ///   that can be modified
+    /// Gets the duration of the video file as a long
+    /// </summary>
+    public long Duration { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the framerate of the video file in fps
+    /// that can be modified
     /// </summary>
     public double FrameRate { get; set; }
 
     /// <summary>
-    ///   Gets the dimensions width x height of the video file
+    /// Gets or sets the framerate of the video file in fps
+    /// that was automatical parsed
+    /// </summary>
+    public double DefaultFrameRate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the number of frames of the video file
+    /// </summary>
+    public int FrameCount { get; private set; }
+
+    /// <summary>
+    /// Gets the dimensions width x height of the video file
     /// </summary>
     public string FrameSize { get; private set; }
 
-    #endregion
-
-    #region Methods
+    /// <summary>
+    /// Gets the codec of the video file
+    /// </summary>
+    public string Codec { get; private set; }
 
     /// <summary>
-    /// Handles the Click event of the Cancel control.
+    /// Gets the bitrate in kbps of the video file
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void CancelClick(object sender, RoutedEventArgs e)
-    {
-      this.Close();
-    }
-
-    /// <summary>
-    /// Handles the Click event of the OK control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void OkClick(object sender, RoutedEventArgs e)
-    {
-      this.DialogResult = true;
-
-      // Update FPS, if needed
-      if (this.DefaultFrameRate != this.FrameRate)
-      {
-        double factor = this.DefaultFrameRate / this.FrameRate;
-        Viana.Project.VideoData.FramerateFactor = factor;
-        Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
-        Video.Instance.VideoElement.FrameTimeInNanoSeconds = (long)(10000000d / this.FrameRate);
-      }
-
-      this.Close();
-    }
+    public string Bitrate { get; private set; }
 
     /// <summary>
     /// Parses the video file for its properties.
     /// </summary>
-    /// <param name="videoFilename">
-    /// The video filename.
-    /// </param>
+    /// <param name="videoFilename">The video filename.</param>
     private void ParseVideoFile(string videoFilename)
     {
       var aviFile = new MediaFile(videoFilename);
       this.Filename = aviFile.Name;
       this.DurationString = aviFile.General.DurationStringAccurate;
       this.Duration = aviFile.General.DurationMillis;
-      double currentFrameRate = aviFile.Video[0].FrameRate / Viana.Project.VideoData.FramerateFactor;
+      var currentFrameRate = aviFile.Video[0].FrameRate / Viana.Project.VideoData.FramerateFactor;
       if (currentFrameRate != aviFile.Video[0].FrameRate)
       {
         this.FrameRate = currentFrameRate;
@@ -176,6 +124,35 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Bitrate = aviFile.General.Bitrate.ToString(CultureInfo.InvariantCulture) + " kbps";
     }
 
-    #endregion
+    /// <summary>
+    /// Handles the Click event of the Cancel control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void CancelClick(object sender, RoutedEventArgs e)
+    {
+      this.Close();
+    }
+
+    /// <summary>
+    /// Handles the Click event of the OK control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void OkClick(object sender, RoutedEventArgs e)
+    {
+      this.DialogResult = true;
+
+      // Update FPS, if needed
+      if (this.DefaultFrameRate != this.FrameRate)
+      {
+        var factor = this.DefaultFrameRate / this.FrameRate;
+        Viana.Project.VideoData.FramerateFactor = factor;
+        Control.Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
+        Control.Video.Instance.VideoElement.FrameTimeInNanoSeconds = (long)(10000000d / this.FrameRate);
+      }
+
+      this.Close();
+    }
   }
 }

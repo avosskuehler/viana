@@ -2,7 +2,7 @@
 // <copyright file="DualTextBox.xaml.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -147,10 +147,10 @@ namespace VianaNET
     /// The element check box_ checked.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ElementCheckBox_Checked(object sender, RoutedEventArgs e)
     {
@@ -162,10 +162,10 @@ namespace VianaNET
     /// The element text box_ got focus.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ElementTextBox_GotFocus(object sender, RoutedEventArgs e)
     {
@@ -177,10 +177,10 @@ namespace VianaNET
     /// The element text box_ text changed.
     /// </summary>
     /// <param name="sender">
-    /// The sender.
+    /// The sender. 
     /// </param>
     /// <param name="e">
-    /// The e.
+    /// The e. 
     /// </param>
     private void ElementTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {

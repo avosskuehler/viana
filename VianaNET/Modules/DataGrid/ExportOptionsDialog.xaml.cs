@@ -19,10 +19,8 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   This dialog covers data export options
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
@@ -37,10 +35,8 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public partial class ExportOptionsDialog
   {
-    #region Constructors and Destructors
-
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ExportOptionsDialog" /> class.
+    /// Initializes a new instance of the <see cref="ExportOptionsDialog"/> class. 
     /// </summary>
     public ExportOptionsDialog()
     {
@@ -56,12 +52,8 @@ namespace VianaNET.Modules.DataGrid
       this.Object3CheckBox.Content = Labels.DataGridObjectPrefix + " 3";
     }
 
-    #endregion
-
-    #region Public Properties
-
     /// <summary>
-    ///   Gets the export options
+    /// Gets the export options
     /// </summary>
     public ExportOptions ExportOptions
     {
@@ -86,7 +78,7 @@ namespace VianaNET.Modules.DataGrid
         }
 
         options.Axes = new List<DataAxis>();
-        foreach (object item in this.ColumnsListBox.Items)
+        foreach (var item in this.ColumnsListBox.Items)
         {
           var axis = item as DataAxis;
 
@@ -100,19 +92,11 @@ namespace VianaNET.Modules.DataGrid
       }
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
     /// Handles the Click event of the Cancel control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void CancelClick(object sender, RoutedEventArgs e)
     {
       this.Close();
@@ -121,12 +105,8 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Handles the Click event of the OK control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
@@ -136,15 +116,11 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Handles the OnClick event of the SelectAllButton control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void SelectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
-      foreach (object item in this.ColumnsListBox.Items)
+      foreach (var item in this.ColumnsListBox.Items)
       {
         var axis = item as DataAxis;
 
@@ -158,15 +134,11 @@ namespace VianaNET.Modules.DataGrid
     /// <summary>
     /// Handles the OnClick event of the UnselectAllButton control.
     /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void UnselectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
-      foreach (object item in this.ColumnsListBox.Items)
+      foreach (var item in this.ColumnsListBox.Items)
       {
         var axis = item as DataAxis;
 
@@ -176,7 +148,5 @@ namespace VianaNET.Modules.DataGrid
         }
       }
     }
-
-    #endregion
   }
 }

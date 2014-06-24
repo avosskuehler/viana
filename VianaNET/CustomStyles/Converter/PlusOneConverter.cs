@@ -2,7 +2,7 @@
 // <copyright file="PlusOneConverter.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -41,19 +41,19 @@ namespace VianaNET.CustomStyles.Converter
     /// The convert.
     /// </summary>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <param name="targetType">
-    /// The target type.
+    /// The target type. 
     /// </param>
     /// <param name="parameter">
-    /// The parameter.
+    /// The parameter. 
     /// </param>
     /// <param name="culture">
-    /// The culture.
+    /// The culture. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -65,19 +65,19 @@ namespace VianaNET.CustomStyles.Converter
     /// The convert back.
     /// </summary>
     /// <param name="value">
-    /// The value.
+    /// The value. 
     /// </param>
     /// <param name="targetType">
-    /// The target type.
+    /// The target type. 
     /// </param>
     /// <param name="parameter">
-    /// The parameter.
+    /// The parameter. 
     /// </param>
     /// <param name="culture">
-    /// The culture.
+    /// The culture. 
     /// </param>
     /// <returns>
-    /// The <see cref="object"/> .
+    /// The <see cref="object"/> . 
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {

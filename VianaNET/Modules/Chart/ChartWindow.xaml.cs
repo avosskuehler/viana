@@ -19,9 +19,6 @@
 // </copyright>
 // <author>Dr. Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The chart window.
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Chart
 {
@@ -62,16 +59,6 @@ namespace VianaNET.Modules.Chart
   /// </summary>
   public partial class ChartWindow
   {
-    #region Constants
-
-    /// <summary>
-    ///   Determines maximum distance of two points (in pixel) given by mouse input
-    ///   that should be considered as different.
-    /// </summary>
-    private const int Maxdistancepoints = 10;
-
-    #endregion
-
     #region Static Fields
 
     /// <summary>
@@ -79,10 +66,20 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     public static readonly DependencyProperty ObjectDescriptionsProperty =
       DependencyProperty.Register(
-        "ObjectDescriptions", 
-        typeof(List<string>), 
-        typeof(ChartWindow), 
+        "ObjectDescriptions",
+        typeof(List<string>),
+        typeof(ChartWindow),
         new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
+
+    #endregion
+
+    #region Constants
+
+    /// <summary>
+    ///   Determines maximum distance of two points (in pixel) given by mouse input
+    ///   that should be considered as different.
+    /// </summary>
+    private const int Maxdistancepoints = 10;
 
     #endregion
 
@@ -123,7 +120,7 @@ namespace VianaNET.Modules.Chart
     private bool isSelectionEnabled;
 
     /// <summary>
-    ///   Indicates setting default axis pair
+    /// Indicates setting default axis pair
     /// </summary>
     private bool isSettingDefaultAxisPair;
 
@@ -163,8 +160,7 @@ namespace VianaNET.Modules.Chart
       this.PopulateObjectCombo();
       Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       Viana.Project.UpdateChartRequested += this.ProjectUpdateChartRequested;
-
-      // Viana.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
+      //Viana.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
       this.isSettingDefaultAxisPair = false;
@@ -504,8 +500,7 @@ namespace VianaNET.Modules.Chart
       var lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness =
         Viana.Project.CurrentFilterData.InterpolationLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor =
-        Viana.Project.CurrentFilterData.InterpolationLineColor.ToOxyColor();
+      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.InterpolationLineColor.ToOxyColor();
       lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.InterpolationLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
@@ -513,8 +508,7 @@ namespace VianaNET.Modules.Chart
       {
         Viana.Project.CurrentFilterData.InterpolationLineThickness =
           lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.InterpolationLineColor =
-          lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
+        Viana.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
         Viana.Project.CurrentFilterData.InterpolationLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
@@ -670,7 +664,7 @@ namespace VianaNET.Modules.Chart
       this.SelectRect.Height = 0;
 
       this.mouseDownPositionInCanvasCoordinates = new Point(
-        e.GetPosition(this.MyCanvas).X, 
+        e.GetPosition(this.MyCanvas).X,
         e.GetPosition(this.MyCanvas).Y);
       this.SelectRect.SetValue(Canvas.LeftProperty, this.mouseDownPositionInCanvasCoordinates.X);
       this.SelectRect.SetValue(Canvas.TopProperty, this.mouseDownPositionInCanvasCoordinates.Y);
@@ -733,19 +727,19 @@ namespace VianaNET.Modules.Chart
                                                               where
                                                                 (dp.X
                                                                  >= Math.Min(
-                                                                   this.mouseDownPositionInAxesCoordinates.X, 
+                                                                   this.mouseDownPositionInAxesCoordinates.X,
                                                                    this.mouseUpPositionInAxesCoordinates.X))
                                                                 && (dp.X
                                                                     <= Math.Max(
-                                                                      this.mouseDownPositionInAxesCoordinates.X, 
+                                                                      this.mouseDownPositionInAxesCoordinates.X,
                                                                       this.mouseUpPositionInAxesCoordinates.X))
                                                                 && (dp.Y
                                                                     >= Math.Min(
-                                                                      this.mouseDownPositionInAxesCoordinates.Y, 
+                                                                      this.mouseDownPositionInAxesCoordinates.Y,
                                                                       this.mouseUpPositionInAxesCoordinates.Y))
                                                                 && (dp.Y
                                                                     <= Math.Max(
-                                                                      this.mouseDownPositionInAxesCoordinates.Y, 
+                                                                      this.mouseDownPositionInAxesCoordinates.Y,
                                                                       this.mouseUpPositionInAxesCoordinates.Y))
                                                               orderby dp.X
                                                               select dp;
@@ -846,9 +840,9 @@ namespace VianaNET.Modules.Chart
         }
 
         var dlg = new VianaDialog(
-          Labels.AskDeleteDataTitle, 
-          Labels.AskDeleteDataMessageTitle, 
-          Labels.AskDeleteDataMessage, 
+          Labels.AskDeleteDataTitle,
+          Labels.AskDeleteDataMessageTitle,
+          Labels.AskDeleteDataMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -863,19 +857,19 @@ namespace VianaNET.Modules.Chart
     ///// </summary>
     ///// <param name="sender">The source of the event.</param>
     ///// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-    // private void SamplesSelectionChanged(object sender, EventArgs e)
-    // {
-    // this.ChartData.DataScatterSeries.ClearSelection();
+    //private void SamplesSelectionChanged(object sender, EventArgs e)
+    //{
+    //this.ChartData.DataScatterSeries.ClearSelection();
 
-    // if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
-    // {
-    // foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
-    // {
-    // int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
-    // this.ChartData.DataScatterSeries.SelectItem(index);
-    // }
-    // }
-    // }
+    //if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //{
+    //  foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
+    //  {
+    //    int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
+    //    this.ChartData.DataScatterSeries.SelectItem(index);
+    //  }
+    //}
+    //}
 
     /// <summary>
     /// Handles the PreviewKeyUp event of the PlotArea control.
@@ -1146,7 +1140,7 @@ namespace VianaNET.Modules.Chart
         // Render formula to visual.
         var visual = new DrawingVisual();
         TexRenderer renderer = Viana.Project.CurrentFilterData.RegressionFunctionTexFormula.GetRenderer(
-          TexStyle.Display, 
+          TexStyle.Display,
           14d);
 
         using (DrawingContext drawingContext = visual.RenderOpen())
@@ -1174,7 +1168,7 @@ namespace VianaNET.Modules.Chart
         // Render formula to visual.
         var visual = new DrawingVisual();
         TexRenderer renderer = Viana.Project.CurrentFilterData.TheoryFunctionTexFormula.GetRenderer(
-          TexStyle.Display, 
+          TexStyle.Display,
           14d);
 
         using (DrawingContext drawingContext = visual.RenderOpen())
@@ -1246,7 +1240,7 @@ namespace VianaNET.Modules.Chart
         }
 
         Viana.Project.CurrentFilterData.RegressionFilter.GetBestRegressData(
-          out bestRegression, 
+          out bestRegression,
           regressionOptionsDialog.negFlag);
         this.UpdateRegressionImageButtonAndLabels(bestRegression);
       }
@@ -1688,8 +1682,8 @@ namespace VianaNET.Modules.Chart
 
       Viana.Project.CurrentChartType = ChartType.Custom;
       var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-      char achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
-      char funcBez = 'y';
+      var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
+      var funcBez = 'y';
       this.axisName = achsBez;
       Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
 
@@ -1748,8 +1742,8 @@ namespace VianaNET.Modules.Chart
 
       Viana.Project.CurrentChartType = ChartType.Custom;
       var axisY = (DataAxis)this.YAxisContent.SelectedItem;
-      char achsBez = axisY.Axis == AxisType.T ? 't' : 'y';
-      char funcBez = 'y';
+      var achsBez = axisY.Axis == AxisType.T ? 't' : 'y';
+      var funcBez = 'y';
       this.axisName = achsBez;
       Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
 

@@ -17,10 +17,6 @@
 //   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //   ************************************************************************
 // </copyright>
-// <summary>
-//   Motion processing algorithm, which highlights motion areas.
-//   This is an adapted filter from the AForge library. All credits to AForge.NET
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Filter
 {
@@ -34,7 +30,7 @@ namespace VianaNET.Modules.Video.Filter
 
   /// <summary>
   ///   Motion processing algorithm, which highlights motion areas.
-  ///   This is an adapted filter from the AForge library. All credits to AForge.NET
+  /// This is an adapted filter from the AForge library. All credits to AForge.NET
   /// </summary>
   /// <seealso cref="MotionDetector" />
   /// <seealso cref="IMotionDetector" />
@@ -43,7 +39,7 @@ namespace VianaNET.Modules.Video.Filter
     #region Fields
 
     /// <summary>
-    ///   The highlight color.
+    /// The highlight color.
     /// </summary>
     private Color highlightColor = Color.Red;
 
@@ -52,15 +48,13 @@ namespace VianaNET.Modules.Video.Filter
     #region Constructors and Destructors
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MotionAreaHighlightingSpecial"/> class. 
-    ///   Initializes a new instance of the <see cref="MotionAreaHighlighting"/> class.
+    ///   Initializes a new instance of the <see cref="MotionAreaHighlighting" /> class.
     /// </summary>
     public MotionAreaHighlightingSpecial()
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MotionAreaHighlightingSpecial"/> class. 
     /// Initializes a new instance of the <see cref="MotionAreaHighlighting"/> class.
     /// </summary>
     /// <param name="highlightColor">

@@ -2,7 +2,7 @@
 // <copyright file="Segment.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2014 Dr. Adrian Voßkühler  
+//   Copyright (C) 2012 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -50,16 +50,16 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="Segment"/> struct.
     /// </summary>
     /// <param name="x1">
-    /// The x 1.
+    /// The x 1. 
     /// </param>
     /// <param name="y1">
-    /// The y 1.
+    /// The y 1. 
     /// </param>
     /// <param name="x2">
-    /// The x 2.
+    /// The x 2. 
     /// </param>
     /// <param name="y2">
-    /// The y 2.
+    /// The y 2. 
     /// </param>
     public Segment(int x1, int y1, int x2, int y2)
       : this(new VectorInt(x1, y1), new VectorInt(x2, y2))
@@ -70,10 +70,10 @@ namespace VianaNET.Modules.Video.Filter
     /// Initializes a new instance of the <see cref="Segment"/> struct.
     /// </summary>
     /// <param name="min">
-    /// The min.
+    /// The min. 
     /// </param>
     /// <param name="max">
-    /// The max.
+    /// The max. 
     /// </param>
     public Segment(VectorInt min, VectorInt max)
     {
