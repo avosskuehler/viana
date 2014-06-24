@@ -68,4 +68,4 @@ using System.Windows;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("5.0.*")]
 [assembly: Guid("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]
-[assembly: AssemblyFileVersion("5.0")]
+[assembly: AssemblyFileVersion("5.0.3")]
