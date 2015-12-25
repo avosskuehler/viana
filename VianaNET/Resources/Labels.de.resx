@@ -1904,4 +1904,31 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
     <value>Nutzt entweder positiven oder negativen Kontrast für die Bewegungserkennung (einfach ausprobieren, was besser passt.</value>
   </data>
+  <data name="AskVideoNotFoundMessage" xml:space="preserve">
+    <value>Geben Sie im nächsten Schritt den Ort der Datei an, oder klicken Sie auf abbrechen, wenn nur die Analysedaten geöffnet werden sollen.</value>
+  </data>
+  <data name="AskVideoNotFoundMessageTitle" xml:space="preserve">
+    <value>Die Videodatei %1 wurde nicht im Verzeichnis %2 gefunden.</value>
+  </data>
+  <data name="AskVideoNotFoundTitle" xml:space="preserve">
+    <value>Videodatei nicht gefunden</value>
+  </data>
+  <data name="ButtonNewProjectLabelTitle" xml:space="preserve">
+    <value>Neues Projekt</value>
+  </data>
+  <data name="ButtonNewProjectToolTipDescription" xml:space="preserve">
+    <value>Erstellt ein neues leeres Projekt und löscht alle geladenen Daten.</value>
+  </data>
+  <data name="ButtonNewProjectToolTipTitle" xml:space="preserve">
+    <value>Neues Projekt anlegen</value>
+  </data>
+  <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
+    <value>Projekt</value>
+  </data>
+  <data name="RibbonGroupVideoLabelTitle" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="VLCDialogTopFrameTitle" xml:space="preserve">
+    <value>Das Video muss zunächst konvertiert werden. Bitte unten den Bereich angeben, der für die Analyse bereit stehen soll und dann auf OK klicken.</value>
+  </data>
 </root>

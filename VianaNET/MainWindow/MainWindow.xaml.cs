@@ -137,6 +137,14 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void SaveProjectClick(object sender, RoutedEventArgs e)
     {
+      SaveCurrentProject();
+    }
+
+    /// <summary>
+    /// Saves the current project.
+    /// </summary>
+    private static void SaveCurrentProject()
+    {
       var filename = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
 
       if (File.Exists(filename))
@@ -164,6 +172,57 @@ namespace VianaNET.MainWindow
     private void SaveProjectAsClick(object sender, RoutedEventArgs e)
     {
       SaveProjectToNewFile();
+    }
+
+    /// <summary>
+    /// The new project on click event handler.
+    /// Clears all data and video settings.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void NewProjectOnClick(object sender, RoutedEventArgs e)
+    {
+      if (Viana.Project.ProjectFilename != string.Empty && Viana.Project.ProjectFilename != null)
+      {
+        var dlg = new VianaDialog(
+          Labels.AskSaveProjectDialogTitle,
+          Labels.AskSaveProjectDialogDescription,
+          Labels.AskSaveProjectDialogMessage,
+          false);
+        if (dlg.ShowDialog().GetValueOrDefault(false))
+        {
+          SaveCurrentProject();
+        }
+      }
+
+      // Note that we want to overwrite the defaults
+      Project.IsDeserializing = true;
+      Viana.Project = new Project();
+      //Viana.Project.ProjectFilename = openedProject.ProjectFilename;
+      //Viana.Project.ProjectPath = openedProject.ProjectPath;
+      //Viana.Project.VideoFile = openedProject.VideoFile;
+      //Viana.Project.VideoMode = openedProject.VideoMode;
+
+      // Restore video mode
+      Video.Instance.VideoMode = VideoMode.File;
+
+      // Update button image source
+      this.CreateImageSourceForNumberOfObjects();
+
+      // Update datagrid
+      Viana.Project.VideoData.NotifyLoading();
+      this.DataGridWindow.Refresh();
+
+      // Update data series values
+      this.ChartWindow.Refresh();
+
+      this.VideoWindow.BlobsControl.ResetBlobsControl();
+      this.Refresh();
+      this.UpdateColorButton();
+      this.UpdateSelectObjectImage();
+
+      // Reset flag
+      Project.IsDeserializing = false;
     }
 
     /// <summary>
@@ -1172,6 +1231,7 @@ namespace VianaNET.MainWindow
       var dlg = new SkipPointsDialog();
       dlg.ShowDialog();
     }
+
 
   }
 }

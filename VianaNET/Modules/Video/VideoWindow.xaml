@@ -9,6 +9,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
 	xmlns:application="clr-namespace:VianaNET.Application"
 	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
+	xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
 	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">
@@ -29,7 +30,6 @@
         <Grid.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="-1"/>
         </Grid.RenderTransform>
-
         <Image Name="VideoImage" 
                HorizontalAlignment="Center" 
                Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"

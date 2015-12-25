@@ -23,25 +23,39 @@
 //   The video player.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using DirectShowLib;
+
+using VianaNET.Logging;
+
 namespace VianaNET.Modules.Video.Control
 {
   using System;
+  using System.Diagnostics;
   using System.Globalization;
+  using System.IO;
+  using System.Reflection;
   using System.Threading;
   using System.Windows;
+  using System.Windows.Forms;
+  using System.Windows.Forms.VisualStyles;
   using System.Windows.Threading;
 
   using DirectShowLib;
 
   using MediaInfoNET;
 
-  using Microsoft.Win32;
-
   using VianaNET.Application;
   using VianaNET.Logging;
+  using VianaNET.MainWindow;
+  using VianaNET.Modules.Video.Dialogs;
   using VianaNET.Resources;
 
+  using Vlc.DotNet.Core;
+  using Vlc.DotNet.Forms;
+
   using File = System.IO.File;
+  using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
   /// <summary>
   ///   The video player.
@@ -313,11 +327,24 @@ namespace VianaNET.Modules.Video.Control
     public bool LoadMovie(string fileName)
     {
       this.ReleaseEventThread();
-
+    Start:
       try
       {
         if (!File.Exists(fileName))
         {
+          if (fileName != string.Empty)
+          {
+            var messageTitle = Labels.AskVideoNotFoundMessageTitle;
+            messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileName));
+            messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileName));
+
+            var dlg = new VianaDialog(Labels.AskVideoNotFoundTitle, messageTitle, Labels.AskVideoNotFoundMessage, false);
+            if (!dlg.ShowDialog().GetValueOrDefault(false))
+            {
+              return false;
+            }
+          }
+
           var ofd = new OpenFileDialog();
           ofd.CheckFileExists = true;
           ofd.CheckPathExists = true;
@@ -345,7 +372,20 @@ namespace VianaNET.Modules.Video.Control
         this.MediaDurationInMS = aviFile.General.DurationMillis;
         this.FrameCount = aviFile.FrameCount;
         Viana.Project.VideoData.FramerateFactor = 1;
-        this.BuildGraph();
+        try
+        {
+          this.BuildGraph();
+        }
+        catch (Exception)
+        {
+          // Store filename
+          //var file = this.VideoFilename;
+          //this.Dispose();
+          //this.ReRenderVideoFile(file);
+          //fileName = Viana.Project.VideoFile;
+          //goto Start;
+          return false;
+        }
 
         Viana.Project.VideoFile = this.VideoFilename;
         Video.Instance.HasVideo = true;
@@ -361,6 +401,7 @@ namespace VianaNET.Modules.Video.Control
 
       return true;
     }
+
 
     /// <summary>
     ///   The revert.
@@ -602,9 +643,9 @@ namespace VianaNET.Modules.Video.Control
       //{
       //  this.isFrameTimeCapable = true;
 
-        // string text = DsError.GetErrorText(hr);
-        // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
-        // text = DsError.GetErrorText(hr);
+      // string text = DsError.GetErrorText(hr);
+      // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
+      // text = DsError.GetErrorText(hr);
       //}
 
       // hr = this.mediaSeeking.GetTimeFormat(out this.timeFormat);

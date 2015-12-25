@@ -854,8 +854,11 @@ namespace VianaNET.Modules.Video
     {
       for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.blobHorizontalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
-        this.blobVerticalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+        if (Viana.Project.ProcessingData.TargetColor.Count > i)
+        {
+          this.blobHorizontalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+          this.blobVerticalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+        }
       }
     }
 

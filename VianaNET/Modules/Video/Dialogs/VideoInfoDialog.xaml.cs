@@ -103,6 +103,20 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="videoFilename">The video filename.</param>
     private void ParseVideoFile(string videoFilename)
     {
+      if (!System.IO.File.Exists(videoFilename))
+      {
+        this.Filename = string.Empty;
+        this.DurationString = string.Empty;
+        this.Duration = 0;
+        this.FrameRate = 25;
+        this.DefaultFrameRate = 25;
+        this.FrameCount = 0;
+        this.FrameSize = string.Empty;
+        this.Codec = string.Empty;
+        this.Bitrate = 0 + " kbps";
+        return;
+      }
+
       var aviFile = new MediaFile(videoFilename);
       this.Filename = aviFile.Name;
       this.DurationString = aviFile.General.DurationStringAccurate;

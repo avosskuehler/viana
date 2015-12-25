@@ -55,6 +55,12 @@ namespace VianaNET.MainWindow
       "StatusLabel", typeof(string), typeof(StatusBarContent), new FrameworkPropertyMetadata("Ready"));
 
     /// <summary>
+    ///   The video filename property for the status bar
+    /// </summary>
+    public static readonly DependencyProperty VideoFilenameProperty = DependencyProperty.Register(
+      "VideoFilename", typeof(string), typeof(StatusBarContent), new FrameworkPropertyMetadata("No video input loaded."));
+
+    /// <summary>
     ///   Holds the instance of singleton
     /// </summary>
     private static StatusBarContent instance;
@@ -141,6 +147,22 @@ namespace VianaNET.MainWindow
       set
       {
         this.SetValue(StatusLabelProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the video filename.
+    /// </summary>
+    public string VideoFilename
+    {
+      get
+      {
+        return (string)this.GetValue(VideoFilenameProperty);
+      }
+
+      set
+      {
+        this.SetValue(VideoFilenameProperty, value);
       }
     }
 

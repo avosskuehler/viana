@@ -17,9 +17,9 @@
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="18"/>
+          <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}"/>
-          <ColumnDefinition Width="18"/>
+          <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -50,12 +50,14 @@
                Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
         <RepeatButton Name="TickDownButton"  Grid.Column="1" Grid.Row="1" 
+           Visibility="{TemplateBinding viana:MediaSlider.IsShowingTickButtons}" 
           Command="{x:Static viana:MediaSlider.TickDownClickedCommand}"
           Style="{StaticResource BaseSliderSidesButtonStyle}">
           <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
         </RepeatButton>
 
         <RepeatButton Name="TickUpButton" Grid.Row="1" Grid.Column="3"
+           Visibility="{TemplateBinding viana:MediaSlider.IsShowingTickButtons}" 
 						Command="{x:Static viana:MediaSlider.TickUpClickedCommand}"
             Style="{StaticResource BaseSliderSidesButtonStyle}">
 
