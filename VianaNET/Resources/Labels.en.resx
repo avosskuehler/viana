@@ -1903,4 +1903,31 @@ F10: Reset coordinate system.</value>
   <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
     <value>Switches between positive and negative contrast motion detection (just try it out).</value>
   </data>
+  <data name="AskVideoNotFoundMessage" xml:space="preserve">
+    <value>Specify the current video file location or use cancel, to open only the already analyzed data.</value>
+  </data>
+  <data name="AskVideoNotFoundMessageTitle" xml:space="preserve">
+    <value>The video file %1 was not present in the directory %2.</value>
+  </data>
+  <data name="AskVideoNotFoundTitle" xml:space="preserve">
+    <value>Video file not found</value>
+  </data>
+  <data name="ButtonNewProjectLabelTitle" xml:space="preserve">
+    <value>New project</value>
+  </data>
+  <data name="ButtonNewProjectToolTipDescription" xml:space="preserve">
+    <value>Creates a new projekt and clears all existing data.</value>
+  </data>
+  <data name="ButtonNewProjectToolTipTitle" xml:space="preserve">
+    <value>Create new project</value>
+  </data>
+  <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="RibbonGroupVideoLabelTitle" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="VLCDialogTopFrameTitle" xml:space="preserve">
+    <value>This video has to be converted first. Please specify the time range to be used for analysis.</value>
+  </data>
 </root>

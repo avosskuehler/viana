@@ -27,7 +27,10 @@
 namespace VianaNET.Application
 {
   using System;
+  using System.Diagnostics;
+  using System.Windows.Controls;
   using System.Windows.Controls.Primitives;
+  using System.Windows.Threading;
 
   /// <summary>
   ///   This class provides extension methods for ToggleButtons and 

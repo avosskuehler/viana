@@ -77,6 +77,15 @@ namespace VianaNET
       new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
+    ///   The is showing times property.
+    /// </summary>
+    public static readonly DependencyProperty IsShowingTickButtonsProperty = DependencyProperty.Register(
+      "IsShowingTickButtons", 
+      typeof(Visibility), 
+      typeof(MediaSlider), 
+      new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+    /// <summary>
     ///   The maximum string property.
     /// </summary>
     public static readonly DependencyProperty MaximumStringProperty = DependencyProperty.Register(
@@ -288,6 +297,22 @@ namespace VianaNET
       set
       {
         this.SetValue(IsShowingTimesProperty, value);
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the is showing tick buttons.
+    /// </summary>
+    public Visibility IsShowingTickButtons
+    {
+      get
+      {
+        return (Visibility)this.GetValue(IsShowingTickButtonsProperty);
+      }
+
+      set
+      {
+        this.SetValue(IsShowingTickButtonsProperty, value);
       }
     }
 
@@ -584,10 +609,11 @@ namespace VianaNET
     /// </returns>
     private string ConvertToTimeString(double value)
     {
-      double timeInMS = value;
-      var seconds = (int)Math.Floor(timeInMS / 1000);
-      var milliseconds = (int)(timeInMS - seconds * 1000);
-      string timeValue = seconds.ToString("N0") + ":" + milliseconds.ToString("000");
+      //int timeInMS = value;
+      var time = new TimeSpan(0, 0, 0, 0,(int)value);
+      //var seconds = (int)Math.Floor(timeInMS / 1000);
+      //var milliseconds = (int)(timeInMS - seconds * 1000);
+      string timeValue = time.ToString(@"mm\:ss\.fff");//seconds.ToString("N0") + ":" + milliseconds.ToString("000");
 
       return timeValue;
     }

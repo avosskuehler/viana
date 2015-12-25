@@ -31,6 +31,13 @@
       <Ribbon.ApplicationMenu>
         <RibbonApplicationMenu SmallImageSource="/VianaNET;component/Images/VianaNET_32.png" KeyTip="S" Label="Datei" IsMainMenu="True">
           <RibbonApplicationMenuItem 
+                        Click="NewProjectOnClick"
+                        Header="{lex:Loc VianaNET:Labels:ButtonNewProjectLabelTitle}"
+                        ImageSource="/VianaNET;component/Images/New32.png"
+                        QuickAccessToolBarImageSource="/VianaNET;component/Images/New16.png" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonNewProjectToolTipDescription}" 
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonNewProjectToolTipTitle}"/>
+          <RibbonApplicationMenuItem 
                         Click="OpenProjectOnClick"
                         Header="{lex:Loc VianaNET:Labels:QATButtonOpenLabelTitle}"
                         ImageSource="/VianaNET;component/Images/FileOpen32.png"
@@ -210,7 +217,37 @@
         </RibbonApplicationMenu>
       </Ribbon.ApplicationMenu>
       <RibbonTab x:Name="RibbonTabHome" Header="{lex:Loc VianaNET:Labels:RibbonTabHomeLabel}">
-        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupOpenVideoLabelTitle}" LargeImageSource="/VianaNET;component/Images/LoadVideo32.png" >
+        <!--<RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupProjectLabelTitle}" LargeImageSource="/VianaNET;component/Images/FileOpen32.png" >
+          <RibbonButton 
+                        Click="NewProjectOnClick"
+                        Label="{lex:Loc VianaNET:Labels:ButtonNewProjectLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/New32.png"
+                        SmallImageSource="/VianaNET;component/Images/New16.png" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonNewProjectToolTipDescription}" 
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonNewProjectToolTipTitle}"/>
+          <RibbonButton 
+                        Click="OpenProjectOnClick"
+                        Label="{lex:Loc VianaNET:Labels:QATButtonOpenLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/FileOpen32.png"
+                        SmallImageSource="/VianaNET;component/Images/FileOpen16.png" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:QATButtonOpenToolTipDescription}" 
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:QATButtonOpenLabelTitle}"/>
+          <RibbonButton 
+                        Click="SaveProjectClick"
+                        Label="{lex:Loc VianaNET:Labels:QATButtonSaveLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/Save32.png"
+                        SmallImageSource="/VianaNET;component/Images/Save16.png" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:QATButtonSaveToolTipDescription}" 
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:QATButtonSaveLabelTitle}"/>
+          <RibbonButton 
+                        Click="SaveProjectAsClick"
+                        Label="{lex:Loc VianaNET:Labels:QATButtonSaveAsLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/Save32.png"
+                        SmallImageSource="/VianaNET;component/Images/Save16.png" 
+                        ToolTipDescription="{lex:Loc VianaNET:Labels:QATButtonSaveAsToolTipDescription}" 
+                        ToolTipTitle="{lex:Loc VianaNET:Labels:QATButtonSaveAsLabelTitle}"/>
+        </RibbonGroup>-->
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoLabelTitle}" LargeImageSource="/VianaNET;component/Images/LoadVideo32.png" >
           <RibbonButton Click="LoadVideoButtonClick"
                          LargeImageSource="/VianaNET;component/Images/LoadVideo32.png" 
                          SmallImageSource="/VianaNET;component/Images/LoadVideo16.png"
@@ -754,6 +791,9 @@
       <StatusBarItem>
         <ProgressBar Width="120" Height="20" Value="{Binding Path=ProgressBarValue,
               Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
+      </StatusBarItem>
+      <StatusBarItem>
+        <Label Content="{Binding Path=VideoFilename, Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
       <StatusBarItem HorizontalAlignment="Right">
         <Label Content="{Binding Path=MessagesLabel,

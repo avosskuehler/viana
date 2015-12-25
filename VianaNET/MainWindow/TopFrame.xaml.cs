@@ -52,6 +52,10 @@ namespace VianaNET.MainWindow
     /// </summary>
     public ImageSource Icon
     {
+      get
+      {
+        return this.LeftIcon.Source;
+      }
       set
       {
         this.LeftIcon.Source = value;
@@ -71,6 +75,22 @@ namespace VianaNET.MainWindow
       set
       {
         this.Header.Text = value;
+      }
+    }
+
+    /// <summary>
+    ///   Gets or sets the titles fontsize.
+    /// </summary>
+    public double TitleSize
+    {
+      get
+      {
+        return this.Header.FontSize;
+      }
+
+      set
+      {
+        this.Header.FontSize = value;
       }
     }
 

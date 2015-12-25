@@ -1887,4 +1887,31 @@
   <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
     <value>@RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription</value>
   </data>
+  <data name="AskVideoNotFoundMessage" xml:space="preserve">
+    <value>@AskVideoNotFoundMessage</value>
+  </data>
+  <data name="AskVideoNotFoundMessageTitle" xml:space="preserve">
+    <value>@AskVideoNotFoundMessageTitle</value>
+  </data>
+  <data name="AskVideoNotFoundTitle" xml:space="preserve">
+    <value>@AskVideoNotFoundTitle</value>
+  </data>
+  <data name="ButtonNewProjectLabelTitle" xml:space="preserve">
+    <value>@ButtonNewProjectLabelTitle</value>
+  </data>
+  <data name="ButtonNewProjectToolTipDescription" xml:space="preserve">
+    <value>@ButtonNewProjectToolTipDescription</value>
+  </data>
+  <data name="ButtonNewProjectToolTipTitle" xml:space="preserve">
+    <value>@ButtonNewProjectToolTipTitle</value>
+  </data>
+  <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupProjectLabelTitle</value>
+  </data>
+  <data name="RibbonGroupVideoLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupVideoLabelTitle</value>
+  </data>
+  <data name="VLCDialogTopFrameTitle" xml:space="preserve">
+    <value>@VLCDialogTopFrameTitle</value>
+  </data>
 </root>

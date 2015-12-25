@@ -497,7 +497,7 @@ namespace VianaNET.Modules.Video.Control
 
     public void UpdateProcessedImageSource()
     {
-      if (Viana.Project.ProcessingData.IsUsingColorDetection)
+      if (Viana.Project.ProcessingData.IsUsingColorDetection && Video.Instance.ColorProcessedImageSource != null)
       {
         // Update ColorProcessedVideoSource
         this.Dispatcher.BeginInvoke(
@@ -506,7 +506,7 @@ namespace VianaNET.Modules.Video.Control
           null);
       }
 
-      if (Viana.Project.ProcessingData.IsUsingMotionDetection)
+      if (Viana.Project.ProcessingData.IsUsingMotionDetection && Video.Instance.MotionProcessedImageSource != null)
       {
         // Update MotionProcessedVideoSource
         this.Dispatcher.BeginInvoke(

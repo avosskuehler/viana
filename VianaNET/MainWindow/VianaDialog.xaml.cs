@@ -99,7 +99,7 @@ namespace VianaNET.MainWindow
     {
       set
       {
-        this.Description.Content = value;
+        this.Description.Text = value;
       }
     }
 

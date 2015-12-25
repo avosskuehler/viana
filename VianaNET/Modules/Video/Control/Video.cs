@@ -32,6 +32,7 @@ namespace VianaNET.Modules.Video.Control
   using System.IO;
   using System.Linq;
   using System.Windows;
+  using System.Windows.Controls.Primitives;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
@@ -39,6 +40,8 @@ namespace VianaNET.Modules.Video.Control
 
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.MainWindow;
+  using VianaNET.Modules.Video.Dialogs;
 
   /// <summary>
   ///   The video.
@@ -434,6 +437,14 @@ namespace VianaNET.Modules.Video.Control
       {
         case VideoMode.File:
           success = this.videoPlayerElement.LoadMovie(filename);
+          if (!success)
+          {
+            var name = this.videoPlayerElement.VideoFilename;
+            this.videoPlayerElement.Dispose();
+            success = this.ReRenderVideoFile(name);
+          }
+
+          StatusBarContent.Instance.VideoFilename = this.videoPlayerElement.VideoFilename;
           //this.VideoSource = this.videoElement.ImageSource;
           //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
           break;
@@ -445,6 +456,17 @@ namespace VianaNET.Modules.Video.Control
       }
 
       return success;
+    }
+
+    private bool ReRenderVideoFile(string videoFile)
+    {
+      using (var vlcConverter = new VLCWindow())
+      {
+        vlcConverter.VideoFile = videoFile;
+        vlcConverter.ShowDialog();
+      }
+
+      return this.LoadMovie(Viana.Project.VideoFile);
     }
 
     /// <summary>
@@ -593,6 +615,7 @@ namespace VianaNET.Modules.Video.Control
           {
             this.videoElement = this.videoCaptureElement;
             this.videoCaptureElement.NewCamera(0, 0, 0);
+            StatusBarContent.Instance.VideoFilename = "Live Video";
           }
 
           break;
