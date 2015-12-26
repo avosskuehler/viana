@@ -1,28 +1,11 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Video.cs" company="Freie Universität Berlin">
-//   ************************************************************************
+﻿// <copyright file="Video.cs" company="FU Berlin">
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
-//   ------------------------------------------------------------------------
-//   This program is free software; you can redistribute it and/or modify it 
-//   under the terms of the GNU General Public License as published by the 
-//   Free Software Foundation; either version 2 of the License, or 
-//   (at your option) any later version.
-//   This program is distributed in the hope that it will be useful, 
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-//   See the GNU General Public License for more details.
-//   You should have received a copy of the GNU General Public License 
-//   along with this program; if not, write to the Free Software Foundation, 
-//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//   ************************************************************************
+//   Copyright (C) 2015 Dr. Adrian Voßkühler  
+//   Licensed under GPL V3
 // </copyright>
-// <author>Dr. Adrian Voßkühler</author>
+// <author>Adrian Voßkühler</author>
 // <email>adrian@vosskuehler.name</email>
-// <summary>
-//   The video.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.Modules.Video.Control
 {
   using System;
@@ -32,7 +15,6 @@ namespace VianaNET.Modules.Video.Control
   using System.IO;
   using System.Linq;
   using System.Windows;
-  using System.Windows.Controls.Primitives;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
@@ -44,10 +26,29 @@ namespace VianaNET.Modules.Video.Control
   using VianaNET.Modules.Video.Dialogs;
 
   /// <summary>
-  ///   The video.
+  ///   This class is the base class for all video inputs.
   /// </summary>
   public class Video : DependencyObject, INotifyPropertyChanged
   {
+    #region Constructors and Destructors
+
+    /// <summary>
+    ///   Prevents a default instance of the <see cref="Video" /> class from being created.
+    /// </summary>
+    private Video()
+    {
+      // Need to have the construction of the Video objects
+      // in constructor, to get the databindings to their 
+      // properties to work.
+      this.videoPlayerElement = new VideoPlayer();
+      this.videoCaptureElement = new VideoCapturer();
+      this.videoCaptureElement.VideoAvailable += this.VideoCaptureElementVideoAvailable;
+      this.videoElement = this.videoPlayerElement;
+      this.videoMode = VideoMode.None;
+    }
+
+    #endregion
+
     #region Static Fields
 
     /// <summary>
@@ -55,31 +56,49 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public static readonly DependencyProperty IsDataAcquisitionRunningProperty =
       DependencyProperty.Register(
-        "IsDataAcquisitionRunning", typeof(bool), typeof(Video), new FrameworkPropertyMetadata(false, OnPropertyChanged));
+        "IsDataAcquisitionRunning",
+        typeof(bool),
+        typeof(Video),
+        new FrameworkPropertyMetadata(false, OnPropertyChanged));
 
     /// <summary>
     ///   The image source property.
     /// </summary>
-    public static readonly DependencyProperty OriginalImageSourceProperty = DependencyProperty.Register(
-      "OriginalImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty OriginalImageSourceProperty =
+      DependencyProperty.Register(
+        "OriginalImageSource",
+        typeof(ImageSource),
+        typeof(Video),
+        new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The color processed image source property.
     /// </summary>
-    public static readonly DependencyProperty ColorProcessedImageSourceProperty = DependencyProperty.Register(
-      "ColorProcessedImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty ColorProcessedImageSourceProperty =
+      DependencyProperty.Register(
+        "ColorProcessedImageSource",
+        typeof(ImageSource),
+        typeof(Video),
+        new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The motion processed image source property.
     /// </summary>
-    public static readonly DependencyProperty MotionProcessedImageSourceProperty = DependencyProperty.Register(
-      "MotionProcessedImageSource", typeof(ImageSource), typeof(Video), new UIPropertyMetadata(null));
+    public static readonly DependencyProperty MotionProcessedImageSourceProperty =
+      DependencyProperty.Register(
+        "MotionProcessedImageSource",
+        typeof(ImageSource),
+        typeof(Video),
+        new UIPropertyMetadata(null));
 
     /// <summary>
     ///   The has video property.
     /// </summary>
     public static readonly DependencyProperty HasVideoProperty = DependencyProperty.Register(
-      "HasVideo", typeof(bool), typeof(Video), new UIPropertyMetadata(false));
+      "HasVideo",
+      typeof(bool),
+      typeof(Video),
+      new UIPropertyMetadata(false));
 
     /// <summary>
     ///   The instance.
@@ -109,25 +128,6 @@ namespace VianaNET.Modules.Video.Control
     ///   The video mode.
     /// </summary>
     private VideoMode videoMode;
-
-    #endregion
-
-    #region Constructors and Destructors
-
-    /// <summary>
-    ///   Prevents a default instance of the <see cref="Video" /> class from being created.
-    /// </summary>
-    private Video()
-    {
-      // Need to have the construction of the Video objects
-      // in constructor, to get the databindings to their 
-      // properties to work.
-      this.videoPlayerElement = new VideoPlayer();
-      this.videoCaptureElement = new VideoCapturer();
-      this.videoCaptureElement.VideoAvailable += this.VideoCaptureElementVideoAvailable;
-      this.videoElement = this.videoPlayerElement;
-      this.videoMode = VideoMode.None;
-    }
 
     #endregion
 
@@ -186,8 +186,10 @@ namespace VianaNET.Modules.Video.Control
     {
       get
       {
-        return (long)((this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs) -
-          Viana.Project.VideoData.TimeZeroPositionInMs);
+        return
+          (long)
+          ((this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs)
+           - Viana.Project.VideoData.TimeZeroPositionInMs);
       }
 
       // get { return this.videoElement.MediaPositionInMilliSeconds; }
@@ -334,7 +336,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets the video input devices.
+    ///   Gets the video input devices.
     /// </summary>
     public ObservableCollection<DsDevice> VideoInputDevices
     {
@@ -345,8 +347,8 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets a valaue indicating whether there are video input devices
-    /// available on the system
+    ///   Gets a valaue indicating whether there are video input devices
+    ///   available on the system
     /// </summary>
     public bool HasVideoInputDevices
     {
@@ -382,7 +384,7 @@ namespace VianaNET.Modules.Video.Control
 
       Bitmap returnBitmap;
       var visual = new DrawingVisual();
-      DrawingContext dc = visual.RenderOpen();
+      var dc = visual.RenderOpen();
       dc.DrawImage(
         this.OriginalImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
@@ -409,30 +411,18 @@ namespace VianaNET.Modules.Video.Control
       return returnBitmap;
     }
 
-    // public void UpdateNativeBitmap()
-    // {
-    // switch (this.videoMode)
-    // {
-    // case VideoMode.File:
-    // this.videoPlayerElement.UpdateNativeBitmap();
-    // break;
-    // case VideoMode.Capture:
-    // break;
-    // }
-    // }
-
     /// <summary>
-    /// The load movie.
+    ///   The load movie.
     /// </summary>
     /// <param name="filename">
-    /// The filename. 
+    ///   The filename.
     /// </param>
     /// <returns>
-    /// The <see cref="bool"/> . 
+    ///   The <see cref="bool" /> .
     /// </returns>
     public bool LoadMovie(string filename)
     {
-      bool success = true;
+      var success = true;
       switch (this.videoMode)
       {
         case VideoMode.File:
@@ -458,9 +448,14 @@ namespace VianaNET.Modules.Video.Control
       return success;
     }
 
+    /// <summary>
+    /// Rerenders the video file, cause it could no be opened by the default direct show codecs.
+    /// </summary>
+    /// <param name="videoFile">The video file.</param>
+    /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
     private bool ReRenderVideoFile(string videoFile)
     {
-      using (var vlcConverter = new VLCWindow())
+      using (var vlcConverter = new VlcWindow())
       {
         vlcConverter.VideoFile = videoFile;
         vlcConverter.ShowDialog();
@@ -470,7 +465,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   The pause.
+    ///   Pauses the video element.
     /// </summary>
     public void Pause()
     {
@@ -478,7 +473,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   The play.
+    ///   Starts playing the video.
     /// </summary>
     public void Play()
     {
@@ -486,7 +481,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   The refresh processing map.
+    ///   Refreshes the processing map.
     /// </summary>
     public void RefreshProcessingMap()
     {
@@ -494,7 +489,7 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   The revert.
+    ///   Reverts the video to start position.
     /// </summary>
     public void Revert()
     {
@@ -502,10 +497,12 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// This method steps the video the given number of frames in the given direction
+    ///   This method steps the video the given number of frames in the given direction
     /// </summary>
-    /// <param name="forward">True, if we should go forward in the video stream. 
-    /// False to go backwards. </param>
+    /// <param name="forward">
+    ///   True, if we should go forward in the video stream.
+    ///   False to go backwards.
+    /// </param>
     /// <param name="count">The number of frames to move</param>
     public void StepFrames(bool forward, int count)
     {
@@ -522,10 +519,12 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// This method steps the video one frame in the given direction
+    ///   This method steps the video one frame in the given direction
     /// </summary>
-    /// <param name="forward">True, if we should go forward in the video stream. 
-    /// False to go backwards. </param>
+    /// <param name="forward">
+    ///   True, if we should go forward in the video stream.
+    ///   False to go backwards.
+    /// </param>
     public void StepOneFrame(bool forward)
     {
       switch (this.videoMode)
@@ -553,10 +552,10 @@ namespace VianaNET.Modules.Video.Control
     #region Methods
 
     /// <summary>
-    /// The on property changed.
+    ///   The on property changed.
     /// </summary>
     /// <param name="args">
-    /// The args. 
+    ///   The args.
     /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
@@ -567,13 +566,17 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Called when property changed.
+    ///   Called when property changed.
     /// </summary>
     /// <param name="obj">The object.</param>
-    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+    /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      (obj as Video).OnPropertyChanged(args);
+      var video = obj as Video;
+      if (video != null)
+      {
+        video.OnPropertyChanged(args);
+      }
     }
 
     /// <summary>
@@ -588,10 +591,10 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// The set video mode.
+    ///   The set video mode.
     /// </summary>
     /// <param name="newVideoMode">
-    /// The new video mode. 
+    ///   The new video mode.
     /// </param>
     private void SetVideoMode(VideoMode newVideoMode)
     {
@@ -627,10 +630,10 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Handles the VideoAvailable event of the videoCaptureElement control.
+    ///   Handles the VideoAvailable event of the videoCaptureElement control.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
     private void VideoCaptureElementVideoAvailable(object sender, EventArgs e)
     {
       //this.VideoSource = this.videoElement.ImageSource;
@@ -639,10 +642,10 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Handles the VideoFrameChanged event of the videoElement control.
+    ///   Handles the VideoFrameChanged event of the videoElement control.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+    /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
     private void VideoElementVideoFrameChanged(object sender, EventArgs e)
     {
       this.OnVideoFrameChanged();

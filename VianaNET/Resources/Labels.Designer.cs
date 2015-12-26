@@ -5020,6 +5020,15 @@ namespace VianaNET.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @SelectVlcLibrariesDescription.
+        /// </summary>
+        internal static string SelectVlcLibrariesDescription {
+            get {
+                return ResourceManager.GetString("SelectVlcLibrariesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to @ShowCalibrationLabelDescription.
         /// </summary>
         internal static string ShowCalibrationLabelDescription {
