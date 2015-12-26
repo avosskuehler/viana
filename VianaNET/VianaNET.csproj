@@ -1007,6 +1007,9 @@
   C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
 ) ELSE (
  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
-)</PostBuildEvent>
+)
+
+C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

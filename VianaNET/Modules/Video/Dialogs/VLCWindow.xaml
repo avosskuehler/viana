@@ -41,9 +41,9 @@
           <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
             <Image Name="BtnPlayImage" Source="/VianaNET;component/Images/Start16.png" Width="16"/>
           </Button>
-          <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
+          <!--<Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
             <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
-          </Button>
+          </Button>-->
           <Rectangle Width="8" />
           <Button x:Name="BtnSetCutoutLeft" Click="BtnSetCutoutLeftClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSetCutoutLeftButtonToolTip}">
             <Image Source="/VianaNET;component/Images/SetCutoutLeft16.png" Width="16"/>

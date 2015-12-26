@@ -327,7 +327,7 @@ namespace VianaNET.Modules.Video.Control
     public bool LoadMovie(string fileName)
     {
       this.ReleaseEventThread();
-    Start:
+
       try
       {
         if (!File.Exists(fileName))
