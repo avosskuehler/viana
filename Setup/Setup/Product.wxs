@@ -22,7 +22,7 @@
       <![CDATA[Installed OR NETFRAMEWORK45]]>
     </Condition>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
     <Media Id="1" Cabinet="viana.cab" EmbedCab="yes" />
 
@@ -30,6 +30,7 @@
       <FeatureRef Id="VianaMainApplicationFeature" />
       <FeatureRef Id='LibsFeature'/>
       <FeatureRef Id='LanguageFeature'/>
+      <FeatureRef Id='VlcFeature'/>
     </Feature>
 
   </Product>

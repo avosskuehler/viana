@@ -130,13 +130,13 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         returnInfo =
           new DirectoryInfo(
-            Path.Combine(currentDirectory, @"C:\Users\Adrian\VSProjects\Vlc.DotNet-master\Vlc.DotNet\lib\x86\"));
+            Path.Combine(currentDirectory, @"VlcLibs\x86"));
       }
       else
       {
         returnInfo =
           new DirectoryInfo(
-            Path.Combine(currentDirectory, @"C:\Users\Adrian\VSProjects\Vlc.DotNet-master\Vlc.DotNet\lib\x64\"));
+            Path.Combine(currentDirectory, @"VlcLibs\x64"));
       }
 
       if (!returnInfo.Exists)
