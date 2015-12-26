@@ -1930,4 +1930,7 @@ F10: Reset coordinate system.</value>
   <data name="VLCDialogTopFrameTitle" xml:space="preserve">
     <value>This video has to be converted first. Please specify the time range to be used for analysis.</value>
   </data>
+  <data name="SelectVlcLibrariesDescription" xml:space="preserve">
+    <value>Please select Vlc libraries folder.</value>
+  </data>
 </root>

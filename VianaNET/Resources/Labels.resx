@@ -1914,4 +1914,7 @@
   <data name="VLCDialogTopFrameTitle" xml:space="preserve">
     <value>@VLCDialogTopFrameTitle</value>
   </data>
+  <data name="SelectVlcLibrariesDescription" xml:space="preserve">
+    <value>@SelectVlcLibrariesDescription</value>
+  </data>
 </root>

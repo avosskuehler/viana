@@ -1,4 +1,4 @@
-﻿<Window x:Class="VianaNET.Modules.Video.Dialogs.VLCWindow"
+﻿<Window x:Class="VianaNET.Modules.Video.Dialogs.VlcWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,7 +15,7 @@
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid>
+  <Grid Background="{StaticResource PropertiesBackgroundBrush}" >
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
@@ -29,9 +29,9 @@
       <ProgressBar x:Name="ConverterProgressbar" Height="25" />
     </StackPanel>
     <WindowsFormsHost Name="VideoPanel"  Grid.Row="2">
-      <forms:VlcControl x:Name="vlcConverterPlayer" VlcLibDirectoryNeeded="VlcControl_VlcLibDirectoryNeeded" PositionChanged="VlcControl_PositionChanged" LengthChanged="VlcPlayer_LengthChanged"/>
+      <forms:VlcControl x:Name="vlcConverterPlayer" VlcLibDirectoryNeeded="VlcControlVlcLibDirectoryNeeded" PositionChanged="VlcControlPositionChanged" LengthChanged="VlcPlayerLengthChanged"/>
     </WindowsFormsHost>
-    <Grid Grid.Row="3" Background="{StaticResource PropertiesBackgroundBrush}" VerticalAlignment="Bottom">
+    <Grid Grid.Row="3" VerticalAlignment="Bottom" Margin="5">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" MinWidth="100" />
         <ColumnDefinition Width="*"/>
@@ -64,7 +64,7 @@
         SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
         TickPlacement="BottomRight" 
         Minimum="0"
-        Thumb.DragStarted="TimelineSliderDragStarted"
+        SelectionAndValueChanged="TimelineSlider_OnSelectionAndValueChanged"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
         Thumb.DragDelta="TimelineSliderDragDelta"/>
     </Grid>

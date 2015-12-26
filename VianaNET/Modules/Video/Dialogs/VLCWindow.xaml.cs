@@ -1,43 +1,68 @@
-﻿using System;
-using System.Windows;
+﻿// <copyright file="VLCWindow.xaml.cs" company="FU Berlin">
+//   Viana.NET - video analysis for physics education
+//   Copyright (C) 2015 Dr. Adrian Voßkühler  
+//   Licensed under GPL V3
+// </copyright>
+// <author>Adrian Voßkühler</author>
+// <email>adrian@vosskuehler.name</email>
 
 namespace VianaNET.Modules.Video.Dialogs
 {
-  using System.Diagnostics;
+  using System;
   using System.Globalization;
   using System.IO;
   using System.Reflection;
   using System.Threading;
+  using System.Windows;
+  using System.Windows.Controls.Primitives;
+  using System.Windows.Forms;
 
   using VianaNET.Application;
-  using VianaNET.Modules.Video.Control;
+  using VianaNET.Resources;
 
   using Vlc.DotNet.Core;
-  using Vlc.DotNet.Core.Interops;
   using Vlc.DotNet.Forms;
 
-  using Path = System.IO.Path;
-
   /// <summary>
-  /// Interaction logic for VLCWindow.xaml
+  ///   This window is used to convert a video, which is by default not readable for Viana (cause there is
+  ///   no directshow codec installed on the system), into an default mpeg mp3 version to make it available
+  ///   for the standard processing pipeline.
+  ///   It uses the VLCPlayer transcoding options via VLCDotNet.
   /// </summary>
-  public partial class VLCWindow : Window, IDisposable
+  public partial class VlcWindow : IDisposable
   {
+    /// <summary>
+    ///   The converted file
+    /// </summary>
     private string convertedFile;
-    private string videoFile;
+
+    /// <summary>
+    ///   Indicates a value, whether this window is in converting mode.
+    /// </summary>
+    private bool isConverting;
+
+    /// <summary>
+    ///   Indicates a value, whether the vlc player is playing
+    /// </summary>
     private bool isPlaying;
 
-    public VLCWindow()
+    /// <summary>
+    ///   The video file to be converted
+    /// </summary>
+    private string videoFile;
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="VlcWindow" /> class.
+    /// </summary>
+    public VlcWindow()
     {
       this.InitializeComponent();
     }
 
-    public void Dispose()
-    {
-      this.vlcConverterPlayer.Dispose();
-      GC.Collect();
-    }
-
+    /// <summary>
+    ///   Gets or sets the video file to be converted.
+    /// </summary>
+    /// <value>The video file to be converted including complete path.</value>
     public string VideoFile
     {
       get
@@ -48,40 +73,48 @@ namespace VianaNET.Modules.Video.Dialogs
       set
       {
         this.videoFile = value;
-
-        //var opts = new[] { "-I dummy", "-vvv", "--sout=#duplicate{dst=display,dst='transcode{vcodec=mp1v,acodec=mpga}:standard{access=file,mux=mpeg1,dst=C://Users//Adrian//Desktop//MyVid.mpg}'" };
-        // % vlc -vvv input_stream --sout '#duplicate{dst=display,dst="transcode{vcodec=mp4v,acodec=mpga,vb=800,ab=128,deinterlace}:standard{access=udp,mux=ts,url=239.255.12.42,sap,name="TestStream"}"}'
-        // "C://Program Files (x86)//Videolan//VLC//VLC.exe" "c:\Stahlfeder_JanMax.mp4" -I dummy --sout=#transcode{vcodec=mp1v,acodec=mpga}:standard{access=file,mux=mpeg1,dst=C://Users//Adrian//Desktop//MyVid.mpg}
-        //this.Player.SetMedia(new Uri(this.videoFile), opts);
-
-        //this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
         this.vlcConverterPlayer.Play(new Uri(this.videoFile));
-        //this.isPlaying = true;
         Thread.Sleep(200);
         this.vlcConverterPlayer.Pause();
-        //Process vlc;
-        //vlc = Process.Start(
-        //  "C://Program Files (x86)//Videolan//VLC//VLC.exe",
-        //  "'c://Stahlfeder_JanMax.mp4' -I dummy --sout=#transcode{vcodec=mp1v,acodec=mpga}:standard{access=file,mux=mpeg1,dst=C://Users//Adrian//Desktop//MyVid.mpg}");
-        //Thread.Sleep(9000);
-        //vlc.Kill();
-
-
-        ////vlc -I dummy -vvv "MyVid.mod"
-        ////--sout=#transcode{vcodec=h264,vb=1024,acodec=mp4a,ab=192,channels=2,deinterlace}:standard{access=file,mux=ts,dst=MyVid.mp4
       }
     }
 
-    private void VlcPlayer_LengthChanged(object sender, VlcMediaPlayerLengthChangedEventArgs e)
+    /// <summary>
+    ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    ///   Especially disposes the vlcplayer to get access to the converted video file.
+    /// </summary>
+    public void Dispose()
     {
-      this.Dispatcher.InvokeAsync(() => { this.TimelineSlider.Maximum = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds; });
+      this.vlcConverterPlayer.Dispose();
+      GC.Collect();
     }
 
-    private void VlcControl_VlcLibDirectoryNeeded(object sender, VlcLibDirectoryNeededEventArgs e)
+    /// <summary>
+    ///   Handles the LengthChanged event of the VlcPlayer control.
+    ///   Updates the maximum value of the timeslider.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="VlcMediaPlayerLengthChangedEventArgs" /> instance containing the event data.</param>
+    private void VlcPlayerLengthChanged(object sender, VlcMediaPlayerLengthChangedEventArgs e)
+    {
+      this.Dispatcher.InvokeAsync(
+        () => { this.TimelineSlider.Maximum = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds; });
+    }
+
+    /// <summary>
+    ///   Handles the VlcLibDirectoryNeeded event of the VlcControl control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="VlcLibDirectoryNeededEventArgs" /> instance containing the event data.</param>
+    private void VlcControlVlcLibDirectoryNeeded(object sender, VlcLibDirectoryNeededEventArgs e)
     {
       e.VlcLibDirectory = GetVlcLibDirectory();
     }
 
+    /// <summary>
+    ///   Gets the VLC library directory.
+    /// </summary>
+    /// <returns>DirectoryInfo.</returns>
     private static DirectoryInfo GetVlcLibDirectory()
     {
       var currentAssembly = Assembly.GetEntryAssembly();
@@ -90,23 +123,26 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         return null;
       }
-      var returnInfo = new DirectoryInfo(currentDirectory);
+
+      DirectoryInfo returnInfo;
 
       if (AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
       {
-        returnInfo = new DirectoryInfo(
-             Path.Combine(currentDirectory, @"C:\Users\Adrian\VSProjects\Vlc.DotNet-master\Vlc.DotNet\lib\x86\"));
+        returnInfo =
+          new DirectoryInfo(
+            Path.Combine(currentDirectory, @"C:\Users\Adrian\VSProjects\Vlc.DotNet-master\Vlc.DotNet\lib\x86\"));
       }
       else
       {
-        returnInfo = new DirectoryInfo(
+        returnInfo =
+          new DirectoryInfo(
             Path.Combine(currentDirectory, @"C:\Users\Adrian\VSProjects\Vlc.DotNet-master\Vlc.DotNet\lib\x64\"));
       }
 
       if (!returnInfo.Exists)
       {
-        var folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-        folderBrowserDialog.Description = "Select Vlc libraries folder.";
+        var folderBrowserDialog = new FolderBrowserDialog();
+        folderBrowserDialog.Description = Labels.SelectVlcLibrariesDescription;
         folderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
         folderBrowserDialog.ShowNewFolderButton = true;
         if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -114,24 +150,37 @@ namespace VianaNET.Modules.Video.Dialogs
           returnInfo = new DirectoryInfo(folderBrowserDialog.SelectedPath);
         }
       }
+
       return returnInfo;
     }
 
-    private void VlcControl_PositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
+    /// <summary>
+    ///   Handles the PositionChanged event of the VlcControl control.
+    ///   Updates the converter progress bar and the sliders thumb.
+    ///   Stops replay if selection end was reached.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="VlcMediaPlayerPositionChangedEventArgs" /> instance containing the event data.</param>
+    private void VlcControlPositionChanged(object sender, VlcMediaPlayerPositionChangedEventArgs e)
     {
       this.Dispatcher.InvokeAsync(
         () =>
-        {
-          this.TimelineSlider.Value = e.NewPosition * this.vlcConverterPlayer.Length;
-          if (e.NewPosition * this.vlcConverterPlayer.Length > this.TimelineSlider.SelectionEnd)
           {
-            this.vlcConverterPlayer.Pause();
-          }
+            this.TimelineSlider.Value = e.NewPosition * this.vlcConverterPlayer.Length;
+            if (e.NewPosition * this.vlcConverterPlayer.Length > this.TimelineSlider.SelectionEnd && !this.isConverting)
+            {
+              this.vlcConverterPlayer.Pause();
+            }
 
-          this.ConverterProgressbar.Value = e.NewPosition * 100;
-        });
+            this.ConverterProgressbar.Value = e.NewPosition * 100;
+          });
     }
 
+    /// <summary>
+    ///   Play button was clicked, so update the button to pause image and start replay.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BtnPlayClick(object sender, RoutedEventArgs e)
     {
       if (this.isPlaying)
@@ -148,6 +197,11 @@ namespace VianaNET.Modules.Video.Dialogs
       this.isPlaying = !this.isPlaying;
     }
 
+    /// <summary>
+    ///   Stop was clicked, so stop the replay and rewind to start.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BtnStopClick(object sender, RoutedEventArgs e)
     {
       this.vlcConverterPlayer.Stop();
@@ -156,71 +210,125 @@ namespace VianaNET.Modules.Video.Dialogs
       this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
     }
 
+    /// <summary>
+    ///   Sets left cutout time on the current timesliders caret position.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BtnSetCutoutLeftClick(object sender, RoutedEventArgs e)
     {
       this.TimelineSlider.SelectionStart = this.TimelineSlider.Value;
       this.TimelineSlider.UpdateSelectionTimes();
     }
 
+    /// <summary>
+    ///   Sets right cutout time on the current timesliders caret position.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BtnSetCutoutRightClick(object sender, RoutedEventArgs e)
     {
       this.TimelineSlider.SelectionEnd = this.TimelineSlider.Value;
       this.TimelineSlider.UpdateSelectionTimes();
     }
 
-    private void TimelineSliderDragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-    {
-
-    }
-
-    private void TimelineSliderDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+    /// <summary>
+    ///   Handles the OnSelectionAndValueChanged event of the TimelineSlider control.
+    ///   Updates the position of the video.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+    private void TimelineSlider_OnSelectionAndValueChanged(object sender, EventArgs e)
     {
       this.vlcConverterPlayer.Position = (float)(this.TimelineSlider.Value / this.vlcConverterPlayer.Length);
     }
 
-    private void TimelineSliderDragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+    /// <summary>
+    ///   Timelines thumb drag completed.
+    ///   Updates the position of the video.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="DragCompletedEventArgs" /> instance containing the event data.</param>
+    private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
-
+      this.vlcConverterPlayer.Position = (float)(this.TimelineSlider.Value / this.vlcConverterPlayer.Length);
     }
 
+    /// <summary>
+    ///   Timelines thumb drag delta.
+    ///   Updates the position of the video.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="DragDeltaEventArgs" /> instance containing the event data.</param>
+    private void TimelineSliderDragDelta(object sender, DragDeltaEventArgs e)
+    {
+      this.vlcConverterPlayer.Position = (float)(this.TimelineSlider.Value / this.vlcConverterPlayer.Length);
+    }
+
+    /// <summary>
+    ///   Ok was clicked, so start transcoding using the vlc command line tools.
+    ///   Saving the video to disk.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
+      this.isConverting = true;
       var path = Viana.Project.ProjectPath ?? Path.GetDirectoryName(this.videoFile);
       this.convertedFile = Path.Combine(path, Path.GetFileNameWithoutExtension(this.videoFile));
       this.convertedFile += ".mpg";
-      var nfi = new NumberFormatInfo();
-      nfi.NumberDecimalSeparator = ".";
+      var nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
       var startTimeOption = "start-time=" + (this.TimelineSlider.SelectionStart / 1000f).ToString("N3", nfi);
       var stopTimeOption = "stop-time=" + (this.TimelineSlider.SelectionEnd / 1000f).ToString("N3", nfi);
-      var transcodeOption = @"sout=#transcode{vcodec=mp1v,vb=1024,acodec=mpga,ab=192}:standard{access=file,mux=mpeg1,dst=" + this.convertedFile + "}";
+      var transcodeOption =
+        @"sout=#transcode{vcodec=mp1v,vb=1024,acodec=mpga,ab=192}:standard{access=file,mux=mpeg1,dst="
+        + this.convertedFile + "}";
       this.ProgressPanel.Visibility = Visibility.Visible;
       this.VideoPanel.Visibility = Visibility.Hidden;
-      var opts = new string[] { startTimeOption, stopTimeOption, transcodeOption };
+      var opts = new[] { startTimeOption, stopTimeOption, transcodeOption };
       this.vlcConverterPlayer.Play(new Uri(this.videoFile), opts);
       this.vlcConverterPlayer.EndReached += this.VlcConverterPlayerEndReached;
       this.OK.IsEnabled = false;
       this.Cancel.IsEnabled = false;
     }
 
-    void VlcConverterPlayerEndReached(object sender, VlcMediaPlayerEndReachedEventArgs e)
+    /// <summary>
+    ///   Cancel was clicked, so just close the dialog.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+    private void CancelClick(object sender, RoutedEventArgs e)
+    {
+      this.Close();
+    }
+
+    /// <summary>
+    ///   The Vlc player has reached the end of the video.
+    ///   This callback is only called in transcode mode, so when this gets called, the conversion process was finished.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="VlcMediaPlayerEndReachedEventArgs" /> instance containing the event data.</param>
+    private void VlcConverterPlayerEndReached(object sender, VlcMediaPlayerEndReachedEventArgs e)
+    {
+      this.FinishAndClose();
+    }
+
+    /// <summary>
+    ///   Resets UI and closes the window.
+    /// </summary>
+    private void FinishAndClose()
     {
       Viana.Project.VideoFile = this.convertedFile;
 
       this.Dispatcher.Invoke(
-      () =>
-      {
-        this.TimelineSlider.ResetSelection();
-        this.TimelineSlider.UpdateSelectionTimes();
+        () =>
+          {
+            this.TimelineSlider.ResetSelection();
+            this.TimelineSlider.UpdateSelectionTimes();
 
-        this.OK.IsEnabled = true;
-        this.Close();
-      });
-
-    }
-
-    private void CancelClick(object sender, RoutedEventArgs e)
-    {
-      this.Close();
+            this.OK.IsEnabled = true;
+            this.Close();
+          });
     }
   }
 }

@@ -1931,4 +1931,7 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="VLCDialogTopFrameTitle" xml:space="preserve">
     <value>Das Video muss zunächst konvertiert werden. Bitte unten den Bereich angeben, der für die Analyse bereit stehen soll und dann auf OK klicken.</value>
   </data>
+  <data name="SelectVlcLibrariesDescription" xml:space="preserve">
+    <value>Bitte wählen Sie den Ordner mit den VLC Bibliotheken aus.</value>
+  </data>
 </root>
