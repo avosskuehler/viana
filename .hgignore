@@ -10,3 +10,5 @@ VianaNET/StyleCop.Cache
 VianaNET.v12.suo
 packages/*
 *.Cache
+Reharper.DotSettings
+VianaNET.sln.GhostDoc.xml
