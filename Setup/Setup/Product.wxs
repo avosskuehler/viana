@@ -8,7 +8,7 @@
            Version="$(var.ProductVersion)"
            Manufacturer="$(var.Manufactor)"
            UpgradeCode="$(var.UpgradeGuid)">
-    <Package Comments="Installs VianaNET - open gaze and mouse analyzer"
+    <Package Comments="Installs VianaNET - Software for motion analysis in science education"
              InstallerVersion="405"
              InstallPrivileges="elevated"
              InstallScope="perMachine"
@@ -26,6 +26,10 @@
 
     <Icon Id="icon.ico" SourceFile="$(var.SolutionDir)VianaNET\Images\VianaNET.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Property Id="ARPCONTACT" Value="Dr. Adrian Voßkühler" />
+    <Property Id="ARPHELPLINK" Value="http://viananet.codeplex.com" />
+    <Property Id="ARPURLINFOABOUT" Value="Software for motion analysis in science education" />
+    <Property Id="ARPURLUPDATEINFO" Value="http://viananet.codeplex.com" />
 
     <Media Id="1" Cabinet="viana.cab" EmbedCab="yes" />
 
@@ -35,8 +39,10 @@
       <FeatureRef Id='LanguageFeature'/>
       <FeatureRef Id='VlcFeature'/>
     </Feature>
-    
-    <WixVariable Id="WixUILicenseRtf" Value="bobpl.rtf" />
+
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.SolutionDir)Setup\Setup\InstallerBkg.png" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.SolutionDir)Setup\Setup\InstallerBanner.png" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SolutionDir)Setup\Setup\License.rtf" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
     <UIRef Id="WixUI_InstallDir" />
   </Product>
