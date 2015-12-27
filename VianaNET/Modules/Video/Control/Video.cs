@@ -426,8 +426,9 @@ namespace VianaNET.Modules.Video.Control
       switch (this.videoMode)
       {
         case VideoMode.File:
+          this.videoPlayerElement.Dispose();
           success = this.videoPlayerElement.LoadMovie(filename);
-          if (!success)
+          if (!success && File.Exists(this.videoPlayerElement.VideoFilename))
           {
             var name = this.videoPlayerElement.VideoFilename;
             this.videoPlayerElement.Dispose();

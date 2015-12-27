@@ -24,6 +24,9 @@
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
+    <Icon Id="icon.ico" SourceFile="$(var.SolutionDir)VianaNET\Images\VianaNET.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
     <Media Id="1" Cabinet="viana.cab" EmbedCab="yes" />
 
     <Feature Id="DefaultFeature" ConfigurableDirectory="TARGETDIR" Level="1">
@@ -32,6 +35,9 @@
       <FeatureRef Id='LanguageFeature'/>
       <FeatureRef Id='VlcFeature'/>
     </Feature>
-
+    
+    <WixVariable Id="WixUILicenseRtf" Value="bobpl.rtf" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <UIRef Id="WixUI_InstallDir" />
   </Product>
 </Wix>

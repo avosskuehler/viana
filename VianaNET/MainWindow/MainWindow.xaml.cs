@@ -217,6 +217,8 @@ namespace VianaNET.MainWindow
       this.ChartWindow.Refresh();
 
       this.VideoWindow.BlobsControl.ResetBlobsControl();
+      Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
+
       this.Refresh();
       this.UpdateColorButton();
       this.UpdateSelectObjectImage();

@@ -9,6 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{DE025CD9
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup\Setup.wixproj", "{2248D372-66FC-471F-89D6-601930B8538D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vlc.DotNet.Core - CLR 4 - .Net 4.5", "..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Core\Vlc.DotNet.Core - CLR 4 - .Net 4.5.csproj", "{24860783-A729-4A14-98C0-9A34BF138BDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vlc.DotNet.Core.Interops - CLR 4 - .Net 4.5", "..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops - CLR 4 - .Net 4.5.csproj", "{47E251AE-A5EE-4526-BDC1-3C008936E80A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vlc.DotNet.Forms - CLR 4 - .Net 4.5", "..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Forms\Vlc.DotNet.Forms - CLR 4 - .Net 4.5.csproj", "{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +43,36 @@ Global
 		{2248D372-66FC-471F-89D6-601930B8538D}.Release|Any CPU.ActiveCfg = Release|x86
 		{2248D372-66FC-471F-89D6-601930B8538D}.Release|x64.ActiveCfg = Release|x64
 		{2248D372-66FC-471F-89D6-601930B8538D}.Release|x86.ActiveCfg = Release|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Debug|x64.ActiveCfg = Debug|x64
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Debug|x64.Build.0 = Debug|x64
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Debug|x86.ActiveCfg = Debug|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Debug|x86.Build.0 = Debug|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Release|Any CPU.ActiveCfg = Release|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Release|x64.ActiveCfg = Release|x64
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Release|x64.Build.0 = Release|x64
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Release|x86.ActiveCfg = Release|x86
+		{24860783-A729-4A14-98C0-9A34BF138BDB}.Release|x86.Build.0 = Release|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Debug|x64.ActiveCfg = Debug|x64
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Debug|x64.Build.0 = Debug|x64
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Debug|x86.ActiveCfg = Debug|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Debug|x86.Build.0 = Debug|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Release|Any CPU.ActiveCfg = Release|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Release|x64.ActiveCfg = Release|x64
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Release|x64.Build.0 = Release|x64
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Release|x86.ActiveCfg = Release|x86
+		{47E251AE-A5EE-4526-BDC1-3C008936E80A}.Release|x86.Build.0 = Release|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Debug|x64.ActiveCfg = Debug|x64
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Debug|x64.Build.0 = Debug|x64
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Debug|x86.ActiveCfg = Debug|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Debug|x86.Build.0 = Debug|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Release|Any CPU.ActiveCfg = Release|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Release|x64.ActiveCfg = Release|x64
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Release|x64.Build.0 = Release|x64
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Release|x86.ActiveCfg = Release|x86
+		{914DE831-4DFA-44F6-96C1-27CF3B89A2CD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

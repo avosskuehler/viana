@@ -723,22 +723,6 @@
     <Reference Include="UIAutomationTypes">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Vlc.DotNet.Core, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Core.2.1.115\lib\net45\x86\Vlc.DotNet.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Core.Interops.2.1.115\lib\net45\x86\Vlc.DotNet.Core.Interops.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Forms, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Forms.2.1.115\lib\net45\x86\Vlc.DotNet.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Wpf, Version=2.1.115.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
-      <HintPath>..\packages\Vlc.DotNet.Wpf.2.1.115\lib\net45\x86\Vlc.DotNet.Wpf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -1002,14 +986,32 @@
     <Resource Include="Images\MotionDetection16.png" />
     <Resource Include="Images\MotionDetection32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\NoVideo800600.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Core.Interops\Vlc.DotNet.Core.Interops - CLR 4 - .Net 4.5.csproj">
+      <Project>{47e251ae-a5ee-4526-bdc1-3c008936e80a}</Project>
+      <Name>Vlc.DotNet.Core.Interops - CLR 4 - .Net 4.5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Core\Vlc.DotNet.Core - CLR 4 - .Net 4.5.csproj">
+      <Project>{24860783-a729-4a14-98c0-9a34bf138bdb}</Project>
+      <Name>Vlc.DotNet.Core - CLR 4 - .Net 4.5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vlc.DotNet-master\Vlc.DotNet\src\Vlc.DotNet.Forms\Vlc.DotNet.Forms - CLR 4 - .Net 4.5.csproj">
+      <Project>{914de831-4dfa-44f6-96c1-27cf3b89a2cd}</Project>
+      <Name>Vlc.DotNet.Forms - CLR 4 - .Net 4.5</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
   C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x64\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
 ) ELSE (
  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x86\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
 )
 
-C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -4,1371 +4,704 @@
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
       <Directory Id="VlcLibs" Name="VlcLibs">
-        <Directory Id="x86" Name="x86">
-          <Component Id="C_libvlc" Guid="{570B6FD7-B622-45CB-AEC0-186468A51AC5}" Win64="$(var.Win64)">
-            <File Id="libvlc" Name="libvlc.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvlc" AssemblyApplication="libvlc"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\" />
-          </Component>
-          <Component Id="C_libvlccore" Guid="{06ADE4C2-7FA0-4C0A-8091-A8F4D6029089}" Win64="$(var.Win64)">
-            <File Id="libvlccore" Name="libvlccore.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvlccore" AssemblyApplication="libvlccore"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\" />
-          </Component>
-          <Directory Id="plugins" Name="plugins">
-            <Directory Id="access" Name="access">
-              <Component Id="C_libfilesystem_plugin" Guid="{DFF2AF09-6907-4CCB-8115-6AB823177642}" Win64="$(var.Win64)">
-                <File Id="libfilesystem_plugin" Name="libfilesystem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libfilesystem_plugin" AssemblyApplication="libfilesystem_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-              <Component Id="C_libidummy_plugin" Guid="{14B67440-DDE0-4919-9A4C-1070A9EAD04E}" Win64="$(var.Win64)">
-                <File Id="libidummy_plugin" Name="libidummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libidummy_plugin" AssemblyApplication="libidummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-              <Component Id="C_libscreen_plugin" Guid="{B12EB365-8B27-40BE-8A74-0870A45272D5}" Win64="$(var.Win64)">
-                <File Id="libscreen_plugin" Name="libscreen_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libscreen_plugin" AssemblyApplication="libscreen_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-            </Directory>
-            <Directory Id="access_output" Name="access_output">
-              <Component Id="C_libaccess_output_dummy_plugin" Guid="{980337A4-2BD2-4AF3-A034-C0587905588A}" Win64="$(var.Win64)">
-                <File Id="libaccess_output_dummy_plugin" Name="libaccess_output_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaccess_output_dummy_plugin" AssemblyApplication="libaccess_output_dummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access_output\" />
-              </Component>
-              <Component Id="C_libaccess_output_file_plugin" Guid="{E5D2A965-37F6-450C-9C40-046400A2F5B6}" Win64="$(var.Win64)">
-                <File Id="libaccess_output_file_plugin" Name="libaccess_output_file_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaccess_output_file_plugin" AssemblyApplication="libaccess_output_file_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access_output\" />
-              </Component>
-
-            </Directory>
-            <Directory Id="audio_output" Name="audio_output">
-              <Component Id="C_libadummy_plugin" Guid="{C0F9406B-67F0-4D44-9DEA-10A9C7D156F9}" Win64="$(var.Win64)">
-                <File Id="libadummy_plugin" Name="libadummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libadummy_plugin" AssemblyApplication="libadummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libafile_plugin" Guid="{DFEE3629-06FA-47DB-A671-24B81AB9A696}" Win64="$(var.Win64)">
-                <File Id="libafile_plugin" Name="libafile_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libafile_plugin" AssemblyApplication="libafile_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libamem_plugin" Guid="{346E026B-7A80-410E-AA51-192712ABF2D2}" Win64="$(var.Win64)">
-                <File Id="libamem_plugin" Name="libamem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libamem_plugin" AssemblyApplication="libamem_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libdirectsound_plugin" Guid="{ED8D7C20-4C2E-4C11-AE6D-18F78A01E606}" Win64="$(var.Win64)">
-                <File Id="libdirectsound_plugin" Name="libdirectsound_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirectsound_plugin" AssemblyApplication="libdirectsound_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libmmdevice_plugin" Guid="{B001234F-C680-4831-96F8-F5A39080CE9F}" Win64="$(var.Win64)">
-                <File Id="libmmdevice_plugin" Name="libmmdevice_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmmdevice_plugin" AssemblyApplication="libmmdevice_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libwaveout_plugin" Guid="{9FB6DFC9-3829-4568-AF00-2654C27D31AF}" Win64="$(var.Win64)">
-                <File Id="libwaveout_plugin" Name="libwaveout_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwaveout_plugin" AssemblyApplication="libwaveout_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-            </Directory>
-            <Directory Id="codec" Name="codec">
-              <Component Id="C_liba52_plugin" Guid="{4E2C5287-C9D7-47C1-87D5-35AE0E875EFE}" Win64="$(var.Win64)">
-                <File Id="liba52_plugin" Name="liba52_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liba52_plugin" AssemblyApplication="liba52_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libadpcm_plugin" Guid="{2012167E-960C-4B04-BA2A-D001BE69F32C}" Win64="$(var.Win64)">
-                <File Id="libadpcm_plugin" Name="libadpcm_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libadpcm_plugin" AssemblyApplication="libadpcm_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libaes3_plugin" Guid="{1797B683-B30F-4225-B13D-D02B08E64480}" Win64="$(var.Win64)">
-                <File Id="libaes3_plugin" Name="libaes3_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaes3_plugin" AssemblyApplication="libaes3_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libaraw_plugin" Guid="{0293AF27-2CDE-4F8D-AA28-0FEB6320271F}" Win64="$(var.Win64)">
-                <File Id="libaraw_plugin" Name="libaraw_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaraw_plugin" AssemblyApplication="libaraw_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libavcodec_plugin" Guid="{1C1D731E-28FF-4E06-8CAA-11B61AC1431C}" Win64="$(var.Win64)">
-                <File Id="libavcodec_plugin" Name="libavcodec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libavcodec_plugin" AssemblyApplication="libavcodec_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcc_plugin" Guid="{D8D5F668-7630-46AF-A8E1-A703E14C41B7}" Win64="$(var.Win64)">
-                <File Id="libcc_plugin" Name="libcc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcc_plugin" AssemblyApplication="libcc_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcdg_plugin" Guid="{52083A5F-F9E3-479D-B14F-6554449D894E}" Win64="$(var.Win64)">
-                <File Id="libcdg_plugin" Name="libcdg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcdg_plugin" AssemblyApplication="libcdg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcrystalhd_plugin" Guid="{BC7A0BD4-19B2-4D9D-B8B9-C7D851E1FD97}" Win64="$(var.Win64)">
-                <File Id="libcrystalhd_plugin" Name="libcrystalhd_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcrystalhd_plugin" AssemblyApplication="libcrystalhd_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcvdsub_plugin" Guid="{2DFFCFD4-66B9-4AE6-9DD9-4B07F448F4C3}" Win64="$(var.Win64)">
-                <File Id="libcvdsub_plugin" Name="libcvdsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcvdsub_plugin" AssemblyApplication="libcvdsub_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libddummy_plugin" Guid="{E3AA5A13-9381-4629-AFFC-A25385AE6507}" Win64="$(var.Win64)">
-                <File Id="libddummy_plugin" Name="libddummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libddummy_plugin" AssemblyApplication="libddummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdmo_plugin" Guid="{6B1DE0C9-DE0C-4E50-B5C1-D1252ECB1E8E}" Win64="$(var.Win64)">
-                <File Id="libdmo_plugin" Name="libdmo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdmo_plugin" AssemblyApplication="libdmo_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdts_plugin" Guid="{DE69D305-1097-4FA8-9AA4-1FE81C93D310}" Win64="$(var.Win64)">
-                <File Id="libdts_plugin" Name="libdts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdts_plugin" AssemblyApplication="libdts_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdvbsub_plugin" Guid="{198B7118-5B33-42AC-85F1-6AF14258EB50}" Win64="$(var.Win64)">
-                <File Id="libdvbsub_plugin" Name="libdvbsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdvbsub_plugin" AssemblyApplication="libdvbsub_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdxva2_plugin" Guid="{71FEC125-D6CF-4F22-8268-DE7A2DF19644}" Win64="$(var.Win64)">
-                <File Id="libdxva2_plugin" Name="libdxva2_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdxva2_plugin" AssemblyApplication="libdxva2_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libedummy_plugin" Guid="{47C5B836-AF6C-4E3D-827A-066FAD8075D8}" Win64="$(var.Win64)">
-                <File Id="libedummy_plugin" Name="libedummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libedummy_plugin" AssemblyApplication="libedummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libfaad_plugin" Guid="{45C07CE1-F2C9-4CF1-9884-9D9F91617376}" Win64="$(var.Win64)">
-                <File Id="libfaad_plugin" Name="libfaad_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libfaad_plugin" AssemblyApplication="libfaad_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libflac_plugin" Guid="{503C1199-A246-4CA7-9AB2-6E3043B579A3}" Win64="$(var.Win64)">
-                <File Id="libflac_plugin" Name="libflac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libflac_plugin" AssemblyApplication="libflac_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libg711_plugin" Guid="{2E76483C-8F1B-460F-AF4E-F9E59F8E05B8}" Win64="$(var.Win64)">
-                <File Id="libg711_plugin" Name="libg711_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libg711_plugin" AssemblyApplication="libg711_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libkate_plugin" Guid="{B7FF1F1F-5573-4E39-952D-5CE4A5841E47}" Win64="$(var.Win64)">
-                <File Id="libkate_plugin" Name="libkate_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libkate_plugin" AssemblyApplication="libkate_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblibass_plugin" Guid="{08FAFEF0-ED45-480B-A8F7-2D7AA0DA1836}" Win64="$(var.Win64)">
-                <File Id="liblibass_plugin" Name="liblibass_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblibass_plugin" AssemblyApplication="liblibass_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblibmpeg2_plugin" Guid="{E967554A-D74C-46FD-B23D-8E54322677C7}" Win64="$(var.Win64)">
-                <File Id="liblibmpeg2_plugin" Name="liblibmpeg2_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblibmpeg2_plugin" AssemblyApplication="liblibmpeg2_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblpcm_plugin" Guid="{2C4D3B79-1245-4A5B-B381-F75E046137D2}" Win64="$(var.Win64)">
-                <File Id="liblpcm_plugin" Name="liblpcm_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblpcm_plugin" AssemblyApplication="liblpcm_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libmpeg_audio_plugin" Guid="{F4B2D085-D1EF-4392-B61A-62EF27C4DBF0}" Win64="$(var.Win64)">
-                <File Id="libmpeg_audio_plugin" Name="libmpeg_audio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpeg_audio_plugin" AssemblyApplication="libmpeg_audio_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libopus_plugin" Guid="{015E1ECE-7D28-4B9D-8C4E-619062F99452}" Win64="$(var.Win64)">
-                <File Id="libopus_plugin" Name="libopus_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libopus_plugin" AssemblyApplication="libopus_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libpng_plugin" Guid="{2FB1822B-B3DE-4E8F-99D7-E97D73A57D7C}" Win64="$(var.Win64)">
-                <File Id="libpng_plugin" Name="libpng_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpng_plugin" AssemblyApplication="libpng_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libqsv_plugin" Guid="{BF9A8581-6398-4B79-8A5B-4CCDE4438FBA}" Win64="$(var.Win64)">
-                <File Id="libqsv_plugin" Name="libqsv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libqsv_plugin" AssemblyApplication="libqsv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libquicktime_plugin" Guid="{5D7D6ACF-F2EC-43FE-AD56-F875334C485B}" Win64="$(var.Win64)">
-                <File Id="libquicktime_plugin" Name="libquicktime_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libquicktime_plugin" AssemblyApplication="libquicktime_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_librawvideo_plugin" Guid="{817386D9-1F55-48C8-AB6A-45D0B0AD41B8}" Win64="$(var.Win64)">
-                <File Id="librawvideo_plugin" Name="librawvideo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawvideo_plugin" AssemblyApplication="librawvideo_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libschroedinger_plugin" Guid="{29A86B08-07B6-4105-84B0-05D5E48AB20E}" Win64="$(var.Win64)">
-                <File Id="libschroedinger_plugin" Name="libschroedinger_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libschroedinger_plugin" AssemblyApplication="libschroedinger_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libscte27_plugin" Guid="{D78E4BCB-7B51-468D-928A-352FAA1952D9}" Win64="$(var.Win64)">
-                <File Id="libscte27_plugin" Name="libscte27_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libscte27_plugin" AssemblyApplication="libscte27_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libspeex_plugin" Guid="{8DA1554E-86C7-40BD-A630-E5208C2E664D}" Win64="$(var.Win64)">
-                <File Id="libspeex_plugin" Name="libspeex_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libspeex_plugin" AssemblyApplication="libspeex_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libspudec_plugin" Guid="{88680BF9-866C-4CAC-BB3C-4C992A57954B}" Win64="$(var.Win64)">
-                <File Id="libspudec_plugin" Name="libspudec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libspudec_plugin" AssemblyApplication="libspudec_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libstl_plugin" Guid="{5394D773-0975-45C7-892F-6F83371AA6CA}" Win64="$(var.Win64)">
-                <File Id="libstl_plugin" Name="libstl_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstl_plugin" AssemblyApplication="libstl_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsubsdec_plugin" Guid="{2BEDB455-3A55-4BC3-981C-4412679239C5}" Win64="$(var.Win64)">
-                <File Id="libsubsdec_plugin" Name="libsubsdec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubsdec_plugin" AssemblyApplication="libsubsdec_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsubsusf_plugin" Guid="{77A3CCFA-F5D2-4A07-97AE-5337488866F3}" Win64="$(var.Win64)">
-                <File Id="libsubsusf_plugin" Name="libsubsusf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubsusf_plugin" AssemblyApplication="libsubsusf_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsvcdsub_plugin" Guid="{CF21C488-E5FF-461A-881B-2B3B49D8281F}" Win64="$(var.Win64)">
-                <File Id="libsvcdsub_plugin" Name="libsvcdsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsvcdsub_plugin" AssemblyApplication="libsvcdsub_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libt140_plugin" Guid="{22A7C96F-5D5C-4DB4-99ED-E05A04F2206C}" Win64="$(var.Win64)">
-                <File Id="libt140_plugin" Name="libt140_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libt140_plugin" AssemblyApplication="libt140_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libtheora_plugin" Guid="{3E5BE9FD-86B2-444E-BD4C-40619835554F}" Win64="$(var.Win64)">
-                <File Id="libtheora_plugin" Name="libtheora_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtheora_plugin" AssemblyApplication="libtheora_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libtwolame_plugin" Guid="{6A7A0427-DDAF-41E5-9BED-AC051E45E699}" Win64="$(var.Win64)">
-                <File Id="libtwolame_plugin" Name="libtwolame_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtwolame_plugin" AssemblyApplication="libtwolame_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libuleaddvaudio_plugin" Guid="{8B5D10EC-5F40-4FBC-9A62-DF57D9A95005}" Win64="$(var.Win64)">
-                <File Id="libuleaddvaudio_plugin" Name="libuleaddvaudio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libuleaddvaudio_plugin" AssemblyApplication="libuleaddvaudio_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libvorbis_plugin" Guid="{E3C3B6C7-013D-4B80-AA55-BD7CC9E50CEC}" Win64="$(var.Win64)">
-                <File Id="libvorbis_plugin" Name="libvorbis_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvorbis_plugin" AssemblyApplication="libvorbis_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libx264_plugin" Guid="{CE391F26-65AE-4148-A3C3-C56472EB2FF8}" Win64="$(var.Win64)">
-                <File Id="libx264_plugin" Name="libx264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libx264_plugin" AssemblyApplication="libx264_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libzvbi_plugin" Guid="{390AC171-2B52-46BF-B757-0EDD5770F02D}" Win64="$(var.Win64)">
-                <File Id="libzvbi_plugin" Name="libzvbi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libzvbi_plugin" AssemblyApplication="libzvbi_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-            </Directory>
-            <Directory Id="demux" Name="demux">
-              <Component Id="C_libaiff_plugin" Guid="{C41C4E42-78DA-4C9D-BF9B-386BEC7470D0}" Win64="$(var.Win64)">
-                <File Id="libaiff_plugin" Name="libaiff_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaiff_plugin" AssemblyApplication="libaiff_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libasf_plugin" Guid="{68520489-ADD1-4488-B3F6-96AB6113D021}" Win64="$(var.Win64)">
-                <File Id="libasf_plugin" Name="libasf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libasf_plugin" AssemblyApplication="libasf_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libau_plugin" Guid="{AE70CC1A-2666-41AD-BC2F-1E0A1B6A6AA1}" Win64="$(var.Win64)">
-                <File Id="libau_plugin" Name="libau_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libau_plugin" AssemblyApplication="libau_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libavi_plugin" Guid="{B7A2F5BE-E4A3-4604-9D0B-3F4F279C1A7B}" Win64="$(var.Win64)">
-                <File Id="libavi_plugin" Name="libavi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libavi_plugin" AssemblyApplication="libavi_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemux_cdg_plugin" Guid="{545C52BF-F1F1-4C9E-AF33-FD8C389FC17A}" Win64="$(var.Win64)">
-                <File Id="libdemux_cdg_plugin" Name="libdemux_cdg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemux_cdg_plugin" AssemblyApplication="libdemux_cdg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemux_stl_plugin" Guid="{1A16765F-0F48-4D24-9CA2-0BB38A237001}" Win64="$(var.Win64)">
-                <File Id="libdemux_stl_plugin" Name="libdemux_stl_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemux_stl_plugin" AssemblyApplication="libdemux_stl_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemuxdump_plugin" Guid="{6670B631-1CF4-4E9F-9EFE-5D1998D70723}" Win64="$(var.Win64)">
-                <File Id="libdemuxdump_plugin" Name="libdemuxdump_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemuxdump_plugin" AssemblyApplication="libdemuxdump_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdirac_plugin" Guid="{AC3689E7-1147-4EA5-A125-85E56BF4A94D}" Win64="$(var.Win64)">
-                <File Id="libdirac_plugin" Name="libdirac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirac_plugin" AssemblyApplication="libdirac_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libes_plugin" Guid="{8E436E95-4E6E-4842-9C1D-45464F3DBA3F}" Win64="$(var.Win64)">
-                <File Id="libes_plugin" Name="libes_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libes_plugin" AssemblyApplication="libes_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libflacsys_plugin" Guid="{8B00B659-A9A2-47E5-92DC-77735F3059E4}" Win64="$(var.Win64)">
-                <File Id="libflacsys_plugin" Name="libflacsys_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libflacsys_plugin" AssemblyApplication="libflacsys_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libgme_plugin" Guid="{331F6336-4E92-4510-B690-79B4434730DB}" Win64="$(var.Win64)">
-                <File Id="libgme_plugin" Name="libgme_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libgme_plugin" AssemblyApplication="libgme_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libh264_plugin" Guid="{03A1FE88-9952-49FE-A58C-F490FE38C6D3}" Win64="$(var.Win64)">
-                <File Id="libh264_plugin" Name="libh264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libh264_plugin" AssemblyApplication="libh264_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libimage_plugin" Guid="{725A434E-68E2-44A1-A396-7E2C19795391}" Win64="$(var.Win64)">
-                <File Id="libimage_plugin" Name="libimage_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libimage_plugin" AssemblyApplication="libimage_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmjpeg_plugin" Guid="{76DFD59D-EBD8-41AB-A5BC-CC75D6C3921C}" Win64="$(var.Win64)">
-                <File Id="libmjpeg_plugin" Name="libmjpeg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmjpeg_plugin" AssemblyApplication="libmjpeg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmkv_plugin" Guid="{D260DA5C-6E7F-4551-84E0-77FB69ED3D47}" Win64="$(var.Win64)">
-                <File Id="libmkv_plugin" Name="libmkv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmkv_plugin" AssemblyApplication="libmkv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmod_plugin" Guid="{FA178CE1-262F-4D6B-8424-BADCABD1E9A8}" Win64="$(var.Win64)">
-                <File Id="libmod_plugin" Name="libmod_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmod_plugin" AssemblyApplication="libmod_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmp4_plugin" Guid="{013F80C6-E88A-429D-A90B-1605B5EFCC9A}" Win64="$(var.Win64)">
-                <File Id="libmp4_plugin" Name="libmp4_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmp4_plugin" AssemblyApplication="libmp4_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmpc_plugin" Guid="{08945DC7-EC01-4EFA-9269-83FFFD730B85}" Win64="$(var.Win64)">
-                <File Id="libmpc_plugin" Name="libmpc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpc_plugin" AssemblyApplication="libmpc_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmpgv_plugin" Guid="{5E0086A6-B657-4D3C-9C3D-30152D11A0D2}" Win64="$(var.Win64)">
-                <File Id="libmpgv_plugin" Name="libmpgv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpgv_plugin" AssemblyApplication="libmpgv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnsc_plugin" Guid="{2E17C812-51EE-4CA1-8DFE-5336D7FE499A}" Win64="$(var.Win64)">
-                <File Id="libnsc_plugin" Name="libnsc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnsc_plugin" AssemblyApplication="libnsc_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnsv_plugin" Guid="{55FF6F22-872C-4A8D-B12D-582562B5C912}" Win64="$(var.Win64)">
-                <File Id="libnsv_plugin" Name="libnsv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnsv_plugin" AssemblyApplication="libnsv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnuv_plugin" Guid="{9A3B2E16-9EF8-4720-8556-8A0F1221CCF2}" Win64="$(var.Win64)">
-                <File Id="libnuv_plugin" Name="libnuv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnuv_plugin" AssemblyApplication="libnuv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libogg_plugin" Guid="{B4F3EE66-8AAA-4938-BB46-FC1B85E866C0}" Win64="$(var.Win64)">
-                <File Id="libogg_plugin" Name="libogg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libogg_plugin" AssemblyApplication="libogg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libplaylist_plugin" Guid="{1FDA625A-35B9-44DF-A11E-77FE46563B2C}" Win64="$(var.Win64)">
-                <File Id="libplaylist_plugin" Name="libplaylist_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libplaylist_plugin" AssemblyApplication="libplaylist_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libps_plugin" Guid="{26B6E18F-FD67-4AE5-AB11-7C373B06D978}" Win64="$(var.Win64)">
-                <File Id="libps_plugin" Name="libps_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libps_plugin" AssemblyApplication="libps_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libpva_plugin" Guid="{1DE4F726-9C7E-413A-ACCB-3F3F0D71078B}" Win64="$(var.Win64)">
-                <File Id="libpva_plugin" Name="libpva_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpva_plugin" AssemblyApplication="libpva_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawaud_plugin" Guid="{AF00D4E7-84E0-4D0B-9A38-25F1A748E5DD}" Win64="$(var.Win64)">
-                <File Id="librawaud_plugin" Name="librawaud_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawaud_plugin" AssemblyApplication="librawaud_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawdv_plugin" Guid="{927D6E81-6750-4985-950A-A9C650B8A1FD}" Win64="$(var.Win64)">
-                <File Id="librawdv_plugin" Name="librawdv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawdv_plugin" AssemblyApplication="librawdv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawvid_plugin" Guid="{1274C236-4AF0-496B-B592-A491A788896A}" Win64="$(var.Win64)">
-                <File Id="librawvid_plugin" Name="librawvid_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawvid_plugin" AssemblyApplication="librawvid_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libreal_plugin" Guid="{0AB6CDC1-19A6-4A07-8785-CF146DA46843}" Win64="$(var.Win64)">
-                <File Id="libreal_plugin" Name="libreal_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libreal_plugin" AssemblyApplication="libreal_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsid_plugin" Guid="{6E48F529-93F6-488D-8258-FACB371C12E1}" Win64="$(var.Win64)">
-                <File Id="libsid_plugin" Name="libsid_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsid_plugin" AssemblyApplication="libsid_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsmf_plugin" Guid="{2A0F93F7-2633-4A53-A877-BF59E47D2536}" Win64="$(var.Win64)">
-                <File Id="libsmf_plugin" Name="libsmf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsmf_plugin" AssemblyApplication="libsmf_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsubtitle_plugin" Guid="{DD64EA4A-D13B-4DBE-A861-501A5762E2B0}" Win64="$(var.Win64)">
-                <File Id="libsubtitle_plugin" Name="libsubtitle_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubtitle_plugin" AssemblyApplication="libsubtitle_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libts_plugin" Guid="{B382AF01-F674-4573-B12E-F1EE167E12BA}" Win64="$(var.Win64)">
-                <File Id="libts_plugin" Name="libts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libts_plugin" AssemblyApplication="libts_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libtta_plugin" Guid="{BE69E985-E0C2-4A7E-A4F5-9727DB035CBB}" Win64="$(var.Win64)">
-                <File Id="libtta_plugin" Name="libtta_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtta_plugin" AssemblyApplication="libtta_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libty_plugin" Guid="{BFCA6798-5487-4D76-9281-11FFE3A48F06}" Win64="$(var.Win64)">
-                <File Id="libty_plugin" Name="libty_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libty_plugin" AssemblyApplication="libty_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvc1_plugin" Guid="{FD1BE2E9-CA2D-4044-B424-2EDAD95BC9AE}" Win64="$(var.Win64)">
-                <File Id="libvc1_plugin" Name="libvc1_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvc1_plugin" AssemblyApplication="libvc1_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvobsub_plugin" Guid="{F6E28D66-C55E-4677-9867-302010A7CA9C}" Win64="$(var.Win64)">
-                <File Id="libvobsub_plugin" Name="libvobsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvobsub_plugin" AssemblyApplication="libvobsub_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvoc_plugin" Guid="{C5ADA944-64A0-4DBF-AF1F-4F51D42823B0}" Win64="$(var.Win64)">
-                <File Id="libvoc_plugin" Name="libvoc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvoc_plugin" AssemblyApplication="libvoc_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libwav_plugin" Guid="{3878C603-7BAE-4224-8EBE-315CA23E7056}" Win64="$(var.Win64)">
-                <File Id="libwav_plugin" Name="libwav_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwav_plugin" AssemblyApplication="libwav_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libxa_plugin" Guid="{A5A933A0-358D-4708-A51C-904C95C00092}" Win64="$(var.Win64)">
-                <File Id="libxa_plugin" Name="libxa_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libxa_plugin" AssemblyApplication="libxa_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-            </Directory>
-            <Directory Id="mux" Name="mux">
-              <Component Id="C_libmux_asf_plugin" Guid="{883DB9B8-AE9A-4F48-BBC9-2125F7BEDD87}" Win64="$(var.Win64)">
-                <File Id="libmux_asf_plugin" Name="libmux_asf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_asf_plugin" AssemblyApplication="libmux_asf_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_avi_plugin" Guid="{2CF746CA-3C32-4752-A41C-8984911187CE}" Win64="$(var.Win64)">
-                <File Id="libmux_avi_plugin" Name="libmux_avi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_avi_plugin" AssemblyApplication="libmux_avi_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_dummy_plugin" Guid="{1DE2D225-7CA5-4719-904C-97B44D96C3D9}" Win64="$(var.Win64)">
-                <File Id="libmux_dummy_plugin" Name="libmux_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_dummy_plugin" AssemblyApplication="libmux_dummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_mp4_plugin" Guid="{AFBFFCAA-C57E-4CA4-B814-1566EDEE695A}" Win64="$(var.Win64)">
-                <File Id="libmux_mp4_plugin" Name="libmux_mp4_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_mp4_plugin" AssemblyApplication="libmux_mp4_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_mpjpeg_plugin" Guid="{1C623815-5713-483E-8D8B-B066DF14F748}" Win64="$(var.Win64)">
-                <File Id="libmux_mpjpeg_plugin" Name="libmux_mpjpeg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_mpjpeg_plugin" AssemblyApplication="libmux_mpjpeg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ogg_plugin" Guid="{512A499E-4555-496F-B939-B3A410C4C918}" Win64="$(var.Win64)">
-                <File Id="libmux_ogg_plugin" Name="libmux_ogg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ogg_plugin" AssemblyApplication="libmux_ogg_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ps_plugin" Guid="{93B5E643-B2AD-49D6-B291-77349135CD67}" Win64="$(var.Win64)">
-                <File Id="libmux_ps_plugin" Name="libmux_ps_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ps_plugin" AssemblyApplication="libmux_ps_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ts_plugin" Guid="{CBDB26F1-0748-48D3-8BF1-772617296084}" Win64="$(var.Win64)">
-                <File Id="libmux_ts_plugin" Name="libmux_ts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ts_plugin" AssemblyApplication="libmux_ts_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_wav_plugin" Guid="{A1F237F9-555F-4C71-8069-A839586C140A}" Win64="$(var.Win64)">
-                <File Id="libmux_wav_plugin" Name="libmux_wav_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_wav_plugin" AssemblyApplication="libmux_wav_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-            </Directory>
-            <Directory Id="packetizer" Name="packetizer">
-              <Component Id="C_libpacketizer_copy_plugin" Guid="{432A912C-8A94-4834-A036-0EFD79B32E2A}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_copy_plugin" Name="libpacketizer_copy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_copy_plugin" AssemblyApplication="libpacketizer_copy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_dirac_plugin" Guid="{11B04689-2A3E-4416-973C-0728E7CD526C}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_dirac_plugin" Name="libpacketizer_dirac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_dirac_plugin" AssemblyApplication="libpacketizer_dirac_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_flac_plugin" Guid="{40B8A737-91AB-4AD2-B5F3-6A6B08AF3392}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_flac_plugin" Name="libpacketizer_flac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_flac_plugin" AssemblyApplication="libpacketizer_flac_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_h264_plugin" Guid="{B821BF7D-12A6-47DC-A432-0850FE9C96A5}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_h264_plugin" Name="libpacketizer_h264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_h264_plugin" AssemblyApplication="libpacketizer_h264_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mlp_plugin" Guid="{DDDB57AE-4850-4FB7-B8D1-4271947040EC}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mlp_plugin" Name="libpacketizer_mlp_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mlp_plugin" AssemblyApplication="libpacketizer_mlp_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpeg4audio_plugin" Guid="{64D0FCA5-B4A8-4167-90D6-A39DDC1E2A45}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpeg4audio_plugin" Name="libpacketizer_mpeg4audio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpeg4audio_plugin" AssemblyApplication="libpacketizer_mpeg4audio_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpeg4video_plugin" Guid="{19E650EF-D7AA-477D-9DCD-6A534F792965}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpeg4video_plugin" Name="libpacketizer_mpeg4video_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpeg4video_plugin" AssemblyApplication="libpacketizer_mpeg4video_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpegvideo_plugin" Guid="{1A681981-4FE0-495E-9959-90FF7A4029AF}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpegvideo_plugin" Name="libpacketizer_mpegvideo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpegvideo_plugin" AssemblyApplication="libpacketizer_mpegvideo_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_vc1_plugin" Guid="{2F23691E-DCFB-43DB-9DBC-D98C5AE1037E}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_vc1_plugin" Name="libpacketizer_vc1_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_vc1_plugin" AssemblyApplication="libpacketizer_vc1_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-            </Directory>
-            <Directory Id="stream_out" Name="stream_out">
-              <Component Id="C_libstream_out_display_plugin" Guid="{D2815198-D976-4513-8AE2-8C2283546C7D}" Win64="$(var.Win64)">
-                <File Id="libstream_out_display_plugin" Name="libstream_out_display_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_display_plugin" AssemblyApplication="libstream_out_display_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_dummy_plugin" Guid="{E6A39674-D8B8-4882-AE32-5815CA0E8A0D}" Win64="$(var.Win64)">
-                <File Id="libstream_out_dummy_plugin" Name="libstream_out_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_dummy_plugin" AssemblyApplication="libstream_out_dummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_standard_plugin" Guid="{8F8BEC00-E0DE-435E-B255-CF31EC5E1F64}" Win64="$(var.Win64)">
-                <File Id="libstream_out_standard_plugin" Name="libstream_out_standard_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_standard_plugin" AssemblyApplication="libstream_out_standard_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_transcode_plugin" Guid="{5D7732BB-77EE-4457-90C9-C70D8A2BF0BA}" Win64="$(var.Win64)">
-                <File Id="libstream_out_transcode_plugin" Name="libstream_out_transcode_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_transcode_plugin" AssemblyApplication="libstream_out_transcode_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-            </Directory>
-            <Directory Id="video_output" Name="video_output">
-              <Component Id="C_libcaca_plugin" Guid="{ADC30DBB-6AAE-4BF7-9547-45E646146D9D}" Win64="$(var.Win64)">
-                <File Id="libcaca_plugin" Name="libcaca_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcaca_plugin" AssemblyApplication="libcaca_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirect2d_plugin" Guid="{C01F7964-4C58-4CF9-B223-79C8BE21817D}" Win64="$(var.Win64)">
-                <File Id="libdirect2d_plugin" Name="libdirect2d_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirect2d_plugin" AssemblyApplication="libdirect2d_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirect3d_plugin" Guid="{E517CE8A-836A-40B7-B1B7-F7A99D371DEE}" Win64="$(var.Win64)">
-                <File Id="libdirect3d_plugin" Name="libdirect3d_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirect3d_plugin" AssemblyApplication="libdirect3d_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirectdraw_plugin" Guid="{1094B53C-F1F1-4C01-823E-3DAEE6D3410D}" Win64="$(var.Win64)">
-                <File Id="libdirectdraw_plugin" Name="libdirectdraw_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirectdraw_plugin" AssemblyApplication="libdirectdraw_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdrawable_plugin" Guid="{BDF30CFC-253D-498A-AF32-345680A11B4F}" Win64="$(var.Win64)">
-                <File Id="libdrawable_plugin" Name="libdrawable_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdrawable_plugin" AssemblyApplication="libdrawable_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libglwin32_plugin" Guid="{34128624-71D8-4408-AD4B-D55F1379CBBF}" Win64="$(var.Win64)">
-                <File Id="libglwin32_plugin" Name="libglwin32_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libglwin32_plugin" AssemblyApplication="libglwin32_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libvdummy_plugin" Guid="{D5C0AC02-27BE-4502-847B-274EC3B0F015}" Win64="$(var.Win64)">
-                <File Id="libvdummy_plugin" Name="libvdummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvdummy_plugin" AssemblyApplication="libvdummy_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libvmem_plugin" Guid="{63D9145A-1EA6-4B97-B161-8206D39AF9A0}" Win64="$(var.Win64)">
-                <File Id="libvmem_plugin" Name="libvmem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvmem_plugin" AssemblyApplication="libvmem_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libwingdi_plugin" Guid="{F795B107-EB62-4990-B4F8-EB027D612214}" Win64="$(var.Win64)">
-                <File Id="libwingdi_plugin" Name="libwingdi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwingdi_plugin" AssemblyApplication="libwingdi_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libyuv_plugin" Guid="{8B552777-D05E-4853-9010-156927B9406C}" Win64="$(var.Win64)">
-                <File Id="libyuv_plugin" Name="libyuv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libyuv_plugin" AssemblyApplication="libyuv_plugin"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-            </Directory>
+        <Component Id="C_libvlc" Guid="{570B6FD7-B622-45CB-AEC0-186468A51AC5}" Win64="$(var.Win64)">
+          <File Id="libvlc" Name="libvlc.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <Component Id="C_libvlccore" Guid="{06ADE4C2-7FA0-4C0A-8091-A8F4D6029089}" Win64="$(var.Win64)">
+          <File Id="libvlccore" Name="libvlccore.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <?if $(var.Platform) = x64 ?>
+        <Component Id="C_libgcc_s_seh_1x64" Guid="{60CFE24D-41C3-4792-9AE4-29C4DA6E5E64}" Win64="$(var.Win64)">
+          <File Id="libgcc_s_seh_1x64" Name="libgcc_s_seh-1.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <Component Id="C_libstdc6x64" Guid="{9636F84B-341E-4B6B-AD68-9363853AD56E}" Win64="$(var.Win64)">
+          <File Id="libstdc6x64" Name="libstdc++-6.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <Component Id="C_libwinpthread_1x64" Guid="{0E79CD32-DBF1-4958-AAB4-7F1D9C156AE6}" Win64="$(var.Win64)">
+          <File Id="libwinpthread_1x64" Name="libwinpthread-1.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <Component Id="C_npvlcx64" Guid="{AF6995E4-E330-4D3B-9B19-0578B8F4DB68}" Win64="$(var.Win64)">
+          <File Id="npvlcx64" Name="npvlc.dll" KeyPath="yes"
+                DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\" />
+        </Component>
+        <?endif ?>
+        <Directory Id="plugins" Name="plugins">
+          <Directory Id="access" Name="access">
+            <Component Id="C_libfilesystem_plugin" Guid="{DFF2AF09-6907-4CCB-8115-6AB823177642}" Win64="$(var.Win64)">
+              <File Id="libfilesystem_plugin" Name="libfilesystem_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\access\" />
+            </Component>
+            <Component Id="C_libidummy_plugin" Guid="{14B67440-DDE0-4919-9A4C-1070A9EAD04E}" Win64="$(var.Win64)">
+              <File Id="libidummy_plugin" Name="libidummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\access\" />
+            </Component>
+            <Component Id="C_libscreen_plugin" Guid="{B12EB365-8B27-40BE-8A74-0870A45272D5}" Win64="$(var.Win64)">
+              <File Id="libscreen_plugin" Name="libscreen_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\access\" />
+            </Component>
           </Directory>
-        </Directory>
-        <Directory Id="x64" Name="x64">
-          <Component Id="C_libvlcx64" Guid="{11E869B7-C5CD-4406-8FB0-80F23402671D}" Win64="$(var.Win64)">
-            <File Id="libvlcx64" Name="libvlc.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvlcx64" AssemblyApplication="libvlcx64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
-          <Component Id="C_libvlccorex64" Guid="{5828C52D-B19D-465B-A217-69DBF01AD60B}" Win64="$(var.Win64)">
-            <File Id="libvlccorex64" Name="libvlccore.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvlccorex64" AssemblyApplication="libvlccorex64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
-          <Component Id="C_libgcc_s_seh_1x64" Guid="{60CFE24D-41C3-4792-9AE4-29C4DA6E5E64}" Win64="$(var.Win64)">
-            <File Id="libgcc_s_seh_1x64" Name="libgcc_s_seh-1.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libgcc_s_seh_1x64" AssemblyApplication="libgcc_s_seh_1x64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
-          <Component Id="C_libstdc6x64" Guid="{9636F84B-341E-4B6B-AD68-9363853AD56E}" Win64="$(var.Win64)">
-            <File Id="libstdc6x64" Name="libstdc++-6.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstdc6x64" AssemblyApplication="libstdc6x64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
-          <Component Id="C_libwinpthread_1x64" Guid="{0E79CD32-DBF1-4958-AAB4-7F1D9C156AE6}" Win64="$(var.Win64)">
-            <File Id="libwinpthread_1x64" Name="libwinpthread-1.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwinpthread_1x64" AssemblyApplication="libwinpthread_1x64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
-          <Component Id="C_npvlcx64" Guid="{AF6995E4-E330-4D3B-9B19-0578B8F4DB68}" Win64="$(var.Win64)">
-            <File Id="npvlcx64" Name="npvlc.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="npvlcx64" AssemblyApplication="npvlcx64"
-                  DiskId="1" Source="$(var.SolutionDir)VlcLibs\x64\" />
-          </Component>
+          <Directory Id="access_output" Name="access_output">
+            <Component Id="C_libaccess_output_dummy_plugin" Guid="{980337A4-2BD2-4AF3-A034-C0587905588A}" Win64="$(var.Win64)">
+              <File Id="libaccess_output_dummy_plugin" Name="libaccess_output_dummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\access_output\" />
+            </Component>
+            <Component Id="C_libaccess_output_file_plugin" Guid="{E5D2A965-37F6-450C-9C40-046400A2F5B6}" Win64="$(var.Win64)">
+              <File Id="libaccess_output_file_plugin" Name="libaccess_output_file_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\access_output\" />
+            </Component>
 
-          <Directory Id="pluginsx64" Name="plugins">
-            <Directory Id="accessx64" Name="access">
-              <Component Id="C_libfilesystem_pluginx64" Guid="{2B230617-3EDD-482E-A45C-0794192FE663}" Win64="$(var.Win64)">
-                <File Id="libfilesystem_pluginx64" Name="libfilesystem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libfilesystem_pluginx64" AssemblyApplication="libfilesystem_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-              <Component Id="C_libidummy_pluginx64" Guid="{16F2A6C2-B8A2-40B1-8C59-E347F37F15D5}" Win64="$(var.Win64)">
-                <File Id="libidummy_pluginx64" Name="libidummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libidummy_pluginx64" AssemblyApplication="libidummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-              <Component Id="C_libscreen_pluginx64" Guid="{BD533B62-B210-4ACC-BCB4-403E5F8F54AB}" Win64="$(var.Win64)">
-                <File Id="libscreen_pluginx64" Name="libscreen_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libscreen_pluginx64" AssemblyApplication="libscreen_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access\" />
-              </Component>
-            </Directory>
-            <Directory Id="access_outputx64" Name="access_output">
-              <Component Id="C_libaccess_output_dummy_pluginx64" Guid="{9DC94DEA-C5EF-4C86-98E4-99E4102F3E01}" Win64="$(var.Win64)">
-                <File Id="libaccess_output_dummy_pluginx64" Name="libaccess_output_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaccess_output_dummy_pluginx64" AssemblyApplication="libaccess_output_dummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access_output\" />
-              </Component>
-              <Component Id="C_libaccess_output_file_pluginx64" Guid="{97887131-705B-4C5F-B426-EF4580DC47F7}" Win64="$(var.Win64)">
-                <File Id="libaccess_output_file_pluginx64" Name="libaccess_output_file_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaccess_output_file_pluginx64" AssemblyApplication="libaccess_output_file_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\access_output\" />
-              </Component>
-
-            </Directory>
-            <Directory Id="audio_outputx64" Name="audio_output">
-              <Component Id="C_libadummy_pluginx64" Guid="{57C58001-3A20-4A0B-91BB-C2953BC3AD7F}" Win64="$(var.Win64)">
-                <File Id="libadummy_pluginx64" Name="libadummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libadummy_pluginx64" AssemblyApplication="libadummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libafile_pluginx64" Guid="{62E12272-1C4D-435C-B7F3-7E46A1764807}" Win64="$(var.Win64)">
-                <File Id="libafile_pluginx64" Name="libafile_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libafile_pluginx64" AssemblyApplication="libafile_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libamem_pluginx64" Guid="{B3721E64-F514-47B3-9934-7CD9228C2B7B}" Win64="$(var.Win64)">
-                <File Id="libamem_pluginx64" Name="libamem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libamem_pluginx64" AssemblyApplication="libamem_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libdirectsound_pluginx64" Guid="{4A88742D-A60F-45E2-90EE-52FDE83D11A2}" Win64="$(var.Win64)">
-                <File Id="libdirectsound_pluginx64" Name="libdirectsound_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirectsound_pluginx64" AssemblyApplication="libdirectsound_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libmmdevice_pluginx64" Guid="{9C049B43-46FF-43D1-A354-F47DF2DD09FF}" Win64="$(var.Win64)">
-                <File Id="libmmdevice_pluginx64" Name="libmmdevice_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmmdevice_pluginx64" AssemblyApplication="libmmdevice_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-              <Component Id="C_libwaveout_pluginx64" Guid="{C2E19A98-363B-4282-8987-345AFCB38EEE}" Win64="$(var.Win64)">
-                <File Id="libwaveout_pluginx64" Name="libwaveout_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwaveout_pluginx64" AssemblyApplication="libwaveout_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\audio_output\" />
-              </Component>
-            </Directory>
-            <Directory Id="codecx64" Name="codec">
-              <Component Id="C_liba52_pluginx64" Guid="{2BCFB50B-0A68-4E9B-967D-A41C0E149102}" Win64="$(var.Win64)">
-                <File Id="liba52_pluginx64" Name="liba52_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liba52_pluginx64" AssemblyApplication="liba52_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libadpcm_pluginx64" Guid="{A1805A99-3B4D-41B9-B789-4CF8FF2C9C36}" Win64="$(var.Win64)">
-                <File Id="libadpcm_pluginx64" Name="libadpcm_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libadpcm_pluginx64" AssemblyApplication="libadpcm_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libaes3_pluginx64" Guid="{8C2A6B77-B8A8-4E47-B02E-5479B7C4FC36}" Win64="$(var.Win64)">
-                <File Id="libaes3_pluginx64" Name="libaes3_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaes3_pluginx64" AssemblyApplication="libaes3_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libaraw_pluginx64" Guid="{B7A4A13A-A7F7-4F57-B9A0-9D053E3DFDB6}" Win64="$(var.Win64)">
-                <File Id="libaraw_pluginx64" Name="libaraw_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaraw_pluginx64" AssemblyApplication="libaraw_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libavcodec_pluginx64" Guid="{A90019C8-51FC-41CE-9565-6D67E8DFE22E}" Win64="$(var.Win64)">
-                <File Id="libavcodec_pluginx64" Name="libavcodec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libavcodec_pluginx64" AssemblyApplication="libavcodec_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcc_pluginx64" Guid="{AC4C220F-5D5D-4E98-A4E4-44C5356C383F}" Win64="$(var.Win64)">
-                <File Id="libcc_pluginx64" Name="libcc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcc_pluginx64" AssemblyApplication="libcc_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcdg_pluginx64" Guid="{B0478E05-24DF-4968-A16B-A1A5B8B98EFE}" Win64="$(var.Win64)">
-                <File Id="libcdg_pluginx64" Name="libcdg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcdg_pluginx64" AssemblyApplication="libcdg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcrystalhd_pluginx64" Guid="{9A74278D-84B3-4DF7-ADB8-1DF55CA6139D}" Win64="$(var.Win64)">
-                <File Id="libcrystalhd_pluginx64" Name="libcrystalhd_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcrystalhd_pluginx64" AssemblyApplication="libcrystalhd_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libcvdsub_pluginx64" Guid="{E411D7A1-331E-4A0F-95BA-02A7EA6012F2}" Win64="$(var.Win64)">
-                <File Id="libcvdsub_pluginx64" Name="libcvdsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcvdsub_pluginx64" AssemblyApplication="libcvdsub_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libddummy_pluginx64" Guid="{B4B94807-E366-4816-8742-CF4A394B6A06}" Win64="$(var.Win64)">
-                <File Id="libddummy_pluginx64" Name="libddummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libddummy_pluginx64" AssemblyApplication="libddummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdmo_pluginx64" Guid="{E86FFAC8-0EFE-40F3-9971-A7DF5B3F1570}" Win64="$(var.Win64)">
-                <File Id="libdmo_pluginx64" Name="libdmo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdmo_pluginx64" AssemblyApplication="libdmo_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdts_pluginx64" Guid="{11C04D15-AC81-466F-B68A-A3F42A3061FA}" Win64="$(var.Win64)">
-                <File Id="libdts_pluginx64" Name="libdts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdts_pluginx64" AssemblyApplication="libdts_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdvbsub_pluginx64" Guid="{F7026502-56D4-42AF-9195-4F75D78D16E4}" Win64="$(var.Win64)">
-                <File Id="libdvbsub_pluginx64" Name="libdvbsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdvbsub_pluginx64" AssemblyApplication="libdvbsub_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libdxva2_pluginx64" Guid="{805718EE-3B9B-4767-838C-738C50625427}" Win64="$(var.Win64)">
-                <File Id="libdxva2_pluginx64" Name="libdxva2_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdxva2_pluginx64" AssemblyApplication="libdxva2_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libedummy_pluginx64" Guid="{6C56C31E-4F8B-438A-91AD-1E287E403DEB}" Win64="$(var.Win64)">
-                <File Id="libedummy_pluginx64" Name="libedummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libedummy_pluginx64" AssemblyApplication="libedummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libfaad_pluginx64" Guid="{D13A6C9D-3844-41BF-9EAB-C5C8F8484F70}" Win64="$(var.Win64)">
-                <File Id="libfaad_pluginx64" Name="libfaad_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libfaad_pluginx64" AssemblyApplication="libfaad_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libflac_pluginx64" Guid="{A38234DC-E247-4630-A776-FE146E1FABEB}" Win64="$(var.Win64)">
-                <File Id="libflac_pluginx64" Name="libflac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libflac_pluginx64" AssemblyApplication="libflac_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libg711_pluginx64" Guid="{6A93D719-25EB-4A86-95DF-6A8668A656DD}" Win64="$(var.Win64)">
-                <File Id="libg711_pluginx64" Name="libg711_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libg711_pluginx64" AssemblyApplication="libg711_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libkate_pluginx64" Guid="{57FD40A1-9197-49A5-8951-694A58EC2B02}" Win64="$(var.Win64)">
-                <File Id="libkate_pluginx64" Name="libkate_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libkate_pluginx64" AssemblyApplication="libkate_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblibass_pluginx64" Guid="{EB8A0072-EDA2-431A-BB24-22EAD179B996}" Win64="$(var.Win64)">
-                <File Id="liblibass_pluginx64" Name="liblibass_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblibass_pluginx64" AssemblyApplication="liblibass_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblibmpeg2_pluginx64" Guid="{BA2A8D46-3606-4945-ADF5-DC51393A1F00}" Win64="$(var.Win64)">
-                <File Id="liblibmpeg2_pluginx64" Name="liblibmpeg2_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblibmpeg2_pluginx64" AssemblyApplication="liblibmpeg2_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_liblpcm_pluginx64" Guid="{E7475243-168E-4541-AE20-8BCDB20BEA7B}" Win64="$(var.Win64)">
-                <File Id="liblpcm_pluginx64" Name="liblpcm_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="liblpcm_pluginx64" AssemblyApplication="liblpcm_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libmpeg_audio_pluginx64" Guid="{DD2F3454-A123-4912-A150-C72B62120DF4}" Win64="$(var.Win64)">
-                <File Id="libmpeg_audio_pluginx64" Name="libmpeg_audio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpeg_audio_pluginx64" AssemblyApplication="libmpeg_audio_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libopus_pluginx64" Guid="{EA57A1AA-A256-4EB3-AA85-C9743B4D70CA}" Win64="$(var.Win64)">
-                <File Id="libopus_pluginx64" Name="libopus_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libopus_pluginx64" AssemblyApplication="libopus_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libpng_pluginx64" Guid="{ED241368-259D-4D65-90BC-89CAF38075AE}" Win64="$(var.Win64)">
-                <File Id="libpng_pluginx64" Name="libpng_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpng_pluginx64" AssemblyApplication="libpng_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libqsv_pluginx64" Guid="{A68A25CE-421B-4ECA-98E9-935FF1086CE1}" Win64="$(var.Win64)">
-                <File Id="libqsv_pluginx64" Name="libqsv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libqsv_pluginx64" AssemblyApplication="libqsv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libquicktime_pluginx64" Guid="{E17BC2D4-E8D9-4A52-B8FF-28957C90B69B}" Win64="$(var.Win64)">
-                <File Id="libquicktime_pluginx64" Name="libquicktime_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libquicktime_pluginx64" AssemblyApplication="libquicktime_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_librawvideo_pluginx64" Guid="{EDB598DE-002A-4C72-B781-384318F5E4D6}" Win64="$(var.Win64)">
-                <File Id="librawvideo_pluginx64" Name="librawvideo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawvideo_pluginx64" AssemblyApplication="librawvideo_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libschroedinger_pluginx64" Guid="{07873ACB-F7BC-481A-AF7F-842E76E2798C}" Win64="$(var.Win64)">
-                <File Id="libschroedinger_pluginx64" Name="libschroedinger_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libschroedinger_pluginx64" AssemblyApplication="libschroedinger_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libscte27_pluginx64" Guid="{912EDE2A-821E-49E0-881A-494A92B7DE84}" Win64="$(var.Win64)">
-                <File Id="libscte27_pluginx64" Name="libscte27_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libscte27_pluginx64" AssemblyApplication="libscte27_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libspeex_pluginx64" Guid="{83540B76-A52F-4BB9-B2C3-35CA35DF6538}" Win64="$(var.Win64)">
-                <File Id="libspeex_pluginx64" Name="libspeex_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libspeex_pluginx64" AssemblyApplication="libspeex_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libspudec_pluginx64" Guid="{1CBE8382-42CC-444C-B765-8D79C3CF416E}" Win64="$(var.Win64)">
-                <File Id="libspudec_pluginx64" Name="libspudec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libspudec_pluginx64" AssemblyApplication="libspudec_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libstl_pluginx64" Guid="{5E0F7B03-05BD-445D-BD78-E175BE5F9E0F}" Win64="$(var.Win64)">
-                <File Id="libstl_pluginx64" Name="libstl_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstl_pluginx64" AssemblyApplication="libstl_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsubsdec_pluginx64" Guid="{AAAC20CD-08C0-4A86-8836-F664F0E8B8DB}" Win64="$(var.Win64)">
-                <File Id="libsubsdec_pluginx64" Name="libsubsdec_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubsdec_pluginx64" AssemblyApplication="libsubsdec_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsubsusf_pluginx64" Guid="{27EA7A67-E8A1-4821-9936-6FD0AF92F561}" Win64="$(var.Win64)">
-                <File Id="libsubsusf_pluginx64" Name="libsubsusf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubsusf_pluginx64" AssemblyApplication="libsubsusf_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libsvcdsub_pluginx64" Guid="{9F2E7606-D16B-4271-B184-8FD97F302536}" Win64="$(var.Win64)">
-                <File Id="libsvcdsub_pluginx64" Name="libsvcdsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsvcdsub_pluginx64" AssemblyApplication="libsvcdsub_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libt140_pluginx64" Guid="{18B68C2D-B7F0-42C4-B281-391B904C6DF2}" Win64="$(var.Win64)">
-                <File Id="libt140_pluginx64" Name="libt140_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libt140_pluginx64" AssemblyApplication="libt140_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libtheora_pluginx64" Guid="{D126E842-5C25-412F-B14E-0C20781CA9D8}" Win64="$(var.Win64)">
-                <File Id="libtheora_pluginx64" Name="libtheora_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtheora_pluginx64" AssemblyApplication="libtheora_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libtwolame_pluginx64" Guid="{951219AF-AE36-4651-AE37-755E5AE6E7F2}" Win64="$(var.Win64)">
-                <File Id="libtwolame_pluginx64" Name="libtwolame_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtwolame_pluginx64" AssemblyApplication="libtwolame_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libuleaddvaudio_pluginx64" Guid="{920EECFD-DF02-4ED7-8ED3-43F721947284}" Win64="$(var.Win64)">
-                <File Id="libuleaddvaudio_pluginx64" Name="libuleaddvaudio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libuleaddvaudio_pluginx64" AssemblyApplication="libuleaddvaudio_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libvorbis_pluginx64" Guid="{4E63E9F2-70F6-40CD-B105-41CE022784CD}" Win64="$(var.Win64)">
-                <File Id="libvorbis_pluginx64" Name="libvorbis_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvorbis_pluginx64" AssemblyApplication="libvorbis_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libx264_pluginx64" Guid="{BB6B7AAE-26E2-4CCA-8E86-3B1EC5940651}" Win64="$(var.Win64)">
-                <File Id="libx264_pluginx64" Name="libx264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libx264_pluginx64" AssemblyApplication="libx264_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-              <Component Id="C_libzvbi_pluginx64" Guid="{844EDA4E-534A-436F-82CE-F0C8F931BD99}" Win64="$(var.Win64)">
-                <File Id="libzvbi_pluginx64" Name="libzvbi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libzvbi_pluginx64" AssemblyApplication="libzvbi_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\codec\" />
-              </Component>
-            </Directory>
-            <Directory Id="demuxx64" Name="demux">
-              <Component Id="C_libaiff_pluginx64" Guid="{C41C4E42-78DA-4C9D-BF9B-386BEC7470D0}" Win64="$(var.Win64)">
-                <File Id="libaiff_pluginx64" Name="libaiff_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libaiff_pluginx64" AssemblyApplication="libaiff_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libasf_pluginx64" Guid="{68520489-ADD1-4488-B3F6-96AB6113D021}" Win64="$(var.Win64)">
-                <File Id="libasf_pluginx64" Name="libasf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libasf_pluginx64" AssemblyApplication="libasf_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libau_pluginx64" Guid="{AE70CC1A-2666-41AD-BC2F-1E0A1B6A6AA1}" Win64="$(var.Win64)">
-                <File Id="libau_pluginx64" Name="libau_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libau_pluginx64" AssemblyApplication="libau_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libavi_pluginx64" Guid="{B7A2F5BE-E4A3-4604-9D0B-3F4F279C1A7B}" Win64="$(var.Win64)">
-                <File Id="libavi_pluginx64" Name="libavi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libavi_pluginx64" AssemblyApplication="libavi_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemux_cdg_pluginx64" Guid="{545C52BF-F1F1-4C9E-AF33-FD8C389FC17A}" Win64="$(var.Win64)">
-                <File Id="libdemux_cdg_pluginx64" Name="libdemux_cdg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemux_cdg_pluginx64" AssemblyApplication="libdemux_cdg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemux_stl_pluginx64" Guid="{1A16765F-0F48-4D24-9CA2-0BB38A237001}" Win64="$(var.Win64)">
-                <File Id="libdemux_stl_pluginx64" Name="libdemux_stl_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemux_stl_pluginx64" AssemblyApplication="libdemux_stl_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdemuxdump_pluginx64" Guid="{6670B631-1CF4-4E9F-9EFE-5D1998D70723}" Win64="$(var.Win64)">
-                <File Id="libdemuxdump_pluginx64" Name="libdemuxdump_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdemuxdump_pluginx64" AssemblyApplication="libdemuxdump_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libdirac_pluginx64" Guid="{AC3689E7-1147-4EA5-A125-85E56BF4A94D}" Win64="$(var.Win64)">
-                <File Id="libdirac_pluginx64" Name="libdirac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirac_pluginx64" AssemblyApplication="libdirac_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libes_pluginx64" Guid="{8E436E95-4E6E-4842-9C1D-45464F3DBA3F}" Win64="$(var.Win64)">
-                <File Id="libes_pluginx64" Name="libes_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libes_pluginx64" AssemblyApplication="libes_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libflacsys_pluginx64" Guid="{8B00B659-A9A2-47E5-92DC-77735F3059E4}" Win64="$(var.Win64)">
-                <File Id="libflacsys_pluginx64" Name="libflacsys_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libflacsys_pluginx64" AssemblyApplication="libflacsys_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libgme_pluginx64" Guid="{331F6336-4E92-4510-B690-79B4434730DB}" Win64="$(var.Win64)">
-                <File Id="libgme_pluginx64" Name="libgme_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libgme_pluginx64" AssemblyApplication="libgme_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libh264_pluginx64" Guid="{03A1FE88-9952-49FE-A58C-F490FE38C6D3}" Win64="$(var.Win64)">
-                <File Id="libh264_pluginx64" Name="libh264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libh264_pluginx64" AssemblyApplication="libh264_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libimage_pluginx64" Guid="{725A434E-68E2-44A1-A396-7E2C19795391}" Win64="$(var.Win64)">
-                <File Id="libimage_pluginx64" Name="libimage_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libimage_pluginx64" AssemblyApplication="libimage_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmjpeg_pluginx64" Guid="{76DFD59D-EBD8-41AB-A5BC-CC75D6C3921C}" Win64="$(var.Win64)">
-                <File Id="libmjpeg_pluginx64" Name="libmjpeg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmjpeg_pluginx64" AssemblyApplication="libmjpeg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmkv_pluginx64" Guid="{D260DA5C-6E7F-4551-84E0-77FB69ED3D47}" Win64="$(var.Win64)">
-                <File Id="libmkv_pluginx64" Name="libmkv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmkv_pluginx64" AssemblyApplication="libmkv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmod_pluginx64" Guid="{FA178CE1-262F-4D6B-8424-BADCABD1E9A8}" Win64="$(var.Win64)">
-                <File Id="libmod_pluginx64" Name="libmod_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmod_pluginx64" AssemblyApplication="libmod_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmp4_pluginx64" Guid="{013F80C6-E88A-429D-A90B-1605B5EFCC9A}" Win64="$(var.Win64)">
-                <File Id="libmp4_pluginx64" Name="libmp4_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmp4_pluginx64" AssemblyApplication="libmp4_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmpc_pluginx64" Guid="{08945DC7-EC01-4EFA-9269-83FFFD730B85}" Win64="$(var.Win64)">
-                <File Id="libmpc_pluginx64" Name="libmpc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpc_pluginx64" AssemblyApplication="libmpc_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libmpgv_pluginx64" Guid="{5E0086A6-B657-4D3C-9C3D-30152D11A0D2}" Win64="$(var.Win64)">
-                <File Id="libmpgv_pluginx64" Name="libmpgv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmpgv_pluginx64" AssemblyApplication="libmpgv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnsc_pluginx64" Guid="{2E17C812-51EE-4CA1-8DFE-5336D7FE499A}" Win64="$(var.Win64)">
-                <File Id="libnsc_pluginx64" Name="libnsc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnsc_pluginx64" AssemblyApplication="libnsc_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnsv_pluginx64" Guid="{55FF6F22-872C-4A8D-B12D-582562B5C912}" Win64="$(var.Win64)">
-                <File Id="libnsv_pluginx64" Name="libnsv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnsv_pluginx64" AssemblyApplication="libnsv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libnuv_pluginx64" Guid="{9A3B2E16-9EF8-4720-8556-8A0F1221CCF2}" Win64="$(var.Win64)">
-                <File Id="libnuv_pluginx64" Name="libnuv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libnuv_pluginx64" AssemblyApplication="libnuv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libogg_pluginx64" Guid="{B4F3EE66-8AAA-4938-BB46-FC1B85E866C0}" Win64="$(var.Win64)">
-                <File Id="libogg_pluginx64" Name="libogg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libogg_pluginx64" AssemblyApplication="libogg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libplaylist_pluginx64" Guid="{1FDA625A-35B9-44DF-A11E-77FE46563B2C}" Win64="$(var.Win64)">
-                <File Id="libplaylist_pluginx64" Name="libplaylist_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libplaylist_pluginx64" AssemblyApplication="libplaylist_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libps_pluginx64" Guid="{26B6E18F-FD67-4AE5-AB11-7C373B06D978}" Win64="$(var.Win64)">
-                <File Id="libps_pluginx64" Name="libps_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libps_pluginx64" AssemblyApplication="libps_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libpva_pluginx64" Guid="{1DE4F726-9C7E-413A-ACCB-3F3F0D71078B}" Win64="$(var.Win64)">
-                <File Id="libpva_pluginx64" Name="libpva_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpva_pluginx64" AssemblyApplication="libpva_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawaud_pluginx64" Guid="{AF00D4E7-84E0-4D0B-9A38-25F1A748E5DD}" Win64="$(var.Win64)">
-                <File Id="librawaud_pluginx64" Name="librawaud_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawaud_pluginx64" AssemblyApplication="librawaud_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawdv_pluginx64" Guid="{927D6E81-6750-4985-950A-A9C650B8A1FD}" Win64="$(var.Win64)">
-                <File Id="librawdv_pluginx64" Name="librawdv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawdv_pluginx64" AssemblyApplication="librawdv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_librawvid_pluginx64" Guid="{1274C236-4AF0-496B-B592-A491A788896A}" Win64="$(var.Win64)">
-                <File Id="librawvid_pluginx64" Name="librawvid_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="librawvid_pluginx64" AssemblyApplication="librawvid_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libreal_pluginx64" Guid="{0AB6CDC1-19A6-4A07-8785-CF146DA46843}" Win64="$(var.Win64)">
-                <File Id="libreal_pluginx64" Name="libreal_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libreal_pluginx64" AssemblyApplication="libreal_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsid_pluginx64" Guid="{6E48F529-93F6-488D-8258-FACB371C12E1}" Win64="$(var.Win64)">
-                <File Id="libsid_pluginx64" Name="libsid_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsid_pluginx64" AssemblyApplication="libsid_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsmf_pluginx64" Guid="{2A0F93F7-2633-4A53-A877-BF59E47D2536}" Win64="$(var.Win64)">
-                <File Id="libsmf_pluginx64" Name="libsmf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsmf_pluginx64" AssemblyApplication="libsmf_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libsubtitle_pluginx64" Guid="{DD64EA4A-D13B-4DBE-A861-501A5762E2B0}" Win64="$(var.Win64)">
-                <File Id="libsubtitle_pluginx64" Name="libsubtitle_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libsubtitle_pluginx64" AssemblyApplication="libsubtitle_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libts_pluginx64" Guid="{B382AF01-F674-4573-B12E-F1EE167E12BA}" Win64="$(var.Win64)">
-                <File Id="libts_pluginx64" Name="libts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libts_pluginx64" AssemblyApplication="libts_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libtta_pluginx64" Guid="{BE69E985-E0C2-4A7E-A4F5-9727DB035CBB}" Win64="$(var.Win64)">
-                <File Id="libtta_pluginx64" Name="libtta_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libtta_pluginx64" AssemblyApplication="libtta_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libty_pluginx64" Guid="{BFCA6798-5487-4D76-9281-11FFE3A48F06}" Win64="$(var.Win64)">
-                <File Id="libty_pluginx64" Name="libty_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libty_pluginx64" AssemblyApplication="libty_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvc1_pluginx64" Guid="{FD1BE2E9-CA2D-4044-B424-2EDAD95BC9AE}" Win64="$(var.Win64)">
-                <File Id="libvc1_pluginx64" Name="libvc1_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvc1_pluginx64" AssemblyApplication="libvc1_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvobsub_pluginx64" Guid="{F6E28D66-C55E-4677-9867-302010A7CA9C}" Win64="$(var.Win64)">
-                <File Id="libvobsub_pluginx64" Name="libvobsub_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvobsub_pluginx64" AssemblyApplication="libvobsub_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libvoc_pluginx64" Guid="{C5ADA944-64A0-4DBF-AF1F-4F51D42823B0}" Win64="$(var.Win64)">
-                <File Id="libvoc_pluginx64" Name="libvoc_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvoc_pluginx64" AssemblyApplication="libvoc_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libwav_pluginx64" Guid="{3878C603-7BAE-4224-8EBE-315CA23E7056}" Win64="$(var.Win64)">
-                <File Id="libwav_pluginx64" Name="libwav_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwav_pluginx64" AssemblyApplication="libwav_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-              <Component Id="C_libxa_pluginx64" Guid="{A5A933A0-358D-4708-A51C-904C95C00092}" Win64="$(var.Win64)">
-                <File Id="libxa_pluginx64" Name="libxa_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libxa_pluginx64" AssemblyApplication="libxa_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\demux\" />
-              </Component>
-            </Directory>
-            <Directory Id="muxx64" Name="mux">
-              <Component Id="C_libmux_asf_pluginx64" Guid="{883DB9B8-AE9A-4F48-BBC9-2125F7BEDD87}" Win64="$(var.Win64)">
-                <File Id="libmux_asf_pluginx64" Name="libmux_asf_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_asf_pluginx64" AssemblyApplication="libmux_asf_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_avi_pluginx64" Guid="{2CF746CA-3C32-4752-A41C-8984911187CE}" Win64="$(var.Win64)">
-                <File Id="libmux_avi_pluginx64" Name="libmux_avi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_avi_pluginx64" AssemblyApplication="libmux_avi_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_dummy_pluginx64" Guid="{1DE2D225-7CA5-4719-904C-97B44D96C3D9}" Win64="$(var.Win64)">
-                <File Id="libmux_dummy_pluginx64" Name="libmux_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_dummy_pluginx64" AssemblyApplication="libmux_dummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_mp4_pluginx64" Guid="{AFBFFCAA-C57E-4CA4-B814-1566EDEE695A}" Win64="$(var.Win64)">
-                <File Id="libmux_mp4_pluginx64" Name="libmux_mp4_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_mp4_pluginx64" AssemblyApplication="libmux_mp4_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_mpjpeg_pluginx64" Guid="{1C623815-5713-483E-8D8B-B066DF14F748}" Win64="$(var.Win64)">
-                <File Id="libmux_mpjpeg_pluginx64" Name="libmux_mpjpeg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_mpjpeg_pluginx64" AssemblyApplication="libmux_mpjpeg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ogg_pluginx64" Guid="{512A499E-4555-496F-B939-B3A410C4C918}" Win64="$(var.Win64)">
-                <File Id="libmux_ogg_pluginx64" Name="libmux_ogg_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ogg_pluginx64" AssemblyApplication="libmux_ogg_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ps_pluginx64" Guid="{93B5E643-B2AD-49D6-B291-77349135CD67}" Win64="$(var.Win64)">
-                <File Id="libmux_ps_pluginx64" Name="libmux_ps_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ps_pluginx64" AssemblyApplication="libmux_ps_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_ts_pluginx64" Guid="{CBDB26F1-0748-48D3-8BF1-772617296084}" Win64="$(var.Win64)">
-                <File Id="libmux_ts_pluginx64" Name="libmux_ts_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_ts_pluginx64" AssemblyApplication="libmux_ts_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-              <Component Id="C_libmux_wav_pluginx64" Guid="{A1F237F9-555F-4C71-8069-A839586C140A}" Win64="$(var.Win64)">
-                <File Id="libmux_wav_pluginx64" Name="libmux_wav_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libmux_wav_pluginx64" AssemblyApplication="libmux_wav_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\mux\" />
-              </Component>
-            </Directory>
-            <Directory Id="packetizerx64" Name="packetizer">
-              <Component Id="C_libpacketizer_copy_pluginx64" Guid="{432A912C-8A94-4834-A036-0EFD79B32E2A}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_copy_pluginx64" Name="libpacketizer_copy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_copy_pluginx64" AssemblyApplication="libpacketizer_copy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_dirac_pluginx64" Guid="{11B04689-2A3E-4416-973C-0728E7CD526C}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_dirac_pluginx64" Name="libpacketizer_dirac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_dirac_pluginx64" AssemblyApplication="libpacketizer_dirac_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_flac_pluginx64" Guid="{40B8A737-91AB-4AD2-B5F3-6A6B08AF3392}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_flac_pluginx64" Name="libpacketizer_flac_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_flac_pluginx64" AssemblyApplication="libpacketizer_flac_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_h264_pluginx64" Guid="{B821BF7D-12A6-47DC-A432-0850FE9C96A5}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_h264_pluginx64" Name="libpacketizer_h264_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_h264_pluginx64" AssemblyApplication="libpacketizer_h264_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mlp_pluginx64" Guid="{DDDB57AE-4850-4FB7-B8D1-4271947040EC}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mlp_pluginx64" Name="libpacketizer_mlp_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mlp_pluginx64" AssemblyApplication="libpacketizer_mlp_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpeg4audio_pluginx64" Guid="{64D0FCA5-B4A8-4167-90D6-A39DDC1E2A45}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpeg4audio_pluginx64" Name="libpacketizer_mpeg4audio_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpeg4audio_pluginx64" AssemblyApplication="libpacketizer_mpeg4audio_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpeg4video_pluginx64" Guid="{19E650EF-D7AA-477D-9DCD-6A534F792965}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpeg4video_pluginx64" Name="libpacketizer_mpeg4video_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpeg4video_pluginx64" AssemblyApplication="libpacketizer_mpeg4video_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_mpegvideo_pluginx64" Guid="{1A681981-4FE0-495E-9959-90FF7A4029AF}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_mpegvideo_pluginx64" Name="libpacketizer_mpegvideo_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_mpegvideo_pluginx64" AssemblyApplication="libpacketizer_mpegvideo_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-              <Component Id="C_libpacketizer_vc1_pluginx64" Guid="{2F23691E-DCFB-43DB-9DBC-D98C5AE1037E}" Win64="$(var.Win64)">
-                <File Id="libpacketizer_vc1_pluginx64" Name="libpacketizer_vc1_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libpacketizer_vc1_pluginx64" AssemblyApplication="libpacketizer_vc1_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\packetizer\" />
-              </Component>
-            </Directory>
-            <Directory Id="stream_outx64" Name="stream_out">
-              <Component Id="C_libstream_out_display_pluginx64" Guid="{D2815198-D976-4513-8AE2-8C2283546C7D}" Win64="$(var.Win64)">
-                <File Id="libstream_out_display_pluginx64" Name="libstream_out_display_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_display_pluginx64" AssemblyApplication="libstream_out_display_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_dummy_pluginx64" Guid="{E6A39674-D8B8-4882-AE32-5815CA0E8A0D}" Win64="$(var.Win64)">
-                <File Id="libstream_out_dummy_pluginx64" Name="libstream_out_dummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_dummy_pluginx64" AssemblyApplication="libstream_out_dummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_standard_pluginx64" Guid="{8F8BEC00-E0DE-435E-B255-CF31EC5E1F64}" Win64="$(var.Win64)">
-                <File Id="libstream_out_standard_pluginx64" Name="libstream_out_standard_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_standard_pluginx64" AssemblyApplication="libstream_out_standard_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-              <Component Id="C_libstream_out_transcode_pluginx64" Guid="{5D7732BB-77EE-4457-90C9-C70D8A2BF0BA}" Win64="$(var.Win64)">
-                <File Id="libstream_out_transcode_pluginx64" Name="libstream_out_transcode_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libstream_out_transcode_pluginx64" AssemblyApplication="libstream_out_transcode_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\stream_out\" />
-              </Component>
-            </Directory>
-            <Directory Id="video_outputx64" Name="video_output">
-              <Component Id="C_libcaca_pluginx64" Guid="{ADC30DBB-6AAE-4BF7-9547-45E646146D9D}" Win64="$(var.Win64)">
-                <File Id="libcaca_pluginx64" Name="libcaca_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libcaca_pluginx64" AssemblyApplication="libcaca_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirect2d_pluginx64" Guid="{C01F7964-4C58-4CF9-B223-79C8BE21817D}" Win64="$(var.Win64)">
-                <File Id="libdirect2d_pluginx64" Name="libdirect2d_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirect2d_pluginx64" AssemblyApplication="libdirect2d_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirect3d_pluginx64" Guid="{E517CE8A-836A-40B7-B1B7-F7A99D371DEE}" Win64="$(var.Win64)">
-                <File Id="libdirect3d_pluginx64" Name="libdirect3d_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirect3d_pluginx64" AssemblyApplication="libdirect3d_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdirectdraw_pluginx64" Guid="{1094B53C-F1F1-4C01-823E-3DAEE6D3410D}" Win64="$(var.Win64)">
-                <File Id="libdirectdraw_pluginx64" Name="libdirectdraw_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdirectdraw_pluginx64" AssemblyApplication="libdirectdraw_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libdrawable_pluginx64" Guid="{BDF30CFC-253D-498A-AF32-345680A11B4F}" Win64="$(var.Win64)">
-                <File Id="libdrawable_pluginx64" Name="libdrawable_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libdrawable_pluginx64" AssemblyApplication="libdrawable_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libglwin32_pluginx64" Guid="{34128624-71D8-4408-AD4B-D55F1379CBBF}" Win64="$(var.Win64)">
-                <File Id="libglwin32_pluginx64" Name="libglwin32_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libglwin32_pluginx64" AssemblyApplication="libglwin32_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libvdummy_pluginx64" Guid="{D5C0AC02-27BE-4502-847B-274EC3B0F015}" Win64="$(var.Win64)">
-                <File Id="libvdummy_pluginx64" Name="libvdummy_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvdummy_pluginx64" AssemblyApplication="libvdummy_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libvmem_pluginx64" Guid="{63D9145A-1EA6-4B97-B161-8206D39AF9A0}" Win64="$(var.Win64)">
-                <File Id="libvmem_pluginx64" Name="libvmem_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libvmem_pluginx64" AssemblyApplication="libvmem_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libwingdi_pluginx64" Guid="{F795B107-EB62-4990-B4F8-EB027D612214}" Win64="$(var.Win64)">
-                <File Id="libwingdi_pluginx64" Name="libwingdi_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libwingdi_pluginx64" AssemblyApplication="libwingdi_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-              <Component Id="C_libyuv_pluginx64" Guid="{8B552777-D05E-4853-9010-156927B9406C}" Win64="$(var.Win64)">
-                <File Id="libyuv_pluginx64" Name="libyuv_plugin.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="libyuv_pluginx64" AssemblyApplication="libyuv_pluginx64"
-                      DiskId="1" Source="$(var.SolutionDir)VlcLibs\x86\plugins\video_output\" />
-              </Component>
-            </Directory>
+          </Directory>
+          <Directory Id="audio_output" Name="audio_output">
+            <Component Id="C_libadummy_plugin" Guid="{C0F9406B-67F0-4D44-9DEA-10A9C7D156F9}" Win64="$(var.Win64)">
+              <File Id="libadummy_plugin" Name="libadummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+            <Component Id="C_libafile_plugin" Guid="{DFEE3629-06FA-47DB-A671-24B81AB9A696}" Win64="$(var.Win64)">
+              <File Id="libafile_plugin" Name="libafile_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+            <Component Id="C_libamem_plugin" Guid="{346E026B-7A80-410E-AA51-192712ABF2D2}" Win64="$(var.Win64)">
+              <File Id="libamem_plugin" Name="libamem_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+            <Component Id="C_libdirectsound_plugin" Guid="{ED8D7C20-4C2E-4C11-AE6D-18F78A01E606}" Win64="$(var.Win64)">
+              <File Id="libdirectsound_plugin" Name="libdirectsound_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+            <Component Id="C_libmmdevice_plugin" Guid="{B001234F-C680-4831-96F8-F5A39080CE9F}" Win64="$(var.Win64)">
+              <File Id="libmmdevice_plugin" Name="libmmdevice_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+            <Component Id="C_libwaveout_plugin" Guid="{9FB6DFC9-3829-4568-AF00-2654C27D31AF}" Win64="$(var.Win64)">
+              <File Id="libwaveout_plugin" Name="libwaveout_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\audio_output\" />
+            </Component>
+          </Directory>
+          <Directory Id="codec" Name="codec">
+            <Component Id="C_liba52_plugin" Guid="{4E2C5287-C9D7-47C1-87D5-35AE0E875EFE}" Win64="$(var.Win64)">
+              <File Id="liba52_plugin" Name="liba52_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libadpcm_plugin" Guid="{2012167E-960C-4B04-BA2A-D001BE69F32C}" Win64="$(var.Win64)">
+              <File Id="libadpcm_plugin" Name="libadpcm_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libaes3_plugin" Guid="{1797B683-B30F-4225-B13D-D02B08E64480}" Win64="$(var.Win64)">
+              <File Id="libaes3_plugin" Name="libaes3_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libaraw_plugin" Guid="{0293AF27-2CDE-4F8D-AA28-0FEB6320271F}" Win64="$(var.Win64)">
+              <File Id="libaraw_plugin" Name="libaraw_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libavcodec_plugin" Guid="{1C1D731E-28FF-4E06-8CAA-11B61AC1431C}" Win64="$(var.Win64)">
+              <File Id="libavcodec_plugin" Name="libavcodec_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libcc_plugin" Guid="{D8D5F668-7630-46AF-A8E1-A703E14C41B7}" Win64="$(var.Win64)">
+              <File Id="libcc_plugin" Name="libcc_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libcdg_plugin" Guid="{52083A5F-F9E3-479D-B14F-6554449D894E}" Win64="$(var.Win64)">
+              <File Id="libcdg_plugin" Name="libcdg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libcrystalhd_plugin" Guid="{BC7A0BD4-19B2-4D9D-B8B9-C7D851E1FD97}" Win64="$(var.Win64)">
+              <File Id="libcrystalhd_plugin" Name="libcrystalhd_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libcvdsub_plugin" Guid="{2DFFCFD4-66B9-4AE6-9DD9-4B07F448F4C3}" Win64="$(var.Win64)">
+              <File Id="libcvdsub_plugin" Name="libcvdsub_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libddummy_plugin" Guid="{E3AA5A13-9381-4629-AFFC-A25385AE6507}" Win64="$(var.Win64)">
+              <File Id="libddummy_plugin" Name="libddummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libdmo_plugin" Guid="{6B1DE0C9-DE0C-4E50-B5C1-D1252ECB1E8E}" Win64="$(var.Win64)">
+              <File Id="libdmo_plugin" Name="libdmo_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libdts_plugin" Guid="{DE69D305-1097-4FA8-9AA4-1FE81C93D310}" Win64="$(var.Win64)">
+              <File Id="libdts_plugin" Name="libdts_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libdvbsub_plugin" Guid="{198B7118-5B33-42AC-85F1-6AF14258EB50}" Win64="$(var.Win64)">
+              <File Id="libdvbsub_plugin" Name="libdvbsub_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libdxva2_plugin" Guid="{71FEC125-D6CF-4F22-8268-DE7A2DF19644}" Win64="$(var.Win64)">
+              <File Id="libdxva2_plugin" Name="libdxva2_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libedummy_plugin" Guid="{47C5B836-AF6C-4E3D-827A-066FAD8075D8}" Win64="$(var.Win64)">
+              <File Id="libedummy_plugin" Name="libedummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libfaad_plugin" Guid="{45C07CE1-F2C9-4CF1-9884-9D9F91617376}" Win64="$(var.Win64)">
+              <File Id="libfaad_plugin" Name="libfaad_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libflac_plugin" Guid="{503C1199-A246-4CA7-9AB2-6E3043B579A3}" Win64="$(var.Win64)">
+              <File Id="libflac_plugin" Name="libflac_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libg711_plugin" Guid="{2E76483C-8F1B-460F-AF4E-F9E59F8E05B8}" Win64="$(var.Win64)">
+              <File Id="libg711_plugin" Name="libg711_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libkate_plugin" Guid="{B7FF1F1F-5573-4E39-952D-5CE4A5841E47}" Win64="$(var.Win64)">
+              <File Id="libkate_plugin" Name="libkate_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_liblibass_plugin" Guid="{08FAFEF0-ED45-480B-A8F7-2D7AA0DA1836}" Win64="$(var.Win64)">
+              <File Id="liblibass_plugin" Name="liblibass_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_liblibmpeg2_plugin" Guid="{E967554A-D74C-46FD-B23D-8E54322677C7}" Win64="$(var.Win64)">
+              <File Id="liblibmpeg2_plugin" Name="liblibmpeg2_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_liblpcm_plugin" Guid="{2C4D3B79-1245-4A5B-B381-F75E046137D2}" Win64="$(var.Win64)">
+              <File Id="liblpcm_plugin" Name="liblpcm_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libmpeg_audio_plugin" Guid="{F4B2D085-D1EF-4392-B61A-62EF27C4DBF0}" Win64="$(var.Win64)">
+              <File Id="libmpeg_audio_plugin" Name="libmpeg_audio_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libopus_plugin" Guid="{015E1ECE-7D28-4B9D-8C4E-619062F99452}" Win64="$(var.Win64)">
+              <File Id="libopus_plugin" Name="libopus_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libpng_plugin" Guid="{2FB1822B-B3DE-4E8F-99D7-E97D73A57D7C}" Win64="$(var.Win64)">
+              <File Id="libpng_plugin" Name="libpng_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <?if $(var.Platform) = x86 ?>
+            <Component Id="C_libqsv_plugin" Guid="{BF9A8581-6398-4B79-8A5B-4CCDE4438FBA}" Win64="$(var.Win64)">
+              <File Id="libqsv_plugin" Name="libqsv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <?endif ?>
+            <Component Id="C_libquicktime_plugin" Guid="{5D7D6ACF-F2EC-43FE-AD56-F875334C485B}" Win64="$(var.Win64)">
+              <File Id="libquicktime_plugin" Name="libquicktime_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_librawvideo_plugin" Guid="{817386D9-1F55-48C8-AB6A-45D0B0AD41B8}" Win64="$(var.Win64)">
+              <File Id="librawvideo_plugin" Name="librawvideo_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libschroedinger_plugin" Guid="{29A86B08-07B6-4105-84B0-05D5E48AB20E}" Win64="$(var.Win64)">
+              <File Id="libschroedinger_plugin" Name="libschroedinger_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libscte27_plugin" Guid="{D78E4BCB-7B51-468D-928A-352FAA1952D9}" Win64="$(var.Win64)">
+              <File Id="libscte27_plugin" Name="libscte27_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libspeex_plugin" Guid="{8DA1554E-86C7-40BD-A630-E5208C2E664D}" Win64="$(var.Win64)">
+              <File Id="libspeex_plugin" Name="libspeex_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libspudec_plugin" Guid="{88680BF9-866C-4CAC-BB3C-4C992A57954B}" Win64="$(var.Win64)">
+              <File Id="libspudec_plugin" Name="libspudec_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libstl_plugin" Guid="{5394D773-0975-45C7-892F-6F83371AA6CA}" Win64="$(var.Win64)">
+              <File Id="libstl_plugin" Name="libstl_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libsubsdec_plugin" Guid="{2BEDB455-3A55-4BC3-981C-4412679239C5}" Win64="$(var.Win64)">
+              <File Id="libsubsdec_plugin" Name="libsubsdec_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libsubsusf_plugin" Guid="{77A3CCFA-F5D2-4A07-97AE-5337488866F3}" Win64="$(var.Win64)">
+              <File Id="libsubsusf_plugin" Name="libsubsusf_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libsvcdsub_plugin" Guid="{CF21C488-E5FF-461A-881B-2B3B49D8281F}" Win64="$(var.Win64)">
+              <File Id="libsvcdsub_plugin" Name="libsvcdsub_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libt140_plugin" Guid="{22A7C96F-5D5C-4DB4-99ED-E05A04F2206C}" Win64="$(var.Win64)">
+              <File Id="libt140_plugin" Name="libt140_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libtheora_plugin" Guid="{3E5BE9FD-86B2-444E-BD4C-40619835554F}" Win64="$(var.Win64)">
+              <File Id="libtheora_plugin" Name="libtheora_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libtwolame_plugin" Guid="{6A7A0427-DDAF-41E5-9BED-AC051E45E699}" Win64="$(var.Win64)">
+              <File Id="libtwolame_plugin" Name="libtwolame_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libuleaddvaudio_plugin" Guid="{8B5D10EC-5F40-4FBC-9A62-DF57D9A95005}" Win64="$(var.Win64)">
+              <File Id="libuleaddvaudio_plugin" Name="libuleaddvaudio_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libvorbis_plugin" Guid="{E3C3B6C7-013D-4B80-AA55-BD7CC9E50CEC}" Win64="$(var.Win64)">
+              <File Id="libvorbis_plugin" Name="libvorbis_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libx264_plugin" Guid="{CE391F26-65AE-4148-A3C3-C56472EB2FF8}" Win64="$(var.Win64)">
+              <File Id="libx264_plugin" Name="libx264_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+            <Component Id="C_libzvbi_plugin" Guid="{390AC171-2B52-46BF-B757-0EDD5770F02D}" Win64="$(var.Win64)">
+              <File Id="libzvbi_plugin" Name="libzvbi_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\codec\" />
+            </Component>
+          </Directory>
+          <Directory Id="demux" Name="demux">
+            <Component Id="C_libaiff_plugin" Guid="{C41C4E42-78DA-4C9D-BF9B-386BEC7470D0}" Win64="$(var.Win64)">
+              <File Id="libaiff_plugin" Name="libaiff_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libasf_plugin" Guid="{68520489-ADD1-4488-B3F6-96AB6113D021}" Win64="$(var.Win64)">
+              <File Id="libasf_plugin" Name="libasf_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libau_plugin" Guid="{AE70CC1A-2666-41AD-BC2F-1E0A1B6A6AA1}" Win64="$(var.Win64)">
+              <File Id="libau_plugin" Name="libau_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libavi_plugin" Guid="{B7A2F5BE-E4A3-4604-9D0B-3F4F279C1A7B}" Win64="$(var.Win64)">
+              <File Id="libavi_plugin" Name="libavi_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libdemux_cdg_plugin" Guid="{545C52BF-F1F1-4C9E-AF33-FD8C389FC17A}" Win64="$(var.Win64)">
+              <File Id="libdemux_cdg_plugin" Name="libdemux_cdg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libdemux_stl_plugin" Guid="{1A16765F-0F48-4D24-9CA2-0BB38A237001}" Win64="$(var.Win64)">
+              <File Id="libdemux_stl_plugin" Name="libdemux_stl_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libdemuxdump_plugin" Guid="{6670B631-1CF4-4E9F-9EFE-5D1998D70723}" Win64="$(var.Win64)">
+              <File Id="libdemuxdump_plugin" Name="libdemuxdump_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libdirac_plugin" Guid="{AC3689E7-1147-4EA5-A125-85E56BF4A94D}" Win64="$(var.Win64)">
+              <File Id="libdirac_plugin" Name="libdirac_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libes_plugin" Guid="{8E436E95-4E6E-4842-9C1D-45464F3DBA3F}" Win64="$(var.Win64)">
+              <File Id="libes_plugin" Name="libes_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libflacsys_plugin" Guid="{8B00B659-A9A2-47E5-92DC-77735F3059E4}" Win64="$(var.Win64)">
+              <File Id="libflacsys_plugin" Name="libflacsys_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libgme_plugin" Guid="{331F6336-4E92-4510-B690-79B4434730DB}" Win64="$(var.Win64)">
+              <File Id="libgme_plugin" Name="libgme_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libh264_plugin" Guid="{03A1FE88-9952-49FE-A58C-F490FE38C6D3}" Win64="$(var.Win64)">
+              <File Id="libh264_plugin" Name="libh264_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libimage_plugin" Guid="{725A434E-68E2-44A1-A396-7E2C19795391}" Win64="$(var.Win64)">
+              <File Id="libimage_plugin" Name="libimage_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmjpeg_plugin" Guid="{76DFD59D-EBD8-41AB-A5BC-CC75D6C3921C}" Win64="$(var.Win64)">
+              <File Id="libmjpeg_plugin" Name="libmjpeg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmkv_plugin" Guid="{D260DA5C-6E7F-4551-84E0-77FB69ED3D47}" Win64="$(var.Win64)">
+              <File Id="libmkv_plugin" Name="libmkv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmod_plugin" Guid="{FA178CE1-262F-4D6B-8424-BADCABD1E9A8}" Win64="$(var.Win64)">
+              <File Id="libmod_plugin" Name="libmod_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmp4_plugin" Guid="{013F80C6-E88A-429D-A90B-1605B5EFCC9A}" Win64="$(var.Win64)">
+              <File Id="libmp4_plugin" Name="libmp4_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmpc_plugin" Guid="{08945DC7-EC01-4EFA-9269-83FFFD730B85}" Win64="$(var.Win64)">
+              <File Id="libmpc_plugin" Name="libmpc_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libmpgv_plugin" Guid="{5E0086A6-B657-4D3C-9C3D-30152D11A0D2}" Win64="$(var.Win64)">
+              <File Id="libmpgv_plugin" Name="libmpgv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libnsc_plugin" Guid="{2E17C812-51EE-4CA1-8DFE-5336D7FE499A}" Win64="$(var.Win64)">
+              <File Id="libnsc_plugin" Name="libnsc_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libnsv_plugin" Guid="{55FF6F22-872C-4A8D-B12D-582562B5C912}" Win64="$(var.Win64)">
+              <File Id="libnsv_plugin" Name="libnsv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libnuv_plugin" Guid="{9A3B2E16-9EF8-4720-8556-8A0F1221CCF2}" Win64="$(var.Win64)">
+              <File Id="libnuv_plugin" Name="libnuv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libogg_plugin" Guid="{B4F3EE66-8AAA-4938-BB46-FC1B85E866C0}" Win64="$(var.Win64)">
+              <File Id="libogg_plugin" Name="libogg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libplaylist_plugin" Guid="{1FDA625A-35B9-44DF-A11E-77FE46563B2C}" Win64="$(var.Win64)">
+              <File Id="libplaylist_plugin" Name="libplaylist_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libps_plugin" Guid="{26B6E18F-FD67-4AE5-AB11-7C373B06D978}" Win64="$(var.Win64)">
+              <File Id="libps_plugin" Name="libps_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libpva_plugin" Guid="{1DE4F726-9C7E-413A-ACCB-3F3F0D71078B}" Win64="$(var.Win64)">
+              <File Id="libpva_plugin" Name="libpva_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_librawaud_plugin" Guid="{AF00D4E7-84E0-4D0B-9A38-25F1A748E5DD}" Win64="$(var.Win64)">
+              <File Id="librawaud_plugin" Name="librawaud_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_librawdv_plugin" Guid="{927D6E81-6750-4985-950A-A9C650B8A1FD}" Win64="$(var.Win64)">
+              <File Id="librawdv_plugin" Name="librawdv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_librawvid_plugin" Guid="{1274C236-4AF0-496B-B592-A491A788896A}" Win64="$(var.Win64)">
+              <File Id="librawvid_plugin" Name="librawvid_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libreal_plugin" Guid="{0AB6CDC1-19A6-4A07-8785-CF146DA46843}" Win64="$(var.Win64)">
+              <File Id="libreal_plugin" Name="libreal_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libsid_plugin" Guid="{6E48F529-93F6-488D-8258-FACB371C12E1}" Win64="$(var.Win64)">
+              <File Id="libsid_plugin" Name="libsid_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libsmf_plugin" Guid="{2A0F93F7-2633-4A53-A877-BF59E47D2536}" Win64="$(var.Win64)">
+              <File Id="libsmf_plugin" Name="libsmf_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libsubtitle_plugin" Guid="{DD64EA4A-D13B-4DBE-A861-501A5762E2B0}" Win64="$(var.Win64)">
+              <File Id="libsubtitle_plugin" Name="libsubtitle_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libts_plugin" Guid="{B382AF01-F674-4573-B12E-F1EE167E12BA}" Win64="$(var.Win64)">
+              <File Id="libts_plugin" Name="libts_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libtta_plugin" Guid="{BE69E985-E0C2-4A7E-A4F5-9727DB035CBB}" Win64="$(var.Win64)">
+              <File Id="libtta_plugin" Name="libtta_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libty_plugin" Guid="{BFCA6798-5487-4D76-9281-11FFE3A48F06}" Win64="$(var.Win64)">
+              <File Id="libty_plugin" Name="libty_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libvc1_plugin" Guid="{FD1BE2E9-CA2D-4044-B424-2EDAD95BC9AE}" Win64="$(var.Win64)">
+              <File Id="libvc1_plugin" Name="libvc1_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libvobsub_plugin" Guid="{F6E28D66-C55E-4677-9867-302010A7CA9C}" Win64="$(var.Win64)">
+              <File Id="libvobsub_plugin" Name="libvobsub_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libvoc_plugin" Guid="{C5ADA944-64A0-4DBF-AF1F-4F51D42823B0}" Win64="$(var.Win64)">
+              <File Id="libvoc_plugin" Name="libvoc_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libwav_plugin" Guid="{3878C603-7BAE-4224-8EBE-315CA23E7056}" Win64="$(var.Win64)">
+              <File Id="libwav_plugin" Name="libwav_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+            <Component Id="C_libxa_plugin" Guid="{A5A933A0-358D-4708-A51C-904C95C00092}" Win64="$(var.Win64)">
+              <File Id="libxa_plugin" Name="libxa_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\demux\" />
+            </Component>
+          </Directory>
+          <Directory Id="mux" Name="mux">
+            <Component Id="C_libmux_asf_plugin" Guid="{883DB9B8-AE9A-4F48-BBC9-2125F7BEDD87}" Win64="$(var.Win64)">
+              <File Id="libmux_asf_plugin" Name="libmux_asf_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_avi_plugin" Guid="{2CF746CA-3C32-4752-A41C-8984911187CE}" Win64="$(var.Win64)">
+              <File Id="libmux_avi_plugin" Name="libmux_avi_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_dummy_plugin" Guid="{1DE2D225-7CA5-4719-904C-97B44D96C3D9}" Win64="$(var.Win64)">
+              <File Id="libmux_dummy_plugin" Name="libmux_dummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_mp4_plugin" Guid="{AFBFFCAA-C57E-4CA4-B814-1566EDEE695A}" Win64="$(var.Win64)">
+              <File Id="libmux_mp4_plugin" Name="libmux_mp4_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_mpjpeg_plugin" Guid="{1C623815-5713-483E-8D8B-B066DF14F748}" Win64="$(var.Win64)">
+              <File Id="libmux_mpjpeg_plugin" Name="libmux_mpjpeg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_ogg_plugin" Guid="{512A499E-4555-496F-B939-B3A410C4C918}" Win64="$(var.Win64)">
+              <File Id="libmux_ogg_plugin" Name="libmux_ogg_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_ps_plugin" Guid="{93B5E643-B2AD-49D6-B291-77349135CD67}" Win64="$(var.Win64)">
+              <File Id="libmux_ps_plugin" Name="libmux_ps_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_ts_plugin" Guid="{CBDB26F1-0748-48D3-8BF1-772617296084}" Win64="$(var.Win64)">
+              <File Id="libmux_ts_plugin" Name="libmux_ts_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+            <Component Id="C_libmux_wav_plugin" Guid="{A1F237F9-555F-4C71-8069-A839586C140A}" Win64="$(var.Win64)">
+              <File Id="libmux_wav_plugin" Name="libmux_wav_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\mux\" />
+            </Component>
+          </Directory>
+          <Directory Id="packetizer" Name="packetizer">
+            <Component Id="C_libpacketizer_copy_plugin" Guid="{432A912C-8A94-4834-A036-0EFD79B32E2A}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_copy_plugin" Name="libpacketizer_copy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_dirac_plugin" Guid="{11B04689-2A3E-4416-973C-0728E7CD526C}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_dirac_plugin" Name="libpacketizer_dirac_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_flac_plugin" Guid="{40B8A737-91AB-4AD2-B5F3-6A6B08AF3392}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_flac_plugin" Name="libpacketizer_flac_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_h264_plugin" Guid="{B821BF7D-12A6-47DC-A432-0850FE9C96A5}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_h264_plugin" Name="libpacketizer_h264_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_mlp_plugin" Guid="{DDDB57AE-4850-4FB7-B8D1-4271947040EC}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_mlp_plugin" Name="libpacketizer_mlp_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_mpeg4audio_plugin" Guid="{64D0FCA5-B4A8-4167-90D6-A39DDC1E2A45}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_mpeg4audio_plugin" Name="libpacketizer_mpeg4audio_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_mpeg4video_plugin" Guid="{19E650EF-D7AA-477D-9DCD-6A534F792965}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_mpeg4video_plugin" Name="libpacketizer_mpeg4video_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_mpegvideo_plugin" Guid="{1A681981-4FE0-495E-9959-90FF7A4029AF}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_mpegvideo_plugin" Name="libpacketizer_mpegvideo_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+            <Component Id="C_libpacketizer_vc1_plugin" Guid="{2F23691E-DCFB-43DB-9DBC-D98C5AE1037E}" Win64="$(var.Win64)">
+              <File Id="libpacketizer_vc1_plugin" Name="libpacketizer_vc1_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\packetizer\" />
+            </Component>
+          </Directory>
+          <Directory Id="stream_out" Name="stream_out">
+            <Component Id="C_libstream_out_display_plugin" Guid="{D2815198-D976-4513-8AE2-8C2283546C7D}" Win64="$(var.Win64)">
+              <File Id="libstream_out_display_plugin" Name="libstream_out_display_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\stream_out\" />
+            </Component>
+            <Component Id="C_libstream_out_dummy_plugin" Guid="{E6A39674-D8B8-4882-AE32-5815CA0E8A0D}" Win64="$(var.Win64)">
+              <File Id="libstream_out_dummy_plugin" Name="libstream_out_dummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\stream_out\" />
+            </Component>
+            <Component Id="C_libstream_out_standard_plugin" Guid="{8F8BEC00-E0DE-435E-B255-CF31EC5E1F64}" Win64="$(var.Win64)">
+              <File Id="libstream_out_standard_plugin" Name="libstream_out_standard_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\stream_out\" />
+            </Component>
+            <Component Id="C_libstream_out_transcode_plugin" Guid="{5D7732BB-77EE-4457-90C9-C70D8A2BF0BA}" Win64="$(var.Win64)">
+              <File Id="libstream_out_transcode_plugin" Name="libstream_out_transcode_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\stream_out\" />
+            </Component>
+          </Directory>
+          <Directory Id="video_output" Name="video_output">
+            <Component Id="C_libcaca_plugin" Guid="{ADC30DBB-6AAE-4BF7-9547-45E646146D9D}" Win64="$(var.Win64)">
+              <File Id="libcaca_plugin" Name="libcaca_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libdirect2d_plugin" Guid="{C01F7964-4C58-4CF9-B223-79C8BE21817D}" Win64="$(var.Win64)">
+              <File Id="libdirect2d_plugin" Name="libdirect2d_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libdirect3d_plugin" Guid="{E517CE8A-836A-40B7-B1B7-F7A99D371DEE}" Win64="$(var.Win64)">
+              <File Id="libdirect3d_plugin" Name="libdirect3d_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libdirectdraw_plugin" Guid="{1094B53C-F1F1-4C01-823E-3DAEE6D3410D}" Win64="$(var.Win64)">
+              <File Id="libdirectdraw_plugin" Name="libdirectdraw_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libdrawable_plugin" Guid="{BDF30CFC-253D-498A-AF32-345680A11B4F}" Win64="$(var.Win64)">
+              <File Id="libdrawable_plugin" Name="libdrawable_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libglwin32_plugin" Guid="{34128624-71D8-4408-AD4B-D55F1379CBBF}" Win64="$(var.Win64)">
+              <File Id="libglwin32_plugin" Name="libglwin32_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libvdummy_plugin" Guid="{D5C0AC02-27BE-4502-847B-274EC3B0F015}" Win64="$(var.Win64)">
+              <File Id="libvdummy_plugin" Name="libvdummy_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libvmem_plugin" Guid="{63D9145A-1EA6-4B97-B161-8206D39AF9A0}" Win64="$(var.Win64)">
+              <File Id="libvmem_plugin" Name="libvmem_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libwingdi_plugin" Guid="{F795B107-EB62-4990-B4F8-EB027D612214}" Win64="$(var.Win64)">
+              <File Id="libwingdi_plugin" Name="libwingdi_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
+            <Component Id="C_libyuv_plugin" Guid="{8B552777-D05E-4853-9010-156927B9406C}" Win64="$(var.Win64)">
+              <File Id="libyuv_plugin" Name="libyuv_plugin.dll" KeyPath="yes"
+                    DiskId="1" Source="$(var.SolutionDir)VlcLibs\$(var.PlatformName)\plugins\video_output\" />
+            </Component>
           </Directory>
         </Directory>
       </Directory>
     </DirectoryRef>
 
     <Feature Id='VlcFeature' Title='Vlc' Description='Installs vlc libraries for the application.' Level='1'>
-      <Feature Id='VlcFeaturex86' Title='Vlc(x86 Libs)' Description='Installs vlc x86 libraries for the application.' Level='1'>
-        <ComponentRef Id="C_libvlc"/>
-        <ComponentRef Id="C_libvlccore"/>
-        <ComponentRef Id="C_libfilesystem_plugin"/>
-        <ComponentRef Id="C_libidummy_plugin"/>
-        <ComponentRef Id="C_libscreen_plugin"/>
-        <ComponentRef Id="C_libaccess_output_dummy_plugin"/>
-        <ComponentRef Id="C_libaccess_output_file_plugin"/>
-        <ComponentRef Id="C_libadummy_plugin"/>
-        <ComponentRef Id="C_libafile_plugin"/>
-        <ComponentRef Id="C_libamem_plugin"/>
-        <ComponentRef Id="C_libdirectsound_plugin" />
-        <ComponentRef Id="C_libmmdevice_plugin" />
-        <ComponentRef Id="C_libwaveout_plugin"/>
-        <ComponentRef Id="C_liba52_plugin"/>
-        <ComponentRef Id="C_libadpcm_plugin"/>
-        <ComponentRef Id="C_libaes3_plugin"/>
-        <ComponentRef Id="C_libaraw_plugin"/>
-        <ComponentRef Id="C_libavcodec_plugin"/>
-        <ComponentRef Id="C_libcc_plugin" />
-        <ComponentRef Id="C_libcdg_plugin"/>
-        <ComponentRef Id="C_libcrystalhd_plugin"/>
-        <ComponentRef Id="C_libcvdsub_plugin"/>
-        <ComponentRef Id="C_libddummy_plugin"/>
-        <ComponentRef Id="C_libdmo_plugin"/>
-        <ComponentRef Id="C_libdts_plugin"/>
-        <ComponentRef Id="C_libdvbsub_plugin" />
-        <ComponentRef Id="C_libdxva2_plugin"/>
-        <ComponentRef Id="C_libedummy_plugin"/>
-        <ComponentRef Id="C_libfaad_plugin"/>
-        <ComponentRef Id="C_libflac_plugin"/>
-        <ComponentRef Id="C_libg711_plugin"/>
-        <ComponentRef Id="C_libkate_plugin"/>
-        <ComponentRef Id="C_liblibass_plugin"/>
-        <ComponentRef Id="C_liblibmpeg2_plugin"/>
-        <ComponentRef Id="C_liblpcm_plugin"/>
-        <ComponentRef Id="C_libmpeg_audio_plugin"/>
-        <ComponentRef Id="C_libopus_plugin"/>
-        <ComponentRef Id="C_libpng_plugin"/>
-        <ComponentRef Id="C_libqsv_plugin"/>
-        <ComponentRef Id="C_libquicktime_plugin" />
-        <ComponentRef Id="C_librawvideo_plugin"/>
-        <ComponentRef Id="C_libschroedinger_plugin"/>
-        <ComponentRef Id="C_libscte27_plugin"/>
-        <ComponentRef Id="C_libspeex_plugin"/>
-        <ComponentRef Id="C_libspudec_plugin" />
-        <ComponentRef Id="C_libstl_plugin"/>
-        <ComponentRef Id="C_libsubsdec_plugin"/>
-        <ComponentRef Id="C_libsubsusf_plugin"/>
-        <ComponentRef Id="C_libsvcdsub_plugin"/>
-        <ComponentRef Id="C_libt140_plugin" />
-        <ComponentRef Id="C_libtheora_plugin" />
-        <ComponentRef Id="C_libtwolame_plugin"/>
-        <ComponentRef Id="C_libuleaddvaudio_plugin"/>
-        <ComponentRef Id="C_libvorbis_plugin"/>
-        <ComponentRef Id="C_libx264_plugin"/>
-        <ComponentRef Id="C_libzvbi_plugin"/>
-        <ComponentRef Id="C_libaiff_plugin" />
-        <ComponentRef Id="C_libasf_plugin"/>
-        <ComponentRef Id="C_libau_plugin"/>
-        <ComponentRef Id="C_libavi_plugin"/>
-        <ComponentRef Id="C_libdemux_cdg_plugin"/>
-        <ComponentRef Id="C_libdemux_stl_plugin"/>
-        <ComponentRef Id="C_libdemuxdump_plugin"/>
-        <ComponentRef Id="C_libdirac_plugin"/>
-        <ComponentRef Id="C_libes_plugin"/>
-        <ComponentRef Id="C_libflacsys_plugin"/>
-        <ComponentRef Id="C_libgme_plugin"/>
-        <ComponentRef Id="C_libh264_plugin"/>
-        <ComponentRef Id="C_libimage_plugin" />
-        <ComponentRef Id="C_libmjpeg_plugin"/>
-        <ComponentRef Id="C_libmkv_plugin"/>
-        <ComponentRef Id="C_libmod_plugin"/>
-        <ComponentRef Id="C_libmp4_plugin"/>
-        <ComponentRef Id="C_libmpc_plugin"/>
-        <ComponentRef Id="C_libmpgv_plugin"/>
-        <ComponentRef Id="C_libnsc_plugin"/>
-        <ComponentRef Id="C_libnsv_plugin"/>
-        <ComponentRef Id="C_libnuv_plugin"/>
-        <ComponentRef Id="C_libogg_plugin"/>
-        <ComponentRef Id="C_libplaylist_plugin"/>
-        <ComponentRef Id="C_libps_plugin"/>
-        <ComponentRef Id="C_libpva_plugin"/>
-        <ComponentRef Id="C_librawaud_plugin"/>
-        <ComponentRef Id="C_librawdv_plugin"/>
-        <ComponentRef Id="C_librawvid_plugin"/>
-        <ComponentRef Id="C_libreal_plugin"/>
-        <ComponentRef Id="C_libsid_plugin"/>
-        <ComponentRef Id="C_libsmf_plugin"/>
-        <ComponentRef Id="C_libsubtitle_plugin" />
-        <ComponentRef Id="C_libts_plugin"/>
-        <ComponentRef Id="C_libtta_plugin"/>
-        <ComponentRef Id="C_libty_plugin"/>
-        <ComponentRef Id="C_libvc1_plugin"/>
-        <ComponentRef Id="C_libvobsub_plugin"/>
-        <ComponentRef Id="C_libvoc_plugin"/>
-        <ComponentRef Id="C_libwav_plugin"/>
-        <ComponentRef Id="C_libxa_plugin"/>
-        <ComponentRef Id="C_libmux_asf_plugin"/>
-        <ComponentRef Id="C_libmux_avi_plugin"/>
-        <ComponentRef Id="C_libmux_dummy_plugin" />
-        <ComponentRef Id="C_libmux_mp4_plugin"/>
-        <ComponentRef Id="C_libmux_mpjpeg_plugin" />
-        <ComponentRef Id="C_libmux_ogg_plugin"/>
-        <ComponentRef Id="C_libmux_ps_plugin" />
-        <ComponentRef Id="C_libmux_ts_plugin" />
-        <ComponentRef Id="C_libmux_wav_plugin" />
-        <ComponentRef Id="C_libpacketizer_copy_plugin"/>
-        <ComponentRef Id="C_libpacketizer_dirac_plugin"/>
-        <ComponentRef Id="C_libpacketizer_flac_plugin"/>
-        <ComponentRef Id="C_libpacketizer_h264_plugin" />
-        <ComponentRef Id="C_libpacketizer_mlp_plugin" />
-        <ComponentRef Id="C_libpacketizer_mpeg4audio_plugin"/>
-        <ComponentRef Id="C_libpacketizer_mpeg4video_plugin" />
-        <ComponentRef Id="C_libpacketizer_mpegvideo_plugin" />
-        <ComponentRef Id="C_libpacketizer_vc1_plugin" />
-        <ComponentRef Id="C_libstream_out_display_plugin" />
-        <ComponentRef Id="C_libstream_out_dummy_plugin"/>
-        <ComponentRef Id="C_libstream_out_standard_plugin" />
-        <ComponentRef Id="C_libstream_out_transcode_plugin"/>
-        <ComponentRef Id="C_libcaca_plugin"/>
-        <ComponentRef Id="C_libdirect2d_plugin"/>
-        <ComponentRef Id="C_libdirect3d_plugin"/>
-        <ComponentRef Id="C_libdirectdraw_plugin" />
-        <ComponentRef Id="C_libdrawable_plugin"/>
-        <ComponentRef Id="C_libglwin32_plugin"/>
-        <ComponentRef Id="C_libvdummy_plugin"/>
-        <ComponentRef Id="C_libvmem_plugin" />
-        <ComponentRef Id="C_libwingdi_plugin"/>
-        <ComponentRef Id="C_libyuv_plugin" />
-      </Feature>
-      <Feature Id='VlcFeaturex64' Title='Vlc(x64 Libs)' Description='Installs vlc x64 libraries for the application.' Level='1'>
-        <ComponentRef Id="C_libvlcx64"/>
-        <ComponentRef Id="C_libvlccorex64"/>
-        <ComponentRef Id="C_libgcc_s_seh_1x64"/>
-        <ComponentRef Id="C_libstdc6x64"/>
-        <ComponentRef Id="C_libwinpthread_1x64"/>
-        <ComponentRef Id="C_npvlcx64"/>
-        <ComponentRef Id="C_libfilesystem_pluginx64"/>
-        <ComponentRef Id="C_libidummy_pluginx64"/>
-        <ComponentRef Id="C_libscreen_pluginx64"/>
-        <ComponentRef Id="C_libaccess_output_dummy_pluginx64"/>
-        <ComponentRef Id="C_libaccess_output_file_pluginx64"/>
-        <ComponentRef Id="C_libadummy_pluginx64"/>
-        <ComponentRef Id="C_libafile_pluginx64"/>
-        <ComponentRef Id="C_libamem_pluginx64"/>
-        <ComponentRef Id="C_libdirectsound_pluginx64"/>
-        <ComponentRef Id="C_libmmdevice_pluginx64"/>
-        <ComponentRef Id="C_libwaveout_pluginx64"/>
-        <ComponentRef Id="C_liba52_pluginx64"/>
-        <ComponentRef Id="C_libadpcm_pluginx64"/>
-        <ComponentRef Id="C_libaes3_pluginx64"/>
-        <ComponentRef Id="C_libaraw_pluginx64"/>
-        <ComponentRef Id="C_libavcodec_pluginx64"/>
-        <ComponentRef Id="C_libcc_pluginx64"/>
-        <ComponentRef Id="C_libcdg_pluginx64"/>
-        <ComponentRef Id="C_libcrystalhd_pluginx64"/>
-        <ComponentRef Id="C_libcvdsub_pluginx64"/>
-        <ComponentRef Id="C_libddummy_pluginx64"/>
-        <ComponentRef Id="C_libdmo_pluginx64"/>
-        <ComponentRef Id="C_libdts_pluginx64"/>
-        <ComponentRef Id="C_libdvbsub_pluginx64"/>
-        <ComponentRef Id="C_libdxva2_pluginx64"/>
-        <ComponentRef Id="C_libedummy_pluginx64"/>
-        <ComponentRef Id="C_libfaad_pluginx64"/>
-        <ComponentRef Id="C_libflac_pluginx64"/>
-        <ComponentRef Id="C_libg711_pluginx64"/>
-        <ComponentRef Id="C_libkate_pluginx64"/>
-        <ComponentRef Id="C_liblibass_pluginx64"/>
-        <ComponentRef Id="C_liblibmpeg2_pluginx64"/>
-        <ComponentRef Id="C_liblpcm_pluginx64"/>
-        <ComponentRef Id="C_libmpeg_audio_pluginx64"/>
-        <ComponentRef Id="C_libopus_pluginx64"/>
-        <ComponentRef Id="C_libpng_pluginx64"/>
-        <ComponentRef Id="C_libqsv_pluginx64"/>
-        <ComponentRef Id="C_libquicktime_pluginx64"/>
-        <ComponentRef Id="C_librawvideo_pluginx64"/>
-        <ComponentRef Id="C_libschroedinger_pluginx64"/>
-        <ComponentRef Id="C_libscte27_pluginx64"/>
-        <ComponentRef Id="C_libspeex_pluginx64"/>
-        <ComponentRef Id="C_libspudec_pluginx64"/>
-        <ComponentRef Id="C_libstl_pluginx64"/>
-        <ComponentRef Id="C_libsubsdec_pluginx64"/>
-        <ComponentRef Id="C_libsubsusf_pluginx64"/>
-        <ComponentRef Id="C_libsvcdsub_pluginx64"/>
-        <ComponentRef Id="C_libt140_pluginx64"/>
-        <ComponentRef Id="C_libtheora_pluginx64"/>
-        <ComponentRef Id="C_libtwolame_pluginx64"/>
-        <ComponentRef Id="C_libuleaddvaudio_pluginx64"/>
-        <ComponentRef Id="C_libvorbis_pluginx64"/>
-        <ComponentRef Id="C_libx264_pluginx64"/>
-        <ComponentRef Id="C_libzvbi_pluginx64"/>
-        <ComponentRef Id="C_libaiff_pluginx64"/>
-        <ComponentRef Id="C_libasf_pluginx64"/>
-        <ComponentRef Id="C_libau_pluginx64"/>
-        <ComponentRef Id="C_libavi_pluginx64"/>
-        <ComponentRef Id="C_libdemux_cdg_pluginx64"/>
-        <ComponentRef Id="C_libdemux_stl_pluginx64"/>
-        <ComponentRef Id="C_libdemuxdump_pluginx64"/>
-        <ComponentRef Id="C_libdirac_pluginx64"/>
-        <ComponentRef Id="C_libes_pluginx64"/>
-        <ComponentRef Id="C_libflacsys_pluginx64"/>
-        <ComponentRef Id="C_libgme_pluginx64"/>
-        <ComponentRef Id="C_libh264_pluginx64"/>
-        <ComponentRef Id="C_libimage_pluginx64"/>
-        <ComponentRef Id="C_libmjpeg_pluginx64"/>
-        <ComponentRef Id="C_libmkv_pluginx64"/>
-        <ComponentRef Id="C_libmod_pluginx64"/>
-        <ComponentRef Id="C_libmp4_pluginx64"/>
-        <ComponentRef Id="C_libmpc_pluginx64"/>
-        <ComponentRef Id="C_libmpgv_pluginx64"/>
-        <ComponentRef Id="C_libnsc_pluginx64"/>
-        <ComponentRef Id="C_libnsv_pluginx64"/>
-        <ComponentRef Id="C_libnuv_pluginx64"/>
-        <ComponentRef Id="C_libogg_pluginx64"/>
-        <ComponentRef Id="C_libplaylist_pluginx64"/>
-        <ComponentRef Id="C_libps_pluginx64"/>
-        <ComponentRef Id="C_libpva_pluginx64"/>
-        <ComponentRef Id="C_librawaud_pluginx64"/>
-        <ComponentRef Id="C_librawdv_pluginx64"/>
-        <ComponentRef Id="C_librawvid_pluginx64"/>
-        <ComponentRef Id="C_libreal_pluginx64"/>
-        <ComponentRef Id="C_libsid_pluginx64"/>
-        <ComponentRef Id="C_libsmf_pluginx64"/>
-        <ComponentRef Id="C_libsubtitle_pluginx64"/>
-        <ComponentRef Id="C_libts_pluginx64"/>
-        <ComponentRef Id="C_libtta_pluginx64"/>
-        <ComponentRef Id="C_libty_pluginx64"/>
-        <ComponentRef Id="C_libvc1_pluginx64"/>
-        <ComponentRef Id="C_libvobsub_pluginx64"/>
-        <ComponentRef Id="C_libvoc_pluginx64"/>
-        <ComponentRef Id="C_libwav_pluginx64"/>
-        <ComponentRef Id="C_libxa_pluginx64"/>
-        <ComponentRef Id="C_libmux_asf_pluginx64"/>
-        <ComponentRef Id="C_libmux_avi_pluginx64"/>
-        <ComponentRef Id="C_libmux_dummy_pluginx64"/>
-        <ComponentRef Id="C_libmux_mp4_pluginx64"/>
-        <ComponentRef Id="C_libmux_mpjpeg_pluginx64"/>
-        <ComponentRef Id="C_libmux_ogg_pluginx64"/>
-        <ComponentRef Id="C_libmux_ps_pluginx64"/>
-        <ComponentRef Id="C_libmux_ts_pluginx64"/>
-        <ComponentRef Id="C_libmux_wav_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_copy_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_dirac_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_flac_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_h264_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_mlp_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_mpeg4audio_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_mpeg4video_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_mpegvideo_pluginx64"/>
-        <ComponentRef Id="C_libpacketizer_vc1_pluginx64"/>
-        <ComponentRef Id="C_libstream_out_display_pluginx64"/>
-        <ComponentRef Id="C_libstream_out_dummy_pluginx64"/>
-        <ComponentRef Id="C_libstream_out_standard_pluginx64"/>
-        <ComponentRef Id="C_libstream_out_transcode_pluginx64"/>
-        <ComponentRef Id="C_libcaca_pluginx64"/>
-        <ComponentRef Id="C_libdirect2d_pluginx64"/>
-        <ComponentRef Id="C_libdirect3d_pluginx64"/>
-        <ComponentRef Id="C_libdirectdraw_pluginx64"/>
-        <ComponentRef Id="C_libdrawable_pluginx64"/>
-        <ComponentRef Id="C_libglwin32_pluginx64"/>
-        <ComponentRef Id="C_libvdummy_pluginx64"/>
-        <ComponentRef Id="C_libvmem_pluginx64"/>
-        <ComponentRef Id="C_libwingdi_pluginx64"/>
-        <ComponentRef Id="C_libyuv_pluginx64"/>
-      </Feature>
+      <ComponentRef Id="C_libvlc"/>
+      <ComponentRef Id="C_libvlccore"/>
+      <?if $(var.Platform) = x64 ?>
+      <ComponentRef Id="C_libgcc_s_seh_1x64"/>
+      <ComponentRef Id="C_libstdc6x64"/>
+      <ComponentRef Id="C_libwinpthread_1x64"/>
+      <ComponentRef Id="C_npvlcx64"/>
+      <?endif ?>
+      <ComponentRef Id="C_libfilesystem_plugin"/>
+      <ComponentRef Id="C_libidummy_plugin"/>
+      <ComponentRef Id="C_libscreen_plugin"/>
+      <ComponentRef Id="C_libaccess_output_dummy_plugin"/>
+      <ComponentRef Id="C_libaccess_output_file_plugin"/>
+      <ComponentRef Id="C_libadummy_plugin"/>
+      <ComponentRef Id="C_libafile_plugin"/>
+      <ComponentRef Id="C_libamem_plugin"/>
+      <ComponentRef Id="C_libdirectsound_plugin" />
+      <ComponentRef Id="C_libmmdevice_plugin" />
+      <ComponentRef Id="C_libwaveout_plugin"/>
+      <ComponentRef Id="C_liba52_plugin"/>
+      <ComponentRef Id="C_libadpcm_plugin"/>
+      <ComponentRef Id="C_libaes3_plugin"/>
+      <ComponentRef Id="C_libaraw_plugin"/>
+      <ComponentRef Id="C_libavcodec_plugin"/>
+      <ComponentRef Id="C_libcc_plugin" />
+      <ComponentRef Id="C_libcdg_plugin"/>
+      <ComponentRef Id="C_libcrystalhd_plugin"/>
+      <ComponentRef Id="C_libcvdsub_plugin"/>
+      <ComponentRef Id="C_libddummy_plugin"/>
+      <ComponentRef Id="C_libdmo_plugin"/>
+      <ComponentRef Id="C_libdts_plugin"/>
+      <ComponentRef Id="C_libdvbsub_plugin" />
+      <ComponentRef Id="C_libdxva2_plugin"/>
+      <ComponentRef Id="C_libedummy_plugin"/>
+      <ComponentRef Id="C_libfaad_plugin"/>
+      <ComponentRef Id="C_libflac_plugin"/>
+      <ComponentRef Id="C_libg711_plugin"/>
+      <ComponentRef Id="C_libkate_plugin"/>
+      <ComponentRef Id="C_liblibass_plugin"/>
+      <ComponentRef Id="C_liblibmpeg2_plugin"/>
+      <ComponentRef Id="C_liblpcm_plugin"/>
+      <ComponentRef Id="C_libmpeg_audio_plugin"/>
+      <ComponentRef Id="C_libopus_plugin"/>
+      <ComponentRef Id="C_libpng_plugin"/>
+      <?if $(var.Platform) = x86 ?>
+      <ComponentRef Id="C_libqsv_plugin"/>
+      <?endif ?>
+      <ComponentRef Id="C_libquicktime_plugin" />
+      <ComponentRef Id="C_librawvideo_plugin"/>
+      <ComponentRef Id="C_libschroedinger_plugin"/>
+      <ComponentRef Id="C_libscte27_plugin"/>
+      <ComponentRef Id="C_libspeex_plugin"/>
+      <ComponentRef Id="C_libspudec_plugin" />
+      <ComponentRef Id="C_libstl_plugin"/>
+      <ComponentRef Id="C_libsubsdec_plugin"/>
+      <ComponentRef Id="C_libsubsusf_plugin"/>
+      <ComponentRef Id="C_libsvcdsub_plugin"/>
+      <ComponentRef Id="C_libt140_plugin" />
+      <ComponentRef Id="C_libtheora_plugin" />
+      <ComponentRef Id="C_libtwolame_plugin"/>
+      <ComponentRef Id="C_libuleaddvaudio_plugin"/>
+      <ComponentRef Id="C_libvorbis_plugin"/>
+      <ComponentRef Id="C_libx264_plugin"/>
+      <ComponentRef Id="C_libzvbi_plugin"/>
+      <ComponentRef Id="C_libaiff_plugin" />
+      <ComponentRef Id="C_libasf_plugin"/>
+      <ComponentRef Id="C_libau_plugin"/>
+      <ComponentRef Id="C_libavi_plugin"/>
+      <ComponentRef Id="C_libdemux_cdg_plugin"/>
+      <ComponentRef Id="C_libdemux_stl_plugin"/>
+      <ComponentRef Id="C_libdemuxdump_plugin"/>
+      <ComponentRef Id="C_libdirac_plugin"/>
+      <ComponentRef Id="C_libes_plugin"/>
+      <ComponentRef Id="C_libflacsys_plugin"/>
+      <ComponentRef Id="C_libgme_plugin"/>
+      <ComponentRef Id="C_libh264_plugin"/>
+      <ComponentRef Id="C_libimage_plugin" />
+      <ComponentRef Id="C_libmjpeg_plugin"/>
+      <ComponentRef Id="C_libmkv_plugin"/>
+      <ComponentRef Id="C_libmod_plugin"/>
+      <ComponentRef Id="C_libmp4_plugin"/>
+      <ComponentRef Id="C_libmpc_plugin"/>
+      <ComponentRef Id="C_libmpgv_plugin"/>
+      <ComponentRef Id="C_libnsc_plugin"/>
+      <ComponentRef Id="C_libnsv_plugin"/>
+      <ComponentRef Id="C_libnuv_plugin"/>
+      <ComponentRef Id="C_libogg_plugin"/>
+      <ComponentRef Id="C_libplaylist_plugin"/>
+      <ComponentRef Id="C_libps_plugin"/>
+      <ComponentRef Id="C_libpva_plugin"/>
+      <ComponentRef Id="C_librawaud_plugin"/>
+      <ComponentRef Id="C_librawdv_plugin"/>
+      <ComponentRef Id="C_librawvid_plugin"/>
+      <ComponentRef Id="C_libreal_plugin"/>
+      <ComponentRef Id="C_libsid_plugin"/>
+      <ComponentRef Id="C_libsmf_plugin"/>
+      <ComponentRef Id="C_libsubtitle_plugin" />
+      <ComponentRef Id="C_libts_plugin"/>
+      <ComponentRef Id="C_libtta_plugin"/>
+      <ComponentRef Id="C_libty_plugin"/>
+      <ComponentRef Id="C_libvc1_plugin"/>
+      <ComponentRef Id="C_libvobsub_plugin"/>
+      <ComponentRef Id="C_libvoc_plugin"/>
+      <ComponentRef Id="C_libwav_plugin"/>
+      <ComponentRef Id="C_libxa_plugin"/>
+      <ComponentRef Id="C_libmux_asf_plugin"/>
+      <ComponentRef Id="C_libmux_avi_plugin"/>
+      <ComponentRef Id="C_libmux_dummy_plugin" />
+      <ComponentRef Id="C_libmux_mp4_plugin"/>
+      <ComponentRef Id="C_libmux_mpjpeg_plugin" />
+      <ComponentRef Id="C_libmux_ogg_plugin"/>
+      <ComponentRef Id="C_libmux_ps_plugin" />
+      <ComponentRef Id="C_libmux_ts_plugin" />
+      <ComponentRef Id="C_libmux_wav_plugin" />
+      <ComponentRef Id="C_libpacketizer_copy_plugin"/>
+      <ComponentRef Id="C_libpacketizer_dirac_plugin"/>
+      <ComponentRef Id="C_libpacketizer_flac_plugin"/>
+      <ComponentRef Id="C_libpacketizer_h264_plugin" />
+      <ComponentRef Id="C_libpacketizer_mlp_plugin" />
+      <ComponentRef Id="C_libpacketizer_mpeg4audio_plugin"/>
+      <ComponentRef Id="C_libpacketizer_mpeg4video_plugin" />
+      <ComponentRef Id="C_libpacketizer_mpegvideo_plugin" />
+      <ComponentRef Id="C_libpacketizer_vc1_plugin" />
+      <ComponentRef Id="C_libstream_out_display_plugin" />
+      <ComponentRef Id="C_libstream_out_dummy_plugin"/>
+      <ComponentRef Id="C_libstream_out_standard_plugin" />
+      <ComponentRef Id="C_libstream_out_transcode_plugin"/>
+      <ComponentRef Id="C_libcaca_plugin"/>
+      <ComponentRef Id="C_libdirect2d_plugin"/>
+      <ComponentRef Id="C_libdirect3d_plugin"/>
+      <ComponentRef Id="C_libdirectdraw_plugin" />
+      <ComponentRef Id="C_libdrawable_plugin"/>
+      <ComponentRef Id="C_libglwin32_plugin"/>
+      <ComponentRef Id="C_libvdummy_plugin"/>
+      <ComponentRef Id="C_libvmem_plugin" />
+      <ComponentRef Id="C_libwingdi_plugin"/>
+      <ComponentRef Id="C_libyuv_plugin" />
     </Feature>
   </Fragment>
 </Wix>

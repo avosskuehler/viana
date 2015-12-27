@@ -40,7 +40,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Freie Universität Berlin")]
 [assembly: AssemblyProduct("Viana.NET")]
-[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2014")]
+[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -66,6 +66,6 @@ using System.Windows;
 // Revision
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("5.0.*")]
+[assembly: AssemblyVersion("5.5.*")]
 [assembly: Guid("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]
-[assembly: AssemblyFileVersion("5.0.3")]
+[assembly: AssemblyFileVersion("5.5.0")]

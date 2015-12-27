@@ -376,14 +376,9 @@ namespace VianaNET.Modules.Video.Control
         {
           this.BuildGraph();
         }
-        catch (Exception)
+        catch (ArgumentOutOfRangeException)
         {
-          // Store filename
-          //var file = this.VideoFilename;
-          //this.Dispose();
-          //this.ReRenderVideoFile(file);
-          //fileName = Viana.Project.VideoFile;
-          //goto Start;
+          // Found no directshow codec to decode
           return false;
         }
 
