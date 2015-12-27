@@ -486,7 +486,7 @@ namespace VianaNET.Modules.Video.Control
     {
       if (forward)
       {
-        if (Video.Instance.IsDataAcquisitionRunning)
+        if (Video.Instance.IsDataAcquisitionRunning || this.frameStep != null)
         {
           this.StepFrames(1);
         }
@@ -737,6 +737,7 @@ namespace VianaNET.Modules.Video.Control
               }
               else if (ec == EventCode.StepComplete)
               {
+                Console.WriteLine("StepComplete");
                 // Throw event
                 if (this.StepComplete != null)
                 {

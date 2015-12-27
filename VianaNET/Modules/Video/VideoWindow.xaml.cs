@@ -898,6 +898,7 @@ namespace VianaNET.Modules.Video
             Viana.Project.ProcessingData.ProcessImage();
           });
 
+
       // Run next sample
       this.Dispatcher.Invoke(
         (ThreadStart)delegate
@@ -1141,7 +1142,7 @@ namespace VianaNET.Modules.Video
 
         // double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
         // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
-        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = Math.Round(preciseTime * VideoBase.NanoSecsToMilliSecs);
       }
     }
 
@@ -1153,6 +1154,7 @@ namespace VianaNET.Modules.Video
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
         Video.Instance.StepOneFrame(false);
+
       }
     }
 

@@ -971,8 +971,8 @@ namespace VianaNET.MainWindow
 
       this.Refresh();
 
-      // Switch to datagrid window
-      this.VideoTab.IsSelected = true;
+      // Switch to chart window
+      this.ChartTab.IsSelected = true;
     }
 
     /// <summary>
