@@ -680,7 +680,7 @@ F10: Suchbereichseingrenzung löschen.</value>
     <value>Hilfe zum Eingrenzen des Suchbereichs ...</value>
   </data>
   <data name="SelectColorWindowDescriptionMessage" xml:space="preserve">
-    <value>Bitte klicken Sie mit der Maus ins Zentrum des zu verfolgenden Objekts.</value>
+    <value>Bitte klicken Sie mit der Maus ins Zentrum des zu verfolgenden Objekts. Wenn es mehrere Objekte sind (bis zu 3), klicken Sie diese nacheinander an.</value>
   </data>
   <data name="SelectColorWindowDescriptionTitle" xml:space="preserve">
     <value>Bitte Objektfarbe auswählen</value>

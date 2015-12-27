@@ -67,12 +67,12 @@ namespace VianaNET.Modules.DataGrid
           options.Objects.Add(0);
         }
 
-        if (this.Object2CheckBox.IsChecked.GetValueOrDefault(false) && this.Object2CheckBox.IsVisible)
+        if (this.Object2CheckBox.IsChecked.GetValueOrDefault(false) && this.Object2CheckBox.Visibility == Visibility.Visible)
         {
           options.Objects.Add(1);
         }
 
-        if (this.Object3CheckBox.IsChecked.GetValueOrDefault(false) && this.Object3CheckBox.IsVisible)
+        if (this.Object3CheckBox.IsChecked.GetValueOrDefault(false) && this.Object3CheckBox.Visibility == Visibility.Visible)
         {
           options.Objects.Add(2);
         }

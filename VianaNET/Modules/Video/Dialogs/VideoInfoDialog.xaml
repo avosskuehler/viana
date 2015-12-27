@@ -40,7 +40,7 @@
             <RowDefinition/>
           </Grid.RowDefinitions>
           <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFilenameLabel}"/>
-          <Label Grid.Row="0" Grid.Column="1" Content="{Binding Filename}"/>
+          <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Filename}"/>
           <Label Grid.Row="1" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoDurationLabel}"/>
           <Label Grid.Row="1" Grid.Column="1" Content="{Binding Duration}"/>
           <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFPSLabel}"/>

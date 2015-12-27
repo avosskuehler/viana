@@ -132,6 +132,7 @@ namespace VianaNET.Modules.Video
       Viana.Project.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
       this.TimelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
       this.TimelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
+      Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
     }
 
     #endregion

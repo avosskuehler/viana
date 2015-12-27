@@ -17,6 +17,8 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls.Primitives;
   using System.Windows.Forms;
 
+  using MediaInfoNET;
+
   using VianaNET.Application;
   using VianaNET.Resources;
 
@@ -124,20 +126,7 @@ namespace VianaNET.Modules.Video.Dialogs
         return null;
       }
 
-      DirectoryInfo returnInfo;
-
-      if (AssemblyName.GetAssemblyName(currentAssembly.Location).ProcessorArchitecture == ProcessorArchitecture.X86)
-      {
-        returnInfo =
-          new DirectoryInfo(
-            Path.Combine(currentDirectory, @"VlcLibs\x86"));
-      }
-      else
-      {
-        returnInfo =
-          new DirectoryInfo(
-            Path.Combine(currentDirectory, @"VlcLibs\x64"));
-      }
+      var returnInfo = new DirectoryInfo(Path.Combine(currentDirectory, @"VlcLibs"));
 
       if (!returnInfo.Exists)
       {
@@ -165,15 +154,15 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.Dispatcher.InvokeAsync(
         () =>
+        {
+          this.TimelineSlider.Value = e.NewPosition * this.vlcConverterPlayer.Length;
+          if (e.NewPosition * this.vlcConverterPlayer.Length > this.TimelineSlider.SelectionEnd && !this.isConverting)
           {
-            this.TimelineSlider.Value = e.NewPosition * this.vlcConverterPlayer.Length;
-            if (e.NewPosition * this.vlcConverterPlayer.Length > this.TimelineSlider.SelectionEnd && !this.isConverting)
-            {
-              this.vlcConverterPlayer.Pause();
-            }
+            this.vlcConverterPlayer.Pause();
+          }
 
-            this.ConverterProgressbar.Value = e.NewPosition * 100;
-          });
+          this.ConverterProgressbar.Value = e.NewPosition * 100;
+        });
     }
 
     /// <summary>
@@ -276,12 +265,12 @@ namespace VianaNET.Modules.Video.Dialogs
       this.isConverting = true;
       var path = Viana.Project.ProjectPath ?? Path.GetDirectoryName(this.videoFile);
       this.convertedFile = Path.Combine(path, Path.GetFileNameWithoutExtension(this.videoFile));
-      this.convertedFile += ".mpg";
+      this.convertedFile += "-conv.avi";
       var nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
       var startTimeOption = "start-time=" + (this.TimelineSlider.SelectionStart / 1000f).ToString("N3", nfi);
       var stopTimeOption = "stop-time=" + (this.TimelineSlider.SelectionEnd / 1000f).ToString("N3", nfi);
       var transcodeOption =
-        @"sout=#transcode{vcodec=mp1v,vb=1024,acodec=mpga,ab=192}:standard{access=file,mux=mpeg1,dst="
+        @"sout=#transcode{vcodec=mp4v,vb=8000,deinterlace,fps=25,acodec=mpga}:standard{access=file,mux=avi,dst="
         + this.convertedFile + "}";
       this.ProgressPanel.Visibility = Visibility.Visible;
       this.VideoPanel.Visibility = Visibility.Hidden;
@@ -322,13 +311,13 @@ namespace VianaNET.Modules.Video.Dialogs
 
       this.Dispatcher.Invoke(
         () =>
-          {
-            this.TimelineSlider.ResetSelection();
-            this.TimelineSlider.UpdateSelectionTimes();
+        {
+          this.TimelineSlider.ResetSelection();
+          this.TimelineSlider.UpdateSelectionTimes();
 
-            this.OK.IsEnabled = true;
-            this.Close();
-          });
+          this.OK.IsEnabled = true;
+          this.Close();
+        });
     }
   }
 }

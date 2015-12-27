@@ -9,7 +9,6 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
 	xmlns:application="clr-namespace:VianaNET.Application"
 	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
-	xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
 	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="300" d:DesignWidth="400">

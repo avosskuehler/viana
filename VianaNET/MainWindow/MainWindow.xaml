@@ -29,7 +29,7 @@
               Title="{lex:Loc VianaNET:Labels:ApplicationTitle}" 
               x:Name="MainRibbon">
       <Ribbon.ApplicationMenu>
-        <RibbonApplicationMenu SmallImageSource="/VianaNET;component/Images/VianaNET_32.png" KeyTip="S" Label="Datei" IsMainMenu="True">
+        <RibbonApplicationMenu KeyTip="S" Label="Datei" IsMainMenu="True">
           <RibbonApplicationMenuItem 
                         Click="NewProjectOnClick"
                         Header="{lex:Loc VianaNET:Labels:ButtonNewProjectLabelTitle}"
@@ -793,7 +793,7 @@
               Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
       <StatusBarItem>
-        <Label Content="{Binding Path=VideoFilename, Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
+        <TextBlock Text="{Binding Path=VideoFilename, Source={x:Static mainWindow:StatusBarContent.Instance}}"/>
       </StatusBarItem>
       <StatusBarItem HorizontalAlignment="Right">
         <Label Content="{Binding Path=MessagesLabel,

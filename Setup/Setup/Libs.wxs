@@ -55,7 +55,18 @@
         <File Id="AForge.Vision" Name="AForge.Vision.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge.Vision" AssemblyApplication="AForge.Vision" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
-
+      <Component Id="C_Vlc.DotNet.Core" Guid="{BBA9C5BA-AD0C-4AFB-867F-0CA80F3CE656}" Win64="$(var.Win64)">
+        <File Id="Vlc.DotNet.Core" Name="Vlc.DotNet.Core.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Core" AssemblyApplication="Vlc.DotNet.Core" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_Vlc.DotNet.Core.Interops" Guid="{B5C07D87-5889-4400-B587-93B726A90F86}" Win64="$(var.Win64)">
+        <File Id="Vlc.DotNet.Core.Interops" Name="Vlc.DotNet.Core.Interops.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Core.Interops" AssemblyApplication="Vlc.DotNet.Core.Interops" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_Vlc.DotNet.Forms" Guid="{03870DE7-47C9-4CEB-A64C-611B6330C0A1}" Win64="$(var.Win64)">
+        <File Id="Vlc.DotNet.Forms" Name="Vlc.DotNet.Forms.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Forms" AssemblyApplication="Vlc.DotNet.Forms" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
     </DirectoryRef>
 
     <Feature Id='LibsFeature' Title='Libs' Description='Installs libraries for the application.' Level='1'>
@@ -79,6 +90,9 @@
         <ComponentRef Id='C_MediaInfoNET' />
         <ComponentRef Id='C_WPFMath' />
         <ComponentRef Id='C_Xceed.Wpf.Toolkit' />
+        <ComponentRef Id='C_Vlc.DotNet.Core' />
+        <ComponentRef Id='C_Vlc.DotNet.Core.Interops' />
+        <ComponentRef Id='C_Vlc.DotNet.Forms' />
       </Feature>
 
     </Feature>
