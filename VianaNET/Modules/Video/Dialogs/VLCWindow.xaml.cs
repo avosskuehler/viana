@@ -17,8 +17,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls.Primitives;
   using System.Windows.Forms;
 
-  using MediaInfoNET;
-
   using VianaNET.Application;
   using VianaNET.Resources;
 
@@ -161,7 +159,11 @@ namespace VianaNET.Modules.Video.Dialogs
             this.vlcConverterPlayer.Pause();
           }
 
-          this.ConverterProgressbar.Value = e.NewPosition * 100;
+
+          var length = this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart;
+          var factor = this.TimelineSlider.Maximum / length;
+          var startPercentage = this.TimelineSlider.SelectionStart / this.TimelineSlider.Maximum;
+          this.ConverterProgressbar.Value = (e.NewPosition - startPercentage) * 100 * factor;
         });
     }
 

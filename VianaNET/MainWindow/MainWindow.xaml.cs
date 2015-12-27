@@ -972,7 +972,7 @@ namespace VianaNET.MainWindow
       this.Refresh();
 
       // Switch to datagrid window
-      this.DatagridTab.IsSelected = true;
+      this.VideoTab.IsSelected = true;
     }
 
     /// <summary>
