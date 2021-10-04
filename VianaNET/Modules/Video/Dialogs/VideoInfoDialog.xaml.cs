@@ -27,9 +27,8 @@
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Globalization;
+  using System.IO;
   using System.Windows;
-
-  using MediaInfoNET;
 
   using VianaNET.Application;
   using VianaNET.Logging;
@@ -103,7 +102,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="videoFilename">The video filename.</param>
     private void ParseVideoFile(string videoFilename)
     {
-      if (!System.IO.File.Exists(videoFilename))
+      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, videoFilename);
+
+      if (!System.IO.File.Exists(fileWithPath))
       {
         this.Filename = string.Empty;
         this.DurationString = string.Empty;
@@ -117,25 +118,50 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      var aviFile = new MediaFile(videoFilename);
-      this.Filename = aviFile.Name;
-      this.DurationString = aviFile.General.DurationStringAccurate;
-      this.Duration = aviFile.General.DurationMillis;
-      var currentFrameRate = aviFile.Video[0].FrameRate / Viana.Project.VideoData.FramerateFactor;
-      if (currentFrameRate != aviFile.Video[0].FrameRate)
+      this.Filename = fileWithPath;
+
+      // Read out video properties
+      using (var info = new MediaInfo.DotNetWrapper.MediaInfo())
       {
-        this.FrameRate = currentFrameRate;
-      }
-      else
-      {
-        this.FrameRate = aviFile.Video[0].FrameRate;
+        var status = info.Open(fileWithPath);
+        var komplett = info.Inform();
+
+        var frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+        if (float.TryParse(frameratestring, out float fpsfactor1000))
+        {
+          var fps = fpsfactor1000 / 1000f;
+          //this.DefaultFrameRate = fps;
+
+          var currentFrameRate = fps / Viana.Project.VideoData.FramerateFactor;
+          if (currentFrameRate != fps)
+          {
+            this.FrameRate = currentFrameRate;
+          }
+          else
+          {
+            this.FrameRate = fps;
+          }
+
+        }
+
+        // Dauer auslesen
+        var durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
+        if (durationmeasure == "ms")
+        {
+          var durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          if (int.TryParse(durationstring, out int duration))
+          {
+            this.Duration = duration;
+            this.DurationString = string.Format("{0} ms", duration);
+          }
+        }
       }
 
-      this.DefaultFrameRate = aviFile.Video[0].FrameRate;
-      this.FrameCount = aviFile.FrameCount;
-      this.FrameSize = aviFile.Video[0].FrameSize;
-      this.Codec = aviFile.Video[0].Format;
-      this.Bitrate = aviFile.General.Bitrate.ToString(CultureInfo.InvariantCulture) + " kbps";
+
+      //this.FrameCount = aviFile.FrameCount;
+      //this.FrameSize = aviFile.Video[0].FrameSize;
+      //this.Codec = aviFile.Video[0].Format;
+      //this.Bitrate = aviFile.General.Bitrate.ToString(CultureInfo.InvariantCulture) + " kbps";
     }
 
     /// <summary>

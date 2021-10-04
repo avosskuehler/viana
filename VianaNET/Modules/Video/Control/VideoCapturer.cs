@@ -23,12 +23,16 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
+  using System.ComponentModel;
   using System.Diagnostics;
+  using System.IO;
   using System.Runtime.InteropServices;
+  using System.Threading;
   using System.Windows;
 
   using DirectShowLib;
-
+  using OpenCvSharp;
+  using OpenCvSharp.WpfExtensions;
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
@@ -56,11 +60,16 @@ namespace VianaNET.Modules.Video.Control
 
     #endregion
 
+    public VideoCapturer()
+    {
+    }
+
     /// <summary>
     /// Finalizes an instance of the <see cref="VideoCapturer"/> class.
     /// </summary>
     ~VideoCapturer()
     {
+
       if (this.VideoDeviceFilter != null)
       {
         Marshal.ReleaseComObject(this.VideoDeviceFilter);
@@ -95,7 +104,6 @@ namespace VianaNET.Modules.Video.Control
     ///   frame rate (for video) or the sample rate and number of channels (for audio).
     /// </summary>
     private IAMStreamConfig videoStreamConfig;
-
     #endregion
 
     #region Public Properties
@@ -174,31 +182,31 @@ namespace VianaNET.Modules.Video.Control
     {
       this.Dispose();
 
-      this.frameCounter = 0;
-      this.frameTimer = new Stopwatch();
+      //this.frameCounter = 0;
+      //this.frameTimer = new Stopwatch();
 
-      try
-      {
-        // Set up the capture graph
-        if (!this.SetupGraph(frameRate, width, height))
-        {
-          Video.Instance.HasVideo = false;
-          return;
-        }
-      }
-      catch
-      {
-        this.Dispose();
-        ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
-        Video.Instance.HasVideo = false;
-        return;
-      }
+      //try
+      //{
+      //  // Set up the capture graph
+      //  if (!this.SetupGraph(frameRate, width, height))
+      //  {
+      //    Video.Instance.HasVideo = false;
+      //    return;
+      //  }
+      //}
+      //catch
+      //{
+      //  this.Dispose();
+      //  ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
+      //  Video.Instance.HasVideo = false;
+      //  return;
+      //}
 
-      Viana.Project.ProcessingData.InitializeImageFilters();
+      //Viana.Project.ProcessingData.InitializeImageFilters();
 
-      this.Play();
-      Video.Instance.HasVideo = true;
-      this.OnVideoAvailable();
+      //this.Play();
+      //Video.Instance.HasVideo = true;
+      //this.OnVideoAvailable();
     }
 
     /// <summary>
@@ -206,8 +214,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Play()
     {
-      base.Play();
-      this.frameTimer.Start();
+      //base.Play();
+
+      //this.frameTimer.Start();
     }
 
     /// <summary>
@@ -215,8 +224,8 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Revert()
     {
-      base.Revert();
-      this.frameTimer.Reset();
+      //base.Revert();
+      //this.frameTimer.Reset();
     }
 
     /// <summary>
@@ -235,31 +244,32 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Stop()
     {
-      try
-      {
-        // To stop the capture filter before stopping the media control
-        // seems to solve the problem described in the next comment.
-        // sancta simplicitas...
-        if (this.VideoDeviceFilter != null)
-        {
-          int hr = this.VideoDeviceFilter.Stop();
-          if (hr != 0)
-          {
-            ErrorLogger.WriteLine("Error while stopping capture filter. Message: " + DsError.GetErrorText(hr));
-          }
+      //try
+      //{
+      //  // To stop the capture filter before stopping the media control
+      //  // seems to solve the problem described in the next comment.
+      //  // sancta simplicitas...
+      //  if (this.VideoDeviceFilter != null)
+      //  {
+      //    int hr = this.VideoDeviceFilter.Stop();
+      //    if (hr != 0)
+      //    {
+      //      ErrorLogger.WriteLine("Error while stopping capture filter. Message: " + DsError.GetErrorText(hr));
+      //    }
 
-          if (this.frameTimer != null)
-          {
-            this.frameTimer.Stop();
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        ErrorLogger.ProcessException(ex, false);
-      }
+      //    if (this.frameTimer != null)
+      //    {
+      //      this.frameTimer.Stop();
+      //    }
+      //  }
 
-      base.Stop();
+      //}
+      //catch (Exception ex)
+      //{
+      //  ErrorLogger.ProcessException(ex, false);
+      //}
+
+      //base.Stop();
     }
 
     /// <summary>
@@ -283,6 +293,7 @@ namespace VianaNET.Modules.Video.Control
       this.UpdateFrameNumberAndMediatime();
       base.OnVideoFrameChanged();
     }
+
 
     /// <summary>
     /// The on video capture device property changed.
@@ -325,242 +336,12 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Set the Framerate, and video size
-    /// </summary>
-    /// <param name="capGraph">
-    /// The <see cref="ICaptureGraphBuilder2"/> interface.
-    /// </param>
-    /// <param name="capFilter">
-    /// The <see cref="IBaseFilter"/> of the capture device.
-    /// </param>
-    /// <param name="frameRate">
-    /// The new framerate to be used.
-    /// </param>
-    /// <param name="width">
-    /// The new video width to be used.
-    /// </param>
-    /// <param name="height">
-    /// The new video height to be used.
-    /// </param>
-    private void SetConfigParms(
-      ICaptureGraphBuilder2 capGraph,
-      IBaseFilter capFilter,
-      int frameRate,
-      int width,
-      int height)
-    {
-      int hr;
-      object o;
-      AMMediaType media;
-
-      // Find the stream config interface
-      hr = capGraph.FindInterface(PinCategory.Capture, MediaType.Video, capFilter, typeof(IAMStreamConfig).GUID, out o);
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine("Could not FindInterface in SetConfigParms. Message: " + DsError.GetErrorText(hr));
-      }
-
-      this.videoControl = capFilter as IAMVideoControl;
-      this.videoStreamConfig = o as IAMStreamConfig;
-
-      if (this.videoStreamConfig == null)
-      {
-        ErrorLogger.WriteLine("Error in SetConfigParams(). Failed to get IAMStreamConfig");
-      }
-
-      // Get the existing format block
-      hr = this.videoStreamConfig.GetFormat(out media);
-
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine("Could not GetFormat in SetConfigParms. Message: " + DsError.GetErrorText(hr));
-      }
-
-      // copy out the videoinfoheader
-      var v = new VideoInfoHeader();
-      Marshal.PtrToStructure(media.formatPtr, v);
-
-      // if overriding set values
-      if (frameRate > 0)
-      {
-        v.AvgTimePerFrame = 10000000 / frameRate;
-      }
-
-      if (width > 0)
-      {
-        v.BmiHeader.Width = width;
-      }
-
-      if (height > 0)
-      {
-        v.BmiHeader.Height = height;
-      }
-
-      // Copy the media structure back
-      Marshal.StructureToPtr(v, media.formatPtr, true);
-
-      // Set the new format
-      hr = this.videoStreamConfig.SetFormat(media);
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine(
-          "Error while setting new camera format (videoStreamConfig) in Camera.Capture. Message: "
-          + DsError.GetErrorText(hr));
-      }
-
-      // Get the new format
-      hr = this.videoStreamConfig.GetFormat(out media);
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine(
-          "Error while getting new camera format (videoStreamConfig) in Camera.Capture. Message: "
-          + DsError.GetErrorText(hr));
-      }
-
-      // copy out the videoinfoheader
-      Marshal.PtrToStructure(media.formatPtr, v);
-      this.FrameTimeInNanoSeconds = v.AvgTimePerFrame;
-
-      DsUtils.FreeAMMediaType(media);
-      media = null;
-    }
-
-    /// <summary>
-    /// Build the capture graph for grabber.
-    /// </summary>
-    /// <param name="frameRate">
-    /// The framerate to use.
-    /// </param>
-    /// <param name="width">
-    /// The width to use.
-    /// </param>
-    /// <param name="height">
-    /// The height to use.
-    /// </param>
-    /// <returns>
-    /// True, if succesfull, otherwise false.
-    /// </returns>
-    private bool SetupGraph(int frameRate, int width, int height)
-    {
-      int hr;
-
-      this.fps = frameRate; // Not measured, only to expose FPS externally 
-
-      // Get the graphbuilder object
-      this.filterGraph = (IFilterGraph2)new FilterGraph();
-
-      // Create the ICaptureGraphBuilder2
-      var captureGraphBuilder = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
-
-      this.mediaControl = this.filterGraph as IMediaControl;
-
-      try
-      {
-        // Create the SampleGrabber interface
-        this.sampleGrabber = (ISampleGrabber)new SampleGrabber();
-
-        // Start building the graph
-        hr = captureGraphBuilder.SetFiltergraph(this.filterGraph);
-        if (hr != 0)
-        {
-          ErrorLogger.WriteLine(
-            "Error in capGraph.SetFiltergraph. Could not build graph. Message: " + DsError.GetErrorText(hr));
-        }
-
-        // #if DEBUG
-        this.rotEntry = new DsROTEntry(this.filterGraph);
-
-        // #endif
-        if (this.VideoDeviceFilter != null)
-        {
-          hr = this.filterGraph.AddFilter(this.VideoDeviceFilter, "Video input");
-          DsError.ThrowExceptionForHR(hr);
-        }
-        else
-        {
-          return false;
-        }
-
-        //// Add the video device
-        // hr = this.filterGraph.AddSourceFilterForMoniker(dev.Mon, null, "Video input", out this.captureFilter);
-        // if (hr != 0)
-        // {
-        // ErrorLogger.WriteLine(
-        // "Error in m_graphBuilder.AddSourceFilterForMoniker(). Could not add source filter. Message: "
-        // + DsError.GetErrorText(hr));
-        // }
-        var baseGrabFlt = (IBaseFilter)this.sampleGrabber;
-
-        this.ConfigureSampleGrabber(this.sampleGrabber);
-
-        // Add the frame grabber to the graph
-        hr = this.filterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
-        if (hr != 0)
-        {
-          ErrorLogger.WriteLine(
-            "Error in m_graphBuilder.AddFilter(). Could not add filter. Message: " + DsError.GetErrorText(hr));
-        }
-
-        // If any of the default config items are set
-        if (frameRate + height + width > 0)
-        {
-          this.SetConfigParms(captureGraphBuilder, this.VideoDeviceFilter, frameRate, width, height);
-        }
-
-        hr = captureGraphBuilder.RenderStream(null, null, this.VideoDeviceFilter, null, baseGrabFlt);
-        string error = DsError.GetErrorText(hr);
-
-        // Check for succesful rendering, if this failed the class cannot be used, so dispose the resources and return false.
-        if (hr < 0)
-        {
-          this.Dispose();
-          return false;
-        }
-        else
-        {
-          // Otherwise update the SampleGrabber.
-          this.SaveSizeInfo(this.sampleGrabber);
-
-          hr = this.sampleGrabber.SetBufferSamples(false);
-
-          if (hr == 0)
-          {
-            hr = this.sampleGrabber.SetOneShot(false);
-          }
-
-          if (hr == 0)
-          {
-            hr = this.sampleGrabber.SetCallback(this, 1);
-          }
-
-          if (hr < 0)
-          {
-            ErrorLogger.WriteLine("Could not set callback function (SetupGraph) in Camera.Capture()");
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        ErrorLogger.ProcessException(ex, false);
-
-        this.Dispose();
-        return false;
-      }
-      finally
-      {
-        Marshal.ReleaseComObject(captureGraphBuilder);
-      }
-
-      return true;
-    }
-
-    /// <summary>
     ///   The update frame number and mediatime.
     /// </summary>
     private void UpdateFrameNumberAndMediatime()
     {
       this.MediaPositionFrameIndex = this.frameCounter;
-      this.MediaPositionInNanoSeconds = this.frameTimer.ElapsedMilliseconds * 10000;
+      //this.MediaPositionInNanoSeconds = this.frameTimer.ElapsedMilliseconds * 10000;
     }
 
     #endregion

@@ -27,6 +27,7 @@
 
 namespace VianaNET.Modules.Video
 {
+  using OpenCvSharp.WpfExtensions;
   using System;
   using System.ComponentModel;
   using System.Threading;
@@ -102,6 +103,15 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private bool isDragging;
 
+
+    /// <summary>
+    /// The OpenCV VideoCapture Device Control
+    /// </summary>
+    private readonly OpenCvSharp.VideoCapture opencvCapture;
+
+    private readonly BackgroundWorker bkgWorker;
+
+
     #endregion
 
     #region Constructors and Destructors
@@ -133,6 +143,24 @@ namespace VianaNET.Modules.Video
       this.TimelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
       this.TimelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
       Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
+
+      bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+      bkgWorker.DoWork += Worker_DoWork;
+
+      opencvCapture = new OpenCvSharp.VideoCapture();
+    }
+
+    private void Dispose()
+    {
+      if (this.bkgWorker != null)
+      {
+        bkgWorker.CancelAsync();
+      }
+
+      if (this.opencvCapture != null)
+      {
+        opencvCapture.Dispose();
+      }
     }
 
     #endregion
@@ -231,6 +259,24 @@ namespace VianaNET.Modules.Video
           this.SelectionPanel.Visibility = Visibility.Collapsed;
           this.BtnSeekPrevious.Visibility = Visibility.Collapsed;
           this.BtnSeekNext.Visibility = Visibility.Collapsed;
+
+          this.opencvCapture.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY);
+          if (!opencvCapture.IsOpened())
+          {
+            opencvCapture.Dispose();
+            return;
+          }
+
+          Video.Instance.VideoElement.SaveSizeInfo(opencvCapture);
+          Viana.Project.ProcessingData.InitializeImageFilters();
+
+          Video.Instance.HasVideo = true;
+
+          if (!this.bkgWorker.IsBusy)
+          {
+            this.bkgWorker.RunWorkerAsync();
+          }
+
           break;
       }
     }
@@ -383,30 +429,30 @@ namespace VianaNET.Modules.Video
       {
         var widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
         var newHorizontalLine = new Line
-          {
-            Visibility = Visibility.Hidden,
-            Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
-            StrokeThickness = 2,
-            X1 = 0,
-            X2 = 0,
-            Y1 = 0,
-            Y2 = 0
-          };
+        {
+          Visibility = Visibility.Hidden,
+          Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          StrokeThickness = 2,
+          X1 = 0,
+          X2 = 0,
+          Y1 = 0,
+          Y2 = 0
+        };
         newHorizontalLine.SetBinding(Line.X2Property, widthBinding);
         this.blobHorizontalLines[i] = newHorizontalLine;
         this.OverlayCanvas.Children.Add(newHorizontalLine);
 
         var heightBinding = new Binding("ActualHeight") { ElementName = "VideoImage" };
         var newVerticalLine = new Line
-          {
-            Visibility = Visibility.Hidden,
-            Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
-            StrokeThickness = 2,
-            X1 = 0,
-            X2 = 0,
-            Y1 = 0,
-            Y2 = 0
-          };
+        {
+          Visibility = Visibility.Hidden,
+          Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          StrokeThickness = 2,
+          X1 = 0,
+          X2 = 0,
+          Y1 = 0,
+          Y2 = 0
+        };
         newVerticalLine.SetBinding(Line.Y2Property, heightBinding);
         this.blobVerticalLines[i] = newVerticalLine;
         this.OverlayCanvas.Children.Add(newVerticalLine);
@@ -932,6 +978,11 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void VideoPlayerVideoFileOpened(object sender, EventArgs e)
     {
+      if (!this.bkgWorker.IsBusy)
+      {
+        bkgWorker.RunWorkerAsync();
+      }
+
       // this.BlobsControl.UpdatedProcessedImage();
       // this.BlobsControl.UpdateScale();
       // this.timelineSlider.SelectionStart = 0;
@@ -984,11 +1035,13 @@ namespace VianaNET.Modules.Video
       if (this.isPlaying)
       {
         this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+        this.bkgWorker.CancelAsync();
         Video.Instance.Pause();
       }
       else
       {
         this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
+        this.bkgWorker.RunWorkerAsync();
         Video.Instance.Play();
       }
 
@@ -1006,6 +1059,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void BtnStopClick(object sender, RoutedEventArgs e)
     {
+      this.bkgWorker.CancelAsync();
       Video.Instance.Revert();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
@@ -1186,5 +1240,28 @@ namespace VianaNET.Modules.Video
     {
       Viana.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
     }
+
+    private void Worker_DoWork(object sender, DoWorkEventArgs e)
+    {
+      var worker = (BackgroundWorker)sender;
+      while (!worker.CancellationPending)
+      {
+        using (var frameMat = opencvCapture.RetrieveMat())
+        {
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          Dispatcher.Invoke(() =>
+          {
+            var newFrame = frameMat.ToWriteableBitmap();
+            Video.Instance.OriginalImageSource = newFrame;
+            Video.Instance.VideoElement.NewFrameCallback(newFrame);
+            //this.VideoImage.Source = Video.Instance.OriginalImageSource;
+            //this.OnVideoFrameChanged(this, new EventArgs());
+          });
+        }
+
+        Thread.Sleep(30);
+      }
+    }
+
   }
 }

@@ -27,13 +27,12 @@
       </Grid.ColumnDefinitions>
       <Grid Name="LeftVideoPanel" Grid.Column="0" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
+          <ScaleTransform ScaleX="1" ScaleY="1"/>
         </Grid.RenderTransform>
         <Image Name="VideoImage" 
                HorizontalAlignment="Center" 
-               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"
-               >
-        </Image>
+               Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}"/>
+
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">

@@ -43,8 +43,6 @@ namespace VianaNET.Modules.Video.Control
 
   using DirectShowLib;
 
-  using MediaInfoNET;
-
   using VianaNET.Application;
   using VianaNET.Logging;
   using VianaNET.MainWindow;
@@ -330,13 +328,19 @@ namespace VianaNET.Modules.Video.Control
 
       try
       {
-        if (!File.Exists(fileName))
+        if (Viana.Project.ProjectPath == null)
+        {
+          Viana.Project.ProjectPath = string.Empty;
+        }
+
+        var fileWithPath = Path.Combine(Viana.Project.ProjectPath, fileName);
+        if (!File.Exists(fileWithPath))
         {
           if (fileName != string.Empty)
           {
             var messageTitle = Labels.AskVideoNotFoundMessageTitle;
-            messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileName));
-            messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileName));
+            messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileWithPath));
+            messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileWithPath));
 
             var dlg = new VianaDialog(Labels.AskVideoNotFoundTitle, messageTitle, Labels.AskVideoNotFoundMessage, false);
             if (!dlg.ShowDialog().GetValueOrDefault(false))
@@ -361,16 +365,73 @@ namespace VianaNET.Modules.Video.Control
           }
         }
 
-        this.VideoFilename = fileName;
+        this.VideoFilename = Path.GetFileName(fileName);
+        Viana.Project.ProjectPath = Path.GetDirectoryName(fileName);
+        fileWithPath = Path.Combine(Viana.Project.ProjectPath, fileName);
 
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
 
         // Read out video properties
-        var aviFile = new MediaFile(this.VideoFilename);
-        this.FrameTimeInNanoSeconds = (long)(10000000d / aviFile.Video[0].FrameRate) + 1;
-        this.MediaDurationInMS = aviFile.General.DurationMillis;
-        this.FrameCount = aviFile.FrameCount;
+        using (var info = new MediaInfo.DotNetWrapper.MediaInfo())
+        {
+          var status = info.Open(fileWithPath);
+          var komplett = info.Inform();
+          var einzeln = komplett.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+          string[] names = new string[500];
+          for (int i = 0; i < 500; i++)
+          {
+            names[i] = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, i, MediaInfo.DotNetWrapper.Enumerations.InfoKind.Name);
+          }
+
+          // CFR = constant frame rate, VFR = variable frame rate
+          var framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+          if (framerateMode == "VFR")
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Die Datei hat eine variable Bildrate, sie muss zunächst konvertiert werden"), true);
+            return false;
+          }
+
+          // Framerate auslesen
+          var frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+          if (!float.TryParse(frameratestring, out float fpsfactor1000))
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Konnte die Bildrate der Datei nicht auslesen."), true);
+            return false;
+          }
+          var fps = fpsfactor1000 / 1000f;
+
+          // Dauer auslesen
+          var durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
+          if (durationmeasure != "ms")
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben."), true);
+            return false;
+          }
+
+          var durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          if (!int.TryParse(durationstring, out int duration))
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Konnte die Dauer der Datei nicht auslesen."), true);
+            return false;
+          }
+
+          // Anzahl der Frames auslesen
+          var framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          if (!int.TryParse(framestring, out int frames))
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Frames", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen."), true);
+            return false;
+          }
+
+          this.FrameTimeInNanoSeconds = (long)(10000000d / fps) + 1;
+          this.MediaDurationInMS = duration;
+          this.FrameCount = frames;
+
+        }
+
+
         Viana.Project.VideoData.FramerateFactor = 1;
         try
         {
@@ -564,10 +625,6 @@ namespace VianaNET.Modules.Video.Control
 
       this.filterGraph = (IFilterGraph2)new FilterGraph();
 
-      // #if DEBUG
-      this.rotEntry = new DsROTEntry(this.filterGraph);
-
-      // #endif
 
       // IFileSourceFilter urlSourceFilter = new URLReader() as IFileSourceFilter;
       // IBaseFilter sourceFilter = urlSourceFilter as IBaseFilter;
@@ -577,45 +634,11 @@ namespace VianaNET.Modules.Video.Control
       // DsError.ThrowExceptionForHR(hr);
       // this.filterGraph.AddFilter(sourceFilter, "URL Source");
       IBaseFilter sourceFilter;
-      this.filterGraph.AddSourceFilter(this.VideoFilename, "File Source", out sourceFilter);
+      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, this.VideoFilename);
 
-      // Create the SampleGrabber interface
-      this.sampleGrabber = (ISampleGrabber)new SampleGrabber();
-      var baseGrabFlt = (IBaseFilter)this.sampleGrabber;
+      this.filterGraph.AddSourceFilter(fileWithPath, "File Source", out sourceFilter);
 
-      this.ConfigureSampleGrabber(this.sampleGrabber);
-
-      // Add the frame grabber to the graph
-      int hr = this.filterGraph.AddFilter(baseGrabFlt, "Ds.NET Grabber");
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine(
-          "Error in m_graphBuilder.AddFilter(). Could not add filter. Message: " + DsError.GetErrorText(hr));
-      }
-
-      IPin sampleGrabberIn = DsFindPin.ByDirection(baseGrabFlt, PinDirection.Input, 0);
-      IPin sampleGrabberOut = DsFindPin.ByDirection(baseGrabFlt, PinDirection.Output, 0);
       IPin sourceOut;
-
-      // Iterate through source output pins, to find video output pin to be connected to
-      // the sample grabber
-      int i = 0;
-      do
-      {
-        sourceOut = DsFindPin.ByDirection(sourceFilter, PinDirection.Output, i);
-        if (sourceOut == null)
-        {
-          throw new ArgumentOutOfRangeException("Found no compatible video source output pin");
-        }
-
-        hr = this.filterGraph.Connect(sourceOut, sampleGrabberIn);
-        i++;
-      }
-      while (hr < 0);
-
-      DsError.ThrowExceptionForHR(hr);
-      hr = this.filterGraph.Render(sampleGrabberOut);
-      DsError.ThrowExceptionForHR(hr);
 
       //// Have the graph builder construct its the appropriate graph automatically
       // hr = this.graphBuilder.RenderFile(filename, null);
@@ -648,8 +671,6 @@ namespace VianaNET.Modules.Video.Control
 
       // Query for video interfaces, which may not be relevant for audio files
       this.videoWindow = this.filterGraph as IVideoWindow;
-      hr = this.videoWindow.put_AutoShow(OABool.False);
-      DsError.ThrowExceptionForHR(hr);
 
       this.basicVideo = this.filterGraph as IBasicVideo;
 
@@ -660,12 +681,6 @@ namespace VianaNET.Modules.Video.Control
       // hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
       // DsError.ThrowExceptionForHR(hr);
 
-      // Get the event handle the graph will use to signal
-      // when events occur
-      IntPtr hEvent;
-      hr = this.mediaEvent.GetEventHandle(out hEvent);
-      DsError.ThrowExceptionForHR(hr);
-
       // Reset event loop exit flag
       this.shouldExitEventLoop = false;
 
@@ -673,11 +688,6 @@ namespace VianaNET.Modules.Video.Control
       this.eventThread = new Thread(this.EventWait);
       this.eventThread.Name = "Media Event Thread";
       this.eventThread.Start();
-
-      this.GetFrameStepInterface();
-
-      // Update the SampleGrabber.
-      this.SaveSizeInfo(this.sampleGrabber);
     }
 
     /// <summary>
@@ -778,6 +788,10 @@ namespace VianaNET.Modules.Video.Control
     /// <returns> True, if frame step interface is available, otherwise false </returns>
     private bool GetFrameStepInterface()
     {
+      // FrameStep deaktivieren
+      return false;
+
+
       int hr = 0;
 
       IVideoFrameStep frameStepTest = null;

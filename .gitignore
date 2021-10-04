@@ -1,0 +1,5 @@
+/.vs/VianaNET/v16/*.suo
+/Debug/*
+/VianaNET/obj/*
+/packages/*
+/VianaTestVideos

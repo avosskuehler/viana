@@ -74,8 +74,8 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         this.videoFile = value;
         this.vlcConverterPlayer.Play(new Uri(this.videoFile));
-        Thread.Sleep(200);
-        this.vlcConverterPlayer.Pause();
+        this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
+        this.isPlaying = true;
       }
     }
 
@@ -97,8 +97,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">The <see cref="VlcMediaPlayerLengthChangedEventArgs" /> instance containing the event data.</param>
     private void VlcPlayerLengthChanged(object sender, VlcMediaPlayerLengthChangedEventArgs e)
     {
+      var test = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds;
+
       this.Dispatcher.InvokeAsync(
-        () => { this.TimelineSlider.Maximum = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds; });
+        () => { this.TimelineSlider.Maximum = new TimeSpan((long)e.NewLength * 10000).Duration().TotalMilliseconds; });
     }
 
     /// <summary>
@@ -309,7 +311,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void FinishAndClose()
     {
-      Viana.Project.VideoFile = this.convertedFile;
+      Viana.Project.VideoFile = Path.GetFileName(this.convertedFile);
 
       this.Dispatcher.Invoke(
         () =>

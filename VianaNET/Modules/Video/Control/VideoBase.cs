@@ -35,6 +35,7 @@ namespace VianaNET.Modules.Video.Control
   using System.Windows;
   using System.Windows.Interop;
   using System.Windows.Media;
+  using System.Windows.Media.Imaging;
   using System.Windows.Threading;
 
   using AForge.Imaging;
@@ -51,7 +52,7 @@ namespace VianaNET.Modules.Video.Control
   ///   frames can be catched and send into the processing tree of
   ///   the application.
   /// </summary>
-  public abstract class VideoBase : DependencyObject, ISampleGrabberCB, IDisposable
+  public abstract class VideoBase : DependencyObject, IDisposable
   {
     #region Constants
 
@@ -143,17 +144,6 @@ namespace VianaNET.Modules.Video.Control
     ///   This points to a file mapping of the video frames.
     /// </summary>
     private IntPtr motionProcessingSection;
-
-    /// <summary>
-    ///   Helps showing capture graph in GraphBuilder
-    /// </summary>
-    protected DsROTEntry rotEntry;
-
-    /// <summary>
-    ///   The ISampleGrabber interface is exposed by the Sample Grabber Filter.
-    ///   It enables an application to retrieve individual media samples as they move through the filter graph.
-    /// </summary>
-    protected ISampleGrabber sampleGrabber;
 
     /// <summary>
     ///   This indicates if the frames of the capture callback should be skipped.
@@ -351,14 +341,6 @@ namespace VianaNET.Modules.Video.Control
     {
       this.Stop();
 
-      // #if DEBUG
-      if (this.rotEntry != null)
-      {
-        this.rotEntry.Dispose();
-        this.rotEntry = null;
-      }
-
-      // #endif
       lock (this)
       {
         this.Dispatcher.Invoke(
@@ -406,13 +388,7 @@ namespace VianaNET.Modules.Video.Control
         {
           this.UnmanagedImage.Dispose();
         }
-
-        if (this.sampleGrabber != null)
-        {
-          Marshal.ReleaseComObject(this.sampleGrabber);
-          this.sampleGrabber = null;
-        }
-
+ 
         if (this.filterGraph != null)
         {
           Marshal.FinalReleaseComObject(this.filterGraph);
@@ -578,95 +554,47 @@ namespace VianaNET.Modules.Video.Control
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
     #region Explicit Interface Methods
-
     /// <summary>
-    /// The <see cref="ISampleGrabberCB.BufferCB{Double,IntPtr, Int32}"/> buffer callback method.
-    ///   Gets called whenever a new frame arrives down the stream in the SampleGrabber.
+    ///   Gets called whenever a new frame arrives
     ///   Updates the memory mapping of the OpenCV image and raises the 
     ///   <see cref="FrameCaptureComplete"/> event.
     /// </summary>
-    /// <param name="sampleTime">
-    /// Starting time of the sample, in seconds. 
-    /// </param>
-    /// <param name="buffer">
-    /// Pointer to a buffer that contains the sample data. 
-    /// </param>
-    /// <param name="bufferLength">
-    /// Length of the buffer pointed to by pBuffer, in bytes. 
-    /// </param>
-    /// <returns>
-    /// Returns S_OK if successful, or an HRESULT error code otherwise. 
-    /// </returns>
-    int ISampleGrabberCB.BufferCB(double sampleTime, IntPtr buffer, int bufferLength)
+    public void NewFrameCallback(WriteableBitmap newFrame)
     {
-      ////long last = this.stopwatch.ElapsedMilliseconds;
-      ////Console.Write("BufferCB called at: ");
-      ////Console.Write(last);
-      ////Console.WriteLine(" ms");
-      // this.MediaPositionFrameIndex++;
-      // Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-      // {
-      // this.MediaPositionInMilliSeconds = (long)(sampleTime * 1000);
       this.frameCounter++;
 
-      // }, null);
-      if (buffer != IntPtr.Zero)
+      // Do not skip frames here by default.
+      // We skip the processing in the Tracker class if it is not fast enough
+      if (!this.skipFrameMode)
       {
-        // Do not skip frames here by default.
-        // We skip the processing in the Tracker class if it is not fast enough
-        if (!this.skipFrameMode)
+        try
         {
-          try
+          // Check mapping if it is not already released and the buffer is running
+          if (this.originalMapping != IntPtr.Zero)
           {
-            // Check mapping if it is not already released and the buffer is running
-            if (this.originalMapping != IntPtr.Zero)
-            {
-              // This is fast and lasts less than 1 millisecond.
-              CopyMemory(this.originalMapping, buffer, bufferLength);
+            // This is fast and lasts less than 1 millisecond.
+            CopyMemory(this.originalMapping, newFrame.BackBuffer, bufferLength);
 
-              this.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
-                (SendOrPostCallback)delegate
-                  {
-                    ((InteropBitmap)Video.Instance.OriginalImageSource).Invalidate();
+            this.Dispatcher.BeginInvoke(
+              DispatcherPriority.Render,
+              (SendOrPostCallback)delegate
+              {
 
-                    // Send new image to processing thread
-                    this.OnVideoFrameChanged();
-                  },
-                null);
-            }
-          }
-          catch (ThreadInterruptedException e)
-          {
-            ErrorLogger.ProcessException(e, false);
-          }
-          catch (Exception we)
-          {
-            ErrorLogger.ProcessException(we, false);
+                  // Send new image to processing thread
+                  this.OnVideoFrameChanged();
+                },
+              null);
           }
         }
+        catch (ThreadInterruptedException e)
+        {
+          ErrorLogger.ProcessException(e, false);
+        }
+        catch (Exception we)
+        {
+          ErrorLogger.ProcessException(we, false);
+        }
       }
-
-      return 0;
-    }
-
-    /// <summary>
-    /// The <see cref="ISampleGrabberCB.SampleCB{Double,IMediaSample}"/> sample callback method.
-    ///   NOT USED.
-    /// </summary>
-    /// <param name="sampleTime">
-    /// Starting time of the sample, in seconds. 
-    /// </param>
-    /// <param name="sample">
-    /// Pointer to the IMediaSample interface of the sample. 
-    /// </param>
-    /// <returns>
-    /// Returns S_OK if successful, or an HRESULT error code otherwise. 
-    /// </returns>
-    int ISampleGrabberCB.SampleCB(double sampleTime, IMediaSample sample)
-    {
-      Marshal.ReleaseComObject(sample);
-      return 0;
     }
 
     #endregion
@@ -770,46 +698,6 @@ namespace VianaNET.Modules.Video.Control
     protected static extern bool UnmapViewOfFile(IntPtr map);
 
     /// <summary>
-    /// Configure the sample grabber with default Video RGB24 mode.
-    /// </summary>
-    /// <param name="sampGrabber">
-    /// The <see cref="ISampleGrabber"/> to be configured. 
-    /// </param>
-    protected void ConfigureSampleGrabber(ISampleGrabber sampGrabber)
-    {
-      AMMediaType media;
-      int hr;
-
-      // Set the media type to Video/RBG24
-      media = new AMMediaType();
-      media.majorType = MediaType.Video;
-
-      // media.subType=MediaSubType.UYVY;
-      media.subType = MediaSubType.RGB32;
-      media.formatType = FormatType.VideoInfo;
-
-      hr = this.sampleGrabber.SetMediaType(media);
-
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine(
-          "Could not ConfigureSampleGrabber in Camera.Capture. Message: " + DsError.GetErrorText(hr));
-      }
-
-      DsUtils.FreeAMMediaType(media);
-      media = null;
-
-      // Configure the samplegrabber
-      hr = this.sampleGrabber.SetCallback(this, 1);
-
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine(
-          "Could not set callback method for sampleGrabber in Camera.Capture. Message: " + DsError.GetErrorText(hr));
-      }
-    }
-
-    /// <summary>
     /// The create memory mapping.
     /// </summary>
     /// <param name="byteCountOfBitmap">
@@ -863,36 +751,20 @@ namespace VianaNET.Modules.Video.Control
     /// <param name="sampGrabber">
     /// The <see cref="ISampleGrabber"/> from which to retreive the sample information. 
     /// </param>
-    protected void SaveSizeInfo(ISampleGrabber sampGrabber)
+    public void SaveSizeInfo(OpenCvSharp.VideoCapture opencvCapture)
     {
-      int hr;
-
-      // Get the media type from the SampleGrabber
-      var media = new AMMediaType();
-      hr = sampGrabber.GetConnectedMediaType(media);
-
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine("Could not SaveSizeInfo in Camera.Capture. Message: " + DsError.GetErrorText(hr));
-      }
-
-      if ((media.formatType != FormatType.VideoInfo) || (media.formatPtr == IntPtr.Zero))
-      {
-        ErrorLogger.WriteLine("Error in Camera.Capture. Unknown Grabber Media Format");
-      }
-
       // Grab the size info
-      var videoInfoHeader = (VideoInfoHeader)Marshal.PtrToStructure(media.formatPtr, typeof(VideoInfoHeader));
-      this.NaturalVideoWidth = videoInfoHeader.BmiHeader.Width;
-      this.NaturalVideoHeight = videoInfoHeader.BmiHeader.Height;
+      this.NaturalVideoWidth = opencvCapture.FrameWidth;
+      this.NaturalVideoHeight = opencvCapture.FrameHeight;
+      //this.FrameTimeInNanoSeconds = (long)(10000000d / opencvCapture.Fps) + 1;
 
-      this.CreateMemoryMapping(4);
+      this.CreateMemoryMapping(3);
       Video.Instance.OriginalImageSource =
         Imaging.CreateBitmapSourceFromMemorySection(
           this.originalSection,
           (int)this.NaturalVideoWidth,
           (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
+          PixelFormats.Bgr24,
           this.Stride,
           0) as InteropBitmap;
 
@@ -901,7 +773,7 @@ namespace VianaNET.Modules.Video.Control
           this.colorProcessingSection,
           (int)this.NaturalVideoWidth,
           (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
+          PixelFormats.Bgr24,
           this.Stride,
           0) as InteropBitmap;
 
@@ -910,12 +782,9 @@ namespace VianaNET.Modules.Video.Control
           this.motionProcessingSection,
           (int)this.NaturalVideoWidth,
           (int)this.NaturalVideoHeight,
-          PixelFormats.Bgr32,
+          PixelFormats.Bgr24,
           this.Stride,
           0) as InteropBitmap;
-
-      DsUtils.FreeAMMediaType(media);
-      media = null;
     }
 
     #endregion
