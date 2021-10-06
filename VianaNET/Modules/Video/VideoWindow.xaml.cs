@@ -27,7 +27,6 @@
 
 namespace VianaNET.Modules.Video
 {
-  using OpenCvSharp.WpfExtensions;
   using System;
   using System.ComponentModel;
   using System.Threading;
@@ -45,7 +44,7 @@ namespace VianaNET.Modules.Video
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The video window.
@@ -104,14 +103,7 @@ namespace VianaNET.Modules.Video
     private bool isDragging;
 
 
-    /// <summary>
-    /// The OpenCV VideoCapture Device Control
-    /// </summary>
-    private readonly OpenCvSharp.VideoCapture opencvCapture;
-
-    private readonly BackgroundWorker bkgWorker;
-
-
+ 
     #endregion
 
     #region Constructors and Destructors
@@ -144,23 +136,10 @@ namespace VianaNET.Modules.Video
       this.TimelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
       Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
 
-      bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
-      bkgWorker.DoWork += Worker_DoWork;
-
-      opencvCapture = new OpenCvSharp.VideoCapture();
     }
 
     private void Dispose()
     {
-      if (this.bkgWorker != null)
-      {
-        bkgWorker.CancelAsync();
-      }
-
-      if (this.opencvCapture != null)
-      {
-        opencvCapture.Dispose();
-      }
     }
 
     #endregion
@@ -190,7 +169,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void RunAutomaticDataAquisition()
     {
-      StatusBarContent.Instance.StatusLabel = Labels.StatusIsCalculating;
+      StatusBarContent.Instance.StatusLabel = VianaNET.Resources.Labels.StatusIsCalculating;
 
       Viana.Project.VideoData.Reset();
 
@@ -260,22 +239,6 @@ namespace VianaNET.Modules.Video
           this.BtnSeekPrevious.Visibility = Visibility.Collapsed;
           this.BtnSeekNext.Visibility = Visibility.Collapsed;
 
-          this.opencvCapture.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY);
-          if (!opencvCapture.IsOpened())
-          {
-            opencvCapture.Dispose();
-            return;
-          }
-
-          Video.Instance.VideoElement.SaveSizeInfo(opencvCapture);
-          Viana.Project.ProcessingData.InitializeImageFilters();
-
-          Video.Instance.HasVideo = true;
-
-          if (!this.bkgWorker.IsBusy)
-          {
-            this.bkgWorker.RunWorkerAsync();
-          }
 
           break;
       }
@@ -371,7 +334,7 @@ namespace VianaNET.Modules.Video
       this.cancelCalculation = false;
 
       // Reset Statusbar
-      StatusBarContent.Instance.StatusLabel = Labels.StatusBarReady;
+      StatusBarContent.Instance.StatusLabel = VianaNET.Resources.Labels.StatusBarReady;
       StatusBarContent.Instance.ProgressBarValue = 0;
 
       // Recalculate dependent data values
@@ -978,11 +941,6 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void VideoPlayerVideoFileOpened(object sender, EventArgs e)
     {
-      if (!this.bkgWorker.IsBusy)
-      {
-        bkgWorker.RunWorkerAsync();
-      }
-
       // this.BlobsControl.UpdatedProcessedImage();
       // this.BlobsControl.UpdateScale();
       // this.timelineSlider.SelectionStart = 0;
@@ -1035,13 +993,11 @@ namespace VianaNET.Modules.Video
       if (this.isPlaying)
       {
         this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
-        this.bkgWorker.CancelAsync();
         Video.Instance.Pause();
       }
       else
       {
         this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
-        this.bkgWorker.RunWorkerAsync();
         Video.Instance.Play();
       }
 
@@ -1059,7 +1015,6 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void BtnStopClick(object sender, RoutedEventArgs e)
     {
-      this.bkgWorker.CancelAsync();
       Video.Instance.Revert();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
@@ -1240,28 +1195,5 @@ namespace VianaNET.Modules.Video
     {
       Viana.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
     }
-
-    private void Worker_DoWork(object sender, DoWorkEventArgs e)
-    {
-      var worker = (BackgroundWorker)sender;
-      while (!worker.CancellationPending)
-      {
-        using (var frameMat = opencvCapture.RetrieveMat())
-        {
-          // Must create and use WriteableBitmap in the same thread(UI Thread).
-          Dispatcher.Invoke(() =>
-          {
-            var newFrame = frameMat.ToWriteableBitmap();
-            Video.Instance.OriginalImageSource = newFrame;
-            Video.Instance.VideoElement.NewFrameCallback(newFrame);
-            //this.VideoImage.Source = Video.Instance.OriginalImageSource;
-            //this.OnVideoFrameChanged(this, new EventArgs());
-          });
-        }
-
-        Thread.Sleep(30);
-      }
-    }
-
   }
 }

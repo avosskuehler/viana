@@ -29,7 +29,7 @@ namespace VianaNET.Data.Filter.Regression
   using System.Xml.Serialization;
 
   using VianaNET.Application;
-  using VianaNET.Resources;
+
 
   using WPFMath;
 

@@ -37,7 +37,7 @@ namespace VianaNET.Data
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Filter;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The image processing.
@@ -730,11 +730,11 @@ namespace VianaNET.Data
       this.isReady = true;
       if (objectsFound)
       {
-        StatusBarContent.Instance.MessagesLabel = Labels.BlobsObjectsFound;
+        StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.BlobsObjectsFound;
         return true;
       }
 
-      StatusBarContent.Instance.MessagesLabel = Labels.BlobsNoObjectFound;
+      StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.BlobsNoObjectFound;
       return false;
     }
 

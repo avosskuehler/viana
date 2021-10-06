@@ -39,7 +39,7 @@ namespace VianaNET.Modules.Chart
   using OxyPlot.Wpf;
 
   using VianaNET.MainWindow;
-  using VianaNET.Resources;
+
 
   using Application = Microsoft.Office.Interop.Word.Application;
 
@@ -60,7 +60,7 @@ namespace VianaNET.Modules.Chart
     {
       var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
       Clipboard.SetImage(bitmap);
-      StatusBarContent.Instance.MessagesLabel = Labels.ChartExportedToClipboardMessage;
+      StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.ChartExportedToClipboardMessage;
     }
 
     /// <summary>
@@ -76,9 +76,9 @@ namespace VianaNET.Modules.Chart
       sfd.CheckPathExists = true;
       sfd.DefaultExt = ".png";
       sfd.AddExtension = true;
-      sfd.Filter = Labels.GraphicFilesFilter;
+      sfd.Filter = VianaNET.Resources.Labels.GraphicFilesFilter;
       sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      sfd.Title = Labels.GraphicFilesSaveFileDialogTitle;
+      sfd.Title = VianaNET.Resources.Labels.GraphicFilesSaveFileDialogTitle;
       if (sfd.ShowDialog().GetValueOrDefault())
       {
         using (var stream = new FileStream(sfd.FileName, FileMode.Create))

@@ -31,13 +31,14 @@ namespace VianaNET.Application
   using System.Threading;
   using System.Windows;
   using System.Windows.Controls;
+  using System.Windows.Markup;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
   using System.Windows.Threading;
 
   using VianaNET.Logging;
   using VianaNET.MainWindow;
-
+  using VianaNET.Properties;
   using WPFLocalizeExtension.Engine;
 
   /// <summary>
@@ -68,6 +69,24 @@ namespace VianaNET.Application
     }
 
     #region Public Methods and Operators
+    private static void InitialiseCultures()
+    {
+      if (!string.IsNullOrEmpty(Settings.Default.Culture))
+      {
+        LocalizeDictionary.Instance.Culture
+          = Thread.CurrentThread.CurrentCulture
+          = new CultureInfo(Settings.Default.Culture);
+      }
+
+      if (!string.IsNullOrEmpty(Settings.Default.UICulture))
+      {
+        LocalizeDictionary.Instance.Culture
+          = Thread.CurrentThread.CurrentUICulture
+          = new CultureInfo(Settings.Default.UICulture);
+      }
+
+      FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
+    }
 
     /// <summary>
     ///   Is a replacement for the winform Application.DoEvents function
@@ -151,8 +170,9 @@ namespace VianaNET.Application
     private void VianaNetApplicationStartup(object sender, StartupEventArgs args)
     {
       this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
-      LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("de");
+      InitialiseCultures();
       this.MainWindow = new MainWindow();
+
     }
 
     #endregion

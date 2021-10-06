@@ -41,7 +41,7 @@ namespace VianaNET.Modules.Video.Control
   using AForge.Imaging;
 
   using DirectShowLib;
-
+  using OpenCvSharp;
   using VianaNET.Application;
   using VianaNET.Logging;
 
@@ -748,15 +748,15 @@ namespace VianaNET.Modules.Video.Control
     /// Saves the video properties of the SampleGrabber into member fields
     ///   and creates a file mapping for the captured frames.
     /// </summary>
-    /// <param name="sampGrabber">
-    /// The <see cref="ISampleGrabber"/> from which to retreive the sample information. 
+    /// <param name="opencvCapture">
+    /// The <see cref="OpenCvSharp.VideoCapture"/> from which to retreive the sample information. 
     /// </param>
-    public void SaveSizeInfo(OpenCvSharp.VideoCapture opencvCapture)
+    public void SaveSizeInfo(VideoCapture opencvCapture)
     {
       // Grab the size info
       this.NaturalVideoWidth = opencvCapture.FrameWidth;
       this.NaturalVideoHeight = opencvCapture.FrameHeight;
-      //this.FrameTimeInNanoSeconds = (long)(10000000d / opencvCapture.Fps) + 1;
+      this.FrameTimeInNanoSeconds = (long)(10000000d / opencvCapture.Fps) + 1;
 
       this.CreateMemoryMapping(3);
       Video.Instance.OriginalImageSource =

@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using VianaNET.Application;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.Modules.Base;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The window to specify the coordinate system
@@ -95,10 +95,10 @@ namespace VianaNET.Modules.Video.Dialogs
     public CoordinateSystemWindow()
     {
       this.playerContainerGrid.Margin = new Thickness(100d);
-      this.Title = Labels.CoordinateSystemWindowTitle;
-      this.LabelTitle.Content = Labels.CoordinateSystemHelpControlTitle;
-      this.DescriptionTitle.Content = Labels.CoordinateSystemHowToHeader;
-      this.DescriptionMessage.Text = Labels.CoordinateSystemHowToDescription;
+      this.Title = VianaNET.Resources.Labels.CoordinateSystemWindowTitle;
+      this.LabelTitle.Content = VianaNET.Resources.Labels.CoordinateSystemHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Resources.Labels.CoordinateSystemHowToHeader;
+      this.DescriptionMessage.Text = VianaNET.Resources.Labels.CoordinateSystemHowToDescription;
       this.originPath = (Path)this.Resources["OriginPath"];
       this.originPath.Visibility = Visibility.Visible;
       this.windowCanvas.Children.Add(this.originPath);

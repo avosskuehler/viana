@@ -35,7 +35,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using VianaNET.Application;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The calibrate video window.
@@ -88,10 +88,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public CalibrateVideoWindow()
     {
-      this.Title = Labels.CalibrateVideoWindowTitle;
-      this.LabelTitle.Content = Labels.CalibrateWindowHelpControlTitle;
-      this.DescriptionTitle.Content = Labels.CalibrateWindowSpecifyOriginHeader;
-      this.DescriptionMessage.Text = Labels.CalibrateWindowSpecifyOriginDescription;
+      this.Title = VianaNET.Resources.Labels.CalibrateVideoWindowTitle;
+      this.LabelTitle.Content = VianaNET.Resources.Labels.CalibrateWindowHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Resources.Labels.CalibrateWindowSpecifyOriginHeader;
+      this.DescriptionMessage.Text = VianaNET.Resources.Labels.CalibrateWindowSpecifyOriginDescription;
       this.originPath = (Path)this.Resources["OriginPath"];
       this.windowCanvas.Children.Add(this.originPath);
       this.ruler = (Line)this.Resources["Ruler"];
@@ -141,8 +141,8 @@ namespace VianaNET.Modules.Video.Dialogs
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);
         Canvas.SetTop(this.originPath, scaledY - this.originPath.ActualHeight / 2);
 
-        this.DescriptionTitle.Content = Labels.CalibrateWindowSpecifyLengthHeader;
-        this.DescriptionMessage.Text = Labels.CalibrateWindowSpecifyLengthDescription;
+        this.DescriptionTitle.Content = VianaNET.Resources.Labels.CalibrateWindowSpecifyLengthHeader;
+        this.DescriptionMessage.Text = VianaNET.Resources.Labels.CalibrateWindowSpecifyLengthDescription;
       }
       else if (!this.startPointIsSet)
       {
@@ -163,9 +163,9 @@ namespace VianaNET.Modules.Video.Dialogs
         if (distance < 5)
         {
           var info = new VianaDialog(
-            Labels.CalibrationLengthToShortTitle,
-            Labels.CalibrationLengthToShortDescription,
-            Labels.CalibrationLengthToShortMessage,
+            VianaNET.Resources.Labels.CalibrationLengthToShortTitle,
+            VianaNET.Resources.Labels.CalibrationLengthToShortDescription,
+            VianaNET.Resources.Labels.CalibrationLengthToShortMessage,
             true);
           info.ShowDialog();
           this.startPointIsSet = false;

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:forms="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
              xmlns:application="clr-namespace:VianaNET.Application"
              xmlns:vianaNet="clr-namespace:VianaNET"
              xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"

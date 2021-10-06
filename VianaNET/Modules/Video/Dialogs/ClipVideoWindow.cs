@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Shapes;
   using VianaNET.Application;
   using VianaNET.Modules.Base;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The clip video window.
@@ -89,10 +89,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public ClipVideoWindow()
     {
-      this.Title = Labels.ClipVideoWindowTitle;
-      this.LabelTitle.Content = Labels.ClipVideoHelpControlTitle;
-      this.DescriptionTitle.Content = Labels.ClipVideoDescriptionTitle;
-      this.DescriptionMessage.Text = Labels.ClipVideoDescriptionMessage;
+      this.Title = VianaNET.Resources.Labels.ClipVideoWindowTitle;
+      this.LabelTitle.Content = VianaNET.Resources.Labels.ClipVideoHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Resources.Labels.ClipVideoDescriptionTitle;
+      this.DescriptionMessage.Text = VianaNET.Resources.Labels.ClipVideoDescriptionMessage;
       this.topLine = (Line)this.Resources["TopLine"];
       this.topLine.Name = "Top";
       this.topLine.MouseEnter += this.TopBottomLineMouseEnter;

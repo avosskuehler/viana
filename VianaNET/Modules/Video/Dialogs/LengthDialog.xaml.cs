@@ -31,7 +31,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using CustomStyles.Types;
   using MainWindow;
 
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The length dialog.
@@ -114,9 +114,9 @@ namespace VianaNET.Modules.Video.Dialogs
       else
       {
         var dlg = new VianaDialog(
-          Labels.CalibrationErrorTitle,
-          Labels.CalibrationErrorDescription,
-          Labels.CalibrationErrorMessage,
+          VianaNET.Resources.Labels.CalibrationErrorTitle,
+          VianaNET.Resources.Labels.CalibrationErrorDescription,
+          VianaNET.Resources.Labels.CalibrationErrorMessage,
           true);
 
         dlg.ShowDialog();

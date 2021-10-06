@@ -41,7 +41,6 @@ namespace VianaNET.Modules.DataGrid
   using VianaNET.Logging;
 
   using Application = System.Windows.Application;
-  using Labels = VianaNET.Resources.Labels;
 
   /// <summary>
   ///   Enthält Hilfsfunktionen zum Erzeugen von Excel-Dateien mit SpreadsheetML.
@@ -515,7 +514,7 @@ namespace VianaNET.Modules.DataGrid
       {
         int oneBased = objectIndex + 1;
         string title = options.Objects.Count > 1
-                         ? Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": "
+                         ? VianaNET.Resources.Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": "
                          : string.Empty;
         if (options.Axes.Contains(DataAxis.DataAxes[2]))
         {

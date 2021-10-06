@@ -62,6 +62,11 @@ namespace VianaNET.Modules.Video.Control
 
     public VideoCapturer()
     {
+      bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+      bkgWorker.DoWork += Worker_DoWork;
+
+      opencvCapture = new OpenCvSharp.VideoCapture();
+
     }
 
     /// <summary>
@@ -77,6 +82,17 @@ namespace VianaNET.Modules.Video.Control
         this.videoControl = null;
         this.videoStreamConfig = null;
       }
+
+      if (this.bkgWorker != null)
+      {
+        bkgWorker.CancelAsync();
+      }
+
+      if (this.opencvCapture != null)
+      {
+        opencvCapture.Dispose();
+      }
+
     }
 
     #region Fields
@@ -84,7 +100,7 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Saves the framerate of the video stream
     /// </summary>
-    private int fps;
+    private double fps;
 
     /// <summary>
     ///   The frame timer.
@@ -104,6 +120,15 @@ namespace VianaNET.Modules.Video.Control
     ///   frame rate (for video) or the sample rate and number of channels (for audio).
     /// </summary>
     private IAMStreamConfig videoStreamConfig;
+
+    /// <summary>
+    /// The OpenCV VideoCapture Device Control
+    /// </summary>
+    private readonly OpenCvSharp.VideoCapture opencvCapture;
+
+    private readonly BackgroundWorker bkgWorker;
+
+
     #endregion
 
     #region Public Properties
@@ -111,7 +136,7 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Gets the framerate of the video stream.
     /// </summary>
-    public int FPS
+    public double FPS
     {
       get
       {
@@ -178,35 +203,43 @@ namespace VianaNET.Modules.Video.Control
     /// <param name="height">
     /// The height to use.
     /// </param>
-    public void NewCamera(int frameRate, int width, int height)
+    public void NewCamera()
     {
       this.Dispose();
 
-      //this.frameCounter = 0;
-      //this.frameTimer = new Stopwatch();
+      this.frameCounter = 0;
+      this.frameTimer = new Stopwatch();
 
-      //try
-      //{
-      //  // Set up the capture graph
-      //  if (!this.SetupGraph(frameRate, width, height))
-      //  {
-      //    Video.Instance.HasVideo = false;
-      //    return;
-      //  }
-      //}
-      //catch
-      //{
-      //  this.Dispose();
-      //  ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
-      //  Video.Instance.HasVideo = false;
-      //  return;
-      //}
+      try
+      {
+        
+        if (!this.opencvCapture.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY))
+        {
+          opencvCapture.Dispose();
+          return;
+        }
 
-      //Viana.Project.ProcessingData.InitializeImageFilters();
+        Video.Instance.VideoElement.SaveSizeInfo(opencvCapture);
+        this.fps = opencvCapture.Fps;
 
-      //this.Play();
-      //Video.Instance.HasVideo = true;
-      //this.OnVideoAvailable();
+        if (!this.bkgWorker.IsBusy)
+        {
+          this.bkgWorker.RunWorkerAsync();
+        }
+      }
+      catch
+      {
+        this.Dispose();
+        ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
+        Video.Instance.HasVideo = false;
+        return;
+      }
+
+      Viana.Project.ProcessingData.InitializeImageFilters();
+
+      this.Play();
+      Video.Instance.HasVideo = true;
+      this.OnVideoAvailable();
     }
 
     /// <summary>
@@ -214,9 +247,13 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Play()
     {
-      //base.Play();
+      base.Play();
+      if (!this.bkgWorker.IsBusy)
+      {
+        this.bkgWorker.RunWorkerAsync();
+      }
 
-      //this.frameTimer.Start();
+      this.frameTimer.Start();
     }
 
     /// <summary>
@@ -224,8 +261,8 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Revert()
     {
-      //base.Revert();
-      //this.frameTimer.Reset();
+      base.Revert();
+      this.frameTimer.Reset();
     }
 
     /// <summary>
@@ -244,6 +281,12 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public override void Stop()
     {
+      this.bkgWorker.CancelAsync();
+      if (this.frameTimer != null)
+      {
+        this.frameTimer.Stop();
+      }
+
       //try
       //{
       //  // To stop the capture filter before stopping the media control
@@ -269,7 +312,7 @@ namespace VianaNET.Modules.Video.Control
       //  ErrorLogger.ProcessException(ex, false);
       //}
 
-      //base.Stop();
+      base.Stop();
     }
 
     /// <summary>
@@ -330,7 +373,7 @@ namespace VianaNET.Modules.Video.Control
         videoCapturer.VideoDeviceFilter = DShowUtils.CreateFilter(FilterCategory.VideoInputDevice, device.Name);
         if (Video.Instance.VideoMode == VideoMode.Capture)
         {
-          videoCapturer.NewCamera(0, 0, 0);
+          videoCapturer.NewCamera();
         }
       }
     }
@@ -341,7 +384,29 @@ namespace VianaNET.Modules.Video.Control
     private void UpdateFrameNumberAndMediatime()
     {
       this.MediaPositionFrameIndex = this.frameCounter;
-      //this.MediaPositionInNanoSeconds = this.frameTimer.ElapsedMilliseconds * 10000;
+      this.MediaPositionInNanoSeconds = this.frameTimer.ElapsedMilliseconds * 10000;
+    }
+
+    private void Worker_DoWork(object sender, DoWorkEventArgs e)
+    {
+      var worker = (BackgroundWorker)sender;
+      while (!worker.CancellationPending)
+      {
+        using (var frameMat = opencvCapture.RetrieveMat())
+        {
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          Dispatcher.Invoke(() =>
+          {
+            var newFrame = frameMat.ToWriteableBitmap();
+            Video.Instance.OriginalImageSource = newFrame;
+            Video.Instance.VideoElement.NewFrameCallback(newFrame);
+            //this.VideoImage.Source = Video.Instance.OriginalImageSource;
+            //this.OnVideoFrameChanged(this, new EventArgs());
+          });
+        }
+
+        Thread.Sleep(30);
+      }
     }
 
     #endregion

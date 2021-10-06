@@ -8,5 +8,11 @@
     <Setting Name="SettingsPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="UICulture" Type="System.String" Scope="User">
+      <Value Profile="(Default)">de</Value>
+    </Setting>
+    <Setting Name="Culture" Type="System.String" Scope="User">
+      <Value Profile="(Default)">de</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

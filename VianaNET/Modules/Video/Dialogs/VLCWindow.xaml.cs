@@ -12,13 +12,11 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Globalization;
   using System.IO;
   using System.Reflection;
-  using System.Threading;
   using System.Windows;
   using System.Windows.Controls.Primitives;
   using System.Windows.Forms;
 
   using VianaNET.Application;
-  using VianaNET.Resources;
 
   using Vlc.DotNet.Core;
   using Vlc.DotNet.Forms;
@@ -131,7 +129,7 @@ namespace VianaNET.Modules.Video.Dialogs
       if (!returnInfo.Exists)
       {
         var folderBrowserDialog = new FolderBrowserDialog();
-        folderBrowserDialog.Description = Labels.SelectVlcLibrariesDescription;
+        folderBrowserDialog.Description = VianaNET.Resources.Labels.SelectVlcLibrariesDescription;
         folderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
         folderBrowserDialog.ShowNewFolderButton = true;
         if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)

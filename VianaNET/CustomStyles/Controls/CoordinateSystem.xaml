@@ -16,9 +16,9 @@
       <!--<ScaleTransform ScaleY="{Binding Path=TransformY}"/>
         <RotateTransform Angle="{Binding Path=RotationAngle}"/>-->
     </Canvas.RenderTransform>
-    <controls:Arrow Canvas.Left="60" Canvas.Top="60" x:Name="ArrowX" Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="40" Y1="0" Y2="0"/>
+    <controls:Arrow Canvas.Left="60" Canvas.Top="60" x:Name="ArrowX" Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" Width="40" Height="1" StrokeThickness="2" X1="0" X2="40" Y1="0" Y2="0"/>
     <Label Content="X" Canvas.Left="105" Canvas.Top="52" Padding="0" />
-    <controls:Arrow Canvas.Left="60" Canvas.Top="20" x:Name="ArrowY"  Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" StrokeThickness="2" X1="0" X2="0" Y1="40" Y2="0"/>
+    <controls:Arrow Canvas.Left="60" Canvas.Top="20" x:Name="ArrowY"  Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="4" HeadWidth="10" Width="1" Height="40" StrokeThickness="2" X1="0" X2="0" Y1="40" Y2="0"/>
     <Label Content="Y" Canvas.Left="57" Canvas.Top="0" RenderTransformOrigin="0.5,0.5" Padding="0">
       <!--<Label.RenderTransform>
         <ScaleTransform ScaleY="{Binding Path=TransformY}"/>

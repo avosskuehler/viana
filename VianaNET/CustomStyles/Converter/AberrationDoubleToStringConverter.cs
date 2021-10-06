@@ -29,7 +29,7 @@ namespace VianaNET.CustomStyles.Converter
   using System.Globalization;
   using System.Windows.Data;
 
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The double to string converter.
@@ -62,7 +62,7 @@ namespace VianaNET.CustomStyles.Converter
       var valueToConvert = (double)value;
       if (valueToConvert != 0)
       {
-        return Labels.AberrationStringPrefix + valueToConvert.ToString("N1");
+        return VianaNET.Resources.Labels.AberrationStringPrefix + valueToConvert.ToString("N1");
       }
 
       return string.Empty;

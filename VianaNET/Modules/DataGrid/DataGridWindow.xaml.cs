@@ -34,7 +34,7 @@ namespace VianaNET.Modules.DataGrid
   using VianaNET.Application;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.DataAcquisition;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The data grid window.
@@ -178,7 +178,7 @@ namespace VianaNET.Modules.DataGrid
       // Create default framenumber colum
       var frameColumn = new DataGridTextColumn
                           {
-                            Header = Labels.DataGridFramenumber,
+                            Header = VianaNET.Resources.Labels.DataGridFramenumber,
                             HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
                             CellStyle = (Style)this.Resources["DataGridCellStyle"],
                             CanUserReorder = false,
@@ -194,7 +194,7 @@ namespace VianaNET.Modules.DataGrid
       // Create default time column
       var timeColumn = new DataGridTextColumn
                          {
-                           Header = Labels.DataGridTimestamp,
+                           Header = VianaNET.Resources.Labels.DataGridTimestamp,
                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
                            CellStyle = (Style)this.Resources["DataGridCellStyle"],
                            CanUserReorder = false,
@@ -220,32 +220,32 @@ namespace VianaNET.Modules.DataGrid
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
         string obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
-        this.CreateColumn(obj + "PixelX", prefix + Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
-        this.CreateColumn(obj + "PixelY", prefix + Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
-        this.CreateColumn(obj + "PositionX", prefix + Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "PositionY", prefix + Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Distance", prefix + Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "DistanceX", prefix + Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "DistanceY", prefix + Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Length", prefix + Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "LengthX", prefix + Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "LengthY", prefix + Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Velocity", prefix + Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
-        this.CreateColumn(obj + "VelocityX", prefix + Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
-        this.CreateColumn(obj + "VelocityY", prefix + Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "PixelX", prefix + VianaNET.Resources.Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PixelY", prefix + VianaNET.Resources.Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PositionX", prefix + VianaNET.Resources.Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "PositionY", prefix + VianaNET.Resources.Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Distance", prefix + VianaNET.Resources.Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceX", prefix + VianaNET.Resources.Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceY", prefix + VianaNET.Resources.Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Length", prefix + VianaNET.Resources.Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthX", prefix + VianaNET.Resources.Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthY", prefix + VianaNET.Resources.Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Velocity", prefix + VianaNET.Resources.Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityX", prefix + VianaNET.Resources.Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityY", prefix + VianaNET.Resources.Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
           obj + "Acceleration",
-          prefix + Labels.DataGridAcceleration,
+          prefix + VianaNET.Resources.Labels.DataGridAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
           obj + "AccelerationX",
-          prefix + Labels.DataGridXAcceleration,
+          prefix + VianaNET.Resources.Labels.DataGridXAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
           obj + "AccelerationY",
-          prefix + Labels.DataGridYAcceleration,
+          prefix + VianaNET.Resources.Labels.DataGridYAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
       }

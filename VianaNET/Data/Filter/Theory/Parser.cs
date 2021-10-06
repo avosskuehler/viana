@@ -26,7 +26,7 @@
 namespace VianaNET.Data.Filter.Theory
 {
   using System;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   The constants.
@@ -415,25 +415,25 @@ namespace VianaNET.Data.Filter.Theory
       switch (nr)
       {
         case 1: 
-          s = Labels.ParseErrorBracketOpen;
+          s = VianaNET.Resources.Labels.ParseErrorBracketOpen;
           break;
         case 2:
-          s = Labels.ParseErrorBracketClose;
+          s = VianaNET.Resources.Labels.ParseErrorBracketClose;
           break;
         case 3:
-          s = Labels.ParseErrorOperatorMissing;
+          s = VianaNET.Resources.Labels.ParseErrorOperatorMissing;
           break;
         case 4:
-          s = Labels.ParseErrorTermMissing;
+          s = VianaNET.Resources.Labels.ParseErrorTermMissing;
           break;
         case 5:
-          s = Labels.ParseErrorIllegalCharacter;
+          s = VianaNET.Resources.Labels.ParseErrorIllegalCharacter;
           break;
         case 6:
-          s = Labels.ParseErrorNoFormulaDefined;
+          s = VianaNET.Resources.Labels.ParseErrorNoFormulaDefined;
           break;
         case 7:
-          s = Labels.ParseErrorUnknownIdentifier;
+          s = VianaNET.Resources.Labels.ParseErrorUnknownIdentifier;
           break;
       }
     }

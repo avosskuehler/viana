@@ -2,7 +2,7 @@
     x:Class="VianaNET.Modules.Video.Dialogs.SelectColorWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:Data="clr-namespace:VianaNET.Data"
+    xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension" xmlns:Data="clr-namespace:VianaNET.Data"
     xmlns:Control="clr-namespace:VianaNET.Modules.Video.Control" xmlns:application="clr-namespace:VianaNET.Application"
     lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 

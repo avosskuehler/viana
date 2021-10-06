@@ -48,7 +48,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Data.Filter.Theory;
   using VianaNET.MainWindow;
   using VianaNET.Modules.DataAcquisition;
-  using VianaNET.Resources;
+
 
   using WPFMath;
 
@@ -840,9 +840,9 @@ namespace VianaNET.Modules.Chart
         }
 
         var dlg = new VianaDialog(
-          Labels.AskDeleteDataTitle,
-          Labels.AskDeleteDataMessageTitle,
-          Labels.AskDeleteDataMessage,
+          VianaNET.Resources.Labels.AskDeleteDataTitle,
+          VianaNET.Resources.Labels.AskDeleteDataMessageTitle,
+          VianaNET.Resources.Labels.AskDeleteDataMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -1063,7 +1063,7 @@ namespace VianaNET.Modules.Chart
 
       for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.ObjectDescriptions.Add(Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
+        this.ObjectDescriptions.Add(VianaNET.Resources.Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
       }
 
       // this.ObjectSelectionCombo.ItemsSource = null;

@@ -28,7 +28,7 @@ namespace VianaNET.Modules.DataGrid
 
   using VianaNET.Application;
   using VianaNET.Data.Collections;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   This dialog covers data export options
@@ -41,15 +41,15 @@ namespace VianaNET.Modules.DataGrid
     public ExportOptionsDialog()
     {
       this.InitializeComponent();
-      this.Object1CheckBox.Content = Labels.DataGridObjectPrefix + " 1";
+      this.Object1CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 1";
       this.Object2CheckBox.Visibility = Viana.Project.ProcessingData.NumberOfTrackedObjects > 1
                                           ? Visibility.Visible
                                           : Visibility.Collapsed;
-      this.Object2CheckBox.Content = Labels.DataGridObjectPrefix + " 2";
+      this.Object2CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 2";
       this.Object3CheckBox.Visibility = Viana.Project.ProcessingData.NumberOfTrackedObjects > 2
                                           ? Visibility.Visible
                                           : Visibility.Collapsed;
-      this.Object3CheckBox.Content = Labels.DataGridObjectPrefix + " 3";
+      this.Object3CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 3";
     }
 
     /// <summary>

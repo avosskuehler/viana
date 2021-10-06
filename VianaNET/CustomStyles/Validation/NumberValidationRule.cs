@@ -10,7 +10,7 @@ namespace VianaNET.CustomStyles.Validation
   using System.Globalization;
   using System.Windows.Controls;
 
-  using VianaNET.Resources;
+
 
   /// <summary>
   /// TODO: Update summary.
@@ -28,7 +28,7 @@ namespace VianaNET.CustomStyles.Validation
       }
       catch (Exception)
       {
-        return new ValidationResult(false, Labels.CalibrationLengthErrorHint);
+        return new ValidationResult(false, VianaNET.Resources.Labels.CalibrationLengthErrorHint);
       }
 
       return new ValidationResult(true, null);

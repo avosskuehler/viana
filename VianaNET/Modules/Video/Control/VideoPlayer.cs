@@ -47,7 +47,7 @@ namespace VianaNET.Modules.Video.Control
   using VianaNET.Logging;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Dialogs;
-  using VianaNET.Resources;
+
 
   using Vlc.DotNet.Core;
   using Vlc.DotNet.Forms;
@@ -338,11 +338,11 @@ namespace VianaNET.Modules.Video.Control
         {
           if (fileName != string.Empty)
           {
-            var messageTitle = Labels.AskVideoNotFoundMessageTitle;
+            var messageTitle = VianaNET.Resources.Labels.AskVideoNotFoundMessageTitle;
             messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileWithPath));
             messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileWithPath));
 
-            var dlg = new VianaDialog(Labels.AskVideoNotFoundTitle, messageTitle, Labels.AskVideoNotFoundMessage, false);
+            var dlg = new VianaDialog(VianaNET.Resources.Labels.AskVideoNotFoundTitle, messageTitle, VianaNET.Resources.Labels.AskVideoNotFoundMessage, false);
             if (!dlg.ShowDialog().GetValueOrDefault(false))
             {
               return false;
@@ -353,8 +353,8 @@ namespace VianaNET.Modules.Video.Control
           ofd.CheckFileExists = true;
           ofd.CheckPathExists = true;
           ofd.FilterIndex = 1;
-          ofd.Filter = Labels.VideoFilesFilter;
-          ofd.Title = Labels.LoadVideoFilesTitle;
+          ofd.Filter = VianaNET.Resources.Labels.VideoFilesFilter;
+          ofd.Title = VianaNET.Resources.Labels.LoadVideoFilesTitle;
           if (ofd.ShowDialog().Value)
           {
             fileName = ofd.FileName;

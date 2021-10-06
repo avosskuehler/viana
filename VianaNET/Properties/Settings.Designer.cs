@@ -46,5 +46,29 @@ namespace VianaNET.Properties {
                 this["SettingsPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de")]
+        public string UICulture {
+            get {
+                return ((string)(this["UICulture"]));
+            }
+            set {
+                this["UICulture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de")]
+        public string Culture {
+            get {
+                return ((string)(this["Culture"]));
+            }
+            set {
+                this["Culture"] = value;
+            }
+        }
     }
 }

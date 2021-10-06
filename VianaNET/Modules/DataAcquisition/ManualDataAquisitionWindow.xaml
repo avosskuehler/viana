@@ -2,7 +2,7 @@
     x:Class="VianaNET.Modules.DataAcquisition.ManualDataAquisitionWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
     xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
     lex:LocalizeDictionary.DesignCulture="de"

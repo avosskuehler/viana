@@ -36,7 +36,7 @@ namespace VianaNET.Modules.DataAcquisition
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data;
   using VianaNET.Modules.Video.Control;
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   Interaction logic for ModifyDataWindow.xaml
@@ -545,7 +545,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private void UpdateDataPointLocation()
     {
-      this.ObjectIndexTextBox.Text = Labels.ModifyDataWindowTrackItemNumberHeader;
+      this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ModifyDataWindowTrackItemNumberHeader;
       var sample = Viana.Project.VideoData.Samples.GetSampleByFrameindex(Video.Instance.FrameIndex);
       var isSet = false;
       if (sample != null)
@@ -574,7 +574,7 @@ namespace VianaNET.Modules.DataAcquisition
           {
             this.HideArrowPointer(i);
             this.SetVisibilityOfSharpCursor(true);
-            this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
+            this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ManualDataAcquisitionTrackItemNumberHeader;
             if (!isSet)
             {
               this.IndexOfTrackedObject = i;
@@ -588,7 +588,7 @@ namespace VianaNET.Modules.DataAcquisition
         this.IndexOfTrackedObject = 1;
         this.SetVisibilityOfArrowCursor(false);
         this.SetVisibilityOfSharpCursor(true);
-        this.ObjectIndexTextBox.Text = Labels.ManualDataAcquisitionTrackItemNumberHeader;
+        this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ManualDataAcquisitionTrackItemNumberHeader;
       }
     }
 

@@ -33,7 +33,7 @@ namespace VianaNET.Data.Filter.Theory
   using System.Windows.Controls;
 
   using VianaNET.Data.Filter.Regression;
-  using VianaNET.Resources;
+
 
   using WPFLocalizeExtension.Extensions;
 
@@ -77,15 +77,15 @@ namespace VianaNET.Data.Filter.Theory
       this.usesDecimalkomma = (15 == Convert.ToDouble("1.5"));
       if (modus == TRechnerArt.rechner)
       {
-        this.Title = Labels.CalculatorDialogTitleCalc;
+        this.Title = VianaNET.Resources.Labels.CalculatorDialogTitleCalc;
         this.buttonX.Visibility = Visibility.Hidden;
-        this.buttonFertig.Content = Labels.CalculatorDialogButtonDoneCalc;
+        this.buttonFertig.Content = VianaNET.Resources.Labels.CalculatorDialogButtonDoneCalc;
       }
       else
       {
-        this.Title = Labels.CalculatorDialogTitleFunctionEditor;
+        this.Title = VianaNET.Resources.Labels.CalculatorDialogTitleFunctionEditor;
         this.buttonX.Visibility = Visibility.Visible;
-        this.buttonFertig.Content = Labels.CalculatorDialogButtonDoneFktEdit;
+        this.buttonFertig.Content = VianaNET.Resources.Labels.CalculatorDialogButtonDoneFktEdit;
       }
 
       for (k = 0; k < Constants.konstante.Length; k++)

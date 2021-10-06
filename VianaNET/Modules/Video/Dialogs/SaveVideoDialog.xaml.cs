@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Forms;
 
-  using VianaNET.Resources;
+
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
 
@@ -83,7 +83,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.InitializeComponent();
       this.InitializeDeviceCombo();
       this.folderBrowserDialog = new FolderBrowserDialog();
-      this.folderBrowserDialog.Description = Labels.VideoSaveFolderBrowserDescriptionTitle;
+      this.folderBrowserDialog.Description = VianaNET.Resources.Labels.VideoSaveFolderBrowserDescriptionTitle;
       this.folderBrowserDialog.ShowNewFolderButton = true;
       this.folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyDocuments;
       this.FolderTextBox.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -313,7 +313,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.FolderTextBox.IsEnabled = isEnabled;
       this.FolderButton.IsEnabled = isEnabled;
       this.CompressorComboBox.IsEnabled = isEnabled;
-      this.StatusBarReadyLabel.Content = isEnabled ? Labels.StatusBarReady : Labels.IsRecordingVideo;
+      this.StatusBarReadyLabel.Content = isEnabled ? VianaNET.Resources.Labels.StatusBarReady : VianaNET.Resources.Labels.IsRecordingVideo;
       this.RunAnalysisButton.IsEnabled = isEnabled;
 
       if (isEnabled)

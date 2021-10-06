@@ -31,7 +31,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows;
 
   using VianaNET.Application;
-  using VianaNET.Logging;
+  using VianaNET.Modules.Video.Control;
 
   /// <summary>
   ///   Thid dialog displays video information
@@ -42,11 +42,23 @@ namespace VianaNET.Modules.Video.Dialogs
     /// Initializes a new instance of the <see cref="VideoInfoDialog"/> class. 
     /// </summary>
     /// <param name="videofile"> The videofile to be analyzed. </param>
-    public VideoInfoDialog(string videofile)
+    public VideoInfoDialog()
     {
       this.InitializeComponent();
       this.DataContext = this;
-      this.ParseVideoFile(videofile);
+      switch (Video.Instance.VideoMode)
+      {
+        case CustomStyles.Types.VideoMode.File:
+          this.ParseVideoFile();
+          break;
+        case CustomStyles.Types.VideoMode.Capture:
+          this.ParseLiveCamera();
+          break;
+        case CustomStyles.Types.VideoMode.None:
+        default:
+          this.ParseVideoFile();
+          break;
+      }
     }
 
     /// <summary>
@@ -99,10 +111,14 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     /// Parses the video file for its properties.
     /// </summary>
-    /// <param name="videoFilename">The video filename.</param>
-    private void ParseVideoFile(string videoFilename)
+    private void ParseVideoFile()
     {
-      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, videoFilename);
+      if (Viana.Project == null || Viana.Project.ProjectPath == null)
+      {
+        return;
+      }
+
+      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, Viana.Project.VideoFile);
 
       if (!System.IO.File.Exists(fileWithPath))
       {
@@ -162,6 +178,23 @@ namespace VianaNET.Modules.Video.Dialogs
       //this.FrameSize = aviFile.Video[0].FrameSize;
       //this.Codec = aviFile.Video[0].Format;
       //this.Bitrate = aviFile.General.Bitrate.ToString(CultureInfo.InvariantCulture) + " kbps";
+    }
+
+    private void ParseLiveCamera()
+    {
+      // Read out video properties
+      var capturer = Video.Instance.VideoCapturerElement;
+
+      this.Filename = string.Empty;
+      this.DurationString = string.Empty;
+      this.Duration = 0;
+      this.FrameRate = capturer.FPS;
+      this.DefaultFrameRate = capturer.FPS;
+      this.FrameCount = 0;
+      this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
+      this.Codec = string.Empty;
+      this.Bitrate =  "?";
+      return;
     }
 
     /// <summary>

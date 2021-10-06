@@ -1546,34 +1546,34 @@
     <value>@ShowVideoInfosButtonToolTipTitle</value>
   </data>
   <data name="VideoInfoDialogTitle" xml:space="preserve">
-    <value>@VideoInfoDialogTitle</value>
+    <value>VideoInfoDialogTitle</value>
   </data>
   <data name="VideoInfoDialogTopFrameTitle" xml:space="preserve">
-    <value>@VideoInfoDialogTopFrameTitle</value>
+    <value>VideoInfoDialogTopFrameTitle</value>
   </data>
   <data name="VideoInfoBitrateLabel" xml:space="preserve">
-    <value>@VideoInfoBitrateLabel</value>
+    <value>VideoInfoBitrateLabel</value>
   </data>
   <data name="VideoInfoCodecLabel" xml:space="preserve">
-    <value>@VideoInfoCodecLabel</value>
+    <value>VideoInfoCodecLabel</value>
   </data>
   <data name="VideoInfoDurationLabel" xml:space="preserve">
-    <value>@VideoInfoDurationLabel</value>
+    <value>VideoInfoDurationLabel</value>
   </data>
   <data name="VideoInfoFilenameLabel" xml:space="preserve">
-    <value>@VideoInfoFilenameLabel</value>
+    <value>VideoInfoFilenameLabel</value>
   </data>
   <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
-    <value>@VideoInfoFPSDefaultLabel</value>
+    <value>VideoInfoFPSDefaultLabel</value>
   </data>
   <data name="VideoInfoFPSLabel" xml:space="preserve">
-    <value>@VideoInfoFPSLabel</value>
+    <value>VideoInfoFPSLabel</value>
   </data>
   <data name="VideoInfoFrameCountLabel" xml:space="preserve">
-    <value>@VideoInfoFrameCountLabel</value>
+    <value>VideoInfoFrameCountLabel</value>
   </data>
   <data name="VideoInfoFrameSizeLabel" xml:space="preserve">
-    <value>@VideoInfoFrameSizeLabel</value>
+    <value>VideoInfoFrameSizeLabel</value>
   </data>
   <data name="VideoWindowPlayButtonToolTip" xml:space="preserve">
     <value>@VideoWindowPlayButtonToolTip</value>

@@ -30,7 +30,7 @@ namespace VianaNET
   using OxyPlot.Axes;
   using OxyPlot.Series;
 
-  using VianaNET.Resources;
+
 
   /// <summary>
   ///   Interaction logic for LineStyleControl.xaml
@@ -196,7 +196,7 @@ namespace VianaNET
     {
       var plotModel1 = new PlotModel();
       plotModel1.IsLegendVisible = false;
-      plotModel1.Title = Labels.LineStyleControlChartTitle;
+      plotModel1.Title = VianaNET.Resources.Labels.LineStyleControlChartTitle;
       var linearAxis1 = new LinearAxis();
       linearAxis1.Position = AxisPosition.Bottom;
       linearAxis1.MaximumPadding = 0.1;

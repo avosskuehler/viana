@@ -276,6 +276,14 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    public bool IsLiveCamera
+    {
+      get
+      {
+        return this.videoMode == VideoMode.Capture;
+      }
+    }
+
     /// <summary>
     ///   Gets the video player element.
     /// </summary>
@@ -618,7 +626,7 @@ namespace VianaNET.Modules.Video.Control
           if (DShowUtils.GetVideoInputDevices().Any())
           {
             this.videoElement = this.videoCaptureElement;
-            this.videoCaptureElement.NewCamera(0, 0, 0);
+            this.videoCaptureElement.NewCamera();
             StatusBarContent.Instance.VideoFilename = "Live Video";
           }
 

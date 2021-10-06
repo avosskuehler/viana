@@ -22,7 +22,7 @@ namespace VianaNET.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Labels {
+    public class Labels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace VianaNET.Resources {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VianaNET.Resources.Labels", typeof(Labels).Assembly);
@@ -51,7 +51,7 @@ namespace VianaNET.Resources {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AberrationStringPrefix ähnelt.
         /// </summary>
-        internal static string AberrationStringPrefix {
+        public static string AberrationStringPrefix {
             get {
                 return ResourceManager.GetString("AberrationStringPrefix", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxCredits ähnelt.
         /// </summary>
-        internal static string AboutBoxCredits {
+        public static string AboutBoxCredits {
             get {
                 return ResourceManager.GetString("AboutBoxCredits", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxCreditsHeader ähnelt.
         /// </summary>
-        internal static string AboutBoxCreditsHeader {
+        public static string AboutBoxCreditsHeader {
             get {
                 return ResourceManager.GetString("AboutBoxCreditsHeader", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxDescription ähnelt.
         /// </summary>
-        internal static string AboutBoxDescription {
+        public static string AboutBoxDescription {
             get {
                 return ResourceManager.GetString("AboutBoxDescription", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxTextBlock ähnelt.
         /// </summary>
-        internal static string AboutBoxTextBlock {
+        public static string AboutBoxTextBlock {
             get {
                 return ResourceManager.GetString("AboutBoxTextBlock", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AboutBoxTitle ähnelt.
         /// </summary>
-        internal static string AboutBoxTitle {
+        public static string AboutBoxTitle {
             get {
                 return ResourceManager.GetString("AboutBoxTitle", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ApplicationTitle ähnelt.
         /// </summary>
-        internal static string ApplicationTitle {
+        public static string ApplicationTitle {
             get {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskDeleteDataMessage ähnelt.
         /// </summary>
-        internal static string AskDeleteDataMessage {
+        public static string AskDeleteDataMessage {
             get {
                 return ResourceManager.GetString("AskDeleteDataMessage", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskDeleteDataMessageTitle ähnelt.
         /// </summary>
-        internal static string AskDeleteDataMessageTitle {
+        public static string AskDeleteDataMessageTitle {
             get {
                 return ResourceManager.GetString("AskDeleteDataMessageTitle", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskDeleteDataTitle ähnelt.
         /// </summary>
-        internal static string AskDeleteDataTitle {
+        public static string AskDeleteDataTitle {
             get {
                 return ResourceManager.GetString("AskDeleteDataTitle", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskSaveProjectDialogDescription ähnelt.
         /// </summary>
-        internal static string AskSaveProjectDialogDescription {
+        public static string AskSaveProjectDialogDescription {
             get {
                 return ResourceManager.GetString("AskSaveProjectDialogDescription", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskSaveProjectDialogMessage ähnelt.
         /// </summary>
-        internal static string AskSaveProjectDialogMessage {
+        public static string AskSaveProjectDialogMessage {
             get {
                 return ResourceManager.GetString("AskSaveProjectDialogMessage", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskSaveProjectDialogTitle ähnelt.
         /// </summary>
-        internal static string AskSaveProjectDialogTitle {
+        public static string AskSaveProjectDialogTitle {
             get {
                 return ResourceManager.GetString("AskSaveProjectDialogTitle", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskVideoNotFoundMessage ähnelt.
         /// </summary>
-        internal static string AskVideoNotFoundMessage {
+        public static string AskVideoNotFoundMessage {
             get {
                 return ResourceManager.GetString("AskVideoNotFoundMessage", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskVideoNotFoundMessageTitle ähnelt.
         /// </summary>
-        internal static string AskVideoNotFoundMessageTitle {
+        public static string AskVideoNotFoundMessageTitle {
             get {
                 return ResourceManager.GetString("AskVideoNotFoundMessageTitle", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AskVideoNotFoundTitle ähnelt.
         /// </summary>
-        internal static string AskVideoNotFoundTitle {
+        public static string AskVideoNotFoundTitle {
             get {
                 return ResourceManager.GetString("AskVideoNotFoundTitle", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAcceleration ähnelt.
         /// </summary>
-        internal static string AxisAcceleration {
+        public static string AxisAcceleration {
             get {
                 return ResourceManager.GetString("AxisAcceleration", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAccelerationInterpolated ähnelt.
         /// </summary>
-        internal static string AxisAccelerationInterpolated {
+        public static string AxisAccelerationInterpolated {
             get {
                 return ResourceManager.GetString("AxisAccelerationInterpolated", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAccelerationXDirection ähnelt.
         /// </summary>
-        internal static string AxisAccelerationXDirection {
+        public static string AxisAccelerationXDirection {
             get {
                 return ResourceManager.GetString("AxisAccelerationXDirection", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAccelerationXDirectionInterpolated ähnelt.
         /// </summary>
-        internal static string AxisAccelerationXDirectionInterpolated {
+        public static string AxisAccelerationXDirectionInterpolated {
             get {
                 return ResourceManager.GetString("AxisAccelerationXDirectionInterpolated", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAccelerationYDirection ähnelt.
         /// </summary>
-        internal static string AxisAccelerationYDirection {
+        public static string AxisAccelerationYDirection {
             get {
                 return ResourceManager.GetString("AxisAccelerationYDirection", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAccelerationYDirectionInterpolated ähnelt.
         /// </summary>
-        internal static string AxisAccelerationYDirectionInterpolated {
+        public static string AxisAccelerationYDirectionInterpolated {
             get {
                 return ResourceManager.GetString("AxisAccelerationYDirectionInterpolated", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAoverT ähnelt.
         /// </summary>
-        internal static string AxisAoverT {
+        public static string AxisAoverT {
             get {
                 return ResourceManager.GetString("AxisAoverT", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAXoverT ähnelt.
         /// </summary>
-        internal static string AxisAXoverT {
+        public static string AxisAXoverT {
             get {
                 return ResourceManager.GetString("AxisAXoverT", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisAYoverT ähnelt.
         /// </summary>
-        internal static string AxisAYoverT {
+        public static string AxisAYoverT {
             get {
                 return ResourceManager.GetString("AxisAYoverT", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDistance ähnelt.
         /// </summary>
-        internal static string AxisDistance {
+        public static string AxisDistance {
             get {
                 return ResourceManager.GetString("AxisDistance", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDistanceX ähnelt.
         /// </summary>
-        internal static string AxisDistanceX {
+        public static string AxisDistanceX {
             get {
                 return ResourceManager.GetString("AxisDistanceX", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDistanceY ähnelt.
         /// </summary>
-        internal static string AxisDistanceY {
+        public static string AxisDistanceY {
             get {
                 return ResourceManager.GetString("AxisDistanceY", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDoverV ähnelt.
         /// </summary>
-        internal static string AxisDoverV {
+        public static string AxisDoverV {
             get {
                 return ResourceManager.GetString("AxisDoverV", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDXoverVX ähnelt.
         /// </summary>
-        internal static string AxisDXoverVX {
+        public static string AxisDXoverVX {
             get {
                 return ResourceManager.GetString("AxisDXoverVX", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisDYoverVY ähnelt.
         /// </summary>
-        internal static string AxisDYoverVY {
+        public static string AxisDYoverVY {
             get {
                 return ResourceManager.GetString("AxisDYoverVY", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisFrame ähnelt.
         /// </summary>
-        internal static string AxisFrame {
+        public static string AxisFrame {
             get {
                 return ResourceManager.GetString("AxisFrame", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisLength ähnelt.
         /// </summary>
-        internal static string AxisLength {
+        public static string AxisLength {
             get {
                 return ResourceManager.GetString("AxisLength", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisLengthX ähnelt.
         /// </summary>
-        internal static string AxisLengthX {
+        public static string AxisLengthX {
             get {
                 return ResourceManager.GetString("AxisLengthX", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisLengthY ähnelt.
         /// </summary>
-        internal static string AxisLengthY {
+        public static string AxisLengthY {
             get {
                 return ResourceManager.GetString("AxisLengthY", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisPixelX ähnelt.
         /// </summary>
-        internal static string AxisPixelX {
+        public static string AxisPixelX {
             get {
                 return ResourceManager.GetString("AxisPixelX", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisPixelY ähnelt.
         /// </summary>
-        internal static string AxisPixelY {
+        public static string AxisPixelY {
             get {
                 return ResourceManager.GetString("AxisPixelY", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisPositionX ähnelt.
         /// </summary>
-        internal static string AxisPositionX {
+        public static string AxisPositionX {
             get {
                 return ResourceManager.GetString("AxisPositionX", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisPositionY ähnelt.
         /// </summary>
-        internal static string AxisPositionY {
+        public static string AxisPositionY {
             get {
                 return ResourceManager.GetString("AxisPositionY", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisSoverT ähnelt.
         /// </summary>
-        internal static string AxisSoverT {
+        public static string AxisSoverT {
             get {
                 return ResourceManager.GetString("AxisSoverT", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisSoverV ähnelt.
         /// </summary>
-        internal static string AxisSoverV {
+        public static string AxisSoverV {
             get {
                 return ResourceManager.GetString("AxisSoverV", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisSXoverVX ähnelt.
         /// </summary>
-        internal static string AxisSXoverVX {
+        public static string AxisSXoverVX {
             get {
                 return ResourceManager.GetString("AxisSXoverVX", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisSYoverVY ähnelt.
         /// </summary>
-        internal static string AxisSYoverVY {
+        public static string AxisSYoverVY {
             get {
                 return ResourceManager.GetString("AxisSYoverVY", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisTime ähnelt.
         /// </summary>
-        internal static string AxisTime {
+        public static string AxisTime {
             get {
                 return ResourceManager.GetString("AxisTime", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocity ähnelt.
         /// </summary>
-        internal static string AxisVelocity {
+        public static string AxisVelocity {
             get {
                 return ResourceManager.GetString("AxisVelocity", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocityInterpolated ähnelt.
         /// </summary>
-        internal static string AxisVelocityInterpolated {
+        public static string AxisVelocityInterpolated {
             get {
                 return ResourceManager.GetString("AxisVelocityInterpolated", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocityXDirection ähnelt.
         /// </summary>
-        internal static string AxisVelocityXDirection {
+        public static string AxisVelocityXDirection {
             get {
                 return ResourceManager.GetString("AxisVelocityXDirection", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocityXDirectionInterpolated ähnelt.
         /// </summary>
-        internal static string AxisVelocityXDirectionInterpolated {
+        public static string AxisVelocityXDirectionInterpolated {
             get {
                 return ResourceManager.GetString("AxisVelocityXDirectionInterpolated", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocityYDirection ähnelt.
         /// </summary>
-        internal static string AxisVelocityYDirection {
+        public static string AxisVelocityYDirection {
             get {
                 return ResourceManager.GetString("AxisVelocityYDirection", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVelocityYDirectionInterpolated ähnelt.
         /// </summary>
-        internal static string AxisVelocityYDirectionInterpolated {
+        public static string AxisVelocityYDirectionInterpolated {
             get {
                 return ResourceManager.GetString("AxisVelocityYDirectionInterpolated", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVoverA ähnelt.
         /// </summary>
-        internal static string AxisVoverA {
+        public static string AxisVoverA {
             get {
                 return ResourceManager.GetString("AxisVoverA", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVoverT ähnelt.
         /// </summary>
-        internal static string AxisVoverT {
+        public static string AxisVoverT {
             get {
                 return ResourceManager.GetString("AxisVoverT", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVXoverAX ähnelt.
         /// </summary>
-        internal static string AxisVXoverAX {
+        public static string AxisVXoverAX {
             get {
                 return ResourceManager.GetString("AxisVXoverAX", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVXoverT ähnelt.
         /// </summary>
-        internal static string AxisVXoverT {
+        public static string AxisVXoverT {
             get {
                 return ResourceManager.GetString("AxisVXoverT", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVYoverAY ähnelt.
         /// </summary>
-        internal static string AxisVYoverAY {
+        public static string AxisVYoverAY {
             get {
                 return ResourceManager.GetString("AxisVYoverAY", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisVYoverT ähnelt.
         /// </summary>
-        internal static string AxisVYoverT {
+        public static string AxisVYoverT {
             get {
                 return ResourceManager.GetString("AxisVYoverT", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisXoverT ähnelt.
         /// </summary>
-        internal static string AxisXoverT {
+        public static string AxisXoverT {
             get {
                 return ResourceManager.GetString("AxisXoverT", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisYoverT ähnelt.
         /// </summary>
-        internal static string AxisYoverT {
+        public static string AxisYoverT {
             get {
                 return ResourceManager.GetString("AxisYoverT", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AxisYoverX ähnelt.
         /// </summary>
-        internal static string AxisYoverX {
+        public static string AxisYoverX {
             get {
                 return ResourceManager.GetString("AxisYoverX", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlDetectedPositionsHeader ähnelt.
         /// </summary>
-        internal static string BlobsControlDetectedPositionsHeader {
+        public static string BlobsControlDetectedPositionsHeader {
             get {
                 return ResourceManager.GetString("BlobsControlDetectedPositionsHeader", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlFoundBlobsHeader ähnelt.
         /// </summary>
-        internal static string BlobsControlFoundBlobsHeader {
+        public static string BlobsControlFoundBlobsHeader {
             get {
                 return ResourceManager.GetString("BlobsControlFoundBlobsHeader", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlMotionProcessedImageHeader ähnelt.
         /// </summary>
-        internal static string BlobsControlMotionProcessedImageHeader {
+        public static string BlobsControlMotionProcessedImageHeader {
             get {
                 return ResourceManager.GetString("BlobsControlMotionProcessedImageHeader", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlProcessedImageHeader ähnelt.
         /// </summary>
-        internal static string BlobsControlProcessedImageHeader {
+        public static string BlobsControlProcessedImageHeader {
             get {
                 return ResourceManager.GetString("BlobsControlProcessedImageHeader", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsNoObjectFound ähnelt.
         /// </summary>
-        internal static string BlobsNoObjectFound {
+        public static string BlobsNoObjectFound {
             get {
                 return ResourceManager.GetString("BlobsNoObjectFound", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsObjectsFound ähnelt.
         /// </summary>
-        internal static string BlobsObjectsFound {
+        public static string BlobsObjectsFound {
             get {
                 return ResourceManager.GetString("BlobsObjectsFound", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAboutLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonAboutLabelDescription {
+        public static string ButtonAboutLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonAboutLabelDescription", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAboutLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonAboutLabelTitle {
+        public static string ButtonAboutLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonAboutLabelTitle", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAboutToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonAboutToolTipDescription {
+        public static string ButtonAboutToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonAboutToolTipDescription", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAboutToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonAboutToolTipTitle {
+        public static string ButtonAboutToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonAboutToolTipTitle", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonApplicationLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonApplicationLabelDescription {
+        public static string ButtonApplicationLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonApplicationLabelDescription", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonApplicationLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonApplicationLabelTitle {
+        public static string ButtonApplicationLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonApplicationLabelTitle", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonApplicationToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonApplicationToolTipDescription {
+        public static string ButtonApplicationToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonApplicationToolTipDescription", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonApplicationToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonApplicationToolTipTitle {
+        public static string ButtonApplicationToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonApplicationToolTipTitle", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionLabelDescription {
+        public static string ButtonAutomaticDataAquisitionLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionLabelDescription", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionLabelTitle {
+        public static string ButtonAutomaticDataAquisitionLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionLabelTitle", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionStopLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionStopLabelDescription {
+        public static string ButtonAutomaticDataAquisitionStopLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionStopLabelDescription", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionStopLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionStopLabelTitle {
+        public static string ButtonAutomaticDataAquisitionStopLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionStopLabelTitle", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionStopToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionStopToolTipDescription {
+        public static string ButtonAutomaticDataAquisitionStopToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionStopToolTipDescription", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionStopToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionStopToolTipTitle {
+        public static string ButtonAutomaticDataAquisitionStopToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionStopToolTipTitle", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionToolTipDescription {
+        public static string ButtonAutomaticDataAquisitionToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionToolTipDescription", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonAutomaticDataAquisitionToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonAutomaticDataAquisitionToolTipTitle {
+        public static string ButtonAutomaticDataAquisitionToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonAutomaticDataAquisitionToolTipTitle", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalculateVelocityLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonCalculateVelocityLabelDescription {
+        public static string ButtonCalculateVelocityLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonCalculateVelocityLabelDescription", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalculateVelocityLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonCalculateVelocityLabelTitle {
+        public static string ButtonCalculateVelocityLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonCalculateVelocityLabelTitle", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalculateVelocityToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonCalculateVelocityToolTipDescription {
+        public static string ButtonCalculateVelocityToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonCalculateVelocityToolTipDescription", resourceCulture);
             }
@@ -819,7 +819,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalculateVelocityToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonCalculateVelocityToolTipTitle {
+        public static string ButtonCalculateVelocityToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonCalculateVelocityToolTipTitle", resourceCulture);
             }
@@ -828,7 +828,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalibrateVideoLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonCalibrateVideoLabelDescription {
+        public static string ButtonCalibrateVideoLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonCalibrateVideoLabelDescription", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalibrateVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonCalibrateVideoLabelTitle {
+        public static string ButtonCalibrateVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonCalibrateVideoLabelTitle", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalibrateVideoToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonCalibrateVideoToolTipDescription {
+        public static string ButtonCalibrateVideoToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonCalibrateVideoToolTipDescription", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCalibrateVideoToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonCalibrateVideoToolTipTitle {
+        public static string ButtonCalibrateVideoToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonCalibrateVideoToolTipTitle", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCaptureVideoLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonCaptureVideoLabelDescription {
+        public static string ButtonCaptureVideoLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonCaptureVideoLabelDescription", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCaptureVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonCaptureVideoLabelTitle {
+        public static string ButtonCaptureVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonCaptureVideoLabelTitle", resourceCulture);
             }
@@ -882,7 +882,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCaptureVideoToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonCaptureVideoToolTipDescription {
+        public static string ButtonCaptureVideoToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonCaptureVideoToolTipDescription", resourceCulture);
             }
@@ -891,7 +891,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCaptureVideoToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonCaptureVideoToolTipTitle {
+        public static string ButtonCaptureVideoToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonCaptureVideoToolTipTitle", resourceCulture);
             }
@@ -900,7 +900,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeColorSchemeLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonChangeColorSchemeLabelDescription {
+        public static string ButtonChangeColorSchemeLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonChangeColorSchemeLabelDescription", resourceCulture);
             }
@@ -909,7 +909,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeColorSchemeLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonChangeColorSchemeLabelTitle {
+        public static string ButtonChangeColorSchemeLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonChangeColorSchemeLabelTitle", resourceCulture);
             }
@@ -918,7 +918,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeColorSchemeToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonChangeColorSchemeToolTipDescription {
+        public static string ButtonChangeColorSchemeToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonChangeColorSchemeToolTipDescription", resourceCulture);
             }
@@ -927,7 +927,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeColorSchemeToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonChangeColorSchemeToolTipTitle {
+        public static string ButtonChangeColorSchemeToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonChangeColorSchemeToolTipTitle", resourceCulture);
             }
@@ -936,7 +936,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeLanguageLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonChangeLanguageLabelDescription {
+        public static string ButtonChangeLanguageLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonChangeLanguageLabelDescription", resourceCulture);
             }
@@ -945,7 +945,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeLanguageLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonChangeLanguageLabelTitle {
+        public static string ButtonChangeLanguageLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonChangeLanguageLabelTitle", resourceCulture);
             }
@@ -954,7 +954,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeLanguageToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonChangeLanguageToolTipDescription {
+        public static string ButtonChangeLanguageToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonChangeLanguageToolTipDescription", resourceCulture);
             }
@@ -963,7 +963,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChangeLanguageToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonChangeLanguageToolTipTitle {
+        public static string ButtonChangeLanguageToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonChangeLanguageToolTipTitle", resourceCulture);
             }
@@ -972,7 +972,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChartWindowLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonChartWindowLabelDescription {
+        public static string ButtonChartWindowLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonChartWindowLabelDescription", resourceCulture);
             }
@@ -981,7 +981,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChartWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonChartWindowLabelTitle {
+        public static string ButtonChartWindowLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonChartWindowLabelTitle", resourceCulture);
             }
@@ -990,7 +990,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChartWindowToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonChartWindowToolTipDescription {
+        public static string ButtonChartWindowToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonChartWindowToolTipDescription", resourceCulture);
             }
@@ -999,7 +999,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChartWindowToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonChartWindowToolTipTitle {
+        public static string ButtonChartWindowToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonChartWindowToolTipTitle", resourceCulture);
             }
@@ -1008,7 +1008,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAnalysisLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonChooseAnalysisLabelDescription {
+        public static string ButtonChooseAnalysisLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonChooseAnalysisLabelDescription", resourceCulture);
             }
@@ -1017,7 +1017,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAnalysisLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonChooseAnalysisLabelTitle {
+        public static string ButtonChooseAnalysisLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonChooseAnalysisLabelTitle", resourceCulture);
             }
@@ -1026,7 +1026,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAnalysisToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonChooseAnalysisToolTipDescription {
+        public static string ButtonChooseAnalysisToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonChooseAnalysisToolTipDescription", resourceCulture);
             }
@@ -1035,7 +1035,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAnalysisToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonChooseAnalysisToolTipTitle {
+        public static string ButtonChooseAnalysisToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonChooseAnalysisToolTipTitle", resourceCulture);
             }
@@ -1044,7 +1044,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAutomaticAnalysisLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonChooseAutomaticAnalysisLabelDescription {
+        public static string ButtonChooseAutomaticAnalysisLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonChooseAutomaticAnalysisLabelDescription", resourceCulture);
             }
@@ -1053,7 +1053,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAutomaticAnalysisLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonChooseAutomaticAnalysisLabelTitle {
+        public static string ButtonChooseAutomaticAnalysisLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonChooseAutomaticAnalysisLabelTitle", resourceCulture);
             }
@@ -1062,7 +1062,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAutomaticAnalysisToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonChooseAutomaticAnalysisToolTipDescription {
+        public static string ButtonChooseAutomaticAnalysisToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonChooseAutomaticAnalysisToolTipDescription", resourceCulture);
             }
@@ -1071,7 +1071,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonChooseAutomaticAnalysisToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonChooseAutomaticAnalysisToolTipTitle {
+        public static string ButtonChooseAutomaticAnalysisToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonChooseAutomaticAnalysisToolTipTitle", resourceCulture);
             }
@@ -1080,7 +1080,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonClipVideoLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonClipVideoLabelDescription {
+        public static string ButtonClipVideoLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonClipVideoLabelDescription", resourceCulture);
             }
@@ -1089,7 +1089,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonClipVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonClipVideoLabelTitle {
+        public static string ButtonClipVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonClipVideoLabelTitle", resourceCulture);
             }
@@ -1098,7 +1098,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonClipVideoToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonClipVideoToolTipDescription {
+        public static string ButtonClipVideoToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonClipVideoToolTipDescription", resourceCulture);
             }
@@ -1107,7 +1107,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonClipVideoToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonClipVideoToolTipTitle {
+        public static string ButtonClipVideoToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonClipVideoToolTipTitle", resourceCulture);
             }
@@ -1116,7 +1116,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCloseApplicationLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonCloseApplicationLabelDescription {
+        public static string ButtonCloseApplicationLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonCloseApplicationLabelDescription", resourceCulture);
             }
@@ -1125,7 +1125,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCloseApplicationLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonCloseApplicationLabelTitle {
+        public static string ButtonCloseApplicationLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonCloseApplicationLabelTitle", resourceCulture);
             }
@@ -1134,7 +1134,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCloseApplicationToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonCloseApplicationToolTipDescription {
+        public static string ButtonCloseApplicationToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonCloseApplicationToolTipDescription", resourceCulture);
             }
@@ -1143,7 +1143,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCloseApplicationToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonCloseApplicationToolTipTitle {
+        public static string ButtonCloseApplicationToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonCloseApplicationToolTipTitle", resourceCulture);
             }
@@ -1152,7 +1152,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCoordinateSystemLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonCoordinateSystemLabelTitle {
+        public static string ButtonCoordinateSystemLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonCoordinateSystemLabelTitle", resourceCulture);
             }
@@ -1161,7 +1161,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCoordinateSystemToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonCoordinateSystemToolTipDescription {
+        public static string ButtonCoordinateSystemToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonCoordinateSystemToolTipDescription", resourceCulture);
             }
@@ -1170,7 +1170,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonCoordinateSystemToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonCoordinateSystemToolTipTitle {
+        public static string ButtonCoordinateSystemToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonCoordinateSystemToolTipTitle", resourceCulture);
             }
@@ -1179,7 +1179,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDatagridWindowLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonDatagridWindowLabelDescription {
+        public static string ButtonDatagridWindowLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonDatagridWindowLabelDescription", resourceCulture);
             }
@@ -1188,7 +1188,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDatagridWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonDatagridWindowLabelTitle {
+        public static string ButtonDatagridWindowLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonDatagridWindowLabelTitle", resourceCulture);
             }
@@ -1197,7 +1197,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDatagridWindowToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonDatagridWindowToolTipDescription {
+        public static string ButtonDatagridWindowToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonDatagridWindowToolTipDescription", resourceCulture);
             }
@@ -1206,7 +1206,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDatagridWindowToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonDatagridWindowToolTipTitle {
+        public static string ButtonDatagridWindowToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonDatagridWindowToolTipTitle", resourceCulture);
             }
@@ -1215,7 +1215,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDeleteDataLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonDeleteDataLabelDescription {
+        public static string ButtonDeleteDataLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonDeleteDataLabelDescription", resourceCulture);
             }
@@ -1224,7 +1224,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDeleteDataLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonDeleteDataLabelTitle {
+        public static string ButtonDeleteDataLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonDeleteDataLabelTitle", resourceCulture);
             }
@@ -1233,7 +1233,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDeleteDataToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonDeleteDataToolTipDescription {
+        public static string ButtonDeleteDataToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonDeleteDataToolTipDescription", resourceCulture);
             }
@@ -1242,7 +1242,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDeleteDataToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonDeleteDataToolTipTitle {
+        public static string ButtonDeleteDataToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonDeleteDataToolTipTitle", resourceCulture);
             }
@@ -1251,7 +1251,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDifferenceQuotientLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonDifferenceQuotientLabelTitle {
+        public static string ButtonDifferenceQuotientLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonDifferenceQuotientLabelTitle", resourceCulture);
             }
@@ -1260,7 +1260,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDifferenceQuotientToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonDifferenceQuotientToolTipDescription {
+        public static string ButtonDifferenceQuotientToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonDifferenceQuotientToolTipDescription", resourceCulture);
             }
@@ -1269,7 +1269,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonDifferenceQuotientToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonDifferenceQuotientToolTipTitle {
+        public static string ButtonDifferenceQuotientToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonDifferenceQuotientToolTipTitle", resourceCulture);
             }
@@ -1278,7 +1278,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartLabelTitle {
+        public static string ButtonExportChartLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartLabelTitle", resourceCulture);
             }
@@ -1287,7 +1287,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToClipboardLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToClipboardLabelDescription {
+        public static string ButtonExportChartToClipboardLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToClipboardLabelDescription", resourceCulture);
             }
@@ -1296,7 +1296,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToClipboardLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToClipboardLabelTitle {
+        public static string ButtonExportChartToClipboardLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToClipboardLabelTitle", resourceCulture);
             }
@@ -1305,7 +1305,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToClipboardToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToClipboardToolTipDescription {
+        public static string ButtonExportChartToClipboardToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToClipboardToolTipDescription", resourceCulture);
             }
@@ -1314,7 +1314,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToClipboardToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToClipboardToolTipTitle {
+        public static string ButtonExportChartToClipboardToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToClipboardToolTipTitle", resourceCulture);
             }
@@ -1323,7 +1323,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToFileLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToFileLabelDescription {
+        public static string ButtonExportChartToFileLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToFileLabelDescription", resourceCulture);
             }
@@ -1332,7 +1332,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToFileLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToFileLabelTitle {
+        public static string ButtonExportChartToFileLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToFileLabelTitle", resourceCulture);
             }
@@ -1341,7 +1341,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToFileToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToFileToolTipDescription {
+        public static string ButtonExportChartToFileToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToFileToolTipDescription", resourceCulture);
             }
@@ -1350,7 +1350,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToFileToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToFileToolTipTitle {
+        public static string ButtonExportChartToFileToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToFileToolTipTitle", resourceCulture);
             }
@@ -1359,7 +1359,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToolTipDescription {
+        public static string ButtonExportChartToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToolTipDescription", resourceCulture);
             }
@@ -1368,7 +1368,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToolTipTitle {
+        public static string ButtonExportChartToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToolTipTitle", resourceCulture);
             }
@@ -1377,7 +1377,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToWordLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToWordLabelDescription {
+        public static string ButtonExportChartToWordLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToWordLabelDescription", resourceCulture);
             }
@@ -1386,7 +1386,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToWordLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToWordLabelTitle {
+        public static string ButtonExportChartToWordLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToWordLabelTitle", resourceCulture);
             }
@@ -1395,7 +1395,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToWordToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToWordToolTipDescription {
+        public static string ButtonExportChartToWordToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportChartToWordToolTipDescription", resourceCulture);
             }
@@ -1404,7 +1404,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportChartToWordToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportChartToWordToolTipTitle {
+        public static string ButtonExportChartToWordToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportChartToWordToolTipTitle", resourceCulture);
             }
@@ -1413,7 +1413,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataLabelTitle {
+        public static string ButtonExportDataLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataLabelTitle", resourceCulture);
             }
@@ -1422,7 +1422,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToCsvLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToCsvLabelDescription {
+        public static string ButtonExportDataToCsvLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToCsvLabelDescription", resourceCulture);
             }
@@ -1431,7 +1431,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToCsvLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToCsvLabelTitle {
+        public static string ButtonExportDataToCsvLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToCsvLabelTitle", resourceCulture);
             }
@@ -1440,7 +1440,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToCsvToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToCsvToolTipDescription {
+        public static string ButtonExportDataToCsvToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToCsvToolTipDescription", resourceCulture);
             }
@@ -1449,7 +1449,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToCsvToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToCsvToolTipTitle {
+        public static string ButtonExportDataToCsvToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToCsvToolTipTitle", resourceCulture);
             }
@@ -1458,7 +1458,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToOdsLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToOdsLabelTitle {
+        public static string ButtonExportDataToOdsLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToOdsLabelTitle", resourceCulture);
             }
@@ -1467,7 +1467,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToOdsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToOdsToolTipDescription {
+        public static string ButtonExportDataToOdsToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToOdsToolTipDescription", resourceCulture);
             }
@@ -1476,7 +1476,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToOdsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToOdsToolTipTitle {
+        public static string ButtonExportDataToOdsToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToOdsToolTipTitle", resourceCulture);
             }
@@ -1485,7 +1485,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToolTipDescription {
+        public static string ButtonExportDataToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToolTipDescription", resourceCulture);
             }
@@ -1494,7 +1494,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToolTipTitle {
+        public static string ButtonExportDataToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToolTipTitle", resourceCulture);
             }
@@ -1503,7 +1503,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToTxtLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToTxtLabelDescription {
+        public static string ButtonExportDataToTxtLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToTxtLabelDescription", resourceCulture);
             }
@@ -1512,7 +1512,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToTxtLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToTxtLabelTitle {
+        public static string ButtonExportDataToTxtLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToTxtLabelTitle", resourceCulture);
             }
@@ -1521,7 +1521,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToTxtToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToTxtToolTipDescription {
+        public static string ButtonExportDataToTxtToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToTxtToolTipDescription", resourceCulture);
             }
@@ -1530,7 +1530,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToTxtToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToTxtToolTipTitle {
+        public static string ButtonExportDataToTxtToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToTxtToolTipTitle", resourceCulture);
             }
@@ -1539,7 +1539,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXlsLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXlsLabelDescription {
+        public static string ButtonExportDataToXlsLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXlsLabelDescription", resourceCulture);
             }
@@ -1548,7 +1548,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXlsLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXlsLabelTitle {
+        public static string ButtonExportDataToXlsLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXlsLabelTitle", resourceCulture);
             }
@@ -1557,7 +1557,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXlsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXlsToolTipDescription {
+        public static string ButtonExportDataToXlsToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXlsToolTipDescription", resourceCulture);
             }
@@ -1566,7 +1566,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXlsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXlsToolTipTitle {
+        public static string ButtonExportDataToXlsToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXlsToolTipTitle", resourceCulture);
             }
@@ -1575,7 +1575,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXmlLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXmlLabelDescription {
+        public static string ButtonExportDataToXmlLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXmlLabelDescription", resourceCulture);
             }
@@ -1584,7 +1584,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXmlLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXmlLabelTitle {
+        public static string ButtonExportDataToXmlLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXmlLabelTitle", resourceCulture);
             }
@@ -1593,7 +1593,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXmlToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXmlToolTipDescription {
+        public static string ButtonExportDataToXmlToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXmlToolTipDescription", resourceCulture);
             }
@@ -1602,7 +1602,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonExportDataToXmlToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonExportDataToXmlToolTipTitle {
+        public static string ButtonExportDataToXmlToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonExportDataToXmlToolTipTitle", resourceCulture);
             }
@@ -1611,7 +1611,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonInterpolationPropertiesLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonInterpolationPropertiesLabelDescription {
+        public static string ButtonInterpolationPropertiesLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonInterpolationPropertiesLabelDescription", resourceCulture);
             }
@@ -1620,7 +1620,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonInterpolationPropertiesLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonInterpolationPropertiesLabelTitle {
+        public static string ButtonInterpolationPropertiesLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonInterpolationPropertiesLabelTitle", resourceCulture);
             }
@@ -1629,7 +1629,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonInterpolationPropertiesToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonInterpolationPropertiesToolTipDescription {
+        public static string ButtonInterpolationPropertiesToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonInterpolationPropertiesToolTipDescription", resourceCulture);
             }
@@ -1638,7 +1638,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonInterpolationPropertiesToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonInterpolationPropertiesToolTipTitle {
+        public static string ButtonInterpolationPropertiesToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonInterpolationPropertiesToolTipTitle", resourceCulture);
             }
@@ -1647,7 +1647,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsInterpolatingDataLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonIsInterpolatingDataLabelDescription {
+        public static string ButtonIsInterpolatingDataLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonIsInterpolatingDataLabelDescription", resourceCulture);
             }
@@ -1656,7 +1656,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsInterpolatingDataLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsInterpolatingDataLabelTitle {
+        public static string ButtonIsInterpolatingDataLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonIsInterpolatingDataLabelTitle", resourceCulture);
             }
@@ -1665,7 +1665,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsInterpolatingDataToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonIsInterpolatingDataToolTipDescription {
+        public static string ButtonIsInterpolatingDataToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonIsInterpolatingDataToolTipDescription", resourceCulture);
             }
@@ -1674,7 +1674,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsInterpolatingDataToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsInterpolatingDataToolTipTitle {
+        public static string ButtonIsInterpolatingDataToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonIsInterpolatingDataToolTipTitle", resourceCulture);
             }
@@ -1683,7 +1683,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingColorDetectionLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingColorDetectionLabelTitle {
+        public static string ButtonIsUsingColorDetectionLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonIsUsingColorDetectionLabelTitle", resourceCulture);
             }
@@ -1692,7 +1692,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingColorDetectionToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingColorDetectionToolTipDescription {
+        public static string ButtonIsUsingColorDetectionToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonIsUsingColorDetectionToolTipDescription", resourceCulture);
             }
@@ -1701,7 +1701,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingColorDetectionToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingColorDetectionToolTipTitle {
+        public static string ButtonIsUsingColorDetectionToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonIsUsingColorDetectionToolTipTitle", resourceCulture);
             }
@@ -1710,7 +1710,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingMotionDetectionLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingMotionDetectionLabelTitle {
+        public static string ButtonIsUsingMotionDetectionLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonIsUsingMotionDetectionLabelTitle", resourceCulture);
             }
@@ -1719,7 +1719,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingMotionDetectionToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingMotionDetectionToolTipDescription {
+        public static string ButtonIsUsingMotionDetectionToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonIsUsingMotionDetectionToolTipDescription", resourceCulture);
             }
@@ -1728,7 +1728,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonIsUsingMotionDetectionToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonIsUsingMotionDetectionToolTipTitle {
+        public static string ButtonIsUsingMotionDetectionToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonIsUsingMotionDetectionToolTipTitle", resourceCulture);
             }
@@ -1737,7 +1737,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonLoadVideoLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonLoadVideoLabelDescription {
+        public static string ButtonLoadVideoLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonLoadVideoLabelDescription", resourceCulture);
             }
@@ -1746,7 +1746,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonLoadVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonLoadVideoLabelTitle {
+        public static string ButtonLoadVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonLoadVideoLabelTitle", resourceCulture);
             }
@@ -1755,7 +1755,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonLoadVideoToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonLoadVideoToolTipDescription {
+        public static string ButtonLoadVideoToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonLoadVideoToolTipDescription", resourceCulture);
             }
@@ -1764,7 +1764,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonLoadVideoToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonLoadVideoToolTipTitle {
+        public static string ButtonLoadVideoToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonLoadVideoToolTipTitle", resourceCulture);
             }
@@ -1773,7 +1773,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonManualDataAquisitionLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonManualDataAquisitionLabelDescription {
+        public static string ButtonManualDataAquisitionLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonManualDataAquisitionLabelDescription", resourceCulture);
             }
@@ -1782,7 +1782,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonManualDataAquisitionLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonManualDataAquisitionLabelTitle {
+        public static string ButtonManualDataAquisitionLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonManualDataAquisitionLabelTitle", resourceCulture);
             }
@@ -1791,7 +1791,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonManualDataAquisitionToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonManualDataAquisitionToolTipDescription {
+        public static string ButtonManualDataAquisitionToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonManualDataAquisitionToolTipDescription", resourceCulture);
             }
@@ -1800,7 +1800,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonManualDataAquisitionToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonManualDataAquisitionToolTipTitle {
+        public static string ButtonManualDataAquisitionToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonManualDataAquisitionToolTipTitle", resourceCulture);
             }
@@ -1809,7 +1809,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureAngleLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonMeasureAngleLabelTitle {
+        public static string ButtonMeasureAngleLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonMeasureAngleLabelTitle", resourceCulture);
             }
@@ -1818,7 +1818,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureAngleToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonMeasureAngleToolTipDescription {
+        public static string ButtonMeasureAngleToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonMeasureAngleToolTipDescription", resourceCulture);
             }
@@ -1827,7 +1827,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureAngleToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonMeasureAngleToolTipTitle {
+        public static string ButtonMeasureAngleToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonMeasureAngleToolTipTitle", resourceCulture);
             }
@@ -1836,7 +1836,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureLengthLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonMeasureLengthLabelTitle {
+        public static string ButtonMeasureLengthLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonMeasureLengthLabelTitle", resourceCulture);
             }
@@ -1845,7 +1845,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureLengthToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonMeasureLengthToolTipDescription {
+        public static string ButtonMeasureLengthToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonMeasureLengthToolTipDescription", resourceCulture);
             }
@@ -1854,7 +1854,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonMeasureLengthToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonMeasureLengthToolTipTitle {
+        public static string ButtonMeasureLengthToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonMeasureLengthToolTipTitle", resourceCulture);
             }
@@ -1863,7 +1863,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonModifyDataLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonModifyDataLabelTitle {
+        public static string ButtonModifyDataLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonModifyDataLabelTitle", resourceCulture);
             }
@@ -1872,7 +1872,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonModifyDataToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonModifyDataToolTipDescription {
+        public static string ButtonModifyDataToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonModifyDataToolTipDescription", resourceCulture);
             }
@@ -1881,7 +1881,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonModifyDataToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonModifyDataToolTipTitle {
+        public static string ButtonModifyDataToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonModifyDataToolTipTitle", resourceCulture);
             }
@@ -1890,7 +1890,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonNewLabelDescription {
+        public static string ButtonNewLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonNewLabelDescription", resourceCulture);
             }
@@ -1899,7 +1899,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonNewLabelTitle {
+        public static string ButtonNewLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonNewLabelTitle", resourceCulture);
             }
@@ -1908,7 +1908,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewProjectLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonNewProjectLabelTitle {
+        public static string ButtonNewProjectLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonNewProjectLabelTitle", resourceCulture);
             }
@@ -1917,7 +1917,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewProjectToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonNewProjectToolTipDescription {
+        public static string ButtonNewProjectToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonNewProjectToolTipDescription", resourceCulture);
             }
@@ -1926,7 +1926,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewProjectToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonNewProjectToolTipTitle {
+        public static string ButtonNewProjectToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonNewProjectToolTipTitle", resourceCulture);
             }
@@ -1935,7 +1935,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonNewToolTipDescription {
+        public static string ButtonNewToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonNewToolTipDescription", resourceCulture);
             }
@@ -1944,7 +1944,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonNewToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonNewToolTipTitle {
+        public static string ButtonNewToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonNewToolTipTitle", resourceCulture);
             }
@@ -1953,7 +1953,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonOtherOptionsLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonOtherOptionsLabelDescription {
+        public static string ButtonOtherOptionsLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonOtherOptionsLabelDescription", resourceCulture);
             }
@@ -1962,7 +1962,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonOtherOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonOtherOptionsLabelTitle {
+        public static string ButtonOtherOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonOtherOptionsLabelTitle", resourceCulture);
             }
@@ -1971,7 +1971,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonOtherOptionsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonOtherOptionsToolTipDescription {
+        public static string ButtonOtherOptionsToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonOtherOptionsToolTipDescription", resourceCulture);
             }
@@ -1980,7 +1980,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonOtherOptionsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonOtherOptionsToolTipTitle {
+        public static string ButtonOtherOptionsToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonOtherOptionsToolTipTitle", resourceCulture);
             }
@@ -1989,7 +1989,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonPropertiesWindowLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonPropertiesWindowLabelDescription {
+        public static string ButtonPropertiesWindowLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonPropertiesWindowLabelDescription", resourceCulture);
             }
@@ -1998,7 +1998,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonPropertiesWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonPropertiesWindowLabelTitle {
+        public static string ButtonPropertiesWindowLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonPropertiesWindowLabelTitle", resourceCulture);
             }
@@ -2007,7 +2007,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonPropertiesWindowToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonPropertiesWindowToolTipDescription {
+        public static string ButtonPropertiesWindowToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonPropertiesWindowToolTipDescription", resourceCulture);
             }
@@ -2016,7 +2016,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonPropertiesWindowToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonPropertiesWindowToolTipTitle {
+        public static string ButtonPropertiesWindowToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonPropertiesWindowToolTipTitle", resourceCulture);
             }
@@ -2025,7 +2025,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRecordVideoLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonRecordVideoLabelDescription {
+        public static string ButtonRecordVideoLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonRecordVideoLabelDescription", resourceCulture);
             }
@@ -2034,7 +2034,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRecordVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonRecordVideoLabelTitle {
+        public static string ButtonRecordVideoLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonRecordVideoLabelTitle", resourceCulture);
             }
@@ -2043,7 +2043,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRecordVideoToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonRecordVideoToolTipDescription {
+        public static string ButtonRecordVideoToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonRecordVideoToolTipDescription", resourceCulture);
             }
@@ -2052,7 +2052,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRecordVideoToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonRecordVideoToolTipTitle {
+        public static string ButtonRecordVideoToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonRecordVideoToolTipTitle", resourceCulture);
             }
@@ -2061,7 +2061,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonResetColorSchemeLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonResetColorSchemeLabelDescription {
+        public static string ButtonResetColorSchemeLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonResetColorSchemeLabelDescription", resourceCulture);
             }
@@ -2070,7 +2070,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonResetColorSchemeLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonResetColorSchemeLabelTitle {
+        public static string ButtonResetColorSchemeLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonResetColorSchemeLabelTitle", resourceCulture);
             }
@@ -2079,7 +2079,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonResetColorSchemeToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonResetColorSchemeToolTipDescription {
+        public static string ButtonResetColorSchemeToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonResetColorSchemeToolTipDescription", resourceCulture);
             }
@@ -2088,7 +2088,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonResetColorSchemeToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonResetColorSchemeToolTipTitle {
+        public static string ButtonResetColorSchemeToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonResetColorSchemeToolTipTitle", resourceCulture);
             }
@@ -2097,7 +2097,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRestoreLayoutLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonRestoreLayoutLabelDescription {
+        public static string ButtonRestoreLayoutLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonRestoreLayoutLabelDescription", resourceCulture);
             }
@@ -2106,7 +2106,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRestoreLayoutLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonRestoreLayoutLabelTitle {
+        public static string ButtonRestoreLayoutLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonRestoreLayoutLabelTitle", resourceCulture);
             }
@@ -2115,7 +2115,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRestoreLayoutToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonRestoreLayoutToolTipDescription {
+        public static string ButtonRestoreLayoutToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonRestoreLayoutToolTipDescription", resourceCulture);
             }
@@ -2124,7 +2124,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonRestoreLayoutToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonRestoreLayoutToolTipTitle {
+        public static string ButtonRestoreLayoutToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonRestoreLayoutToolTipTitle", resourceCulture);
             }
@@ -2133,7 +2133,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSaveLayoutLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonSaveLayoutLabelDescription {
+        public static string ButtonSaveLayoutLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonSaveLayoutLabelDescription", resourceCulture);
             }
@@ -2142,7 +2142,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSaveLayoutLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSaveLayoutLabelTitle {
+        public static string ButtonSaveLayoutLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSaveLayoutLabelTitle", resourceCulture);
             }
@@ -2151,7 +2151,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSaveLayoutToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSaveLayoutToolTipDescription {
+        public static string ButtonSaveLayoutToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSaveLayoutToolTipDescription", resourceCulture);
             }
@@ -2160,7 +2160,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSaveLayoutToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSaveLayoutToolTipTitle {
+        public static string ButtonSaveLayoutToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSaveLayoutToolTipTitle", resourceCulture);
             }
@@ -2169,7 +2169,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectColorLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectColorLabelDescription {
+        public static string ButtonSelectColorLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectColorLabelDescription", resourceCulture);
             }
@@ -2178,7 +2178,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectColorLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectColorLabelTitle {
+        public static string ButtonSelectColorLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectColorLabelTitle", resourceCulture);
             }
@@ -2187,7 +2187,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectColorToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectColorToolTipDescription {
+        public static string ButtonSelectColorToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectColorToolTipDescription", resourceCulture);
             }
@@ -2196,7 +2196,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectColorToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectColorToolTipTitle {
+        public static string ButtonSelectColorToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectColorToolTipTitle", resourceCulture);
             }
@@ -2205,7 +2205,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectedColorLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectedColorLabelTitle {
+        public static string ButtonSelectedColorLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectedColorLabelTitle", resourceCulture);
             }
@@ -2214,7 +2214,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectNumberOfObjectsLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectNumberOfObjectsLabelDescription {
+        public static string ButtonSelectNumberOfObjectsLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelDescription", resourceCulture);
             }
@@ -2223,7 +2223,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectNumberOfObjectsLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectNumberOfObjectsLabelTitle {
+        public static string ButtonSelectNumberOfObjectsLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelTitle", resourceCulture);
             }
@@ -2232,7 +2232,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectNumberOfObjectsLabelTitle2 ähnelt.
         /// </summary>
-        internal static string ButtonSelectNumberOfObjectsLabelTitle2 {
+        public static string ButtonSelectNumberOfObjectsLabelTitle2 {
             get {
                 return ResourceManager.GetString("ButtonSelectNumberOfObjectsLabelTitle2", resourceCulture);
             }
@@ -2241,7 +2241,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectNumberOfObjectsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectNumberOfObjectsToolTipDescription {
+        public static string ButtonSelectNumberOfObjectsToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectNumberOfObjectsToolTipDescription", resourceCulture);
             }
@@ -2250,7 +2250,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectNumberOfObjectsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectNumberOfObjectsToolTipTitle {
+        public static string ButtonSelectNumberOfObjectsToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectNumberOfObjectsToolTipTitle", resourceCulture);
             }
@@ -2259,7 +2259,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectObjectLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectObjectLabelDescription {
+        public static string ButtonSelectObjectLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectObjectLabelDescription", resourceCulture);
             }
@@ -2268,7 +2268,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectObjectLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectObjectLabelTitle {
+        public static string ButtonSelectObjectLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectObjectLabelTitle", resourceCulture);
             }
@@ -2277,7 +2277,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectObjectToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSelectObjectToolTipDescription {
+        public static string ButtonSelectObjectToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSelectObjectToolTipDescription", resourceCulture);
             }
@@ -2286,7 +2286,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectObjectToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSelectObjectToolTipTitle {
+        public static string ButtonSelectObjectToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectObjectToolTipTitle", resourceCulture);
             }
@@ -2295,7 +2295,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSkipPointsLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSkipPointsLabelTitle {
+        public static string ButtonSkipPointsLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSkipPointsLabelTitle", resourceCulture);
             }
@@ -2304,7 +2304,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSkipPointsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSkipPointsToolTipDescription {
+        public static string ButtonSkipPointsToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSkipPointsToolTipDescription", resourceCulture);
             }
@@ -2313,7 +2313,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSkipPointsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSkipPointsToolTipTitle {
+        public static string ButtonSkipPointsToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSkipPointsToolTipTitle", resourceCulture);
             }
@@ -2322,7 +2322,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSwitchTimeUnitLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonSwitchTimeUnitLabelTitle {
+        public static string ButtonSwitchTimeUnitLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonSwitchTimeUnitLabelTitle", resourceCulture);
             }
@@ -2331,7 +2331,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSwitchTimeUnitToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonSwitchTimeUnitToolTipDescription {
+        public static string ButtonSwitchTimeUnitToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonSwitchTimeUnitToolTipDescription", resourceCulture);
             }
@@ -2340,7 +2340,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSwitchTimeUnitToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonSwitchTimeUnitToolTipTitle {
+        public static string ButtonSwitchTimeUnitToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSwitchTimeUnitToolTipTitle", resourceCulture);
             }
@@ -2349,7 +2349,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoCaptureDevicePropertiesLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonVideoCaptureDevicePropertiesLabelDescription {
+        public static string ButtonVideoCaptureDevicePropertiesLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonVideoCaptureDevicePropertiesLabelDescription", resourceCulture);
             }
@@ -2358,7 +2358,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoCaptureDevicePropertiesLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonVideoCaptureDevicePropertiesLabelTitle {
+        public static string ButtonVideoCaptureDevicePropertiesLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonVideoCaptureDevicePropertiesLabelTitle", resourceCulture);
             }
@@ -2367,7 +2367,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoCaptureDevicePropertiesToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonVideoCaptureDevicePropertiesToolTipDescription {
+        public static string ButtonVideoCaptureDevicePropertiesToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonVideoCaptureDevicePropertiesToolTipDescription", resourceCulture);
             }
@@ -2376,7 +2376,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoCaptureDevicePropertiesToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonVideoCaptureDevicePropertiesToolTipTitle {
+        public static string ButtonVideoCaptureDevicePropertiesToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonVideoCaptureDevicePropertiesToolTipTitle", resourceCulture);
             }
@@ -2385,7 +2385,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoWindowLabelDescription ähnelt.
         /// </summary>
-        internal static string ButtonVideoWindowLabelDescription {
+        public static string ButtonVideoWindowLabelDescription {
             get {
                 return ResourceManager.GetString("ButtonVideoWindowLabelDescription", resourceCulture);
             }
@@ -2394,7 +2394,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string ButtonVideoWindowLabelTitle {
+        public static string ButtonVideoWindowLabelTitle {
             get {
                 return ResourceManager.GetString("ButtonVideoWindowLabelTitle", resourceCulture);
             }
@@ -2403,7 +2403,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoWindowToolTipDescription ähnelt.
         /// </summary>
-        internal static string ButtonVideoWindowToolTipDescription {
+        public static string ButtonVideoWindowToolTipDescription {
             get {
                 return ResourceManager.GetString("ButtonVideoWindowToolTipDescription", resourceCulture);
             }
@@ -2412,7 +2412,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonVideoWindowToolTipTitle ähnelt.
         /// </summary>
-        internal static string ButtonVideoWindowToolTipTitle {
+        public static string ButtonVideoWindowToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonVideoWindowToolTipTitle", resourceCulture);
             }
@@ -2421,7 +2421,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogButtonDoneCalc ähnelt.
         /// </summary>
-        internal static string CalculatorDialogButtonDoneCalc {
+        public static string CalculatorDialogButtonDoneCalc {
             get {
                 return ResourceManager.GetString("CalculatorDialogButtonDoneCalc", resourceCulture);
             }
@@ -2430,7 +2430,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogButtonDoneFktEdit ähnelt.
         /// </summary>
-        internal static string CalculatorDialogButtonDoneFktEdit {
+        public static string CalculatorDialogButtonDoneFktEdit {
             get {
                 return ResourceManager.GetString("CalculatorDialogButtonDoneFktEdit", resourceCulture);
             }
@@ -2439,7 +2439,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogInsert ähnelt.
         /// </summary>
-        internal static string CalculatorDialogInsert {
+        public static string CalculatorDialogInsert {
             get {
                 return ResourceManager.GetString("CalculatorDialogInsert", resourceCulture);
             }
@@ -2448,7 +2448,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogPhysicalKonst ähnelt.
         /// </summary>
-        internal static string CalculatorDialogPhysicalKonst {
+        public static string CalculatorDialogPhysicalKonst {
             get {
                 return ResourceManager.GetString("CalculatorDialogPhysicalKonst", resourceCulture);
             }
@@ -2457,7 +2457,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogTitleCalc ähnelt.
         /// </summary>
-        internal static string CalculatorDialogTitleCalc {
+        public static string CalculatorDialogTitleCalc {
             get {
                 return ResourceManager.GetString("CalculatorDialogTitleCalc", resourceCulture);
             }
@@ -2466,7 +2466,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalculatorDialogTitleFunctionEditor ähnelt.
         /// </summary>
-        internal static string CalculatorDialogTitleFunctionEditor {
+        public static string CalculatorDialogTitleFunctionEditor {
             get {
                 return ResourceManager.GetString("CalculatorDialogTitleFunctionEditor", resourceCulture);
             }
@@ -2475,7 +2475,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateVideoWindowTitle ähnelt.
         /// </summary>
-        internal static string CalibrateVideoWindowTitle {
+        public static string CalibrateVideoWindowTitle {
             get {
                 return ResourceManager.GetString("CalibrateVideoWindowTitle", resourceCulture);
             }
@@ -2484,7 +2484,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateWindowHelpControlTitle ähnelt.
         /// </summary>
-        internal static string CalibrateWindowHelpControlTitle {
+        public static string CalibrateWindowHelpControlTitle {
             get {
                 return ResourceManager.GetString("CalibrateWindowHelpControlTitle", resourceCulture);
             }
@@ -2493,7 +2493,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateWindowSpecifyLengthDescription ähnelt.
         /// </summary>
-        internal static string CalibrateWindowSpecifyLengthDescription {
+        public static string CalibrateWindowSpecifyLengthDescription {
             get {
                 return ResourceManager.GetString("CalibrateWindowSpecifyLengthDescription", resourceCulture);
             }
@@ -2502,7 +2502,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateWindowSpecifyLengthHeader ähnelt.
         /// </summary>
-        internal static string CalibrateWindowSpecifyLengthHeader {
+        public static string CalibrateWindowSpecifyLengthHeader {
             get {
                 return ResourceManager.GetString("CalibrateWindowSpecifyLengthHeader", resourceCulture);
             }
@@ -2511,7 +2511,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateWindowSpecifyOriginDescription ähnelt.
         /// </summary>
-        internal static string CalibrateWindowSpecifyOriginDescription {
+        public static string CalibrateWindowSpecifyOriginDescription {
             get {
                 return ResourceManager.GetString("CalibrateWindowSpecifyOriginDescription", resourceCulture);
             }
@@ -2520,7 +2520,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrateWindowSpecifyOriginHeader ähnelt.
         /// </summary>
-        internal static string CalibrateWindowSpecifyOriginHeader {
+        public static string CalibrateWindowSpecifyOriginHeader {
             get {
                 return ResourceManager.GetString("CalibrateWindowSpecifyOriginHeader", resourceCulture);
             }
@@ -2529,7 +2529,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationErrorDescription ähnelt.
         /// </summary>
-        internal static string CalibrationErrorDescription {
+        public static string CalibrationErrorDescription {
             get {
                 return ResourceManager.GetString("CalibrationErrorDescription", resourceCulture);
             }
@@ -2538,7 +2538,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationErrorMessage ähnelt.
         /// </summary>
-        internal static string CalibrationErrorMessage {
+        public static string CalibrationErrorMessage {
             get {
                 return ResourceManager.GetString("CalibrationErrorMessage", resourceCulture);
             }
@@ -2547,7 +2547,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationErrorTitle ähnelt.
         /// </summary>
-        internal static string CalibrationErrorTitle {
+        public static string CalibrationErrorTitle {
             get {
                 return ResourceManager.GetString("CalibrationErrorTitle", resourceCulture);
             }
@@ -2556,7 +2556,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationLengthErrorHint ähnelt.
         /// </summary>
-        internal static string CalibrationLengthErrorHint {
+        public static string CalibrationLengthErrorHint {
             get {
                 return ResourceManager.GetString("CalibrationLengthErrorHint", resourceCulture);
             }
@@ -2565,7 +2565,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationLengthToShortDescription ähnelt.
         /// </summary>
-        internal static string CalibrationLengthToShortDescription {
+        public static string CalibrationLengthToShortDescription {
             get {
                 return ResourceManager.GetString("CalibrationLengthToShortDescription", resourceCulture);
             }
@@ -2574,7 +2574,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationLengthToShortMessage ähnelt.
         /// </summary>
-        internal static string CalibrationLengthToShortMessage {
+        public static string CalibrationLengthToShortMessage {
             get {
                 return ResourceManager.GetString("CalibrationLengthToShortMessage", resourceCulture);
             }
@@ -2583,7 +2583,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CalibrationLengthToShortTitle ähnelt.
         /// </summary>
-        internal static string CalibrationLengthToShortTitle {
+        public static string CalibrationLengthToShortTitle {
             get {
                 return ResourceManager.GetString("CalibrationLengthToShortTitle", resourceCulture);
             }
@@ -2592,7 +2592,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @Cancel ähnelt.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -2601,7 +2601,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartDisplayOptionsLabelDescription ähnelt.
         /// </summary>
-        internal static string ChartDisplayOptionsLabelDescription {
+        public static string ChartDisplayOptionsLabelDescription {
             get {
                 return ResourceManager.GetString("ChartDisplayOptionsLabelDescription", resourceCulture);
             }
@@ -2610,7 +2610,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartDisplayOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string ChartDisplayOptionsLabelTitle {
+        public static string ChartDisplayOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("ChartDisplayOptionsLabelTitle", resourceCulture);
             }
@@ -2619,7 +2619,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartDisplayOptionsToolTipDescription ähnelt.
         /// </summary>
-        internal static string ChartDisplayOptionsToolTipDescription {
+        public static string ChartDisplayOptionsToolTipDescription {
             get {
                 return ResourceManager.GetString("ChartDisplayOptionsToolTipDescription", resourceCulture);
             }
@@ -2628,7 +2628,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartDisplayOptionsToolTipTitle ähnelt.
         /// </summary>
-        internal static string ChartDisplayOptionsToolTipTitle {
+        public static string ChartDisplayOptionsToolTipTitle {
             get {
                 return ResourceManager.GetString("ChartDisplayOptionsToolTipTitle", resourceCulture);
             }
@@ -2637,7 +2637,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartExportedToClipboardMessage ähnelt.
         /// </summary>
-        internal static string ChartExportedToClipboardMessage {
+        public static string ChartExportedToClipboardMessage {
             get {
                 return ResourceManager.GetString("ChartExportedToClipboardMessage", resourceCulture);
             }
@@ -2646,7 +2646,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogDataGroupHeader ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogDataGroupHeader {
+        public static string ChartHelpDialogDataGroupHeader {
             get {
                 return ResourceManager.GetString("ChartHelpDialogDataGroupHeader", resourceCulture);
             }
@@ -2655,7 +2655,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogDataGroupText ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogDataGroupText {
+        public static string ChartHelpDialogDataGroupText {
             get {
                 return ResourceManager.GetString("ChartHelpDialogDataGroupText", resourceCulture);
             }
@@ -2664,7 +2664,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogShortCutGroupHeader ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogShortCutGroupHeader {
+        public static string ChartHelpDialogShortCutGroupHeader {
             get {
                 return ResourceManager.GetString("ChartHelpDialogShortCutGroupHeader", resourceCulture);
             }
@@ -2673,7 +2673,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogShortCutGroupText ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogShortCutGroupText {
+        public static string ChartHelpDialogShortCutGroupText {
             get {
                 return ResourceManager.GetString("ChartHelpDialogShortCutGroupText", resourceCulture);
             }
@@ -2682,7 +2682,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogTitle ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogTitle {
+        public static string ChartHelpDialogTitle {
             get {
                 return ResourceManager.GetString("ChartHelpDialogTitle", resourceCulture);
             }
@@ -2691,7 +2691,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartHelpDialogTopFrameTitle ähnelt.
         /// </summary>
-        internal static string ChartHelpDialogTopFrameTitle {
+        public static string ChartHelpDialogTopFrameTitle {
             get {
                 return ResourceManager.GetString("ChartHelpDialogTopFrameTitle", resourceCulture);
             }
@@ -2700,7 +2700,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowAxesHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowAxesHeader {
+        public static string ChartWindowAxesHeader {
             get {
                 return ResourceManager.GetString("ChartWindowAxesHeader", resourceCulture);
             }
@@ -2709,7 +2709,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowAxisIntervalHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowAxisIntervalHeader {
+        public static string ChartWindowAxisIntervalHeader {
             get {
                 return ResourceManager.GetString("ChartWindowAxisIntervalHeader", resourceCulture);
             }
@@ -2718,7 +2718,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowAxisMaximumHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowAxisMaximumHeader {
+        public static string ChartWindowAxisMaximumHeader {
             get {
                 return ResourceManager.GetString("ChartWindowAxisMaximumHeader", resourceCulture);
             }
@@ -2727,7 +2727,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowAxisMinimumHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowAxisMinimumHeader {
+        public static string ChartWindowAxisMinimumHeader {
             get {
                 return ResourceManager.GetString("ChartWindowAxisMinimumHeader", resourceCulture);
             }
@@ -2736,7 +2736,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowAxisStyleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowAxisStyleHeader {
+        public static string ChartWindowAxisStyleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowAxisStyleHeader", resourceCulture);
             }
@@ -2745,7 +2745,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowCalculatorHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowCalculatorHeader {
+        public static string ChartWindowCalculatorHeader {
             get {
                 return ResourceManager.GetString("ChartWindowCalculatorHeader", resourceCulture);
             }
@@ -2754,7 +2754,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartFitAndSmooth ähnelt.
         /// </summary>
-        internal static string ChartWindowChartFitAndSmooth {
+        public static string ChartWindowChartFitAndSmooth {
             get {
                 return ResourceManager.GetString("ChartWindowChartFitAndSmooth", resourceCulture);
             }
@@ -2763,7 +2763,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowChartHeader {
+        public static string ChartWindowChartHeader {
             get {
                 return ResourceManager.GetString("ChartWindowChartHeader", resourceCulture);
             }
@@ -2772,7 +2772,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartLegend ähnelt.
         /// </summary>
-        internal static string ChartWindowChartLegend {
+        public static string ChartWindowChartLegend {
             get {
                 return ResourceManager.GetString("ChartWindowChartLegend", resourceCulture);
             }
@@ -2781,7 +2781,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartProperties ähnelt.
         /// </summary>
-        internal static string ChartWindowChartProperties {
+        public static string ChartWindowChartProperties {
             get {
                 return ResourceManager.GetString("ChartWindowChartProperties", resourceCulture);
             }
@@ -2790,7 +2790,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartSeries ähnelt.
         /// </summary>
-        internal static string ChartWindowChartSeries {
+        public static string ChartWindowChartSeries {
             get {
                 return ResourceManager.GetString("ChartWindowChartSeries", resourceCulture);
             }
@@ -2799,7 +2799,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartTitle ähnelt.
         /// </summary>
-        internal static string ChartWindowChartTitle {
+        public static string ChartWindowChartTitle {
             get {
                 return ResourceManager.GetString("ChartWindowChartTitle", resourceCulture);
             }
@@ -2808,7 +2808,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowChartTitleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowChartTitleHeader {
+        public static string ChartWindowChartTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowChartTitleHeader", resourceCulture);
             }
@@ -2817,7 +2817,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowCustomAxisHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowCustomAxisHeader {
+        public static string ChartWindowCustomAxisHeader {
             get {
                 return ResourceManager.GetString("ChartWindowCustomAxisHeader", resourceCulture);
             }
@@ -2826,7 +2826,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowCustomDiagrammTypes ähnelt.
         /// </summary>
-        internal static string ChartWindowCustomDiagrammTypes {
+        public static string ChartWindowCustomDiagrammTypes {
             get {
                 return ResourceManager.GetString("ChartWindowCustomDiagrammTypes", resourceCulture);
             }
@@ -2835,7 +2835,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowDataSeriesLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowDataSeriesLabel {
+        public static string ChartWindowDataSeriesLabel {
             get {
                 return ResourceManager.GetString("ChartWindowDataSeriesLabel", resourceCulture);
             }
@@ -2844,7 +2844,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowDisplayCurveLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowDisplayCurveLabel {
+        public static string ChartWindowDisplayCurveLabel {
             get {
                 return ResourceManager.GetString("ChartWindowDisplayCurveLabel", resourceCulture);
             }
@@ -2853,7 +2853,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowEnableTrackerCheckBox ähnelt.
         /// </summary>
-        internal static string ChartWindowEnableTrackerCheckBox {
+        public static string ChartWindowEnableTrackerCheckBox {
             get {
                 return ResourceManager.GetString("ChartWindowEnableTrackerCheckBox", resourceCulture);
             }
@@ -2862,7 +2862,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowHelpHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowHelpHeader {
+        public static string ChartWindowHelpHeader {
             get {
                 return ResourceManager.GetString("ChartWindowHelpHeader", resourceCulture);
             }
@@ -2871,7 +2871,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowInterpolationHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowInterpolationHeader {
+        public static string ChartWindowInterpolationHeader {
             get {
                 return ResourceManager.GetString("ChartWindowInterpolationHeader", resourceCulture);
             }
@@ -2880,7 +2880,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowInterpolationLineLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowInterpolationLineLabel {
+        public static string ChartWindowInterpolationLineLabel {
             get {
                 return ResourceManager.GetString("ChartWindowInterpolationLineLabel", resourceCulture);
             }
@@ -2889,7 +2889,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowInterpolationOptions ähnelt.
         /// </summary>
-        internal static string ChartWindowInterpolationOptions {
+        public static string ChartWindowInterpolationOptions {
             get {
                 return ResourceManager.GetString("ChartWindowInterpolationOptions", resourceCulture);
             }
@@ -2898,7 +2898,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowInterpolationSeriesLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowInterpolationSeriesLabel {
+        public static string ChartWindowInterpolationSeriesLabel {
             get {
                 return ResourceManager.GetString("ChartWindowInterpolationSeriesLabel", resourceCulture);
             }
@@ -2907,7 +2907,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLegendHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowLegendHeader {
+        public static string ChartWindowLegendHeader {
             get {
                 return ResourceManager.GetString("ChartWindowLegendHeader", resourceCulture);
             }
@@ -2916,7 +2916,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLegendPlacementInside ähnelt.
         /// </summary>
-        internal static string ChartWindowLegendPlacementInside {
+        public static string ChartWindowLegendPlacementInside {
             get {
                 return ResourceManager.GetString("ChartWindowLegendPlacementInside", resourceCulture);
             }
@@ -2925,7 +2925,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLegendPlacementLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowLegendPlacementLabel {
+        public static string ChartWindowLegendPlacementLabel {
             get {
                 return ResourceManager.GetString("ChartWindowLegendPlacementLabel", resourceCulture);
             }
@@ -2934,7 +2934,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLegendPlacementOutside ähnelt.
         /// </summary>
-        internal static string ChartWindowLegendPlacementOutside {
+        public static string ChartWindowLegendPlacementOutside {
             get {
                 return ResourceManager.GetString("ChartWindowLegendPlacementOutside", resourceCulture);
             }
@@ -2943,7 +2943,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLegendTitleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowLegendTitleHeader {
+        public static string ChartWindowLegendTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowLegendTitleHeader", resourceCulture);
             }
@@ -2952,7 +2952,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowLineColorLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowLineColorLabel {
+        public static string ChartWindowLineColorLabel {
             get {
                 return ResourceManager.GetString("ChartWindowLineColorLabel", resourceCulture);
             }
@@ -2961,7 +2961,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowObjectSelectionLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowObjectSelectionLabel {
+        public static string ChartWindowObjectSelectionLabel {
             get {
                 return ResourceManager.GetString("ChartWindowObjectSelectionLabel", resourceCulture);
             }
@@ -2970,7 +2970,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowPhaseSpaceHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowPhaseSpaceHeader {
+        public static string ChartWindowPhaseSpaceHeader {
             get {
                 return ResourceManager.GetString("ChartWindowPhaseSpaceHeader", resourceCulture);
             }
@@ -2979,7 +2979,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowPositionSpaceHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowPositionSpaceHeader {
+        public static string ChartWindowPositionSpaceHeader {
             get {
                 return ResourceManager.GetString("ChartWindowPositionSpaceHeader", resourceCulture);
             }
@@ -2988,7 +2988,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowPrecisionLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowPrecisionLabel {
+        public static string ChartWindowPrecisionLabel {
             get {
                 return ResourceManager.GetString("ChartWindowPrecisionLabel", resourceCulture);
             }
@@ -2997,7 +2997,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRegressionChooseTypeLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowRegressionChooseTypeLabel {
+        public static string ChartWindowRegressionChooseTypeLabel {
             get {
                 return ResourceManager.GetString("ChartWindowRegressionChooseTypeLabel", resourceCulture);
             }
@@ -3006,7 +3006,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRegressionHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowRegressionHeader {
+        public static string ChartWindowRegressionHeader {
             get {
                 return ResourceManager.GetString("ChartWindowRegressionHeader", resourceCulture);
             }
@@ -3015,7 +3015,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRegressionLineLegend ähnelt.
         /// </summary>
-        internal static string ChartWindowRegressionLineLegend {
+        public static string ChartWindowRegressionLineLegend {
             get {
                 return ResourceManager.GetString("ChartWindowRegressionLineLegend", resourceCulture);
             }
@@ -3024,7 +3024,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRegressionSeriesLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowRegressionSeriesLabel {
+        public static string ChartWindowRegressionSeriesLabel {
             get {
                 return ResourceManager.GetString("ChartWindowRegressionSeriesLabel", resourceCulture);
             }
@@ -3033,7 +3033,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowRescaleAxesButton ähnelt.
         /// </summary>
-        internal static string ChartWindowRescaleAxesButton {
+        public static string ChartWindowRescaleAxesButton {
             get {
                 return ResourceManager.GetString("ChartWindowRescaleAxesButton", resourceCulture);
             }
@@ -3042,7 +3042,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowScatterPointStyleColored ähnelt.
         /// </summary>
-        internal static string ChartWindowScatterPointStyleColored {
+        public static string ChartWindowScatterPointStyleColored {
             get {
                 return ResourceManager.GetString("ChartWindowScatterPointStyleColored", resourceCulture);
             }
@@ -3051,7 +3051,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowScatterPointStyleSingleColored ähnelt.
         /// </summary>
-        internal static string ChartWindowScatterPointStyleSingleColored {
+        public static string ChartWindowScatterPointStyleSingleColored {
             get {
                 return ResourceManager.GetString("ChartWindowScatterPointStyleSingleColored", resourceCulture);
             }
@@ -3060,7 +3060,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowSelectionEnabledHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowSelectionEnabledHeader {
+        public static string ChartWindowSelectionEnabledHeader {
             get {
                 return ResourceManager.GetString("ChartWindowSelectionEnabledHeader", resourceCulture);
             }
@@ -3069,7 +3069,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowSeriesHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowSeriesHeader {
+        public static string ChartWindowSeriesHeader {
             get {
                 return ResourceManager.GetString("ChartWindowSeriesHeader", resourceCulture);
             }
@@ -3078,7 +3078,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowSeriesStyleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowSeriesStyleHeader {
+        public static string ChartWindowSeriesStyleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowSeriesStyleHeader", resourceCulture);
             }
@@ -3087,7 +3087,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowSeriesTitleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowSeriesTitleHeader {
+        public static string ChartWindowSeriesTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowSeriesTitleHeader", resourceCulture);
             }
@@ -3096,7 +3096,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowShowGridLinesHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowShowGridLinesHeader {
+        public static string ChartWindowShowGridLinesHeader {
             get {
                 return ResourceManager.GetString("ChartWindowShowGridLinesHeader", resourceCulture);
             }
@@ -3105,7 +3105,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowShowLegendHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowShowLegendHeader {
+        public static string ChartWindowShowLegendHeader {
             get {
                 return ResourceManager.GetString("ChartWindowShowLegendHeader", resourceCulture);
             }
@@ -3114,7 +3114,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTheoreticalFunctionChooseTypeLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowTheoreticalFunctionChooseTypeLabel {
+        public static string ChartWindowTheoreticalFunctionChooseTypeLabel {
             get {
                 return ResourceManager.GetString("ChartWindowTheoreticalFunctionChooseTypeLabel", resourceCulture);
             }
@@ -3123,7 +3123,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTheorieLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowTheorieLabel {
+        public static string ChartWindowTheorieLabel {
             get {
                 return ResourceManager.GetString("ChartWindowTheorieLabel", resourceCulture);
             }
@@ -3132,7 +3132,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTheoryLineLegend ähnelt.
         /// </summary>
-        internal static string ChartWindowTheoryLineLegend {
+        public static string ChartWindowTheoryLineLegend {
             get {
                 return ResourceManager.GetString("ChartWindowTheoryLineLegend", resourceCulture);
             }
@@ -3141,7 +3141,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTheorySeriesLabel ähnelt.
         /// </summary>
-        internal static string ChartWindowTheorySeriesLabel {
+        public static string ChartWindowTheorySeriesLabel {
             get {
                 return ResourceManager.GetString("ChartWindowTheorySeriesLabel", resourceCulture);
             }
@@ -3150,7 +3150,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTitle ähnelt.
         /// </summary>
-        internal static string ChartWindowTitle {
+        public static string ChartWindowTitle {
             get {
                 return ResourceManager.GetString("ChartWindowTitle", resourceCulture);
             }
@@ -3159,7 +3159,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowTitlesHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowTitlesHeader {
+        public static string ChartWindowTitlesHeader {
             get {
                 return ResourceManager.GetString("ChartWindowTitlesHeader", resourceCulture);
             }
@@ -3168,7 +3168,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowXAxisHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowXAxisHeader {
+        public static string ChartWindowXAxisHeader {
             get {
                 return ResourceManager.GetString("ChartWindowXAxisHeader", resourceCulture);
             }
@@ -3177,7 +3177,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowXAxisTitleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowXAxisTitleHeader {
+        public static string ChartWindowXAxisTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowXAxisTitleHeader", resourceCulture);
             }
@@ -3186,7 +3186,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowYAxisHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowYAxisHeader {
+        public static string ChartWindowYAxisHeader {
             get {
                 return ResourceManager.GetString("ChartWindowYAxisHeader", resourceCulture);
             }
@@ -3195,7 +3195,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ChartWindowYAxisTitleHeader ähnelt.
         /// </summary>
-        internal static string ChartWindowYAxisTitleHeader {
+        public static string ChartWindowYAxisTitleHeader {
             get {
                 return ResourceManager.GetString("ChartWindowYAxisTitleHeader", resourceCulture);
             }
@@ -3204,7 +3204,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ClipVideoDescriptionMessage ähnelt.
         /// </summary>
-        internal static string ClipVideoDescriptionMessage {
+        public static string ClipVideoDescriptionMessage {
             get {
                 return ResourceManager.GetString("ClipVideoDescriptionMessage", resourceCulture);
             }
@@ -3213,7 +3213,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ClipVideoDescriptionTitle ähnelt.
         /// </summary>
-        internal static string ClipVideoDescriptionTitle {
+        public static string ClipVideoDescriptionTitle {
             get {
                 return ResourceManager.GetString("ClipVideoDescriptionTitle", resourceCulture);
             }
@@ -3222,7 +3222,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ClipVideoHelpControlTitle ähnelt.
         /// </summary>
-        internal static string ClipVideoHelpControlTitle {
+        public static string ClipVideoHelpControlTitle {
             get {
                 return ResourceManager.GetString("ClipVideoHelpControlTitle", resourceCulture);
             }
@@ -3231,7 +3231,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ClipVideoWindowTitle ähnelt.
         /// </summary>
-        internal static string ClipVideoWindowTitle {
+        public static string ClipVideoWindowTitle {
             get {
                 return ResourceManager.GetString("ClipVideoWindowTitle", resourceCulture);
             }
@@ -3240,7 +3240,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CoordinateSystemHelpControlTitle ähnelt.
         /// </summary>
-        internal static string CoordinateSystemHelpControlTitle {
+        public static string CoordinateSystemHelpControlTitle {
             get {
                 return ResourceManager.GetString("CoordinateSystemHelpControlTitle", resourceCulture);
             }
@@ -3249,7 +3249,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CoordinateSystemHowToDescription ähnelt.
         /// </summary>
-        internal static string CoordinateSystemHowToDescription {
+        public static string CoordinateSystemHowToDescription {
             get {
                 return ResourceManager.GetString("CoordinateSystemHowToDescription", resourceCulture);
             }
@@ -3258,7 +3258,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CoordinateSystemHowToHeader ähnelt.
         /// </summary>
-        internal static string CoordinateSystemHowToHeader {
+        public static string CoordinateSystemHowToHeader {
             get {
                 return ResourceManager.GetString("CoordinateSystemHowToHeader", resourceCulture);
             }
@@ -3267,7 +3267,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CoordinateSystemWindowTitle ähnelt.
         /// </summary>
-        internal static string CoordinateSystemWindowTitle {
+        public static string CoordinateSystemWindowTitle {
             get {
                 return ResourceManager.GetString("CoordinateSystemWindowTitle", resourceCulture);
             }
@@ -3276,7 +3276,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @CsvFilter ähnelt.
         /// </summary>
-        internal static string CsvFilter {
+        public static string CsvFilter {
             get {
                 return ResourceManager.GetString("CsvFilter", resourceCulture);
             }
@@ -3285,7 +3285,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridAcceleration ähnelt.
         /// </summary>
-        internal static string DataGridAcceleration {
+        public static string DataGridAcceleration {
             get {
                 return ResourceManager.GetString("DataGridAcceleration", resourceCulture);
             }
@@ -3294,7 +3294,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridAccelerationInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridAccelerationInterpolated {
+        public static string DataGridAccelerationInterpolated {
             get {
                 return ResourceManager.GetString("DataGridAccelerationInterpolated", resourceCulture);
             }
@@ -3303,7 +3303,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DatagridDisplayUnitsLabelDescription ähnelt.
         /// </summary>
-        internal static string DatagridDisplayUnitsLabelDescription {
+        public static string DatagridDisplayUnitsLabelDescription {
             get {
                 return ResourceManager.GetString("DatagridDisplayUnitsLabelDescription", resourceCulture);
             }
@@ -3312,7 +3312,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DatagridDisplayUnitsLabelTitle ähnelt.
         /// </summary>
-        internal static string DatagridDisplayUnitsLabelTitle {
+        public static string DatagridDisplayUnitsLabelTitle {
             get {
                 return ResourceManager.GetString("DatagridDisplayUnitsLabelTitle", resourceCulture);
             }
@@ -3321,7 +3321,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DatagridDisplayUnitsToolTipDescription ähnelt.
         /// </summary>
-        internal static string DatagridDisplayUnitsToolTipDescription {
+        public static string DatagridDisplayUnitsToolTipDescription {
             get {
                 return ResourceManager.GetString("DatagridDisplayUnitsToolTipDescription", resourceCulture);
             }
@@ -3330,7 +3330,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DatagridDisplayUnitsToolTipTitle ähnelt.
         /// </summary>
-        internal static string DatagridDisplayUnitsToolTipTitle {
+        public static string DatagridDisplayUnitsToolTipTitle {
             get {
                 return ResourceManager.GetString("DatagridDisplayUnitsToolTipTitle", resourceCulture);
             }
@@ -3339,7 +3339,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridDistance ähnelt.
         /// </summary>
-        internal static string DataGridDistance {
+        public static string DataGridDistance {
             get {
                 return ResourceManager.GetString("DataGridDistance", resourceCulture);
             }
@@ -3348,7 +3348,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridFramenumber ähnelt.
         /// </summary>
-        internal static string DataGridFramenumber {
+        public static string DataGridFramenumber {
             get {
                 return ResourceManager.GetString("DataGridFramenumber", resourceCulture);
             }
@@ -3357,7 +3357,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridLength ähnelt.
         /// </summary>
-        internal static string DataGridLength {
+        public static string DataGridLength {
             get {
                 return ResourceManager.GetString("DataGridLength", resourceCulture);
             }
@@ -3366,7 +3366,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridObjectPrefix ähnelt.
         /// </summary>
-        internal static string DataGridObjectPrefix {
+        public static string DataGridObjectPrefix {
             get {
                 return ResourceManager.GetString("DataGridObjectPrefix", resourceCulture);
             }
@@ -3375,7 +3375,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridTimestamp ähnelt.
         /// </summary>
-        internal static string DataGridTimestamp {
+        public static string DataGridTimestamp {
             get {
                 return ResourceManager.GetString("DataGridTimestamp", resourceCulture);
             }
@@ -3384,7 +3384,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridVelocity ähnelt.
         /// </summary>
-        internal static string DataGridVelocity {
+        public static string DataGridVelocity {
             get {
                 return ResourceManager.GetString("DataGridVelocity", resourceCulture);
             }
@@ -3393,7 +3393,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridVelocityInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridVelocityInterpolated {
+        public static string DataGridVelocityInterpolated {
             get {
                 return ResourceManager.GetString("DataGridVelocityInterpolated", resourceCulture);
             }
@@ -3402,7 +3402,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DatagridWindowTitle ähnelt.
         /// </summary>
-        internal static string DatagridWindowTitle {
+        public static string DatagridWindowTitle {
             get {
                 return ResourceManager.GetString("DatagridWindowTitle", resourceCulture);
             }
@@ -3411,7 +3411,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXAcceleration ähnelt.
         /// </summary>
-        internal static string DataGridXAcceleration {
+        public static string DataGridXAcceleration {
             get {
                 return ResourceManager.GetString("DataGridXAcceleration", resourceCulture);
             }
@@ -3420,7 +3420,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXAccelerationInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridXAccelerationInterpolated {
+        public static string DataGridXAccelerationInterpolated {
             get {
                 return ResourceManager.GetString("DataGridXAccelerationInterpolated", resourceCulture);
             }
@@ -3429,7 +3429,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXDistance ähnelt.
         /// </summary>
-        internal static string DataGridXDistance {
+        public static string DataGridXDistance {
             get {
                 return ResourceManager.GetString("DataGridXDistance", resourceCulture);
             }
@@ -3438,7 +3438,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXLength ähnelt.
         /// </summary>
-        internal static string DataGridXLength {
+        public static string DataGridXLength {
             get {
                 return ResourceManager.GetString("DataGridXLength", resourceCulture);
             }
@@ -3447,7 +3447,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXPixel ähnelt.
         /// </summary>
-        internal static string DataGridXPixel {
+        public static string DataGridXPixel {
             get {
                 return ResourceManager.GetString("DataGridXPixel", resourceCulture);
             }
@@ -3456,7 +3456,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXPosition ähnelt.
         /// </summary>
-        internal static string DataGridXPosition {
+        public static string DataGridXPosition {
             get {
                 return ResourceManager.GetString("DataGridXPosition", resourceCulture);
             }
@@ -3465,7 +3465,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXVelocity ähnelt.
         /// </summary>
-        internal static string DataGridXVelocity {
+        public static string DataGridXVelocity {
             get {
                 return ResourceManager.GetString("DataGridXVelocity", resourceCulture);
             }
@@ -3474,7 +3474,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridXVelocityInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridXVelocityInterpolated {
+        public static string DataGridXVelocityInterpolated {
             get {
                 return ResourceManager.GetString("DataGridXVelocityInterpolated", resourceCulture);
             }
@@ -3483,7 +3483,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYAcceleration ähnelt.
         /// </summary>
-        internal static string DataGridYAcceleration {
+        public static string DataGridYAcceleration {
             get {
                 return ResourceManager.GetString("DataGridYAcceleration", resourceCulture);
             }
@@ -3492,7 +3492,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYAccelerationInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridYAccelerationInterpolated {
+        public static string DataGridYAccelerationInterpolated {
             get {
                 return ResourceManager.GetString("DataGridYAccelerationInterpolated", resourceCulture);
             }
@@ -3501,7 +3501,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYDistance ähnelt.
         /// </summary>
-        internal static string DataGridYDistance {
+        public static string DataGridYDistance {
             get {
                 return ResourceManager.GetString("DataGridYDistance", resourceCulture);
             }
@@ -3510,7 +3510,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYLength ähnelt.
         /// </summary>
-        internal static string DataGridYLength {
+        public static string DataGridYLength {
             get {
                 return ResourceManager.GetString("DataGridYLength", resourceCulture);
             }
@@ -3519,7 +3519,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYPixel ähnelt.
         /// </summary>
-        internal static string DataGridYPixel {
+        public static string DataGridYPixel {
             get {
                 return ResourceManager.GetString("DataGridYPixel", resourceCulture);
             }
@@ -3528,7 +3528,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYPosition ähnelt.
         /// </summary>
-        internal static string DataGridYPosition {
+        public static string DataGridYPosition {
             get {
                 return ResourceManager.GetString("DataGridYPosition", resourceCulture);
             }
@@ -3537,7 +3537,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYVelocity ähnelt.
         /// </summary>
-        internal static string DataGridYVelocity {
+        public static string DataGridYVelocity {
             get {
                 return ResourceManager.GetString("DataGridYVelocity", resourceCulture);
             }
@@ -3546,7 +3546,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DataGridYVelocityInterpolated ähnelt.
         /// </summary>
-        internal static string DataGridYVelocityInterpolated {
+        public static string DataGridYVelocityInterpolated {
             get {
                 return ResourceManager.GetString("DataGridYVelocityInterpolated", resourceCulture);
             }
@@ -3555,7 +3555,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DifferenceQuotientBackwardTitle ähnelt.
         /// </summary>
-        internal static string DifferenceQuotientBackwardTitle {
+        public static string DifferenceQuotientBackwardTitle {
             get {
                 return ResourceManager.GetString("DifferenceQuotientBackwardTitle", resourceCulture);
             }
@@ -3564,7 +3564,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DifferenceQuotientCentralTitle ähnelt.
         /// </summary>
-        internal static string DifferenceQuotientCentralTitle {
+        public static string DifferenceQuotientCentralTitle {
             get {
                 return ResourceManager.GetString("DifferenceQuotientCentralTitle", resourceCulture);
             }
@@ -3573,7 +3573,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DifferenceQuotientDialogDescription ähnelt.
         /// </summary>
-        internal static string DifferenceQuotientDialogDescription {
+        public static string DifferenceQuotientDialogDescription {
             get {
                 return ResourceManager.GetString("DifferenceQuotientDialogDescription", resourceCulture);
             }
@@ -3582,7 +3582,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DifferenceQuotientDialogTitle ähnelt.
         /// </summary>
-        internal static string DifferenceQuotientDialogTitle {
+        public static string DifferenceQuotientDialogTitle {
             get {
                 return ResourceManager.GetString("DifferenceQuotientDialogTitle", resourceCulture);
             }
@@ -3591,7 +3591,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DifferenceQuotientForwardTitle ähnelt.
         /// </summary>
-        internal static string DifferenceQuotientForwardTitle {
+        public static string DifferenceQuotientForwardTitle {
             get {
                 return ResourceManager.GetString("DifferenceQuotientForwardTitle", resourceCulture);
             }
@@ -3600,7 +3600,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DirectShowErrorPreface ähnelt.
         /// </summary>
-        internal static string DirectShowErrorPreface {
+        public static string DirectShowErrorPreface {
             get {
                 return ResourceManager.GetString("DirectShowErrorPreface", resourceCulture);
             }
@@ -3609,7 +3609,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DirectShowErrorTitle ähnelt.
         /// </summary>
-        internal static string DirectShowErrorTitle {
+        public static string DirectShowErrorTitle {
             get {
                 return ResourceManager.GetString("DirectShowErrorTitle", resourceCulture);
             }
@@ -3618,7 +3618,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExponentialSmoothDialogSmoothingFactorLabel ähnelt.
         /// </summary>
-        internal static string ExponentialSmoothDialogSmoothingFactorLabel {
+        public static string ExponentialSmoothDialogSmoothingFactorLabel {
             get {
                 return ResourceManager.GetString("ExponentialSmoothDialogSmoothingFactorLabel", resourceCulture);
             }
@@ -3627,7 +3627,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExponentialSmoothDialogTitle ähnelt.
         /// </summary>
-        internal static string ExponentialSmoothDialogTitle {
+        public static string ExponentialSmoothDialogTitle {
             get {
                 return ResourceManager.GetString("ExponentialSmoothDialogTitle", resourceCulture);
             }
@@ -3636,7 +3636,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportDialogTopFrameTitle ähnelt.
         /// </summary>
-        internal static string ExportDialogTopFrameTitle {
+        public static string ExportDialogTopFrameTitle {
             get {
                 return ResourceManager.GetString("ExportDialogTopFrameTitle", resourceCulture);
             }
@@ -3645,7 +3645,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogColumnGroupHeader ähnelt.
         /// </summary>
-        internal static string ExportOptionsDialogColumnGroupHeader {
+        public static string ExportOptionsDialogColumnGroupHeader {
             get {
                 return ResourceManager.GetString("ExportOptionsDialogColumnGroupHeader", resourceCulture);
             }
@@ -3654,7 +3654,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogObjectGroupHeader ähnelt.
         /// </summary>
-        internal static string ExportOptionsDialogObjectGroupHeader {
+        public static string ExportOptionsDialogObjectGroupHeader {
             get {
                 return ResourceManager.GetString("ExportOptionsDialogObjectGroupHeader", resourceCulture);
             }
@@ -3663,7 +3663,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogSelectAll ähnelt.
         /// </summary>
-        internal static string ExportOptionsDialogSelectAll {
+        public static string ExportOptionsDialogSelectAll {
             get {
                 return ResourceManager.GetString("ExportOptionsDialogSelectAll", resourceCulture);
             }
@@ -3672,7 +3672,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogTitle ähnelt.
         /// </summary>
-        internal static string ExportOptionsDialogTitle {
+        public static string ExportOptionsDialogTitle {
             get {
                 return ResourceManager.GetString("ExportOptionsDialogTitle", resourceCulture);
             }
@@ -3681,7 +3681,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogUnselectAll ähnelt.
         /// </summary>
-        internal static string ExportOptionsDialogUnselectAll {
+        public static string ExportOptionsDialogUnselectAll {
             get {
                 return ResourceManager.GetString("ExportOptionsDialogUnselectAll", resourceCulture);
             }
@@ -3690,7 +3690,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportWhereToSaveFile ähnelt.
         /// </summary>
-        internal static string ExportWhereToSaveFile {
+        public static string ExportWhereToSaveFile {
             get {
                 return ResourceManager.GetString("ExportWhereToSaveFile", resourceCulture);
             }
@@ -3699,7 +3699,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @GraphicFilesFilter ähnelt.
         /// </summary>
-        internal static string GraphicFilesFilter {
+        public static string GraphicFilesFilter {
             get {
                 return ResourceManager.GetString("GraphicFilesFilter", resourceCulture);
             }
@@ -3708,7 +3708,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @GraphicFilesSaveFileDialogTitle ähnelt.
         /// </summary>
-        internal static string GraphicFilesSaveFileDialogTitle {
+        public static string GraphicFilesSaveFileDialogTitle {
             get {
                 return ResourceManager.GetString("GraphicFilesSaveFileDialogTitle", resourceCulture);
             }
@@ -3717,7 +3717,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDescriptionTitle ähnelt.
         /// </summary>
-        internal static string InterpolationDescriptionTitle {
+        public static string InterpolationDescriptionTitle {
             get {
                 return ResourceManager.GetString("InterpolationDescriptionTitle", resourceCulture);
             }
@@ -3726,7 +3726,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDialogInterpolationType ähnelt.
         /// </summary>
-        internal static string InterpolationDialogInterpolationType {
+        public static string InterpolationDialogInterpolationType {
             get {
                 return ResourceManager.GetString("InterpolationDialogInterpolationType", resourceCulture);
             }
@@ -3735,7 +3735,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDialogNumberOfSamplesToUse ähnelt.
         /// </summary>
-        internal static string InterpolationDialogNumberOfSamplesToUse {
+        public static string InterpolationDialogNumberOfSamplesToUse {
             get {
                 return ResourceManager.GetString("InterpolationDialogNumberOfSamplesToUse", resourceCulture);
             }
@@ -3744,7 +3744,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDialogTitle ähnelt.
         /// </summary>
-        internal static string InterpolationDialogTitle {
+        public static string InterpolationDialogTitle {
             get {
                 return ResourceManager.GetString("InterpolationDialogTitle", resourceCulture);
             }
@@ -3753,7 +3753,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDialogTopTitle ähnelt.
         /// </summary>
-        internal static string InterpolationDialogTopTitle {
+        public static string InterpolationDialogTopTitle {
             get {
                 return ResourceManager.GetString("InterpolationDialogTopTitle", resourceCulture);
             }
@@ -3762,7 +3762,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationExponentialSmoothDescription ähnelt.
         /// </summary>
-        internal static string InterpolationExponentialSmoothDescription {
+        public static string InterpolationExponentialSmoothDescription {
             get {
                 return ResourceManager.GetString("InterpolationExponentialSmoothDescription", resourceCulture);
             }
@@ -3771,7 +3771,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationMovingAverageDescription ähnelt.
         /// </summary>
-        internal static string InterpolationMovingAverageDescription {
+        public static string InterpolationMovingAverageDescription {
             get {
                 return ResourceManager.GetString("InterpolationMovingAverageDescription", resourceCulture);
             }
@@ -3780,7 +3780,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationPropertiesTitle ähnelt.
         /// </summary>
-        internal static string InterpolationPropertiesTitle {
+        public static string InterpolationPropertiesTitle {
             get {
                 return ResourceManager.GetString("InterpolationPropertiesTitle", resourceCulture);
             }
@@ -3789,7 +3789,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @IsRecordingVideo ähnelt.
         /// </summary>
-        internal static string IsRecordingVideo {
+        public static string IsRecordingVideo {
             get {
                 return ResourceManager.GetString("IsRecordingVideo", resourceCulture);
             }
@@ -3798,7 +3798,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LengthDialogDescription ähnelt.
         /// </summary>
-        internal static string LengthDialogDescription {
+        public static string LengthDialogDescription {
             get {
                 return ResourceManager.GetString("LengthDialogDescription", resourceCulture);
             }
@@ -3807,7 +3807,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LengthDialogTitle ähnelt.
         /// </summary>
-        internal static string LengthDialogTitle {
+        public static string LengthDialogTitle {
             get {
                 return ResourceManager.GetString("LengthDialogTitle", resourceCulture);
             }
@@ -3816,7 +3816,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineOptionsDialogTitle ähnelt.
         /// </summary>
-        internal static string LineOptionsDialogTitle {
+        public static string LineOptionsDialogTitle {
             get {
                 return ResourceManager.GetString("LineOptionsDialogTitle", resourceCulture);
             }
@@ -3825,7 +3825,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineOptionsDialogTopTitle ähnelt.
         /// </summary>
-        internal static string LineOptionsDialogTopTitle {
+        public static string LineOptionsDialogTopTitle {
             get {
                 return ResourceManager.GetString("LineOptionsDialogTopTitle", resourceCulture);
             }
@@ -3834,7 +3834,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineStyleControlChartTitle ähnelt.
         /// </summary>
-        internal static string LineStyleControlChartTitle {
+        public static string LineStyleControlChartTitle {
             get {
                 return ResourceManager.GetString("LineStyleControlChartTitle", resourceCulture);
             }
@@ -3843,7 +3843,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineStyleDisplayMarkerLabel ähnelt.
         /// </summary>
-        internal static string LineStyleDisplayMarkerLabel {
+        public static string LineStyleDisplayMarkerLabel {
             get {
                 return ResourceManager.GetString("LineStyleDisplayMarkerLabel", resourceCulture);
             }
@@ -3852,7 +3852,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LineStyleOptionsDialogTitle ähnelt.
         /// </summary>
-        internal static string LineStyleOptionsDialogTitle {
+        public static string LineStyleOptionsDialogTitle {
             get {
                 return ResourceManager.GetString("LineStyleOptionsDialogTitle", resourceCulture);
             }
@@ -3861,7 +3861,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @LoadVideoFilesTitle ähnelt.
         /// </summary>
-        internal static string LoadVideoFilesTitle {
+        public static string LoadVideoFilesTitle {
             get {
                 return ResourceManager.GetString("LoadVideoFilesTitle", resourceCulture);
             }
@@ -3870,7 +3870,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisition ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisition {
+        public static string ManualDataAcquisition {
             get {
                 return ResourceManager.GetString("ManualDataAcquisition", resourceCulture);
             }
@@ -3879,7 +3879,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionAllPoints ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionAllPoints {
+        public static string ManualDataAcquisitionAllPoints {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionAllPoints", resourceCulture);
             }
@@ -3888,7 +3888,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionControlTitle ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionControlTitle {
+        public static string ManualDataAcquisitionControlTitle {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionControlTitle", resourceCulture);
             }
@@ -3897,7 +3897,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionDescription ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionDescription {
+        public static string ManualDataAcquisitionDescription {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionDescription", resourceCulture);
             }
@@ -3906,7 +3906,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionFrameLabel ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionFrameLabel {
+        public static string ManualDataAcquisitionFrameLabel {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionFrameLabel", resourceCulture);
             }
@@ -3915,7 +3915,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionRecentPointCount ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionRecentPointCount {
+        public static string ManualDataAcquisitionRecentPointCount {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionRecentPointCount", resourceCulture);
             }
@@ -3924,7 +3924,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionSkipPointCount ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionSkipPointCount {
+        public static string ManualDataAcquisitionSkipPointCount {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionSkipPointCount", resourceCulture);
             }
@@ -3933,7 +3933,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ManualDataAcquisitionTrackItemNumberHeader ähnelt.
         /// </summary>
-        internal static string ManualDataAcquisitionTrackItemNumberHeader {
+        public static string ManualDataAcquisitionTrackItemNumberHeader {
             get {
                 return ResourceManager.GetString("ManualDataAcquisitionTrackItemNumberHeader", resourceCulture);
             }
@@ -3942,7 +3942,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureAngleHelpControlTitle ähnelt.
         /// </summary>
-        internal static string MeasureAngleHelpControlTitle {
+        public static string MeasureAngleHelpControlTitle {
             get {
                 return ResourceManager.GetString("MeasureAngleHelpControlTitle", resourceCulture);
             }
@@ -3951,7 +3951,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureAngleHowToMeasureDescription ähnelt.
         /// </summary>
-        internal static string MeasureAngleHowToMeasureDescription {
+        public static string MeasureAngleHowToMeasureDescription {
             get {
                 return ResourceManager.GetString("MeasureAngleHowToMeasureDescription", resourceCulture);
             }
@@ -3960,7 +3960,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureAngleHowToMeasureHeader ähnelt.
         /// </summary>
-        internal static string MeasureAngleHowToMeasureHeader {
+        public static string MeasureAngleHowToMeasureHeader {
             get {
                 return ResourceManager.GetString("MeasureAngleHowToMeasureHeader", resourceCulture);
             }
@@ -3969,7 +3969,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureAngleWindowTitle ähnelt.
         /// </summary>
-        internal static string MeasureAngleWindowTitle {
+        public static string MeasureAngleWindowTitle {
             get {
                 return ResourceManager.GetString("MeasureAngleWindowTitle", resourceCulture);
             }
@@ -3978,7 +3978,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureLengthHelpControlTitle ähnelt.
         /// </summary>
-        internal static string MeasureLengthHelpControlTitle {
+        public static string MeasureLengthHelpControlTitle {
             get {
                 return ResourceManager.GetString("MeasureLengthHelpControlTitle", resourceCulture);
             }
@@ -3987,7 +3987,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureLengthHowToMeasureDescription ähnelt.
         /// </summary>
-        internal static string MeasureLengthHowToMeasureDescription {
+        public static string MeasureLengthHowToMeasureDescription {
             get {
                 return ResourceManager.GetString("MeasureLengthHowToMeasureDescription", resourceCulture);
             }
@@ -3996,7 +3996,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureLengthHowToMeasureHeader ähnelt.
         /// </summary>
-        internal static string MeasureLengthHowToMeasureHeader {
+        public static string MeasureLengthHowToMeasureHeader {
             get {
                 return ResourceManager.GetString("MeasureLengthHowToMeasureHeader", resourceCulture);
             }
@@ -4005,7 +4005,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MeasureLengthWindowTitle ähnelt.
         /// </summary>
-        internal static string MeasureLengthWindowTitle {
+        public static string MeasureLengthWindowTitle {
             get {
                 return ResourceManager.GetString("MeasureLengthWindowTitle", resourceCulture);
             }
@@ -4014,7 +4014,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ModifyDataDescription ähnelt.
         /// </summary>
-        internal static string ModifyDataDescription {
+        public static string ModifyDataDescription {
             get {
                 return ResourceManager.GetString("ModifyDataDescription", resourceCulture);
             }
@@ -4023,7 +4023,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ModifyDataWindowControlTitle ähnelt.
         /// </summary>
-        internal static string ModifyDataWindowControlTitle {
+        public static string ModifyDataWindowControlTitle {
             get {
                 return ResourceManager.GetString("ModifyDataWindowControlTitle", resourceCulture);
             }
@@ -4032,7 +4032,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ModifyDataWindowTrackItemNumberHeader ähnelt.
         /// </summary>
-        internal static string ModifyDataWindowTrackItemNumberHeader {
+        public static string ModifyDataWindowTrackItemNumberHeader {
             get {
                 return ResourceManager.GetString("ModifyDataWindowTrackItemNumberHeader", resourceCulture);
             }
@@ -4041,7 +4041,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MovingAverageDialogTitle ähnelt.
         /// </summary>
-        internal static string MovingAverageDialogTitle {
+        public static string MovingAverageDialogTitle {
             get {
                 return ResourceManager.GetString("MovingAverageDialogTitle", resourceCulture);
             }
@@ -4050,7 +4050,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @OdsFilter ähnelt.
         /// </summary>
-        internal static string OdsFilter {
+        public static string OdsFilter {
             get {
                 return ResourceManager.GetString("OdsFilter", resourceCulture);
             }
@@ -4059,7 +4059,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @OK ähnelt.
         /// </summary>
-        internal static string OK {
+        public static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
             }
@@ -4068,7 +4068,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @OpenProjectDialogTitle ähnelt.
         /// </summary>
-        internal static string OpenProjectDialogTitle {
+        public static string OpenProjectDialogTitle {
             get {
                 return ResourceManager.GetString("OpenProjectDialogTitle", resourceCulture);
             }
@@ -4077,7 +4077,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorBracketClose ähnelt.
         /// </summary>
-        internal static string ParseErrorBracketClose {
+        public static string ParseErrorBracketClose {
             get {
                 return ResourceManager.GetString("ParseErrorBracketClose", resourceCulture);
             }
@@ -4086,7 +4086,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorBracketOpen ähnelt.
         /// </summary>
-        internal static string ParseErrorBracketOpen {
+        public static string ParseErrorBracketOpen {
             get {
                 return ResourceManager.GetString("ParseErrorBracketOpen", resourceCulture);
             }
@@ -4095,7 +4095,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorIllegalCharacter ähnelt.
         /// </summary>
-        internal static string ParseErrorIllegalCharacter {
+        public static string ParseErrorIllegalCharacter {
             get {
                 return ResourceManager.GetString("ParseErrorIllegalCharacter", resourceCulture);
             }
@@ -4104,7 +4104,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorNoFormulaDefined ähnelt.
         /// </summary>
-        internal static string ParseErrorNoFormulaDefined {
+        public static string ParseErrorNoFormulaDefined {
             get {
                 return ResourceManager.GetString("ParseErrorNoFormulaDefined", resourceCulture);
             }
@@ -4113,7 +4113,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorOperatorMissing ähnelt.
         /// </summary>
-        internal static string ParseErrorOperatorMissing {
+        public static string ParseErrorOperatorMissing {
             get {
                 return ResourceManager.GetString("ParseErrorOperatorMissing", resourceCulture);
             }
@@ -4122,7 +4122,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorTermMissing ähnelt.
         /// </summary>
-        internal static string ParseErrorTermMissing {
+        public static string ParseErrorTermMissing {
             get {
                 return ResourceManager.GetString("ParseErrorTermMissing", resourceCulture);
             }
@@ -4131,7 +4131,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ParseErrorUnknownIdentifier ähnelt.
         /// </summary>
-        internal static string ParseErrorUnknownIdentifier {
+        public static string ParseErrorUnknownIdentifier {
             get {
                 return ResourceManager.GetString("ParseErrorUnknownIdentifier", resourceCulture);
             }
@@ -4140,7 +4140,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_c ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_c {
+        public static string PhysikKonstant_c {
             get {
                 return ResourceManager.GetString("PhysikKonstant_c", resourceCulture);
             }
@@ -4149,7 +4149,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_e ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_e {
+        public static string PhysikKonstant_e {
             get {
                 return ResourceManager.GetString("PhysikKonstant_e", resourceCulture);
             }
@@ -4158,7 +4158,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_epsilon ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_epsilon {
+        public static string PhysikKonstant_epsilon {
             get {
                 return ResourceManager.GetString("PhysikKonstant_epsilon", resourceCulture);
             }
@@ -4167,7 +4167,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_f ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_f {
+        public static string PhysikKonstant_f {
             get {
                 return ResourceManager.GetString("PhysikKonstant_f", resourceCulture);
             }
@@ -4176,7 +4176,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_g ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_g {
+        public static string PhysikKonstant_g {
             get {
                 return ResourceManager.GetString("PhysikKonstant_g", resourceCulture);
             }
@@ -4185,7 +4185,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_h ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_h {
+        public static string PhysikKonstant_h {
             get {
                 return ResourceManager.GetString("PhysikKonstant_h", resourceCulture);
             }
@@ -4194,7 +4194,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_Lambda0 ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_Lambda0 {
+        public static string PhysikKonstant_Lambda0 {
             get {
                 return ResourceManager.GetString("PhysikKonstant_Lambda0", resourceCulture);
             }
@@ -4203,7 +4203,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_me ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_me {
+        public static string PhysikKonstant_me {
             get {
                 return ResourceManager.GetString("PhysikKonstant_me", resourceCulture);
             }
@@ -4212,7 +4212,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @PhysikKonstant_mu ähnelt.
         /// </summary>
-        internal static string PhysikKonstant_mu {
+        public static string PhysikKonstant_mu {
             get {
                 return ResourceManager.GetString("PhysikKonstant_mu", resourceCulture);
             }
@@ -4221,7 +4221,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonOpenLabelTitle ähnelt.
         /// </summary>
-        internal static string QATButtonOpenLabelTitle {
+        public static string QATButtonOpenLabelTitle {
             get {
                 return ResourceManager.GetString("QATButtonOpenLabelTitle", resourceCulture);
             }
@@ -4230,7 +4230,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonOpenToolTipDescription ähnelt.
         /// </summary>
-        internal static string QATButtonOpenToolTipDescription {
+        public static string QATButtonOpenToolTipDescription {
             get {
                 return ResourceManager.GetString("QATButtonOpenToolTipDescription", resourceCulture);
             }
@@ -4239,7 +4239,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveAsLabelTitle ähnelt.
         /// </summary>
-        internal static string QATButtonSaveAsLabelTitle {
+        public static string QATButtonSaveAsLabelTitle {
             get {
                 return ResourceManager.GetString("QATButtonSaveAsLabelTitle", resourceCulture);
             }
@@ -4248,7 +4248,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveAsToolTipDescription ähnelt.
         /// </summary>
-        internal static string QATButtonSaveAsToolTipDescription {
+        public static string QATButtonSaveAsToolTipDescription {
             get {
                 return ResourceManager.GetString("QATButtonSaveAsToolTipDescription", resourceCulture);
             }
@@ -4257,7 +4257,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveLabelDescription ähnelt.
         /// </summary>
-        internal static string QATButtonSaveLabelDescription {
+        public static string QATButtonSaveLabelDescription {
             get {
                 return ResourceManager.GetString("QATButtonSaveLabelDescription", resourceCulture);
             }
@@ -4266,7 +4266,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveLabelTitle ähnelt.
         /// </summary>
-        internal static string QATButtonSaveLabelTitle {
+        public static string QATButtonSaveLabelTitle {
             get {
                 return ResourceManager.GetString("QATButtonSaveLabelTitle", resourceCulture);
             }
@@ -4275,7 +4275,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveToolTipDescription ähnelt.
         /// </summary>
-        internal static string QATButtonSaveToolTipDescription {
+        public static string QATButtonSaveToolTipDescription {
             get {
                 return ResourceManager.GetString("QATButtonSaveToolTipDescription", resourceCulture);
             }
@@ -4284,7 +4284,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @QATButtonSaveToolTipTitle ähnelt.
         /// </summary>
-        internal static string QATButtonSaveToolTipTitle {
+        public static string QATButtonSaveToolTipTitle {
             get {
                 return ResourceManager.GetString("QATButtonSaveToolTipTitle", resourceCulture);
             }
@@ -4293,7 +4293,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionBestType ähnelt.
         /// </summary>
-        internal static string RegressionBestType {
+        public static string RegressionBestType {
             get {
                 return ResourceManager.GetString("RegressionBestType", resourceCulture);
             }
@@ -4302,7 +4302,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionCalculatorDialogTitle ähnelt.
         /// </summary>
-        internal static string RegressionCalculatorDialogTitle {
+        public static string RegressionCalculatorDialogTitle {
             get {
                 return ResourceManager.GetString("RegressionCalculatorDialogTitle", resourceCulture);
             }
@@ -4311,7 +4311,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionColorRegress ähnelt.
         /// </summary>
-        internal static string RegressionColorRegress {
+        public static string RegressionColorRegress {
             get {
                 return ResourceManager.GetString("RegressionColorRegress", resourceCulture);
             }
@@ -4320,7 +4320,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionColorTheorie ähnelt.
         /// </summary>
-        internal static string RegressionColorTheorie {
+        public static string RegressionColorTheorie {
             get {
                 return ResourceManager.GetString("RegressionColorTheorie", resourceCulture);
             }
@@ -4329,7 +4329,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionCurve ähnelt.
         /// </summary>
-        internal static string RegressionCurve {
+        public static string RegressionCurve {
             get {
                 return ResourceManager.GetString("RegressionCurve", resourceCulture);
             }
@@ -4338,7 +4338,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionDialogHeader ähnelt.
         /// </summary>
-        internal static string RegressionDialogHeader {
+        public static string RegressionDialogHeader {
             get {
                 return ResourceManager.GetString("RegressionDialogHeader", resourceCulture);
             }
@@ -4347,7 +4347,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionDialogTitle ähnelt.
         /// </summary>
-        internal static string RegressionDialogTitle {
+        public static string RegressionDialogTitle {
             get {
                 return ResourceManager.GetString("RegressionDialogTitle", resourceCulture);
             }
@@ -4356,7 +4356,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionDialogTopTitle ähnelt.
         /// </summary>
-        internal static string RegressionDialogTopTitle {
+        public static string RegressionDialogTopTitle {
             get {
                 return ResourceManager.GetString("RegressionDialogTopTitle", resourceCulture);
             }
@@ -4365,7 +4365,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionExp ähnelt.
         /// </summary>
-        internal static string RegressionExp {
+        public static string RegressionExp {
             get {
                 return ResourceManager.GetString("RegressionExp", resourceCulture);
             }
@@ -4374,7 +4374,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionExpo ähnelt.
         /// </summary>
-        internal static string RegressionExpo {
+        public static string RegressionExpo {
             get {
                 return ResourceManager.GetString("RegressionExpo", resourceCulture);
             }
@@ -4383,7 +4383,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionFunctionLabel ähnelt.
         /// </summary>
-        internal static string RegressionFunctionLabel {
+        public static string RegressionFunctionLabel {
             get {
                 return ResourceManager.GetString("RegressionFunctionLabel", resourceCulture);
             }
@@ -4392,7 +4392,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionLinear ähnelt.
         /// </summary>
-        internal static string RegressionLinear {
+        public static string RegressionLinear {
             get {
                 return ResourceManager.GetString("RegressionLinear", resourceCulture);
             }
@@ -4401,7 +4401,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionLineLabel ähnelt.
         /// </summary>
-        internal static string RegressionLineLabel {
+        public static string RegressionLineLabel {
             get {
                 return ResourceManager.GetString("RegressionLineLabel", resourceCulture);
             }
@@ -4410,7 +4410,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionLineThickness ähnelt.
         /// </summary>
-        internal static string RegressionLineThickness {
+        public static string RegressionLineThickness {
             get {
                 return ResourceManager.GetString("RegressionLineThickness", resourceCulture);
             }
@@ -4419,7 +4419,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionLog ähnelt.
         /// </summary>
-        internal static string RegressionLog {
+        public static string RegressionLog {
             get {
                 return ResourceManager.GetString("RegressionLog", resourceCulture);
             }
@@ -4428,7 +4428,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionNumberDigits ähnelt.
         /// </summary>
-        internal static string RegressionNumberDigits {
+        public static string RegressionNumberDigits {
             get {
                 return ResourceManager.GetString("RegressionNumberDigits", resourceCulture);
             }
@@ -4437,7 +4437,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionPot ähnelt.
         /// </summary>
-        internal static string RegressionPot {
+        public static string RegressionPot {
             get {
                 return ResourceManager.GetString("RegressionPot", resourceCulture);
             }
@@ -4446,7 +4446,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionQuad ähnelt.
         /// </summary>
-        internal static string RegressionQuad {
+        public static string RegressionQuad {
             get {
                 return ResourceManager.GetString("RegressionQuad", resourceCulture);
             }
@@ -4455,7 +4455,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionResonanz ähnelt.
         /// </summary>
-        internal static string RegressionResonanz {
+        public static string RegressionResonanz {
             get {
                 return ResourceManager.GetString("RegressionResonanz", resourceCulture);
             }
@@ -4464,7 +4464,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionSin ähnelt.
         /// </summary>
-        internal static string RegressionSin {
+        public static string RegressionSin {
             get {
                 return ResourceManager.GetString("RegressionSin", resourceCulture);
             }
@@ -4473,7 +4473,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionSinExp ähnelt.
         /// </summary>
-        internal static string RegressionSinExp {
+        public static string RegressionSinExp {
             get {
                 return ResourceManager.GetString("RegressionSinExp", resourceCulture);
             }
@@ -4482,7 +4482,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RegressionTheorie ähnelt.
         /// </summary>
-        internal static string RegressionTheorie {
+        public static string RegressionTheorie {
             get {
                 return ResourceManager.GetString("RegressionTheorie", resourceCulture);
             }
@@ -4491,7 +4491,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonApplicationMenuRecentFilesTitle ähnelt.
         /// </summary>
-        internal static string RibbonApplicationMenuRecentFilesTitle {
+        public static string RibbonApplicationMenuRecentFilesTitle {
             get {
                 return ResourceManager.GetString("RibbonApplicationMenuRecentFilesTitle", resourceCulture);
             }
@@ -4500,7 +4500,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupAutomaticAquisitionLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupAutomaticAquisitionLabelTitle {
+        public static string RibbonGroupAutomaticAquisitionLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupAutomaticAquisitionLabelTitle", resourceCulture);
             }
@@ -4509,7 +4509,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupChartExportLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupChartExportLabelTitle {
+        public static string RibbonGroupChartExportLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupChartExportLabelTitle", resourceCulture);
             }
@@ -4518,7 +4518,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupChartOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupChartOptionsLabelTitle {
+        public static string RibbonGroupChartOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupChartOptionsLabelTitle", resourceCulture);
             }
@@ -4527,7 +4527,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupChartShowWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupChartShowWindowLabelTitle {
+        public static string RibbonGroupChartShowWindowLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupChartShowWindowLabelTitle", resourceCulture);
             }
@@ -4536,7 +4536,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridExportLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupDatagridExportLabelTitle {
+        public static string RibbonGroupDatagridExportLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupDatagridExportLabelTitle", resourceCulture);
             }
@@ -4545,7 +4545,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridInterpolationTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupDatagridInterpolationTitle {
+        public static string RibbonGroupDatagridInterpolationTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupDatagridInterpolationTitle", resourceCulture);
             }
@@ -4554,7 +4554,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupDatagridOptionsLabelTitle {
+        public static string RibbonGroupDatagridOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupDatagridOptionsLabelTitle", resourceCulture);
             }
@@ -4563,7 +4563,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridShowWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupDatagridShowWindowLabelTitle {
+        public static string RibbonGroupDatagridShowWindowLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupDatagridShowWindowLabelTitle", resourceCulture);
             }
@@ -4572,7 +4572,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridUpdateDataLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupDatagridUpdateDataLabelTitle {
+        public static string RibbonGroupDatagridUpdateDataLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupDatagridUpdateDataLabelTitle", resourceCulture);
             }
@@ -4581,7 +4581,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupHelpLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupHelpLabelTitle {
+        public static string RibbonGroupHelpLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupHelpLabelTitle", resourceCulture);
             }
@@ -4590,7 +4590,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupLanguageLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupLanguageLabelTitle {
+        public static string RibbonGroupLanguageLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupLanguageLabelTitle", resourceCulture);
             }
@@ -4599,7 +4599,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupManualAquisitionLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupManualAquisitionLabelTitle {
+        public static string RibbonGroupManualAquisitionLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupManualAquisitionLabelTitle", resourceCulture);
             }
@@ -4608,7 +4608,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupOpenVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupOpenVideoLabelTitle {
+        public static string RibbonGroupOpenVideoLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupOpenVideoLabelTitle", resourceCulture);
             }
@@ -4617,7 +4617,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupPrepareLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupPrepareLabelTitle {
+        public static string RibbonGroupPrepareLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupPrepareLabelTitle", resourceCulture);
             }
@@ -4626,7 +4626,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupProjectLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupProjectLabelTitle {
+        public static string RibbonGroupProjectLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupProjectLabelTitle", resourceCulture);
             }
@@ -4635,7 +4635,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupStyleLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupStyleLabelTitle {
+        public static string RibbonGroupStyleLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupStyleLabelTitle", resourceCulture);
             }
@@ -4644,7 +4644,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoAutoDetectionColorOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoAutoDetectionColorOptionsLabelTitle {
+        public static string RibbonGroupVideoAutoDetectionColorOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoAutoDetectionColorOptionsLabelTitle", resourceCulture);
             }
@@ -4653,7 +4653,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle {
+        public static string RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle", resourceCulture);
             }
@@ -4662,7 +4662,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoAutoDetectionOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoAutoDetectionOptionsLabelTitle {
+        public static string RibbonGroupVideoAutoDetectionOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoAutoDetectionOptionsLabelTitle", resourceCulture);
             }
@@ -4671,7 +4671,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoAutoDetectionSelectObjectTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoAutoDetectionSelectObjectTitle {
+        public static string RibbonGroupVideoAutoDetectionSelectObjectTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoAutoDetectionSelectObjectTitle", resourceCulture);
             }
@@ -4680,7 +4680,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoCalibrationOptionsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoCalibrationOptionsLabelTitle {
+        public static string RibbonGroupVideoCalibrationOptionsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoCalibrationOptionsLabelTitle", resourceCulture);
             }
@@ -4689,7 +4689,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoLabelTitle {
+        public static string RibbonGroupVideoLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoLabelTitle", resourceCulture);
             }
@@ -4698,7 +4698,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoMeasureLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoMeasureLabelTitle {
+        public static string RibbonGroupVideoMeasureLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoMeasureLabelTitle", resourceCulture);
             }
@@ -4707,7 +4707,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoSelectDeviceLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoSelectDeviceLabelTitle {
+        public static string RibbonGroupVideoSelectDeviceLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoSelectDeviceLabelTitle", resourceCulture);
             }
@@ -4716,7 +4716,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupVideoShowWindowLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupVideoShowWindowLabelTitle {
+        public static string RibbonGroupVideoShowWindowLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupVideoShowWindowLabelTitle", resourceCulture);
             }
@@ -4725,7 +4725,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupWindowsLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonGroupWindowsLabelTitle {
+        public static string RibbonGroupWindowsLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupWindowsLabelTitle", resourceCulture);
             }
@@ -4734,7 +4734,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionBlobMaxDiameter ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionBlobMaxDiameter {
+        public static string RibbonLabelAutoDetectionBlobMaxDiameter {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionBlobMaxDiameter", resourceCulture);
             }
@@ -4743,7 +4743,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionBlobMinDiameter ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionBlobMinDiameter {
+        public static string RibbonLabelAutoDetectionBlobMinDiameter {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionBlobMinDiameter", resourceCulture);
             }
@@ -4752,7 +4752,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionMotionPixelThreshold ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionMotionPixelThreshold {
+        public static string RibbonLabelAutoDetectionMotionPixelThreshold {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionMotionPixelThreshold", resourceCulture);
             }
@@ -4761,7 +4761,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle {
+        public static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle", resourceCulture);
             }
@@ -4770,7 +4770,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription {
+        public static string RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription", resourceCulture);
             }
@@ -4779,7 +4779,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle {
+        public static string RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle", resourceCulture);
             }
@@ -4788,7 +4788,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription {
+        public static string RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription", resourceCulture);
             }
@@ -4797,7 +4797,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonLabelAutoDetectionTolerance ähnelt.
         /// </summary>
-        internal static string RibbonLabelAutoDetectionTolerance {
+        public static string RibbonLabelAutoDetectionTolerance {
             get {
                 return ResourceManager.GetString("RibbonLabelAutoDetectionTolerance", resourceCulture);
             }
@@ -4806,7 +4806,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonSelectLanguageLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonSelectLanguageLabelTitle {
+        public static string RibbonSelectLanguageLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonSelectLanguageLabelTitle", resourceCulture);
             }
@@ -4815,7 +4815,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabAnalysisLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabAnalysisLabel {
+        public static string RibbonTabAnalysisLabel {
             get {
                 return ResourceManager.GetString("RibbonTabAnalysisLabel", resourceCulture);
             }
@@ -4824,7 +4824,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabChartLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabChartLabel {
+        public static string RibbonTabChartLabel {
             get {
                 return ResourceManager.GetString("RibbonTabChartLabel", resourceCulture);
             }
@@ -4833,7 +4833,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabDatagridLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabDatagridLabel {
+        public static string RibbonTabDatagridLabel {
             get {
                 return ResourceManager.GetString("RibbonTabDatagridLabel", resourceCulture);
             }
@@ -4842,7 +4842,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabHomeLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabHomeLabel {
+        public static string RibbonTabHomeLabel {
             get {
                 return ResourceManager.GetString("RibbonTabHomeLabel", resourceCulture);
             }
@@ -4851,7 +4851,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabOptionsLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabOptionsLabel {
+        public static string RibbonTabOptionsLabel {
             get {
                 return ResourceManager.GetString("RibbonTabOptionsLabel", resourceCulture);
             }
@@ -4860,7 +4860,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabVideoLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabVideoLabel {
+        public static string RibbonTabVideoLabel {
             get {
                 return ResourceManager.GetString("RibbonTabVideoLabel", resourceCulture);
             }
@@ -4869,7 +4869,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonTabWindowsLabel ähnelt.
         /// </summary>
-        internal static string RibbonTabWindowsLabel {
+        public static string RibbonTabWindowsLabel {
             get {
                 return ResourceManager.GetString("RibbonTabWindowsLabel", resourceCulture);
             }
@@ -4878,7 +4878,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonVideoDevicesSelectDeviceLabelTitle ähnelt.
         /// </summary>
-        internal static string RibbonVideoDevicesSelectDeviceLabelTitle {
+        public static string RibbonVideoDevicesSelectDeviceLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonVideoDevicesSelectDeviceLabelTitle", resourceCulture);
             }
@@ -4887,7 +4887,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveDialogButtonDoNotSave ähnelt.
         /// </summary>
-        internal static string SaveDialogButtonDoNotSave {
+        public static string SaveDialogButtonDoNotSave {
             get {
                 return ResourceManager.GetString("SaveDialogButtonDoNotSave", resourceCulture);
             }
@@ -4896,7 +4896,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveDialogButtonSave ähnelt.
         /// </summary>
-        internal static string SaveDialogButtonSave {
+        public static string SaveDialogButtonSave {
             get {
                 return ResourceManager.GetString("SaveDialogButtonSave", resourceCulture);
             }
@@ -4905,7 +4905,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveProjectDialogDescription ähnelt.
         /// </summary>
-        internal static string SaveProjectDialogDescription {
+        public static string SaveProjectDialogDescription {
             get {
                 return ResourceManager.GetString("SaveProjectDialogDescription", resourceCulture);
             }
@@ -4914,7 +4914,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveProjectDialogMessage ähnelt.
         /// </summary>
-        internal static string SaveProjectDialogMessage {
+        public static string SaveProjectDialogMessage {
             get {
                 return ResourceManager.GetString("SaveProjectDialogMessage", resourceCulture);
             }
@@ -4923,7 +4923,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveProjectDialogTitle ähnelt.
         /// </summary>
-        internal static string SaveProjectDialogTitle {
+        public static string SaveProjectDialogTitle {
             get {
                 return ResourceManager.GetString("SaveProjectDialogTitle", resourceCulture);
             }
@@ -4932,7 +4932,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogCompressorLabel ähnelt.
         /// </summary>
-        internal static string SaveVideoDialogCompressorLabel {
+        public static string SaveVideoDialogCompressorLabel {
             get {
                 return ResourceManager.GetString("SaveVideoDialogCompressorLabel", resourceCulture);
             }
@@ -4941,7 +4941,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogFilenameLabel ähnelt.
         /// </summary>
-        internal static string SaveVideoDialogFilenameLabel {
+        public static string SaveVideoDialogFilenameLabel {
             get {
                 return ResourceManager.GetString("SaveVideoDialogFilenameLabel", resourceCulture);
             }
@@ -4950,7 +4950,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogFolderLabel ähnelt.
         /// </summary>
-        internal static string SaveVideoDialogFolderLabel {
+        public static string SaveVideoDialogFolderLabel {
             get {
                 return ResourceManager.GetString("SaveVideoDialogFolderLabel", resourceCulture);
             }
@@ -4959,7 +4959,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogStartAnalysis ähnelt.
         /// </summary>
-        internal static string SaveVideoDialogStartAnalysis {
+        public static string SaveVideoDialogStartAnalysis {
             get {
                 return ResourceManager.GetString("SaveVideoDialogStartAnalysis", resourceCulture);
             }
@@ -4968,7 +4968,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogTitle ähnelt.
         /// </summary>
-        internal static string SaveVideoDialogTitle {
+        public static string SaveVideoDialogTitle {
             get {
                 return ResourceManager.GetString("SaveVideoDialogTitle", resourceCulture);
             }
@@ -4977,7 +4977,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectColorWindowDescriptionMessage ähnelt.
         /// </summary>
-        internal static string SelectColorWindowDescriptionMessage {
+        public static string SelectColorWindowDescriptionMessage {
             get {
                 return ResourceManager.GetString("SelectColorWindowDescriptionMessage", resourceCulture);
             }
@@ -4986,7 +4986,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectColorWindowDescriptionTitle ähnelt.
         /// </summary>
-        internal static string SelectColorWindowDescriptionTitle {
+        public static string SelectColorWindowDescriptionTitle {
             get {
                 return ResourceManager.GetString("SelectColorWindowDescriptionTitle", resourceCulture);
             }
@@ -4995,7 +4995,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectColorWindowHelpControlTitle ähnelt.
         /// </summary>
-        internal static string SelectColorWindowHelpControlTitle {
+        public static string SelectColorWindowHelpControlTitle {
             get {
                 return ResourceManager.GetString("SelectColorWindowHelpControlTitle", resourceCulture);
             }
@@ -5004,7 +5004,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectColorWindowObjectIndexHeader ähnelt.
         /// </summary>
-        internal static string SelectColorWindowObjectIndexHeader {
+        public static string SelectColorWindowObjectIndexHeader {
             get {
                 return ResourceManager.GetString("SelectColorWindowObjectIndexHeader", resourceCulture);
             }
@@ -5013,7 +5013,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectColorWindowTitle ähnelt.
         /// </summary>
-        internal static string SelectColorWindowTitle {
+        public static string SelectColorWindowTitle {
             get {
                 return ResourceManager.GetString("SelectColorWindowTitle", resourceCulture);
             }
@@ -5022,7 +5022,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SelectVlcLibrariesDescription ähnelt.
         /// </summary>
-        internal static string SelectVlcLibrariesDescription {
+        public static string SelectVlcLibrariesDescription {
             get {
                 return ResourceManager.GetString("SelectVlcLibrariesDescription", resourceCulture);
             }
@@ -5031,7 +5031,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowCalibrationLabelDescription ähnelt.
         /// </summary>
-        internal static string ShowCalibrationLabelDescription {
+        public static string ShowCalibrationLabelDescription {
             get {
                 return ResourceManager.GetString("ShowCalibrationLabelDescription", resourceCulture);
             }
@@ -5040,7 +5040,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowCalibrationLabelTitle ähnelt.
         /// </summary>
-        internal static string ShowCalibrationLabelTitle {
+        public static string ShowCalibrationLabelTitle {
             get {
                 return ResourceManager.GetString("ShowCalibrationLabelTitle", resourceCulture);
             }
@@ -5049,7 +5049,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowCalibrationToolTipDescription ähnelt.
         /// </summary>
-        internal static string ShowCalibrationToolTipDescription {
+        public static string ShowCalibrationToolTipDescription {
             get {
                 return ResourceManager.GetString("ShowCalibrationToolTipDescription", resourceCulture);
             }
@@ -5058,7 +5058,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowCalibrationToolTipTitle ähnelt.
         /// </summary>
-        internal static string ShowCalibrationToolTipTitle {
+        public static string ShowCalibrationToolTipTitle {
             get {
                 return ResourceManager.GetString("ShowCalibrationToolTipTitle", resourceCulture);
             }
@@ -5067,7 +5067,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowClipRegion ähnelt.
         /// </summary>
-        internal static string ShowClipRegion {
+        public static string ShowClipRegion {
             get {
                 return ResourceManager.GetString("ShowClipRegion", resourceCulture);
             }
@@ -5076,7 +5076,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowClipRegionLabelDescription ähnelt.
         /// </summary>
-        internal static string ShowClipRegionLabelDescription {
+        public static string ShowClipRegionLabelDescription {
             get {
                 return ResourceManager.GetString("ShowClipRegionLabelDescription", resourceCulture);
             }
@@ -5085,7 +5085,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowClipRegionLabelTitle ähnelt.
         /// </summary>
-        internal static string ShowClipRegionLabelTitle {
+        public static string ShowClipRegionLabelTitle {
             get {
                 return ResourceManager.GetString("ShowClipRegionLabelTitle", resourceCulture);
             }
@@ -5094,7 +5094,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowClipRegionToolTipDescription ähnelt.
         /// </summary>
-        internal static string ShowClipRegionToolTipDescription {
+        public static string ShowClipRegionToolTipDescription {
             get {
                 return ResourceManager.GetString("ShowClipRegionToolTipDescription", resourceCulture);
             }
@@ -5103,7 +5103,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowClipRegionToolTipTitle ähnelt.
         /// </summary>
-        internal static string ShowClipRegionToolTipTitle {
+        public static string ShowClipRegionToolTipTitle {
             get {
                 return ResourceManager.GetString("ShowClipRegionToolTipTitle", resourceCulture);
             }
@@ -5112,7 +5112,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowPixelLengthLabelTitle ähnelt.
         /// </summary>
-        internal static string ShowPixelLengthLabelTitle {
+        public static string ShowPixelLengthLabelTitle {
             get {
                 return ResourceManager.GetString("ShowPixelLengthLabelTitle", resourceCulture);
             }
@@ -5121,7 +5121,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowPixelLengthToolTipDescription ähnelt.
         /// </summary>
-        internal static string ShowPixelLengthToolTipDescription {
+        public static string ShowPixelLengthToolTipDescription {
             get {
                 return ResourceManager.GetString("ShowPixelLengthToolTipDescription", resourceCulture);
             }
@@ -5130,7 +5130,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowPixelLengthToolTipTitle ähnelt.
         /// </summary>
-        internal static string ShowPixelLengthToolTipTitle {
+        public static string ShowPixelLengthToolTipTitle {
             get {
                 return ResourceManager.GetString("ShowPixelLengthToolTipTitle", resourceCulture);
             }
@@ -5139,7 +5139,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowVideoInfosButtonLabelTitle ähnelt.
         /// </summary>
-        internal static string ShowVideoInfosButtonLabelTitle {
+        public static string ShowVideoInfosButtonLabelTitle {
             get {
                 return ResourceManager.GetString("ShowVideoInfosButtonLabelTitle", resourceCulture);
             }
@@ -5148,7 +5148,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowVideoInfosButtonToolTipDescription ähnelt.
         /// </summary>
-        internal static string ShowVideoInfosButtonToolTipDescription {
+        public static string ShowVideoInfosButtonToolTipDescription {
             get {
                 return ResourceManager.GetString("ShowVideoInfosButtonToolTipDescription", resourceCulture);
             }
@@ -5157,7 +5157,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ShowVideoInfosButtonToolTipTitle ähnelt.
         /// </summary>
-        internal static string ShowVideoInfosButtonToolTipTitle {
+        public static string ShowVideoInfosButtonToolTipTitle {
             get {
                 return ResourceManager.GetString("ShowVideoInfosButtonToolTipTitle", resourceCulture);
             }
@@ -5166,7 +5166,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SkipPointsDialogDescription ähnelt.
         /// </summary>
-        internal static string SkipPointsDialogDescription {
+        public static string SkipPointsDialogDescription {
             get {
                 return ResourceManager.GetString("SkipPointsDialogDescription", resourceCulture);
             }
@@ -5175,7 +5175,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SkipPointsDialogTitle ähnelt.
         /// </summary>
-        internal static string SkipPointsDialogTitle {
+        public static string SkipPointsDialogTitle {
             get {
                 return ResourceManager.GetString("SkipPointsDialogTitle", resourceCulture);
             }
@@ -5184,7 +5184,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @StatusBarReady ähnelt.
         /// </summary>
-        internal static string StatusBarReady {
+        public static string StatusBarReady {
             get {
                 return ResourceManager.GetString("StatusBarReady", resourceCulture);
             }
@@ -5193,7 +5193,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @StatusIsCalculating ähnelt.
         /// </summary>
-        internal static string StatusIsCalculating {
+        public static string StatusIsCalculating {
             get {
                 return ResourceManager.GetString("StatusIsCalculating", resourceCulture);
             }
@@ -5202,7 +5202,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @TimeUnitDialogDescription ähnelt.
         /// </summary>
-        internal static string TimeUnitDialogDescription {
+        public static string TimeUnitDialogDescription {
             get {
                 return ResourceManager.GetString("TimeUnitDialogDescription", resourceCulture);
             }
@@ -5211,7 +5211,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @TimeUnitDialogTitle ähnelt.
         /// </summary>
-        internal static string TimeUnitDialogTitle {
+        public static string TimeUnitDialogTitle {
             get {
                 return ResourceManager.GetString("TimeUnitDialogTitle", resourceCulture);
             }
@@ -5220,7 +5220,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @TxtFilter ähnelt.
         /// </summary>
-        internal static string TxtFilter {
+        public static string TxtFilter {
             get {
                 return ResourceManager.GetString("TxtFilter", resourceCulture);
             }
@@ -5229,7 +5229,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VianaDialogTitle ähnelt.
         /// </summary>
-        internal static string VianaDialogTitle {
+        public static string VianaDialogTitle {
             get {
                 return ResourceManager.GetString("VianaDialogTitle", resourceCulture);
             }
@@ -5238,97 +5238,97 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoFilesFilter ähnelt.
         /// </summary>
-        internal static string VideoFilesFilter {
+        public static string VideoFilesFilter {
             get {
                 return ResourceManager.GetString("VideoFilesFilter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoBitrateLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoBitrateLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoBitrateLabel {
+        public static string VideoInfoBitrateLabel {
             get {
                 return ResourceManager.GetString("VideoInfoBitrateLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoCodecLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoCodecLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoCodecLabel {
+        public static string VideoInfoCodecLabel {
             get {
                 return ResourceManager.GetString("VideoInfoCodecLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoDialogTitle ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoDialogTitle ähnelt.
         /// </summary>
-        internal static string VideoInfoDialogTitle {
+        public static string VideoInfoDialogTitle {
             get {
                 return ResourceManager.GetString("VideoInfoDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoDialogTopFrameTitle ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoDialogTopFrameTitle ähnelt.
         /// </summary>
-        internal static string VideoInfoDialogTopFrameTitle {
+        public static string VideoInfoDialogTopFrameTitle {
             get {
                 return ResourceManager.GetString("VideoInfoDialogTopFrameTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoDurationLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoDurationLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoDurationLabel {
+        public static string VideoInfoDurationLabel {
             get {
                 return ResourceManager.GetString("VideoInfoDurationLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoFilenameLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFilenameLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoFilenameLabel {
+        public static string VideoInfoFilenameLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFilenameLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoFPSDefaultLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFPSDefaultLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoFPSDefaultLabel {
+        public static string VideoInfoFPSDefaultLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFPSDefaultLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoFPSLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFPSLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoFPSLabel {
+        public static string VideoInfoFPSLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFPSLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoFrameCountLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFrameCountLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoFrameCountLabel {
+        public static string VideoInfoFrameCountLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFrameCountLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @VideoInfoFrameSizeLabel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFrameSizeLabel ähnelt.
         /// </summary>
-        internal static string VideoInfoFrameSizeLabel {
+        public static string VideoInfoFrameSizeLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFrameSizeLabel", resourceCulture);
             }
@@ -5337,7 +5337,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoSaveFolderBrowserDescriptionTitle ähnelt.
         /// </summary>
-        internal static string VideoSaveFolderBrowserDescriptionTitle {
+        public static string VideoSaveFolderBrowserDescriptionTitle {
             get {
                 return ResourceManager.GetString("VideoSaveFolderBrowserDescriptionTitle", resourceCulture);
             }
@@ -5346,7 +5346,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowPlayButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowPlayButtonToolTip {
+        public static string VideoWindowPlayButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowPlayButtonToolTip", resourceCulture);
             }
@@ -5355,7 +5355,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowRecordButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowRecordButtonToolTip {
+        public static string VideoWindowRecordButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowRecordButtonToolTip", resourceCulture);
             }
@@ -5364,7 +5364,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowSeekNextButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowSeekNextButtonToolTip {
+        public static string VideoWindowSeekNextButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowSeekNextButtonToolTip", resourceCulture);
             }
@@ -5373,7 +5373,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowSeekPreviousButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowSeekPreviousButtonToolTip {
+        public static string VideoWindowSeekPreviousButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowSeekPreviousButtonToolTip", resourceCulture);
             }
@@ -5382,7 +5382,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowSetCutoutLeftButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowSetCutoutLeftButtonToolTip {
+        public static string VideoWindowSetCutoutLeftButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowSetCutoutLeftButtonToolTip", resourceCulture);
             }
@@ -5391,7 +5391,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowSetCutoutRightButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowSetCutoutRightButtonToolTip {
+        public static string VideoWindowSetCutoutRightButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowSetCutoutRightButtonToolTip", resourceCulture);
             }
@@ -5400,7 +5400,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowSetZeroTimeButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowSetZeroTimeButtonToolTip {
+        public static string VideoWindowSetZeroTimeButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowSetZeroTimeButtonToolTip", resourceCulture);
             }
@@ -5409,7 +5409,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowStopButtonToolTip ähnelt.
         /// </summary>
-        internal static string VideoWindowStopButtonToolTip {
+        public static string VideoWindowStopButtonToolTip {
             get {
                 return ResourceManager.GetString("VideoWindowStopButtonToolTip", resourceCulture);
             }
@@ -5418,7 +5418,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VideoWindowTitle ähnelt.
         /// </summary>
-        internal static string VideoWindowTitle {
+        public static string VideoWindowTitle {
             get {
                 return ResourceManager.GetString("VideoWindowTitle", resourceCulture);
             }
@@ -5427,7 +5427,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @VLCDialogTopFrameTitle ähnelt.
         /// </summary>
-        internal static string VLCDialogTopFrameTitle {
+        public static string VLCDialogTopFrameTitle {
             get {
                 return ResourceManager.GetString("VLCDialogTopFrameTitle", resourceCulture);
             }
@@ -5436,7 +5436,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @WindowWithHelpButtonDoneLabel ähnelt.
         /// </summary>
-        internal static string WindowWithHelpButtonDoneLabel {
+        public static string WindowWithHelpButtonDoneLabel {
             get {
                 return ResourceManager.GetString("WindowWithHelpButtonDoneLabel", resourceCulture);
             }
@@ -5445,7 +5445,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @WindowWithHelpOptionsExpanderHeader ähnelt.
         /// </summary>
-        internal static string WindowWithHelpOptionsExpanderHeader {
+        public static string WindowWithHelpOptionsExpanderHeader {
             get {
                 return ResourceManager.GetString("WindowWithHelpOptionsExpanderHeader", resourceCulture);
             }
@@ -5454,7 +5454,7 @@ namespace VianaNET.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @XmlFilter ähnelt.
         /// </summary>
-        internal static string XmlFilter {
+        public static string XmlFilter {
             get {
                 return ResourceManager.GetString("XmlFilter", resourceCulture);
             }

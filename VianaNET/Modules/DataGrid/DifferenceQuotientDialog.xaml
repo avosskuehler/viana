@@ -1,7 +1,7 @@
 ﻿<Window x:Class="VianaNET.Modules.DataGrid.DifferenceQuotientDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
         xmlns:vianaNet="clr-namespace:VianaNET"
         lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="NoResize" WindowStartupLocation="CenterScreen"

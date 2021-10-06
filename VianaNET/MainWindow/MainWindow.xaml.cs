@@ -44,8 +44,6 @@ namespace VianaNET.MainWindow
   using Microsoft.Win32;
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Logging;
-  using VianaNET.Resources;
   using VianaNET.Modules.Chart;
   using VianaNET.Modules.DataAcquisition;
   using VianaNET.Modules.DataGrid;
@@ -100,7 +98,7 @@ namespace VianaNET.MainWindow
       this.SelectColorRibbonButton.LargeImageSource = new BitmapImage(largeSource);
       var smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
       this.SelectColorRibbonButton.SmallImageSource = new BitmapImage(smallSource);
-      this.SelectColorRibbonButton.Label = Labels.ButtonSelectColorLabelTitle;
+      this.SelectColorRibbonButton.Label = VianaNET.Resources.Labels.ButtonSelectColorLabelTitle;
     }
 
     #endregion
@@ -116,7 +114,7 @@ namespace VianaNET.MainWindow
       var dlg = new SaveFileDialog
       {
         Filter = "Viana.NET projects|*.via",
-        Title = Labels.SaveProjectDialogTitle,
+        Title = VianaNET.Resources.Labels.SaveProjectDialogTitle,
         DefaultExt = "via"
       };
 
@@ -185,9 +183,9 @@ namespace VianaNET.MainWindow
       if (Viana.Project.ProjectFilename != string.Empty && Viana.Project.ProjectFilename != null)
       {
         var dlg = new VianaDialog(
-          Labels.AskSaveProjectDialogTitle,
-          Labels.AskSaveProjectDialogDescription,
-          Labels.AskSaveProjectDialogMessage,
+          VianaNET.Resources.Labels.AskSaveProjectDialogTitle,
+          VianaNET.Resources.Labels.AskSaveProjectDialogDescription,
+          VianaNET.Resources.Labels.AskSaveProjectDialogMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -239,7 +237,7 @@ namespace VianaNET.MainWindow
       var dlg = new OpenFileDialog
       {
         Filter = "Viana.NET projects|*.via",
-        Title = Labels.OpenProjectDialogTitle,
+        Title = VianaNET.Resources.Labels.OpenProjectDialogTitle,
         DefaultExt = "via",
         Multiselect = false
       };
@@ -451,7 +449,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void ShowVideoInfosButtonClick(object sender, RoutedEventArgs e)
     {
-      var dialog = new VideoInfoDialog(Viana.Project.VideoFile);
+      var dialog = new VideoInfoDialog();
       dialog.ShowDialog();
     }
 
@@ -562,7 +560,7 @@ namespace VianaNET.MainWindow
           DefaultExt = "csv",
 
           // Available file extensions
-          Filter = Labels.CsvFilter,
+          Filter = VianaNET.Resources.Labels.CsvFilter,
 
           // Adds a extension if the user does not
           AddExtension = true,
@@ -571,7 +569,7 @@ namespace VianaNET.MainWindow
           RestoreDirectory = true,
 
           // Dialog title
-          Title = Labels.ExportWhereToSaveFile,
+          Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
 
           // Startup directory
           InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -599,10 +597,10 @@ namespace VianaNET.MainWindow
       var sfd = new SaveFileDialog
                   {
                     DefaultExt = "txt",
-                    Filter = Labels.TxtFilter,
+                    Filter = VianaNET.Resources.Labels.TxtFilter,
                     AddExtension = true,
                     RestoreDirectory = true,
-                    Title = Labels.ExportWhereToSaveFile,
+                    Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                   };
 
@@ -642,10 +640,10 @@ namespace VianaNET.MainWindow
       var sfd = new SaveFileDialog
         {
           DefaultExt = "xml",
-          Filter = Labels.XmlFilter,
+          Filter = VianaNET.Resources.Labels.XmlFilter,
           AddExtension = true,
           RestoreDirectory = true,
-          Title = Labels.ExportWhereToSaveFile,
+          Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
           InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
 
@@ -671,10 +669,10 @@ namespace VianaNET.MainWindow
       var sfd = new SaveFileDialog
       {
         DefaultExt = "ods",
-        Filter = Labels.OdsFilter,
+        Filter = VianaNET.Resources.Labels.OdsFilter,
         AddExtension = true,
         RestoreDirectory = true,
-        Title = Labels.ExportWhereToSaveFile,
+        Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
         InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
       };
 
@@ -913,11 +911,11 @@ namespace VianaNET.MainWindow
 
       if (Viana.Project.ProcessingData.NumberOfTrackedObjects > 1)
       {
-        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle2;
+        this.SelectNumberOfObjectsButton.Label = VianaNET.Resources.Labels.ButtonSelectNumberOfObjectsLabelTitle2;
       }
       else
       {
-        this.SelectNumberOfObjectsButton.Label = Labels.ButtonSelectNumberOfObjectsLabelTitle;
+        this.SelectNumberOfObjectsButton.Label = VianaNET.Resources.Labels.ButtonSelectNumberOfObjectsLabelTitle;
       }
     }
 
@@ -1013,17 +1011,17 @@ namespace VianaNET.MainWindow
     {
       Settings.Default.Save();
       var currentProjectFile = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
-      var title = Labels.SaveProjectDialogTitle;
+      var title = VianaNET.Resources.Labels.SaveProjectDialogTitle;
       title = title.Replace("%1", Viana.Project.ProjectFilename);
 
       if (File.Exists(currentProjectFile))
       {
-        var description = Labels.SaveProjectDialogDescription;
+        var description = VianaNET.Resources.Labels.SaveProjectDialogDescription;
         description = description.Replace("%1", Viana.Project.ProjectFilename);
         var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.SaveProjectDialogMessage);
+          VianaNET.Resources.Labels.SaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -1032,12 +1030,12 @@ namespace VianaNET.MainWindow
       }
       else
       {
-        var description = Labels.AskSaveProjectDialogDescription;
+        var description = VianaNET.Resources.Labels.AskSaveProjectDialogDescription;
         description = description.Replace("%1", Viana.Project.ProjectFilename);
         var dlg = new VianaSaveDialog(
           title,
           description,
-          Labels.AskSaveProjectDialogMessage);
+          VianaNET.Resources.Labels.AskSaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -1067,7 +1065,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateColorButton()
     {
-      this.SelectColorRibbonButton.Label = Labels.ButtonSelectedColorLabelTitle;
+      this.SelectColorRibbonButton.Label = VianaNET.Resources.Labels.ButtonSelectedColorLabelTitle;
 
       var drawingVisual = new DrawingVisual();
       DrawingContext drawingContext = drawingVisual.RenderOpen();

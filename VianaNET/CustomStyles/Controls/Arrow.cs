@@ -39,66 +39,66 @@ namespace VianaNET.CustomStyles.Controls
     ///   The head height property
     /// </summary>
     public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register(
-      "HeadHeight", 
-      typeof(double), 
-      typeof(Arrow), 
+      "HeadHeight",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The head width property
     /// </summary>
     public static readonly DependencyProperty HeadWidthProperty = DependencyProperty.Register(
-      "HeadWidth", 
-      typeof(double), 
-      typeof(Arrow), 
+      "HeadWidth",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The x1 property
     /// </summary>
     public static readonly DependencyProperty X1Property = DependencyProperty.Register(
-      "X1", 
-      typeof(double), 
-      typeof(Arrow), 
+      "X1",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The x2 property
     /// </summary>
     public static readonly DependencyProperty X2Property = DependencyProperty.Register(
-      "X2", 
-      typeof(double), 
-      typeof(Arrow), 
+      "X2",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The y1 property
     /// </summary>
     public static readonly DependencyProperty Y1Property = DependencyProperty.Register(
-      "Y1", 
-      typeof(double), 
-      typeof(Arrow), 
+      "Y1",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The y2 property
     /// </summary>
     public static readonly DependencyProperty Y2Property = DependencyProperty.Register(
-      "Y2", 
-      typeof(double), 
-      typeof(Arrow), 
+      "Y2",
+      typeof(double),
+      typeof(Arrow),
       new FrameworkPropertyMetadata(
-        0.0, 
+        0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     #endregion
@@ -273,11 +273,11 @@ namespace VianaNET.CustomStyles.Controls
       var pt2 = new Point(this.X2, this.Y2);
 
       var pt3 = new Point(
-        this.X2 + (this.HeadWidth * cost - this.HeadHeight * sint), 
+        this.X2 + (this.HeadWidth * cost - this.HeadHeight * sint),
         this.Y2 + (this.HeadWidth * sint + this.HeadHeight * cost));
 
       var pt4 = new Point(
-        this.X2 + (this.HeadWidth * cost + this.HeadHeight * sint), 
+        this.X2 + (this.HeadWidth * cost + this.HeadHeight * sint),
         this.Y2 - (this.HeadHeight * cost - this.HeadWidth * sint));
 
       context.BeginFigure(pt1, true, false);
