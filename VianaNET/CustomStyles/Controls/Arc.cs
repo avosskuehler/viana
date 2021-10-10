@@ -18,9 +18,9 @@
 //   ************************************************************************
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace VianaNET.CustomStyles.Controls
 {
-
   using System;
   using System.Collections.Generic;
   using System.Windows;
@@ -100,15 +100,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public Point Center
     {
-      get
-      {
-        return (Point)this.GetValue(CenterProperty);
-      }
+      get => (Point)this.GetValue(CenterProperty);
 
-      set
-      {
-        this.SetValue(CenterProperty, value);
-      }
+      set => this.SetValue(CenterProperty, value);
     }
 
     /// <summary>
@@ -116,15 +110,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public double EndAngle
     {
-      get
-      {
-        return (double)this.GetValue(EndAngleProperty);
-      }
+      get => (double)this.GetValue(EndAngleProperty);
 
-      set
-      {
-        this.SetValue(EndAngleProperty, value);
-      }
+      set => this.SetValue(EndAngleProperty, value);
     }
 
     /// <summary>
@@ -132,15 +120,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public double Radius
     {
-      get
-      {
-        return (double)this.GetValue(RadiusProperty);
-      }
+      get => (double)this.GetValue(RadiusProperty);
 
-      set
-      {
-        this.SetValue(RadiusProperty, value);
-      }
+      set => this.SetValue(RadiusProperty, value);
     }
 
     /// <summary>
@@ -148,15 +130,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public bool SmallAngle
     {
-      get
-      {
-        return (bool)this.GetValue(SmallAngleProperty);
-      }
+      get => (bool)this.GetValue(SmallAngleProperty);
 
-      set
-      {
-        this.SetValue(SmallAngleProperty, value);
-      }
+      set => this.SetValue(SmallAngleProperty, value);
     }
 
     /// <summary>
@@ -164,15 +140,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public double StartAngle
     {
-      get
-      {
-        return (double)this.GetValue(StartAngleProperty);
-      }
+      get => (double)this.GetValue(StartAngleProperty);
 
-      set
-      {
-        this.SetValue(StartAngleProperty, value);
-      }
+      set => this.SetValue(StartAngleProperty, value);
     }
 
     #endregion
@@ -186,8 +156,8 @@ namespace VianaNET.CustomStyles.Controls
     {
       get
       {
-        var start = this.StartAngle * Math.PI / 180; // 0
-        var end = this.EndAngle * Math.PI / 180;     // PI/2
+        double start = this.StartAngle * Math.PI / 180; // 0
+        double end = this.EndAngle * Math.PI / 180;     // PI/2
 
         double a0 = start < 0 ? start + 2 * Math.PI : start; // 0
         double a1 = end < 0 ? end + 2 * Math.PI : end;       // PI/2
@@ -197,7 +167,7 @@ namespace VianaNET.CustomStyles.Controls
           a1 += Math.PI * 2;
         }
 
-        var d = SweepDirection.Clockwise;
+        SweepDirection d = SweepDirection.Clockwise;
         bool large;
 
         if (this.SmallAngle)
@@ -210,19 +180,19 @@ namespace VianaNET.CustomStyles.Controls
           large = Math.Abs(a1 - a0) > Math.PI; // false
         }
 
-        var dir1 = new Vector(Math.Cos(a0), Math.Sin(a0));
+        Vector dir1 = new Vector(Math.Cos(a0), Math.Sin(a0));
         dir1.Normalize();
-        var dir2 = new Vector(Math.Cos(a1), Math.Sin(a1));
+        Vector dir2 = new Vector(Math.Cos(a1), Math.Sin(a1));
         dir2.Normalize();
 
         Point p0 = this.Center + dir1 * this.Radius;
         Point p1 = this.Center + dir2 * this.Radius;
 
-        var segments = new List<PathSegment>(1);
+        List<PathSegment> segments = new List<PathSegment>(1);
         segments.Add(new ArcSegment(p1, new Size(this.Radius, this.Radius), 0.0, large, d, true));
 
-        var figures = new List<PathFigure>(1);
-        var pf = new PathFigure(p0, segments, true);
+        List<PathFigure> figures = new List<PathFigure>(1);
+        PathFigure pf = new PathFigure(p0, segments, true);
         pf.IsClosed = false;
         figures.Add(pf);
 

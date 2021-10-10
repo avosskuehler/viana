@@ -230,15 +230,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public int NoCols
     {
-      get
-      {
-        return this.in_Mat.GetUpperBound(1) + 1;
-      }
+      get => this.in_Mat.GetUpperBound(1) + 1;
 
-      set
-      {
-        this.in_Mat = new double[this.in_Mat.GetUpperBound(0), value];
-      }
+      set => this.in_Mat = new double[this.in_Mat.GetUpperBound(0), value];
     }
 
     /// <summary>
@@ -248,27 +242,15 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public int NoRows
     {
-      get
-      {
-        return this.in_Mat.GetUpperBound(0) + 1;
-      }
+      get => this.in_Mat.GetUpperBound(0) + 1;
 
-      set
-      {
-        this.in_Mat = new double[value, this.in_Mat.GetUpperBound(0)];
-      }
+      set => this.in_Mat = new double[value, this.in_Mat.GetUpperBound(0)];
     }
 
     /// <summary>
     ///   This property returns the matrix as an array.
     /// </summary>
-    public double[,] toArray
-    {
-      get
-      {
-        return this.in_Mat;
-      }
-    }
+    public double[,] toArray => this.in_Mat;
 
     #endregion
 
@@ -288,15 +270,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </returns>
     public double this[int Row, int Col]
     {
-      get
-      {
-        return this.in_Mat[Row, Col];
-      }
+      get => this.in_Mat[Row, Col];
 
-      set
-      {
-        this.in_Mat[Row, Col] = value;
-      }
+      set => this.in_Mat[Row, Col] = value;
     }
 
     #endregion
@@ -389,7 +365,7 @@ namespace VianaNET.Data.Filter.Regression
     public static double[] CrossProduct(double[] V1, double[] V2)
     {
       double i, j, k;
-      var sol = new double[2];
+      double[] sol = new double[2];
       int Rows1;
       int Rows2;
 
@@ -441,7 +417,7 @@ namespace VianaNET.Data.Filter.Regression
     public static double[,] CrossProduct(double[,] V1, double[,] V2)
     {
       double i, j, k;
-      var sol = new double[3, 1];
+      double[,] sol = new double[3, 1];
       int Rows1, Cols1;
       int Rows2, Cols2;
 
@@ -891,7 +867,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </returns>
     public static double[,] Identity(int n)
     {
-      var temp = new double[n, n];
+      double[,] temp = new double[n, n];
       for (int i = 0; i < n; i++)
       {
         temp[i, i] = 1;
@@ -1131,8 +1107,8 @@ namespace VianaNET.Data.Filter.Regression
       int IMAX = 0, N = Rows;
       double AAMAX, Sum, Dum, TINY = 1E-20;
 
-      var INDX = new int[N + 1];
-      var VV = new double[N * 10];
+      int[] INDX = new int[N + 1];
+      double[] VV = new double[N * 10];
       double D = 1.0;
 
       for (i = 0; i <= N; i++)
@@ -1230,8 +1206,8 @@ namespace VianaNET.Data.Filter.Regression
       }
 
       int count = 0;
-      var l = new double[N + 1, N + 1];
-      var u = new double[N + 1, N + 1];
+      double[,] l = new double[N + 1, N + 1];
+      double[,] u = new double[N + 1, N + 1];
 
       for (i = 0; i <= N; i++)
       {
@@ -1401,7 +1377,7 @@ namespace VianaNET.Data.Filter.Regression
         throw new MatrixNullException();
       }
 
-      var Sol = new double[Rows + 1, 1];
+      double[,] Sol = new double[Rows + 1, 1];
 
       for (int i = 0; i <= Rows; i++)
       {
@@ -1776,7 +1752,7 @@ namespace VianaNET.Data.Filter.Regression
 
       double[,] U_temp, S_temp, V_temp;
       double anorm, c, f, g, h, s, scale, x, y, z;
-      var rv1 = new double[NMAX];
+      double[] rv1 = new double[NMAX];
 
       l = 0;
       nm = 0;
@@ -2326,8 +2302,8 @@ namespace VianaNET.Data.Filter.Regression
       int IMAX = 0, N = Rows;
       double AAMAX, Sum, Dum, TINY = 1E-20;
 
-      var INDX = new int[N + 1];
-      var VV = new double[N * 10];
+      int[] INDX = new int[N + 1];
+      double[] VV = new double[N * 10];
       double D = 1.0;
 
       for (i = 0; i <= N; i++)
@@ -2639,7 +2615,7 @@ namespace VianaNET.Data.Filter.Regression
         throw new MatrixDimensionException();
       }
 
-      var Sol = new double[Rows + 1];
+      double[] Sol = new double[Rows + 1];
 
       for (int i = 0; i <= Rows; i++)
       {
@@ -3023,7 +2999,7 @@ namespace VianaNET.Data.Filter.Regression
     private static void SwapRows(double[,] Mat, int Row, int toRow)
     {
       int N = Mat.GetUpperBound(0);
-      var dumArray = new double[1, N + 1];
+      double[,] dumArray = new double[1, N + 1];
       for (int i = 0; i <= N; i++)
       {
         dumArray[0, i] = Mat[Row, i];

@@ -19,8 +19,6 @@ namespace VianaNET.Modules.Video.Control
   using System.Windows.Media.Imaging;
 
   using DirectShowLib;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Dialogs;
@@ -182,44 +180,23 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Gets the frame timestamp in ms.
     /// </summary>
-    public long FrameTimestampInMs
-    {
-      get
-      {
-        return
-          (long)
+    public long FrameTimestampInMs => (long)
           ((this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs)
-           - Viana.Project.VideoData.TimeZeroPositionInMs);
-      }
-
-      // get { return this.videoElement.MediaPositionInMilliSeconds; }
-    }
+           - App.Project.VideoData.TimeZeroPositionInMs);
 
     /// <summary>
     ///   Gets the frame timestamp in ms starting with zero at the beginning of the video.
     /// </summary>
-    public long FrameTimestampInMsWithoutOffest
-    {
-      get
-      {
-        return (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs);
-      }
-    }
+    public long FrameTimestampInMsWithoutOffest => (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs);
 
     /// <summary>
     ///   Gets or sets a value indicating whether is data acquisition running.
     /// </summary>
     public bool IsDataAcquisitionRunning
     {
-      get
-      {
-        return (bool)this.GetValue(IsDataAcquisitionRunningProperty);
-      }
+      get => (bool)this.GetValue(IsDataAcquisitionRunningProperty);
 
-      set
-      {
-        this.SetValue(IsDataAcquisitionRunningProperty, value);
-      }
+      set => this.SetValue(IsDataAcquisitionRunningProperty, value);
     }
 
     /// <summary>
@@ -227,88 +204,46 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public bool HasVideo
     {
-      get
-      {
-        return (bool)this.GetValue(HasVideoProperty);
-      }
+      get => (bool)this.GetValue(HasVideoProperty);
 
-      set
-      {
-        this.SetValue(HasVideoProperty, value);
-      }
+      set => this.SetValue(HasVideoProperty, value);
     }
 
     /// <summary>
     ///   Gets the video capturer element.
     /// </summary>
-    public VideoCapturer VideoCapturerElement
-    {
-      get
-      {
-        return this.videoCaptureElement;
-      }
-    }
+    public VideoCapturer VideoCapturerElement => this.videoCaptureElement;
 
     /// <summary>
     ///   Gets the video element.
     /// </summary>
-    public VideoBase VideoElement
-    {
-      get
-      {
-        return this.videoElement;
-      }
-    }
+    public VideoBase VideoElement => this.videoElement;
 
     /// <summary>
     ///   Gets or sets the video mode.
     /// </summary>
     public VideoMode VideoMode
     {
-      get
-      {
-        return this.videoMode;
-      }
+      get => this.videoMode;
 
-      set
-      {
-        this.SetVideoMode(value);
-      }
+      set => this.SetVideoMode(value);
     }
 
-    public bool IsLiveCamera
-    {
-      get
-      {
-        return this.videoMode == VideoMode.Capture;
-      }
-    }
+    public bool IsLiveCamera => this.videoMode == VideoMode.Capture;
 
     /// <summary>
     ///   Gets the video player element.
     /// </summary>
-    public VideoPlayer VideoPlayerElement
-    {
-      get
-      {
-        return this.videoPlayerElement;
-      }
-    }
+    public VideoPlayer VideoPlayerElement => this.videoPlayerElement;
 
     /// <summary>
     ///   Gets or sets the image source.
     /// </summary>
     public ImageSource OriginalImageSource
     {
-      get
-      {
-        return (ImageSource)this.GetValue(OriginalImageSourceProperty);
-      }
+      get => (ImageSource)this.GetValue(OriginalImageSourceProperty);
 
-      set
-      {
-        this.SetValue(OriginalImageSourceProperty, value);
-      }
+      set => this.SetValue(OriginalImageSourceProperty, value);
     }
 
     /// <summary>
@@ -316,15 +251,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public ImageSource ColorProcessedImageSource
     {
-      get
-      {
-        return (ImageSource)this.GetValue(ColorProcessedImageSourceProperty);
-      }
+      get => (ImageSource)this.GetValue(ColorProcessedImageSourceProperty);
 
-      set
-      {
-        this.SetValue(ColorProcessedImageSourceProperty, value);
-      }
+      set => this.SetValue(ColorProcessedImageSourceProperty, value);
     }
 
     /// <summary>
@@ -332,39 +261,21 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public ImageSource MotionProcessedImageSource
     {
-      get
-      {
-        return (ImageSource)this.GetValue(MotionProcessedImageSourceProperty);
-      }
+      get => (ImageSource)this.GetValue(MotionProcessedImageSourceProperty);
 
-      set
-      {
-        this.SetValue(MotionProcessedImageSourceProperty, value);
-      }
+      set => this.SetValue(MotionProcessedImageSourceProperty, value);
     }
 
     /// <summary>
     ///   Gets the video input devices.
     /// </summary>
-    public ObservableCollection<DsDevice> VideoInputDevices
-    {
-      get
-      {
-        return new ObservableCollection<DsDevice>(DShowUtils.GetVideoInputDevices());
-      }
-    }
+    public ObservableCollection<DsDevice> VideoInputDevices => new ObservableCollection<DsDevice>(DShowUtils.GetVideoInputDevices());
 
     /// <summary>
     ///   Gets a valaue indicating whether there are video input devices
     ///   available on the system
     /// </summary>
-    public bool HasVideoInputDevices
-    {
-      get
-      {
-        return this.VideoInputDevices.Count > 0;
-      }
-    }
+    public bool HasVideoInputDevices => this.VideoInputDevices.Count > 0;
 
     #endregion
 
@@ -391,14 +302,14 @@ namespace VianaNET.Modules.Video.Control
       }
 
       Bitmap returnBitmap;
-      var visual = new DrawingVisual();
-      var dc = visual.RenderOpen();
+      DrawingVisual visual = new DrawingVisual();
+      DrawingContext dc = visual.RenderOpen();
       dc.DrawImage(
         this.OriginalImageSource,
         new Rect(0, 0, this.videoElement.NaturalVideoWidth, this.videoElement.NaturalVideoHeight));
 
       dc.Close();
-      var rtp = new RenderTargetBitmap(
+      RenderTargetBitmap rtp = new RenderTargetBitmap(
         (int)this.videoElement.NaturalVideoWidth,
         (int)this.videoElement.NaturalVideoHeight,
         96d,
@@ -406,9 +317,9 @@ namespace VianaNET.Modules.Video.Control
         PixelFormats.Default);
       rtp.Render(visual);
 
-      using (var outStream = new MemoryStream())
+      using (MemoryStream outStream = new MemoryStream())
       {
-        var pnge = new PngBitmapEncoder();
+        PngBitmapEncoder pnge = new PngBitmapEncoder();
         pnge.Frames.Add(BitmapFrame.Create(rtp));
         pnge.Save(outStream);
         returnBitmap = new Bitmap(outStream);
@@ -430,7 +341,7 @@ namespace VianaNET.Modules.Video.Control
     /// </returns>
     public bool LoadMovie(string filename)
     {
-      var success = true;
+      bool success = true;
       switch (this.videoMode)
       {
         case VideoMode.File:
@@ -438,7 +349,7 @@ namespace VianaNET.Modules.Video.Control
           success = this.videoPlayerElement.LoadMovie(filename);
           if (!success && File.Exists(this.videoPlayerElement.VideoFilename))
           {
-            var name = this.videoPlayerElement.VideoFilename;
+            string name = this.videoPlayerElement.VideoFilename;
             this.videoPlayerElement.Dispose();
             success = this.ReRenderVideoFile(name);
           }
@@ -464,13 +375,13 @@ namespace VianaNET.Modules.Video.Control
     /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
     private bool ReRenderVideoFile(string videoFile)
     {
-      using (var vlcConverter = new VlcWindow())
+      using (VlcWindow vlcConverter = new VlcWindow())
       {
         vlcConverter.VideoFile = videoFile;
         vlcConverter.ShowDialog();
       }
 
-      return this.LoadMovie(Viana.Project.VideoFile);
+      return this.LoadMovie(App.Project.VideoFile);
     }
 
     /// <summary>
@@ -581,8 +492,7 @@ namespace VianaNET.Modules.Video.Control
     /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var video = obj as Video;
-      if (video != null)
+      if (obj is Video video)
       {
         video.OnPropertyChanged(args);
       }

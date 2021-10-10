@@ -27,12 +27,8 @@ namespace VianaNET.Data.Filter.Theory
 {
   using System;
   using System.Globalization;
-  using System.Reflection;
-  using System.Resources;
   using System.Windows;
   using System.Windows.Controls;
-
-  using VianaNET.Data.Filter.Regression;
 
 
   using WPFLocalizeExtension.Extensions;
@@ -77,21 +73,21 @@ namespace VianaNET.Data.Filter.Theory
       this.usesDecimalkomma = (15 == Convert.ToDouble("1.5"));
       if (modus == TRechnerArt.rechner)
       {
-        this.Title = VianaNET.Resources.Labels.CalculatorDialogTitleCalc;
+        this.Title = VianaNET.Localization.Labels.CalculatorDialogTitleCalc;
         this.buttonX.Visibility = Visibility.Hidden;
-        this.buttonFertig.Content = VianaNET.Resources.Labels.CalculatorDialogButtonDoneCalc;
+        this.buttonFertig.Content = VianaNET.Localization.Labels.CalculatorDialogButtonDoneCalc;
       }
       else
       {
-        this.Title = VianaNET.Resources.Labels.CalculatorDialogTitleFunctionEditor;
+        this.Title = VianaNET.Localization.Labels.CalculatorDialogTitleFunctionEditor;
         this.buttonX.Visibility = Visibility.Visible;
-        this.buttonFertig.Content = VianaNET.Resources.Labels.CalculatorDialogButtonDoneFktEdit;
+        this.buttonFertig.Content = VianaNET.Localization.Labels.CalculatorDialogButtonDoneFktEdit;
       }
 
       for (k = 0; k < Constants.konstante.Length; k++)
       {
         string uiString;
-        var locExtension = new LocExtension("VianaNET:Labels:" + Constants.konstante[k].titel);
+        LocExtension locExtension = new LocExtension("VianaNET:Labels:" + Constants.konstante[k].titel);
         locExtension.ResolveLocalizedValue(out uiString);
         this.comboBox1.Items.Add(uiString);
       }
@@ -140,8 +136,8 @@ namespace VianaNET.Data.Filter.Theory
     /// </param>
     private void Einfuegen(string insertString)
     {
-      var caretPos = this.textBox1.CaretIndex;
-      var selLen = this.textBox1.SelectionLength;
+      int caretPos = this.textBox1.CaretIndex;
+      int selLen = this.textBox1.SelectionLength;
       if (caretPos > this.textBox1.SelectionStart)
       {
         caretPos = this.textBox1.SelectionStart;
@@ -170,9 +166,8 @@ namespace VianaNET.Data.Filter.Theory
     private void ButtonBackClick(object sender, RoutedEventArgs e)
     {
       int offset;
-      var button = sender as Button;
 
-      if (button == null)
+      if (!(sender is Button button))
       {
         return;
       }
@@ -186,8 +181,8 @@ namespace VianaNET.Data.Filter.Theory
         offset = -1;
       }
 
-      var caretPos = this.textBox1.CaretIndex + offset;
-      var selLen = this.textBox1.SelectionLength;
+      int caretPos = this.textBox1.CaretIndex + offset;
+      int selLen = this.textBox1.SelectionLength;
       if (caretPos < 0)
       {
         return;
@@ -347,13 +342,12 @@ namespace VianaNET.Data.Filter.Theory
     private void ButtonZifferClick(object sender, RoutedEventArgs e)
     {
       const string OpStr = "^+-*/";
-      var button = sender as Button;
-      if (button == null)
+      if (!(sender is Button button))
       {
         return;
       }
 
-      var stringValue = (string)button.Content;
+      string stringValue = (string)button.Content;
       this.Einfuegen(stringValue);
       if ((!this.buttonTakeKonst.IsEnabled) & (OpStr.IndexOf(stringValue, StringComparison.Ordinal) >= 0))
       {
@@ -372,8 +366,7 @@ namespace VianaNET.Data.Filter.Theory
     /// </param>
     private void ButtonFktClick(object sender, RoutedEventArgs e)
     {
-      var button = sender as Button;
-      if (button == null)
+      if (!(sender is Button button))
       {
         return;
       }
@@ -393,8 +386,8 @@ namespace VianaNET.Data.Filter.Theory
     /// </param>
     private void TextBox1TextChanged1(object sender, TextChangedEventArgs e)
     {
-      var formelStr = this.textBox1.Text;
-      if (usesDecimalkomma)
+      string formelStr = this.textBox1.Text;
+      if (this.usesDecimalkomma)
       {
         formelStr = formelStr.Replace('.', ',');
       }
@@ -403,7 +396,7 @@ namespace VianaNET.Data.Filter.Theory
         formelStr = formelStr.Replace(',', '.');
       }
       string hilfStr = string.Empty;
-      var aktParser = new Parse();
+      Parse aktParser = new Parse();
       this.scannedFkt = null;
       aktParser.ScanFkt(ref this.scannedFkt, formelStr);
       if (aktParser.lastErrNr > 0)
@@ -434,7 +427,7 @@ namespace VianaNET.Data.Filter.Theory
         }
         else
         {
-          var wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
+          double wert = aktParser.FktWert_Berechne(this.scannedFkt, -1);
           this.textBoxErgebnis.Text = wert.ToString(CultureInfo.InvariantCulture);
         }
       }

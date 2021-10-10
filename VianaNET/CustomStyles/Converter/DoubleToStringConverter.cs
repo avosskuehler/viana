@@ -49,7 +49,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (double)value;
+      double valueToConvert = (double)value;
       return valueToConvert.ToString("N2");
     }
 
@@ -65,7 +65,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (string)value;
+      string valueToConvertBack = (string)value;
       return double.Parse(valueToConvertBack);
     }
 

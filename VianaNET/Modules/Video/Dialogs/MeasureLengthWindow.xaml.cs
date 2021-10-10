@@ -28,8 +28,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls.Primitives;
   using System.Windows.Input;
   using System.Windows.Threading;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Video.Control;
 
@@ -261,7 +259,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(false, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
       }
     }
 
@@ -272,7 +270,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(true, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
       }
     }
 
@@ -361,10 +359,10 @@ namespace VianaNET.Modules.Video.Dialogs
       // Abstand berechnen
       double distance =
         Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
-      double result = distance * Viana.Project.CalibrationData.ScalePixelToUnit;
+      double result = distance * App.Project.CalibrationData.ScalePixelToUnit;
 
       ((Label)this.LengthLabelBorder.Child).Content = result.ToString("N2") + " "
-                                                      + Viana.Project.CalibrationData.LengthUnit;
+                                                      + App.Project.CalibrationData.LengthUnit;
       double centerLineX = (this.ruler.X1 + this.ruler.X2) / 2;
       double centerLineY = (this.ruler.Y1 + this.ruler.Y2) / 2;
 
@@ -390,7 +388,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point
+          Point currentLocation = new Point
                                   {
                                     X = Canvas.GetLeft(this.ControlPanel), 
                                     Y = Canvas.GetTop(this.ControlPanel)

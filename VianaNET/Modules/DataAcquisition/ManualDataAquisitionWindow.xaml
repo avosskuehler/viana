@@ -4,11 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
-    xmlns:vianaNet="clr-namespace:VianaNET" xmlns:application="clr-namespace:VianaNET.Application"
+    xmlns:vianaNet="clr-namespace:VianaNET" xmlns:local="clr-namespace:VianaNET"
     lex:LocalizeDictionary.DesignCulture="de"
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
-  Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
+  Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static local:App.Project}}"
   Loaded="WindowLoaded" 
   PreviewKeyDown="WindowPreviewKeyDown">
   <Window.Resources>
@@ -26,7 +26,7 @@
       <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
       <Border Name="ObjectIndexPanel" 
-              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
+              Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static local:App.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 
@@ -88,8 +88,8 @@
             Style="{StaticResource MediaSliderStyle}"
             FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
             Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
-            SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
-            SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
+            SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
+            SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"
             SmallChange="1" 
             IsSelectionRangeEnabled="True" 
             TickPlacement="BottomRight" 

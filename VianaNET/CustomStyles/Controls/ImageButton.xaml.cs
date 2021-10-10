@@ -114,15 +114,9 @@ namespace VianaNET
     /// </summary>
     public HorizontalAlignment ContentHorizontalAlignment
     {
-      get
-      {
-        return (HorizontalAlignment)this.GetValue(ContentHorizontalAlignmentProperty);
-      }
+      get => (HorizontalAlignment)this.GetValue(ContentHorizontalAlignmentProperty);
 
-      set
-      {
-        this.SetValue(ContentHorizontalAlignmentProperty, value);
-      }
+      set => this.SetValue(ContentHorizontalAlignmentProperty, value);
     }
 
     /// <summary>
@@ -130,15 +124,9 @@ namespace VianaNET
     /// </summary>
     public VerticalAlignment ContentVerticalAlignment
     {
-      get
-      {
-        return (VerticalAlignment)this.GetValue(ContentVerticalAlignmentProperty);
-      }
+      get => (VerticalAlignment)this.GetValue(ContentVerticalAlignmentProperty);
 
-      set
-      {
-        this.SetValue(ContentVerticalAlignmentProperty, value);
-      }
+      set => this.SetValue(ContentVerticalAlignmentProperty, value);
     }
 
     /// <summary>
@@ -146,15 +134,9 @@ namespace VianaNET
     /// </summary>
     public ImageSource ImageSource
     {
-      get
-      {
-        return (ImageSource)this.GetValue(ImageSourceProperty);
-      }
+      get => (ImageSource)this.GetValue(ImageSourceProperty);
 
-      set
-      {
-        this.SetValue(ImageSourceProperty, value);
-      }
+      set => this.SetValue(ImageSourceProperty, value);
     }
 
     /// <summary>
@@ -162,15 +144,9 @@ namespace VianaNET
     /// </summary>
     public bool IsToolStyle
     {
-      get
-      {
-        return (bool)this.GetValue(IsToolStyleProperty);
-      }
+      get => (bool)this.GetValue(IsToolStyleProperty);
 
-      set
-      {
-        this.SetValue(IsToolStyleProperty, value);
-      }
+      set => this.SetValue(IsToolStyleProperty, value);
     }
 
     /// <summary>
@@ -178,15 +154,9 @@ namespace VianaNET
     /// </summary>
     public Orientation Orientation
     {
-      get
-      {
-        return (Orientation)this.GetValue(OrientationProperty);
-      }
+      get => (Orientation)this.GetValue(OrientationProperty);
 
-      set
-      {
-        this.SetValue(OrientationProperty, value);
-      }
+      set => this.SetValue(OrientationProperty, value);
     }
 
     #endregion

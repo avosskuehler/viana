@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
-             xmlns:application="clr-namespace:VianaNET.Application"
+             xmlns:local="clr-namespace:VianaNET"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100"
              Width="120"
@@ -12,7 +12,7 @@
              DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
   <Canvas RenderTransformOrigin="0.5,0.5">
     <Canvas.RenderTransform>
-      <MatrixTransform Matrix="{Binding Path=CalibrationData.CoordinateTransform, Source={x:Static application:Viana.Project}}"/>
+      <MatrixTransform Matrix="{Binding Path=CalibrationData.CoordinateTransform, Source={x:Static local:App.Project}}"/>
       <!--<ScaleTransform ScaleY="{Binding Path=TransformY}"/>
         <RotateTransform Angle="{Binding Path=RotationAngle}"/>-->
     </Canvas.RenderTransform>

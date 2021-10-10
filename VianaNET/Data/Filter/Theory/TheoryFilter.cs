@@ -30,8 +30,6 @@ namespace VianaNET.Data.Filter.Theory
   using System;
   using System.Xml.Serialization;
 
-  using VianaNET.Application;
-
   /// <summary>
   /// This class is a filter implementing FilterBase which is used to
   /// display a theoretical function in the ChartWindow.
@@ -54,16 +52,13 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public FunctionCalcTree TheoreticalFunctionCalculatorTree
     {
-      get
-      {
-        return this.theoreticalFunctionCalculatorTree;
-      }
+      get => this.theoreticalFunctionCalculatorTree;
 
       set
       {
         this.theoreticalFunctionCalculatorTree = value;
         this.CalculateFilterValues();
-        Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
+        App.Project.CurrentFilterData.NotifyTheoryTermChange();
       }
     }
 
@@ -74,7 +69,7 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public override void CalculateFilterValues()
     {
-      var parser = new Parse();
+      Parse parser = new Parse();
       this.TheoryFunction = x => parser.FreierFktWert(this.TheoreticalFunctionCalculatorTree, x);
     }
 

@@ -138,7 +138,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </param>
     public OfficeColor(string color, OfficeColorPallet pallet)
     {
-      var c = (Color)ColorConverter.ConvertFromString(color);
+      Color c = (Color)ColorConverter.ConvertFromString(color);
       this.Pallet = pallet;
       this.A = c.A;
       this.R = c.R;

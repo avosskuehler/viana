@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:forms="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
+             xmlns:vlc="clr-namespace:Vlc.DotNet.Forms;assembly=Vlc.DotNet.Forms"
              xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
-             xmlns:application="clr-namespace:VianaNET.Application"
+             xmlns:local="clr-namespace:VianaNET"
              xmlns:vianaNet="clr-namespace:VianaNET"
              xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="600"
         Title="Videoimport"
         Icon="/VianaNET;component/Images/VianaNET.ico">
   <Window.Resources>
@@ -28,8 +28,9 @@
       <Label Content="Konvertierung läuft..." FontSize="20" HorizontalAlignment="Center"/>
       <ProgressBar x:Name="ConverterProgressbar" Height="25" />
     </StackPanel>
+
     <WindowsFormsHost Name="VideoPanel"  Grid.Row="2">
-      <forms:VlcControl x:Name="vlcConverterPlayer" VlcLibDirectoryNeeded="VlcControlVlcLibDirectoryNeeded" PositionChanged="VlcControlPositionChanged" LengthChanged="VlcPlayerLengthChanged"/>
+      <vlc:VlcControl x:Name="vlcConverterPlayer" VlcLibDirectoryNeeded="VlcControlVlcLibDirectoryNeeded" PositionChanged="VlcControlPositionChanged" LengthChanged="VlcPlayerLengthChanged"/>
     </WindowsFormsHost>
     <Grid Grid.Row="3" VerticalAlignment="Bottom" Margin="5">
       <Grid.ColumnDefinitions>
@@ -60,8 +61,8 @@
         IsSelectionRangeEnabled="True" 
         IsShowingTickButtons="Collapsed"
         FrameTimeInNanoSeconds="40000000"
-        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
-        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
+        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
+        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"
         TickPlacement="BottomRight" 
         Minimum="0"
         SelectionAndValueChanged="TimelineSlider_OnSelectionAndValueChanged"

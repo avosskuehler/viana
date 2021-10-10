@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:converter="clr-namespace:VianaNET.CustomStyles.Converter"
 	xmlns:types="clr-namespace:VianaNET.CustomStyles.Types"
-	xmlns:oxy="http://oxyplot.codeplex.com">
+	xmlns:oxy="http://oxyplot.org/wpf">
   <converter:DoubleToStringConverter x:Key="DoubleToStringConverter" />
   <converter:AberrationDoubleToStringConverter x:Key="AberrationDoubleToStringConverter" />
   <converter:PlusOneConverter x:Key="PlusOneConverter" />

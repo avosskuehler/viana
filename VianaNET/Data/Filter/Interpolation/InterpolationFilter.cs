@@ -30,8 +30,6 @@ namespace VianaNET.Data.Filter.Interpolation
   using System.Windows.Controls;
   using System.Xml.Serialization;
 
-  using VianaNET.Application;
-
   /// <summary>
   ///   The exponential smooth filter.
   /// </summary>
@@ -81,11 +79,11 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </summary>
     public void ShowInterpolationOptionsDialog()
     {
-      var dlg = new InterpolationOptionsDialog { ChoosenInterpolationFilter = this };
+      InterpolationOptionsDialog dlg = new InterpolationOptionsDialog { ChoosenInterpolationFilter = this };
 
       if (dlg.ShowDialog().GetValueOrDefault())
       {
-        Viana.Project.CurrentFilterData.InterpolationFilter = dlg.ChoosenInterpolationFilter;
+        App.Project.CurrentFilterData.InterpolationFilter = dlg.ChoosenInterpolationFilter;
       }
     }
 

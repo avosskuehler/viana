@@ -103,13 +103,13 @@ namespace VianaNET.Modules.Video.Filter
       iy.AddRange(this.GetIndicesAboveThreshold(this.Histogram.MaxIndex.Y + step, step, hy, histUpperThreshold.Y));
 
       // Find the boundaries for the segments defined by the seeds
-      var segments = new List<Segment>();
+      List<Segment> segments = new List<Segment>();
 
       foreach (int y0 in iy)
       {
         foreach (int x0 in ix)
         {
-          var segment = new Segment(0, 0, 0, 0);
+          Segment segment = new Segment(0, 0, 0, 0);
           segment.Min.X = this.GetIndexBelowThreshold(x0, -1, hx, this.ThresholdLuminance.X);
           segment.Max.X = this.GetIndexBelowThreshold(x0, 1, hx, this.ThresholdLuminance.X);
           segment.Min.Y = this.GetIndexBelowThreshold(y0, -1, hy, this.ThresholdLuminance.Y);
@@ -234,7 +234,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </returns>
     private List<int> GetIndicesAboveThreshold(int start, int step, int[] hist, int threshold)
     {
-      var result = new List<int>();
+      List<int> result = new List<int>();
       int hi;
       for (int i = start; i < hist.Length && i > 0; i += step)
       {

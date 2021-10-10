@@ -140,46 +140,25 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Gets a value indicating whether capturing.
     /// </summary>
-    public bool Capturing
-    {
-      get
-      {
-        return this.m_Capturing;
-      }
-    }
+    public bool Capturing => this.m_Capturing;
 
     /// <summary>
     ///   Gets the file name.
     /// </summary>
-    public string FileName
-    {
-      get
-      {
-        return this.filename;
-      }
-    }
+    public string FileName => this.filename;
 
     // Property to report whether we have a device
     /// <summary>
     ///   Gets a value indicating whether selected.
     /// </summary>
-    public bool Selected
-    {
-      get
-      {
-        return this.m_DeviceSelected;
-      }
-    }
+    public bool Selected => this.m_DeviceSelected;
 
     /// <summary>
     ///   Gets or sets the video compressor name.
     /// </summary>
     public string VideoCompressorName
     {
-      get
-      {
-        return this.videoCompressorFilterName;
-      }
+      get => this.videoCompressorFilterName;
 
       set
       {
@@ -208,8 +187,7 @@ namespace VianaNET.Modules.Video.Control
     {
       this.StopCapture();
 
-      var pMC = this.sourceFilterGraph as IMediaControl;
-      if (pMC != null)
+      if (this.sourceFilterGraph is IMediaControl pMC)
       {
         pMC.Stop(); // Ignore any error
       }
@@ -284,13 +262,13 @@ namespace VianaNET.Modules.Video.Control
           inputDeviceFilter, PinDirection.Output, PinCategory.Capture, MediaType.Video, false, 0, out this.m_pCapOutput);
         if (hr >= 0)
         {
-          var pSC = (IAMStreamControl)this.m_pCapOutput;
+          IAMStreamControl pSC = (IAMStreamControl)this.m_pCapOutput;
           pSC.StartAt(NEVER, 0); // Ignore any error
         }
 
         this.ConfigureVideo();
 
-        var pMC = (IMediaControl)this.sourceFilterGraph;
+        IMediaControl pMC = (IMediaControl)this.sourceFilterGraph;
 
         hr = pMC.Run();
         DsError.ThrowExceptionForHR(hr);
@@ -436,13 +414,13 @@ namespace VianaNET.Modules.Video.Control
         if (this.filename != null)
         {
           // re-enable capture stream
-          var pSC = (IAMStreamControl)this.m_pCapOutput;
+          IAMStreamControl pSC = (IAMStreamControl)this.m_pCapOutput;
 
           // immediately!
           pSC.StartAt(null, 0); // Ignore any error
 
           // start capture graph
-          var pMC = (IMediaControl)this.filterGraph;
+          IMediaControl pMC = (IMediaControl)this.filterGraph;
           hr = pMC.Run();
           DsError.ThrowExceptionForHR(hr);
 
@@ -479,13 +457,13 @@ namespace VianaNET.Modules.Video.Control
         DsError.ThrowExceptionForHR(hr);
 
         // stop capture graph
-        var pMC = (IMediaControl)this.filterGraph;
+        IMediaControl pMC = (IMediaControl)this.filterGraph;
 
         hr = pMC.Stop();
         DsError.ThrowExceptionForHR(hr);
 
         // disable capture stream (to save resources)
-        var pSC = (IAMStreamControl)this.m_pCapOutput;
+        IAMStreamControl pSC = (IAMStreamControl)this.m_pCapOutput;
 
         pSC.StartAt(NEVER, 0); // Ignore any error
 
@@ -508,13 +486,13 @@ namespace VianaNET.Modules.Video.Control
       if (this.videoPanel.Handle != IntPtr.Zero)
       {
         int cx, cy;
-        var pBV = (IBasicVideo)this.sourceFilterGraph;
+        IBasicVideo pBV = (IBasicVideo)this.sourceFilterGraph;
 
         hr = pBV.GetVideoSize(out cx, out cy);
         DsError.ThrowExceptionForHR(hr);
 
         // reparent playback window
-        var pVW = (IVideoWindow)this.sourceFilterGraph;
+        IVideoWindow pVW = (IVideoWindow)this.sourceFilterGraph;
 
         hr = pVW.put_WindowStyle(WindowStyle.Child | WindowStyle.ClipSiblings | WindowStyle.ClipChildren);
         DsError.ThrowExceptionForHR(hr);
@@ -616,7 +594,7 @@ namespace VianaNET.Modules.Video.Control
     private void videoPanel_Resize(object sender, EventArgs e)
     {
       // reparent playback window
-      var pVW = (IVideoWindow)this.sourceFilterGraph;
+      IVideoWindow pVW = (IVideoWindow)this.sourceFilterGraph;
       int hr = pVW.SetWindowPosition(0, 0, this.videoPanel.Width, this.videoPanel.Height);
       DsError.ThrowExceptionForHR(hr);
     }

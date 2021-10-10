@@ -87,10 +87,7 @@ namespace VianaNET
     /// </summary>
     public int Decimals
     {
-      get
-      {
-        return this._decimals;
-      }
+      get => this._decimals;
 
       set
       {
@@ -104,10 +101,7 @@ namespace VianaNET
     /// </summary>
     public bool IsCheckable
     {
-      get
-      {
-        return Visibility.Visible == this.ElementCheckBox.Visibility;
-      }
+      get => Visibility.Visible == this.ElementCheckBox.Visibility;
 
       set
       {
@@ -121,15 +115,9 @@ namespace VianaNET
     /// </summary>
     public bool IsChecked
     {
-      get
-      {
-        return this.ElementCheckBox.IsChecked();
-      }
+      get => this.ElementCheckBox.IsChecked();
 
-      set
-      {
-        this.ElementCheckBox.IsChecked = value;
-      }
+      set => this.ElementCheckBox.IsChecked = value;
     }
 
     /// <summary>
@@ -137,15 +125,9 @@ namespace VianaNET
     /// </summary>
     public string Label
     {
-      get
-      {
-        return this.ElementLabel.Text;
-      }
+      get => this.ElementLabel.Text;
 
-      set
-      {
-        this.ElementLabel.Text = value;
-      }
+      set => this.ElementLabel.Text = value;
     }
 
     /// <summary>
@@ -153,15 +135,9 @@ namespace VianaNET
     /// </summary>
     public double Maximum
     {
-      get
-      {
-        return this.ElementSlider.Maximum;
-      }
+      get => this.ElementSlider.Maximum;
 
-      set
-      {
-        this.ElementSlider.Maximum = value;
-      }
+      set => this.ElementSlider.Maximum = value;
     }
 
     /// <summary>
@@ -169,15 +145,9 @@ namespace VianaNET
     /// </summary>
     public double Minimum
     {
-      get
-      {
-        return this.ElementSlider.Minimum;
-      }
+      get => this.ElementSlider.Minimum;
 
-      set
-      {
-        this.ElementSlider.Minimum = value;
-      }
+      set => this.ElementSlider.Minimum = value;
     }
 
     /// <summary>
@@ -187,15 +157,9 @@ namespace VianaNET
       Justification = "Not easily confused with DependencyObject.GetValue().")]
     public double Value
     {
-      get
-      {
-        return this._value;
-      }
+      get => this._value;
 
-      set
-      {
-        this.ElementSlider.Value = value;
-      }
+      set => this.ElementSlider.Value = value;
     }
 
     #endregion

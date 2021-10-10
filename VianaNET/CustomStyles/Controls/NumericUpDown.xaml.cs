@@ -209,39 +209,21 @@ namespace VianaNET
     /// <summary>
     ///   Gets the decrease command.
     /// </summary>
-    public static RoutedCommand DecreaseCommand
-    {
-      get
-      {
-        return _decreaseCommand;
-      }
-    }
+    public static RoutedCommand DecreaseCommand => _decreaseCommand;
 
     /// <summary>
     ///   Gets the increase command.
     /// </summary>
-    public static RoutedCommand IncreaseCommand
-    {
-      get
-      {
-        return _increaseCommand;
-      }
-    }
+    public static RoutedCommand IncreaseCommand => _increaseCommand;
 
     /// <summary>
     ///   Gets or sets the change.
     /// </summary>
     public decimal Change
     {
-      get
-      {
-        return (decimal)this.GetValue(ChangeProperty);
-      }
+      get => (decimal)this.GetValue(ChangeProperty);
 
-      set
-      {
-        this.SetValue(ChangeProperty, value);
-      }
+      set => this.SetValue(ChangeProperty, value);
     }
 
     /// <summary>
@@ -249,15 +231,9 @@ namespace VianaNET
     /// </summary>
     public int DecimalPlaces
     {
-      get
-      {
-        return (int)this.GetValue(DecimalPlacesProperty);
-      }
+      get => (int)this.GetValue(DecimalPlacesProperty);
 
-      set
-      {
-        this.SetValue(DecimalPlacesProperty, value);
-      }
+      set => this.SetValue(DecimalPlacesProperty, value);
     }
 
     /// <summary>
@@ -265,15 +241,9 @@ namespace VianaNET
     /// </summary>
     public decimal Maximum
     {
-      get
-      {
-        return (decimal)this.GetValue(MaximumProperty);
-      }
+      get => (decimal)this.GetValue(MaximumProperty);
 
-      set
-      {
-        this.SetValue(MaximumProperty, value);
-      }
+      set => this.SetValue(MaximumProperty, value);
     }
 
     /// <summary>
@@ -281,15 +251,9 @@ namespace VianaNET
     /// </summary>
     public decimal Minimum
     {
-      get
-      {
-        return (decimal)this.GetValue(MinimumProperty);
-      }
+      get => (decimal)this.GetValue(MinimumProperty);
 
-      set
-      {
-        this.SetValue(MinimumProperty, value);
-      }
+      set => this.SetValue(MinimumProperty, value);
     }
 
     /// <summary>
@@ -297,27 +261,15 @@ namespace VianaNET
     /// </summary>
     public decimal Value
     {
-      get
-      {
-        return (decimal)this.GetValue(ValueProperty);
-      }
+      get => (decimal)this.GetValue(ValueProperty);
 
-      set
-      {
-        this.SetValue(ValueProperty, value);
-      }
+      set => this.SetValue(ValueProperty, value);
     }
 
     /// <summary>
     ///   Gets the value string.
     /// </summary>
-    public string ValueString
-    {
-      get
-      {
-        return (string)this.GetValue(ValueStringProperty);
-      }
-    }
+    public string ValueString => (string)this.GetValue(ValueStringProperty);
 
     #endregion
 
@@ -422,8 +374,8 @@ namespace VianaNET
     /// </returns>
     private static object CoerceChange(DependencyObject element, object value)
     {
-      var newChange = (decimal)value;
-      var control = (NumericUpDown)element;
+      decimal newChange = (decimal)value;
+      NumericUpDown control = (NumericUpDown)element;
 
       decimal coercedNewChange = decimal.Round(newChange, control.DecimalPlaces);
 
@@ -452,8 +404,8 @@ namespace VianaNET
     /// </returns>
     private static object CoerceMaximum(DependencyObject element, object value)
     {
-      var control = (NumericUpDown)element;
-      var newMaximum = (decimal)value;
+      NumericUpDown control = (NumericUpDown)element;
+      decimal newMaximum = (decimal)value;
       return decimal.Round(Math.Max(newMaximum, control.Minimum), control.DecimalPlaces);
     }
 
@@ -471,8 +423,8 @@ namespace VianaNET
     /// </returns>
     private static object CoerceMinimum(DependencyObject element, object value)
     {
-      var minimum = (decimal)value;
-      var control = (NumericUpDown)element;
+      decimal minimum = (decimal)value;
+      NumericUpDown control = (NumericUpDown)element;
       return decimal.Round(minimum, control.DecimalPlaces);
     }
 
@@ -490,8 +442,8 @@ namespace VianaNET
     /// </returns>
     private static object CoerceValue(DependencyObject element, object value)
     {
-      var newValue = (decimal)value;
-      var control = (NumericUpDown)element;
+      decimal newValue = (decimal)value;
+      NumericUpDown control = (NumericUpDown)element;
 
       newValue = Math.Max(control.Minimum, Math.Min(control.Maximum, newValue));
       newValue = decimal.Round(newValue, control.DecimalPlaces);
@@ -541,7 +493,7 @@ namespace VianaNET
     /// </param>
     private static void OnDecimalPlacesChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
     {
-      var control = (NumericUpDown)element;
+      NumericUpDown control = (NumericUpDown)element;
       control.CoerceValue(ChangeProperty);
       control.CoerceValue(MinimumProperty);
       control.CoerceValue(MaximumProperty);
@@ -560,8 +512,7 @@ namespace VianaNET
     /// </param>
     private static void OnDecreaseCommand(object sender, ExecutedRoutedEventArgs e)
     {
-      var control = sender as NumericUpDown;
-      if (control != null)
+      if (sender is NumericUpDown control)
       {
         control.OnDecrease();
       }
@@ -578,8 +529,7 @@ namespace VianaNET
     /// </param>
     private static void OnIncreaseCommand(object sender, ExecutedRoutedEventArgs e)
     {
-      var control = sender as NumericUpDown;
-      if (control != null)
+      if (sender is NumericUpDown control)
       {
         control.OnIncrease();
       }
@@ -625,7 +575,7 @@ namespace VianaNET
     /// </param>
     private static void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      var control = (NumericUpDown)sender;
+      NumericUpDown control = (NumericUpDown)sender;
 
       // When someone click on a part in the NumericUpDown and it's not focusable
       // NumericUpDown needs to take the focus in order to process keyboard correctly
@@ -646,18 +596,17 @@ namespace VianaNET
     /// </param>
     private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var control = (NumericUpDown)obj;
+      NumericUpDown control = (NumericUpDown)obj;
 
-      var oldValue = (decimal)args.OldValue;
-      var newValue = (decimal)args.NewValue;
+      decimal oldValue = (decimal)args.OldValue;
+      decimal newValue = (decimal)args.NewValue;
 
-      var peer = UIElementAutomationPeer.FromElement(control) as NumericUpDownAutomationPeer;
-      if (peer != null)
+      if (UIElementAutomationPeer.FromElement(control) is NumericUpDownAutomationPeer peer)
       {
         peer.RaiseValueChangedEvent(oldValue, newValue);
       }
 
-      var e = new RoutedPropertyChangedEventArgs<decimal>(oldValue, newValue, ValueChangedEvent);
+      RoutedPropertyChangedEventArgs<decimal> e = new RoutedPropertyChangedEventArgs<decimal>(oldValue, newValue, ValueChangedEvent);
 
       control.OnValueChanged(e);
 
@@ -675,7 +624,7 @@ namespace VianaNET
     /// </returns>
     private static bool ValidateChange(object value)
     {
-      var change = (decimal)value;
+      decimal change = (decimal)value;
       return change > 0;
     }
 
@@ -690,7 +639,7 @@ namespace VianaNET
     /// </returns>
     private static bool ValidateDecimalPlaces(object value)
     {
-      var decimalPlaces = (int)value;
+      int decimalPlaces = (int)value;
       return decimalPlaces >= 0;
     }
 
@@ -755,68 +704,32 @@ namespace VianaNET
     /// <summary>
     ///   Gets a value indicating whether is read only.
     /// </summary>
-    bool IRangeValueProvider.IsReadOnly
-    {
-      get
-      {
-        return !this.IsEnabled();
-      }
-    }
+    bool IRangeValueProvider.IsReadOnly => !this.IsEnabled();
 
     /// <summary>
     ///   Gets the large change.
     /// </summary>
-    double IRangeValueProvider.LargeChange
-    {
-      get
-      {
-        return (double)this.MyOwner.Change;
-      }
-    }
+    double IRangeValueProvider.LargeChange => (double)this.MyOwner.Change;
 
     /// <summary>
     ///   Gets the maximum.
     /// </summary>
-    double IRangeValueProvider.Maximum
-    {
-      get
-      {
-        return (double)this.MyOwner.Maximum;
-      }
-    }
+    double IRangeValueProvider.Maximum => (double)this.MyOwner.Maximum;
 
     /// <summary>
     ///   Gets the minimum.
     /// </summary>
-    double IRangeValueProvider.Minimum
-    {
-      get
-      {
-        return (double)this.MyOwner.Minimum;
-      }
-    }
+    double IRangeValueProvider.Minimum => (double)this.MyOwner.Minimum;
 
     /// <summary>
     ///   Gets the small change.
     /// </summary>
-    double IRangeValueProvider.SmallChange
-    {
-      get
-      {
-        return (double)this.MyOwner.Change;
-      }
-    }
+    double IRangeValueProvider.SmallChange => (double)this.MyOwner.Change;
 
     /// <summary>
     ///   Gets the value.
     /// </summary>
-    double IRangeValueProvider.Value
-    {
-      get
-      {
-        return (double)this.MyOwner.Value;
-      }
-    }
+    double IRangeValueProvider.Value => (double)this.MyOwner.Value;
 
     #endregion
 
@@ -825,13 +738,7 @@ namespace VianaNET
     /// <summary>
     ///   Gets the my owner.
     /// </summary>
-    private NumericUpDown MyOwner
-    {
-      get
-      {
-        return (NumericUpDown)base.Owner;
-      }
-    }
+    private NumericUpDown MyOwner => (NumericUpDown)base.Owner;
 
     #endregion
 
@@ -875,7 +782,7 @@ namespace VianaNET
         throw new ArgumentOutOfRangeException();
       }
 
-      var val = (decimal)value;
+      decimal val = (decimal)value;
       if (val < this.MyOwner.Minimum || val > this.MyOwner.Maximum)
       {
         throw new ArgumentOutOfRangeException("value");

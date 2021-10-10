@@ -96,7 +96,7 @@ namespace VianaNET.CustomStyles.Types
 
         // If Original was present, add each of its elements to the list
         this.list.Clear();
-        foreach (var pair in this.Original)
+        foreach (KeyValuePair<TK, TV> pair in this.Original)
         {
           this.list.Add(new KeyAndValue { Key = pair.Key, Value = pair.Value });
         }

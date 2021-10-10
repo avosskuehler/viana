@@ -27,7 +27,6 @@
 namespace VianaNET.MainWindow
 {
   using System;
-  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
   using System.IO;
@@ -53,8 +52,6 @@ namespace VianaNET.MainWindow
 
   using WPFLocalizeExtension.Engine;
 
-  using WPFMath;
-
   /// <summary>
   ///   The main window.
   /// </summary>
@@ -71,10 +68,10 @@ namespace VianaNET.MainWindow
       this.InitializeComponent();
 
       this.MainRibbon.DataContext = this;
-      Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
-      var devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
+      System.Collections.Generic.List<string> devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
 
       this.VideoSourceGalleryCategory.ItemsSource = devices;
       if (Video.Instance.VideoInputDevices.Count > 0)
@@ -94,11 +91,11 @@ namespace VianaNET.MainWindow
     /// </summary>
     public void ResetColorButton()
     {
-      var largeSource = new Uri(@"/VianaNET;component/Images/SelectColor32.png", UriKind.Relative);
+      Uri largeSource = new Uri(@"/VianaNET;component/Images/SelectColor32.png", UriKind.Relative);
       this.SelectColorRibbonButton.LargeImageSource = new BitmapImage(largeSource);
-      var smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
+      Uri smallSource = new Uri(@"/VianaNET;component/Images/SelectColor16.png", UriKind.Relative);
       this.SelectColorRibbonButton.SmallImageSource = new BitmapImage(smallSource);
-      this.SelectColorRibbonButton.Label = VianaNET.Resources.Labels.ButtonSelectColorLabelTitle;
+      this.SelectColorRibbonButton.Label = VianaNET.Localization.Labels.ButtonSelectColorLabelTitle;
     }
 
     #endregion
@@ -111,16 +108,16 @@ namespace VianaNET.MainWindow
     /// </summary>
     private static void SaveProjectToNewFile()
     {
-      var dlg = new SaveFileDialog
+      SaveFileDialog dlg = new SaveFileDialog
       {
         Filter = "Viana.NET projects|*.via",
-        Title = VianaNET.Resources.Labels.SaveProjectDialogTitle,
+        Title = VianaNET.Localization.Labels.SaveProjectDialogTitle,
         DefaultExt = "via"
       };
 
       if (dlg.ShowDialog().GetValueOrDefault(false))
       {
-        Project.Serialize(Viana.Project, dlg.FileName);
+        Project.Serialize(App.Project, dlg.FileName);
 
         // Add project file to recent files list
         RecentFiles.Instance.Add(dlg.FileName);
@@ -143,12 +140,12 @@ namespace VianaNET.MainWindow
     /// </summary>
     private static void SaveCurrentProject()
     {
-      var filename = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
+      string filename = App.Project.ProjectPath + Path.DirectorySeparatorChar + App.Project.ProjectFilename;
 
       if (File.Exists(filename))
       {
         // Save file
-        Project.Serialize(Viana.Project, filename);
+        Project.Serialize(App.Project, filename);
 
         // Add project file to recent files list
         RecentFiles.Instance.Add(filename);
@@ -180,12 +177,12 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void NewProjectOnClick(object sender, RoutedEventArgs e)
     {
-      if (Viana.Project.ProjectFilename != string.Empty && Viana.Project.ProjectFilename != null)
+      if (App.Project.ProjectFilename != string.Empty && App.Project.ProjectFilename != null)
       {
-        var dlg = new VianaDialog(
-          VianaNET.Resources.Labels.AskSaveProjectDialogTitle,
-          VianaNET.Resources.Labels.AskSaveProjectDialogDescription,
-          VianaNET.Resources.Labels.AskSaveProjectDialogMessage,
+        VianaDialog dlg = new VianaDialog(
+          VianaNET.Localization.Labels.AskSaveProjectDialogTitle,
+          VianaNET.Localization.Labels.AskSaveProjectDialogDescription,
+          VianaNET.Localization.Labels.AskSaveProjectDialogMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -195,11 +192,11 @@ namespace VianaNET.MainWindow
 
       // Note that we want to overwrite the defaults
       Project.IsDeserializing = true;
-      Viana.Project = new Project();
-      //Viana.Project.ProjectFilename = openedProject.ProjectFilename;
-      //Viana.Project.ProjectPath = openedProject.ProjectPath;
-      //Viana.Project.VideoFile = openedProject.VideoFile;
-      //Viana.Project.VideoMode = openedProject.VideoMode;
+      App.Project = new Project();
+      //App.Project.ProjectFilename = openedProject.ProjectFilename;
+      //App.Project.ProjectPath = openedProject.ProjectPath;
+      //App.Project.VideoFile = openedProject.VideoFile;
+      //App.Project.VideoMode = openedProject.VideoMode;
 
       // Restore video mode
       Video.Instance.VideoMode = VideoMode.File;
@@ -208,14 +205,14 @@ namespace VianaNET.MainWindow
       this.CreateImageSourceForNumberOfObjects();
 
       // Update datagrid
-      Viana.Project.VideoData.NotifyLoading();
+      App.Project.VideoData.NotifyLoading();
       this.DataGridWindow.Refresh();
 
       // Update data series values
       this.ChartWindow.Refresh();
 
       this.VideoWindow.BlobsControl.ResetBlobsControl();
-      Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
+      Video.Instance.OriginalImageSource = App.GetImageSource("NoVideo800600.png");
 
       this.Refresh();
       this.UpdateColorButton();
@@ -234,10 +231,10 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void OpenProjectOnClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new OpenFileDialog
+      OpenFileDialog dlg = new OpenFileDialog
       {
         Filter = "Viana.NET projects|*.via",
-        Title = VianaNET.Resources.Labels.OpenProjectDialogTitle,
+        Title = VianaNET.Localization.Labels.OpenProjectDialogTitle,
         DefaultExt = "via",
         Multiselect = false
       };
@@ -264,117 +261,117 @@ namespace VianaNET.MainWindow
       Project.IsDeserializing = true;
 
       // Restore project settings
-      var openedProject = Project.Deserialize(filename);
+      Project openedProject = Project.Deserialize(filename);
 
       // Direct overwrite of Project static instance will kill all xaml driven bindings...
       // so update all properties individually.
       // VianaNetApplication.Project = openedProject;
-      Viana.Project.VideoData.Samples = openedProject.VideoData.Samples;
-      //Viana.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
-      Viana.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
-      Viana.Project.VideoData.TimeZeroPositionInMs = openedProject.VideoData.TimeZeroPositionInMs;
+      App.Project.VideoData.Samples = openedProject.VideoData.Samples;
+      //App.Project.VideoData.ActiveObject = openedProject.VideoData.ActiveObject;
+      App.Project.VideoData.LastPoint = openedProject.VideoData.LastPoint;
+      App.Project.VideoData.TimeZeroPositionInMs = openedProject.VideoData.TimeZeroPositionInMs;
 
-      Viana.Project.CalibrationData.ClipRegion = openedProject.CalibrationData.ClipRegion;
-      Viana.Project.CalibrationData.GradientBackground = openedProject.CalibrationData.GradientBackground;
-      Viana.Project.CalibrationData.HasClipRegion = openedProject.CalibrationData.HasClipRegion;
-      Viana.Project.CalibrationData.IsShowingUnits = openedProject.CalibrationData.IsShowingUnits;
-      Viana.Project.CalibrationData.IsVideoCalibrated = openedProject.CalibrationData.IsVideoCalibrated;
-      Viana.Project.CalibrationData.OriginInPixel = openedProject.CalibrationData.OriginInPixel;
-      Viana.Project.CalibrationData.LengthUnit = openedProject.CalibrationData.LengthUnit;
-      Viana.Project.CalibrationData.RulerDescription = openedProject.CalibrationData.RulerDescription;
-      Viana.Project.CalibrationData.RulerEndPointInPixel = openedProject.CalibrationData.RulerEndPointInPixel;
-      Viana.Project.CalibrationData.RulerStartPointInPixel = openedProject.CalibrationData.RulerStartPointInPixel;
-      Viana.Project.CalibrationData.RulerUnit = openedProject.CalibrationData.RulerUnit;
-      Viana.Project.CalibrationData.RulerValueInRulerUnits = openedProject.CalibrationData.RulerValueInRulerUnits;
-      Viana.Project.CalibrationData.ScalePixelToUnit = openedProject.CalibrationData.ScalePixelToUnit;
-      Viana.Project.CalibrationData.TimeUnit = openedProject.CalibrationData.TimeUnit;
+      App.Project.CalibrationData.ClipRegion = openedProject.CalibrationData.ClipRegion;
+      App.Project.CalibrationData.GradientBackground = openedProject.CalibrationData.GradientBackground;
+      App.Project.CalibrationData.HasClipRegion = openedProject.CalibrationData.HasClipRegion;
+      App.Project.CalibrationData.IsShowingUnits = openedProject.CalibrationData.IsShowingUnits;
+      App.Project.CalibrationData.IsVideoCalibrated = openedProject.CalibrationData.IsVideoCalibrated;
+      App.Project.CalibrationData.OriginInPixel = openedProject.CalibrationData.OriginInPixel;
+      App.Project.CalibrationData.LengthUnit = openedProject.CalibrationData.LengthUnit;
+      App.Project.CalibrationData.RulerDescription = openedProject.CalibrationData.RulerDescription;
+      App.Project.CalibrationData.RulerEndPointInPixel = openedProject.CalibrationData.RulerEndPointInPixel;
+      App.Project.CalibrationData.RulerStartPointInPixel = openedProject.CalibrationData.RulerStartPointInPixel;
+      App.Project.CalibrationData.RulerUnit = openedProject.CalibrationData.RulerUnit;
+      App.Project.CalibrationData.RulerValueInRulerUnits = openedProject.CalibrationData.RulerValueInRulerUnits;
+      App.Project.CalibrationData.ScalePixelToUnit = openedProject.CalibrationData.ScalePixelToUnit;
+      App.Project.CalibrationData.TimeUnit = openedProject.CalibrationData.TimeUnit;
 
-      Viana.Project.SerializableFilterData = openedProject.SerializableFilterData;
-      Viana.Project.CurrentChartType = openedProject.CurrentChartType;
+      App.Project.SerializableFilterData = openedProject.SerializableFilterData;
+      App.Project.CurrentChartType = openedProject.CurrentChartType;
 
-      //Viana.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
-      //Viana.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
-      //Viana.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
-      //Viana.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
-      //Viana.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
-      //Viana.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
-      //Viana.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
-      //Viana.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
-      //Viana.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
-      //Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
+      //App.Project.CurrentFilterData.NumericPrecision = openedProject.CurrentFilterData.NumericPrecision;
+      //App.Project.CurrentFilterData.DataLineColor = openedProject.CurrentFilterData.DataLineColor;
+      //App.Project.CurrentFilterData.DataLineThickness = openedProject.CurrentFilterData.DataLineThickness;
+      //App.Project.CurrentFilterData.InterpolationLineColor = openedProject.CurrentFilterData.InterpolationLineColor;
+      //App.Project.CurrentFilterData.InterpolationLineThickness = openedProject.CurrentFilterData.InterpolationLineThickness;
+      //App.Project.CurrentFilterData.RegressionLineColor = openedProject.CurrentFilterData.RegressionLineColor;
+      //App.Project.CurrentFilterData.RegressionLineThickness = openedProject.CurrentFilterData.RegressionLineThickness;
+      //App.Project.CurrentFilterData.TheoryLineColor = openedProject.CurrentFilterData.TheoryLineColor;
+      //App.Project.CurrentFilterData.TheoryLineThickness = openedProject.CurrentFilterData.TheoryLineThickness;
+      //App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree =
       //  openedProject.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree;
-      //Viana.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
-      //Viana.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
-      //Viana.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
-      //Viana.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
-      //Viana.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
-      //Viana.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
+      //App.Project.CurrentFilterData.AxisX = openedProject.CurrentFilterData.AxisX;
+      //App.Project.CurrentFilterData.AxisY = openedProject.CurrentFilterData.AxisY;
+      //App.Project.CurrentFilterData.IsShowingDataSeries = openedProject.CurrentFilterData.IsShowingDataSeries;
+      //App.Project.CurrentFilterData.IsShowingInterpolationSeries = openedProject.CurrentFilterData.IsShowingInterpolationSeries;
+      //App.Project.CurrentFilterData.IsShowingRegressionSeries = openedProject.CurrentFilterData.IsShowingRegressionSeries;
+      //App.Project.CurrentFilterData.IsShowingTheorySeries = openedProject.CurrentFilterData.IsShowingTheorySeries;
 
-      //Viana.Project.ProcessingData.Reset();
+      //App.Project.ProcessingData.Reset();
       for (int i = 0; i < openedProject.ProcessingData.BlobMaxDiameter.Count; i++)
       {
-        if (Viana.Project.ProcessingData.BlobMaxDiameter.Count > i)
+        if (App.Project.ProcessingData.BlobMaxDiameter.Count > i)
         {
-          Viana.Project.ProcessingData.BlobMaxDiameter[i] = openedProject.ProcessingData.BlobMaxDiameter[i];
-          Viana.Project.ProcessingData.BlobMinDiameter[i] = openedProject.ProcessingData.BlobMinDiameter[i];
-          Viana.Project.ProcessingData.ColorThreshold[i] = openedProject.ProcessingData.ColorThreshold[i];
+          App.Project.ProcessingData.BlobMaxDiameter[i] = openedProject.ProcessingData.BlobMaxDiameter[i];
+          App.Project.ProcessingData.BlobMinDiameter[i] = openedProject.ProcessingData.BlobMinDiameter[i];
+          App.Project.ProcessingData.ColorThreshold[i] = openedProject.ProcessingData.ColorThreshold[i];
         }
         else
         {
-          Viana.Project.ProcessingData.BlobMaxDiameter.Add(openedProject.ProcessingData.BlobMaxDiameter[i]);
-          Viana.Project.ProcessingData.BlobMinDiameter.Add(openedProject.ProcessingData.BlobMinDiameter[i]);
-          Viana.Project.ProcessingData.ColorThreshold.Add(openedProject.ProcessingData.ColorThreshold[i]);
+          App.Project.ProcessingData.BlobMaxDiameter.Add(openedProject.ProcessingData.BlobMaxDiameter[i]);
+          App.Project.ProcessingData.BlobMinDiameter.Add(openedProject.ProcessingData.BlobMinDiameter[i]);
+          App.Project.ProcessingData.ColorThreshold.Add(openedProject.ProcessingData.ColorThreshold[i]);
         }
       }
 
-      Viana.Project.ProcessingData.CurrentBlobCenter = openedProject.ProcessingData.CurrentBlobCenter;
-      Viana.Project.ProcessingData.DetectedBlob = openedProject.ProcessingData.DetectedBlob;
-      Viana.Project.ProcessingData.IndexOfObject = openedProject.ProcessingData.IndexOfObject;
+      App.Project.ProcessingData.CurrentBlobCenter = openedProject.ProcessingData.CurrentBlobCenter;
+      App.Project.ProcessingData.DetectedBlob = openedProject.ProcessingData.DetectedBlob;
+      App.Project.ProcessingData.IndexOfObject = openedProject.ProcessingData.IndexOfObject;
 
-      Viana.Project.ProcessingData.IsTargetColorSet = openedProject.ProcessingData.IsTargetColorSet;
+      App.Project.ProcessingData.IsTargetColorSet = openedProject.ProcessingData.IsTargetColorSet;
       for (int i = 0; i < openedProject.ProcessingData.TargetColor.Count - openedProject.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        Viana.Project.ProcessingData.TargetColor.RemoveAt(i);
+        App.Project.ProcessingData.TargetColor.RemoveAt(i);
       }
 
-      Viana.Project.ProcessingData.NumberOfTrackedObjects = openedProject.ProcessingData.NumberOfTrackedObjects;
+      App.Project.ProcessingData.NumberOfTrackedObjects = openedProject.ProcessingData.NumberOfTrackedObjects;
 
       // Update button image source
       this.CreateImageSourceForNumberOfObjects();
 
       this.UpdateColorButton();
 
-      Viana.Project.ProjectFilename = openedProject.ProjectFilename;
-      Viana.Project.ProjectPath = openedProject.ProjectPath;
-      Viana.Project.VideoFile = openedProject.VideoFile;
-      Viana.Project.VideoMode = openedProject.VideoMode;
+      App.Project.ProjectFilename = openedProject.ProjectFilename;
+      App.Project.ProjectPath = openedProject.ProjectPath;
+      App.Project.VideoFile = openedProject.VideoFile;
+      App.Project.VideoMode = openedProject.VideoMode;
       //this.VideoWindow.CreateCrossHairLines();
 
       // after updating series do calculation
-      Viana.Project.CurrentFilterData.RegressionFilter = Viana.Project.CurrentFilterData.RegressionFilter;
-      Viana.Project.CurrentFilterData.RegressionAberration = Viana.Project.CurrentFilterData.RegressionAberration;
+      App.Project.CurrentFilterData.RegressionFilter = App.Project.CurrentFilterData.RegressionFilter;
+      App.Project.CurrentFilterData.RegressionAberration = App.Project.CurrentFilterData.RegressionAberration;
 
       // Restore video mode
-      Video.Instance.VideoMode = Viana.Project.VideoMode;
-      switch (Viana.Project.VideoMode)
+      Video.Instance.VideoMode = App.Project.VideoMode;
+      switch (App.Project.VideoMode)
       {
         case VideoMode.File:
           // load video
-          this.VideoWindow.LoadVideo(Viana.Project.VideoFile);
+          this.VideoWindow.LoadVideo(App.Project.VideoFile);
           break;
         case VideoMode.Capture:
           break;
       }
 
       // Set selection after loading video
-      Viana.Project.VideoData.SelectionStart = openedProject.VideoData.SelectionStart;
-      Viana.Project.VideoData.SelectionEnd = openedProject.VideoData.SelectionEnd;
+      App.Project.VideoData.SelectionStart = openedProject.VideoData.SelectionStart;
+      App.Project.VideoData.SelectionEnd = openedProject.VideoData.SelectionEnd;
       this.VideoWindow.TimelineSlider.UpdateSelectionTimes();
 
       Video.Instance.Revert();
 
       // Update datagrid
-      Viana.Project.VideoData.NotifyLoading();
+      App.Project.VideoData.NotifyLoading();
       this.DataGridWindow.Refresh();
 
       // Update data series values
@@ -406,7 +403,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void AboutButtonClick(object sender, RoutedEventArgs e)
     {
-      var aboutWindow = new AboutWindow();
+      AboutWindow aboutWindow = new AboutWindow();
       aboutWindow.ShowDialog();
     }
 
@@ -438,7 +435,7 @@ namespace VianaNET.MainWindow
     private void CalculateVelocityButtonClick(object sender, RoutedEventArgs e)
     {
       this.Cursor = Cursors.Wait;
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
       this.Cursor = Cursors.Arrow;
     }
 
@@ -449,7 +446,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void ShowVideoInfosButtonClick(object sender, RoutedEventArgs e)
     {
-      var dialog = new VideoInfoDialog();
+      VideoInfoDialog dialog = new VideoInfoDialog();
       dialog.ShowDialog();
     }
 
@@ -461,10 +458,10 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void SwitchTimeUnitButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new TimeUnitDialog();
+      TimeUnitDialog dlg = new TimeUnitDialog();
       dlg.ShowDialog();
       this.Cursor = Cursors.Wait;
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
       this.Cursor = Cursors.Arrow;
     }
 
@@ -476,7 +473,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void DifferenceQuotientButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new DifferenceQuotientDialog();
+      DifferenceQuotientDialog dlg = new DifferenceQuotientDialog();
       dlg.ShowDialog();
     }
 
@@ -512,7 +509,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void DeleteDataButtonClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.VideoData.Reset();
+      App.Project.VideoData.Reset();
       this.Refresh();
     }
 
@@ -554,13 +551,13 @@ namespace VianaNET.MainWindow
     private void ExportDataToCsvButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
-      var sfd = new SaveFileDialog
+      SaveFileDialog sfd = new SaveFileDialog
         {
           // Default file extension
           DefaultExt = "csv",
 
           // Available file extensions
-          Filter = VianaNET.Resources.Labels.CsvFilter,
+          Filter = VianaNET.Localization.Labels.CsvFilter,
 
           // Adds a extension if the user does not
           AddExtension = true,
@@ -569,7 +566,7 @@ namespace VianaNET.MainWindow
           RestoreDirectory = true,
 
           // Dialog title
-          Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
+          Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
 
           // Startup directory
           InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -578,10 +575,10 @@ namespace VianaNET.MainWindow
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        var optionsDialog = new ExportOptionsDialog();
+        ExportOptionsDialog optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToCsv(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToCsv(App.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -594,23 +591,23 @@ namespace VianaNET.MainWindow
     private void ExportDataToTxtButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
-      var sfd = new SaveFileDialog
+      SaveFileDialog sfd = new SaveFileDialog
                   {
                     DefaultExt = "txt",
-                    Filter = VianaNET.Resources.Labels.TxtFilter,
+                    Filter = VianaNET.Localization.Labels.TxtFilter,
                     AddExtension = true,
                     RestoreDirectory = true,
-                    Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
+                    Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
                   };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        var optionsDialog = new ExportOptionsDialog();
+        ExportOptionsDialog optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToTxt(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToTxt(App.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -622,10 +619,10 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ExportDataToXlsButtonClick(object sender, RoutedEventArgs e)
     {
-      var optionsDialog = new ExportOptionsDialog();
+      ExportOptionsDialog optionsDialog = new ExportOptionsDialog();
       if (optionsDialog.ShowDialog().GetValueOrDefault())
       {
-        ExportData.ToXls(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions);
+        ExportData.ToXls(App.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions);
       }
     }
 
@@ -637,23 +634,23 @@ namespace VianaNET.MainWindow
     private void ExportDataToXmlButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
-      var sfd = new SaveFileDialog
+      SaveFileDialog sfd = new SaveFileDialog
         {
           DefaultExt = "xml",
-          Filter = VianaNET.Resources.Labels.XmlFilter,
+          Filter = VianaNET.Localization.Labels.XmlFilter,
           AddExtension = true,
           RestoreDirectory = true,
-          Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
+          Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
           InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        var optionsDialog = new ExportOptionsDialog();
+        ExportOptionsDialog optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToXml(Viana.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
+          ExportData.ToXml(App.Project.VideoData.FilteredSamples, optionsDialog.ExportOptions, sfd.FileName);
         }
       }
     }
@@ -666,23 +663,23 @@ namespace VianaNET.MainWindow
     private void ExportDataToOdsButtonClick(object sender, RoutedEventArgs e)
     {
       // Create new SaveFileDialog object
-      var sfd = new SaveFileDialog
+      SaveFileDialog sfd = new SaveFileDialog
       {
         DefaultExt = "ods",
-        Filter = VianaNET.Resources.Labels.OdsFilter,
+        Filter = VianaNET.Localization.Labels.OdsFilter,
         AddExtension = true,
         RestoreDirectory = true,
-        Title = VianaNET.Resources.Labels.ExportWhereToSaveFile,
+        Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
         InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
       };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        var optionsDialog = new ExportOptionsDialog();
+        ExportOptionsDialog optionsDialog = new ExportOptionsDialog();
         if (optionsDialog.ShowDialog().GetValueOrDefault())
         {
-          ExportData.ToOds(Viana.Project.VideoData.FilteredSamples, sfd.FileName, optionsDialog.ExportOptions);
+          ExportData.ToOds(App.Project.VideoData.FilteredSamples, sfd.FileName, optionsDialog.ExportOptions);
         }
       }
     }
@@ -701,8 +698,8 @@ namespace VianaNET.MainWindow
         this.VideoWindow.SetVideoMode(VideoMode.None);
       }
 
-      var saveVideoDialog = new SaveVideoDialog();
-      var showDialog = saveVideoDialog.ShowDialog();
+      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
+      bool? showDialog = saveVideoDialog.ShowDialog();
       if (showDialog != null && showDialog.Value)
       {
         this.VideoWindow.SetVideoMode(VideoMode.File);
@@ -727,16 +724,16 @@ namespace VianaNET.MainWindow
       }
 
       // Clear all data to correctly recreate data arrays.
-      Viana.Project.VideoData.Reset();
+      App.Project.VideoData.Reset();
 
       // Increase number of objects, shrink to maximal 3.
-      if (Viana.Project.ProcessingData.NumberOfTrackedObjects == 3)
+      if (App.Project.ProcessingData.NumberOfTrackedObjects == 3)
       {
-        Viana.Project.ProcessingData.NumberOfTrackedObjects = 1;
+        App.Project.ProcessingData.NumberOfTrackedObjects = 1;
       }
       else
       {
-        Viana.Project.ProcessingData.NumberOfTrackedObjects++;
+        App.Project.ProcessingData.NumberOfTrackedObjects++;
       }
 
       // Update button image source
@@ -750,7 +747,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void SelectObjectButtonClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.ProcessingData.IndexOfObject++;
+      App.Project.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
@@ -770,7 +767,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void CalibrateVideoButtonClick(object sender, RoutedEventArgs e)
     {
-      var calibrateWindow = new CalibrateVideoWindow();
+      CalibrateVideoWindow calibrateWindow = new CalibrateVideoWindow();
       if (calibrateWindow.ShowDialog().GetValueOrDefault())
       {
         this.VideoWindow.UpdateCalibration();
@@ -786,7 +783,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void CoordinateSystemButtonClick(object sender, RoutedEventArgs e)
     {
-      var coordinateSystemWindow = new CoordinateSystemWindow();
+      CoordinateSystemWindow coordinateSystemWindow = new CoordinateSystemWindow();
       coordinateSystemWindow.ShowDialog();
     }
 
@@ -865,7 +862,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ClipVideoButtonClick(object sender, RoutedEventArgs e)
     {
-      var clipWindow = new ClipVideoWindow();
+      ClipVideoWindow clipWindow = new ClipVideoWindow();
       clipWindow.ShowDialog();
       this.VideoWindow.UpdateClippingRegion();
     }
@@ -885,7 +882,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void CreateImageSourceForNumberOfObjects()
     {
-      var drawingVisual = new DrawingVisual();
+      DrawingVisual drawingVisual = new DrawingVisual();
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
 
@@ -894,8 +891,8 @@ namespace VianaNET.MainWindow
       // new Rect(2, 2, 28, 28),
       // 5,
       // 5);
-      var text = new FormattedText(
-        Viana.Project.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
+      FormattedText text = new FormattedText(
+        App.Project.ProcessingData.NumberOfTrackedObjects.ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -905,17 +902,17 @@ namespace VianaNET.MainWindow
       drawingContext.DrawText(text, new Point(8, 1));
 
       drawingContext.Close();
-      var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
       this.SelectNumberOfObjectsButton.LargeImageSource = bmp;
 
-      if (Viana.Project.ProcessingData.NumberOfTrackedObjects > 1)
+      if (App.Project.ProcessingData.NumberOfTrackedObjects > 1)
       {
-        this.SelectNumberOfObjectsButton.Label = VianaNET.Resources.Labels.ButtonSelectNumberOfObjectsLabelTitle2;
+        this.SelectNumberOfObjectsButton.Label = VianaNET.Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle2;
       }
       else
       {
-        this.SelectNumberOfObjectsButton.Label = VianaNET.Resources.Labels.ButtonSelectNumberOfObjectsLabelTitle;
+        this.SelectNumberOfObjectsButton.Label = VianaNET.Localization.Labels.ButtonSelectNumberOfObjectsLabelTitle;
       }
     }
 
@@ -962,9 +959,9 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void ManualDataAquisitionButtonClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.VideoData.Reset();
+      App.Project.VideoData.Reset();
 
-      var manualAquisitionWindow = new ManualDataAquisitionWindow();
+      ManualDataAquisitionWindow manualAquisitionWindow = new ManualDataAquisitionWindow();
       manualAquisitionWindow.ShowDialog();
 
       this.Refresh();
@@ -981,9 +978,9 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void ModifyDataButtonClick(object sender, RoutedEventArgs e)
     {
-      var modifyDataWindow = new ModifyDataWindow();
+      ModifyDataWindow modifyDataWindow = new ModifyDataWindow();
       modifyDataWindow.ShowDialog();
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>
@@ -992,10 +989,10 @@ namespace VianaNET.MainWindow
     private void Refresh()
     {
       // Update data grid
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update BlobsControl Dataview if visible
-      if (Viana.Project.ProcessingData.IsTargetColorSet)
+      if (App.Project.ProcessingData.IsTargetColorSet)
       {
         this.VideoWindow.BlobsControl.UpdateDataPoints();
       }
@@ -1010,32 +1007,32 @@ namespace VianaNET.MainWindow
     private void MainWindowClosing(object sender, CancelEventArgs e)
     {
       Settings.Default.Save();
-      var currentProjectFile = Viana.Project.ProjectPath + Path.DirectorySeparatorChar + Viana.Project.ProjectFilename;
-      var title = VianaNET.Resources.Labels.SaveProjectDialogTitle;
-      title = title.Replace("%1", Viana.Project.ProjectFilename);
+      string currentProjectFile = App.Project.ProjectPath + Path.DirectorySeparatorChar + App.Project.ProjectFilename;
+      string title = VianaNET.Localization.Labels.SaveProjectDialogTitle;
+      title = title.Replace("%1", App.Project.ProjectFilename);
 
       if (File.Exists(currentProjectFile))
       {
-        var description = VianaNET.Resources.Labels.SaveProjectDialogDescription;
-        description = description.Replace("%1", Viana.Project.ProjectFilename);
-        var dlg = new VianaSaveDialog(
+        string description = VianaNET.Localization.Labels.SaveProjectDialogDescription;
+        description = description.Replace("%1", App.Project.ProjectFilename);
+        VianaSaveDialog dlg = new VianaSaveDialog(
           title,
           description,
-          VianaNET.Resources.Labels.SaveProjectDialogMessage);
+          VianaNET.Localization.Labels.SaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
-          Project.Serialize(Viana.Project, currentProjectFile);
+          Project.Serialize(App.Project, currentProjectFile);
         }
       }
       else
       {
-        var description = VianaNET.Resources.Labels.AskSaveProjectDialogDescription;
-        description = description.Replace("%1", Viana.Project.ProjectFilename);
-        var dlg = new VianaSaveDialog(
+        string description = VianaNET.Localization.Labels.AskSaveProjectDialogDescription;
+        description = description.Replace("%1", App.Project.ProjectFilename);
+        VianaSaveDialog dlg = new VianaSaveDialog(
           title,
           description,
-          VianaNET.Resources.Labels.AskSaveProjectDialogMessage);
+          VianaNET.Localization.Labels.AskSaveProjectDialogMessage);
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
@@ -1053,7 +1050,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void SelectColorButtonClick(object sender, RoutedEventArgs e)
     {
-      var fullScreenVideoWindow = new SelectColorWindow();
+      SelectColorWindow fullScreenVideoWindow = new SelectColorWindow();
       if (fullScreenVideoWindow.ShowDialog().GetValueOrDefault())
       {
         this.UpdateColorButton();
@@ -1065,17 +1062,17 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateColorButton()
     {
-      this.SelectColorRibbonButton.Label = VianaNET.Resources.Labels.ButtonSelectedColorLabelTitle;
+      this.SelectColorRibbonButton.Label = VianaNET.Localization.Labels.ButtonSelectedColorLabelTitle;
 
-      var drawingVisual = new DrawingVisual();
+      DrawingVisual drawingVisual = new DrawingVisual();
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
-      int count = Viana.Project.ProcessingData.NumberOfTrackedObjects;
+      int count = App.Project.ProcessingData.NumberOfTrackedObjects;
       float bandwidth = 26f / count;
       for (int i = 0; i < count; i++)
       {
         drawingContext.DrawRectangle(
-          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
           null,
           new Rect(3 + i * bandwidth, 3, bandwidth, 27));
       }
@@ -1083,11 +1080,11 @@ namespace VianaNET.MainWindow
       drawingContext.DrawRoundedRectangle(Brushes.Transparent, new Pen(Brushes.White, 2f), new Rect(2, 2, 28, 28), 5, 5);
 
       drawingContext.Close();
-      var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
       this.SelectColorRibbonButton.LargeImageSource = bmp;
-      Viana.Project.ProcessingData.IsTargetColorSet = false;
-      Viana.Project.ProcessingData.IsTargetColorSet = true;
+      App.Project.ProcessingData.IsTargetColorSet = false;
+      App.Project.ProcessingData.IsTargetColorSet = true;
     }
 
     /// <summary>
@@ -1095,22 +1092,22 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectBindings()
     {
-      var thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding thresholdBinding = new Binding("ProcessingData.ColorThreshold[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.SliderThreshold.SetBinding(RangeBase.ValueProperty, thresholdBinding);
 
-      var minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding minDiameterBinding = new Binding("ProcessingData.BlobMinDiameter[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.SliderMinDiameter.SetBinding(RangeBase.ValueProperty, minDiameterBinding);
 
-      var maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding maxDiameterBinding = new Binding("ProcessingData.BlobMaxDiameter[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.SliderMaxDiameter.SetBinding(RangeBase.ValueProperty, maxDiameterBinding);
 
-      var motionThresholdBinding = new Binding("ProcessingData.MotionThreshold[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding motionThresholdBinding = new Binding("ProcessingData.MotionThreshold[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.SliderMotionPixelThreshold.SetBinding(RangeBase.ValueProperty, motionThresholdBinding);
 
-      var suppressNoiseBinding = new Binding("ProcessingData.SuppressNoise[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding suppressNoiseBinding = new Binding("ProcessingData.SuppressNoise[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.SuppressNoiseCheckbox.SetBinding(ToggleButton.IsCheckedProperty, suppressNoiseBinding);
 
-      var positiveContrastBinding = new Binding("ProcessingData.PositiveContrast[" + Viana.Project.ProcessingData.IndexOfObject + "]") { Source = Viana.Project };
+      Binding positiveContrastBinding = new Binding("ProcessingData.PositiveContrast[" + App.Project.ProcessingData.IndexOfObject + "]") { Source = App.Project };
       this.UsePositiveThresholdCheckbox.SetBinding(ToggleButton.IsCheckedProperty, positiveContrastBinding);
     }
 
@@ -1119,13 +1116,13 @@ namespace VianaNET.MainWindow
     /// </summary>
     private void UpdateSelectObjectImage()
     {
-      var icon = new BitmapImage(new Uri("pack://application:,,,/VianaNET;component/Images/SelectObject32.png"));
+      BitmapImage icon = new BitmapImage(new Uri("pack://application:,,,/VianaNET;component/Images/SelectObject32.png"));
 
-      var drawingVisual = new DrawingVisual();
+      DrawingVisual drawingVisual = new DrawingVisual();
       DrawingContext drawingContext = drawingVisual.RenderOpen();
       drawingContext.DrawImage(icon, new Rect(0, 0, 32, 32));
-      var text = new FormattedText(
-        (Viana.Project.ProcessingData.IndexOfObject + 1).ToString("N0"),
+      FormattedText text = new FormattedText(
+        (App.Project.ProcessingData.IndexOfObject + 1).ToString("N0"),
         LocalizeDictionary.Instance.Culture,
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
@@ -1135,7 +1132,7 @@ namespace VianaNET.MainWindow
       drawingContext.DrawText(text, new Point(10, 3));
 
       drawingContext.Close();
-      var bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
       bmp.Render(drawingVisual);
       this.ButtonSelectObject.LargeImageSource = bmp;
 
@@ -1159,7 +1156,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void MeasureLengthButtonClick(object sender, RoutedEventArgs e)
     {
-      var measureLengthWindow = new MeasureLengthWindow();
+      MeasureLengthWindow measureLengthWindow = new MeasureLengthWindow();
       measureLengthWindow.ShowDialog();
     }
 
@@ -1170,7 +1167,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void MeasureAngleButtonClick(object sender, RoutedEventArgs e)
     {
-      var measureAngleWindow = new MeasureAngleWindow();
+      MeasureAngleWindow measureAngleWindow = new MeasureAngleWindow();
       measureAngleWindow.ShowDialog();
     }
 
@@ -1181,15 +1178,13 @@ namespace VianaNET.MainWindow
     /// <param name="e">Event arguments</param>
     private void RecentProjectMouseDown(object sender, RoutedEventArgs e)
     {
-      var contentPresenter = sender as ContentPresenter;
-      if (contentPresenter == null)
+      if (!(sender is ContentPresenter contentPresenter))
       {
         return;
       }
 
-      var projectEntry = contentPresenter.Content as ProjectEntry;
 
-      if (projectEntry == null)
+      if (!(contentPresenter.Content is ProjectEntry projectEntry))
       {
         return;
       }
@@ -1211,7 +1206,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
     private void VideoInputDeviceCombo_OnSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-      foreach (var videoInputDevice in Video.Instance.VideoInputDevices)
+      foreach (DirectShowLib.DsDevice videoInputDevice in Video.Instance.VideoInputDevices)
       {
         if (videoInputDevice.Name == this.VideoInputDeviceCombo.SelectedItem.ToString())
         {
@@ -1228,7 +1223,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void SkipPointsButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new SkipPointsDialog();
+      SkipPointsDialog dlg = new SkipPointsDialog();
       dlg.ShowDialog();
     }
 

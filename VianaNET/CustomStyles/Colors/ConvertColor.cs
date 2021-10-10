@@ -30,8 +30,6 @@ namespace VianaNET.CustomStyles.Colors
   using System;
   using System.Windows.Media;
 
-  using OxyPlot;
-
   /// <summary>
   ///   Convert colors from RGB to HSL/HSV and vice-versa.
   ///   http://en.wikipedia.org/wiki/HSL_color_space

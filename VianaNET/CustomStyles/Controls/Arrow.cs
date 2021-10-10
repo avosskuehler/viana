@@ -23,7 +23,6 @@ namespace VianaNET.CustomStyles.Controls
 {
   using System;
   using System.ComponentModel;
-  using System.Threading;
   using System.Windows;
   using System.Windows.Media;
   using System.Windows.Shapes;
@@ -114,15 +113,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double HeadHeight
     {
-      get
-      {
-        return (double)this.GetValue(HeadHeightProperty);
-      }
+      get => (double)this.GetValue(HeadHeightProperty);
 
-      set
-      {
-        this.SetValue(HeadHeightProperty, value);
-      }
+      set => this.SetValue(HeadHeightProperty, value);
     }
 
     /// <summary>
@@ -134,15 +127,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double HeadWidth
     {
-      get
-      {
-        return (double)this.GetValue(HeadWidthProperty);
-      }
+      get => (double)this.GetValue(HeadWidthProperty);
 
-      set
-      {
-        this.SetValue(HeadWidthProperty, value);
-      }
+      set => this.SetValue(HeadWidthProperty, value);
     }
 
     /// <summary>
@@ -154,15 +141,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double X1
     {
-      get
-      {
-        return (double)this.GetValue(X1Property);
-      }
+      get => (double)this.GetValue(X1Property);
 
-      set
-      {
-        this.SetValue(X1Property, value);
-      }
+      set => this.SetValue(X1Property, value);
     }
 
     /// <summary>
@@ -174,15 +155,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double X2
     {
-      get
-      {
-        return (double)this.GetValue(X2Property);
-      }
+      get => (double)this.GetValue(X2Property);
 
-      set
-      {
-        this.SetValue(X2Property, value);
-      }
+      set => this.SetValue(X2Property, value);
     }
 
     /// <summary>
@@ -194,15 +169,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double Y1
     {
-      get
-      {
-        return (double)this.GetValue(Y1Property);
-      }
+      get => (double)this.GetValue(Y1Property);
 
-      set
-      {
-        this.SetValue(Y1Property, value);
-      }
+      set => this.SetValue(Y1Property, value);
     }
 
     /// <summary>
@@ -214,15 +183,9 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double Y2
     {
-      get
-      {
-        return (double)this.GetValue(Y2Property);
-      }
+      get => (double)this.GetValue(Y2Property);
 
-      set
-      {
-        this.SetValue(Y2Property, value);
-      }
+      set => this.SetValue(Y2Property, value);
     }
 
     #endregion
@@ -239,9 +202,9 @@ namespace VianaNET.CustomStyles.Controls
       get
       {
         // Create a StreamGeometry for describing the shape
-        var geometry = new StreamGeometry { FillRule = FillRule.EvenOdd };
+        StreamGeometry geometry = new StreamGeometry { FillRule = FillRule.EvenOdd };
 
-        using (var context = geometry.Open())
+        using (StreamGeometryContext context = geometry.Open())
         {
           this.InternalDrawArrowGeometry(context);
         }
@@ -265,18 +228,18 @@ namespace VianaNET.CustomStyles.Controls
     /// </param>
     private void InternalDrawArrowGeometry(StreamGeometryContext context)
     {
-      var theta = Math.Atan2(this.Y1 - this.Y2, this.X1 - this.X2);
-      var sint = Math.Sin(theta);
-      var cost = Math.Cos(theta);
+      double theta = Math.Atan2(this.Y1 - this.Y2, this.X1 - this.X2);
+      double sint = Math.Sin(theta);
+      double cost = Math.Cos(theta);
 
-      var pt1 = new Point(this.X1, this.Y1);
-      var pt2 = new Point(this.X2, this.Y2);
+      Point pt1 = new Point(this.X1, this.Y1);
+      Point pt2 = new Point(this.X2, this.Y2);
 
-      var pt3 = new Point(
+      Point pt3 = new Point(
         this.X2 + (this.HeadWidth * cost - this.HeadHeight * sint),
         this.Y2 + (this.HeadWidth * sint + this.HeadHeight * cost));
 
-      var pt4 = new Point(
+      Point pt4 = new Point(
         this.X2 + (this.HeadWidth * cost + this.HeadHeight * sint),
         this.Y2 - (this.HeadHeight * cost - this.HeadWidth * sint));
 

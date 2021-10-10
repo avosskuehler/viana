@@ -27,8 +27,6 @@ namespace VianaNET.Data
   using System.ComponentModel;
   using System.Linq;
   using System.Windows;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
@@ -148,15 +146,9 @@ namespace VianaNET.Data
     /// </summary>
     public DataCollection FilteredSamples
     {
-      get
-      {
-        return (DataCollection)this.GetValue(FilteredSamplesProperty);
-      }
+      get => (DataCollection)this.GetValue(FilteredSamplesProperty);
 
-      set
-      {
-        this.SetValue(FilteredSamplesProperty, value);
-      }
+      set => this.SetValue(FilteredSamplesProperty, value);
     }
 
     /// <summary>
@@ -165,42 +157,24 @@ namespace VianaNET.Data
     /// </summary>
     public double FramerateFactor
     {
-      get
-      {
-        return (double)this.GetValue(FramerateFactorProperty);
-      }
+      get => (double)this.GetValue(FramerateFactorProperty);
 
-      set
-      {
-        this.SetValue(FramerateFactorProperty, value);
-      }
+      set => this.SetValue(FramerateFactorProperty, value);
     }
 
     /// <summary>
     ///   Gets a value indicating whether there is at least one data sample
     /// </summary>
-    public bool HasSamples
-    {
-      get
-      {
-        return this.Samples.Count > 0;
-      }
-    }
+    public bool HasSamples => this.Samples.Count > 0;
 
     /// <summary>
     ///   Gets or sets the last point.
     /// </summary>
     public Point[] LastPoint
     {
-      get
-      {
-        return (Point[])this.GetValue(LastPointProperty);
-      }
+      get => (Point[])this.GetValue(LastPointProperty);
 
-      set
-      {
-        this.SetValue(LastPointProperty, value);
-      }
+      set => this.SetValue(LastPointProperty, value);
     }
 
     /// <summary>
@@ -210,15 +184,9 @@ namespace VianaNET.Data
     /// </summary>
     public DataCollection Samples
     {
-      get
-      {
-        return (DataCollection)this.GetValue(SamplesProperty);
-      }
+      get => (DataCollection)this.GetValue(SamplesProperty);
 
-      set
-      {
-        this.SetValue(SamplesProperty, value);
-      }
+      set => this.SetValue(SamplesProperty, value);
     }
 
     /// <summary>
@@ -227,15 +195,9 @@ namespace VianaNET.Data
     /// </summary>
     public double SelectionEnd
     {
-      get
-      {
-        return (double)this.GetValue(SelectionEndProperty);
-      }
+      get => (double)this.GetValue(SelectionEndProperty);
 
-      set
-      {
-        this.SetValue(SelectionEndProperty, value);
-      }
+      set => this.SetValue(SelectionEndProperty, value);
     }
 
     /// <summary>
@@ -244,15 +206,9 @@ namespace VianaNET.Data
     /// </summary>
     public double SelectionStart
     {
-      get
-      {
-        return (double)this.GetValue(SelectionStartProperty);
-      }
+      get => (double)this.GetValue(SelectionStartProperty);
 
-      set
-      {
-        this.SetValue(SelectionStartProperty, value);
-      }
+      set => this.SetValue(SelectionStartProperty, value);
     }
 
     /// <summary>
@@ -269,10 +225,7 @@ namespace VianaNET.Data
     /// </summary>
     public int UseEveryNthPoint
     {
-      get
-      {
-        return (int)this.GetValue(UseEveryNthPointProperty);
-      }
+      get => (int)this.GetValue(UseEveryNthPointProperty);
 
       set
       {
@@ -301,7 +254,7 @@ namespace VianaNET.Data
         this.LastPoint[objectIndex] = newSamplePosition.Value;
       }
 
-      var timeSample = new TimeSample
+      TimeSample timeSample = new TimeSample
                          {
                            Framenumber = Video.Instance.FrameIndex,
                            Timestamp = Video.Instance.FrameTimestampInMs,
@@ -309,7 +262,7 @@ namespace VianaNET.Data
                          };
 
       double newTime = Video.Instance.FrameTimestampInMs;
-      switch (Viana.Project.CalibrationData.TimeUnit)
+      switch (App.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
           break;
@@ -323,10 +276,10 @@ namespace VianaNET.Data
       DataSample newObjectSample = null;
       if (newSamplePosition.HasValue)
       {
-        Point origin = Viana.Project.CalibrationData.OriginInPixel;
+        Point origin = App.Project.CalibrationData.OriginInPixel;
         Point transformedPoint = newSamplePosition.Value;
         transformedPoint.Offset(-origin.X, -origin.Y);
-        transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
+        transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         newObjectSample = new DataSample { Framenumber = timeSample.Framenumber, Time = newTime, PixelX = transformedPoint.X, PixelY = transformedPoint.Y };
       }
 
@@ -338,7 +291,7 @@ namespace VianaNET.Data
         {
           if (this.Samples[index].Object == null)
           {
-            this.Samples[index].Object = new DataSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+            this.Samples[index].Object = new DataSample[App.Project.ProcessingData.NumberOfTrackedObjects];
           }
 
           this.Samples[index].Object[objectIndex] = newObjectSample;
@@ -350,7 +303,7 @@ namespace VianaNET.Data
         {
           if (timeSample.Object == null)
           {
-            timeSample.Object = new DataSample[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+            timeSample.Object = new DataSample[App.Project.ProcessingData.NumberOfTrackedObjects];
           }
 
           timeSample.Object[objectIndex] = newObjectSample;
@@ -384,7 +337,7 @@ namespace VianaNET.Data
         sample.IsSelected = true;
       }
 
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       this.OnSelectionChanged();
     }
@@ -400,7 +353,7 @@ namespace VianaNET.Data
         if (i % this.UseEveryNthPoint == 0)
         {
           TimeSample sampleToAdd = this.Samples[i - 1];
-          if (sampleToAdd.Object != null && sampleToAdd.Object[Viana.Project.ProcessingData.IndexOfObject] != null)
+          if (sampleToAdd.Object != null && sampleToAdd.Object[App.Project.ProcessingData.IndexOfObject] != null)
           {
             this.FilteredSamples.Add(sampleToAdd);
           }
@@ -408,7 +361,7 @@ namespace VianaNET.Data
       }
 
       // Updates the chart plot
-      Viana.Project.RequestChartUpdate();
+      App.Project.RequestChartUpdate();
 
       // Update views
       this.OnPropertyChanged("FilteredSamples");
@@ -422,7 +375,7 @@ namespace VianaNET.Data
     public void NotifyLoading()
     {
       // Recalculate dependent data values
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update dependencies
       this.OnPropertyChanged("Samples");
@@ -446,7 +399,7 @@ namespace VianaNET.Data
     {
       this.GeneratePosition();
 
-      switch (Viana.Project.ProcessingData.DifferenceQuotientType)
+      switch (App.Project.ProcessingData.DifferenceQuotientType)
       {
         case DifferenceQuotientType.Forward:
           this.CalculateWithForwardDifference();
@@ -489,7 +442,7 @@ namespace VianaNET.Data
     {
       this.Samples.Clear();
       this.FilteredSamples.Clear();
-      this.LastPoint = new Point[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+      this.LastPoint = new Point[App.Project.ProcessingData.NumberOfTrackedObjects];
       this.OnPropertyChanged("Samples");
     }
 
@@ -511,10 +464,10 @@ namespace VianaNET.Data
       TimeSample sample = this.Samples.GetSampleByFrameindex(frameIndex);
       if (sample != null)
       {
-        Point origin = Viana.Project.CalibrationData.OriginInPixel;
+        Point origin = App.Project.CalibrationData.OriginInPixel;
         Point transformedPoint = newLocation;
         transformedPoint.Offset(-origin.X, -origin.Y);
-        transformedPoint = Viana.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
+        transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         sample.Object[objectIndex].PixelX = transformedPoint.X;
         sample.Object[objectIndex].PixelY = transformedPoint.Y;
       }
@@ -554,18 +507,18 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!Viana.Project.CalibrationData.IsVideoCalibrated)
+      if (!App.Project.CalibrationData.IsVideoCalibrated)
       {
         return new Point(value.PixelX, value.PixelY);
       }
 
-      var calibratedPoint = new Point(value.PixelX, value.PixelY);
+      Point calibratedPoint = new Point(value.PixelX, value.PixelY);
 
       // calibratedPoint.Offset(
-      // -Viana.Project.CalibrationData.OriginInPixel.X,
-      // -Viana.Project.CalibrationData.OriginInPixel.Y);
-      calibratedPoint.X = calibratedPoint.X * Viana.Project.CalibrationData.ScalePixelToUnit;
-      calibratedPoint.Y = calibratedPoint.Y * Viana.Project.CalibrationData.ScalePixelToUnit;
+      // -App.Project.CalibrationData.OriginInPixel.X,
+      // -App.Project.CalibrationData.OriginInPixel.Y);
+      calibratedPoint.X = calibratedPoint.X * App.Project.CalibrationData.ScalePixelToUnit;
+      calibratedPoint.Y = calibratedPoint.Y * App.Project.CalibrationData.ScalePixelToUnit;
 
       return calibratedPoint;
     }
@@ -577,7 +530,7 @@ namespace VianaNET.Data
     private static int GetTimeFactor()
     {
       int timefactor;
-      switch (Viana.Project.CalibrationData.TimeUnit)
+      switch (App.Project.CalibrationData.TimeUnit)
       {
         case TimeUnit.ms:
           timefactor = 1;
@@ -1085,7 +1038,7 @@ namespace VianaNET.Data
     /// </summary>
     private void CalculateWithBackwardDifference()
     {
-      for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
         for (int i = 1; i < this.validDataSamples[j].Count; i++)
@@ -1146,7 +1099,7 @@ namespace VianaNET.Data
     /// </summary>
     private void CalculateWithCentralDifference()
     {
-      for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
         for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
@@ -1227,7 +1180,7 @@ namespace VianaNET.Data
     /// </summary>
     private void CalculateWithForwardDifference()
     {
-      for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+      for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
         for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
@@ -1288,15 +1241,15 @@ namespace VianaNET.Data
     /// </summary>
     private void GeneratePosition()
     {
-      this.validDataSamples = new List<TimeSample>[Viana.Project.ProcessingData.NumberOfTrackedObjects];
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      this.validDataSamples = new List<TimeSample>[App.Project.ProcessingData.NumberOfTrackedObjects];
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
         this.validDataSamples[i] = new List<TimeSample>();
       }
 
       foreach (TimeSample timeSample in this.Samples)
       {
-        for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           if (timeSample.Object == null)
           {

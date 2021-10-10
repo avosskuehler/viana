@@ -7,7 +7,7 @@
 	xmlns:blobDetection="clr-namespace:VianaNET.Modules.Video.BlobDetection" 
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
-	xmlns:application="clr-namespace:VianaNET.Application"
+	xmlns:local="clr-namespace:VianaNET"
 	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
 	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
@@ -20,7 +20,7 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="40"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}">
+    <Grid Grid.Row="0" Name="ContentPanel" Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static local:App.Project}}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="Auto"/>
@@ -39,7 +39,7 @@
             </Border.RenderTransform>
             <Label Name="PixelLabel" 
                      Content="{Binding Path=CalibrationData.RulerValueInPixelUnits,
-              Source={x:Static application:Viana.Project}}"
+              Source={x:Static local:App.Project}}"
                  Visibility="Visible"/>
           </Border>
           <Path Name="OriginPath" Stroke="Red" StrokeThickness="1" Visibility="Hidden">
@@ -60,7 +60,7 @@
             <StackPanel Orientation="Horizontal">
               <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
-              Source={x:Static application:Viana.Project},
+              Source={x:Static local:App.Project},
               Converter={StaticResource RulerUnitStringConverter}, 
               ConverterParameter={StaticResource PositionMeasurement}}"/>
             </StackPanel>
@@ -86,7 +86,7 @@
       <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="10" Height="10"/>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -137,8 +137,8 @@
         TickUpClicked="TimelineSliderTickUpClicked"
         FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
         Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
-        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static application:Viana.Project}}"
-        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static application:Viana.Project}}"
+        SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
+        SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"
         SmallChange="1" 
         TickPlacement="BottomRight" 
         Interval="1" 

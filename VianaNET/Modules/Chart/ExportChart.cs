@@ -41,7 +41,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.MainWindow;
 
 
-  using Application = Microsoft.Office.Interop.Word.Application;
+  using wordapp = Microsoft.Office.Interop.Word;
 
   /// <summary>
   ///   The export chart.
@@ -58,9 +58,11 @@ namespace VianaNET.Modules.Chart
     /// </param>
     public static void ToClipboard(PlotModel chart)
     {
-      var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+      PngExporter exporter = new PngExporter();
+      BitmapSource bitmap = exporter.ExportToBitmap(chart);
+      //, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
       Clipboard.SetImage(bitmap);
-      StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.ChartExportedToClipboardMessage;
+      StatusBarContent.Instance.MessagesLabel = VianaNET.Localization.Labels.ChartExportedToClipboardMessage;
     }
 
     /// <summary>
@@ -71,21 +73,21 @@ namespace VianaNET.Modules.Chart
     /// </param>
     public static void ToFile(PlotModel chart)
     {
-      var sfd = new SaveFileDialog();
+      SaveFileDialog sfd = new SaveFileDialog();
       sfd.CheckFileExists = false;
       sfd.CheckPathExists = true;
       sfd.DefaultExt = ".png";
       sfd.AddExtension = true;
-      sfd.Filter = VianaNET.Resources.Labels.GraphicFilesFilter;
+      sfd.Filter = VianaNET.Localization.Labels.GraphicFilesFilter;
       sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      sfd.Title = VianaNET.Resources.Labels.GraphicFilesSaveFileDialogTitle;
+      sfd.Title = VianaNET.Localization.Labels.GraphicFilesSaveFileDialogTitle;
       if (sfd.ShowDialog().GetValueOrDefault())
       {
-        using (var stream = new FileStream(sfd.FileName, FileMode.Create))
+        using (FileStream stream = new FileStream(sfd.FileName, FileMode.Create))
         {
           BitmapEncoder encoder = null;
           string extension = Path.GetExtension(sfd.FileName);
-          var enc = new ASCIIEncoding();
+          ASCIIEncoding enc = new ASCIIEncoding();
           if (extension != null)
           {
             switch (extension.ToLower())
@@ -106,12 +108,11 @@ namespace VianaNET.Modules.Chart
                 encoder = new WmpBitmapEncoder();
                 break;
               case ".svg":
-                var rc = new ShapesRenderContext(null);
-                var svg = OxyPlot.SvgExporter.ExportToString(chart, chart.Width, chart.Height, true, rc);
+                string svg = OxyPlot.SvgExporter.ExportToString(chart, chart.Width, chart.Height, true);
                 stream.Write(enc.GetBytes(svg), 0, svg.Length);
                 return;
               case ".xaml":
-                var xaml = XamlExporter.ExportToString(chart, chart.Width, chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+                string xaml = XamlExporter.ExportToString(chart, chart.Width, chart.Height);
                 stream.Write(enc.GetBytes(xaml), 0, xaml.Length);
                 return;
               case ".jpg":
@@ -121,7 +122,8 @@ namespace VianaNET.Modules.Chart
             }
           }
 
-          var bitmap = PngExporter.ExportToBitmap(chart, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+          PngExporter exporter = new PngExporter();
+          BitmapSource bitmap = exporter.ExportToBitmap(chart);
 
           // Save to file
           if (encoder != null)
@@ -146,7 +148,7 @@ namespace VianaNET.Modules.Chart
       try
       {
         // Insert in word
-        var word = new Application();
+        var word = new wordapp.Application();
         word.Visible = true;
 
         object template = Missing.Value;

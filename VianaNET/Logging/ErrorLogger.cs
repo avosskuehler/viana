@@ -103,7 +103,7 @@ namespace VianaNET.Logging
       WriteLine(message);
       {
         // if (showMessageBox)
-        var dlg = new VianaDialog("Exception occured", ex.Message, message, true);
+        VianaDialog dlg = new VianaDialog("Exception occured", ex.Message, message, true);
         dlg.ShowDialog();
       }
     }
@@ -146,7 +146,7 @@ namespace VianaNET.Logging
     /// </returns>
     private static string GetLogEntryForException(Exception e)
     {
-      var sb = new StringBuilder();
+      StringBuilder sb = new StringBuilder();
       sb.AppendLine("Message: " + e.Message);
       sb.AppendLine("Source: " + e.Source);
       sb.AppendLine("TargetSite: " + e.TargetSite);

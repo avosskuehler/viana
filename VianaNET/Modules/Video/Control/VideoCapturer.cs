@@ -25,7 +25,6 @@ namespace VianaNET.Modules.Video.Control
   using System;
   using System.ComponentModel;
   using System.Diagnostics;
-  using System.IO;
   using System.Runtime.InteropServices;
   using System.Threading;
   using System.Windows;
@@ -33,7 +32,6 @@ namespace VianaNET.Modules.Video.Control
   using DirectShowLib;
   using OpenCvSharp;
   using OpenCvSharp.WpfExtensions;
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
 
@@ -62,10 +60,10 @@ namespace VianaNET.Modules.Video.Control
 
     public VideoCapturer()
     {
-      bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
-      bkgWorker.DoWork += Worker_DoWork;
+      this.bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+      this.bkgWorker.DoWork += this.Worker_DoWork;
 
-      opencvCapture = new OpenCvSharp.VideoCapture();
+      this.opencvCapture = new VideoCapture();
 
     }
 
@@ -79,18 +77,16 @@ namespace VianaNET.Modules.Video.Control
       {
         Marshal.ReleaseComObject(this.VideoDeviceFilter);
         this.VideoDeviceFilter = null;
-        this.videoControl = null;
-        this.videoStreamConfig = null;
       }
 
       if (this.bkgWorker != null)
       {
-        bkgWorker.CancelAsync();
+        this.bkgWorker.CancelAsync();
       }
 
       if (this.opencvCapture != null)
       {
-        opencvCapture.Dispose();
+        this.opencvCapture.Dispose();
       }
 
     }
@@ -108,23 +104,9 @@ namespace VianaNET.Modules.Video.Control
     private Stopwatch frameTimer;
 
     /// <summary>
-    ///   The IAMVideoControl interface controls certain video capture operations
-    ///   such as enumerating available frame rates and image orientation.
-    /// </summary>
-    private IAMVideoControl videoControl;
-
-    /// <summary>
-    ///   The IAMStreamConfig interface sets the output format on certain capture
-    ///   and compression filters, for both audio and video. Applications can use
-    ///   this interface to set format properties, such as the output dimensions and
-    ///   frame rate (for video) or the sample rate and number of channels (for audio).
-    /// </summary>
-    private IAMStreamConfig videoStreamConfig;
-
-    /// <summary>
     /// The OpenCV VideoCapture Device Control
     /// </summary>
-    private readonly OpenCvSharp.VideoCapture opencvCapture;
+    private readonly VideoCapture opencvCapture;
 
     private readonly BackgroundWorker bkgWorker;
 
@@ -136,39 +118,21 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Gets the framerate of the video stream.
     /// </summary>
-    public double FPS
-    {
-      get
-      {
-        return this.fps;
-      }
-    }
+    public double FPS => this.fps;
 
     /// <summary>
     ///   Gets a value indicating whether this capturer is in the PlayState.Running state.
     /// </summary>
-    public bool IsRunning
-    {
-      get
-      {
-        return this.CurrentState == PlayState.Running;
-      }
-    }
+    public bool IsRunning => this.CurrentState == PlayState.Running;
 
     /// <summary>
     ///   Gets or sets the video capture device.
     /// </summary>
     public DsDevice VideoCaptureDevice
     {
-      get
-      {
-        return (DsDevice)this.GetValue(VideoCaptureDeviceProperty);
-      }
+      get => (DsDevice)this.GetValue(VideoCaptureDeviceProperty);
 
-      set
-      {
-        this.SetValue(VideoCaptureDeviceProperty, value);
-      }
+      set => this.SetValue(VideoCaptureDeviceProperty, value);
     }
 
     /// <summary>
@@ -212,15 +176,15 @@ namespace VianaNET.Modules.Video.Control
 
       try
       {
-        
+
         if (!this.opencvCapture.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY))
         {
-          opencvCapture.Dispose();
+          this.opencvCapture.Dispose();
           return;
         }
 
-        Video.Instance.VideoElement.SaveSizeInfo(opencvCapture);
-        this.fps = opencvCapture.Fps;
+        Video.Instance.VideoElement.SaveSizeInfo(this.opencvCapture);
+        this.fps = this.opencvCapture.Fps;
 
         if (!this.bkgWorker.IsBusy)
         {
@@ -235,7 +199,7 @@ namespace VianaNET.Modules.Video.Control
         return;
       }
 
-      Viana.Project.ProcessingData.InitializeImageFilters();
+      App.Project.ProcessingData.InitializeImageFilters();
 
       this.Play();
       Video.Instance.HasVideo = true;
@@ -287,31 +251,6 @@ namespace VianaNET.Modules.Video.Control
         this.frameTimer.Stop();
       }
 
-      //try
-      //{
-      //  // To stop the capture filter before stopping the media control
-      //  // seems to solve the problem described in the next comment.
-      //  // sancta simplicitas...
-      //  if (this.VideoDeviceFilter != null)
-      //  {
-      //    int hr = this.VideoDeviceFilter.Stop();
-      //    if (hr != 0)
-      //    {
-      //      ErrorLogger.WriteLine("Error while stopping capture filter. Message: " + DsError.GetErrorText(hr));
-      //    }
-
-      //    if (this.frameTimer != null)
-      //    {
-      //      this.frameTimer.Stop();
-      //    }
-      //  }
-
-      //}
-      //catch (Exception ex)
-      //{
-      //  ErrorLogger.ProcessException(ex, false);
-      //}
-
       base.Stop();
     }
 
@@ -361,10 +300,9 @@ namespace VianaNET.Modules.Video.Control
       //  return;
       //}
 
-      var videoCapturer = obj as VideoCapturer;
-      if (videoCapturer != null)
+      if (obj is VideoCapturer videoCapturer)
       {
-        var device = args.NewValue as DsDevice;
+        DsDevice device = args.NewValue as DsDevice;
         if (videoCapturer.VideoDeviceFilter != null)
         {
           Marshal.ReleaseComObject(videoCapturer.VideoDeviceFilter);
@@ -389,19 +327,17 @@ namespace VianaNET.Modules.Video.Control
 
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var worker = (BackgroundWorker)sender;
+      BackgroundWorker worker = (BackgroundWorker)sender;
       while (!worker.CancellationPending)
       {
-        using (var frameMat = opencvCapture.RetrieveMat())
+        using (Mat frameMat = this.opencvCapture.RetrieveMat())
         {
           // Must create and use WriteableBitmap in the same thread(UI Thread).
-          Dispatcher.Invoke(() =>
+          this.Dispatcher.Invoke(() =>
           {
-            var newFrame = frameMat.ToWriteableBitmap();
+            System.Windows.Media.Imaging.WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
             Video.Instance.OriginalImageSource = newFrame;
             Video.Instance.VideoElement.NewFrameCallback(newFrame);
-            //this.VideoImage.Source = Video.Instance.OriginalImageSource;
-            //this.OnVideoFrameChanged(this, new EventArgs());
           });
         }
 

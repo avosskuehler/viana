@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VianaNET", "VianaNET\VianaNET.csproj", "{B78F89B8-61CF-4DBA-9E96-BBD210848855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VianaNET", "VianaNET\VianaNET.csproj", "{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{DE025CD9-9CD4-4651-81D7-AEB7FB7A907F}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Setup", "Setup\Setup\Setup.wixproj", "{2248D372-66FC-471F-89D6-601930B8538D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC146FD3-B535-4601-BE1B-D9A47E5E12B6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{160DE4D9-9A5C-4E88-B628-C6E5BB79DD05}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
@@ -24,32 +20,23 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|x64.ActiveCfg = Debug|x64
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|x64.Build.0 = Debug|x64
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|x86.ActiveCfg = Debug|x86
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Debug|x86.Build.0 = Debug|x86
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|x64.ActiveCfg = Release|x64
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|x64.Build.0 = Release|x64
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|x86.ActiveCfg = Release|x86
-		{B78F89B8-61CF-4DBA-9E96-BBD210848855}.Release|x86.Build.0 = Release|x86
-		{2248D372-66FC-471F-89D6-601930B8538D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{2248D372-66FC-471F-89D6-601930B8538D}.Debug|x64.ActiveCfg = Debug|x64
-		{2248D372-66FC-471F-89D6-601930B8538D}.Debug|x86.ActiveCfg = Debug|x86
-		{2248D372-66FC-471F-89D6-601930B8538D}.Release|Any CPU.ActiveCfg = Release|x86
-		{2248D372-66FC-471F-89D6-601930B8538D}.Release|x64.ActiveCfg = Release|x64
-		{2248D372-66FC-471F-89D6-601930B8538D}.Release|x86.ActiveCfg = Release|x86
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|x64.ActiveCfg = Debug|x64
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|x64.Build.0 = Debug|x64
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|x86.ActiveCfg = Debug|x86
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Debug|x86.Build.0 = Debug|x86
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|x64.ActiveCfg = Release|x64
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|x64.Build.0 = Release|x64
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|x86.ActiveCfg = Release|x86
+		{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2248D372-66FC-471F-89D6-601930B8538D} = {DE025CD9-9CD4-4651-81D7-AEB7FB7A907F}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {68F10863-C3CB-40F7-8C34-CCD80B7CAB88}
+		SolutionGuid = {DD66A0ED-54AA-42F0-93F6-570CE98B8A3F}
 	EndGlobalSection
 EndGlobal

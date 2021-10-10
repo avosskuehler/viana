@@ -91,14 +91,12 @@ namespace VianaNET.Modules.Video.Control
     public static void DisplayPropertyPage(IntPtr parentHandle, IBaseFilter dev)
     {
       // Get the ISpecifyPropertyPages for the filter
-      var properties = dev as ISpecifyPropertyPages;
       int hr = 0;
 
-      if (properties == null)
+      if (!(dev is ISpecifyPropertyPages properties))
       {
         // If the filter doesn't implement ISpecifyPropertyPages, try displaying IAMVfwCompressDialogs instead!
-        var compressDialog = dev as IAMVfwCompressDialogs;
-        if (compressDialog != null)
+        if (dev is IAMVfwCompressDialogs compressDialog)
         {
           hr = compressDialog.ShowDialog(VfwCompressDialogs.Config, IntPtr.Zero);
           DsError.ThrowExceptionForHR(hr);
@@ -119,8 +117,7 @@ namespace VianaNET.Modules.Video.Control
 
       // Check for property pages on the output pin
       IPin pin = DsFindPin.ByDirection(dev, PinDirection.Output, 0);
-      var properties2 = pin as ISpecifyPropertyPages;
-      if (properties2 != null)
+      if (pin is ISpecifyPropertyPages properties2)
       {
         DsCAUUID captureGUID2;
         hr = properties2.GetPages(out captureGUID2);
@@ -177,7 +174,7 @@ namespace VianaNET.Modules.Video.Control
     /// <returns> A <see cref="List{String}" /> with the friendly names of the audio compressors. </returns>
     public static List<string> GetAudioCompressors()
     {
-      var compressors = new List<string>();
+      List<string> compressors = new List<string>();
 
       // enumerate Audio Compressor filters 
       foreach (DsDevice ds in DsDevice.GetDevicesOfCat(FilterCategory.AudioCompressorCategory))
@@ -195,7 +192,7 @@ namespace VianaNET.Modules.Video.Control
     /// <returns> A <see cref="List{String}" /> with the friendly names of the audio devices. </returns>
     public static List<string> GetAudioInputDevices()
     {
-      var devices = new List<string>();
+      List<string> devices = new List<string>();
 
       // enumerate Audio Input Devices
       foreach (DsDevice ds in DsDevice.GetDevicesOfCat(FilterCategory.AudioInputDevice))
@@ -237,7 +234,7 @@ namespace VianaNET.Modules.Video.Control
       }
 
       // Create the Graph
-      var localGraphBuilder = (IGraphBuilder)new FilterGraph();
+      IGraphBuilder localGraphBuilder = (IGraphBuilder)new FilterGraph();
 
       // Create the Capture Graph Builder
       ICaptureGraphBuilder2 captureGraphBuilder = null;
@@ -258,8 +255,7 @@ namespace VianaNET.Modules.Video.Control
           PinCategory.Capture, MediaType.Video, videoDevice, typeof(IAMStreamConfig).GUID, out o);
         DsError.ThrowExceptionForHR(hr);
 
-        var videoStreamConfig = o as IAMStreamConfig;
-        if (videoStreamConfig == null)
+        if (!(o is IAMStreamConfig videoStreamConfig))
         {
           throw new Exception("Failed to get IAMStreamConfig");
         }
@@ -270,7 +266,7 @@ namespace VianaNET.Modules.Video.Control
         AMMediaType media;
 
         // copy out the videoinfoheader
-        var caps = new VideoStreamConfigCaps();
+        VideoStreamConfigCaps caps = new VideoStreamConfigCaps();
         IntPtr capsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(VideoStreamConfigCaps)));
         Marshal.StructureToPtr(caps, capsPtr, false);
         for (int i = 0; i < pinCount; i++)
@@ -280,8 +276,8 @@ namespace VianaNET.Modules.Video.Control
           Marshal.PtrToStructure(capsPtr, caps);
 
           // Get valid framerates
-          var maxRate = (int)(10000000f / caps.MinFrameInterval);
-          var minRate = (int)(10000000f / caps.MaxFrameInterval);
+          int maxRate = (int)(10000000f / caps.MinFrameInterval);
+          int minRate = (int)(10000000f / caps.MaxFrameInterval);
 
           // Paranoia check for wrong intialized web cams
           // which don´t use nano second units, instead using real frame rates
@@ -357,7 +353,7 @@ namespace VianaNET.Modules.Video.Control
     /// <returns> A <see cref="List{String}" /> with the friendly names of the video compressors. </returns>
     public static List<string> GetVideoCompressors()
     {
-      var compressors = new List<string>();
+      List<string> compressors = new List<string>();
 
       // enumerate Video Compressor filters 
       foreach (DsDevice ds in DsDevice.GetDevicesOfCat(FilterCategory.VideoCompressorCategory))
@@ -375,7 +371,7 @@ namespace VianaNET.Modules.Video.Control
     /// <returns> A <see cref="List{String}" /> with the friendly names of the video devices. </returns>
     public static List<DsDevice> GetVideoInputDevices()
     {
-      var devices = new List<DsDevice>();
+      List<DsDevice> devices = new List<DsDevice>();
 
       // enumerate Video Input Devices
       foreach (DsDevice ds in DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice))
@@ -414,8 +410,7 @@ namespace VianaNET.Modules.Video.Control
       // Find the stream config interface
       hr = capGraph.FindInterface(PinCategory.Capture, MediaType.Video, capFilter, typeof(IAMStreamConfig).GUID, out o);
 
-      var videoStreamConfig = o as IAMStreamConfig;
-      if (videoStreamConfig == null)
+      if (!(o is IAMStreamConfig videoStreamConfig))
       {
         throw new Exception("Failed to get IAMStreamConfig");
       }
@@ -425,7 +420,7 @@ namespace VianaNET.Modules.Video.Control
       DsError.ThrowExceptionForHR(hr);
 
       // copy out the videoinfoheader
-      var v = new VideoInfoHeader();
+      VideoInfoHeader v = new VideoInfoHeader();
       Marshal.PtrToStructure(media.formatPtr, v);
 
       // if overriding the framerate, set the frame rate

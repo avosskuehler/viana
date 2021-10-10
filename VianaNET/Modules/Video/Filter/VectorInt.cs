@@ -82,68 +82,32 @@ namespace VianaNET.Modules.Video.Filter
     /// <summary>
     ///   Gets the one.
     /// </summary>
-    public static VectorInt One
-    {
-      get
-      {
-        return new VectorInt(1, 1);
-      }
-    }
+    public static VectorInt One => new VectorInt(1, 1);
 
     /// <summary>
     ///   Gets the unit x.
     /// </summary>
-    public static VectorInt UnitX
-    {
-      get
-      {
-        return new VectorInt(1, 0);
-      }
-    }
+    public static VectorInt UnitX => new VectorInt(1, 0);
 
     /// <summary>
     ///   Gets the unit y.
     /// </summary>
-    public static VectorInt UnitY
-    {
-      get
-      {
-        return new VectorInt(0, 1);
-      }
-    }
+    public static VectorInt UnitY => new VectorInt(0, 1);
 
     /// <summary>
     ///   Gets the zero.
     /// </summary>
-    public static VectorInt Zero
-    {
-      get
-      {
-        return new VectorInt(0, 0);
-      }
-    }
+    public static VectorInt Zero => new VectorInt(0, 0);
 
     /// <summary>
     ///   Gets the length.
     /// </summary>
-    public int Length
-    {
-      get
-      {
-        return (int)Math.Sqrt(this.X * this.X + this.Y * this.Y);
-      }
-    }
+    public int Length => (int)Math.Sqrt(this.X * this.X + this.Y * this.Y);
 
     /// <summary>
     ///   Gets the length sq.
     /// </summary>
-    public int LengthSq
-    {
-      get
-      {
-        return this.X * this.X + this.Y * this.Y;
-      }
-    }
+    public int LengthSq => this.X * this.X + this.Y * this.Y;
 
     #endregion
 

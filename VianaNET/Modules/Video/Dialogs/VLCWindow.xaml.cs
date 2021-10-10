@@ -16,8 +16,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls.Primitives;
   using System.Windows.Forms;
 
-  using VianaNET.Application;
-
   using Vlc.DotNet.Core;
   using Vlc.DotNet.Forms;
 
@@ -63,16 +61,13 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <value>The video file to be converted including complete path.</value>
     public string VideoFile
     {
-      get
-      {
-        return this.videoFile;
-      }
+      get => this.videoFile;
 
       set
       {
         this.videoFile = value;
         this.vlcConverterPlayer.Play(new Uri(this.videoFile));
-        this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
+        this.BtnPlayImage.Source = App.GetImageSource("Pause16.png");
         this.isPlaying = true;
       }
     }
@@ -95,7 +90,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">The <see cref="VlcMediaPlayerLengthChangedEventArgs" /> instance containing the event data.</param>
     private void VlcPlayerLengthChanged(object sender, VlcMediaPlayerLengthChangedEventArgs e)
     {
-      var test = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds;
+      double test = new TimeSpan((long)e.NewLength).Duration().TotalMilliseconds;
 
       this.Dispatcher.InvokeAsync(
         () => { this.TimelineSlider.Maximum = new TimeSpan((long)e.NewLength * 10000).Duration().TotalMilliseconds; });
@@ -117,19 +112,19 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <returns>DirectoryInfo.</returns>
     private static DirectoryInfo GetVlcLibDirectory()
     {
-      var currentAssembly = Assembly.GetEntryAssembly();
-      var currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
+      Assembly currentAssembly = Assembly.GetEntryAssembly();
+      string currentDirectory = new FileInfo(currentAssembly.Location).DirectoryName;
       if (currentDirectory == null)
       {
         return null;
       }
 
-      var returnInfo = new DirectoryInfo(Path.Combine(currentDirectory, @"VlcLibs"));
+      DirectoryInfo returnInfo = new DirectoryInfo(Path.Combine(currentDirectory, @"VlcLibs"));
 
       if (!returnInfo.Exists)
       {
-        var folderBrowserDialog = new FolderBrowserDialog();
-        folderBrowserDialog.Description = VianaNET.Resources.Labels.SelectVlcLibrariesDescription;
+        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        folderBrowserDialog.Description = VianaNET.Localization.Labels.SelectVlcLibrariesDescription;
         folderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
         folderBrowserDialog.ShowNewFolderButton = true;
         if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -160,9 +155,9 @@ namespace VianaNET.Modules.Video.Dialogs
           }
 
 
-          var length = this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart;
-          var factor = this.TimelineSlider.Maximum / length;
-          var startPercentage = this.TimelineSlider.SelectionStart / this.TimelineSlider.Maximum;
+          double length = this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart;
+          double factor = this.TimelineSlider.Maximum / length;
+          double startPercentage = this.TimelineSlider.SelectionStart / this.TimelineSlider.Maximum;
           this.ConverterProgressbar.Value = (e.NewPosition - startPercentage) * 100 * factor;
         });
     }
@@ -176,12 +171,12 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (this.isPlaying)
       {
-        this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+        this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
         this.vlcConverterPlayer.Pause();
       }
       else
       {
-        this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
+        this.BtnPlayImage.Source = App.GetImageSource("Pause16.png");
         this.vlcConverterPlayer.Play();
       }
 
@@ -198,7 +193,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.vlcConverterPlayer.Stop();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
-      this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+      this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
     }
 
     /// <summary>
@@ -265,18 +260,18 @@ namespace VianaNET.Modules.Video.Dialogs
     private void OkClick(object sender, RoutedEventArgs e)
     {
       this.isConverting = true;
-      var path = Viana.Project.ProjectPath ?? Path.GetDirectoryName(this.videoFile);
+      string path = App.Project.ProjectPath ?? Path.GetDirectoryName(this.videoFile);
       this.convertedFile = Path.Combine(path, Path.GetFileNameWithoutExtension(this.videoFile));
       this.convertedFile += "-conv.avi";
-      var nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
-      var startTimeOption = "start-time=" + (this.TimelineSlider.SelectionStart / 1000f).ToString("N3", nfi);
-      var stopTimeOption = "stop-time=" + (this.TimelineSlider.SelectionEnd / 1000f).ToString("N3", nfi);
-      var transcodeOption =
+      NumberFormatInfo nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
+      string startTimeOption = "start-time=" + (this.TimelineSlider.SelectionStart / 1000f).ToString("N3", nfi);
+      string stopTimeOption = "stop-time=" + (this.TimelineSlider.SelectionEnd / 1000f).ToString("N3", nfi);
+      string transcodeOption =
         @"sout=#transcode{vcodec=mp4v,vb=8000,deinterlace,fps=25,acodec=mpga}:standard{access=file,mux=avi,dst="
         + this.convertedFile + "}";
       this.ProgressPanel.Visibility = Visibility.Visible;
       this.VideoPanel.Visibility = Visibility.Hidden;
-      var opts = new[] { startTimeOption, stopTimeOption, transcodeOption };
+      string[] opts = new[] { startTimeOption, stopTimeOption, transcodeOption };
       this.vlcConverterPlayer.Play(new Uri(this.videoFile), opts);
       this.vlcConverterPlayer.EndReached += this.VlcConverterPlayerEndReached;
       this.OK.IsEnabled = false;
@@ -309,7 +304,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void FinishAndClose()
     {
-      Viana.Project.VideoFile = Path.GetFileName(this.convertedFile);
+      App.Project.VideoFile = Path.GetFileName(this.convertedFile);
 
       this.Dispatcher.Invoke(
         () =>

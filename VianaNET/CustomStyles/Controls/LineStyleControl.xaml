@@ -7,7 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:VianaNET="clr-namespace:VianaNET"
              xmlns:engine="http://wpflocalizeextension.codeplex.com"
-             xmlns:oxy="http://oxyplot.codeplex.com"
+             xmlns:oxy="http://oxyplot.org/wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="362"
              DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
@@ -38,6 +38,6 @@
                       SelectedColorChanged="ColorPickerSelectedColorChanged"/>
     <Label Grid.Column="0" Grid.Row="2" Content="{lex:Loc VianaNET:Labels:LineStyleDisplayMarkerLabel}" VerticalAlignment="Center" />
     <ComboBox Grid.Column="1" Grid.Row="2" Name="MarkerTypeComboBox" VerticalAlignment="Center" Margin="5" SelectionChanged="MarkerTypeComboBox_OnSelectionChanged"/>
-    <oxy:Plot Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Model="{Binding ChartModel}"></oxy:Plot>
+    <oxy:PlotView Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Model="{Binding ChartModel}"></oxy:PlotView>
   </Grid>
 </UserControl>

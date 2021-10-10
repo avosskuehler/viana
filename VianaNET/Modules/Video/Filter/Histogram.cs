@@ -160,11 +160,11 @@ namespace VianaNET.Modules.Video.Filter
     /// </returns>
     public unsafe Histogram FromIntPtrMap(IntPtr map)
     {
-      var ptr = (byte*)map;
+      byte* ptr = (byte*)map;
       int w = this.ImageWidth;
       int h = this.ImageHeight;
-      var histX = new int[w];
-      var histY = new int[h];
+      int[] histX = new int[w];
+      int[] histY = new int[h];
 
       // var empty = -16777216;// CompareEmptyColor; // = 0
       int ipx = this.ImagePixelSize;

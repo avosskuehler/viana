@@ -5,7 +5,7 @@
     xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
     lex:LocalizeDictionary.DesignCulture="de"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:application="clr-namespace:VianaNET.Application"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:VianaNET"
     mc:Ignorable="d"
   d:DesignHeight="418" d:DesignWidth="770">
   <UserControl.Resources>
@@ -14,8 +14,8 @@
   <DataGrid 
     AutoGenerateColumns="False" 
     Name="DataGrid"
-    Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static application:Viana.Project}}"
-    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static application:Viana.Project}}" 
+    Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static local:App.Project}}"
+    ItemsSource="{Binding Path=VideoData.Samples, Source={x:Static local:App.Project}}" 
     HorizontalGridLinesBrush="Gray" 
     VerticalGridLinesBrush="Gray" 
     RowHeaderWidth="20" 

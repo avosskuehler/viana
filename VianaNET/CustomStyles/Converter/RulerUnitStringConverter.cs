@@ -24,8 +24,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
-
 namespace VianaNET.CustomStyles.Converter
 {
   using System;
@@ -33,7 +31,6 @@ namespace VianaNET.CustomStyles.Converter
   using System.Windows.Data;
 
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
 
   /// <summary>
   ///   The ruler unit string converter.
@@ -63,16 +60,16 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (double)value;
-      string unit = " " + Viana.Project.CalibrationData.LengthUnit;
-      var param = (MeasurementType)parameter;
+      double valueToConvert = (double)value;
+      string unit = " " + App.Project.CalibrationData.LengthUnit;
+      MeasurementType param = (MeasurementType)parameter;
       switch (param)
       {
         case MeasurementType.Pixel:
-          unit = " " + Viana.Project.CalibrationData.PixelUnit;
+          unit = " " + App.Project.CalibrationData.PixelUnit;
           break;
         case MeasurementType.Position:
-          unit = " " + Viana.Project.CalibrationData.LengthUnit;
+          unit = " " + App.Project.CalibrationData.LengthUnit;
           break;
       }
 
@@ -109,7 +106,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (string)value;
+      string valueToConvertBack = (string)value;
       return double.Parse(valueToConvertBack);
     }
 

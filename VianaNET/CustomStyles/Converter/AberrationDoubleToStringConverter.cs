@@ -29,8 +29,6 @@ namespace VianaNET.CustomStyles.Converter
   using System.Globalization;
   using System.Windows.Data;
 
-
-
   /// <summary>
   ///   The double to string converter.
   /// </summary>
@@ -59,10 +57,10 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (double)value;
+      double valueToConvert = (double)value;
       if (valueToConvert != 0)
       {
-        return VianaNET.Resources.Labels.AberrationStringPrefix + valueToConvert.ToString("N1");
+        return VianaNET.Localization.Labels.AberrationStringPrefix + valueToConvert.ToString("N1");
       }
 
       return string.Empty;
@@ -88,7 +86,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (string)value;
+      string valueToConvertBack = (string)value;
       return double.Parse(valueToConvertBack);
     }
 

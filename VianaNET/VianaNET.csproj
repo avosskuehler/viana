@@ -1,144 +1,237 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props" Condition="Exists('..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B78F89B8-61CF-4DBA-9E96-BBD210848855}</ProjectGuid>
+    <ProjectGuid>{9DAD3858-72EA-4B23-A8B5-DF12BBC1AAFE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VianaNET</RootNamespace>
     <AssemblyName>VianaNET</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <ApplicationIcon>Images\VianaNET.ico</ApplicationIcon>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>Properties\VianaNETKey.snk</AssemblyOriginatorKeyFile>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Deterministic>false</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <OutputPath>..\Debug\AnyCPU\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
+    <OutputPath>..\Release\AnyCPU\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup>
+    <StartupObject>VianaNET.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <OutputPath>..\Debug\x86\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Release\x86\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <OutputPath>..\Debug\x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\$(Configuration)\$(Platform)\</OutputPath>
+    <OutputPath>..\Release\x64\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>VianaNET.Application.Viana</StartupObject>
+    <ApplicationIcon>Images\VianaNET.ico</ApplicationIcon>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
-    <None Include="app.config" />
-    <EmbeddedResource Include="Modules\DataGrid\template.ods" />
-    <None Include="packages.config" />
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Properties\VianaNETKey.snk" />
+    <Reference Include="AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.2.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Vision, Version=2.2.5.0, Culture=neutral, PublicKeyToken=b612fa915eefaa06, processorArchitecture=MSIL">
+      <HintPath>..\packages\AForge.Vision.2.2.5\lib\AForge.Vision.dll</HintPath>
+    </Reference>
+    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="DirectShowLib, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DirectShowLib.Standard.2.1.0\lib\net45\DirectShowLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Fluent, Version=8.0.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fluent.Ribbon.8.0.3\lib\net452\Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome5, Version=2.1.4.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome5.2.1.4\lib\net40\FontAwesome5.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome5.Net, Version=2.1.4.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome5.2.1.4\lib\net40\FontAwesome5.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaInfo.DotNetWrapper, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MediaInfo.DotNetWrapper.1.0.7\lib\net40\MediaInfo.DotNetWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.5.3.20210817\lib\net461\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.4.5.3.20210817\lib\net461\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.WpfExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp4.WpfExtensions.4.5.3.20210817\lib\net461\OpenCvSharp.WpfExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot, Version=2.1.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.1.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=2.1.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.2.1.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf.Shared, Version=2.1.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.Shared.2.1.0\lib\net45\OxyPlot.Wpf.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="Vlc.DotNet.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Core.3.1.0\lib\net45\Vlc.DotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Core.Interops.3.1.0\lib\net45\Vlc.DotNet.Core.Interops.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Forms, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vlc.DotNet.Forms.3.1.0\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFFolderBrowser, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFFolderBrowser.1.0.2\lib\WPFFolderBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFLocalizeExtension, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFLocalizeExtension.3.9.0\lib\net452\WPFLocalizeExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="WpfMath, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfMath.0.11.0\lib\net452\WpfMath.dll</HintPath>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\XAMLMarkupExtensions.2.1.1\lib\net452\XAMLMarkupExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Compile Include="Application\ExtensionMethods.cs" />
     <Compile Include="Application\Project.cs" />
     <Compile Include="Application\ProjectEntry.cs" />
     <Compile Include="Application\RecentFiles.cs" />
-    <Compile Include="Application\Viana.xaml.cs">
-      <DependentUpon>Viana.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CustomStyles\Colors\Coloration.cs" />
     <Compile Include="CustomStyles\Colors\ColorType.cs" />
     <Compile Include="CustomStyles\Colors\ConvertColor.cs" />
@@ -148,221 +241,12 @@
     <Compile Include="CustomStyles\Colors\OfficeColors.cs" />
     <Compile Include="CustomStyles\Colors\OfficePallet.cs" />
     <Compile Include="CustomStyles\Controls\Arc.cs" />
-    <Compile Include="CustomStyles\Controls\ArrowPointer.cs" />
     <Compile Include="CustomStyles\Controls\Arrow.cs" />
+    <Compile Include="CustomStyles\Controls\ArrowPointer.cs" />
+    <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
     <Compile Include="CustomStyles\Controls\CoordinateSystem.xaml.cs">
       <DependentUpon>CoordinateSystem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
-      <DependentUpon>LineStyleControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
-    <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
-    <Compile Include="CustomStyles\Converter\LineStyleToBooleanConverter.cs" />
-    <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
-    <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
-    <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
-    <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
-    <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
-    <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
-    <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
-    <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
-    <Compile Include="CustomStyles\Types\TimeUnit.cs" />
-    <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
-    <Compile Include="Data\ChartData.cs" />
-    <Compile Include="Logging\TraceListener.cs" />
-    <Compile Include="Modules\Chart\ChartHelpDialog.xaml.cs">
-      <DependentUpon>ChartHelpDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataAcquisition\ModifyDataWindow.xaml.cs">
-      <DependentUpon>ModifyDataWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataGrid\ExportOptions.cs" />
-    <Compile Include="Modules\DataGrid\ExportOptionsDialog.xaml.cs">
-      <DependentUpon>ExportOptionsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataGrid\DifferenceQuotientDialog.xaml.cs">
-      <DependentUpon>DifferenceQuotientDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
-      <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Dialogs\CoordinateSystemWindow.cs" />
-    <Compile Include="Modules\Video\Dialogs\MeasureAngleWindow.xaml.cs">
-      <DependentUpon>MeasureAngleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.xaml.cs">
-      <DependentUpon>MeasureLengthWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Dialogs\VLCWindow.xaml.cs">
-      <DependentUpon>VLCWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Filter\CropFilterRgb.cs" />
-    <Compile Include="Modules\Video\Filter\MotionHighlightingSpecial.cs" />
-    <Compile Include="Modules\Video\Filter\TwoFramesDifferenceDetectorSpecial.cs" />
-    <Compile Include="Resources\Labels.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Labels.resx</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\VianaSaveDialog.xaml.cs">
-      <DependentUpon>VianaSaveDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataGrid\TimeUnitDialog.xaml.cs">
-      <DependentUpon>TimeUnitDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Dialogs\VideoInfoDialog.xaml.cs">
-      <DependentUpon>VideoInfoDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Settings.cs" />
-    <Page Include="CustomStyles\Controls\CoordinateSystem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomStyles\Styles\TextBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Styles\EnumStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Styles\OfficeColors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\LineStyleControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="CustomStyles\Styles\DataGridStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="CustomStyles\Types\AxisType.cs" />
-    <Compile Include="CustomStyles\Types\ChartType.cs" />
-    <Compile Include="Data\CalibrationData.cs" />
-    <Compile Include="Data\Collections\DataCharts.cs" />
-    <Compile Include="Data\Filter\Interpolation\InterpolationFilterTypes.cs" />
-    <Compile Include="Data\Filter\Interpolation\InterpolationFilter.cs" />
-    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothControl.xaml.cs">
-      <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml.cs">
-      <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\Theory\FunctionCalcTree.cs" />
-    <Compile Include="Data\Filter\Theory\TheoryFilter.cs" />
-    <Compile Include="Data\Collections\XYSample.cs" />
-    <Compile Include="Data\Filter\NumericalPrecisionDialog.xaml.cs">
-      <DependentUpon>NumericalPrecisionDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\LineOptionsDialog.xaml.cs">
-      <DependentUpon>LineOptionsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\Regression\MatrixLibrary.cs" />
-    <Compile Include="Data\Filter\Regression\RegressionFilter.cs" />
-    <Compile Include="Data\Filter\Regression\RegressionOptionsDialog.xaml.cs">
-      <DependentUpon>RegressionOptionsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\Theory\Parser.cs" />
-    <Compile Include="Data\Filter\Regression\RegressionType.cs" />
-    <Compile Include="Data\Collections\TimeSample.cs" />
-    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothFilter.cs" />
-    <Compile Include="Data\Filter\Interpolation\InterpolationOptionsDialog.xaml.cs">
-      <DependentUpon>InterpolationOptionsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\Interpolation\MovingAverageFilter.cs" />
-    <Compile Include="Data\Filter\FilterBase.cs" />
-    <Compile Include="Data\ProcessingData.cs" />
-    <Compile Include="Data\Filter\Interpolation\MovingAverageUserControl.xaml.cs">
-      <DependentUpon>MovingAverageUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Filter\FilterData.cs" />
-    <Compile Include="Modules\DataGrid\ExportData.cs" />
-    <Compile Include="MainWindow\StatusBarContent.cs" />
-    <Compile Include="CustomStyles\Types\MeasurementType.cs" />
-    <Compile Include="CustomStyles\Types\SortedCollection.cs" />
-    <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
-    <Compile Include="CustomStyles\Types\LengthUnit.cs" />
-    <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
-    <Compile Include="Data\Collections\DataAxes.cs" />
-    <Compile Include="Data\Collections\DataCollection.cs" />
-    <Compile Include="Data\Collections\DataSample.cs" />
-    <Compile Include="Data\VideoData.cs" />
-    <Compile Include="Logging\ErrorLogger.cs" />
-    <Compile Include="MainWindow\AboutWindow.xaml.cs">
-      <DependentUpon>AboutWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\VianaDialog.xaml.cs">
-      <DependentUpon>VianaDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\TopFrame.xaml.cs">
-      <DependentUpon>TopFrame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Chart\ChartWindow.xaml.cs">
-      <DependentUpon>ChartWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Chart\ExportChart.cs" />
-    <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
-      <DependentUpon>DataGridWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Control\LiveVideoController.cs" />
-    <Compile Include="Modules\Video\Dialogs\SaveVideoDialog.xaml.cs">
-      <DependentUpon>SaveVideoDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Dialogs\SelectColorWindow.xaml.cs">
-      <DependentUpon>SelectColorWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\Filter\ColorAndCropFilterRgb.cs" />
-    <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
-    <Compile Include="Modules\Video\Filter\FilterBase.cs" />
-    <Compile Include="Modules\Video\Dialogs\CalibrateVideoWindow.cs" />
-    <Compile Include="Modules\Video\Dialogs\ClipVideoWindow.cs" />
-    <Compile Include="Modules\Video\Control\VideoBase.cs" />
-    <Compile Include="Modules\Video\Control\DShowUtils.cs" />
-    <Compile Include="Modules\Video\Control\Video.cs" />
-    <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
-    <Compile Include="Modules\Video\Filter\GMFBridge.cs" />
-    <Compile Include="Modules\Video\Filter\Histogram.cs" />
-    <Compile Include="Modules\Video\Filter\HistogramMinMaxSegmentator.cs" />
-    <Compile Include="Modules\Video\Filter\Segment.cs" />
-    <Compile Include="Modules\Video\Filter\VectorInt.cs" />
-    <Compile Include="Modules\Video\Filter\YCbCrColor.cs" />
-    <Compile Include="CustomStyles\Types\VideoMode.cs" />
-    <Compile Include="Modules\Base\WindowWithHelp.xaml.cs">
-      <DependentUpon>WindowWithHelp.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
-      <DependentUpon>BlobsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml.cs">
-      <DependentUpon>ManualDataAquisitionWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
-    <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
-    <Compile Include="Modules\Video\Dialogs\LengthDialog.xaml.cs">
-      <DependentUpon>LengthDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Video\VideoWindow.xaml.cs">
-      <DependentUpon>VideoWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="CustomStyles\Styles\SliderStyles.xaml.cs">
-      <DependentUpon>SliderStyles.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
-      <DependentUpon>MediaSliderControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
     <Compile Include="CustomStyles\Controls\DualTextBox.xaml.cs">
       <DependentUpon>DualTextBox.xaml</DependentUpon>
     </Compile>
@@ -376,8 +260,14 @@
     <Compile Include="CustomStyles\Controls\LabeledTextBox.xaml.cs">
       <DependentUpon>LabeledTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomStyles\Controls\LineStyleControl.xaml.cs">
+      <DependentUpon>LineStyleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomStyles\Controls\MediaSlider.xaml.cs">
       <DependentUpon>MediaSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
+      <DependentUpon>MediaSliderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Controls\MediaTickBar.cs" />
     <Compile Include="CustomStyles\Controls\MediaTrack.cs" />
@@ -390,25 +280,286 @@
     <Compile Include="CustomStyles\Controls\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="Application\Viana.xaml">
+    <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
+    <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
+    <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
+    <Compile Include="CustomStyles\Converter\DSTimeToMillisecondsConverter.cs" />
+    <Compile Include="CustomStyles\Converter\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="CustomStyles\Converter\LineStyleToBooleanConverter.cs" />
+    <Compile Include="CustomStyles\Converter\NumberOfObjectsToVisibilityConverter.cs" />
+    <Compile Include="CustomStyles\Converter\PercentToDoubleConverter.cs" />
+    <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
+    <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
+    <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
+    <Compile Include="CustomStyles\Styles\SliderStyles.xaml.cs">
+      <DependentUpon>SliderStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\ChartType.cs" />
+    <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
+    <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
+    <Compile Include="CustomStyles\Types\LengthUnit.cs" />
+    <Compile Include="CustomStyles\Types\MeasurementType.cs" />
+    <Compile Include="CustomStyles\Types\SortedCollection.cs" />
+    <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
+    <Compile Include="CustomStyles\Types\TimeUnit.cs" />
+    <Compile Include="CustomStyles\Types\VideoMode.cs" />
+    <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
+    <Compile Include="Data\CalibrationData.cs" />
+    <Compile Include="Data\ChartData.cs" />
+    <Compile Include="Data\Collections\DataAxes.cs" />
+    <Compile Include="Data\Collections\DataCharts.cs" />
+    <Compile Include="Data\Collections\DataCollection.cs" />
+    <Compile Include="Data\Collections\DataSample.cs" />
+    <Compile Include="Data\Collections\TimeSample.cs" />
+    <Compile Include="Data\Collections\XYSample.cs" />
+    <Compile Include="Data\Filter\FilterBase.cs" />
+    <Compile Include="Data\Filter\FilterData.cs" />
+    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothControl.xaml.cs">
+      <DependentUpon>ExponentialSmoothControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\Interpolation\ExponentialSmoothFilter.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationFilter.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationFilterTypes.cs" />
+    <Compile Include="Data\Filter\Interpolation\InterpolationOptionsDialog.xaml.cs">
+      <DependentUpon>InterpolationOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\Interpolation\MovingAverageFilter.cs" />
+    <Compile Include="Data\Filter\Interpolation\MovingAverageUserControl.xaml.cs">
+      <DependentUpon>MovingAverageUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\LineOptionsDialog.xaml.cs">
+      <DependentUpon>LineOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\NumericalPrecisionDialog.xaml.cs">
+      <DependentUpon>NumericalPrecisionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\Regression\MatrixLibrary.cs" />
+    <Compile Include="Data\Filter\Regression\RegressionFilter.cs" />
+    <Compile Include="Data\Filter\Regression\RegressionOptionsDialog.xaml.cs">
+      <DependentUpon>RegressionOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\Regression\RegressionType.cs" />
+    <Compile Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml.cs">
+      <DependentUpon>CalculatorAndFktEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Filter\Theory\FunctionCalcTree.cs" />
+    <Compile Include="Data\Filter\Theory\Parser.cs" />
+    <Compile Include="Data\Filter\Theory\TheoryFilter.cs" />
+    <Compile Include="Data\ProcessingData.cs" />
+    <Compile Include="Data\VideoData.cs" />
+    <Compile Include="Localization\Labels.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\Labels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\Labels.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Logging\ErrorLogger.cs" />
+    <Compile Include="Logging\TraceListener.cs" />
+    <Compile Include="MainWindow\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\StatusBarContent.cs" />
+    <Compile Include="MainWindow\TopFrame.xaml.cs">
+      <DependentUpon>TopFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\VianaDialog.xaml.cs">
+      <DependentUpon>VianaDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\VianaSaveDialog.xaml.cs">
+      <DependentUpon>VianaSaveDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Base\WindowWithHelp.xaml.cs">
+      <DependentUpon>WindowWithHelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Chart\ChartHelpDialog.xaml.cs">
+      <DependentUpon>ChartHelpDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Chart\ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Chart\ExportChart.cs" />
+    <Compile Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml.cs">
+      <DependentUpon>ManualDataAquisitionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataAcquisition\ModifyDataWindow.xaml.cs">
+      <DependentUpon>ModifyDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataGrid\DataGridWindow.xaml.cs">
+      <DependentUpon>DataGridWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataGrid\DifferenceQuotientDialog.xaml.cs">
+      <DependentUpon>DifferenceQuotientDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataGrid\ExportData.cs" />
+    <Compile Include="Modules\DataGrid\ExportOptions.cs" />
+    <Compile Include="Modules\DataGrid\ExportOptionsDialog.xaml.cs">
+      <DependentUpon>ExportOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataGrid\SkipPointsDialog.xaml.cs">
+      <DependentUpon>SkipPointsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataGrid\TimeUnitDialog.xaml.cs">
+      <DependentUpon>TimeUnitDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
+      <DependentUpon>BlobsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Control\DShowUtils.cs" />
+    <Compile Include="Modules\Video\Control\LiveVideoController.cs" />
+    <Compile Include="Modules\Video\Control\Video.cs" />
+    <Compile Include="Modules\Video\Control\VideoBase.cs" />
+    <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
+    <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
+    <Compile Include="Modules\Video\Control\VideoPlayerCV.cs" />
+    <Compile Include="Modules\Video\Dialogs\CalibrateVideoWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\ClipVideoWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\CoordinateSystemWindow.cs" />
+    <Compile Include="Modules\Video\Dialogs\LengthDialog.xaml.cs">
+      <DependentUpon>LengthDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\MeasureAngleWindow.xaml.cs">
+      <DependentUpon>MeasureAngleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\MeasureLengthWindow.xaml.cs">
+      <DependentUpon>MeasureLengthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\SaveVideoDialog.xaml.cs">
+      <DependentUpon>SaveVideoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\SelectColorWindow.xaml.cs">
+      <DependentUpon>SelectColorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\VideoInfoDialog.xaml.cs">
+      <DependentUpon>VideoInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Dialogs\VLCWindow.xaml.cs">
+      <DependentUpon>VLCWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilterRGB.cs" />
+    <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
+    <Compile Include="Modules\Video\Filter\CropFilterRgb.cs" />
+    <Compile Include="Modules\Video\Filter\FilterBase.cs" />
+    <Compile Include="Modules\Video\Filter\GMFBridge.cs" />
+    <Compile Include="Modules\Video\Filter\Histogram.cs" />
+    <Compile Include="Modules\Video\Filter\HistogramMinMaxSegmentator.cs" />
+    <Compile Include="Modules\Video\Filter\MotionHighlightingSpecial.cs" />
+    <Compile Include="Modules\Video\Filter\Segment.cs" />
+    <Compile Include="Modules\Video\Filter\TwoFramesDifferenceDetectorSpecial.cs" />
+    <Compile Include="Modules\Video\Filter\VectorInt.cs" />
+    <Compile Include="Modules\Video\Filter\YCbCrColor.cs" />
+    <Compile Include="Modules\Video\VideoWindow.xaml.cs">
+      <DependentUpon>VideoWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CustomStyles\Controls\CheckBox.xaml">
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\CoordinateSystem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\DualTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\LabeledSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\LabeledTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\LineStyleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\MediaSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\MediaSliderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\NumericUpDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\RadioButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\ScrollViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\Slider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Controls\SliderValue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Converter\Converter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Page Include="CustomStyles\Styles\BackgroundStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Styles\DataGridStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Styles\EnumStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomStyles\Styles\GeometryItems.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyles\Converter\Converter.xaml">
+    <Page Include="CustomStyles\Styles\OfficeColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Styles\SliderStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomStyles\Styles\TextBoxStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomStyles\Styles\VianaStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -424,19 +575,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml">
+    <Page Include="Data\Filter\LineOptionsDialog.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Data\Filter\NumericalPrecisionDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Data\Filter\Regression\RegressionOptionsDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Data\Filter\LineOptionsDialog.xaml">
+    <Page Include="Data\Filter\Theory\CalculatorAndFktEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MainWindow\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\TopFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow\VianaDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -447,10 +618,16 @@
     <Page Include="Modules\Base\WindowWithHelp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\Chart\ChartHelpDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\Chart\ChartHelpDialog.xaml">
+    <Page Include="Modules\Chart\ChartWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -458,7 +635,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Modules\DataGrid\DataGridWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Modules\DataGrid\DifferenceQuotientDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataGrid\ExportOptionsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -470,69 +655,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Modules\DataGrid\ExportOptionsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Modules\Video\BlobDetection\BlobsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomStyles\Styles\SliderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\MediaSliderControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Styles\VianaStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow\VianaDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow\TopFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Modules\Chart\ChartWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Modules\DataGrid\DataGridWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
+    <Page Include="Modules\Video\Dialogs\LengthDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -545,12 +672,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Video\Dialogs\SaveVideoDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Modules\Video\Dialogs\LengthDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -563,327 +684,78 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Video\Dialogs\VLCWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Video\VideoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\CheckBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\ComboBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\DualTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\ImageButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\LabeledSlider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\LabeledTextBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\MediaSlider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\NumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\RadioButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\ScrollBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\Slider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CustomStyles\Controls\SliderValue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AForge">
-      <HintPath>..\packages\AForge.2.2.5\lib\AForge.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Imaging">
-      <HintPath>..\packages\AForge.Imaging.2.2.5\lib\AForge.Imaging.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Math">
-      <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Vision, Version=2.2.5.0, Culture=neutral, PublicKeyToken=b612fa915eefaa06, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AForge.Vision.2.2.5\lib\AForge.Vision.dll</HintPath>
-    </Reference>
-    <Reference Include="DirectShowLib-2005, Version=2.1.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\DirectShowLib-2005.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip.Reduced">
-      <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
-    </Reference>
-    <Reference Include="MediaInfo.DotNetWrapper, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediaInfo.DotNetWrapper.1.0.7\lib\net40\MediaInfo.DotNetWrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="MediaInfo.Wrapper, Version=21.9.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MediaInfo.Wrapper.21.9.1\lib\net45\MediaInfo.Wrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Microsoft.Office.Interop.Excel.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Microsoft.Office.Interop.Word.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenCvSharp4.4.5.3.20210817\lib\net461\OpenCvSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenCvSharp4.4.5.3.20210817\lib\net461\OpenCvSharp.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenCvSharp.WpfExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenCvSharp4.WpfExtensions.4.5.3.20210817\lib\net461\OpenCvSharp.WpfExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot, Version=2014.1.318.1, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Core.2014.1.318.1\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot.Wpf, Version=2014.1.318.1, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\OxyPlot.Wpf.2014.1.318.1\lib\NET45\OxyPlot.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="PresentationFramework.Aero" />
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Ribbon" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationTypes">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.3.1.0\lib\net45\Vlc.DotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.Interops.3.1.0\lib\net45\Vlc.DotNet.Core.Interops.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Forms, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Forms.3.1.0\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="WindowsFormsIntegration">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WPFLocalizeExtension, Version=0.0.0.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFLocalizeExtension.3.9.0\lib\net452\WPFLocalizeExtension.dll</HintPath>
-    </Reference>
-    <Reference Include="WPFMath, Version=0.1.0.39082, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\WPFMath.dll</HintPath>
-    </Reference>
-    <Reference Include="XAMLMarkupExtensions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\XAMLMarkupExtensions.2.1.1\lib\net452\XAMLMarkupExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=2.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Color32.png" />
-    <Resource Include="Images\ColorReset32.png" />
-    <Resource Include="Images\RevertLayout32.png" />
-    <Resource Include="Images\SaveLayout32.png" />
-    <Resource Include="Images\SaveImage32.png" />
-    <Resource Include="Images\Help32.png" />
-    <Resource Include="Images\Help16.png" />
-    <Resource Include="Images\Properties32.png" />
-    <Resource Include="Images\Properties16.png" />
-    <Resource Include="Images\Reset32.png" />
-    <Resource Include="Images\Reset16.png" />
-    <Resource Include="Images\Save16.png" />
-    <Resource Include="Images\UpArrow16.png" />
-    <Resource Include="Images\DownArrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Labels.en.resx">
-      <SubType>Designer</SubType>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Localization\Labels.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Labels.de.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Localization\Labels.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Labels.resx">
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Localization\Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+    <None Include="Images\InstallerBanner.psd" />
+    <None Include="Images\InstallerBkg.psd" />
+    <None Include="Images\NoVideo.psd" />
+    <None Include="Images\RecordVideo.psd" />
+    <None Include="Images\VianaLogo.psd" />
+    <None Include="Images\VianaNET32.psd" />
+    <None Include="Images\VideoOpen.psd" />
+    <None Include="Modules\DataGrid\template.ods" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\VianaNET.ico" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Analyse32.png" />
-    <Resource Include="Images\Video32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\VianaNET_32.png" />
+    <Resource Include="CustomStyles\Cursors\CursorMinus.cur" />
+    <Resource Include="CustomStyles\Cursors\CursorPlus.cur" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Analyse16.png" />
-    <Resource Include="Images\Video16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\VideoOpen32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\SeekNext16.png" />
-    <Resource Include="Images\SeekPrevious16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Revert16.png" />
-    <Resource Include="Images\Start16.png" />
-    <Resource Include="Images\Stop16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Pause16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\SelectColor16.png" />
-    <Resource Include="Images\SelectColor32.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\Analyse32.png" />
+    <Resource Include="Images\Angle16.png" />
+    <Resource Include="Images\Angle32.png" />
     <Resource Include="Images\AutomaticDataAquisition16.png" />
     <Resource Include="Images\AutomaticDataAquisition32.png" />
-    <Resource Include="Images\Calibrate16.png" />
-    <Resource Include="Images\Calibrate32.png" />
-    <Resource Include="Images\ManualDataAquisition16.png" />
-    <Resource Include="Images\ManualDataAquisition32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ClipVideo16.png" />
-    <Resource Include="Images\ClipVideo32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Chart16.png" />
-    <Resource Include="Images\Chart32.png" />
-    <Resource Include="Images\Datagrid16.png" />
-    <Resource Include="Images\Datagrid32.png" />
-    <Resource Include="Images\VianaLogo64.png" />
-    <Resource Include="Images\Options16.png" />
-    <Resource Include="Images\Options32.png" />
-    <Resource Include="Images\ExportToCsv16.png" />
-    <Resource Include="Images\ExportToCsv32.png" />
-    <Resource Include="Images\ExportToTxt16.png" />
-    <Resource Include="Images\ExportToTxt32.png" />
-    <Resource Include="Images\ExportToXls16.png" />
-    <Resource Include="Images\ExportToXls32.png" />
-    <Resource Include="Images\ExportToXml16.png" />
-    <Resource Include="Images\ExportToXml32.png" />
-    <Resource Include="Images\Capture16.png" />
-    <Resource Include="Images\Capture32.png" />
-    <Resource Include="Images\ExportChartToClipboard16.png" />
-    <Resource Include="Images\ExportChartToClipboard32.png" />
-    <Resource Include="Images\ExportChartToFile16.png" />
-    <Resource Include="Images\ExportChartToFile32.png" />
-    <Resource Include="Images\ExportChartToWord16.png" />
-    <Resource Include="Images\ExportChartToWord32.png" />
-    <Resource Include="Images\LoadVideo16.png" />
-    <Resource Include="Images\LoadVideo32.png" />
-    <Resource Include="Images\VideoWindow16.png" />
-    <Resource Include="Images\VideoWindow32.png" />
     <Resource Include="Images\AutomaticDataAquisitionStop16.png" />
     <Resource Include="Images\AutomaticDataAquisitionStop32.png" />
-    <Resource Include="Images\DataDelete16.png" />
-    <Resource Include="Images\DataDelete32.png" />
-    <Resource Include="Images\Recalculate16.png" />
-    <Resource Include="Images\Recalculate32.png" />
-    <Resource Include="Images\VideoDeviceOptions16.png" />
-    <Resource Include="Images\VideoDeviceOptions32.png" />
-    <Resource Include="Images\Record16.png" />
+    <Resource Include="Images\Calibrate16.png" />
+    <Resource Include="Images\Calibrate32.png" />
+    <Resource Include="Images\Capture16.png" />
+    <Resource Include="Images\Capture32.png" />
+    <Resource Include="Images\Chart16.png" />
+    <Resource Include="Images\Chart32.png" />
     <Resource Include="Images\ChartTypeArea16.png" />
     <Resource Include="Images\ChartTypeArea32.png" />
+    <Resource Include="Images\ChartTypeBubble16.png" />
+    <Resource Include="Images\ChartTypeBubble32.png" />
     <Resource Include="Images\ChartTypeColumn16.png" />
     <Resource Include="Images\ChartTypeColumn32.png" />
     <Resource Include="Images\ChartTypeLine16.png" />
@@ -892,135 +764,143 @@
     <Resource Include="Images\ChartTypePie32.png" />
     <Resource Include="Images\ChartTypeXYScatter16.png" />
     <Resource Include="Images\ChartTypeXYScatter32.png" />
-    <Resource Include="Images\ChartTypeBubble16.png" />
-    <Resource Include="Images\ChartTypeBubble32.png" />
-    <Resource Include="Images\RecordVideo32.png" />
-    <Resource Include="Images\Save32.png" />
-    <Resource Include="Images\New16.png" />
-    <Resource Include="Images\New32.png" />
+    <Resource Include="Images\ClipVideo16.png" />
+    <Resource Include="Images\ClipVideo32.png" />
+    <Resource Include="Images\Close16.png" />
+    <Resource Include="Images\Close32.png" />
+    <Resource Include="Images\Color32.png" />
+    <Resource Include="Images\ColorDetection16.png" />
+    <Resource Include="Images\ColorDetection32.png" />
+    <Resource Include="Images\ColorReset32.png" />
+    <Resource Include="Images\CoordinateSystem16.png" />
+    <Resource Include="Images\CoordinateSystem32.png" />
+    <Resource Include="Images\DataDelete16.png" />
+    <Resource Include="Images\DataDelete32.png" />
+    <Resource Include="Images\Datagrid16.png" />
+    <Resource Include="Images\Datagrid32.png" />
+    <Resource Include="Images\DifferenceQuotient16.png" />
+    <Resource Include="Images\DifferenceQuotient32.png" />
+    <Resource Include="Images\DownArrow.png" />
+    <Resource Include="Images\Exit32.png" />
+    <Resource Include="Images\ExportChart32.png" />
+    <Resource Include="Images\ExportChartToClipboard16.png" />
+    <Resource Include="Images\ExportChartToClipboard32.png" />
+    <Resource Include="Images\ExportChartToFile16.png" />
+    <Resource Include="Images\ExportChartToFile32.png" />
+    <Resource Include="Images\ExportChartToWord16.png" />
+    <Resource Include="Images\ExportChartToWord32.png" />
+    <Resource Include="Images\ExportData32.png" />
+    <Resource Include="Images\ExportToCsv16.png" />
+    <Resource Include="Images\ExportToCsv32.png" />
+    <Resource Include="Images\ExportToOds16.png" />
+    <Resource Include="Images\ExportToOds32.png" />
+    <Resource Include="Images\ExportToTxt16.png" />
+    <Resource Include="Images\ExportToTxt32.png" />
+    <Resource Include="Images\ExportToXls16.png" />
+    <Resource Include="Images\ExportToXls32.png" />
+    <Resource Include="Images\ExportToXml16.png" />
+    <Resource Include="Images\ExportToXml32.png" />
     <Resource Include="Images\FileOpen16.png" />
     <Resource Include="Images\FileOpen32.png" />
+    <Resource Include="Images\Help16.png" />
+    <Resource Include="Images\Help32.png" />
+    <Resource Include="Images\InstallerBanner.jpg" />
+    <Resource Include="Images\InterpolateData16.png" />
+    <Resource Include="Images\InterpolateData32.png" />
+    <Resource Include="Images\LineColor16.png" />
+    <Resource Include="Images\LineColor32.png" />
+    <Resource Include="Images\LoadVideo16.png" />
+    <Resource Include="Images\LoadVideo32.png" />
+    <Resource Include="Images\ManualDataAquisition16.png" />
+    <Resource Include="Images\ManualDataAquisition32.png" />
+    <Resource Include="Images\ModifyData16.png" />
+    <Resource Include="Images\ModifyData32.png" />
+    <Resource Include="Images\MotionDetection16.png" />
+    <Resource Include="Images\MotionDetection32.png" />
+    <Resource Include="Images\New16.png" />
+    <Resource Include="Images\New32.png" />
+    <Resource Include="Images\NoVideo800600.png" />
+    <Resource Include="Images\Open16.png" />
+    <Resource Include="Images\Open32.png" />
+    <Resource Include="Images\Options16.png" />
+    <Resource Include="Images\Options32.png" />
+    <Resource Include="Images\Pause16.png" />
     <Resource Include="Images\PlayControl16.png" />
     <Resource Include="Images\PlayControl32.png" />
     <Resource Include="Images\PlayControl48.png" />
+    <Resource Include="Images\Properties16.png" />
+    <Resource Include="Images\Properties32.png" />
+    <Resource Include="Images\Recalculate16.png" />
+    <Resource Include="Images\Recalculate32.png" />
+    <Resource Include="Images\Record16.png" />
     <Resource Include="Images\RecordControl16.png" />
+    <Resource Include="Images\RecordControl16B.png" />
     <Resource Include="Images\RecordControl32.png" />
     <Resource Include="Images\RecordControl48.png" />
-    <Resource Include="Images\StepForward16.png" />
-    <Resource Include="Images\StepForward32.png" />
-    <Resource Include="Images\StopControl16.png" />
-    <Resource Include="Images\StopControl32.png" />
-    <Resource Include="Images\StopControl48.png" />
-    <Resource Include="Images\InterpolateData16.png" />
-    <Resource Include="Images\InterpolateData32.png" />
-    <Resource Include="Images\SelectObject16.png" />
-    <Resource Include="Images\SelectObject32.png" />
+    <Resource Include="Images\RecordVideo16.png" />
+    <Resource Include="Images\RecordVideo32.png" />
+    <Resource Include="Images\RegressionExponentialA16.png" />
     <Resource Include="Images\RegressionExponentialA32.png" />
+    <Resource Include="Images\RegressionExponentialB16.png" />
     <Resource Include="Images\RegressionExponentialB32.png" />
     <Resource Include="Images\RegressionLinear16.png" />
     <Resource Include="Images\RegressionLinear32.png" />
-    <Resource Include="Images\RegressionLogarithmus32.png" />
-    <Resource Include="Images\RegressionPotentiell32.png" />
-    <Resource Include="Images\RegressionQuadratisch32.png" />
-    <Resource Include="Images\RegressionResonanz32.png" />
-    <Resource Include="Images\RegressionSinusExponential32.png" />
-    <Resource Include="Images\RegressionSinus32.png" />
     <Resource Include="Images\RegressionLogarithmus16.png" />
-    <Resource Include="Images\RegressionExponentialA16.png" />
-    <Resource Include="Images\RegressionExponentialB16.png" />
+    <Resource Include="Images\RegressionLogarithmus32.png" />
     <Resource Include="Images\RegressionPotentiell16.png" />
+    <Resource Include="Images\RegressionPotentiell32.png" />
     <Resource Include="Images\RegressionQuadratisch16.png" />
+    <Resource Include="Images\RegressionQuadratisch32.png" />
     <Resource Include="Images\RegressionResonanz16.png" />
-    <Resource Include="Images\RegressionSinusExponential16.png" />
+    <Resource Include="Images\RegressionResonanz32.png" />
     <Resource Include="Images\RegressionSinus16.png" />
-    <Resource Include="Images\RecordVideo16.png" />
-    <Resource Include="Images\ExportChart32.png" />
-    <Resource Include="Images\ExportData32.png" />
-    <Resource Include="Images\LineColor16.png" />
-    <Resource Include="Images\LineColor32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\TimeUnit16.png" />
-    <Resource Include="Images\TimeUnit32.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\RegressionSinus32.png" />
+    <Resource Include="Images\RegressionSinusExponential16.png" />
+    <Resource Include="Images\RegressionSinusExponential32.png" />
+    <Resource Include="Images\Reset16.png" />
+    <Resource Include="Images\Reset32.png" />
+    <Resource Include="Images\Revert16.png" />
+    <Resource Include="Images\RevertLayout32.png" />
+    <Resource Include="Images\Save16.png" />
+    <Resource Include="Images\Save32.png" />
+    <Resource Include="Images\SaveImage32.png" />
+    <Resource Include="Images\SaveLayout32.png" />
+    <Resource Include="Images\SeekNext16.png" />
+    <Resource Include="Images\SeekPrevious16.png" />
+    <Resource Include="Images\SelectColor16.png" />
+    <Resource Include="Images\SelectColor32.png" />
+    <Resource Include="Images\SelectObject16.png" />
+    <Resource Include="Images\SelectObject32.png" />
     <Resource Include="Images\SetCutoutLeft16.png" />
     <Resource Include="Images\SetCutoutRight16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\SetZeroTime16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="CustomStyles\Cursors\CursorMinus.cur" />
-    <Resource Include="CustomStyles\Cursors\CursorPlus.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\VideoInfo16.png" />
-    <Resource Include="Images\VideoInfo32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\SkipPoints16.png" />
     <Resource Include="Images\SkipPoints32.png" />
+    <Resource Include="Images\Start16.png" />
+    <Resource Include="Images\StepForward16.png" />
+    <Resource Include="Images\StepForward32.png" />
+    <Resource Include="Images\Stop16.png" />
+    <Resource Include="Images\StopControl16.png" />
+    <Resource Include="Images\StopControl32.png" />
+    <Resource Include="Images\StopControl48.png" />
+    <Resource Include="Images\TimeUnit16.png" />
+    <Resource Include="Images\TimeUnit32.png" />
+    <Resource Include="Images\UpArrow16.png" />
+    <Resource Include="Images\VianaLogo64.png" />
+    <Resource Include="Images\VianaNET.ico" />
+    <Resource Include="Images\VianaNET_32.png" />
+    <Resource Include="Images\Video16.png" />
+    <Resource Include="Images\Video32.png" />
+    <Resource Include="Images\VideoDeviceOptions16.png" />
+    <Resource Include="Images\VideoDeviceOptions32.png" />
+    <Resource Include="Images\VideoInfo16.png" />
+    <Resource Include="Images\VideoInfo32.png" />
+    <Resource Include="Images\VideoOpen32.png" />
+    <Resource Include="Images\VideoWindow16.png" />
+    <Resource Include="Images\VideoWindow32.png" />
+    <Resource Include="Images\Word16.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ExportToOds16.png" />
-    <Resource Include="Images\ExportToOds32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ModifyData16.png" />
-    <Resource Include="Images\ModifyData32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\DifferenceQuotient16.png" />
-    <Resource Include="Images\DifferenceQuotient32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\CoordinateSystem16.png" />
-    <Resource Include="Images\CoordinateSystem32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Angle16.png" />
-    <Resource Include="Images\Angle32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ColorDetection16.png" />
-    <Resource Include="Images\ColorDetection32.png" />
-    <Resource Include="Images\MotionDetection16.png" />
-    <Resource Include="Images\MotionDetection32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\NoVideo800600.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <PropertyGroup>
-    <PostBuildEvent>if $(PlatformName) == x64 (
-  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
-  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x64\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
-) ELSE (
- C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
-  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x86\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
-)
-
-</PostBuildEvent>
-  </PropertyGroup>
-  <Import Project="..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets" Condition="Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
@@ -1028,4 +908,14 @@
     <Error Condition="!Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets'))" />
     <Error Condition="!Exists('..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props'))" />
   </Target>
+  <Import Project="..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets" Condition="Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(PlatformName) == x64 (
+  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x64\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
+) ELSE (
+ C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
+  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x86\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

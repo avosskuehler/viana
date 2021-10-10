@@ -24,8 +24,6 @@ namespace VianaNET.Modules.DataGrid
 {
   using System.Windows;
 
-  using VianaNET.Application;
-
   /// <summary>
   ///   The length dialog.
   /// </summary>
@@ -40,7 +38,7 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
       this.UseEveryNthPointNumericUpDown.Focus();
-      this.UseEveryNthPointNumericUpDown.Value = Viana.Project.VideoData.UseEveryNthPoint;
+      this.UseEveryNthPointNumericUpDown.Value = App.Project.VideoData.UseEveryNthPoint;
     }
 
     #endregion
@@ -73,7 +71,7 @@ namespace VianaNET.Modules.DataGrid
     private void OkClick(object sender, RoutedEventArgs e)
     {
       this.DialogResult = true;
-      Viana.Project.VideoData.UseEveryNthPoint = (int)this.UseEveryNthPointNumericUpDown.Value;
+      App.Project.VideoData.UseEveryNthPoint = (int)this.UseEveryNthPointNumericUpDown.Value;
       this.Close();
     }
 

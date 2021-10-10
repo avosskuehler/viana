@@ -88,57 +88,27 @@ namespace VianaNET.Modules.Video.Filter
     /// <summary>
     ///   Gets the center.
     /// </summary>
-    public VectorInt Center
-    {
-      get
-      {
-        return this.Min.Interpolate(this.Max, 0.5f);
-      }
-    }
+    public VectorInt Center => this.Min.Interpolate(this.Max, 0.5f);
 
     /// <summary>
     ///   Gets the diagonal.
     /// </summary>
-    public int Diagonal
-    {
-      get
-      {
-        return (this.Max - this.Min).Length;
-      }
-    }
+    public int Diagonal => (this.Max - this.Min).Length;
 
     /// <summary>
     ///   Gets the diagonal sq.
     /// </summary>
-    public int DiagonalSq
-    {
-      get
-      {
-        return (this.Max - this.Min).LengthSq;
-      }
-    }
+    public int DiagonalSq => (this.Max - this.Min).LengthSq;
 
     /// <summary>
     ///   Gets the height.
     /// </summary>
-    public int Height
-    {
-      get
-      {
-        return this.Max.Y - this.Min.Y;
-      }
-    }
+    public int Height => this.Max.Y - this.Min.Y;
 
     /// <summary>
     ///   Gets the width.
     /// </summary>
-    public int Width
-    {
-      get
-      {
-        return this.Max.X - this.Min.X;
-      }
-    }
+    public int Width => this.Max.X - this.Min.X;
 
     #endregion
   }

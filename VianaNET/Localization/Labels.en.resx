@@ -1,0 +1,1939 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AberrationStringPrefix" xml:space="preserve">
+    <value>Error square: </value>
+  </data>
+  <data name="AboutBoxCredits" xml:space="preserve">
+    <value>Herwig Niemeyer for the regression and theory series functionality along with lots of bug fixes.</value>
+  </data>
+  <data name="AboutBoxCreditsHeader" xml:space="preserve">
+    <value>Credits to</value>
+  </data>
+  <data name="AboutBoxDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="AboutBoxTextBlock" xml:space="preserve">
+    <value>This software is intended to detect and analyse object movements in videos. It is based on the famous Viana version of Thomas Kerstinga t the Universität Essen. 
+Would like to have feedback:</value>
+  </data>
+  <data name="AboutBoxTitle" xml:space="preserve">
+    <value>About Viana.NET</value>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>Viana.NET</value>
+  </data>
+  <data name="AskDeleteDataMessage" xml:space="preserve">
+    <value>Are you sure to delete all selected data points?</value>
+  </data>
+  <data name="AskDeleteDataMessageTitle" xml:space="preserve">
+    <value>Delete data points?</value>
+  </data>
+  <data name="AskDeleteDataTitle" xml:space="preserve">
+    <value>Adapt data</value>
+  </data>
+  <data name="AskSaveProjectDialogDescription" xml:space="preserve">
+    <value>Should save the current project?</value>
+  </data>
+  <data name="AskSaveProjectDialogMessage" xml:space="preserve">
+    <value>You worked with a newly created project. Should it be saved before closing?</value>
+  </data>
+  <data name="AskSaveProjectDialogTitle" xml:space="preserve">
+    <value>Save project?</value>
+  </data>
+  <data name="AskVideoNotFoundMessage" xml:space="preserve">
+    <value>Specify the current video file location or use cancel, to open only the already analyzed data.</value>
+  </data>
+  <data name="AskVideoNotFoundMessageTitle" xml:space="preserve">
+    <value>The video file %1 was not present in the directory %2.</value>
+  </data>
+  <data name="AskVideoNotFoundTitle" xml:space="preserve">
+    <value>Video file not found</value>
+  </data>
+  <data name="AxisAcceleration" xml:space="preserve">
+    <value>Acceleration</value>
+  </data>
+  <data name="AxisAccelerationInterpolated" xml:space="preserve">
+    <value>Acceleration (interpolated)</value>
+  </data>
+  <data name="AxisAccelerationXDirection" xml:space="preserve">
+    <value>Acceleration in x-Direction</value>
+  </data>
+  <data name="AxisAccelerationXDirectionInterpolated" xml:space="preserve">
+    <value>Acceleration in x-Direction (interpolated)</value>
+  </data>
+  <data name="AxisAccelerationYDirection" xml:space="preserve">
+    <value>Acceleration in y-Direction</value>
+  </data>
+  <data name="AxisAccelerationYDirectionInterpolated" xml:space="preserve">
+    <value>Acceleration in y-Direction (interpolated)</value>
+  </data>
+  <data name="AxisAoverT" xml:space="preserve">
+    <value>t-a</value>
+  </data>
+  <data name="AxisAXoverT" xml:space="preserve">
+    <value>t-ax</value>
+  </data>
+  <data name="AxisAYoverT" xml:space="preserve">
+    <value>t-ay</value>
+  </data>
+  <data name="AxisDistance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="AxisDistanceX" xml:space="preserve">
+    <value>Distance in x-direction</value>
+  </data>
+  <data name="AxisDistanceY" xml:space="preserve">
+    <value>Distance in y-direction</value>
+  </data>
+  <data name="AxisDoverV" xml:space="preserve">
+    <value>v-d</value>
+  </data>
+  <data name="AxisDXoverVX" xml:space="preserve">
+    <value>vx-dx</value>
+  </data>
+  <data name="AxisDYoverVY" xml:space="preserve">
+    <value>vy-dy</value>
+  </data>
+  <data name="AxisFrame" xml:space="preserve">
+    <value>Framenumber</value>
+  </data>
+  <data name="AxisLength" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="AxisLengthX" xml:space="preserve">
+    <value>Length in x-Direction</value>
+  </data>
+  <data name="AxisLengthY" xml:space="preserve">
+    <value>Length in y-Direction</value>
+  </data>
+  <data name="AxisPixelX" xml:space="preserve">
+    <value>Video pixel (X)</value>
+  </data>
+  <data name="AxisPixelY" xml:space="preserve">
+    <value>Video pixel (Y)</value>
+  </data>
+  <data name="AxisPositionX" xml:space="preserve">
+    <value>X position</value>
+  </data>
+  <data name="AxisPositionY" xml:space="preserve">
+    <value>Y position</value>
+  </data>
+  <data name="AxisSoverT" xml:space="preserve">
+    <value>t-s</value>
+  </data>
+  <data name="AxisSoverV" xml:space="preserve">
+    <value>v-s</value>
+  </data>
+  <data name="AxisSXoverVX" xml:space="preserve">
+    <value>vx-sx</value>
+  </data>
+  <data name="AxisSYoverVY" xml:space="preserve">
+    <value>vy-sy</value>
+  </data>
+  <data name="AxisTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="AxisVelocity" xml:space="preserve">
+    <value>Velocity</value>
+  </data>
+  <data name="AxisVelocityInterpolated" xml:space="preserve">
+    <value>Velocity (interpolated)</value>
+  </data>
+  <data name="AxisVelocityXDirection" xml:space="preserve">
+    <value>Velocity in x-direction</value>
+  </data>
+  <data name="AxisVelocityXDirectionInterpolated" xml:space="preserve">
+    <value>Velocity in x-direction (interpolated)</value>
+  </data>
+  <data name="AxisVelocityYDirection" xml:space="preserve">
+    <value>Velocity in y-direction</value>
+  </data>
+  <data name="AxisVelocityYDirectionInterpolated" xml:space="preserve">
+    <value>Velocity in y-direction (interpolated)</value>
+  </data>
+  <data name="AxisVoverA" xml:space="preserve">
+    <value>a-v</value>
+  </data>
+  <data name="AxisVoverT" xml:space="preserve">
+    <value>t-v</value>
+  </data>
+  <data name="AxisVXoverAX" xml:space="preserve">
+    <value>ax-vx</value>
+  </data>
+  <data name="AxisVXoverT" xml:space="preserve">
+    <value>t-vx</value>
+  </data>
+  <data name="AxisVYoverAY" xml:space="preserve">
+    <value>ay-vy</value>
+  </data>
+  <data name="AxisVYoverT" xml:space="preserve">
+    <value>t-vy</value>
+  </data>
+  <data name="AxisXoverT" xml:space="preserve">
+    <value>t-x</value>
+  </data>
+  <data name="AxisYoverT" xml:space="preserve">
+    <value>t-y</value>
+  </data>
+  <data name="AxisYoverX" xml:space="preserve">
+    <value>x-y</value>
+  </data>
+  <data name="BlobsControlDetectedPositionsHeader" xml:space="preserve">
+    <value>Detected Positions</value>
+  </data>
+  <data name="BlobsControlFoundBlobsHeader" xml:space="preserve">
+    <value>Found Blobs</value>
+  </data>
+  <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
+    <value>Motion detection</value>
+  </data>
+  <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
+    <value>Color detection</value>
+  </data>
+  <data name="BlobsNoObjectFound" xml:space="preserve">
+    <value>no object found</value>
+  </data>
+  <data name="BlobsObjectsFound" xml:space="preserve">
+    <value>object found</value>
+  </data>
+  <data name="ButtonAboutLabelDescription" xml:space="preserve">
+    <value>About the application.</value>
+  </data>
+  <data name="ButtonAboutLabelTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ButtonAboutToolTipDescription" xml:space="preserve">
+    <value>Click here to get information about the application.</value>
+  </data>
+  <data name="ButtonAboutToolTipTitle" xml:space="preserve">
+    <value>About Viana</value>
+  </data>
+  <data name="ButtonApplicationLabelDescription" xml:space="preserve">
+    <value>Displays application menu</value>
+  </data>
+  <data name="ButtonApplicationLabelTitle" xml:space="preserve">
+    <value>Application button</value>
+  </data>
+  <data name="ButtonApplicationToolTipDescription" xml:space="preserve">
+    <value>Click here to control the application.</value>
+  </data>
+  <data name="ButtonApplicationToolTipTitle" xml:space="preserve">
+    <value>Application manager</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionLabelDescription" xml:space="preserve">
+    <value>Detect the position of the target automatically.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionLabelTitle" xml:space="preserve">
+    <value>Automatic analysis.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopLabelDescription" xml:space="preserve">
+    <value>Stop the automatic detection of the target.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopLabelTitle" xml:space="preserve">
+    <value>Stop automatic analysis.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopToolTipDescription" xml:space="preserve">
+    <value>Click here to stop the auto detection of the target object in each video frame.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionStopToolTipTitle" xml:space="preserve">
+    <value>Stop automatic data aquisition.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionToolTipDescription" xml:space="preserve">
+    <value>Click here to detect the position of the target object in each video frame automatically via the color key.</value>
+  </data>
+  <data name="ButtonAutomaticDataAquisitionToolTipTitle" xml:space="preserve">
+    <value>Automatic data aquisition.</value>
+  </data>
+  <data name="ButtonCalculateVelocityLabelDescription" xml:space="preserve">
+    <value>Calculate distance, velocity, acceleration</value>
+  </data>
+  <data name="ButtonCalculateVelocityLabelTitle" xml:space="preserve">
+    <value>Calculate s,v,a</value>
+  </data>
+  <data name="ButtonCalculateVelocityToolTipDescription" xml:space="preserve">
+    <value>Click here to calculate distance, velocity, acceleration of the data samples.</value>
+  </data>
+  <data name="ButtonCalculateVelocityToolTipTitle" xml:space="preserve">
+    <value>Calculate s,v,a</value>
+  </data>
+  <data name="ButtonCalibrateVideoLabelDescription" xml:space="preserve">
+    <value>Calibrate the video dimensions.</value>
+  </data>
+  <data name="ButtonCalibrateVideoLabelTitle" xml:space="preserve">
+    <value>Calibrate video.</value>
+  </data>
+  <data name="ButtonCalibrateVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to specify origin and dimensions of the video content.</value>
+  </data>
+  <data name="ButtonCalibrateVideoToolTipTitle" xml:space="preserve">
+    <value>Calibrate video.</value>
+  </data>
+  <data name="ButtonCaptureVideoLabelDescription" xml:space="preserve">
+    <value>Capture video from webcam.</value>
+  </data>
+  <data name="ButtonCaptureVideoLabelTitle" xml:space="preserve">
+    <value>Capture video</value>
+  </data>
+  <data name="ButtonCaptureVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to capture a video stream from a webcam or other video input device for analysis.</value>
+  </data>
+  <data name="ButtonCaptureVideoToolTipTitle" xml:space="preserve">
+    <value>Capture video</value>
+  </data>
+  <data name="ButtonChangeColorSchemeLabelDescription" xml:space="preserve">
+    <value>Change the color scheme of the headers and backgrounds of the application.</value>
+  </data>
+  <data name="ButtonChangeColorSchemeLabelTitle" xml:space="preserve">
+    <value>Change color scheme</value>
+  </data>
+  <data name="ButtonChangeColorSchemeToolTipDescription" xml:space="preserve">
+    <value>Click here to change the color scheme of the headers and backgrounds of the application.</value>
+  </data>
+  <data name="ButtonChangeColorSchemeToolTipTitle" xml:space="preserve">
+    <value>Change color scheme</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelDescription" xml:space="preserve">
+    <value>Change the language of the application.</value>
+  </data>
+  <data name="ButtonChangeLanguageLabelTitle" xml:space="preserve">
+    <value>Change language</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipDescription" xml:space="preserve">
+    <value>Click here to change the language of the application.</value>
+  </data>
+  <data name="ButtonChangeLanguageToolTipTitle" xml:space="preserve">
+    <value>Change language</value>
+  </data>
+  <data name="ButtonChartWindowLabelDescription" xml:space="preserve">
+    <value>Create data charts</value>
+  </data>
+  <data name="ButtonChartWindowLabelTitle" xml:space="preserve">
+    <value>Charts</value>
+  </data>
+  <data name="ButtonChartWindowToolTipDescription" xml:space="preserve">
+    <value>Click here to create charts fot the measured data points.</value>
+  </data>
+  <data name="ButtonChartWindowToolTipTitle" xml:space="preserve">
+    <value>Create data charts</value>
+  </data>
+  <data name="ButtonChooseAnalysisLabelDescription" xml:space="preserve">
+    <value>Select manual or automatic analysis mode.</value>
+  </data>
+  <data name="ButtonChooseAnalysisLabelTitle" xml:space="preserve">
+    <value>Select analysis mode</value>
+  </data>
+  <data name="ButtonChooseAnalysisToolTipDescription" xml:space="preserve">
+    <value>Click here to select manual or automatic analysis mode along with other options.</value>
+  </data>
+  <data name="ButtonChooseAnalysisToolTipTitle" xml:space="preserve">
+    <value>Select analysis mode</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisLabelDescription" xml:space="preserve">
+    <value>Setup automatic video analysis</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisLabelTitle" xml:space="preserve">
+    <value>Automatic mode</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisToolTipDescription" xml:space="preserve">
+    <value>Click here for automatic video analysis setup</value>
+  </data>
+  <data name="ButtonChooseAutomaticAnalysisToolTipTitle" xml:space="preserve">
+    <value>Automatic mode</value>
+  </data>
+  <data name="ButtonClipVideoLabelDescription" xml:space="preserve">
+    <value>Select the area in which the target may appear.</value>
+  </data>
+  <data name="ButtonClipVideoLabelTitle" xml:space="preserve">
+    <value>Clip video area.</value>
+  </data>
+  <data name="ButtonClipVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to select the area of the video in which the target can appear to speed up processing and improve precision.</value>
+  </data>
+  <data name="ButtonClipVideoToolTipTitle" xml:space="preserve">
+    <value>Clip video search area.</value>
+  </data>
+  <data name="ButtonCloseApplicationLabelDescription" xml:space="preserve">
+    <value>Close the application</value>
+  </data>
+  <data name="ButtonCloseApplicationLabelTitle" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ButtonCloseApplicationToolTipDescription" xml:space="preserve">
+    <value>Click here to close VianaNET</value>
+  </data>
+  <data name="ButtonCloseApplicationToolTipTitle" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ButtonCoordinateSystemLabelTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipDescription" xml:space="preserve">
+    <value>Click here, to specify position and orientation of the coordinate system.</value>
+  </data>
+  <data name="ButtonCoordinateSystemToolTipTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="ButtonDatagridWindowLabelDescription" xml:space="preserve">
+    <value>Displays datagrid window</value>
+  </data>
+  <data name="ButtonDatagridWindowLabelTitle" xml:space="preserve">
+    <value>Datagrid</value>
+  </data>
+  <data name="ButtonDatagridWindowToolTipDescription" xml:space="preserve">
+    <value>Click here to show the datagrid window</value>
+  </data>
+  <data name="ButtonDatagridWindowToolTipTitle" xml:space="preserve">
+    <value>Show datagrid window</value>
+  </data>
+  <data name="ButtonDeleteDataLabelDescription" xml:space="preserve">
+    <value>Deletes the captured data samples.</value>
+  </data>
+  <data name="ButtonDeleteDataLabelTitle" xml:space="preserve">
+    <value>Delete data</value>
+  </data>
+  <data name="ButtonDeleteDataToolTipDescription" xml:space="preserve">
+    <value>Click here to delete the captured data samples.</value>
+  </data>
+  <data name="ButtonDeleteDataToolTipTitle" xml:space="preserve">
+    <value>Delete data</value>
+  </data>
+  <data name="ButtonDifferenceQuotientLabelTitle" xml:space="preserve">
+    <value>Differentiation calculation</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipDescription" xml:space="preserve">
+    <value>Click here, to specify the differentiation, the difference quotient.</value>
+  </data>
+  <data name="ButtonDifferenceQuotientToolTipTitle" xml:space="preserve">
+    <value>Differentiation calculation</value>
+  </data>
+  <data name="ButtonExportChartLabelTitle" xml:space="preserve">
+    <value>Export chart</value>
+  </data>
+  <data name="ButtonExportChartToClipboardLabelDescription" xml:space="preserve">
+    <value>Copies the current chart to the clipboard.</value>
+  </data>
+  <data name="ButtonExportChartToClipboardLabelTitle" xml:space="preserve">
+    <value>Copy chart</value>
+  </data>
+  <data name="ButtonExportChartToClipboardToolTipDescription" xml:space="preserve">
+    <value>Click here to copy the current chart to the clipboard.</value>
+  </data>
+  <data name="ButtonExportChartToClipboardToolTipTitle" xml:space="preserve">
+    <value>Copy chart</value>
+  </data>
+  <data name="ButtonExportChartToFileLabelDescription" xml:space="preserve">
+    <value>Saves the current chart to disk.</value>
+  </data>
+  <data name="ButtonExportChartToFileLabelTitle" xml:space="preserve">
+    <value>Save chart</value>
+  </data>
+  <data name="ButtonExportChartToFileToolTipDescription" xml:space="preserve">
+    <value>Click here to save the current chart to disk.</value>
+  </data>
+  <data name="ButtonExportChartToFileToolTipTitle" xml:space="preserve">
+    <value>Save chart</value>
+  </data>
+  <data name="ButtonExportChartToolTipDescription" xml:space="preserve">
+    <value>Exports the displayed diagram into clipboard or different file formats.</value>
+  </data>
+  <data name="ButtonExportChartToolTipTitle" xml:space="preserve">
+    <value>Exports the current diagram</value>
+  </data>
+  <data name="ButtonExportChartToWordLabelDescription" xml:space="preserve">
+    <value>Opens the current chart in word.</value>
+  </data>
+  <data name="ButtonExportChartToWordLabelTitle" xml:space="preserve">
+    <value>Copy chart to word</value>
+  </data>
+  <data name="ButtonExportChartToWordToolTipDescription" xml:space="preserve">
+    <value>Click here to open the current chart in word.</value>
+  </data>
+  <data name="ButtonExportChartToWordToolTipTitle" xml:space="preserve">
+    <value>Copy chart to word</value>
+  </data>
+  <data name="ButtonExportDataLabelTitle" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="ButtonExportDataToCsvLabelDescription" xml:space="preserve">
+    <value>Exports the data into a text file with csv style</value>
+  </data>
+  <data name="ButtonExportDataToCsvLabelTitle" xml:space="preserve">
+    <value>Export to csv</value>
+  </data>
+  <data name="ButtonExportDataToCsvToolTipDescription" xml:space="preserve">
+    <value>Click here to export the current data into a textfile in csv style</value>
+  </data>
+  <data name="ButtonExportDataToCsvToolTipTitle" xml:space="preserve">
+    <value>Export to csv</value>
+  </data>
+  <data name="ButtonExportDataToOdsLabelTitle" xml:space="preserve">
+    <value>Export data to ods</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipDescription" xml:space="preserve">
+    <value>Exports the data into an open document spreadsheet file.</value>
+  </data>
+  <data name="ButtonExportDataToOdsToolTipTitle" xml:space="preserve">
+    <value>Export to ods</value>
+  </data>
+  <data name="ButtonExportDataToolTipDescription" xml:space="preserve">
+    <value>Enables data export to different file formats like txt, csv, xml and xls</value>
+  </data>
+  <data name="ButtonExportDataToolTipTitle" xml:space="preserve">
+    <value>Export the recorded data</value>
+  </data>
+  <data name="ButtonExportDataToTxtLabelDescription" xml:space="preserve">
+    <value>Exports the data into a text file</value>
+  </data>
+  <data name="ButtonExportDataToTxtLabelTitle" xml:space="preserve">
+    <value>Export to txt</value>
+  </data>
+  <data name="ButtonExportDataToTxtToolTipDescription" xml:space="preserve">
+    <value>Click here to export the current data into a textfile.</value>
+  </data>
+  <data name="ButtonExportDataToTxtToolTipTitle" xml:space="preserve">
+    <value>Export to txt</value>
+  </data>
+  <data name="ButtonExportDataToXlsLabelDescription" xml:space="preserve">
+    <value>Exports the data into an excel worksheet</value>
+  </data>
+  <data name="ButtonExportDataToXlsLabelTitle" xml:space="preserve">
+    <value>Export to excel</value>
+  </data>
+  <data name="ButtonExportDataToXlsToolTipDescription" xml:space="preserve">
+    <value>Click here to export the current data into an excel worksheet.</value>
+  </data>
+  <data name="ButtonExportDataToXlsToolTipTitle" xml:space="preserve">
+    <value>Export to excel</value>
+  </data>
+  <data name="ButtonExportDataToXmlLabelDescription" xml:space="preserve">
+    <value>Exports the data into a xml file</value>
+  </data>
+  <data name="ButtonExportDataToXmlLabelTitle" xml:space="preserve">
+    <value>Export to xml</value>
+  </data>
+  <data name="ButtonExportDataToXmlToolTipDescription" xml:space="preserve">
+    <value>Click here to export the current data into a xml file.</value>
+  </data>
+  <data name="ButtonExportDataToXmlToolTipTitle" xml:space="preserve">
+    <value>Export to xml</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelDescription" xml:space="preserve">
+    <value>Displays a dialog to specify interpolation properties.</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesLabelTitle" xml:space="preserve">
+    <value>Interpolate</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipDescription" xml:space="preserve">
+    <value>Click here to display a dialog for detailed specification of interpolation options.</value>
+  </data>
+  <data name="ButtonInterpolationPropertiesToolTipTitle" xml:space="preserve">
+    <value>Interpolate</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelDescription" xml:space="preserve">
+    <value>Calculates interpolated values for the derived values</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataLabelTitle" xml:space="preserve">
+    <value>Interpolate data</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipDescription" xml:space="preserve">
+    <value>Click here to smooth velocity and accelerationd data.</value>
+  </data>
+  <data name="ButtonIsInterpolatingDataToolTipTitle" xml:space="preserve">
+    <value>Interpolate data</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipDescription" xml:space="preserve">
+    <value>Activate this button to use color detection for searching the objects.</value>
+  </data>
+  <data name="ButtonIsUsingColorDetectionToolTipTitle" xml:space="preserve">
+    <value>Activate/deactivate color detection</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipDescription" xml:space="preserve">
+    <value>Activate this button to use motion detection for searching the objects. Can be used in combination with color detection.</value>
+  </data>
+  <data name="ButtonIsUsingMotionDetectionToolTipTitle" xml:space="preserve">
+    <value>Activate/deactivate motion detection</value>
+  </data>
+  <data name="ButtonLoadVideoLabelDescription" xml:space="preserve">
+    <value>Load video file for analysis.</value>
+  </data>
+  <data name="ButtonLoadVideoLabelTitle" xml:space="preserve">
+    <value>Load video</value>
+  </data>
+  <data name="ButtonLoadVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to load a new video file for analysis.</value>
+  </data>
+  <data name="ButtonLoadVideoToolTipTitle" xml:space="preserve">
+    <value>Load video from file.</value>
+  </data>
+  <data name="ButtonManualDataAquisitionLabelDescription" xml:space="preserve">
+    <value>Specify the position of the target manually.</value>
+  </data>
+  <data name="ButtonManualDataAquisitionLabelTitle" xml:space="preserve">
+    <value>Manual analysis.</value>
+  </data>
+  <data name="ButtonManualDataAquisitionToolTipDescription" xml:space="preserve">
+    <value>Click here to manually specify the position of the target object in each video frame.</value>
+  </data>
+  <data name="ButtonManualDataAquisitionToolTipTitle" xml:space="preserve">
+    <value>Manual data aquisition.</value>
+  </data>
+  <data name="ButtonMeasureAngleLabelTitle" xml:space="preserve">
+    <value>Measure angle</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipDescription" xml:space="preserve">
+    <value>Click here, to measure angles in the video.</value>
+  </data>
+  <data name="ButtonMeasureAngleToolTipTitle" xml:space="preserve">
+    <value>Measure angle</value>
+  </data>
+  <data name="ButtonMeasureLengthLabelTitle" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipDescription" xml:space="preserve">
+    <value>Click here, to measure different lengths in the video.</value>
+  </data>
+  <data name="ButtonMeasureLengthToolTipTitle" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="ButtonModifyDataLabelTitle" xml:space="preserve">
+    <value>Move data points</value>
+  </data>
+  <data name="ButtonModifyDataToolTipDescription" xml:space="preserve">
+    <value>Click here to adapt the location of single data points</value>
+  </data>
+  <data name="ButtonModifyDataToolTipTitle" xml:space="preserve">
+    <value>Change data point location</value>
+  </data>
+  <data name="ButtonNewLabelDescription" xml:space="preserve">
+    <value>Start new video analysis project.</value>
+  </data>
+  <data name="ButtonNewLabelTitle" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ButtonNewProjectLabelTitle" xml:space="preserve">
+    <value>New project</value>
+  </data>
+  <data name="ButtonNewProjectToolTipDescription" xml:space="preserve">
+    <value>Creates a new projekt and clears all existing data.</value>
+  </data>
+  <data name="ButtonNewProjectToolTipTitle" xml:space="preserve">
+    <value>Create new project</value>
+  </data>
+  <data name="ButtonNewToolTipDescription" xml:space="preserve">
+    <value>Click here to create a new video analysis project.</value>
+  </data>
+  <data name="ButtonNewToolTipTitle" xml:space="preserve">
+    <value>New video analysis</value>
+  </data>
+  <data name="ButtonOtherOptionsLabelDescription" xml:space="preserve">
+    <value>Display more options</value>
+  </data>
+  <data name="ButtonOtherOptionsLabelTitle" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="ButtonOtherOptionsToolTipDescription" xml:space="preserve">
+    <value>Click here to display more options for the automatic detection.</value>
+  </data>
+  <data name="ButtonOtherOptionsToolTipTitle" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="ButtonPropertiesWindowLabelDescription" xml:space="preserve">
+    <value>Show properties window</value>
+  </data>
+  <data name="ButtonPropertiesWindowLabelTitle" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="ButtonPropertiesWindowToolTipDescription" xml:space="preserve">
+    <value>Click here to show the properties window</value>
+  </data>
+  <data name="ButtonPropertiesWindowToolTipTitle" xml:space="preserve">
+    <value>Show properties window</value>
+  </data>
+  <data name="ButtonRecordVideoLabelDescription" xml:space="preserve">
+    <value>Opens a video recording window, which enables to save life video from connected devices to disk for further analysis.</value>
+  </data>
+  <data name="ButtonRecordVideoLabelTitle" xml:space="preserve">
+    <value>Record Video</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipDescription" xml:space="preserve">
+    <value>Click here to open a video recording window, which enables to save life video from connected devices to disk for further analysis.</value>
+  </data>
+  <data name="ButtonRecordVideoToolTipTitle" xml:space="preserve">
+    <value>Record video from device to disk.</value>
+  </data>
+  <data name="ButtonResetColorSchemeLabelDescription" xml:space="preserve">
+    <value>Reset the color scheme to defaults.</value>
+  </data>
+  <data name="ButtonResetColorSchemeLabelTitle" xml:space="preserve">
+    <value>Reset color scheme</value>
+  </data>
+  <data name="ButtonResetColorSchemeToolTipDescription" xml:space="preserve">
+    <value>Click here to reset the color scheme to defaults.</value>
+  </data>
+  <data name="ButtonResetColorSchemeToolTipTitle" xml:space="preserve">
+    <value>Change color scheme</value>
+  </data>
+  <data name="ButtonRestoreLayoutLabelDescription" xml:space="preserve">
+    <value>Load window layout of user interface and window arrangement from file.</value>
+  </data>
+  <data name="ButtonRestoreLayoutLabelTitle" xml:space="preserve">
+    <value>Restore window layout of user interface and window arrangement from file.</value>
+  </data>
+  <data name="ButtonRestoreLayoutToolTipDescription" xml:space="preserve">
+    <value>Click here to load the stored window layout of the user interface and window arrangement from a xml file.</value>
+  </data>
+  <data name="ButtonRestoreLayoutToolTipTitle" xml:space="preserve">
+    <value>Load window layout from file.</value>
+  </data>
+  <data name="ButtonSaveLayoutLabelDescription" xml:space="preserve">
+    <value>Save layout of user interface and window arrangement to a file.</value>
+  </data>
+  <data name="ButtonSaveLayoutLabelTitle" xml:space="preserve">
+    <value>Save window layout</value>
+  </data>
+  <data name="ButtonSaveLayoutToolTipDescription" xml:space="preserve">
+    <value>Click here save the layout of the user interface and window arrangement to a file.</value>
+  </data>
+  <data name="ButtonSaveLayoutToolTipTitle" xml:space="preserve">
+    <value>Save window layout to file.</value>
+  </data>
+  <data name="ButtonSelectColorLabelDescription" xml:space="preserve">
+    <value>Select the target objects color.</value>
+  </data>
+  <data name="ButtonSelectColorLabelTitle" xml:space="preserve">
+    <value>Select target color.</value>
+  </data>
+  <data name="ButtonSelectColorToolTipDescription" xml:space="preserve">
+    <value>Click here to select the target objects color in the current video frame.</value>
+  </data>
+  <data name="ButtonSelectColorToolTipTitle" xml:space="preserve">
+    <value>Select target color.</value>
+  </data>
+  <data name="ButtonSelectedColorLabelTitle" xml:space="preserve">
+    <value>Target color</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelDescription" xml:space="preserve">
+    <value>Specifies the number of tracker objects in the video.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle" xml:space="preserve">
+    <value>tracked objects</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsLabelTitle2" xml:space="preserve">
+    <value>tracked object</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipDescription" xml:space="preserve">
+    <value>This is the number of tracked objects.</value>
+  </data>
+  <data name="ButtonSelectNumberOfObjectsToolTipTitle" xml:space="preserve">
+    <value>Number of tracked objects</value>
+  </data>
+  <data name="ButtonSelectObjectLabelDescription" xml:space="preserve">
+    <value>Changes the object the parameters are valid for.</value>
+  </data>
+  <data name="ButtonSelectObjectLabelTitle" xml:space="preserve">
+    <value>Select object</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipDescription" xml:space="preserve">
+    <value>Click here to change the object index. The parameters on the right are specified only for this object.</value>
+  </data>
+  <data name="ButtonSelectObjectToolTipTitle" xml:space="preserve">
+    <value>Select object</value>
+  </data>
+  <data name="ButtonSkipPointsLabelTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipDescription" xml:space="preserve">
+    <value>Click, here to specify the number of points between two data samples that are ignored for analysis.</value>
+  </data>
+  <data name="ButtonSkipPointsToolTipTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitLabelTitle" xml:space="preserve">
+    <value>Switch time unit</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipDescription" xml:space="preserve">
+    <value>Change the unit for the time variable, e.g. from milliseconds to seconds.</value>
+  </data>
+  <data name="ButtonSwitchTimeUnitToolTipTitle" xml:space="preserve">
+    <value>Change the time unit</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesLabelDescription" xml:space="preserve">
+    <value>Show properties dialog for selected video device.</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesLabelTitle" xml:space="preserve">
+    <value>Video Device</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesToolTipDescription" xml:space="preserve">
+    <value>Click here to display a dialog for selecting and modifying options for the selected video device.</value>
+  </data>
+  <data name="ButtonVideoCaptureDevicePropertiesToolTipTitle" xml:space="preserve">
+    <value>Device properties</value>
+  </data>
+  <data name="ButtonVideoWindowLabelDescription" xml:space="preserve">
+    <value>Displays video window</value>
+  </data>
+  <data name="ButtonVideoWindowLabelTitle" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="ButtonVideoWindowToolTipDescription" xml:space="preserve">
+    <value>Click here to show the video window</value>
+  </data>
+  <data name="ButtonVideoWindowToolTipTitle" xml:space="preserve">
+    <value>Show video window</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneCalc" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CalculatorDialogButtonDoneFktEdit" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="CalculatorDialogInsert" xml:space="preserve">
+    <value>insert</value>
+  </data>
+  <data name="CalculatorDialogPhysicalKonst" xml:space="preserve">
+    <value>physical constants</value>
+  </data>
+  <data name="CalculatorDialogTitleCalc" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="CalculatorDialogTitleFunctionEditor" xml:space="preserve">
+    <value>Function editor</value>
+  </data>
+  <data name="CalibrateVideoWindowTitle" xml:space="preserve">
+    <value>Calibrate video ...</value>
+  </data>
+  <data name="CalibrateWindowHelpControlTitle" xml:space="preserve">
+    <value>Help for calibration</value>
+  </data>
+  <data name="CalibrateWindowSpecifyLengthDescription" xml:space="preserve">
+    <value>Please click with the left mouse button at the starting position of an object with known length and click again at the ending point of the object with known length.
+F10: Clear measurement.</value>
+  </data>
+  <data name="CalibrateWindowSpecifyLengthHeader" xml:space="preserve">
+    <value>Specify known length</value>
+  </data>
+  <data name="CalibrateWindowSpecifyOriginDescription" xml:space="preserve">
+    <value>Please click with the left mouse button at the position in the video frame where the origin of the data points (0,0) should be located.
+F10: Reset origin and measurement.</value>
+  </data>
+  <data name="CalibrateWindowSpecifyOriginHeader" xml:space="preserve">
+    <value>Specify origin</value>
+  </data>
+  <data name="CalibrationErrorDescription" xml:space="preserve">
+    <value>Please enter a length value.</value>
+  </data>
+  <data name="CalibrationErrorMessage" xml:space="preserve">
+    <value> Please enter the value without the unit and specify the measurements unit separately.</value>
+  </data>
+  <data name="CalibrationErrorTitle" xml:space="preserve">
+    <value>Calibration error ...</value>
+  </data>
+  <data name="CalibrationLengthErrorHint" xml:space="preserve">
+    <value>Please specify length without unit.</value>
+  </data>
+  <data name="CalibrationLengthToShortDescription" xml:space="preserve">
+    <value>Please note:</value>
+  </data>
+  <data name="CalibrationLengthToShortMessage" xml:space="preserve">
+    <value>The measured distance is to small to be valid, please try again.</value>
+  </data>
+  <data name="CalibrationLengthToShortTitle" xml:space="preserve">
+    <value>Distance to small</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChartDisplayOptionsLabelDescription" xml:space="preserve">
+    <value>Displays properties pane for axes description and other options.</value>
+  </data>
+  <data name="ChartDisplayOptionsLabelTitle" xml:space="preserve">
+    <value>Display chart properties</value>
+  </data>
+  <data name="ChartDisplayOptionsToolTipDescription" xml:space="preserve">
+    <value>Click here to display properties pane for axes description and other options.</value>
+  </data>
+  <data name="ChartDisplayOptionsToolTipTitle" xml:space="preserve">
+    <value>Display chart properties</value>
+  </data>
+  <data name="ChartExportedToClipboardMessage" xml:space="preserve">
+    <value>Chart exported to clipboard.</value>
+  </data>
+  <data name="ChartHelpDialogDataGroupHeader" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChartHelpDialogDataGroupText" xml:space="preserve">
+    <value>Display coordinates - left mouse button
+Modify coordinates - left mouse button double click on data point
+Select points - drag rectangle with left mouse button (needs to be activated in chart properties on the right)
+Delete selected points - 'Del' key</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupHeader" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ChartHelpDialogShortCutGroupText" xml:space="preserve">
+    <value>Pan - right mouse button
+Zoom - mouse wheel
+Zoom by rectangle - Ctrl + right mouse button
+Reset axes - 'a'
+Copy bitmap - Ctrl + c</value>
+  </data>
+  <data name="ChartHelpDialogTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ChartHelpDialogTopFrameTitle" xml:space="preserve">
+    <value>Shortcut info for the diagram module.</value>
+  </data>
+  <data name="ChartWindowAxesHeader" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="ChartWindowAxisIntervalHeader" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="ChartWindowAxisMaximumHeader" xml:space="preserve">
+    <value>Maximum</value>
+  </data>
+  <data name="ChartWindowAxisMinimumHeader" xml:space="preserve">
+    <value>Minimum</value>
+  </data>
+  <data name="ChartWindowAxisStyleHeader" xml:space="preserve">
+    <value>Chart style</value>
+  </data>
+  <data name="ChartWindowCalculatorHeader" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="ChartWindowChartFitAndSmooth" xml:space="preserve">
+    <value>Smooth &amp; Fit</value>
+  </data>
+  <data name="ChartWindowChartHeader" xml:space="preserve">
+    <value>Chart content</value>
+  </data>
+  <data name="ChartWindowChartLegend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="ChartWindowChartProperties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="ChartWindowChartSeries" xml:space="preserve">
+    <value>x-y samples</value>
+  </data>
+  <data name="ChartWindowChartTitle" xml:space="preserve">
+    <value>Data samples</value>
+  </data>
+  <data name="ChartWindowChartTitleHeader" xml:space="preserve">
+    <value>Chart title</value>
+  </data>
+  <data name="ChartWindowCustomAxisHeader" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="ChartWindowCustomDiagrammTypes" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="ChartWindowDataSeriesLabel" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="ChartWindowDisplayCurveLabel" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ChartWindowEnableTrackerCheckBox" xml:space="preserve">
+    <value>Enable data selection.</value>
+  </data>
+  <data name="ChartWindowHelpHeader" xml:space="preserve">
+    <value>Shortcut info</value>
+  </data>
+  <data name="ChartWindowInterpolationHeader" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ChartWindowInterpolationLineLabel" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ChartWindowInterpolationOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ChartWindowInterpolationSeriesLabel" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="ChartWindowLegendHeader" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="ChartWindowLegendPlacementInside" xml:space="preserve">
+    <value>Inside</value>
+  </data>
+  <data name="ChartWindowLegendPlacementLabel" xml:space="preserve">
+    <value>Legend position</value>
+  </data>
+  <data name="ChartWindowLegendPlacementOutside" xml:space="preserve">
+    <value>Outside</value>
+  </data>
+  <data name="ChartWindowLegendTitleHeader" xml:space="preserve">
+    <value>Legend title</value>
+  </data>
+  <data name="ChartWindowLineColorLabel" xml:space="preserve">
+    <value>color</value>
+  </data>
+  <data name="ChartWindowObjectSelectionLabel" xml:space="preserve">
+    <value>Select object</value>
+  </data>
+  <data name="ChartWindowPhaseSpaceHeader" xml:space="preserve">
+    <value>Phase space</value>
+  </data>
+  <data name="ChartWindowPositionSpaceHeader" xml:space="preserve">
+    <value>Position space</value>
+  </data>
+  <data name="ChartWindowPrecisionLabel" xml:space="preserve">
+    <value>Precision</value>
+  </data>
+  <data name="ChartWindowRegressionChooseTypeLabel" xml:space="preserve">
+    <value>choose type</value>
+  </data>
+  <data name="ChartWindowRegressionHeader" xml:space="preserve">
+    <value>fit</value>
+  </data>
+  <data name="ChartWindowRegressionLineLegend" xml:space="preserve">
+    <value>regression</value>
+  </data>
+  <data name="ChartWindowRegressionSeriesLabel" xml:space="preserve">
+    <value>Regression</value>
+  </data>
+  <data name="ChartWindowRescaleAxesButton" xml:space="preserve">
+    <value>Rescale axes</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleColored" xml:space="preserve">
+    <value>Colored</value>
+  </data>
+  <data name="ChartWindowScatterPointStyleSingleColored" xml:space="preserve">
+    <value>Single colored</value>
+  </data>
+  <data name="ChartWindowSelectionEnabledHeader" xml:space="preserve">
+    <value>Selection enabled</value>
+  </data>
+  <data name="ChartWindowSeriesHeader" xml:space="preserve">
+    <value>Title of the data series</value>
+  </data>
+  <data name="ChartWindowSeriesStyleHeader" xml:space="preserve">
+    <value>Line series style</value>
+  </data>
+  <data name="ChartWindowSeriesTitleHeader" xml:space="preserve">
+    <value>Series title</value>
+  </data>
+  <data name="ChartWindowShowGridLinesHeader" xml:space="preserve">
+    <value>Show grid lines</value>
+  </data>
+  <data name="ChartWindowShowLegendHeader" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="ChartWindowTheoreticalFunctionChooseTypeLabel" xml:space="preserve">
+    <value>function</value>
+  </data>
+  <data name="ChartWindowTheorieLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="ChartWindowTheoryLineLegend" xml:space="preserve">
+    <value>theoretical function</value>
+  </data>
+  <data name="ChartWindowTheorySeriesLabel" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="ChartWindowTitle" xml:space="preserve">
+    <value>Charting</value>
+  </data>
+  <data name="ChartWindowTitlesHeader" xml:space="preserve">
+    <value>Titles</value>
+  </data>
+  <data name="ChartWindowXAxisHeader" xml:space="preserve">
+    <value>x-Axis</value>
+  </data>
+  <data name="ChartWindowXAxisTitleHeader" xml:space="preserve">
+    <value>x-Axis title </value>
+  </data>
+  <data name="ChartWindowYAxisHeader" xml:space="preserve">
+    <value>y-Axis</value>
+  </data>
+  <data name="ChartWindowYAxisTitleHeader" xml:space="preserve">
+    <value>y-Axis title</value>
+  </data>
+  <data name="ClipVideoDescriptionMessage" xml:space="preserve">
+    <value>Please click and drag the four lines at the margion of the image to specify the bounds of the search region of the target. 
+Click OK or press Enter, when ready.</value>
+  </data>
+  <data name="ClipVideoDescriptionTitle" xml:space="preserve">
+    <value>Specify bounds</value>
+  </data>
+  <data name="ClipVideoHelpControlTitle" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ClipVideoWindowTitle" xml:space="preserve">
+    <value>Help for clip search region ...</value>
+  </data>
+  <data name="CoordinateSystemHelpControlTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="CoordinateSystemHowToDescription" xml:space="preserve">
+    <value>First specify the x-direction, then the y-direction.
+F10: Reset coordinate system.</value>
+  </data>
+  <data name="CoordinateSystemHowToHeader" xml:space="preserve">
+    <value>Howto define:</value>
+  </data>
+  <data name="CoordinateSystemWindowTitle" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="CsvFilter" xml:space="preserve">
+    <value>Csv file (*.csv)|*.csv</value>
+  </data>
+  <data name="DataGridAcceleration" xml:space="preserve">
+    <value>Acceleration</value>
+  </data>
+  <data name="DataGridAccelerationInterpolated" xml:space="preserve">
+    <value>Acceleration Interpolated</value>
+  </data>
+  <data name="DatagridDisplayUnitsLabelDescription" xml:space="preserve">
+    <value>Add units to data values in datagrid</value>
+  </data>
+  <data name="DatagridDisplayUnitsLabelTitle" xml:space="preserve">
+    <value>Display units</value>
+  </data>
+  <data name="DatagridDisplayUnitsToolTipDescription" xml:space="preserve">
+    <value>Click here to display the units for the data values in the datagrid table.</value>
+  </data>
+  <data name="DatagridDisplayUnitsToolTipTitle" xml:space="preserve">
+    <value>Display units</value>
+  </data>
+  <data name="DataGridDistance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="DataGridFramenumber" xml:space="preserve">
+    <value>Frame</value>
+  </data>
+  <data name="DataGridLength" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="DataGridObjectPrefix" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="DataGridTimestamp" xml:space="preserve">
+    <value>Timestamp</value>
+  </data>
+  <data name="DataGridVelocity" xml:space="preserve">
+    <value>Velocity</value>
+  </data>
+  <data name="DataGridVelocityInterpolated" xml:space="preserve">
+    <value>Velocity (interpolated)</value>
+  </data>
+  <data name="DatagridWindowTitle" xml:space="preserve">
+    <value>Datagrid</value>
+  </data>
+  <data name="DataGridXAcceleration" xml:space="preserve">
+    <value>Acceleration (X)</value>
+  </data>
+  <data name="DataGridXAccelerationInterpolated" xml:space="preserve">
+    <value>Acceleration (X) (interpolated)</value>
+  </data>
+  <data name="DataGridXDistance" xml:space="preserve">
+    <value>Position (X)</value>
+  </data>
+  <data name="DataGridXLength" xml:space="preserve">
+    <value>Length (X)</value>
+  </data>
+  <data name="DataGridXPixel" xml:space="preserve">
+    <value>Pixel (X)</value>
+  </data>
+  <data name="DataGridXPosition" xml:space="preserve">
+    <value>X Position</value>
+  </data>
+  <data name="DataGridXVelocity" xml:space="preserve">
+    <value>Velocity (X)</value>
+  </data>
+  <data name="DataGridXVelocityInterpolated" xml:space="preserve">
+    <value>Velocity (X) (interpolated)</value>
+  </data>
+  <data name="DataGridYAcceleration" xml:space="preserve">
+    <value>Acceleration (Y)</value>
+  </data>
+  <data name="DataGridYAccelerationInterpolated" xml:space="preserve">
+    <value>Acceleration (Y) (interpolated)</value>
+  </data>
+  <data name="DataGridYDistance" xml:space="preserve">
+    <value>Position (Y)</value>
+  </data>
+  <data name="DataGridYLength" xml:space="preserve">
+    <value>Length (Y)</value>
+  </data>
+  <data name="DataGridYPixel" xml:space="preserve">
+    <value>Pixel (Y)</value>
+  </data>
+  <data name="DataGridYPosition" xml:space="preserve">
+    <value>Y Position</value>
+  </data>
+  <data name="DataGridYVelocity" xml:space="preserve">
+    <value>Velocity (Y)</value>
+  </data>
+  <data name="DataGridYVelocityInterpolated" xml:space="preserve">
+    <value>Velocity (Y) (interpolated)</value>
+  </data>
+  <data name="DifferenceQuotientBackwardTitle" xml:space="preserve">
+    <value>Backward</value>
+  </data>
+  <data name="DifferenceQuotientCentralTitle" xml:space="preserve">
+    <value>Central</value>
+  </data>
+  <data name="DifferenceQuotientDialogDescription" xml:space="preserve">
+    <value>Please specify the type of the difference quotient calculation.</value>
+  </data>
+  <data name="DifferenceQuotientDialogTitle" xml:space="preserve">
+    <value>Difference quotient calculation</value>
+  </data>
+  <data name="DifferenceQuotientForwardTitle" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="DirectShowErrorPreface" xml:space="preserve">
+    <value>This error occured during processing your request: </value>
+  </data>
+  <data name="DirectShowErrorTitle" xml:space="preserve">
+    <value>DirectShow error occured</value>
+  </data>
+  <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
+    <value>Smoothing factor, determines the weighting of the interpolated data point.</value>
+  </data>
+  <data name="ExponentialSmoothDialogTitle" xml:space="preserve">
+    <value>Exponential smoothing</value>
+  </data>
+  <data name="ExportDialogTopFrameTitle" xml:space="preserve">
+    <value>Pleae specify the data columns to be exported.</value>
+  </data>
+  <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
+    <value>Columns for export:</value>
+  </data>
+  <data name="ExportOptionsDialogObjectGroupHeader" xml:space="preserve">
+    <value>Export data for the following objects:</value>
+  </data>
+  <data name="ExportOptionsDialogSelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="ExportOptionsDialogTitle" xml:space="preserve">
+    <value>Export data ...</value>
+  </data>
+  <data name="ExportOptionsDialogUnselectAll" xml:space="preserve">
+    <value>Unselect all</value>
+  </data>
+  <data name="ExportWhereToSaveFile" xml:space="preserve">
+    <value>Where do you want to save the file?</value>
+  </data>
+  <data name="GraphicFilesFilter" xml:space="preserve">
+    <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|XAML - Extensible Application Markup Language|*.xaml|SVG - Scalable Vector Graphics|*.svg|BMP - Bitmap|*.bmp|TIF - Tagged Image File|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
+  </data>
+  <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
+    <value>Please specify an image file name ...</value>
+  </data>
+  <data name="InterpolationDescriptionTitle" xml:space="preserve">
+    <value>Description for the interpolation filter</value>
+  </data>
+  <data name="InterpolationDialogInterpolationType" xml:space="preserve">
+    <value>Choose type of interpolation</value>
+  </data>
+  <data name="InterpolationDialogNumberOfSamplesToUse" xml:space="preserve">
+    <value>Number of the samples to use for interpolation</value>
+  </data>
+  <data name="InterpolationDialogTitle" xml:space="preserve">
+    <value>Specify the parameters of the interpolation filter.</value>
+  </data>
+  <data name="InterpolationDialogTopTitle" xml:space="preserve">
+    <value>Specify parameters ...</value>
+  </data>
+  <data name="InterpolationExponentialSmoothDescription" xml:space="preserve">
+    <value>Exponential smoothing weights the current value with the smoothing factor and adds the interpolated foregoing data sample weighted with (1-smoothing factor).</value>
+  </data>
+  <data name="InterpolationMovingAverageDescription" xml:space="preserve">
+    <value>This interpolation filter calculates a moving average of the given number of samples.</value>
+  </data>
+  <data name="InterpolationPropertiesTitle" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="IsRecordingVideo" xml:space="preserve">
+    <value>Recording active ...</value>
+  </data>
+  <data name="LengthDialogDescription" xml:space="preserve">
+    <value>Please enter the length of the marked element.</value>
+  </data>
+  <data name="LengthDialogTitle" xml:space="preserve">
+    <value>Specify known length ...</value>
+  </data>
+  <data name="LineOptionsDialogTitle" xml:space="preserve">
+    <value>Specify the number of digits when showing decimals.</value>
+  </data>
+  <data name="LineOptionsDialogTopTitle" xml:space="preserve">
+    <value>some options for display</value>
+  </data>
+  <data name="LineStyleControlChartTitle" xml:space="preserve">
+    <value>Sample curve</value>
+  </data>
+  <data name="LineStyleDisplayMarkerLabel" xml:space="preserve">
+    <value>Data points</value>
+  </data>
+  <data name="LineStyleOptionsDialogTitle" xml:space="preserve">
+    <value>Please specify color and thickness of data curve</value>
+  </data>
+  <data name="LoadVideoFilesTitle" xml:space="preserve">
+    <value>Select video to load ...</value>
+  </data>
+  <data name="ManualDataAcquisition" xml:space="preserve">
+    <value>Manual Data Acquisition</value>
+  </data>
+  <data name="ManualDataAcquisitionAllPoints" xml:space="preserve">
+    <value>all</value>
+  </data>
+  <data name="ManualDataAcquisitionControlTitle" xml:space="preserve">
+    <value>Data Acquisition Help</value>
+  </data>
+  <data name="ManualDataAcquisitionDescription" xml:space="preserve">
+    <value>1. Please click with the left mouse button on the center of the tracked object, the video will automatically advance one frame.
+2. When you want to go one frame back use the right mouse button.
+3. Once finished, press Enter.</value>
+  </data>
+  <data name="ManualDataAcquisitionFrameLabel" xml:space="preserve">
+    <value>Frame</value>
+  </data>
+  <data name="ManualDataAcquisitionRecentPointCount" xml:space="preserve">
+    <value>Number of shown data points</value>
+  </data>
+  <data name="ManualDataAcquisitionSkipPointCount" xml:space="preserve">
+    <value>Number of images to skip (between data points)</value>
+  </data>
+  <data name="ManualDataAcquisitionTrackItemNumberHeader" xml:space="preserve">
+    <value>Measure object:</value>
+  </data>
+  <data name="MeasureAngleHelpControlTitle" xml:space="preserve">
+    <value>Angle measurement</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureDescription" xml:space="preserve">
+    <value>The angle is measured in the middle of the triangle specified by three clicks.</value>
+  </data>
+  <data name="MeasureAngleHowToMeasureHeader" xml:space="preserve">
+    <value>How to measure angles</value>
+  </data>
+  <data name="MeasureAngleWindowTitle" xml:space="preserve">
+    <value>Measure angles</value>
+  </data>
+  <data name="MeasureLengthHelpControlTitle" xml:space="preserve">
+    <value>How to measure</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureDescription" xml:space="preserve">
+    <value>The length to measure is defined via two mouse clicks.</value>
+  </data>
+  <data name="MeasureLengthHowToMeasureHeader" xml:space="preserve">
+    <value>Measure length</value>
+  </data>
+  <data name="MeasureLengthWindowTitle" xml:space="preserve">
+    <value>Survey</value>
+  </data>
+  <data name="ModifyDataDescription" xml:space="preserve">
+    <value>1. Please left click on the new object location.
+2. Go forward and backward using the arrow keys.
+3. When ready, click RETURN.</value>
+  </data>
+  <data name="ModifyDataWindowControlTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
+    <value>Modify object: </value>
+  </data>
+  <data name="MovingAverageDialogTitle" xml:space="preserve">
+    <value>Moving average ...</value>
+  </data>
+  <data name="OdsFilter" xml:space="preserve">
+    <value>Open Document Spreadsheet (*.ods)|*.ods</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenProjectDialogTitle" xml:space="preserve">
+    <value>open project</value>
+  </data>
+  <data name="ParseErrorBracketClose" xml:space="preserve">
+    <value>) expected</value>
+  </data>
+  <data name="ParseErrorBracketOpen" xml:space="preserve">
+    <value>( expected</value>
+  </data>
+  <data name="ParseErrorIllegalCharacter" xml:space="preserve">
+    <value>illegal character or identifier</value>
+  </data>
+  <data name="ParseErrorNoFormulaDefined" xml:space="preserve">
+    <value>no formula defined</value>
+  </data>
+  <data name="ParseErrorOperatorMissing" xml:space="preserve">
+    <value>operator expected</value>
+  </data>
+  <data name="ParseErrorTermMissing" xml:space="preserve">
+    <value>( or number or identifier expected</value>
+  </data>
+  <data name="ParseErrorUnknownIdentifier" xml:space="preserve">
+    <value>unknown identifier</value>
+  </data>
+  <data name="PhysikKonstant_c" xml:space="preserve">
+    <value>speed of light in vacuum</value>
+  </data>
+  <data name="PhysikKonstant_e" xml:space="preserve">
+    <value>elementary charge</value>
+  </data>
+  <data name="PhysikKonstant_epsilon" xml:space="preserve">
+    <value>electric constant</value>
+  </data>
+  <data name="PhysikKonstant_f" xml:space="preserve">
+    <value>Newtonian constant of gravitation</value>
+  </data>
+  <data name="PhysikKonstant_g" xml:space="preserve">
+    <value>standard acceleration of gravity</value>
+  </data>
+  <data name="PhysikKonstant_h" xml:space="preserve">
+    <value>Planck constant</value>
+  </data>
+  <data name="PhysikKonstant_Lambda0" xml:space="preserve">
+    <value>Compton wavelength</value>
+  </data>
+  <data name="PhysikKonstant_me" xml:space="preserve">
+    <value>electron mass</value>
+  </data>
+  <data name="PhysikKonstant_mu" xml:space="preserve">
+    <value>magnetic constant</value>
+  </data>
+  <data name="QATButtonOpenLabelTitle" xml:space="preserve">
+    <value>Open project ...</value>
+  </data>
+  <data name="QATButtonOpenToolTipDescription" xml:space="preserve">
+    <value>Opens a project file for further analysis.</value>
+  </data>
+  <data name="QATButtonSaveAsLabelTitle" xml:space="preserve">
+    <value>Save as ...</value>
+  </data>
+  <data name="QATButtonSaveAsToolTipDescription" xml:space="preserve">
+    <value>Saves the current project under a new name.</value>
+  </data>
+  <data name="QATButtonSaveLabelDescription" xml:space="preserve">
+    <value>Save video analysis data to disk ...</value>
+  </data>
+  <data name="QATButtonSaveLabelTitle" xml:space="preserve">
+    <value>Save ...</value>
+  </data>
+  <data name="QATButtonSaveToolTipDescription" xml:space="preserve">
+    <value>Saves the measured movement data time series into an ASCII file on disk.</value>
+  </data>
+  <data name="QATButtonSaveToolTipTitle" xml:space="preserve">
+    <value>Save data</value>
+  </data>
+  <data name="RegressionBestType" xml:space="preserve">
+    <value>find best linefit</value>
+  </data>
+  <data name="RegressionCalculatorDialogTitle" xml:space="preserve">
+    <value>Calculator or input for functionterms (theoretical Funktion)</value>
+  </data>
+  <data name="RegressionColorRegress" xml:space="preserve">
+    <value>Color Regression</value>
+  </data>
+  <data name="RegressionColorTheorie" xml:space="preserve">
+    <value>Color theorie</value>
+  </data>
+  <data name="RegressionCurve" xml:space="preserve">
+    <value>Regressionting curve</value>
+  </data>
+  <data name="RegressionDialogHeader" xml:space="preserve">
+    <value>Choose regression function</value>
+  </data>
+  <data name="RegressionDialogTitle" xml:space="preserve">
+    <value>Here you can choose the type of the Regressionting function</value>
+  </data>
+  <data name="RegressionDialogTopTitle" xml:space="preserve">
+    <value>choose Regressionting function</value>
+  </data>
+  <data name="RegressionExp" xml:space="preserve">
+    <value>Expontentialfunction ( a*exp(b*x) )</value>
+  </data>
+  <data name="RegressionExpo" xml:space="preserve">
+    <value>Expontentialfunction ( a*exp(b*x) + c )</value>
+  </data>
+  <data name="RegressionFunctionLabel" xml:space="preserve">
+    <value>Regression Function</value>
+  </data>
+  <data name="RegressionLinear" xml:space="preserve">
+    <value>lineare Function (m*x+n)</value>
+  </data>
+  <data name="RegressionLineLabel" xml:space="preserve">
+    <value>Regressionting curve</value>
+  </data>
+  <data name="RegressionLineThickness" xml:space="preserve">
+    <value>Linethickness</value>
+  </data>
+  <data name="RegressionLog" xml:space="preserve">
+    <value>logarithmische Function ( a*ln(b*x) )</value>
+  </data>
+  <data name="RegressionNumberDigits" xml:space="preserve">
+    <value>number of digits</value>
+  </data>
+  <data name="RegressionPot" xml:space="preserve">
+    <value>Potenzfunction ( a*x^b)</value>
+  </data>
+  <data name="RegressionQuad" xml:space="preserve">
+    <value>quadratic Function (a*x²+b*x+c)</value>
+  </data>
+  <data name="RegressionResonanz" xml:space="preserve">
+    <value>Resonanzfunction ( a/sqrt(1+b*(x-c/x) )</value>
+  </data>
+  <data name="RegressionSin" xml:space="preserve">
+    <value>Sinus-Function ( a*sin(bx+c)+d )</value>
+  </data>
+  <data name="RegressionSinExp" xml:space="preserve">
+    <value>gedämpfte Sinusfkt ( a*sin(b*x)*exp(c*x)  )</value>
+  </data>
+  <data name="RegressionTheorie" xml:space="preserve">
+    <value>theoretical curve</value>
+  </data>
+  <data name="RibbonApplicationMenuRecentFilesTitle" xml:space="preserve">
+    <value>Recent files</value>
+  </data>
+  <data name="RibbonGroupAutomaticAquisitionLabelTitle" xml:space="preserve">
+    <value>Automatic Data Aquisition</value>
+  </data>
+  <data name="RibbonGroupChartExportLabelTitle" xml:space="preserve">
+    <value>Export chart</value>
+  </data>
+  <data name="RibbonGroupChartOptionsLabelTitle" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="RibbonGroupChartShowWindowLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="RibbonGroupDatagridExportLabelTitle" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="RibbonGroupDatagridInterpolationTitle" xml:space="preserve">
+    <value>Interpolation</value>
+  </data>
+  <data name="RibbonGroupDatagridOptionsLabelTitle" xml:space="preserve">
+    <value>Configure units</value>
+  </data>
+  <data name="RibbonGroupDatagridShowWindowLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="RibbonGroupDatagridUpdateDataLabelTitle" xml:space="preserve">
+    <value>Update data</value>
+  </data>
+  <data name="RibbonGroupHelpLabelTitle" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="RibbonGroupLanguageLabelTitle" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RibbonGroupManualAquisitionLabelTitle" xml:space="preserve">
+    <value>Manual Data Aquisition</value>
+  </data>
+  <data name="RibbonGroupOpenVideoLabelTitle" xml:space="preserve">
+    <value>Open video</value>
+  </data>
+  <data name="RibbonGroupPrepareLabelTitle" xml:space="preserve">
+    <value>Prepare</value>
+  </data>
+  <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="RibbonGroupStyleLabelTitle" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionColorOptionsLabelTitle" xml:space="preserve">
+    <value>Adapt color detection</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle" xml:space="preserve">
+    <value>Adapt motion detection</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionOptionsLabelTitle" xml:space="preserve">
+    <value>Detection options</value>
+  </data>
+  <data name="RibbonGroupVideoAutoDetectionSelectObjectTitle" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="RibbonGroupVideoCalibrationOptionsLabelTitle" xml:space="preserve">
+    <value>Display calibration</value>
+  </data>
+  <data name="RibbonGroupVideoLabelTitle" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="RibbonGroupVideoMeasureLabelTitle" xml:space="preserve">
+    <value>Surveying</value>
+  </data>
+  <data name="RibbonGroupVideoSelectDeviceLabelTitle" xml:space="preserve">
+    <value>Video device</value>
+  </data>
+  <data name="RibbonGroupVideoShowWindowLabelTitle" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="RibbonGroupWindowsLabelTitle" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionBlobMaxDiameter" xml:space="preserve">
+    <value>diameter max</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionBlobMinDiameter" xml:space="preserve">
+    <value>diameter min</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionPixelThreshold" xml:space="preserve">
+    <value>Minimal motion (px)</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxTitle" xml:space="preserve">
+    <value>Suppress noise</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription" xml:space="preserve">
+    <value>Applies a 3x3px erosion filter before motion detection.</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdTitle" xml:space="preserve">
+    <value>Use positive contrast</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionMotionUsePositiveThresholdToolTipDescription" xml:space="preserve">
+    <value>Switches between positive and negative contrast motion detection (just try it out).</value>
+  </data>
+  <data name="RibbonLabelAutoDetectionTolerance" xml:space="preserve">
+    <value>Color tolerance</value>
+  </data>
+  <data name="RibbonSelectLanguageLabelTitle" xml:space="preserve">
+    <value>Please select you language</value>
+  </data>
+  <data name="RibbonTabAnalysisLabel" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="RibbonTabChartLabel" xml:space="preserve">
+    <value>Chart</value>
+  </data>
+  <data name="RibbonTabDatagridLabel" xml:space="preserve">
+    <value>Datagrid</value>
+  </data>
+  <data name="RibbonTabHomeLabel" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="RibbonTabOptionsLabel" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="RibbonTabVideoLabel" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="RibbonTabWindowsLabel" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="RibbonVideoDevicesSelectDeviceLabelTitle" xml:space="preserve">
+    <value>Select video device</value>
+  </data>
+  <data name="SaveDialogButtonDoNotSave" xml:space="preserve">
+    <value>Do not save</value>
+  </data>
+  <data name="SaveDialogButtonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveProjectDialogDescription" xml:space="preserve">
+    <value>Overwrite existing project file?</value>
+  </data>
+  <data name="SaveProjectDialogMessage" xml:space="preserve">
+    <value>The project file already exists and will be overwritten.</value>
+  </data>
+  <data name="SaveProjectDialogTitle" xml:space="preserve">
+    <value>Save project ...</value>
+  </data>
+  <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
+    <value>Video compressor</value>
+  </data>
+  <data name="SaveVideoDialogFilenameLabel" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="SaveVideoDialogFolderLabel" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="SaveVideoDialogStartAnalysis" xml:space="preserve">
+    <value>Analyse video</value>
+  </data>
+  <data name="SaveVideoDialogTitle" xml:space="preserve">
+    <value>Record video from camera device</value>
+  </data>
+  <data name="SelectColorWindowDescriptionMessage" xml:space="preserve">
+    <value>Klick with the left mouse button in the middle of the object that should be tracked.</value>
+  </data>
+  <data name="SelectColorWindowDescriptionTitle" xml:space="preserve">
+    <value>Please select target color</value>
+  </data>
+  <data name="SelectColorWindowHelpControlTitle" xml:space="preserve">
+    <value>Help for color selection</value>
+  </data>
+  <data name="SelectColorWindowObjectIndexHeader" xml:space="preserve">
+    <value>Color for object</value>
+  </data>
+  <data name="SelectColorWindowTitle" xml:space="preserve">
+    <value>Color selection</value>
+  </data>
+  <data name="SelectVlcLibrariesDescription" xml:space="preserve">
+    <value>Please select Vlc libraries folder.</value>
+  </data>
+  <data name="ShowCalibrationLabelDescription" xml:space="preserve">
+    <value>Overlays the calibration ruler</value>
+  </data>
+  <data name="ShowCalibrationLabelTitle" xml:space="preserve">
+    <value>Display calibration</value>
+  </data>
+  <data name="ShowCalibrationToolTipDescription" xml:space="preserve">
+    <value>Click here to show or hide the calibration ruler of the measured video. (Only availble, if video has been calibrated)</value>
+  </data>
+  <data name="ShowCalibrationToolTipTitle" xml:space="preserve">
+    <value>Display calibration ruler</value>
+  </data>
+  <data name="ShowClipRegion" xml:space="preserve">
+    <value>Show clip region</value>
+  </data>
+  <data name="ShowClipRegionLabelDescription" xml:space="preserve">
+    <value>Display video object search region</value>
+  </data>
+  <data name="ShowClipRegionLabelTitle" xml:space="preserve">
+    <value>Display clip region</value>
+  </data>
+  <data name="ShowClipRegionToolTipDescription" xml:space="preserve">
+    <value>Click here to display the object search region in the video, if specified.</value>
+  </data>
+  <data name="ShowClipRegionToolTipTitle" xml:space="preserve">
+    <value>Display clip region</value>
+  </data>
+  <data name="ShowPixelLengthLabelTitle" xml:space="preserve">
+    <value>Display the length of a pixel</value>
+  </data>
+  <data name="ShowPixelLengthToolTipDescription" xml:space="preserve">
+    <value>Check this to display the length of a pixel.</value>
+  </data>
+  <data name="ShowPixelLengthToolTipTitle" xml:space="preserve">
+    <value>How long is a pixel?</value>
+  </data>
+  <data name="ShowVideoInfosButtonLabelTitle" xml:space="preserve">
+    <value>Video info</value>
+  </data>
+  <data name="ShowVideoInfosButtonToolTipDescription" xml:space="preserve">
+    <value>Click here, to display time unit, codec information, length and other information about the loaded video file.</value>
+  </data>
+  <data name="ShowVideoInfosButtonToolTipTitle" xml:space="preserve">
+    <value>Display video information</value>
+  </data>
+  <data name="SkipPointsDialogDescription" xml:space="preserve">
+    <value>Each n.th sample should be used for analysis.</value>
+  </data>
+  <data name="SkipPointsDialogTitle" xml:space="preserve">
+    <value>Downsampling</value>
+  </data>
+  <data name="StatusBarReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="StatusIsCalculating" xml:space="preserve">
+    <value>Calculating ...</value>
+  </data>
+  <data name="Testlabel_Content" xml:space="preserve">
+    <value>Test Text EN</value>
+  </data>
+  <data name="TimeUnitDialogDescription" xml:space="preserve">
+    <value>Choose the unit for the time variable which to be used for the display.</value>
+  </data>
+  <data name="TimeUnitDialogTitle" xml:space="preserve">
+    <value>Choose time unit</value>
+  </data>
+  <data name="TxtFilter" xml:space="preserve">
+    <value>Text file (*.txt)|*.txt</value>
+  </data>
+  <data name="VianaDialogTitle" xml:space="preserve">
+    <value>Viana.NET message ...</value>
+  </data>
+  <data name="VideoFilesFilter" xml:space="preserve">
+    <value>Video files (*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov)|*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov|All files|*.*</value>
+  </data>
+  <data name="VideoInfoBitrateLabel" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="VideoInfoCodecLabel" xml:space="preserve">
+    <value>Codec</value>
+  </data>
+  <data name="VideoInfoDialogTitle" xml:space="preserve">
+    <value>Video file ...</value>
+  </data>
+  <data name="VideoInfoDialogTopFrameTitle" xml:space="preserve">
+    <value>Check and modify the video file properties.</value>
+  </data>
+  <data name="VideoInfoDurationLabel" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="VideoInfoFilenameLabel" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
+    <value>FPS. Change to </value>
+  </data>
+  <data name="VideoInfoFPSLabel" xml:space="preserve">
+    <value>Frames per second</value>
+  </data>
+  <data name="VideoInfoFrameCountLabel" xml:space="preserve">
+    <value>Frame count</value>
+  </data>
+  <data name="VideoInfoFrameSizeLabel" xml:space="preserve">
+    <value>Frame size</value>
+  </data>
+  <data name="VideoSaveFolderBrowserDescriptionTitle" xml:space="preserve">
+    <value>Please select a folder for the new video files ...</value>
+  </data>
+  <data name="VideoWindowPlayButtonToolTip" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="VideoWindowRecordButtonToolTip" xml:space="preserve">
+    <value>Start recording</value>
+  </data>
+  <data name="VideoWindowSeekNextButtonToolTip" xml:space="preserve">
+    <value>Step frame</value>
+  </data>
+  <data name="VideoWindowSeekPreviousButtonToolTip" xml:space="preserve">
+    <value>Step back</value>
+  </data>
+  <data name="VideoWindowSetCutoutLeftButtonToolTip" xml:space="preserve">
+    <value>Set start time for analysis</value>
+  </data>
+  <data name="VideoWindowSetCutoutRightButtonToolTip" xml:space="preserve">
+    <value>Set end time for analysis</value>
+  </data>
+  <data name="VideoWindowSetZeroTimeButtonToolTip" xml:space="preserve">
+    <value>Set zero time</value>
+  </data>
+  <data name="VideoWindowStopButtonToolTip" xml:space="preserve">
+    <value>Stop or back to beginning.</value>
+  </data>
+  <data name="VideoWindowTitle" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="VLCDialogTopFrameTitle" xml:space="preserve">
+    <value>This video has to be converted first. Please specify the time range to be used for analysis.</value>
+  </data>
+  <data name="WindowWithHelpButtonDoneLabel" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="WindowWithHelpOptionsExpanderHeader" xml:space="preserve">
+    <value>Further options</value>
+  </data>
+  <data name="XmlFilter" xml:space="preserve">
+    <value>Xml file (*.xml)|*.xml</value>
+  </data>
+</root>

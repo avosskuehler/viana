@@ -52,14 +52,8 @@ namespace VianaNET.MainWindow
     /// </summary>
     public ImageSource Icon
     {
-      get
-      {
-        return this.LeftIcon.Source;
-      }
-      set
-      {
-        this.LeftIcon.Source = value;
-      }
+      get => this.LeftIcon.Source;
+      set => this.LeftIcon.Source = value;
     }
 
     /// <summary>
@@ -67,15 +61,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string Title
     {
-      get
-      {
-        return this.Header.Text;
-      }
+      get => this.Header.Text;
 
-      set
-      {
-        this.Header.Text = value;
-      }
+      set => this.Header.Text = value;
     }
 
     /// <summary>
@@ -83,15 +71,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public double TitleSize
     {
-      get
-      {
-        return this.Header.FontSize;
-      }
+      get => this.Header.FontSize;
 
-      set
-      {
-        this.Header.FontSize = value;
-      }
+      set => this.Header.FontSize = value;
     }
 
     #endregion

@@ -31,8 +31,6 @@ namespace VianaNET.Modules.DataAcquisition
   using System.Windows.Media;
   using System.Windows.Shapes;
   using System.Windows.Threading;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Video.Control;
 
@@ -47,9 +45,9 @@ namespace VianaNET.Modules.DataAcquisition
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
     /// </summary>
     public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair", 
-      typeof(SolidColorBrush), 
-      typeof(ManualDataAquisitionWindow), 
+      "BrushOfCossHair",
+      typeof(SolidColorBrush),
+      typeof(ManualDataAquisitionWindow),
       new FrameworkPropertyMetadata(Brushes.Red, OnPropertyChanged));
 
     /// <summary>
@@ -57,9 +55,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public static readonly DependencyProperty IndexOfTrackedObjectProperty =
       DependencyProperty.Register(
-        "IndexOfTrackedObject", 
-        typeof(int), 
-        typeof(ManualDataAquisitionWindow), 
+        "IndexOfTrackedObject",
+        typeof(int),
+        typeof(ManualDataAquisitionWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
     #endregion
@@ -143,15 +141,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public SolidColorBrush BrushOfCossHair
     {
-      get
-      {
-        return (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
-      }
+      get => (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
 
-      set
-      {
-        this.SetValue(BrushOfCossHairProperty, value);
-      }
+      set => this.SetValue(BrushOfCossHairProperty, value);
     }
 
     /// <summary>
@@ -159,15 +151,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public int IndexOfTrackedObject
     {
-      get
-      {
-        return (int)this.GetValue(IndexOfTrackedObjectProperty);
-      }
+      get => (int)this.GetValue(IndexOfTrackedObjectProperty);
 
-      set
-      {
-        this.SetValue(IndexOfTrackedObjectProperty, value);
-      }
+      set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
     /// <summary>
@@ -190,9 +176,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var window = obj as ManualDataAquisitionWindow;
-
-      if (window == null)
+      if (!(obj is ManualDataAquisitionWindow window))
       {
         return;
       }
@@ -201,13 +185,13 @@ namespace VianaNET.Modules.DataAcquisition
       if (args.Property == IndexOfTrackedObjectProperty)
       {
         // Reset index if appropriate
-        if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        if (window.IndexOfTrackedObject > App.Project.ProcessingData.NumberOfTrackedObjects)
         {
           window.IndexOfTrackedObject = 1;
         }
 
         window.BrushOfCossHair =
-          new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+          new SolidColorBrush(App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
       }
     }
 
@@ -266,7 +250,7 @@ namespace VianaNET.Modules.DataAcquisition
       // Remove old visual data points for all tracked objects
       if (this.visualDataPoints != null)
       {
-        for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+        for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           foreach (Ellipse item in this.visualDataPoints[j])
           {
@@ -285,16 +269,16 @@ namespace VianaNET.Modules.DataAcquisition
       // Create new visual data points if appropriate
       if (count > 0)
       {
-        this.visualDataPoints = new List<Ellipse>[Viana.Project.ProcessingData.NumberOfTrackedObjects];
-        for (int j = 0; j < Viana.Project.ProcessingData.NumberOfTrackedObjects; j++)
+        this.visualDataPoints = new List<Ellipse>[App.Project.ProcessingData.NumberOfTrackedObjects];
+        for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
           {
-            var visualDataPoint = new Ellipse();
+            Ellipse visualDataPoint = new Ellipse();
             visualDataPoint.Width = 2 * this.visualDataPointRadius;
             visualDataPoint.Height = 2 * this.visualDataPointRadius;
-            visualDataPoint.Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[j]);
+            visualDataPoint.Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[j]);
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 
@@ -392,9 +376,9 @@ namespace VianaNET.Modules.DataAcquisition
         double originalX = factorX * (scaledX - spaceX);
         double originalY = factorY * (scaledY - spaceY);
 
-        Viana.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {
           this.StepOneFrameForward();
         }
@@ -405,11 +389,11 @@ namespace VianaNET.Modules.DataAcquisition
         if (this.visualDataPointRingBufferSize > 0)
         {
           Canvas.SetTop(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
             canvasPosY - this.visualDataPointRadius);
 
           Canvas.SetLeft(
-            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer], 
+            this.visualDataPoints[this.IndexOfTrackedObject - 1][this.indexOfVisualDataPointRingBuffer],
             canvasPosX - this.visualDataPointRadius);
 
           this.indexOfVisualDataPointRingBuffer++;
@@ -618,7 +602,7 @@ namespace VianaNET.Modules.DataAcquisition
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point();
+          Point currentLocation = new Point();
           currentLocation.X = Canvas.GetLeft(this.ControlPanel);
           currentLocation.Y = Canvas.GetTop(this.ControlPanel);
 

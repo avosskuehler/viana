@@ -45,10 +45,10 @@ namespace VianaNET
     /// </param>
     protected override void OnRender(DrawingContext dc)
     {
-      var size = new Size(base.ActualWidth, base.ActualHeight);
+      Size size = new Size(base.ActualWidth, base.ActualHeight);
       double num = this.Maximum - this.Minimum;
-      var point = new Point(0, 0);
-      var point2 = new Point(0, 0);
+      Point point = new Point(0, 0);
+      Point point2 = new Point(0, 0);
       dc.DrawRectangle(Brushes.Red, null, new Rect(size));
       double y = this.ReservedSpace * 0.5;
       FormattedText formattedText = null;

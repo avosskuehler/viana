@@ -138,10 +138,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </remarks>
     public int DifferenceThreshold
     {
-      get
-      {
-        return this.differenceThreshold;
-      }
+      get => this.differenceThreshold;
 
       set
       {
@@ -223,10 +220,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </remarks>
     public bool SuppressNoise
     {
-      get
-      {
-        return this.suppressNoise;
-      }
+      get => this.suppressNoise;
 
       set
       {
@@ -280,7 +274,7 @@ namespace VianaNET.Modules.Video.Filter
           this.width = videoFrame.Width;
           this.height = videoFrame.Height;
 
-          // alocate memory for previous and current frames
+          // allocate memory for previous and current frames
           this.previousFrame = UnmanagedImage.Create(this.width, this.height, PixelFormat.Format8bppIndexed);
           this.motionFrame = UnmanagedImage.Create(this.width, this.height, PixelFormat.Format8bppIndexed);
 
@@ -308,8 +302,8 @@ namespace VianaNET.Modules.Video.Filter
         ConvertToGrayscale(videoFrame, this.motionFrame);
 
         // pointers to previous and current frames
-        var prevFrame = (byte*)this.previousFrame.ImageData.ToPointer();
-        var currFrame = (byte*)this.motionFrame.ImageData.ToPointer();
+        byte* prevFrame = (byte*)this.previousFrame.ImageData.ToPointer();
+        byte* currFrame = (byte*)this.motionFrame.ImageData.ToPointer();
 
         // 1 - get difference between frames
         // 2 - copy current frame to previous frame
@@ -342,7 +336,7 @@ namespace VianaNET.Modules.Video.Filter
 
         // calculate amount of motion pixels
         this.pixelsChanged = 0;
-        var motion = (byte*)this.motionFrame.ImageData.ToPointer();
+        byte* motion = (byte*)this.motionFrame.ImageData.ToPointer();
 
         for (int i = 0; i < this.frameSize; i++, motion++)
         {

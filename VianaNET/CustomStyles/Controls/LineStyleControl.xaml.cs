@@ -30,8 +30,6 @@ namespace VianaNET
   using OxyPlot.Axes;
   using OxyPlot.Series;
 
-
-
   /// <summary>
   ///   Interaction logic for LineStyleControl.xaml
   /// </summary>
@@ -76,10 +74,7 @@ namespace VianaNET
     /// </summary>
     public MarkerType MarkerType
     {
-      get
-      {
-        return this.Series.MarkerType;
-      }
+      get => this.Series.MarkerType;
 
       set
       {
@@ -115,10 +110,7 @@ namespace VianaNET
     /// </value>
     public OxyColor SeriesColor
     {
-      get
-      {
-        return this.Series.Color;
-      }
+      get => this.Series.Color;
 
       set
       {
@@ -137,10 +129,7 @@ namespace VianaNET
     /// </value>
     public double SeriesStrokeThickness
     {
-      get
-      {
-        return this.Series.StrokeThickness;
-      }
+      get => this.Series.StrokeThickness;
 
       set
       {
@@ -158,13 +147,7 @@ namespace VianaNET
     /// <summary>
     ///   Gets the sample series
     /// </summary>
-    private LineSeries Series
-    {
-      get
-      {
-        return (LineSeries)this.ChartModel.Series[0];
-      }
-    }
+    private LineSeries Series => (LineSeries)this.ChartModel.Series[0];
 
     #endregion
 
@@ -177,12 +160,12 @@ namespace VianaNET
     /// The sender.
     /// </param>
     /// <param name="e">
-    /// The <see cref="System.Windows.RoutedPropertyChangedEventArgs{Color}"/> instance containing the event
+    /// The <see cref="RoutedPropertyChangedEventArgs{Color}"/> instance containing the event
     ///   data.
     /// </param>
-    private void ColorPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+    private void ColorPickerSelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
     {
-      Color c = this.ColorPicker.SelectedColor;
+      Color c = this.ColorPicker.SelectedColor.Value;
       this.SeriesColor = OxyColor.FromArgb(c.A, c.R, c.G, c.B);
     }
 
@@ -194,19 +177,19 @@ namespace VianaNET
     /// </returns>
     private PlotModel CreateLineSeries()
     {
-      var plotModel1 = new PlotModel();
+      PlotModel plotModel1 = new PlotModel();
       plotModel1.IsLegendVisible = false;
-      plotModel1.Title = VianaNET.Resources.Labels.LineStyleControlChartTitle;
-      var linearAxis1 = new LinearAxis();
+      plotModel1.Title = VianaNET.Localization.Labels.LineStyleControlChartTitle;
+      LinearAxis linearAxis1 = new LinearAxis();
       linearAxis1.Position = AxisPosition.Bottom;
       linearAxis1.MaximumPadding = 0.1;
       linearAxis1.MinimumPadding = 0.1;
       plotModel1.Axes.Add(linearAxis1);
-      var linearAxis2 = new LinearAxis();
+      LinearAxis linearAxis2 = new LinearAxis();
       linearAxis2.MaximumPadding = 0.1;
       linearAxis2.MinimumPadding = 0.1;
       plotModel1.Axes.Add(linearAxis2);
-      var lineSeries1 = new LineSeries();
+      LineSeries lineSeries1 = new LineSeries();
       lineSeries1.Color = OxyColors.SkyBlue;
       lineSeries1.MarkerFill = OxyColors.SkyBlue;
       lineSeries1.MarkerSize = 6;

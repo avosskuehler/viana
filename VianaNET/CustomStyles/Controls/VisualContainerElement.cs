@@ -39,22 +39,19 @@ namespace VianaNET
 
     public DrawingVisual Visual
     {
-      get { return this.visual; }
+      get => this.visual;
       set
       {
-        RemoveVisualChild(this.visual);
+        this.RemoveVisualChild(this.visual);
         this.visual = value;
-        AddVisualChild(this.visual);
+        this.AddVisualChild(this.visual);
 
-        InvalidateMeasure();
-        InvalidateVisual();
+        this.InvalidateMeasure();
+        this.InvalidateVisual();
       }
     }
 
-    protected override int VisualChildrenCount
-    {
-      get { return 1; }
-    }
+    protected override int VisualChildrenCount => 1;
 
     protected override Visual GetVisualChild(int index)
     {

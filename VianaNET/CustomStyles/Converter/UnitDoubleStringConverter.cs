@@ -29,8 +29,6 @@ namespace VianaNET.CustomStyles.Converter
   using System;
   using System.Globalization;
   using System.Windows.Data;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
 
   /// <summary>
@@ -52,7 +50,7 @@ namespace VianaNET.CustomStyles.Converter
     /// <returns>
     /// A converted value. If the method returns null, the valid null value is used.
     /// </returns>
-    /// <exception cref="System.ArgumentOutOfRangeException">Wrong TimeUnit</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Wrong TimeUnit</exception>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       double valueToConvert = 0;
@@ -73,14 +71,14 @@ namespace VianaNET.CustomStyles.Converter
         return string.Empty;
       }
 
-      var param = (MeasurementType)parameter;
+      MeasurementType param = (MeasurementType)parameter;
 
-      string unit = " " + Viana.Project.CalibrationData.LengthUnit;
+      string unit = " " + App.Project.CalibrationData.LengthUnit;
       string formatting = "N2";
       switch (param)
       {
         case MeasurementType.Time:
-          var timeunit = Viana.Project.CalibrationData.TimeUnit;
+          TimeUnit timeunit = App.Project.CalibrationData.TimeUnit;
           switch (timeunit)
           {
             case TimeUnit.ms:
@@ -98,24 +96,24 @@ namespace VianaNET.CustomStyles.Converter
 
           break;
         case MeasurementType.Pixel:
-          unit = " " + Viana.Project.CalibrationData.PixelUnit;
+          unit = " " + App.Project.CalibrationData.PixelUnit;
           formatting = "N0";
           break;
         case MeasurementType.Position:
-          unit = " " + Viana.Project.CalibrationData.LengthUnit;
+          unit = " " + App.Project.CalibrationData.LengthUnit;
           formatting = "N2";
           break;
         case MeasurementType.Velocity:
-          unit = " " + Viana.Project.CalibrationData.VelocityUnit;
+          unit = " " + App.Project.CalibrationData.VelocityUnit;
           formatting = "N2";
           break;
         case MeasurementType.Acceleration:
-          unit = " " + Viana.Project.CalibrationData.AccelerationUnit;
+          unit = " " + App.Project.CalibrationData.AccelerationUnit;
           formatting = "N2";
           break;
       }
 
-      if (Viana.Project.CalibrationData.IsShowingUnits)
+      if (App.Project.CalibrationData.IsShowingUnits)
       {
         return valueToConvert.ToString(formatting) + unit;
       }
@@ -135,7 +133,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (string)value;
+      string valueToConvertBack = (string)value;
       return double.Parse(valueToConvertBack);
     }
 

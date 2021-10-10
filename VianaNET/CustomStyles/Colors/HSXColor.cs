@@ -112,10 +112,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float? Hue
     {
-      get
-      {
-        return this.hue;
-      }
+      get => this.hue;
 
       set
       {
@@ -149,15 +146,9 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float Saturation
     {
-      get
-      {
-        return this.saturation;
-      }
+      get => this.saturation;
 
-      set
-      {
-        this.saturation = value;
-      }
+      set => this.saturation = value;
     }
 
     /// <summary>
@@ -165,15 +156,9 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float ValueLuminanceBrightness
     {
-      get
-      {
-        return this.valueLuminanceBrightness;
-      }
+      get => this.valueLuminanceBrightness;
 
-      set
-      {
-        this.valueLuminanceBrightness = value;
-      }
+      set => this.valueLuminanceBrightness = value;
     }
 
     #endregion

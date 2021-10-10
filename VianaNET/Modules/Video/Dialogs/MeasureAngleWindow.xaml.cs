@@ -28,8 +28,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls.Primitives;
   using System.Windows.Input;
   using System.Windows.Threading;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Video.Control;
 
@@ -105,7 +103,7 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      var location = e.GetPosition(this.VideoImage);
+      Point location = e.GetPosition(this.VideoImage);
 
       if (!this.startPointIsSet)
       {
@@ -154,8 +152,8 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      var scaledX = e.GetPosition(this.VideoImage).X;
-      var scaledY = e.GetPosition(this.VideoImage).Y;
+      double scaledX = e.GetPosition(this.VideoImage).X;
+      double scaledY = e.GetPosition(this.VideoImage).Y;
 
       if (this.startPointIsSet && !this.centerPointIsSet)
       {
@@ -264,7 +262,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(false, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
       }
     }
 
@@ -275,7 +273,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(true, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
       }
     }
 
@@ -362,11 +360,11 @@ namespace VianaNET.Modules.Video.Dialogs
     private void UpdateAngleLabel()
     {
       // Winkel berechnen
-      var vecHor = new Vector(1, 0);
-      var vec1 = new Vector(this.Line1.X1 - this.Line1.X2, this.Line1.Y1 - this.Line1.Y2);
-      var vec2 = new Vector(this.Line2.X2 - this.Line2.X1, this.Line2.Y2 - this.Line2.Y1);
-      var startAngle = Vector.AngleBetween(vecHor, vec1);
-      var endAngle = Vector.AngleBetween(vecHor, vec2);
+      Vector vecHor = new Vector(1, 0);
+      Vector vec1 = new Vector(this.Line1.X1 - this.Line1.X2, this.Line1.Y1 - this.Line1.Y2);
+      Vector vec2 = new Vector(this.Line2.X2 - this.Line2.X1, this.Line2.Y2 - this.Line2.Y1);
+      double startAngle = Vector.AngleBetween(vecHor, vec1);
+      double endAngle = Vector.AngleBetween(vecHor, vec2);
       this.Arc.EndAngle = endAngle;
       this.Arc.StartAngle = startAngle;
 
@@ -399,7 +397,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point
+          Point currentLocation = new Point
                                   {
                                     X = Canvas.GetLeft(this.ControlPanel),
                                     Y = Canvas.GetTop(this.ControlPanel)

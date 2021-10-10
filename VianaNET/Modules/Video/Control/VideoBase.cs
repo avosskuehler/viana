@@ -42,7 +42,6 @@ namespace VianaNET.Modules.Video.Control
 
   using DirectShowLib;
   using OpenCvSharp;
-  using VianaNET.Application;
   using VianaNET.Logging;
 
   /// <summary>
@@ -227,15 +226,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public PlayState CurrentState
     {
-      get
-      {
-        return (PlayState)this.GetValue(CurrentStateProperty);
-      }
+      get => (PlayState)this.GetValue(CurrentStateProperty);
 
-      set
-      {
-        this.SetValue(CurrentStateProperty, value);
-      }
+      set => this.SetValue(CurrentStateProperty, value);
     }
 
     /// <summary>
@@ -243,15 +236,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public int FrameCount
     {
-      get
-      {
-        return (int)this.GetValue(FrameCountProperty);
-      }
+      get => (int)this.GetValue(FrameCountProperty);
 
-      set
-      {
-        this.SetValue(FrameCountProperty, value);
-      }
+      set => this.SetValue(FrameCountProperty, value);
     }
 
     /// <summary>
@@ -259,15 +246,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public long FrameTimeInNanoSeconds
     {
-      get
-      {
-        return (long)this.GetValue(FrameTimeInNanoSecondsProperty);
-      }
+      get => (long)this.GetValue(FrameTimeInNanoSecondsProperty);
 
-      set
-      {
-        this.SetValue(FrameTimeInNanoSecondsProperty, value);
-      }
+      set => this.SetValue(FrameTimeInNanoSecondsProperty, value);
     }
 
     /// <summary>
@@ -275,15 +256,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public int MediaPositionFrameIndex
     {
-      get
-      {
-        return (int)this.GetValue(MediaPositionFrameIndexProperty);
-      }
+      get => (int)this.GetValue(MediaPositionFrameIndexProperty);
 
-      set
-      {
-        this.SetValue(MediaPositionFrameIndexProperty, value);
-      }
+      set => this.SetValue(MediaPositionFrameIndexProperty, value);
     }
 
     /// <summary>
@@ -473,7 +448,7 @@ namespace VianaNET.Modules.Video.Control
 
     public void UpdateProcessedImageSource()
     {
-      if (Viana.Project.ProcessingData.IsUsingColorDetection && Video.Instance.ColorProcessedImageSource != null)
+      if (App.Project.ProcessingData.IsUsingColorDetection && Video.Instance.ColorProcessedImageSource != null)
       {
         // Update ColorProcessedVideoSource
         this.Dispatcher.BeginInvoke(
@@ -482,7 +457,7 @@ namespace VianaNET.Modules.Video.Control
           null);
       }
 
-      if (Viana.Project.ProcessingData.IsUsingMotionDetection && Video.Instance.MotionProcessedImageSource != null)
+      if (App.Project.ProcessingData.IsUsingMotionDetection && Video.Instance.MotionProcessedImageSource != null)
       {
         // Update MotionProcessedVideoSource
         this.Dispatcher.BeginInvoke(
@@ -509,7 +484,7 @@ namespace VianaNET.Modules.Video.Control
 
     public void CopyProcessingMapToUnmanagedImage()
     {
-      this.UnmanagedImage = new UnmanagedImage(this.ColorProcessingMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+      this.UnmanagedImage = new UnmanagedImage(this.ColorProcessingMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
       CopyMemory(this.UnmanagedImage.ImageData, this.ColorProcessingMapping, this.bufferLength);
     }
 
@@ -573,7 +548,7 @@ namespace VianaNET.Modules.Video.Control
           if (this.originalMapping != IntPtr.Zero)
           {
             // This is fast and lasts less than 1 millisecond.
-            CopyMemory(this.originalMapping, newFrame.BackBuffer, bufferLength);
+            CopyMemory(this.originalMapping, newFrame.BackBuffer, this.bufferLength);
 
             this.Dispatcher.BeginInvoke(
               DispatcherPriority.Render,
@@ -719,7 +694,7 @@ namespace VianaNET.Modules.Video.Control
       this.originalMapping = MapViewOfFile(this.originalSection, 0xF001F, 0, 0, (uint)this.bufferLength);
       this.ColorProcessingMapping = MapViewOfFile(this.colorProcessingSection, 0xF001F, 0, 0, (uint)this.bufferLength);
       this.MotionProcessingMapping = MapViewOfFile(this.motionProcessingSection, 0xF001F, 0, 0, (uint)this.bufferLength);
-      this.UnmanagedImage = new UnmanagedImage(this.originalMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+      this.UnmanagedImage = new UnmanagedImage(this.originalMapping, (int)this.NaturalVideoWidth, (int)this.NaturalVideoHeight, this.Stride, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
     }
 
     /// <summary>
@@ -749,7 +724,7 @@ namespace VianaNET.Modules.Video.Control
     ///   and creates a file mapping for the captured frames.
     /// </summary>
     /// <param name="opencvCapture">
-    /// The <see cref="OpenCvSharp.VideoCapture"/> from which to retreive the sample information. 
+    /// The <see cref="VideoCapture"/> from which to retreive the sample information. 
     /// </param>
     public void SaveSizeInfo(VideoCapture opencvCapture)
     {

@@ -26,11 +26,9 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows;
   using System.Windows.Input;
   using System.Windows.Media;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
 
-  using WPFMath;
+  using WpfMath;
 
   /// <summary>
   ///   The length dialog.
@@ -46,15 +44,15 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
 
-      var formulaParser = new TexFormulaParser();
-      var forwardFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t)}{\\Delta t}");
-      var centralFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t-\\Delta t )}{2\\cdot \\Delta t}");
-      var backwardFormula = formulaParser.Parse("v(t)=\\frac{s(t)-s(t-\\Delta t )}{\\Delta t}");
+      TexFormulaParser formulaParser = new TexFormulaParser();
+      TexFormula forwardFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t)}{\\Delta t}");
+      TexFormula centralFormula = formulaParser.Parse("v(t)=\\frac{s(t+\\Delta t)-s(t-\\Delta t )}{2\\cdot \\Delta t}");
+      TexFormula backwardFormula = formulaParser.Parse("v(t)=\\frac{s(t)-s(t-\\Delta t )}{\\Delta t}");
 
       // Render formula to visual.
-      var forwardVisual = new DrawingVisual();
-      var forwardRenderer = forwardFormula.GetRenderer(TexStyle.Display, 14d);
-      using (var drawingContext = forwardVisual.RenderOpen())
+      DrawingVisual forwardVisual = new DrawingVisual();
+      TexRenderer forwardRenderer = forwardFormula.GetRenderer(TexStyle.Display, 14d, "Arial");
+      using (DrawingContext drawingContext = forwardVisual.RenderOpen())
       {
         forwardRenderer.Render(drawingContext, 0, 1);
       }
@@ -62,9 +60,9 @@ namespace VianaNET.Modules.DataGrid
       this.ForwardFormulaContainerElement.Visual = forwardVisual;
 
       // Render formula to visual.
-      var centralVisual = new DrawingVisual();
-      var centralRenderer = centralFormula.GetRenderer(TexStyle.Display, 14d);
-      using (var drawingContext = centralVisual.RenderOpen())
+      DrawingVisual centralVisual = new DrawingVisual();
+      TexRenderer centralRenderer = centralFormula.GetRenderer(TexStyle.Display, 14d, "Arial");
+      using (DrawingContext drawingContext = centralVisual.RenderOpen())
       {
         centralRenderer.Render(drawingContext, 0, 1);
       }
@@ -72,16 +70,16 @@ namespace VianaNET.Modules.DataGrid
       this.CentralFormulaContainerElement.Visual = centralVisual;
 
       // Render formula to visual.
-      var backwardVisual = new DrawingVisual();
-      var backwardRenderer = backwardFormula.GetRenderer(TexStyle.Display, 14d);
-      using (var drawingContext = backwardVisual.RenderOpen())
+      DrawingVisual backwardVisual = new DrawingVisual();
+      TexRenderer backwardRenderer = backwardFormula.GetRenderer(TexStyle.Display, 14d, "Arial");
+      using (DrawingContext drawingContext = backwardVisual.RenderOpen())
       {
         backwardRenderer.Render(drawingContext, 0, 1);
       }
 
       this.BackwardFormulaContainerElement.Visual = backwardVisual;
 
-      switch (Viana.Project.ProcessingData.DifferenceQuotientType)
+      switch (App.Project.ProcessingData.DifferenceQuotientType)
       {
         case DifferenceQuotientType.Forward:
           this.ForwardRadioButton.IsChecked = true;
@@ -126,7 +124,7 @@ namespace VianaNET.Modules.DataGrid
     /// </param>
     private void OkClick(object sender, RoutedEventArgs e)
     {
-      var newQuotientType = DifferenceQuotientType.Forward;
+      DifferenceQuotientType newQuotientType = DifferenceQuotientType.Forward;
 
       this.DialogResult = true;
       if (this.ForwardRadioButton.IsChecked.GetValueOrDefault(false))
@@ -142,9 +140,9 @@ namespace VianaNET.Modules.DataGrid
         newQuotientType = DifferenceQuotientType.Backward;
       }
 
-      Viana.Project.ProcessingData.DifferenceQuotientType = newQuotientType;
+      App.Project.ProcessingData.DifferenceQuotientType = newQuotientType;
       this.Cursor = Cursors.Wait;
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
       this.Cursor = Cursors.Arrow;
       this.Close();
     }

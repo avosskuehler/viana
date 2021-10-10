@@ -11,7 +11,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Height="500" Width="350" WindowStyle="ThreeDBorderWindow"
-        Title="{lex:Loc VideoInfoDialogTitle}" 
+        Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTitle}" 
         SizeToContent="Height" 
         ShowInTaskbar="True" 
         Icon="/VianaNET;component/Images/VianaNET.ico" 
@@ -55,7 +55,7 @@
           </StackPanel>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameCountLabel}"/>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="1" Content="{Binding FrameCount}"/>
-          <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc VideoInfoFrameSizeLabel}"/>
+          <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameSizeLabel}"/>
           <Label Grid.Row="4" Grid.Column="1" Content="{Binding FrameSize}"/>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="5" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoCodecLabel}"/>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="5" Grid.Column="1" Content="{Binding Codec}"/>

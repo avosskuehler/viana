@@ -107,7 +107,7 @@ namespace VianaNET.Modules.Video.Filter
     /// <param name="image">
     /// Source image data. 
     /// </param>
-    public override unsafe void ProcessInPlace(IntPtr image)
+    public unsafe override void ProcessInPlace(IntPtr image)
     {
       int t = this.Threshold;
       int ipx = this.ImagePixelSize;
@@ -132,7 +132,7 @@ namespace VianaNET.Modules.Video.Filter
       // int offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
 
       // do the job
-      var ptr = (byte*)image;
+      byte* ptr = (byte*)image;
       byte r, g, b;
 
       // allign pointer to the first pixel to process

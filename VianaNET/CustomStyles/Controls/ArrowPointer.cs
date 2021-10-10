@@ -56,8 +56,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double X
     {
-      get { return (double)this.GetValue(XProperty); }
-      set { this.SetValue(XProperty, value); }
+      get => (double)this.GetValue(XProperty);
+      set => this.SetValue(XProperty, value);
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double Y
     {
-      get { return (double)this.GetValue(YProperty); }
-      set { this.SetValue(YProperty, value); }
+      get => (double)this.GetValue(YProperty);
+      set => this.SetValue(YProperty, value);
     }
 
     /// <summary>
@@ -82,8 +82,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double Length
     {
-      get { return (double)this.GetValue(LengthProperty); }
-      set { this.SetValue(LengthProperty, value); }
+      get => (double)this.GetValue(LengthProperty);
+      set => this.SetValue(LengthProperty, value);
     }
 
     /// <summary>
@@ -95,8 +95,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double CenterSpace
     {
-      get { return (double)this.GetValue(CenterSpaceProperty); }
-      set { this.SetValue(CenterSpaceProperty, value); }
+      get => (double)this.GetValue(CenterSpaceProperty);
+      set => this.SetValue(CenterSpaceProperty, value);
     }
 
 
@@ -109,8 +109,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double HeadWidth
     {
-      get { return (double)this.GetValue(HeadWidthProperty); }
-      set { this.SetValue(HeadWidthProperty, value); }
+      get => (double)this.GetValue(HeadWidthProperty);
+      set => this.SetValue(HeadWidthProperty, value);
     }
 
     /// <summary>
@@ -122,8 +122,8 @@ namespace VianaNET.CustomStyles.Controls
     [TypeConverter(typeof(LengthConverter))]
     public double HeadHeight
     {
-      get { return (double)this.GetValue(HeadHeightProperty); }
-      set { this.SetValue(HeadHeightProperty, value); }
+      get => (double)this.GetValue(HeadHeightProperty);
+      set => this.SetValue(HeadHeightProperty, value);
     }
 
     #endregion
@@ -139,9 +139,9 @@ namespace VianaNET.CustomStyles.Controls
       get
       {
         // Create a StreamGeometry for describing the shape
-        var geometry = new StreamGeometry { FillRule = FillRule.EvenOdd };
+        StreamGeometry geometry = new StreamGeometry { FillRule = FillRule.EvenOdd };
 
-        using (var context = geometry.Open())
+        using (StreamGeometryContext context = geometry.Open())
         {
           this.InternalDrawArrowGeometry(context);
         }
@@ -165,28 +165,28 @@ namespace VianaNET.CustomStyles.Controls
     {
       context.BeginFigure(new Point(this.X, this.Y), false, false);
 
-      var x1s = this.X - this.CenterSpace - this.Length;
-      var y1s = this.Y - this.CenterSpace - this.Length;
-      var x1e = this.X - this.CenterSpace;
-      var y1e = this.Y - this.CenterSpace;
+      double x1s = this.X - this.CenterSpace - this.Length;
+      double y1s = this.Y - this.CenterSpace - this.Length;
+      double x1e = this.X - this.CenterSpace;
+      double y1e = this.Y - this.CenterSpace;
       this.DrawArrow(context, y1s, y1e, x1s, x1e);
 
-      var x2s = this.X + this.CenterSpace + this.Length;
-      var y2s = this.Y + this.CenterSpace + this.Length;
-      var x2e = this.X + this.CenterSpace;
-      var y2e = this.Y + this.CenterSpace;
+      double x2s = this.X + this.CenterSpace + this.Length;
+      double y2s = this.Y + this.CenterSpace + this.Length;
+      double x2e = this.X + this.CenterSpace;
+      double y2e = this.Y + this.CenterSpace;
       this.DrawArrow(context, y2s, y2e, x2s, x2e);
 
-      var x3s = this.X + this.CenterSpace + this.Length;
-      var y3s = this.Y - this.CenterSpace - this.Length;
-      var x3e = this.X + this.CenterSpace;
-      var y3e = this.Y - this.CenterSpace;
+      double x3s = this.X + this.CenterSpace + this.Length;
+      double y3s = this.Y - this.CenterSpace - this.Length;
+      double x3e = this.X + this.CenterSpace;
+      double y3e = this.Y - this.CenterSpace;
       this.DrawArrow(context, y3s, y3e, x3s, x3e);
 
-      var x4s = this.X - this.CenterSpace - this.Length;
-      var y4s = this.Y + this.CenterSpace + this.Length;
-      var x4e = this.X - this.CenterSpace;
-      var y4e = this.Y + this.CenterSpace;
+      double x4s = this.X - this.CenterSpace - this.Length;
+      double y4s = this.Y + this.CenterSpace + this.Length;
+      double x4e = this.X - this.CenterSpace;
+      double y4e = this.Y + this.CenterSpace;
       this.DrawArrow(context, y4s, y4e, x4s, x4e);
 
       context.BeginFigure(new Point(x1s, y1s), true, false);
@@ -198,18 +198,18 @@ namespace VianaNET.CustomStyles.Controls
 
     private void DrawArrow(StreamGeometryContext context, double y1, double y2, double x1, double x2)
     {
-      var theta = Math.Atan2(y1 - y2, x1 - x2);
-      var sint = Math.Sin(theta);
-      var cost = Math.Cos(theta);
+      double theta = Math.Atan2(y1 - y2, x1 - x2);
+      double sint = Math.Sin(theta);
+      double cost = Math.Cos(theta);
 
-      var pt1 = new Point(x1, y1);
-      var pt2 = new Point(x2, y2);
+      Point pt1 = new Point(x1, y1);
+      Point pt2 = new Point(x2, y2);
 
-      var pt3 = new Point(
+      Point pt3 = new Point(
         x2 + (this.HeadWidth * cost - this.HeadHeight * sint),
         y2 + (this.HeadWidth * sint + this.HeadHeight * cost));
 
-      var pt4 = new Point(
+      Point pt4 = new Point(
         x2 + (this.HeadWidth * cost + this.HeadHeight * sint),
         y2 - (this.HeadHeight * cost - this.HeadWidth * sint));
 

@@ -8,8 +8,8 @@
     mc:Ignorable="d"
   xmlns:vianaNet="clr-namespace:VianaNET" 
   xmlns:collections="clr-namespace:VianaNET.Data.Collections"
-  xmlns:application="clr-namespace:VianaNET.Application"
-  xmlns:oxy="http://oxyplot.codeplex.com"
+  xmlns:local="clr-namespace:VianaNET"
+  xmlns:oxy="http://oxyplot.org/wpf"
   lex:LocalizeDictionary.DesignCulture="de"
   d:DesignHeight="500" d:DesignWidth="1800"
   DataContext="{Binding RelativeSource={RelativeSource Self}, Path=ChartData}"
@@ -29,7 +29,7 @@
           <Label Content="{lex:Loc VianaNET:Labels:ChartWindowChartHeader}" Style="{StaticResource HeaderStyle}"/>
           <Grid Name="ObjectSelectionGrid" 
                 Margin="5"
-                Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static application:Viana.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
+                Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static local:App.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="100"/>
               <ColumnDefinition Width="*"/>
@@ -39,7 +39,7 @@
               Name="ObjectSelectionCombo"
               Grid.Column="1" 
               Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
-              ItemsSource="{Binding Path=ProcessingData.IndexOfObject, Source={x:Static application:Viana.Project}}"
+              ItemsSource="{Binding Path=ProcessingData.IndexOfObject, Source={x:Static local:App.Project}}"
               SelectionChanged="ObjectSelectionComboSelectionChanged" />
           </Grid>
           <TabControl Name="ChartContentTab">
@@ -137,15 +137,15 @@
               <CheckBox 
               Grid.Row="0" Grid.Column="0"  Margin="5"
               Name="RegressionCheckBox"
-              IsChecked="{Binding Path=CurrentFilterData.IsShowingRegressionSeries, Source={x:Static application:Viana.Project}, Mode=TwoWay}" 
+              IsChecked="{Binding Path=CurrentFilterData.IsShowingRegressionSeries, Source={x:Static local:App.Project}, Mode=TwoWay}" 
               Checked="ShowRegressionCheckBoxChecked" Unchecked="ShowRegressionCheckBoxUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Content="{lex:Loc VianaNET:Labels:ChartWindowDisplayCurveLabel}"/>
               <vianaNet:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="FormulaContainerElement" SnapsToDevicePixels="True"
-                                               Visibility="{Binding Path=CurrentFilterData.IsShowingRegressionSeries, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
+                                               Visibility="{Binding Path=CurrentFilterData.IsShowingRegressionSeries, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
               <!--<Label Grid.Column="0" Grid.Row="1" Content="{Binding Path=RegressionFunctionString, Source={x:Static Regression:FittedData.Instance}}" Name="RegressionFunctionLabel" Grid.ColumnSpan="2" />-->
-              <Label Grid.Column="0" Grid.Row="2"  MaxWidth="350" Content="{Binding Path=CurrentFilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static application:Viana.Project}}" Grid.ColumnSpan="2" />
+              <Label Grid.Column="0" Grid.Row="2"  MaxWidth="350" Content="{Binding Path=CurrentFilterData.RegressionAberration, Converter={StaticResource AberrationDoubleToStringConverter}, Source={x:Static local:App.Project}}" Grid.ColumnSpan="2" />
             </Grid>
           </GroupBox>
           <GroupBox Header="{lex:Loc VianaNET:Labels:ChartWindowTheorieLabel}"
@@ -168,14 +168,14 @@
               <CheckBox 
               Grid.Row="0" Grid.Column="0" Margin="5" 
               Content="{lex:Loc VianaNET:Labels:ChartWindowDisplayCurveLabel}" Name="CheckBoxShowTheorie"
-              IsChecked="{Binding Path=CurrentFilterData.IsShowingTheorySeries, Source={x:Static application:Viana.Project}, Mode=TwoWay}" 
-                IsEnabled="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static application:Viana.Project}}" 
+              IsChecked="{Binding Path=CurrentFilterData.IsShowingTheorySeries, Source={x:Static local:App.Project}, Mode=TwoWay}" 
+                IsEnabled="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static local:App.Project}}" 
               Checked="ShowTheorieCheckBoxChecked"
               Unchecked="ShowTheorieCheckBoxUnchecked"
               HorizontalAlignment="Left"
               VerticalAlignment="Center"/>
               <vianaNet:VisualContainerElement Margin="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" x:Name="TheorieFormulaContainerElement" SnapsToDevicePixels="True"
-              Visibility="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static application:Viana.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
+              Visibility="{Binding Path=CurrentFilterData.HasTheoryFunction, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"/>
               <!--<Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=TheoreticalFunction.Name, Source={x:Static Regression:FittedData.Instance}}" Name="TheoreticalFunctionLabel" Grid.ColumnSpan="2" />-->
             </Grid>
           </GroupBox>
@@ -190,7 +190,7 @@
                       Margin="5"
                       Name="InterpolationLineCheckBox"
                       Content="{lex:Loc VianaNET:Labels:ChartWindowInterpolationLineLabel}" 
-                      IsChecked="{Binding Path=CurrentFilterData.IsShowingInterpolationSeries, Source={x:Static application:Viana.Project}, Mode=TwoWay}" 
+                      IsChecked="{Binding Path=CurrentFilterData.IsShowingInterpolationSeries, Source={x:Static local:App.Project}, Mode=TwoWay}" 
                       Checked="ShowInterpolationCheckBoxCheckedChanged"
                       Unchecked="ShowInterpolationCheckBoxCheckedChanged"
                       HorizontalAlignment="Left"

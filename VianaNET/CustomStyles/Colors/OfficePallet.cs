@@ -105,10 +105,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float Brightness
     {
-      get
-      {
-        return this._Brightness;
-      }
+      get => this._Brightness;
 
       set
       {
@@ -125,10 +122,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public ColorType ColorType
     {
-      get
-      {
-        return this._ColorType;
-      }
+      get => this._ColorType;
 
       set
       {
@@ -143,23 +137,14 @@ namespace VianaNET.CustomStyles.Colors
     /// <summary>
     ///   Gets the coloration.
     /// </summary>
-    public Coloration Coloration
-    {
-      get
-      {
-        return this._ColorType == ColorType.HSL ? this._HSLColoration : this._HSVColoration;
-      }
-    }
+    public Coloration Coloration => this._ColorType == ColorType.HSL ? this._HSLColoration : this._HSVColoration;
 
     /// <summary>
     ///   Gets or sets the hue.
     /// </summary>
     public float Hue
     {
-      get
-      {
-        return this._Hue;
-      }
+      get => this._Hue;
 
       set
       {
@@ -176,10 +161,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float HueConstraint
     {
-      get
-      {
-        return this._HueConstraint;
-      }
+      get => this._HueConstraint;
 
       set
       {
@@ -196,10 +178,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public float Saturation
     {
-      get
-      {
-        return this._Saturation;
-      }
+      get => this._Saturation;
 
       set
       {
@@ -214,13 +193,7 @@ namespace VianaNET.CustomStyles.Colors
     /// <summary>
     ///   Gets the type.
     /// </summary>
-    public Type Type
-    {
-      get
-      {
-        return this._Type;
-      }
-    }
+    public Type Type => this._Type;
 
     #endregion
 

@@ -25,10 +25,7 @@ namespace VianaNET.Modules.DataGrid
 {
   using System.Collections.Generic;
   using System.Windows;
-
-  using VianaNET.Application;
   using VianaNET.Data.Collections;
-
 
   /// <summary>
   ///   This dialog covers data export options
@@ -41,15 +38,15 @@ namespace VianaNET.Modules.DataGrid
     public ExportOptionsDialog()
     {
       this.InitializeComponent();
-      this.Object1CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 1";
-      this.Object2CheckBox.Visibility = Viana.Project.ProcessingData.NumberOfTrackedObjects > 1
+      this.Object1CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 1";
+      this.Object2CheckBox.Visibility = App.Project.ProcessingData.NumberOfTrackedObjects > 1
                                           ? Visibility.Visible
                                           : Visibility.Collapsed;
-      this.Object2CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 2";
-      this.Object3CheckBox.Visibility = Viana.Project.ProcessingData.NumberOfTrackedObjects > 2
+      this.Object2CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 2";
+      this.Object3CheckBox.Visibility = App.Project.ProcessingData.NumberOfTrackedObjects > 2
                                           ? Visibility.Visible
                                           : Visibility.Collapsed;
-      this.Object3CheckBox.Content = VianaNET.Resources.Labels.DataGridObjectPrefix + " 3";
+      this.Object3CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 3";
     }
 
     /// <summary>
@@ -59,7 +56,7 @@ namespace VianaNET.Modules.DataGrid
     {
       get
       {
-        var options = new ExportOptions();
+        ExportOptions options = new ExportOptions();
 
         options.Objects = new List<int>(1);
         if (this.Object1CheckBox.IsChecked.GetValueOrDefault(true))
@@ -78,11 +75,9 @@ namespace VianaNET.Modules.DataGrid
         }
 
         options.Axes = new List<DataAxis>();
-        foreach (var item in this.ColumnsListBox.Items)
+        foreach (object item in this.ColumnsListBox.Items)
         {
-          var axis = item as DataAxis;
-
-          if (axis != null && axis.ShouldExport)
+          if (item is DataAxis axis && axis.ShouldExport)
           {
             options.Axes.Add(axis);
           }
@@ -120,11 +115,9 @@ namespace VianaNET.Modules.DataGrid
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void SelectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
-      foreach (var item in this.ColumnsListBox.Items)
+      foreach (object item in this.ColumnsListBox.Items)
       {
-        var axis = item as DataAxis;
-
-        if (axis != null)
+        if (item is DataAxis axis)
         {
           axis.ShouldExport = true;
         }
@@ -138,11 +131,9 @@ namespace VianaNET.Modules.DataGrid
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void UnselectAllButton_OnClick(object sender, RoutedEventArgs e)
     {
-      foreach (var item in this.ColumnsListBox.Items)
+      foreach (object item in this.ColumnsListBox.Items)
       {
-        var axis = item as DataAxis;
-
-        if (axis != null && axis.ShouldExport)
+        if (item is DataAxis axis && axis.ShouldExport)
         {
           axis.ShouldExport = false;
         }

@@ -27,7 +27,6 @@ namespace VianaNET.Data.Filter.Theory
 {
   using System;
 
-
   /// <summary>
   ///   The constants.
   /// </summary>
@@ -415,25 +414,25 @@ namespace VianaNET.Data.Filter.Theory
       switch (nr)
       {
         case 1: 
-          s = VianaNET.Resources.Labels.ParseErrorBracketOpen;
+          s = VianaNET.Localization.Labels.ParseErrorBracketOpen;
           break;
         case 2:
-          s = VianaNET.Resources.Labels.ParseErrorBracketClose;
+          s = VianaNET.Localization.Labels.ParseErrorBracketClose;
           break;
         case 3:
-          s = VianaNET.Resources.Labels.ParseErrorOperatorMissing;
+          s = VianaNET.Localization.Labels.ParseErrorOperatorMissing;
           break;
         case 4:
-          s = VianaNET.Resources.Labels.ParseErrorTermMissing;
+          s = VianaNET.Localization.Labels.ParseErrorTermMissing;
           break;
         case 5:
-          s = VianaNET.Resources.Labels.ParseErrorIllegalCharacter;
+          s = VianaNET.Localization.Labels.ParseErrorIllegalCharacter;
           break;
         case 6:
-          s = VianaNET.Resources.Labels.ParseErrorNoFormulaDefined;
+          s = VianaNET.Localization.Labels.ParseErrorNoFormulaDefined;
           break;
         case 7:
-          s = VianaNET.Resources.Labels.ParseErrorUnknownIdentifier;
+          s = VianaNET.Localization.Labels.ParseErrorUnknownIdentifier;
           break;
       }
     }
@@ -1164,7 +1163,7 @@ namespace VianaNET.Data.Filter.Theory
           }
           else
           {
-              ScanFkt_Err(7);
+          this.ScanFkt_Err(7);
           }
       }   
     }
@@ -1202,8 +1201,8 @@ namespace VianaNET.Data.Filter.Theory
             }
             i++;
         }
-        // keine Konstantenbezeichnung gefunden
-        ScanFkt_Err(7);
+      // keine Konstantenbezeichnung gefunden
+      this.ScanFkt_Err(7);
     }
 
 

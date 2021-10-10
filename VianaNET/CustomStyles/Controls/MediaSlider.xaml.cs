@@ -187,10 +187,10 @@ namespace VianaNET
     /// </summary>
     public MediaSlider()
     {
-      var bindingTickDownClicked = new CommandBinding(TickDownClickedCommand, this.TickDownClickedCommand_Executed);
+      CommandBinding bindingTickDownClicked = new CommandBinding(TickDownClickedCommand, this.TickDownClickedCommand_Executed);
       this.CommandBindings.Add(bindingTickDownClicked);
 
-      var bindingTickUpClicked = new CommandBinding(TickUpClickedCommand, this.TickUpClickedCommand_Executed);
+      CommandBinding bindingTickUpClicked = new CommandBinding(TickUpClickedCommand, this.TickUpClickedCommand_Executed);
       this.CommandBindings.Add(bindingTickUpClicked);
     }
 
@@ -257,15 +257,9 @@ namespace VianaNET
     /// </summary>
     public string CurrentTimeString
     {
-      get
-      {
-        return (string)this.GetValue(CurrentTimeStringProperty);
-      }
+      get => (string)this.GetValue(CurrentTimeStringProperty);
 
-      set
-      {
-        this.SetValue(CurrentTimeStringProperty, value);
-      }
+      set => this.SetValue(CurrentTimeStringProperty, value);
     }
 
     /// <summary>
@@ -273,15 +267,9 @@ namespace VianaNET
     /// </summary>
     public long FrameTimeInNanoSeconds
     {
-      get
-      {
-        return (long)this.GetValue(FrameTimeInNanoSecondsProperty);
-      }
+      get => (long)this.GetValue(FrameTimeInNanoSecondsProperty);
 
-      set
-      {
-        this.SetValue(FrameTimeInNanoSecondsProperty, value);
-      }
+      set => this.SetValue(FrameTimeInNanoSecondsProperty, value);
     }
 
     /// <summary>
@@ -289,15 +277,9 @@ namespace VianaNET
     /// </summary>
     public Visibility IsShowingTimes
     {
-      get
-      {
-        return (Visibility)this.GetValue(IsShowingTimesProperty);
-      }
+      get => (Visibility)this.GetValue(IsShowingTimesProperty);
 
-      set
-      {
-        this.SetValue(IsShowingTimesProperty, value);
-      }
+      set => this.SetValue(IsShowingTimesProperty, value);
     }
 
     /// <summary>
@@ -305,15 +287,9 @@ namespace VianaNET
     /// </summary>
     public Visibility IsShowingTickButtons
     {
-      get
-      {
-        return (Visibility)this.GetValue(IsShowingTickButtonsProperty);
-      }
+      get => (Visibility)this.GetValue(IsShowingTickButtonsProperty);
 
-      set
-      {
-        this.SetValue(IsShowingTickButtonsProperty, value);
-      }
+      set => this.SetValue(IsShowingTickButtonsProperty, value);
     }
 
     /// <summary>
@@ -321,15 +297,9 @@ namespace VianaNET
     /// </summary>
     public string MaximumString
     {
-      get
-      {
-        return (string)this.GetValue(MaximumStringProperty);
-      }
+      get => (string)this.GetValue(MaximumStringProperty);
 
-      set
-      {
-        this.SetValue(MaximumStringProperty, value);
-      }
+      set => this.SetValue(MaximumStringProperty, value);
     }
 
     /// <summary>
@@ -337,15 +307,9 @@ namespace VianaNET
     /// </summary>
     public string MinimumString
     {
-      get
-      {
-        return (string)this.GetValue(MinimumStringProperty);
-      }
+      get => (string)this.GetValue(MinimumStringProperty);
 
-      set
-      {
-        this.SetValue(MinimumStringProperty, value);
-      }
+      set => this.SetValue(MinimumStringProperty, value);
     }
 
     /// <summary>
@@ -353,15 +317,9 @@ namespace VianaNET
     /// </summary>
     public string SelectionEndString
     {
-      get
-      {
-        return (string)this.GetValue(SelectionEndStringProperty);
-      }
+      get => (string)this.GetValue(SelectionEndStringProperty);
 
-      set
-      {
-        this.SetValue(SelectionEndStringProperty, value);
-      }
+      set => this.SetValue(SelectionEndStringProperty, value);
     }
 
     /// <summary>
@@ -369,15 +327,9 @@ namespace VianaNET
     /// </summary>
     public string SelectionStartString
     {
-      get
-      {
-        return (string)this.GetValue(SelectionStartStringProperty);
-      }
+      get => (string)this.GetValue(SelectionStartStringProperty);
 
-      set
-      {
-        this.SetValue(SelectionStartStringProperty, value);
-      }
+      set => this.SetValue(SelectionStartStringProperty, value);
     }
 
     #endregion
@@ -610,7 +562,7 @@ namespace VianaNET
     private string ConvertToTimeString(double value)
     {
       //int timeInMS = value;
-      var time = new TimeSpan(0, 0, 0, 0,(int)value);
+      TimeSpan time = new TimeSpan(0, 0, 0, 0,(int)value);
       //var seconds = (int)Math.Floor(timeInMS / 1000);
       //var milliseconds = (int)(timeInMS - seconds * 1000);
       string timeValue = time.ToString(@"mm\:ss\.fff");//seconds.ToString("N0") + ":" + milliseconds.ToString("000");

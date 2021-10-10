@@ -29,9 +29,8 @@ namespace VianaNET.Data.Filter
   using System.Collections.Generic;
   using System.Windows;
   using System.Xml.Serialization;
-  using Application;
-  using Collections;
-  using CustomStyles.Types;
+  using VianaNET.Data.Collections;
+  using VianaNET.CustomStyles.Types;
 
   /// <summary>
   ///   The interpolation base.
@@ -124,15 +123,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public int NumberOfSamplesToInterpolate
     {
-      get
-      {
-        return (int)this.GetValue(NumberOfSamplesToInterpolateProperty);
-      }
+      get => (int)this.GetValue(NumberOfSamplesToInterpolateProperty);
 
-      set
-      {
-        this.SetValue(NumberOfSamplesToInterpolateProperty, value);
-      }
+      set => this.SetValue(NumberOfSamplesToInterpolateProperty, value);
     }
 
     #endregion
@@ -161,7 +154,7 @@ namespace VianaNET.Data.Filter
     /// </returns>
     protected List<double> GetRangeAtPosition(int startIndex, int numberOfSamplesToReturn)
     {
-      var sampleCollection = new List<double>(numberOfSamplesToReturn);
+      List<double> sampleCollection = new List<double>(numberOfSamplesToReturn);
 
       for (int i = startIndex; i < startIndex + numberOfSamplesToReturn; i++)
       {
@@ -191,22 +184,22 @@ namespace VianaNET.Data.Filter
         return;
       }
 
-      var aktObjectNr = Viana.Project.ProcessingData.IndexOfObject;
+      int aktObjectNr = App.Project.ProcessingData.IndexOfObject;
       this.WertX.Clear();
       this.WertY.Clear();
       this.WertXMin = double.MaxValue;
       this.WertXMax = double.MinValue;
       this.anzahl = 0;
 
-      foreach (var sample in Viana.Project.VideoData.FilteredSamples)
+      foreach (TimeSample sample in App.Project.VideoData.FilteredSamples)
       {
         if (!sample.IsSelected)
         {
           continue;
         }
 
-        var valueX = this.GetValueFromSample(true, aktObjectNr, sample);
-        var valueY = this.GetValueFromSample(false, aktObjectNr, sample);
+        double? valueX = this.GetValueFromSample(true, aktObjectNr, sample);
+        double? valueY = this.GetValueFromSample(false, aktObjectNr, sample);
 
         if (valueX.HasValue && valueY.HasValue)
         {
@@ -273,7 +266,7 @@ namespace VianaNET.Data.Filter
         return null;
       }
 
-      switch (isXValue ? Viana.Project.CurrentFilterData.AxisX.Axis : Viana.Project.CurrentFilterData.AxisY.Axis)
+      switch (isXValue ? App.Project.CurrentFilterData.AxisX.Axis : App.Project.CurrentFilterData.AxisY.Axis)
       {
         case AxisType.I:
           value = sample.Framenumber;

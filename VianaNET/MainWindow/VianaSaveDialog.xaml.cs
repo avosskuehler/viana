@@ -70,10 +70,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public Brush DescriptionBackground
     {
-      set
-      {
-        this.DescriptionArea.Background = value;
-      }
+      set => this.DescriptionArea.Background = value;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -85,10 +82,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string Message
     {
-      set
-      {
-        this.message.Text = value;
-      }
+      set => this.message.Text = value;
     }
 
     /// <summary>
@@ -96,10 +90,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string MessageDescription
     {
-      set
-      {
-        this.Description.Content = value;
-      }
+      set => this.Description.Content = value;
     }
 
 
@@ -108,10 +99,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string VianaTitle
     {
-      set
-      {
-        this.TopFrame.Title = value;
-      }
+      set => this.TopFrame.Title = value;
     }
 
     #endregion

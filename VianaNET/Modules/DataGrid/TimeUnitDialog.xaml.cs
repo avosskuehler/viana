@@ -28,9 +28,6 @@ namespace VianaNET.Modules.DataGrid
 {
   using System.Windows;
 
-  using VianaNET.Application;
-  using VianaNET.CustomStyles.Types;
-
   /// <summary>
   ///   The length dialog.
   /// </summary>

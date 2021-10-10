@@ -5,7 +5,7 @@
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:collections="clr-namespace:VianaNET.Data.Collections"
-        xmlns:application="clr-namespace:VianaNET.Application"
+        xmlns:local="clr-namespace:VianaNET"
         xmlns:vianaNet="clr-namespace:VianaNET"
         lex:LocalizeDictionary.DesignCulture="de"
     ResizeMode="NoResize" WindowStartupLocation="CenterScreen"

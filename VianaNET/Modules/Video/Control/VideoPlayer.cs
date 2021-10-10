@@ -24,33 +24,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using DirectShowLib;
-
-using VianaNET.Logging;
-
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.Diagnostics;
-  using System.Globalization;
   using System.IO;
-  using System.Reflection;
   using System.Threading;
   using System.Windows;
-  using System.Windows.Forms;
-  using System.Windows.Forms.VisualStyles;
   using System.Windows.Threading;
 
   using DirectShowLib;
-
-  using VianaNET.Application;
   using VianaNET.Logging;
   using VianaNET.MainWindow;
-  using VianaNET.Modules.Video.Dialogs;
 
-
-  using Vlc.DotNet.Core;
-  using Vlc.DotNet.Forms;
 
   using File = System.IO.File;
   using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
@@ -175,15 +160,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public double MediaDurationInMS
     {
-      get
-      {
-        return (double)this.GetValue(MediaDurationInMSProperty);
-      }
+      get => (double)this.GetValue(MediaDurationInMSProperty);
 
-      set
-      {
-        this.SetValue(MediaDurationInMSProperty, value);
-      }
+      set => this.SetValue(MediaDurationInMSProperty, value);
     }
 
     ///// <summary>
@@ -194,7 +173,7 @@ namespace VianaNET.Modules.Video.Control
     //{
     //  get
     //  {
-    //    return this.MediaDurationInMS * Viana.Project.VideoData.FramerateFactor;
+    //    return this.MediaDurationInMS * App.Project.VideoData.FramerateFactor;
     //  }
     //}
 
@@ -224,7 +203,7 @@ namespace VianaNET.Modules.Video.Control
         //}
         //else
         //{
-        return (long)(currentPosition * Viana.Project.VideoData.FramerateFactor);
+        return (long)(currentPosition * App.Project.VideoData.FramerateFactor);
         //}
       }
 
@@ -235,7 +214,7 @@ namespace VianaNET.Modules.Video.Control
           return;
         }
 
-        long currentPosition = (long)(value / Viana.Project.VideoData.FramerateFactor);
+        long currentPosition = (long)(value / App.Project.VideoData.FramerateFactor);
         if (currentPosition < 0)
         {
           currentPosition = 0;
@@ -328,33 +307,33 @@ namespace VianaNET.Modules.Video.Control
 
       try
       {
-        if (Viana.Project.ProjectPath == null)
+        if (App.Project.ProjectPath == null)
         {
-          Viana.Project.ProjectPath = string.Empty;
+          App.Project.ProjectPath = string.Empty;
         }
 
-        var fileWithPath = Path.Combine(Viana.Project.ProjectPath, fileName);
+        string fileWithPath = Path.Combine(App.Project.ProjectPath, fileName);
         if (!File.Exists(fileWithPath))
         {
           if (fileName != string.Empty)
           {
-            var messageTitle = VianaNET.Resources.Labels.AskVideoNotFoundMessageTitle;
+            string messageTitle = VianaNET.Localization.Labels.AskVideoNotFoundMessageTitle;
             messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileWithPath));
             messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileWithPath));
 
-            var dlg = new VianaDialog(VianaNET.Resources.Labels.AskVideoNotFoundTitle, messageTitle, VianaNET.Resources.Labels.AskVideoNotFoundMessage, false);
+            VianaDialog dlg = new VianaDialog(VianaNET.Localization.Labels.AskVideoNotFoundTitle, messageTitle, VianaNET.Localization.Labels.AskVideoNotFoundMessage, false);
             if (!dlg.ShowDialog().GetValueOrDefault(false))
             {
               return false;
             }
           }
 
-          var ofd = new OpenFileDialog();
+          OpenFileDialog ofd = new OpenFileDialog();
           ofd.CheckFileExists = true;
           ofd.CheckPathExists = true;
           ofd.FilterIndex = 1;
-          ofd.Filter = VianaNET.Resources.Labels.VideoFilesFilter;
-          ofd.Title = VianaNET.Resources.Labels.LoadVideoFilesTitle;
+          ofd.Filter = VianaNET.Localization.Labels.VideoFilesFilter;
+          ofd.Title = VianaNET.Localization.Labels.LoadVideoFilesTitle;
           if (ofd.ShowDialog().Value)
           {
             fileName = ofd.FileName;
@@ -366,18 +345,18 @@ namespace VianaNET.Modules.Video.Control
         }
 
         this.VideoFilename = Path.GetFileName(fileName);
-        Viana.Project.ProjectPath = Path.GetDirectoryName(fileName);
-        fileWithPath = Path.Combine(Viana.Project.ProjectPath, fileName);
+        App.Project.ProjectPath = Path.GetDirectoryName(fileName);
+        fileWithPath = Path.Combine(App.Project.ProjectPath, fileName);
 
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
 
         // Read out video properties
-        using (var info = new MediaInfo.DotNetWrapper.MediaInfo())
+        using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
         {
-          var status = info.Open(fileWithPath);
-          var komplett = info.Inform();
-          var einzeln = komplett.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+          MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileWithPath);
+          string komplett = info.Inform();
+          string[] einzeln = komplett.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
           string[] names = new string[500];
           for (int i = 0; i < 500; i++)
@@ -386,7 +365,7 @@ namespace VianaNET.Modules.Video.Control
           }
 
           // CFR = constant frame rate, VFR = variable frame rate
-          var framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+          string framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (framerateMode == "VFR")
           {
             ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Die Datei hat eine variable Bildrate, sie muss zunächst konvertiert werden"), true);
@@ -394,23 +373,23 @@ namespace VianaNET.Modules.Video.Control
           }
 
           // Framerate auslesen
-          var frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+          string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (!float.TryParse(frameratestring, out float fpsfactor1000))
           {
             ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Konnte die Bildrate der Datei nicht auslesen."), true);
             return false;
           }
-          var fps = fpsfactor1000 / 1000f;
+          float fps = fpsfactor1000 / 1000f;
 
           // Dauer auslesen
-          var durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
+          string durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
           if (durationmeasure != "ms")
           {
             ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben."), true);
             return false;
           }
 
-          var durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          string durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(durationstring, out int duration))
           {
             ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Konnte die Dauer der Datei nicht auslesen."), true);
@@ -418,7 +397,7 @@ namespace VianaNET.Modules.Video.Control
           }
 
           // Anzahl der Frames auslesen
-          var framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          string framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(framestring, out int frames))
           {
             ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Frames", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen."), true);
@@ -432,7 +411,7 @@ namespace VianaNET.Modules.Video.Control
         }
 
 
-        Viana.Project.VideoData.FramerateFactor = 1;
+        App.Project.VideoData.FramerateFactor = 1;
         try
         {
           this.BuildGraph();
@@ -443,9 +422,9 @@ namespace VianaNET.Modules.Video.Control
           return false;
         }
 
-        Viana.Project.VideoFile = this.VideoFilename;
+        App.Project.VideoFile = this.VideoFilename;
         Video.Instance.HasVideo = true;
-        Viana.Project.ProcessingData.InitializeImageFilters();
+        App.Project.ProcessingData.InitializeImageFilters();
         this.Revert();
         this.OnVideoAvailable();
       }
@@ -467,7 +446,7 @@ namespace VianaNET.Modules.Video.Control
       base.Revert();
 
       int hr = 0;
-      var zeroPosition = new DsLong((long)(Viana.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
+      DsLong zeroPosition = new DsLong((long)(App.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
 
       // if (zeroPosition <= 0)
       // {
@@ -634,7 +613,7 @@ namespace VianaNET.Modules.Video.Control
       // DsError.ThrowExceptionForHR(hr);
       // this.filterGraph.AddFilter(sourceFilter, "URL Source");
       IBaseFilter sourceFilter;
-      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, this.VideoFilename);
+      string fileWithPath = Path.Combine(App.Project.ProjectPath, this.VideoFilename);
 
       this.filterGraph.AddSourceFilter(fileWithPath, "File Source", out sourceFilter);
 

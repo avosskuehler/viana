@@ -81,76 +81,76 @@ namespace VianaNET.Data.Collections
     static DataAxis()
     {
       // Single axis data
-      var iAxis = new DataAxis(AxisType.I);
-      var lociAxis = new LocExtension("VianaNET:Labels:AxisFrame");
+      DataAxis iAxis = new DataAxis(AxisType.I);
+      LocExtension lociAxis = new LocExtension("VianaNET:Labels:AxisFrame");
       lociAxis.SetBinding(iAxis, DescriptionProperty);
 
-      var tAxis = new DataAxis(AxisType.T);
-      var loctAxis = new LocExtension("VianaNET:Labels:AxisTime");
+      DataAxis tAxis = new DataAxis(AxisType.T);
+      LocExtension loctAxis = new LocExtension("VianaNET:Labels:AxisTime");
       loctAxis.SetBinding(tAxis, DescriptionProperty);
 
-      var xAxis = new DataAxis(AxisType.X);
-      var locxAxis = new LocExtension("VianaNET:Labels:AxisPixelX");
+      DataAxis xAxis = new DataAxis(AxisType.X);
+      LocExtension locxAxis = new LocExtension("VianaNET:Labels:AxisPixelX");
       locxAxis.SetBinding(xAxis, DescriptionProperty);
 
-      var yAxis = new DataAxis(AxisType.Y);
-      var locyAxis = new LocExtension("VianaNET:Labels:AxisPixelY");
+      DataAxis yAxis = new DataAxis(AxisType.Y);
+      LocExtension locyAxis = new LocExtension("VianaNET:Labels:AxisPixelY");
       locyAxis.SetBinding(yAxis, DescriptionProperty);
 
-      var pxAxis = new DataAxis(AxisType.PX);
-      var locpxAxis = new LocExtension("VianaNET:Labels:AxisPositionX");
+      DataAxis pxAxis = new DataAxis(AxisType.PX);
+      LocExtension locpxAxis = new LocExtension("VianaNET:Labels:AxisPositionX");
       locpxAxis.SetBinding(pxAxis, DescriptionProperty);
 
-      var pyAxis = new DataAxis(AxisType.PY);
-      var locpyAxis = new LocExtension("VianaNET:Labels:AxisPositionY");
+      DataAxis pyAxis = new DataAxis(AxisType.PY);
+      LocExtension locpyAxis = new LocExtension("VianaNET:Labels:AxisPositionY");
       locpyAxis.SetBinding(pyAxis, DescriptionProperty);
 
-      var dAxis = new DataAxis(AxisType.D);
-      var locdAxis = new LocExtension("VianaNET:Labels:AxisDistance");
+      DataAxis dAxis = new DataAxis(AxisType.D);
+      LocExtension locdAxis = new LocExtension("VianaNET:Labels:AxisDistance");
       locdAxis.SetBinding(dAxis, DescriptionProperty);
 
-      var dxAxis = new DataAxis(AxisType.DX);
-      var locdxAxis = new LocExtension("VianaNET:Labels:AxisDistanceX");
+      DataAxis dxAxis = new DataAxis(AxisType.DX);
+      LocExtension locdxAxis = new LocExtension("VianaNET:Labels:AxisDistanceX");
       locdxAxis.SetBinding(dxAxis, DescriptionProperty);
 
-      var dyAxis = new DataAxis(AxisType.DY);
-      var locdyAxis = new LocExtension("VianaNET:Labels:AxisDistanceY");
+      DataAxis dyAxis = new DataAxis(AxisType.DY);
+      LocExtension locdyAxis = new LocExtension("VianaNET:Labels:AxisDistanceY");
       locdyAxis.SetBinding(dyAxis, DescriptionProperty);
 
-      var sAxis = new DataAxis(AxisType.S);
-      var locsAxis = new LocExtension("VianaNET:Labels:AxisLength");
+      DataAxis sAxis = new DataAxis(AxisType.S);
+      LocExtension locsAxis = new LocExtension("VianaNET:Labels:AxisLength");
       locsAxis.SetBinding(sAxis, DescriptionProperty);
 
-      var sxAxis = new DataAxis(AxisType.SX);
-      var locsxAxis = new LocExtension("VianaNET:Labels:AxisLengthX");
+      DataAxis sxAxis = new DataAxis(AxisType.SX);
+      LocExtension locsxAxis = new LocExtension("VianaNET:Labels:AxisLengthX");
       locsxAxis.SetBinding(sxAxis, DescriptionProperty);
 
-      var syAxis = new DataAxis(AxisType.SY);
-      var locsyAxis = new LocExtension("VianaNET:Labels:AxisLengthY");
+      DataAxis syAxis = new DataAxis(AxisType.SY);
+      LocExtension locsyAxis = new LocExtension("VianaNET:Labels:AxisLengthY");
       locsyAxis.SetBinding(syAxis, DescriptionProperty);
 
-      var vAxis = new DataAxis(AxisType.V);
-      var locvAxis = new LocExtension("VianaNET:Labels:AxisVelocity");
+      DataAxis vAxis = new DataAxis(AxisType.V);
+      LocExtension locvAxis = new LocExtension("VianaNET:Labels:AxisVelocity");
       locvAxis.SetBinding(vAxis, DescriptionProperty);
 
-      var vxAxis = new DataAxis(AxisType.VX);
-      var locvxAxis = new LocExtension("VianaNET:Labels:AxisVelocityXDirection");
+      DataAxis vxAxis = new DataAxis(AxisType.VX);
+      LocExtension locvxAxis = new LocExtension("VianaNET:Labels:AxisVelocityXDirection");
       locvxAxis.SetBinding(vxAxis, DescriptionProperty);
 
-      var vyAxis = new DataAxis(AxisType.VY);
-      var locvyAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirection");
+      DataAxis vyAxis = new DataAxis(AxisType.VY);
+      LocExtension locvyAxis = new LocExtension("VianaNET:Labels:AxisVelocityYDirection");
       locvyAxis.SetBinding(vyAxis, DescriptionProperty);
 
-      var aAxis = new DataAxis(AxisType.A);
-      var locaAxis = new LocExtension("VianaNET:Labels:AxisAcceleration");
+      DataAxis aAxis = new DataAxis(AxisType.A);
+      LocExtension locaAxis = new LocExtension("VianaNET:Labels:AxisAcceleration");
       locaAxis.SetBinding(aAxis, DescriptionProperty);
 
-      var axAxis = new DataAxis(AxisType.AX);
-      var locaxAxis = new LocExtension("VianaNET:Labels:AxisAccelerationXDirection");
+      DataAxis axAxis = new DataAxis(AxisType.AX);
+      LocExtension locaxAxis = new LocExtension("VianaNET:Labels:AxisAccelerationXDirection");
       locaxAxis.SetBinding(axAxis, DescriptionProperty);
 
-      var ayAxis = new DataAxis(AxisType.AY);
-      var locayAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirection");
+      DataAxis ayAxis = new DataAxis(AxisType.AY);
+      LocExtension locayAxis = new LocExtension("VianaNET:Labels:AxisAccelerationYDirection");
       locayAxis.SetBinding(ayAxis, DescriptionProperty);
 
 
@@ -204,15 +204,9 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public AxisType Axis
     {
-      get
-      {
-        return (AxisType)this.GetValue(AxisProperty);
-      }
+      get => (AxisType)this.GetValue(AxisProperty);
 
-      set
-      {
-        this.SetValue(AxisProperty, value);
-      }
+      set => this.SetValue(AxisProperty, value);
     }
 
     /// <summary>
@@ -220,15 +214,9 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public string Description
     {
-      get
-      {
-        return (string)this.GetValue(DescriptionProperty);
-      }
+      get => (string)this.GetValue(DescriptionProperty);
 
-      set
-      {
-        this.SetValue(DescriptionProperty, value);
-      }
+      set => this.SetValue(DescriptionProperty, value);
     }
 
     /// <summary>
@@ -236,15 +224,9 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public bool ShouldExport
     {
-      get
-      {
-        return (bool)this.GetValue(ShouldExportProperty);
-      }
+      get => (bool)this.GetValue(ShouldExportProperty);
 
-      set
-      {
-        this.SetValue(ShouldExportProperty, value);
-      }
+      set => this.SetValue(ShouldExportProperty, value);
     }
 
     #endregion

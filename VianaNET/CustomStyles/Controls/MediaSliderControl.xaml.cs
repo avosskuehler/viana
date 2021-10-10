@@ -25,7 +25,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET
 {
-  using System.Windows.Controls;
   using System.Windows.Input;
 
   /// <summary>

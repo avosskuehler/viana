@@ -36,6 +36,7 @@ namespace VianaNET.Modules.Chart
   using System.Windows.Media.Imaging;
 
   using OxyPlot;
+  using OxyPlot.Legends;
   using OxyPlot.Series;
   using OxyPlot.Wpf;
 
@@ -50,7 +51,7 @@ namespace VianaNET.Modules.Chart
   using VianaNET.Modules.DataAcquisition;
 
 
-  using WPFMath;
+  using WpfMath;
 
   using HitTestResult = OxyPlot.HitTestResult;
 
@@ -100,14 +101,14 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private readonly Cursor minusCursor =
       new Cursor(
-        Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
+        App.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
 
     /// <summary>
     ///   The plus cursor.
     /// </summary>
     private readonly Cursor plusCursor =
       new Cursor(
-        Application.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorPlus.cur")).Stream);
+        App.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorPlus.cur")).Stream);
 
     /// <summary>
     ///   A character for the axis name
@@ -158,9 +159,9 @@ namespace VianaNET.Modules.Chart
       this.InitializeComponent();
       this.ObjectSelectionCombo.DataContext = this;
       this.PopulateObjectCombo();
-      Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
-      Viana.Project.UpdateChartRequested += this.ProjectUpdateChartRequested;
-      //Viana.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
+      App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      App.Project.UpdateChartRequested += this.ProjectUpdateChartRequested;
+      //App.Project.VideoData.SelectionChanged += this.SamplesSelectionChanged;
       this.isInitialized = true;
       this.formulaParser = new TexFormulaParser();
       this.isSettingDefaultAxisPair = false;
@@ -184,15 +185,9 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     public List<string> ObjectDescriptions
     {
-      get
-      {
-        return (List<string>)this.GetValue(ObjectDescriptionsProperty);
-      }
+      get => (List<string>)this.GetValue(ObjectDescriptionsProperty);
 
-      set
-      {
-        this.SetValue(ObjectDescriptionsProperty, value);
-      }
+      set => this.SetValue(ObjectDescriptionsProperty, value);
     }
 
     #endregion
@@ -215,13 +210,13 @@ namespace VianaNET.Modules.Chart
       }
 
       // Whenever changing the axes, the theory formula will be odd, so hide it
-      // Viana.Project.CurrentFilterData.IsShowingTheorySeries = false;
+      // App.Project.CurrentFilterData.IsShowingTheorySeries = false;
       // this.UpdateTheoryFormula();
-      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-      var axisY = (DataAxis)this.YAxisContent.SelectedItem;
+      DataAxis axisX = (DataAxis)this.XAxisContent.SelectedItem;
+      DataAxis axisY = (DataAxis)this.YAxisContent.SelectedItem;
 
-      Viana.Project.CurrentFilterData.AxisX = axisX;
-      Viana.Project.CurrentFilterData.AxisY = axisY;
+      App.Project.CurrentFilterData.AxisX = axisX;
+      App.Project.CurrentFilterData.AxisY = axisY;
 
       string propertyX;
       string unitNameX;
@@ -241,12 +236,12 @@ namespace VianaNET.Modules.Chart
 
       this.ChartData.UpdateDefaultSeriesMapping(propertyX, propertyY);
 
-      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
-      Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
       this.RefreshRegressionFuctionTerm();
       this.UpdateTheoryFormula();
-      Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
-      Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
+      App.Project.CurrentFilterData.NotifyTheoryTermChange();
+      App.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
 
       this.ChartData.ChartDataModel.ResetAllAxes();
       this.ChartData.UpdateModel();
@@ -286,8 +281,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var window = obj as ChartWindow;
-      if (window != null)
+      if (obj is ChartWindow window)
       {
         window.Refresh();
       }
@@ -353,22 +347,21 @@ namespace VianaNET.Modules.Chart
     private void DataChart_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
       Point point = e.GetPosition(this.DataChart);
-      var screenPoint = new ScreenPoint(point.X, point.Y);
+      ScreenPoint screenPoint = new ScreenPoint(point.X, point.Y);
       HitTestResult result = this.ChartData.DataScatterSeries.HitTest(new HitTestArguments(screenPoint, 20));
       if (result == null)
       {
         return;
       }
 
-      var sample = result.Item as TimeSample;
-      var modifyWindow = new ModifyDataWindow();
-      if (sample != null)
+      ModifyDataWindow modifyWindow = new ModifyDataWindow();
+      if (result.Item is TimeSample sample)
       {
         modifyWindow.MoveToFrame(sample.Framenumber);
       }
 
       modifyWindow.ShowDialog();
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>
@@ -397,17 +390,17 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void DataStyleButtonClick(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.DataLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.DataLineColor.ToOxyColor();
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.DataLineMarkerType;
+      LineOptionsDialog lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = App.Project.CurrentFilterData.DataLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = App.Project.CurrentFilterData.DataLineColor.ToOxyColor();
+      lineOptionsDialog.LineStyleControl.MarkerType = App.Project.CurrentFilterData.DataLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
-        Viana.Project.CurrentFilterData.DataLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.DataLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
-        Viana.Project.CurrentFilterData.DataLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        App.Project.CurrentFilterData.DataLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
+        App.Project.CurrentFilterData.DataLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
+        App.Project.CurrentFilterData.DataLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
     }
@@ -439,7 +432,7 @@ namespace VianaNET.Modules.Chart
     {
       this.isSelectionEnabled = false;
       this.ChartData.DataScatterSeries.ClearSelection();
-      foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+      foreach (TimeSample sample in App.Project.VideoData.FilteredSamples)
       {
         sample.IsSelected = true;
       }
@@ -458,10 +451,10 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void FilterPrecisionButtonClick(object sender, RoutedEventArgs e)
     {
-      var dlg = new NumericalPrecisionDialog { NumberOfDigits = Viana.Project.CurrentFilterData.NumericPrecision };
+      NumericalPrecisionDialog dlg = new NumericalPrecisionDialog { NumberOfDigits = App.Project.CurrentFilterData.NumericPrecision };
       if (dlg.ShowDialog().GetValueOrDefault(false))
       {
-        Viana.Project.CurrentFilterData.NumericPrecision = dlg.NumberOfDigits;
+        App.Project.CurrentFilterData.NumericPrecision = dlg.NumberOfDigits;
         if (this.RegressionCheckBox.IsChecked())
         {
           this.RefreshRegressionFuctionTerm();
@@ -481,8 +474,8 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void InterpolationOptionsButtonClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.InterpolationFilter.ShowInterpolationOptionsDialog();
-      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      App.Project.CurrentFilterData.InterpolationFilter.ShowInterpolationOptionsDialog();
+      App.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
       this.ChartData.UpdateModel();
     }
 
@@ -497,19 +490,19 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void InterpolationStyleButtonClick(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
+      LineOptionsDialog lineOptionsDialog = new LineOptionsDialog();
       lineOptionsDialog.LineStyleControl.SeriesStrokeThickness =
-        Viana.Project.CurrentFilterData.InterpolationLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.InterpolationLineColor.ToOxyColor();
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.InterpolationLineMarkerType;
+        App.Project.CurrentFilterData.InterpolationLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = App.Project.CurrentFilterData.InterpolationLineColor.ToOxyColor();
+      lineOptionsDialog.LineStyleControl.MarkerType = App.Project.CurrentFilterData.InterpolationLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
-        Viana.Project.CurrentFilterData.InterpolationLineThickness =
+        App.Project.CurrentFilterData.InterpolationLineThickness =
           lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
-        Viana.Project.CurrentFilterData.InterpolationLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        App.Project.CurrentFilterData.InterpolationLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
+        App.Project.CurrentFilterData.InterpolationLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
     }
@@ -525,7 +518,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void LegendPlacementInsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
     {
-      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Inside;
+      this.ChartData.ChartDataModel.Legends[0].LegendPlacement = LegendPlacement.Inside;
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
@@ -540,7 +533,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void LegendPlacementOutsideRadioButton_OnChecked(object sender, RoutedEventArgs e)
     {
-      this.ChartData.ChartDataModel.LegendPlacement = LegendPlacement.Outside;
+      this.ChartData.ChartDataModel.Legends[0].LegendPlacement = LegendPlacement.Outside;
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
@@ -555,7 +548,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void LegendTextBoxChanged(object sender, TextChangedEventArgs e)
     {
-      this.ChartData.ChartDataModel.LegendTitle = this.LegendTextBox.Text;
+      this.ChartData.ChartDataModel.Legends[0].LegendTitle = this.LegendTextBox.Text;
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
@@ -605,8 +598,8 @@ namespace VianaNET.Modules.Chart
         return;
       }
 
-      var entry = (string)this.ObjectSelectionCombo.SelectedItem;
-      Viana.Project.ProcessingData.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+      string entry = (string)this.ObjectSelectionCombo.SelectedItem;
+      App.Project.ProcessingData.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
     }
 
     /// <summary>
@@ -681,7 +674,7 @@ namespace VianaNET.Modules.Chart
       }
 
       // Remove selection in VideoData
-      foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+      foreach (TimeSample sample in App.Project.VideoData.FilteredSamples)
       {
         sample.IsSelected = false;
       }
@@ -703,21 +696,31 @@ namespace VianaNET.Modules.Chart
     {
       if (this.mouseDown)
       {
-        var currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
+        Point currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
         this.mouseUpPositionInAxesCoordinates =
           this.ChartData.DataScatterSeries.InverseTransform(new ScreenPoint(currentPos.X, currentPos.Y));
 
         if (this.PointsAreNear(this.mouseDownPositionInCanvasCoordinates, currentPos))
         {
-          this.mouseDownPositionInAxesCoordinates.X -= Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02;
-          this.mouseUpPositionInAxesCoordinates.X += Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02;
-          this.mouseDownPositionInAxesCoordinates.Y -= Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02;
-          this.mouseUpPositionInAxesCoordinates.Y += Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02;
+          DataPoint newDownPoint = new DataPoint(
+            this.mouseDownPositionInAxesCoordinates.X - Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02,
+            this.mouseDownPositionInAxesCoordinates.Y - Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02);
+          this.mouseDownPositionInAxesCoordinates = newDownPoint;
+
+          DataPoint newUpPoint = new DataPoint(
+            this.mouseUpPositionInAxesCoordinates.X - Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02,
+            this.mouseUpPositionInAxesCoordinates.Y - Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02);
+          this.mouseUpPositionInAxesCoordinates = newUpPoint;
+
+          //this.mouseDownPositionInAxesCoordinates.X -= Math.Abs(this.mouseDownPositionInAxesCoordinates.X) * 0.02;
+          //this.mouseUpPositionInAxesCoordinates.X += Math.Abs(this.mouseUpPositionInAxesCoordinates.X) * 0.02;
+          //this.mouseDownPositionInAxesCoordinates.Y -= Math.Abs(this.mouseDownPositionInAxesCoordinates.Y) * 0.02;
+          //this.mouseUpPositionInAxesCoordinates.Y += Math.Abs(this.mouseUpPositionInAxesCoordinates.Y) * 0.02;
         }
 
         // Create current point list
-        var actualDataPoints = new List<ScatterPoint>();
-        foreach (TimeSample item in Viana.Project.VideoData.FilteredSamples)
+        List<ScatterPoint> actualDataPoints = new List<ScatterPoint>();
+        foreach (TimeSample item in App.Project.VideoData.FilteredSamples)
         {
           actualDataPoints.Add(this.ChartData.DataScatterSeries.Mapping(item));
         }
@@ -750,7 +753,7 @@ namespace VianaNET.Modules.Chart
           {
             int index = actualDataPoints.IndexOf(dataPoint);
             this.ChartData.DataScatterSeries.UnselectItem(index);
-            Viana.Project.VideoData.FilteredSamples[index].IsSelected = false;
+            App.Project.VideoData.FilteredSamples[index].IsSelected = false;
           }
         }
         else
@@ -759,14 +762,14 @@ namespace VianaNET.Modules.Chart
           {
             int index = actualDataPoints.IndexOf(dataPoint);
             this.ChartData.DataScatterSeries.SelectItem(index);
-            Viana.Project.VideoData.FilteredSamples[index].IsSelected = true;
+            App.Project.VideoData.FilteredSamples[index].IsSelected = true;
           }
         }
 
         // Reset selection to whole series, if no point is selected
         if (!selectedDataPoints.Any())
         {
-          foreach (TimeSample sample in Viana.Project.VideoData.FilteredSamples)
+          foreach (TimeSample sample in App.Project.VideoData.FilteredSamples)
           {
             sample.IsSelected = true;
           }
@@ -792,7 +795,7 @@ namespace VianaNET.Modules.Chart
     {
       if (this.mouseDown)
       {
-        var currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
+        Point currentPos = new Point(e.GetPosition(this.MyCanvas).X, e.GetPosition(this.MyCanvas).Y);
 
         this.SelectRect.Visibility = Visibility.Visible;
         this.SelectRect.Width = Math.Abs(this.mouseDownPositionInCanvasCoordinates.X - currentPos.X);
@@ -834,19 +837,19 @@ namespace VianaNET.Modules.Chart
       }
       else if (e.Key == Key.Delete)
       {
-        if (Viana.Project.VideoData.Samples.AllSamplesSelected)
+        if (App.Project.VideoData.Samples.AllSamplesSelected)
         {
           return;
         }
 
-        var dlg = new VianaDialog(
-          VianaNET.Resources.Labels.AskDeleteDataTitle,
-          VianaNET.Resources.Labels.AskDeleteDataMessageTitle,
-          VianaNET.Resources.Labels.AskDeleteDataMessage,
+        VianaDialog dlg = new VianaDialog(
+          VianaNET.Localization.Labels.AskDeleteDataTitle,
+          VianaNET.Localization.Labels.AskDeleteDataMessageTitle,
+          VianaNET.Localization.Labels.AskDeleteDataMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
-          Viana.Project.VideoData.DeleteSelectedSamples();
+          App.Project.VideoData.DeleteSelectedSamples();
           this.ChartData.DataScatterSeries.ClearSelection();
         }
       }
@@ -861,11 +864,11 @@ namespace VianaNET.Modules.Chart
     //{
     //this.ChartData.DataScatterSeries.ClearSelection();
 
-    //if (!Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //if (!App.Project.VideoData.Samples.AllSamplesSelected)
     //{
-    //  foreach (TimeSample timesample in Viana.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
+    //  foreach (TimeSample timesample in App.Project.VideoData.FilteredSamples.Where(o => o.IsSelected))
     //  {
-    //    int index = Viana.Project.VideoData.FilteredSamples.IndexOf(timesample);
+    //    int index = App.Project.VideoData.FilteredSamples.IndexOf(timesample);
     //    this.ChartData.DataScatterSeries.SelectItem(index);
     //  }
     //}
@@ -918,22 +921,22 @@ namespace VianaNET.Modules.Chart
 
       this.isSettingDefaultAxisPair = true;
 
-      var chartType = ChartType.YoverX;
+      ChartType chartType = ChartType.YoverX;
       char achsBez = 'x';
       char funcBez = 'y';
 
       if (this.TabPositionSpace.IsSelected)
       {
-        var chart = (DataCharts)this.AxesContentPositionSpace.SelectedItem;
+        DataCharts chart = (DataCharts)this.AxesContentPositionSpace.SelectedItem;
         chartType = chart.Chart;
       }
       else if (this.TabPhaseSpace.IsSelected)
       {
-        var chart = (DataCharts)this.AxesContentPhaseSpace.SelectedItem;
+        DataCharts chart = (DataCharts)this.AxesContentPhaseSpace.SelectedItem;
         chartType = chart.Chart;
       }
 
-      Viana.Project.CurrentChartType = chartType;
+      App.Project.CurrentChartType = chartType;
       switch (chartType)
       {
         case ChartType.YoverX:
@@ -1047,7 +1050,7 @@ namespace VianaNET.Modules.Chart
       }
 
       this.axisName = achsBez;
-      Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
+      App.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
       this.Refresh();
 
       this.isSettingDefaultAxisPair = false;
@@ -1061,16 +1064,16 @@ namespace VianaNET.Modules.Chart
       // Erase old entries
       this.ObjectDescriptions.Clear();
 
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.ObjectDescriptions.Add(VianaNET.Resources.Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
+        this.ObjectDescriptions.Add(VianaNET.Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
       }
 
       // this.ObjectSelectionCombo.ItemsSource = null;
       this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
-      var indexBinding = new Binding("ProcessingData.IndexOfObject") { Source = Viana.Project };
+      Binding indexBinding = new Binding("ProcessingData.IndexOfObject") { Source = App.Project };
       this.ObjectSelectionCombo.SetBinding(Selector.SelectedIndexProperty, indexBinding);
-      Viana.Project.ProcessingData.IndexOfObject++;
+      App.Project.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
@@ -1107,8 +1110,8 @@ namespace VianaNET.Modules.Chart
     {
       if (Project.IsDeserializing)
       {
-        this.XAxisContent.SelectedValue = Viana.Project.CurrentFilterData.AxisX.Axis;
-        this.YAxisContent.SelectedValue = Viana.Project.CurrentFilterData.AxisY.Axis;
+        this.XAxisContent.SelectedValue = App.Project.CurrentFilterData.AxisX.Axis;
+        this.YAxisContent.SelectedValue = App.Project.CurrentFilterData.AxisY.Axis;
         this.TabOther.IsSelected = true;
       }
 
@@ -1126,7 +1129,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void RechnerButtonClick(object sender, RoutedEventArgs e)
     {
-      var calculator = new CalculatorAndFktEditor(TRechnerArt.rechner);
+      CalculatorAndFktEditor calculator = new CalculatorAndFktEditor(TRechnerArt.rechner);
       calculator.ShowDialog();
     }
 
@@ -1135,13 +1138,14 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private void RefreshRegressionFuctionTerm()
     {
-      if (Viana.Project.CurrentFilterData.RegressionFunctionTexFormula != null)
+      if (App.Project.CurrentFilterData.RegressionFunctionTexFormula != null)
       {
         // Render formula to visual.
-        var visual = new DrawingVisual();
-        TexRenderer renderer = Viana.Project.CurrentFilterData.RegressionFunctionTexFormula.GetRenderer(
+        DrawingVisual visual = new DrawingVisual();
+        TexRenderer renderer = App.Project.CurrentFilterData.RegressionFunctionTexFormula.GetRenderer(
           TexStyle.Display,
-          14d);
+          14d,
+          "Arial");
 
         using (DrawingContext drawingContext = visual.RenderOpen())
         {
@@ -1163,13 +1167,14 @@ namespace VianaNET.Modules.Chart
     private void RefreshTheorieFunctionTerm()
     {
       // Only if we have a formula and should display the theory series
-      if (Viana.Project.CurrentFilterData.TheoryFunctionTexFormula != null)
+      if (App.Project.CurrentFilterData.TheoryFunctionTexFormula != null)
       {
         // Render formula to visual.
-        var visual = new DrawingVisual();
-        TexRenderer renderer = Viana.Project.CurrentFilterData.TheoryFunctionTexFormula.GetRenderer(
+        DrawingVisual visual = new DrawingVisual();
+        TexRenderer renderer = App.Project.CurrentFilterData.TheoryFunctionTexFormula.GetRenderer(
           TexStyle.Display,
-          14d);
+          14d,
+          "Arial");
 
         using (DrawingContext drawingContext = visual.RenderOpen())
         {
@@ -1184,7 +1189,7 @@ namespace VianaNET.Modules.Chart
         this.TheorieFormulaContainerElement.Visual = null;
       }
 
-      Viana.Project.CurrentFilterData.NotifyTheoryTermChange();
+      App.Project.CurrentFilterData.NotifyTheoryTermChange();
     }
 
     /// <summary>
@@ -1198,18 +1203,18 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void RegressionStyleButtonClick(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.RegressionLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.RegressionLineColor.ToOxyColor();
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.RegressionLineMarkerType;
+      LineOptionsDialog lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = App.Project.CurrentFilterData.RegressionLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = App.Project.CurrentFilterData.RegressionLineColor.ToOxyColor();
+      lineOptionsDialog.LineStyleControl.MarkerType = App.Project.CurrentFilterData.RegressionLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
-        Viana.Project.CurrentFilterData.RegressionLineThickness =
+        App.Project.CurrentFilterData.RegressionLineThickness =
           lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
-        Viana.Project.CurrentFilterData.RegressionLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        App.Project.CurrentFilterData.RegressionLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
+        App.Project.CurrentFilterData.RegressionLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
     }
@@ -1225,7 +1230,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void RegressionTypeButtonClick(object sender, RoutedEventArgs e)
     {
-      var regressionOptionsDialog = new RegressionOptionsDialog(Viana.Project.CurrentFilterData.RegressionFilter);
+      RegressionOptionsDialog regressionOptionsDialog = new RegressionOptionsDialog(App.Project.CurrentFilterData.RegressionFilter);
       if (!regressionOptionsDialog.ShowDialog().GetValueOrDefault(false))
       {
         return;
@@ -1234,12 +1239,12 @@ namespace VianaNET.Modules.Chart
       if (regressionOptionsDialog.RegressionType == RegressionType.Best)
       {
         RegressionType bestRegression;
-        if (Viana.Project.CurrentFilterData.RegressionFilter.WertX.Count == 0)
+        if (App.Project.CurrentFilterData.RegressionFilter.WertX.Count == 0)
         {
-          Viana.Project.CurrentFilterData.RegressionFilter.CalculateFilterValues();
+          App.Project.CurrentFilterData.RegressionFilter.CalculateFilterValues();
         }
 
-        Viana.Project.CurrentFilterData.RegressionFilter.GetBestRegressData(
+        App.Project.CurrentFilterData.RegressionFilter.GetBestRegressData(
           out bestRegression,
           regressionOptionsDialog.negFlag);
         this.UpdateRegressionImageButtonAndLabels(bestRegression);
@@ -1276,7 +1281,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShortCutHelpButtonClick(object sender, RoutedEventArgs e)
     {
-      var dialog = new ChartHelpDialog();
+      ChartHelpDialog dialog = new ChartHelpDialog();
       dialog.ShowDialog();
     }
 
@@ -1292,7 +1297,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowInterpolationCheckBoxCheckedChanged(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateInterpolationSeriesDataPoints();
       this.ChartData.UpdateModel();
     }
 
@@ -1307,7 +1312,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowRegressionCheckBoxChecked(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
 
       // Funktionsterm und mittleres Fehlerquadrat anzeigen
       this.RefreshRegressionFuctionTerm();
@@ -1325,11 +1330,11 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowRegressionCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
 
       // Funktionsterm und mittleres Fehlerquadrat nicht mehr anzeigen
-      Viana.Project.CurrentFilterData.RegressionFunctionTexFormula = null;
-      Viana.Project.CurrentFilterData.RegressionAberration = 0;
+      App.Project.CurrentFilterData.RegressionFunctionTexFormula = null;
+      App.Project.CurrentFilterData.RegressionAberration = 0;
       this.RefreshRegressionFuctionTerm();
       this.ChartData.UpdateModel();
     }
@@ -1345,7 +1350,7 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowTheorieCheckBoxChecked(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
       this.UpdateTheoryFormula();
       this.ChartData.UpdateModel();
     }
@@ -1361,9 +1366,9 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ShowTheorieCheckBoxUnchecked(object sender, RoutedEventArgs e)
     {
-      Viana.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
+      App.Project.CurrentFilterData.CalculateTheorySeriesDataPoints();
 
-      // Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
+      // App.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
       // this.RefreshTheorieFunctionTerm();
       this.ChartData.UpdateModel();
     }
@@ -1379,12 +1384,12 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void TheoryOptionsButtonClick(object sender, RoutedEventArgs e)
     {
-      var fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
+      CalculatorAndFktEditor fktEditor = new CalculatorAndFktEditor(TRechnerArt.formelRechner);
       fktEditor.buttonX.Content = string.Concat(this.axisName);
       Constants.varName = string.Concat(this.axisName);
-      if (Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree != null)
+      if (App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree != null)
       {
-        fktEditor.textBox1.Text = Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
+        fktEditor.textBox1.Text = App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
         fktEditor.textBox1.SelectAll();
       }
 
@@ -1392,8 +1397,8 @@ namespace VianaNET.Modules.Chart
 
       if (fktEditor.DialogResult.GetValueOrDefault(false))
       {
-        Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree = fktEditor.GetFunktion();
-        Viana.Project.CurrentFilterData.IsShowingTheorySeries = true;
+        App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree = fktEditor.GetFunktion();
+        App.Project.CurrentFilterData.IsShowingTheorySeries = true;
         this.UpdateTheoryFormula();
       }
     }
@@ -1409,17 +1414,17 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void TheoryStyleButtonClick(object sender, RoutedEventArgs e)
     {
-      var lineOptionsDialog = new LineOptionsDialog();
-      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = Viana.Project.CurrentFilterData.TheoryLineThickness;
-      lineOptionsDialog.LineStyleControl.SeriesColor = Viana.Project.CurrentFilterData.TheoryLineColor.ToOxyColor();
-      lineOptionsDialog.LineStyleControl.MarkerType = Viana.Project.CurrentFilterData.TheoryLineMarkerType;
+      LineOptionsDialog lineOptionsDialog = new LineOptionsDialog();
+      lineOptionsDialog.LineStyleControl.SeriesStrokeThickness = App.Project.CurrentFilterData.TheoryLineThickness;
+      lineOptionsDialog.LineStyleControl.SeriesColor = App.Project.CurrentFilterData.TheoryLineColor.ToOxyColor();
+      lineOptionsDialog.LineStyleControl.MarkerType = App.Project.CurrentFilterData.TheoryLineMarkerType;
       lineOptionsDialog.ShowDialog();
 
       if (lineOptionsDialog.DialogResult == true)
       {
-        Viana.Project.CurrentFilterData.TheoryLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
-        Viana.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
-        Viana.Project.CurrentFilterData.TheoryLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
+        App.Project.CurrentFilterData.TheoryLineThickness = lineOptionsDialog.LineStyleControl.SeriesStrokeThickness;
+        App.Project.CurrentFilterData.TheoryLineColor = lineOptionsDialog.LineStyleControl.SeriesColor.ToColor();
+        App.Project.CurrentFilterData.TheoryLineMarkerType = lineOptionsDialog.LineStyleControl.MarkerType;
         this.ChartData.UpdateAppearance();
       }
     }
@@ -1464,99 +1469,99 @@ namespace VianaNET.Modules.Chart
           break;
         case AxisType.T:
           datafield = "Time";
-          unitname = Viana.Project.CalibrationData.TimeUnit.ToString();
+          unitname = App.Project.CalibrationData.TimeUnit.ToString();
           break;
         case AxisType.X:
           datafield = "PixelX";
-          unitname = Viana.Project.CalibrationData.PixelUnit;
+          unitname = App.Project.CalibrationData.PixelUnit;
           break;
         case AxisType.Y:
           datafield = "PixelY";
-          unitname = Viana.Project.CalibrationData.PixelUnit;
+          unitname = App.Project.CalibrationData.PixelUnit;
           break;
         case AxisType.PX:
           datafield = "PositionX";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.PY:
           datafield = "PositionY";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.D:
           datafield = "Distance";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.DX:
           datafield = "DistanceX";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.DY:
           datafield = "DistanceY";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.S:
           datafield = "Length";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.SX:
           datafield = "LengthX";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.SY:
           datafield = "LengthY";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
         case AxisType.V:
           datafield = "Velocity";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VX:
           datafield = "VelocityX";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VY:
           datafield = "VelocityY";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VI:
           datafield = "VelocityI";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VXI:
           datafield = "VelocityXI";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.VYI:
           datafield = "VelocityYI";
-          unitname = Viana.Project.CalibrationData.VelocityUnit;
+          unitname = App.Project.CalibrationData.VelocityUnit;
           break;
         case AxisType.A:
           datafield = "Acceleration";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AX:
           datafield = "AccelerationX";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AY:
           datafield = "AccelerationY";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AI:
           datafield = "AccelerationI";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AXI:
           datafield = "AccelerationXI";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         case AxisType.AYI:
           datafield = "AccelerationYI";
-          unitname = Viana.Project.CalibrationData.AccelerationUnit;
+          unitname = App.Project.CalibrationData.AccelerationUnit;
           break;
         default:
           datafield = "PositionX";
-          unitname = Viana.Project.CalibrationData.LengthUnit.ToString();
+          unitname = App.Project.CalibrationData.LengthUnit.ToString();
           break;
       }
     }
@@ -1571,7 +1576,7 @@ namespace VianaNET.Modules.Chart
     private void UpdateRegressionImageButtonAndLabels(RegressionType aktregressionType)
     {
       string bildsource;
-      Viana.Project.CurrentFilterData.RegressionFilter.RegressionType = aktregressionType;
+      App.Project.CurrentFilterData.RegressionFilter.RegressionType = aktregressionType;
       switch (aktregressionType)
       {
         case RegressionType.Linear:
@@ -1606,12 +1611,12 @@ namespace VianaNET.Modules.Chart
           break;
       }
 
-      var neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
+      Uri neuBildsource = new Uri(bildsource, UriKind.RelativeOrAbsolute);
       this.RegressionTypeButton.ImageSource = new BitmapImage(neuBildsource);
 
       if (this.RegressionCheckBox.IsChecked.GetValueOrDefault(false))
       {
-        Viana.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
+        App.Project.CurrentFilterData.CalculateRegressionSeriesDataPoints();
         this.RefreshRegressionFuctionTerm();
       }
     }
@@ -1623,13 +1628,13 @@ namespace VianaNET.Modules.Chart
     {
       try
       {
-        if (Viana.Project.CurrentFilterData.TheoryFilter == null
-            || Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
+        if (App.Project.CurrentFilterData.TheoryFilter == null
+            || App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree == null)
         {
           return;
         }
 
-        string functionString = Viana.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
+        string functionString = App.Project.CurrentFilterData.TheoryFilter.TheoreticalFunctionCalculatorTree.Name;
         functionString = functionString.Replace("*", "{\\cdot}");
         functionString = functionString.Replace("(", "{(");
         functionString = functionString.Replace(")", ")}");
@@ -1653,14 +1658,14 @@ namespace VianaNET.Modules.Chart
         TexFormula formula = this.formulaParser.Parse(functionString);
         if (formula != null)
         {
-          Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = formula;
+          App.Project.CurrentFilterData.TheoryFunctionTexFormula = formula;
         }
 
         this.RefreshTheorieFunctionTerm();
       }
       catch (Exception)
       {
-        Viana.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
+        App.Project.CurrentFilterData.TheoryFunctionTexFormula = null;
       }
     }
 
@@ -1680,12 +1685,12 @@ namespace VianaNET.Modules.Chart
         return;
       }
 
-      Viana.Project.CurrentChartType = ChartType.Custom;
-      var axisX = (DataAxis)this.XAxisContent.SelectedItem;
-      var achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
-      var funcBez = 'y';
+      App.Project.CurrentChartType = ChartType.Custom;
+      DataAxis axisX = (DataAxis)this.XAxisContent.SelectedItem;
+      char achsBez = axisX.Axis == AxisType.T ? 't' : 'x';
+      char funcBez = 'y';
       this.axisName = achsBez;
-      Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
+      App.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
 
       this.Refresh();
     }
@@ -1740,12 +1745,12 @@ namespace VianaNET.Modules.Chart
         return;
       }
 
-      Viana.Project.CurrentChartType = ChartType.Custom;
-      var axisY = (DataAxis)this.YAxisContent.SelectedItem;
-      var achsBez = axisY.Axis == AxisType.T ? 't' : 'y';
-      var funcBez = 'y';
+      App.Project.CurrentChartType = ChartType.Custom;
+      DataAxis axisY = (DataAxis)this.YAxisContent.SelectedItem;
+      char achsBez = axisY.Axis == AxisType.T ? 't' : 'y';
+      char funcBez = 'y';
       this.axisName = achsBez;
-      Viana.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
+      App.Project.CurrentFilterData.RegressionFilter.SetBezeichnungen(achsBez, funcBez);
 
       this.Refresh();
     }

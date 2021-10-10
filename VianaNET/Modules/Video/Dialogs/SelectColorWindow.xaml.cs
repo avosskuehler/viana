@@ -24,9 +24,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using VianaNET.Application;
-using VianaNET.Logging;
-
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System;
@@ -34,9 +31,6 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
-  using System.Windows.Media;
-
-  using VianaNET.Data;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
 
@@ -108,15 +102,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public int IndexOfTrackedObject
     {
-      get
-      {
-        return (int)this.GetValue(IndexOfTrackedObjectProperty);
-      }
+      get => (int)this.GetValue(IndexOfTrackedObjectProperty);
 
-      set
-      {
-        this.SetValue(IndexOfTrackedObjectProperty, value);
-      }
+      set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
     #endregion
@@ -162,7 +150,7 @@ namespace VianaNET.Modules.Video.Dialogs
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
         double originalX = factorX * scaledX;
         double originalY = factorY * scaledY;
-        var rect = new Int32Rect((int)originalX, (int)originalY, 1, 1);
+        Int32Rect rect = new Int32Rect((int)originalX, (int)originalY, 1, 1);
 
         Bitmap frame = Video.Instance.CreateBitmapFromCurrentImageSource();
         if (frame == null)
@@ -172,16 +160,16 @@ namespace VianaNET.Modules.Video.Dialogs
 
         Color color = frame.GetPixel((int)originalX, (int)originalY);
         System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(255, color.R, color.G, color.B);
-        Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
+        App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
         //Project.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
       }
       catch (Exception)
       {
-        var error = new VianaDialog("Error", "No Color selected", "Could not detect the color at the given position", true);
+        VianaDialog error = new VianaDialog("Error", "No Color selected", "Could not detect the color at the given position", true);
         error.ShowDialog();
       }
 
-      if (this.IndexOfTrackedObject == Viana.Project.ProcessingData.NumberOfTrackedObjects)
+      if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
       {
         this.DialogResult = true;
         this.Close();
@@ -208,7 +196,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point();
+          Point currentLocation = new Point();
           currentLocation.X = Canvas.GetLeft(this.ControlPanel);
           currentLocation.Y = Canvas.GetTop(this.ControlPanel);
 
@@ -240,10 +228,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var window = obj as SelectColorWindow;
+      SelectColorWindow window = obj as SelectColorWindow;
 
       // Reset index if appropriate
-      if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+      if (window.IndexOfTrackedObject > App.Project.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

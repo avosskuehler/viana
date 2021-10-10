@@ -70,10 +70,7 @@ namespace VianaNET
     /// </summary>
     public bool IsChecked
     {
-      get
-      {
-        return this.ElementCheckBox.IsChecked();
-      }
+      get => this.ElementCheckBox.IsChecked();
 
       set
       {
@@ -87,15 +84,9 @@ namespace VianaNET
     /// </summary>
     public string Label
     {
-      get
-      {
-        return this.ElementCheckBox.Content as string;
-      }
+      get => this.ElementCheckBox.Content as string;
 
-      set
-      {
-        this.ElementCheckBox.Content = value;
-      }
+      set => this.ElementCheckBox.Content = value;
     }
 
     /// <summary>
@@ -103,10 +94,7 @@ namespace VianaNET
     /// </summary>
     public string Text
     {
-      get
-      {
-        return this.ElementTextBox.Text;
-      }
+      get => this.ElementTextBox.Text;
 
       set
       {
@@ -145,7 +133,7 @@ namespace VianaNET
     /// </param>
     private void ElementTextBox_GotFocus(object sender, RoutedEventArgs e)
     {
-      var textBox = sender as TextBox;
+      TextBox textBox = sender as TextBox;
       textBox.SelectAll();
     }
 

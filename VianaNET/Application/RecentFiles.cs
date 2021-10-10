@@ -136,10 +136,7 @@ namespace VianaNET.Application
     ///   Gets the recent files list.
     /// </summary>
     /// <value> A <see cref="RecentFiles" /> with the recent files. </value>
-    public static RecentFiles Instance
-    {
-      get { return recentFiles ?? (recentFiles = new RecentFiles()); }
-    }
+    public static RecentFiles Instance => recentFiles ?? (recentFiles = new RecentFiles());
 
     /// <summary>
     ///   Gets or sets the <see cref="RecentFilesCollection" /> array
@@ -147,28 +144,16 @@ namespace VianaNET.Application
     /// </summary>
     public ObservableCollection<ProjectEntry> RecentFilesCollection
     {
-      get
-      {
-        return (ObservableCollection<ProjectEntry>)this.GetValue(RecentFilesCollectionProperty);
-      }
+      get => (ObservableCollection<ProjectEntry>)this.GetValue(RecentFilesCollectionProperty);
 
-      set
-      {
-        this.SetValue(RecentFilesCollectionProperty, value);
-      }
+      set => this.SetValue(RecentFilesCollectionProperty, value);
     }
 
     /// <summary>
     /// Gets the complete filename with path
     /// to the settings file used to store recent file collection.
     /// </summary>
-    public string SettingsFile
-    {
-      get
-      {
-        return Path.Combine(this.appSettings.SettingsPath, "VianaRecentFileList.xml");
-      }
-    }
+    public string SettingsFile => Path.Combine(this.appSettings.SettingsPath, "VianaRecentFileList.xml");
 
     #endregion
 
@@ -185,16 +170,16 @@ namespace VianaNET.Application
     /// </param>
     public void Add(string file)
     {
-      var fileIndex = this.FindFile(file);
-      var bitmap = Video.Instance.CreateBitmapFromCurrentImageSource();
+      int fileIndex = this.FindFile(file);
+      Bitmap bitmap = Video.Instance.CreateBitmapFromCurrentImageSource();
       if (bitmap == null)
       {
         bitmap = new Bitmap(64, 64);
       }
 
       bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
-      var smallBitmap = ScaleImage(bitmap, 64, 64);
-      var projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };
+      Bitmap smallBitmap = ScaleImage(bitmap, 64, 64);
+      ProjectEntry projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };
 
       if (fileIndex < 0)
       {
@@ -237,7 +222,7 @@ namespace VianaNET.Application
     public string GetDisplayName(string fullName)
     {
       // if file is in current directory, show only file name
-      var fileInfo = new FileInfo(fullName);
+      FileInfo fileInfo = new FileInfo(fullName);
 
       // keep current directory in the time of initialization
       string currentDirectory = Directory.GetCurrentDirectory();
@@ -291,8 +276,8 @@ namespace VianaNET.Application
     /// </summary>
     public void Save()
     {
-      var dcs = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
-      var fs = new FileStream(this.SettingsFile, FileMode.Create);
+      DataContractSerializer dcs = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
+      FileStream fs = new FileStream(this.SettingsFile, FileMode.Create);
       dcs.WriteObject(fs, this.RecentFilesCollection);
       fs.Close();
     }
@@ -356,9 +341,9 @@ namespace VianaNET.Application
     {
       if (File.Exists(this.SettingsFile))
       {
-        var fs = new FileStream(this.SettingsFile, FileMode.Open);
-        var reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-        var ser = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
+        FileStream fs = new FileStream(this.SettingsFile, FileMode.Open);
+        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+        DataContractSerializer ser = new DataContractSerializer(typeof(ObservableCollection<ProjectEntry>));
 
         // Deserialize the data and read it from the instance.
         this.RecentFilesCollection = (ObservableCollection<ProjectEntry>)ser.ReadObject(reader, true);
@@ -401,16 +386,16 @@ namespace VianaNET.Application
       //this.OnPropertyChanged("RecentFilesCollection");
     }
 
-    public static System.Drawing.Bitmap ScaleImage(System.Drawing.Bitmap image, int maxWidth, int maxHeight)
+    public static Bitmap ScaleImage(Bitmap image, int maxWidth, int maxHeight)
     {
-      var ratioX = (double)maxWidth / image.Width;
-      var ratioY = (double)maxHeight / image.Height;
-      var ratio = Math.Min(ratioX, ratioY);
+      double ratioX = (double)maxWidth / image.Width;
+      double ratioY = (double)maxHeight / image.Height;
+      double ratio = Math.Min(ratioX, ratioY);
 
-      var newWidth = (int)(image.Width * ratio);
-      var newHeight = (int)(image.Height * ratio);
+      int newWidth = (int)(image.Width * ratio);
+      int newHeight = (int)(image.Height * ratio);
 
-      var newImage = new System.Drawing.Bitmap(newWidth, newHeight);
+      Bitmap newImage = new Bitmap(newWidth, newHeight);
       System.Drawing.Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
       return newImage;
     }

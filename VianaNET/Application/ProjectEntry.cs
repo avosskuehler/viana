@@ -22,10 +22,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Drawing;
-
 namespace VianaNET.Application
 {
+  using System.Drawing;
   using System;
   using System.IO;
   using System.Windows;
@@ -48,23 +47,14 @@ namespace VianaNET.Application
     /// Gets the file name of the current project.
     /// </summary>
     [XmlIgnore]
-    public string ProjectFileName
-    {
-      get
-      {
-        return Path.GetFileName(this.ProjectFile);
-      }
-    }
+    public string ProjectFileName => Path.GetFileName(this.ProjectFile);
 
     /// <summary>
     /// Gets the <see cref="BitmapSource"/> to be used as an image source
     /// for the current projects quick view icon.
     /// </summary>
     [XmlIgnore]
-    public BitmapSource ProjectImageSource
-    {
-      get { return CreateBitmapSourceFromBitmap(this.ProjectIcon); }
-    }
+    public BitmapSource ProjectImageSource => CreateBitmapSourceFromBitmap(this.ProjectIcon);
 
     /// <summary>
     /// Gets or sets an <see cref="Bitmap"/> with an icon of the

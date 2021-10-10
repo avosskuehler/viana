@@ -37,7 +37,7 @@ namespace VianaNET.Data.Filter
   using VianaNET.Data.Filter.Regression;
   using VianaNET.Data.Filter.Theory;
 
-  using WPFMath;
+  using WpfMath;
 
   /// <summary>
   ///   The video data.
@@ -349,10 +349,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public DataAxis AxisX
     {
-      get
-      {
-        return (DataAxis)this.GetValue(AxisXProperty);
-      }
+      get => (DataAxis)this.GetValue(AxisXProperty);
 
       set
       {
@@ -368,10 +365,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public DataAxis AxisY
     {
-      get
-      {
-        return (DataAxis)this.GetValue(AxisYProperty);
-      }
+      get => (DataAxis)this.GetValue(AxisYProperty);
 
       set
       {
@@ -388,15 +382,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public FilterBase CurrentFilter
     {
-      get
-      {
-        return (FilterBase)this.GetValue(CurrentFilterProperty);
-      }
+      get => (FilterBase)this.GetValue(CurrentFilterProperty);
 
-      set
-      {
-        this.SetValue(CurrentFilterProperty, value);
-      }
+      set => this.SetValue(CurrentFilterProperty, value);
     }
 
     /// <summary>
@@ -404,15 +392,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public Color DataLineColor
     {
-      get
-      {
-        return (Color)this.GetValue(DataLineColorProperty);
-      }
+      get => (Color)this.GetValue(DataLineColorProperty);
 
-      set
-      {
-        this.SetValue(DataLineColorProperty, value);
-      }
+      set => this.SetValue(DataLineColorProperty, value);
     }
 
     /// <summary>
@@ -420,15 +402,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public MarkerType DataLineMarkerType
     {
-      get
-      {
-        return (MarkerType)this.GetValue(DataLineMarkerTypeProperty);
-      }
+      get => (MarkerType)this.GetValue(DataLineMarkerTypeProperty);
 
-      set
-      {
-        this.SetValue(DataLineMarkerTypeProperty, value);
-      }
+      set => this.SetValue(DataLineMarkerTypeProperty, value);
     }
 
     /// <summary>
@@ -436,15 +412,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public double DataLineThickness
     {
-      get
-      {
-        return (double)this.GetValue(DataLineThicknessProperty);
-      }
+      get => (double)this.GetValue(DataLineThicknessProperty);
 
-      set
-      {
-        this.SetValue(DataLineThicknessProperty, value);
-      }
+      set => this.SetValue(DataLineThicknessProperty, value);
     }
 
     /// <summary>
@@ -471,15 +441,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public InterpolationFilter InterpolationFilter
     {
-      get
-      {
-        return (InterpolationFilter)this.GetValue(InterpolationFilterProperty);
-      }
+      get => (InterpolationFilter)this.GetValue(InterpolationFilterProperty);
 
-      set
-      {
-        this.SetValue(InterpolationFilterProperty, value);
-      }
+      set => this.SetValue(InterpolationFilterProperty, value);
     }
 
     /// <summary>
@@ -487,15 +451,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public Color InterpolationLineColor
     {
-      get
-      {
-        return (Color)this.GetValue(InterpolationLineColorProperty);
-      }
+      get => (Color)this.GetValue(InterpolationLineColorProperty);
 
-      set
-      {
-        this.SetValue(InterpolationLineColorProperty, value);
-      }
+      set => this.SetValue(InterpolationLineColorProperty, value);
     }
 
     /// <summary>
@@ -503,15 +461,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public MarkerType InterpolationLineMarkerType
     {
-      get
-      {
-        return (MarkerType)this.GetValue(InterpolationLineMarkerTypeProperty);
-      }
+      get => (MarkerType)this.GetValue(InterpolationLineMarkerTypeProperty);
 
-      set
-      {
-        this.SetValue(InterpolationLineMarkerTypeProperty, value);
-      }
+      set => this.SetValue(InterpolationLineMarkerTypeProperty, value);
     }
 
     /// <summary>
@@ -519,15 +471,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public double InterpolationLineThickness
     {
-      get
-      {
-        return (double)this.GetValue(InterpolationLineThicknessProperty);
-      }
+      get => (double)this.GetValue(InterpolationLineThicknessProperty);
 
-      set
-      {
-        this.SetValue(InterpolationLineThicknessProperty, value);
-      }
+      set => this.SetValue(InterpolationLineThicknessProperty, value);
     }
 
     /// <summary>
@@ -536,15 +482,9 @@ namespace VianaNET.Data.Filter
     [XmlIgnore]
     public SortedObservableCollection<XYSample> InterpolationSeries
     {
-      get
-      {
-        return (SortedObservableCollection<XYSample>)this.GetValue(InterpolationSeriesProperty);
-      }
+      get => (SortedObservableCollection<XYSample>)this.GetValue(InterpolationSeriesProperty);
 
-      set
-      {
-        this.SetValue(InterpolationSeriesProperty, value);
-      }
+      set => this.SetValue(InterpolationSeriesProperty, value);
     }
 
     /// <summary>
@@ -552,15 +492,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public bool IsShowingDataSeries
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingDataSeriesProperty);
-      }
+      get => (bool)this.GetValue(IsShowingDataSeriesProperty);
 
-      set
-      {
-        this.SetValue(IsShowingDataSeriesProperty, value);
-      }
+      set => this.SetValue(IsShowingDataSeriesProperty, value);
     }
 
     /// <summary>
@@ -568,15 +502,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public bool IsShowingInterpolationSeries
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingInterpolationSeriesProperty);
-      }
+      get => (bool)this.GetValue(IsShowingInterpolationSeriesProperty);
 
-      set
-      {
-        this.SetValue(IsShowingInterpolationSeriesProperty, value);
-      }
+      set => this.SetValue(IsShowingInterpolationSeriesProperty, value);
     }
 
     /// <summary>
@@ -584,15 +512,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public bool IsShowingRegressionSeries
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingRegressionSeriesProperty);
-      }
+      get => (bool)this.GetValue(IsShowingRegressionSeriesProperty);
 
-      set
-      {
-        this.SetValue(IsShowingRegressionSeriesProperty, value);
-      }
+      set => this.SetValue(IsShowingRegressionSeriesProperty, value);
     }
 
     /// <summary>
@@ -600,15 +522,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public bool IsShowingTheorySeries
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingTheorySeriesProperty);
-      }
+      get => (bool)this.GetValue(IsShowingTheorySeriesProperty);
 
-      set
-      {
-        this.SetValue(IsShowingTheorySeriesProperty, value);
-      }
+      set => this.SetValue(IsShowingTheorySeriesProperty, value);
     }
 
     /// <summary>
@@ -616,10 +532,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public int NumericPrecision
     {
-      get
-      {
-        return (int)this.GetValue(NumericPrecisionProperty);
-      }
+      get => (int)this.GetValue(NumericPrecisionProperty);
 
       set
       {
@@ -637,10 +550,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public double RegressionAberration
     {
-      get
-      {
-        return (double)this.GetValue(RegressionAberrationProperty);
-      }
+      get => (double)this.GetValue(RegressionAberrationProperty);
 
       set
       {
@@ -657,15 +567,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public RegressionFilter RegressionFilter
     {
-      get
-      {
-        return (RegressionFilter)this.GetValue(RegressionFilterProperty);
-      }
+      get => (RegressionFilter)this.GetValue(RegressionFilterProperty);
 
-      set
-      {
-        this.SetValue(RegressionFilterProperty, value);
-      }
+      set => this.SetValue(RegressionFilterProperty, value);
     }
 
     /// <summary>
@@ -673,10 +577,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public TexFormula RegressionFunctionTexFormula
     {
-      get
-      {
-        return (TexFormula)this.GetValue(RegressionFunctionTexFormulaProperty);
-      }
+      get => (TexFormula)this.GetValue(RegressionFunctionTexFormulaProperty);
 
       set
       {
@@ -690,15 +591,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public Color RegressionLineColor
     {
-      get
-      {
-        return (Color)this.GetValue(RegressionLineColorProperty);
-      }
+      get => (Color)this.GetValue(RegressionLineColorProperty);
 
-      set
-      {
-        this.SetValue(RegressionLineColorProperty, value);
-      }
+      set => this.SetValue(RegressionLineColorProperty, value);
     }
 
     /// <summary>
@@ -706,15 +601,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public MarkerType RegressionLineMarkerType
     {
-      get
-      {
-        return (MarkerType)this.GetValue(RegressionLineMarkerTypeProperty);
-      }
+      get => (MarkerType)this.GetValue(RegressionLineMarkerTypeProperty);
 
-      set
-      {
-        this.SetValue(RegressionLineMarkerTypeProperty, value);
-      }
+      set => this.SetValue(RegressionLineMarkerTypeProperty, value);
     }
 
     /// <summary>
@@ -722,15 +611,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public double RegressionLineThickness
     {
-      get
-      {
-        return (double)this.GetValue(RegressionLineThicknessProperty);
-      }
+      get => (double)this.GetValue(RegressionLineThicknessProperty);
 
-      set
-      {
-        this.SetValue(RegressionLineThicknessProperty, value);
-      }
+      set => this.SetValue(RegressionLineThicknessProperty, value);
     }
 
     /// <summary>
@@ -738,15 +621,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public Color SelectionColor
     {
-      get
-      {
-        return (Color)this.GetValue(SelectionColorProperty);
-      }
+      get => (Color)this.GetValue(SelectionColorProperty);
 
-      set
-      {
-        this.SetValue(SelectionColorProperty, value);
-      }
+      set => this.SetValue(SelectionColorProperty, value);
     }
 
     /// <summary>
@@ -754,15 +631,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public TheoryFilter TheoryFilter
     {
-      get
-      {
-        return (TheoryFilter)this.GetValue(TheoryFilterProperty);
-      }
+      get => (TheoryFilter)this.GetValue(TheoryFilterProperty);
 
-      set
-      {
-        this.SetValue(TheoryFilterProperty, value);
-      }
+      set => this.SetValue(TheoryFilterProperty, value);
     }
 
     /// <summary>
@@ -770,10 +641,7 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public TexFormula TheoryFunctionTexFormula
     {
-      get
-      {
-        return (TexFormula)this.GetValue(TheoryFunctionTexFormulaProperty);
-      }
+      get => (TexFormula)this.GetValue(TheoryFunctionTexFormulaProperty);
 
       set
       {
@@ -787,15 +655,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public Color TheoryLineColor
     {
-      get
-      {
-        return (Color)this.GetValue(TheoryLineColorProperty);
-      }
+      get => (Color)this.GetValue(TheoryLineColorProperty);
 
-      set
-      {
-        this.SetValue(TheoryLineColorProperty, value);
-      }
+      set => this.SetValue(TheoryLineColorProperty, value);
     }
 
     /// <summary>
@@ -803,15 +665,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public MarkerType TheoryLineMarkerType
     {
-      get
-      {
-        return (MarkerType)this.GetValue(TheoryLineMarkerTypeProperty);
-      }
+      get => (MarkerType)this.GetValue(TheoryLineMarkerTypeProperty);
 
-      set
-      {
-        this.SetValue(TheoryLineMarkerTypeProperty, value);
-      }
+      set => this.SetValue(TheoryLineMarkerTypeProperty, value);
     }
 
     /// <summary>
@@ -819,15 +675,9 @@ namespace VianaNET.Data.Filter
     /// </summary>
     public double TheoryLineThickness
     {
-      get
-      {
-        return (double)this.GetValue(TheoryLineThicknessProperty);
-      }
+      get => (double)this.GetValue(TheoryLineThicknessProperty);
 
-      set
-      {
-        this.SetValue(TheoryLineThicknessProperty, value);
-      }
+      set => this.SetValue(TheoryLineThicknessProperty, value);
     }
 
     #endregion

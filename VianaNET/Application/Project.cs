@@ -35,8 +35,6 @@ namespace VianaNET.Application
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
 
-  using WPFMath;
-
   /// <summary>
   ///   This class is a singleton encapsulating all settings for a viana.net project
   /// </summary>
@@ -67,7 +65,7 @@ namespace VianaNET.Application
     /// </summary>
     public Project()
     {
-      TexFormulaParser.Initialize();
+      //TexFormulaParser.Initialize();
       this.filterData = new Dictionary<ChartType, FilterData> { { ChartType.YoverX, new FilterData() } };
       this.CalibrationData = new CalibrationData();
       this.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
@@ -115,15 +113,9 @@ namespace VianaNET.Application
     /// </summary>
     public DictionaryProxy<ChartType, FilterData> SerializableFilterData
     {
-      get
-      {
-        return new DictionaryProxy<ChartType, FilterData>(this.filterData);
-      }
+      get => new DictionaryProxy<ChartType, FilterData>(this.filterData);
 
-      set
-      {
-        this.filterData = value.ToDictionary();
-      }
+      set => this.filterData = value.ToDictionary();
     }
 
     /// <summary>
@@ -175,10 +167,7 @@ namespace VianaNET.Application
     /// </summary>
     public ChartType CurrentChartType
     {
-      get
-      {
-        return this.currentChartType;
-      }
+      get => this.currentChartType;
 
       set
       {
@@ -229,11 +218,11 @@ namespace VianaNET.Application
         Project projectFromFile;
 
         // A FileStream is needed to read the XML document.
-        using (var fs = new FileStream(filePath, FileMode.Open))
+        using (FileStream fs = new FileStream(filePath, FileMode.Open))
         {
           // Create an instance of the XmlSerializer class;
           // specify the type of object to be deserialized 
-          var serializer = new XmlSerializer(typeof(Project));
+          XmlSerializer serializer = new XmlSerializer(typeof(Project));
 
           ////* If the XML document has been altered with unknown 
           ////nodes or attributes, handle them with the 
@@ -282,7 +271,7 @@ namespace VianaNET.Application
 
           // Create an instance of the XmlSerializer class;
           // specify the type of object to serialize 
-          var serializer = new XmlSerializer(typeof(Project));
+          XmlSerializer serializer = new XmlSerializer(typeof(Project));
           projectToSerialize.ProjectFilename = Path.GetFileName(filePath);
           projectToSerialize.ProjectPath = Path.GetDirectoryName(filePath);
           projectToSerialize.VideoMode = Video.Instance.VideoMode;

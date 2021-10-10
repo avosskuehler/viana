@@ -30,13 +30,9 @@ namespace VianaNET.Modules.DataAcquisition
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Threading;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
-  using VianaNET.Data;
   using VianaNET.Modules.Video.Control;
-
 
   /// <summary>
   ///   Interaction logic for ModifyDataWindow.xaml
@@ -119,14 +115,14 @@ namespace VianaNET.Modules.DataAcquisition
       this.ObjectIndexPanel.DataContext = this;
       this.WindowCanvas.DataContext = this;
 
-      var arrowCount = Viana.Project.ProcessingData.NumberOfTrackedObjects;
+      int arrowCount = App.Project.ProcessingData.NumberOfTrackedObjects;
       this.isDraggingCursor = new bool[arrowCount];
       this.arrowPointers = new ArrowPointer[arrowCount];
       for (int i = 0; i < arrowCount; i++)
       {
-        var pointer = new ArrowPointer();
+        ArrowPointer pointer = new ArrowPointer();
         pointer.Name = "Object" + (i + 1).ToString(CultureInfo.InvariantCulture);
-        pointer.Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+        pointer.Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
         pointer.Fill = Brushes.Transparent;
         pointer.Length = 50;
         pointer.CenterSpace = 5;
@@ -166,15 +162,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public SolidColorBrush BrushOfCossHair
     {
-      get
-      {
-        return (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
-      }
+      get => (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
 
-      set
-      {
-        this.SetValue(BrushOfCossHairProperty, value);
-      }
+      set => this.SetValue(BrushOfCossHairProperty, value);
     }
 
     /// <summary>
@@ -182,15 +172,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public int IndexOfTrackedObject
     {
-      get
-      {
-        return (int)this.GetValue(IndexOfTrackedObjectProperty);
-      }
+      get => (int)this.GetValue(IndexOfTrackedObjectProperty);
 
-      set
-      {
-        this.SetValue(IndexOfTrackedObjectProperty, value);
-      }
+      set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
     #endregion
@@ -221,9 +205,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var window = obj as ModifyDataWindow;
-
-      if (window == null)
+      if (!(obj is ModifyDataWindow window))
       {
         return;
       }
@@ -232,12 +214,12 @@ namespace VianaNET.Modules.DataAcquisition
       if (args.Property == IndexOfTrackedObjectProperty)
       {
         // Reset index if appropriate
-        if (window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        if (window.IndexOfTrackedObject > App.Project.ProcessingData.NumberOfTrackedObjects)
         {
           window.IndexOfTrackedObject = 1;
         }
 
-        window.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+        window.BrushOfCossHair = new SolidColorBrush(App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
       }
     }
 
@@ -252,7 +234,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void ButtonReadyClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
       this.Close();
     }
 
@@ -359,16 +341,16 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (e.ChangedButton == MouseButton.Left)
       {
-        var scaledX = e.GetPosition(this.VideoImage).X;
-        var scaledY = e.GetPosition(this.VideoImage).Y;
+        double scaledX = e.GetPosition(this.VideoImage).X;
+        double scaledY = e.GetPosition(this.VideoImage).Y;
         var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
         var factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
         var originalX = factorX * scaledX;
         var originalY = factorY * scaledY;
 
-        Viana.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
 
-        if (this.IndexOfTrackedObject == Viana.Project.ProcessingData.NumberOfTrackedObjects)
+        if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {
           this.SetVisibilityOfSharpCursor(false);
         }
@@ -385,18 +367,17 @@ namespace VianaNET.Modules.DataAcquisition
 
     private void ArrowShapeMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-      var arrowShape = sender as ArrowPointer;
-      if (arrowShape == null)
+      if (!(sender is ArrowPointer arrowShape))
       {
         return;
       }
 
-      var index = arrowShape.Name.Replace("Object", string.Empty);
+      string index = arrowShape.Name.Replace("Object", string.Empty);
       this.IndexOfTrackedObject = int.Parse(index);
 
       this.Cursor = Cursors.Hand;
 
-      for (var i = 0; i < this.isDraggingCursor.Length; i++)
+      for (int i = 0; i < this.isDraggingCursor.Length; i++)
       {
         this.isDraggingCursor[i] = false;
       }
@@ -421,7 +402,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void PlayerMouseMove(object sender, MouseEventArgs e)
     {
-      var mouseMoveLocation = e.GetPosition(this.WindowCanvas);
+      Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
       this.MoveSharpCursorToScreenLocation(mouseMoveLocation);
 
       if (Mouse.LeftButton == MouseButtonState.Pressed && this.Cursor == Cursors.Hand)
@@ -434,7 +415,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (Mouse.LeftButton == MouseButtonState.Pressed && this.Cursor == Cursors.Hand)
       {
-        var mouseMoveLocation = e.GetPosition(this.WindowCanvas);
+        Point mouseMoveLocation = e.GetPosition(this.WindowCanvas);
         this.MoveSharpCursorToScreenLocation(mouseMoveLocation);
         this.MoveArrowCursorToScreenLocation(this.IndexOfTrackedObject, mouseMoveLocation);
       }
@@ -454,7 +435,7 @@ namespace VianaNET.Modules.DataAcquisition
         double originalX = factorX * scaledX;
         double originalY = factorY * scaledY;
 
-        Viana.Project.VideoData.UpdatePoint(
+        App.Project.VideoData.UpdatePoint(
           Video.Instance.FrameIndex,
           this.IndexOfTrackedObject - 1,
           new Point(originalX, originalY));
@@ -480,7 +461,7 @@ namespace VianaNET.Modules.DataAcquisition
       Canvas.SetLeft(this.CursorEllipse, newLocation.X - this.visualDataPointRadius);
 
       // Update crosshair brush
-      this.BrushOfCossHair = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
+      this.BrushOfCossHair = new SolidColorBrush(App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
     }
 
     /// <summary>
@@ -506,7 +487,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(false, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
         this.UpdateDataPointLocation();
       }
     }
@@ -518,7 +499,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (this.TimelineSlider.Value <= this.TimelineSlider.SelectionEnd - this.TimelineSlider.TickFrequency)
       {
-        Video.Instance.StepFrames(true, Viana.Project.VideoData.UseEveryNthPoint);
+        Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
         this.UpdateDataPointLocation();
       }
     }
@@ -545,9 +526,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private void UpdateDataPointLocation()
     {
-      this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ModifyDataWindowTrackItemNumberHeader;
-      var sample = Viana.Project.VideoData.Samples.GetSampleByFrameindex(Video.Instance.FrameIndex);
-      var isSet = false;
+      this.ObjectIndexTextBox.Text = VianaNET.Localization.Labels.ModifyDataWindowTrackItemNumberHeader;
+      Data.Collections.TimeSample sample = App.Project.VideoData.Samples.GetSampleByFrameindex(Video.Instance.FrameIndex);
+      bool isSet = false;
       if (sample != null)
       {
         this.SetVisibilityOfArrowCursor(true);
@@ -555,18 +536,18 @@ namespace VianaNET.Modules.DataAcquisition
         var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
         var factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
 
-        for (int i = 1; i <= Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 1; i <= App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           if (sample.Object != null && sample.Object[i - 1] != null)
           {
-            var location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
-            location = Viana.Project.CalibrationData.CoordinateTransform.Transform(location);
-            var origin = Viana.Project.CalibrationData.OriginInPixel;
+            Point location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
+            location = App.Project.CalibrationData.CoordinateTransform.Transform(location);
+            Point origin = App.Project.CalibrationData.OriginInPixel;
             location.Offset(origin.X, origin.Y);
             var scaledX = location.X / factorX;
             var scaledY = location.Y / factorY;
 
-            var screenLocation = this.VideoImage.TranslatePoint(new Point(scaledX, scaledY), this.WindowCanvas);
+            Point screenLocation = this.VideoImage.TranslatePoint(new Point(scaledX, scaledY), this.WindowCanvas);
 
             this.MoveArrowCursorToScreenLocation(i, screenLocation);
           }
@@ -574,7 +555,7 @@ namespace VianaNET.Modules.DataAcquisition
           {
             this.HideArrowPointer(i);
             this.SetVisibilityOfSharpCursor(true);
-            this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ManualDataAcquisitionTrackItemNumberHeader;
+            this.ObjectIndexTextBox.Text = VianaNET.Localization.Labels.ManualDataAcquisitionTrackItemNumberHeader;
             if (!isSet)
             {
               this.IndexOfTrackedObject = i;
@@ -588,7 +569,7 @@ namespace VianaNET.Modules.DataAcquisition
         this.IndexOfTrackedObject = 1;
         this.SetVisibilityOfArrowCursor(false);
         this.SetVisibilityOfSharpCursor(true);
-        this.ObjectIndexTextBox.Text = VianaNET.Resources.Labels.ManualDataAcquisitionTrackItemNumberHeader;
+        this.ObjectIndexTextBox.Text = VianaNET.Localization.Labels.ManualDataAcquisitionTrackItemNumberHeader;
       }
     }
 
@@ -603,13 +584,13 @@ namespace VianaNET.Modules.DataAcquisition
       {
         for (int i = 0; i < this.arrowPointers.Length; i++)
         {
-          var pointer = this.arrowPointers[i];
-          pointer.Visibility = i < Viana.Project.ProcessingData.NumberOfTrackedObjects ? Visibility.Visible : Visibility.Hidden;
+          ArrowPointer pointer = this.arrowPointers[i];
+          pointer.Visibility = i < App.Project.ProcessingData.NumberOfTrackedObjects ? Visibility.Visible : Visibility.Hidden;
         }
       }
       else
       {
-        foreach (var arrowPointer in this.arrowPointers)
+        foreach (ArrowPointer arrowPointer in this.arrowPointers)
         {
           arrowPointer.Visibility = Visibility.Hidden;
         }
@@ -701,7 +682,7 @@ namespace VianaNET.Modules.DataAcquisition
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point
+          Point currentLocation = new Point
                                   {
                                     X = Canvas.GetLeft(this.ControlPanel),
                                     Y = Canvas.GetTop(this.ControlPanel)

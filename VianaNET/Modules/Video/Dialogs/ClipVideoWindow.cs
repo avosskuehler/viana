@@ -30,9 +30,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Shapes;
-  using VianaNET.Application;
   using VianaNET.Modules.Base;
-
 
   /// <summary>
   ///   The clip video window.
@@ -89,10 +87,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public ClipVideoWindow()
     {
-      this.Title = VianaNET.Resources.Labels.ClipVideoWindowTitle;
-      this.LabelTitle.Content = VianaNET.Resources.Labels.ClipVideoHelpControlTitle;
-      this.DescriptionTitle.Content = VianaNET.Resources.Labels.ClipVideoDescriptionTitle;
-      this.DescriptionMessage.Text = VianaNET.Resources.Labels.ClipVideoDescriptionMessage;
+      this.Title = VianaNET.Localization.Labels.ClipVideoWindowTitle;
+      this.LabelTitle.Content = VianaNET.Localization.Labels.ClipVideoHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Localization.Labels.ClipVideoDescriptionTitle;
+      this.DescriptionMessage.Text = VianaNET.Localization.Labels.ClipVideoDescriptionMessage;
       this.topLine = (Line)this.Resources["TopLine"];
       this.topLine.Name = "Top";
       this.topLine.MouseEnter += this.TopBottomLineMouseEnter;
@@ -155,8 +153,8 @@ namespace VianaNET.Modules.Video.Dialogs
       if (e.SystemKey == Key.F10)
       {
         // Reset clip region
-        Viana.Project.CalibrationData.ClipRegion = new Rect(0, 0, 0, 0);
-        Viana.Project.CalibrationData.HasClipRegion = false;
+        App.Project.CalibrationData.ClipRegion = new Rect(0, 0, 0, 0);
+        App.Project.CalibrationData.HasClipRegion = false;
         this.DialogResult = true;
         this.Close();
       }
@@ -270,37 +268,34 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void ResetOuterRegion()
     {
-      var geometry = this.outerRegion.Data as CombinedGeometry;
-      if (geometry == null)
+      if (!(this.outerRegion.Data is CombinedGeometry geometry))
       {
         return;
       }
 
-      var outerRect = geometry.Geometry1 as RectangleGeometry;
-      if (outerRect != null)
+      if (geometry.Geometry1 is RectangleGeometry outerRect)
       {
         outerRect.Rect = new Rect(0, 0, this.VideoImage.ActualWidth, this.VideoImage.ActualHeight);
       }
 
-      var innerRect = geometry.Geometry2 as RectangleGeometry;
-      if (innerRect != null)
+      if (geometry.Geometry2 is RectangleGeometry innerRect)
       {
         innerRect.Rect = new Rect(
           new Point(this.leftLine.X1, this.topLine.Y1), new Point(this.rightLine.X1, this.bottomLine.Y1));
       }
 
-      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-      var rect = new Rect
+      Rect rect = new Rect
                    {
                      Location = new Point(this.leftLine.X1 * factorX, this.topLine.Y1 * factorY),
                      Width = (this.rightLine.X1 - this.leftLine.X1) * factorX,
                      Height = (this.bottomLine.Y1 - this.topLine.Y1) * factorY
                    };
 
-      Viana.Project.CalibrationData.ClipRegion = rect;
-      Viana.Project.CalibrationData.HasClipRegion = true;
+      App.Project.CalibrationData.ClipRegion = rect;
+      App.Project.CalibrationData.HasClipRegion = true;
     }
 
     /// <summary>
@@ -320,7 +315,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
-      if (!Viana.Project.CalibrationData.HasClipRegion)
+      if (!App.Project.CalibrationData.HasClipRegion)
       {
         this.topLine.X1 = DefaultMargin;
         this.topLine.X2 = this.VideoImage.ActualWidth - DefaultMargin;
@@ -340,23 +335,23 @@ namespace VianaNET.Modules.Video.Dialogs
         double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
 
-        this.topLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.topLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.topLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.topLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.leftLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.leftLine.X2 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.leftLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.leftLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.bottomLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left / factorX;
-        this.bottomLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.bottomLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.bottomLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        this.rightLine.X1 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.rightLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top / factorY;
-        this.rightLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right / factorX;
-        this.rightLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom / factorY;
-        Viana.Project.CalibrationData.HasClipRegion = true;
+        this.topLine.X1 = App.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.topLine.X2 = App.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.topLine.Y1 = App.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.topLine.Y2 = App.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.leftLine.X1 = App.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.leftLine.X2 = App.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.leftLine.Y1 = App.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.leftLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.bottomLine.X1 = App.Project.CalibrationData.ClipRegion.Left / factorX;
+        this.bottomLine.Y1 = App.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.bottomLine.X2 = App.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.bottomLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        this.rightLine.X1 = App.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.rightLine.Y1 = App.Project.CalibrationData.ClipRegion.Top / factorY;
+        this.rightLine.X2 = App.Project.CalibrationData.ClipRegion.Right / factorX;
+        this.rightLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom / factorY;
+        App.Project.CalibrationData.HasClipRegion = true;
       }
 
       this.ResetOuterRegion();

@@ -58,7 +58,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (int)value;
+      int valueToConvert = (int)value;
       return valueToConvert > 1 ? Visibility.Visible : Visibility.Collapsed;
     }
 
@@ -82,7 +82,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (Visibility)value;
+      Visibility valueToConvertBack = (Visibility)value;
       if (valueToConvertBack == Visibility.Visible)
       {
         return 3;

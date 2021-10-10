@@ -528,13 +528,7 @@ namespace VianaNET.CustomStyles.Colors
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
-      public static OfficePallet Pallet
-      {
-        get
-        {
-          return Pallets[(int)OfficeColorPallet.Background];
-        }
-      }
+      public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Background];
 
       #endregion
     }
@@ -573,13 +567,7 @@ namespace VianaNET.CustomStyles.Colors
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
-      public static OfficePallet Pallet
-      {
-        get
-        {
-          return Pallets[(int)OfficeColorPallet.Disabled];
-        }
-      }
+      public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Disabled];
 
       #endregion
     }
@@ -603,13 +591,7 @@ namespace VianaNET.CustomStyles.Colors
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
-      public static OfficePallet Pallet
-      {
-        get
-        {
-          return Pallets[(int)OfficeColorPallet.EditableControlsBackground];
-        }
-      }
+      public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.EditableControlsBackground];
 
       #endregion
     }
@@ -648,13 +630,7 @@ namespace VianaNET.CustomStyles.Colors
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
-      public static OfficePallet Pallet
-      {
-        get
-        {
-          return Pallets[(int)OfficeColorPallet.Foreground];
-        }
-      }
+      public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Foreground];
 
       #endregion
     }
@@ -788,13 +764,7 @@ namespace VianaNET.CustomStyles.Colors
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
-      public static OfficePallet Pallet
-      {
-        get
-        {
-          return Pallets[(int)OfficeColorPallet.HighLight];
-        }
-      }
+      public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.HighLight];
 
       #endregion
     }

@@ -27,7 +27,6 @@ namespace VianaNET.CustomStyles.Converter
 {
   using System;
   using System.Globalization;
-  using System.Windows;
   using System.Windows.Data;
 
   using OxyPlot;
@@ -52,7 +51,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (LineStyle)value;
+      LineStyle valueToConvert = (LineStyle)value;
       if (valueToConvert == LineStyle.None)
       {
         return false;
@@ -73,7 +72,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (bool)value;
+      bool valueToConvertBack = (bool)value;
       return valueToConvertBack ? LineStyle.Solid : LineStyle.None;
     }
 

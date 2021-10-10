@@ -91,10 +91,7 @@ namespace VianaNET.CustomStyles.Types
     /// </returns>
     public override TValue this[int index]
     {
-      get
-      {
-        return base[index];
-      }
+      get => base[index];
 
       set
       {

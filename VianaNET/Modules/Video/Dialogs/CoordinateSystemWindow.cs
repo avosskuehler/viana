@@ -28,11 +28,8 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Shapes;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.Modules.Base;
-
 
   /// <summary>
   ///   The window to specify the coordinate system
@@ -95,10 +92,10 @@ namespace VianaNET.Modules.Video.Dialogs
     public CoordinateSystemWindow()
     {
       this.playerContainerGrid.Margin = new Thickness(100d);
-      this.Title = VianaNET.Resources.Labels.CoordinateSystemWindowTitle;
-      this.LabelTitle.Content = VianaNET.Resources.Labels.CoordinateSystemHelpControlTitle;
-      this.DescriptionTitle.Content = VianaNET.Resources.Labels.CoordinateSystemHowToHeader;
-      this.DescriptionMessage.Text = VianaNET.Resources.Labels.CoordinateSystemHowToDescription;
+      this.Title = VianaNET.Localization.Labels.CoordinateSystemWindowTitle;
+      this.LabelTitle.Content = VianaNET.Localization.Labels.CoordinateSystemHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Localization.Labels.CoordinateSystemHowToHeader;
+      this.DescriptionMessage.Text = VianaNET.Localization.Labels.CoordinateSystemHowToDescription;
       this.originPath = (Path)this.Resources["OriginPath"];
       this.originPath.Visibility = Visibility.Visible;
       this.windowCanvas.Children.Add(this.originPath);
@@ -150,17 +147,17 @@ namespace VianaNET.Modules.Video.Dialogs
       else
       {
         this.DialogResult = true;
-        var vectorDefault = new Vector(1, 0);
-        var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
-        var vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
-        var angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
-        var scaleY = angle > 0 ? 1 : -1;
-        var matrix = new Matrix();
-        var angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
+        Vector vectorDefault = new Vector(1, 0);
+        Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
+        Vector vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
+        double angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
+        int scaleY = angle > 0 ? 1 : -1;
+        Matrix matrix = new Matrix();
+        double angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
         matrix.Scale(1, scaleY);
         matrix.Rotate(-angleX);
 
-        Viana.Project.CalibrationData.CoordinateTransform = matrix;
+        App.Project.CalibrationData.CoordinateTransform = matrix;
         this.Close();
       }
     }
@@ -219,7 +216,7 @@ namespace VianaNET.Modules.Video.Dialogs
       if (e.SystemKey == Key.F10)
       {
         // Reset coordinate system
-        Viana.Project.CalibrationData.CoordinateTransform = Matrix.Identity;
+        App.Project.CalibrationData.CoordinateTransform = Matrix.Identity;
         this.DialogResult = true;
         this.Close();
       }
@@ -232,7 +229,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// The source of the event.
     /// </param>
     /// <param name="e">
-    /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
     /// </param>
     private void CoordinateSystemWindowLoaded(object sender, RoutedEventArgs e)
     {
@@ -240,8 +237,8 @@ namespace VianaNET.Modules.Video.Dialogs
       double scaleY;
       if (this.GetScales(out scaleX, out scaleY))
       {
-        double originXInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.X * scaleX;
-        double originYInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.Y * scaleY;
+        double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
+        double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;
         Canvas.SetLeft(this.originPath, originXInScreenPixel - this.originPath.ActualWidth / 2);
         Canvas.SetTop(this.originPath, originYInScreenPixel - this.originPath.ActualHeight / 2);
         this.directionX.X1 = originXInScreenPixel;
@@ -311,19 +308,19 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void SetYAxis(Point mouseLocation)
     {
-      var lineXEndpoint = new Point(this.directionX.X2, this.directionX.Y2);
+      Point lineXEndpoint = new Point(this.directionX.X2, this.directionX.Y2);
       this.SetLabelXPosition(lineXEndpoint);
 
       double scaleX;
       double scaleY;
       if (this.GetScales(out scaleX, out scaleY))
       {
-        double originXInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.X * scaleX;
-        double originYInScreenPixel = Viana.Project.CalibrationData.OriginInPixel.Y * scaleY;
+        double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
+        double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;
 
-        var vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
-        var vectorMouse = new Vector(mouseLocation.X - originXInScreenPixel, mouseLocation.Y - originYInScreenPixel);
-        var angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
+        Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
+        Vector vectorMouse = new Vector(mouseLocation.X - originXInScreenPixel, mouseLocation.Y - originYInScreenPixel);
+        double angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
         Vector vectorY;
         if (angleMouseXAxis >= 0 && angleMouseXAxis <= 180)
         {

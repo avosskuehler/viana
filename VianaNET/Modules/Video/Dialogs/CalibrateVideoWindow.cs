@@ -32,10 +32,8 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows.Controls;
   using System.Windows.Input;
   using System.Windows.Shapes;
-  using VianaNET.Application;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Base;
-
 
   /// <summary>
   ///   The calibrate video window.
@@ -88,10 +86,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     public CalibrateVideoWindow()
     {
-      this.Title = VianaNET.Resources.Labels.CalibrateVideoWindowTitle;
-      this.LabelTitle.Content = VianaNET.Resources.Labels.CalibrateWindowHelpControlTitle;
-      this.DescriptionTitle.Content = VianaNET.Resources.Labels.CalibrateWindowSpecifyOriginHeader;
-      this.DescriptionMessage.Text = VianaNET.Resources.Labels.CalibrateWindowSpecifyOriginDescription;
+      this.Title = VianaNET.Localization.Labels.CalibrateVideoWindowTitle;
+      this.LabelTitle.Content = VianaNET.Localization.Labels.CalibrateWindowHelpControlTitle;
+      this.DescriptionTitle.Content = VianaNET.Localization.Labels.CalibrateWindowSpecifyOriginHeader;
+      this.DescriptionMessage.Text = VianaNET.Localization.Labels.CalibrateWindowSpecifyOriginDescription;
       this.originPath = (Path)this.Resources["OriginPath"];
       this.windowCanvas.Children.Add(this.originPath);
       this.ruler = (Line)this.Resources["Ruler"];
@@ -126,23 +124,23 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      var scaledX = e.GetPosition(this.VideoImage).X;
-      var scaledY = e.GetPosition(this.VideoImage).Y;
-      var factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
-      var factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
-      var originalX = factorX * scaledX;
-      var originalY = factorY * scaledY;
+      double scaledX = e.GetPosition(this.VideoImage).X;
+      double scaledY = e.GetPosition(this.VideoImage).Y;
+      double factorX = this.VideoImage.Source.Width / this.VideoImage.ActualWidth;
+      double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
+      double originalX = factorX * scaledX;
+      double originalY = factorY * scaledY;
 
       if (!this.originIsSet)
       {
-        Viana.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
+        App.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
         this.originIsSet = true;
         this.originPath.Visibility = Visibility.Visible;
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);
         Canvas.SetTop(this.originPath, scaledY - this.originPath.ActualHeight / 2);
 
-        this.DescriptionTitle.Content = VianaNET.Resources.Labels.CalibrateWindowSpecifyLengthHeader;
-        this.DescriptionMessage.Text = VianaNET.Resources.Labels.CalibrateWindowSpecifyLengthDescription;
+        this.DescriptionTitle.Content = VianaNET.Localization.Labels.CalibrateWindowSpecifyLengthHeader;
+        this.DescriptionMessage.Text = VianaNET.Localization.Labels.CalibrateWindowSpecifyLengthDescription;
       }
       else if (!this.startPointIsSet)
       {
@@ -159,13 +157,13 @@ namespace VianaNET.Modules.Video.Dialogs
         this.endPoint = new Point(originalX, originalY);
 
         // Sicher gehen, dass Messpunkt nicht zu dicht liegen
-        var distance = Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
+        double distance = Math.Sqrt(Math.Pow(this.endPoint.Y - this.startPoint.Y, 2) + Math.Pow(this.endPoint.X - this.startPoint.X, 2));
         if (distance < 5)
         {
-          var info = new VianaDialog(
-            VianaNET.Resources.Labels.CalibrationLengthToShortTitle,
-            VianaNET.Resources.Labels.CalibrationLengthToShortDescription,
-            VianaNET.Resources.Labels.CalibrationLengthToShortMessage,
+          VianaDialog info = new VianaDialog(
+            VianaNET.Localization.Labels.CalibrationLengthToShortTitle,
+            VianaNET.Localization.Labels.CalibrationLengthToShortDescription,
+            VianaNET.Localization.Labels.CalibrationLengthToShortMessage,
             true);
           info.ShowDialog();
           this.startPointIsSet = false;
@@ -173,25 +171,25 @@ namespace VianaNET.Modules.Video.Dialogs
           return;
         }
 
-        var lengthDialog = new LengthDialog();
+        LengthDialog lengthDialog = new LengthDialog();
 
         if (lengthDialog.ShowDialog().GetValueOrDefault(false))
         {
           // Save ruler points to Settings
-          Viana.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
-          Viana.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
+          App.Project.CalibrationData.RulerEndPointInPixel = this.endPoint;
+          App.Project.CalibrationData.RulerStartPointInPixel = this.startPoint;
 
-          var lengthVector = new Vector();
+          Vector lengthVector = new Vector();
           lengthVector = Vector.Add(
             lengthVector,
-            new Vector(Viana.Project.CalibrationData.RulerStartPointInPixel.X, Viana.Project.CalibrationData.RulerStartPointInPixel.Y));
+            new Vector(App.Project.CalibrationData.RulerStartPointInPixel.X, App.Project.CalibrationData.RulerStartPointInPixel.Y));
           lengthVector.Negate();
           lengthVector = Vector.Add(
             lengthVector,
-            new Vector(Viana.Project.CalibrationData.RulerEndPointInPixel.X, Viana.Project.CalibrationData.RulerEndPointInPixel.Y));
-          var length = lengthVector.Length;
-          Viana.Project.CalibrationData.ScalePixelToUnit = Viana.Project.CalibrationData.RulerValueInRulerUnits / length;
-          Viana.Project.CalibrationData.IsVideoCalibrated = true;
+            new Vector(App.Project.CalibrationData.RulerEndPointInPixel.X, App.Project.CalibrationData.RulerEndPointInPixel.Y));
+          double length = lengthVector.Length;
+          App.Project.CalibrationData.ScalePixelToUnit = App.Project.CalibrationData.RulerValueInRulerUnits / length;
+          App.Project.CalibrationData.IsVideoCalibrated = true;
           this.DialogResult = true;
         }
 
@@ -203,7 +201,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// Handles the MouseMove event of the Container control.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="System.Windows.Input.MouseEventArgs" /> instance containing the event data.</param>
+    /// <param name="e">The <see cref="MouseEventArgs" /> instance containing the event data.</param>
     protected override void ContainerMouseMove(object sender, MouseEventArgs e)
     {
       base.ContainerMouseMove(sender, e);
@@ -214,8 +212,8 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (this.originIsSet && this.startPointIsSet)
       {
-        var scaledX = e.GetPosition(this.VideoImage).X;
-        var scaledY = e.GetPosition(this.VideoImage).Y;
+        double scaledX = e.GetPosition(this.VideoImage).X;
+        double scaledY = e.GetPosition(this.VideoImage).Y;
         this.ruler.X2 = scaledX;
         this.ruler.Y2 = scaledY;
       }
@@ -233,11 +231,11 @@ namespace VianaNET.Modules.Video.Dialogs
       if (e.SystemKey == Key.F10)
       {
         // Reset calibration
-        Viana.Project.CalibrationData.OriginInPixel = new Point();
-        Viana.Project.CalibrationData.RulerEndPointInPixel = new Point();
-        Viana.Project.CalibrationData.RulerStartPointInPixel = new Point();
-        Viana.Project.CalibrationData.ScalePixelToUnit = 1;
-        Viana.Project.CalibrationData.IsVideoCalibrated = false;
+        App.Project.CalibrationData.OriginInPixel = new Point();
+        App.Project.CalibrationData.RulerEndPointInPixel = new Point();
+        App.Project.CalibrationData.RulerStartPointInPixel = new Point();
+        App.Project.CalibrationData.ScalePixelToUnit = 1;
+        App.Project.CalibrationData.IsVideoCalibrated = false;
 
         this.DialogResult = true;
 

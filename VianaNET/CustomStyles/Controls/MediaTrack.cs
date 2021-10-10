@@ -44,7 +44,7 @@ namespace VianaNET
     /// </param>
     protected override void OnRender(DrawingContext dc)
     {
-      var size = new Size(base.ActualWidth, base.ActualHeight);
+      Size size = new Size(base.ActualWidth, base.ActualHeight);
       double num = this.Maximum - this.Minimum;
     }
 

@@ -29,11 +29,8 @@ namespace VianaNET.Data
 {
   using System;
   using System.ComponentModel;
-  using System.Globalization;
   using System.Windows;
   using System.Windows.Media;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
 
   /// <summary>
@@ -177,15 +174,9 @@ namespace VianaNET.Data
     /// </summary>
     public Rect ClipRegion
     {
-      get
-      {
-        return (Rect)this.GetValue(ClipRegionProperty);
-      }
+      get => (Rect)this.GetValue(ClipRegionProperty);
 
-      set
-      {
-        this.SetValue(ClipRegionProperty, value);
-      }
+      set => this.SetValue(ClipRegionProperty, value);
     }
 
     /// <summary>
@@ -194,15 +185,9 @@ namespace VianaNET.Data
     /// </summary>
     public LinearGradientBrush GradientBackground
     {
-      get
-      {
-        return (LinearGradientBrush)this.GetValue(GradientBackgroundProperty);
-      }
+      get => (LinearGradientBrush)this.GetValue(GradientBackgroundProperty);
 
-      set
-      {
-        this.SetValue(GradientBackgroundProperty, value);
-      }
+      set => this.SetValue(GradientBackgroundProperty, value);
     }
 
     /// <summary>
@@ -211,15 +196,9 @@ namespace VianaNET.Data
     /// </summary>
     public bool HasClipRegion
     {
-      get
-      {
-        return (bool)this.GetValue(HasClipRegionProperty);
-      }
+      get => (bool)this.GetValue(HasClipRegionProperty);
 
-      set
-      {
-        this.SetValue(HasClipRegionProperty, value);
-      }
+      set => this.SetValue(HasClipRegionProperty, value);
     }
 
     /// <summary>
@@ -228,15 +207,9 @@ namespace VianaNET.Data
     /// </summary>
     public bool IsShowingUnits
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingUnitsProperty);
-      }
+      get => (bool)this.GetValue(IsShowingUnitsProperty);
 
-      set
-      {
-        this.SetValue(IsShowingUnitsProperty, value);
-      }
+      set => this.SetValue(IsShowingUnitsProperty, value);
     }
 
     /// <summary>
@@ -245,15 +218,9 @@ namespace VianaNET.Data
     /// </summary>
     public bool IsShowingPixelLength
     {
-      get
-      {
-        return (bool)this.GetValue(IsShowingPixelLengthProperty);
-      }
+      get => (bool)this.GetValue(IsShowingPixelLengthProperty);
 
-      set
-      {
-        this.SetValue(IsShowingPixelLengthProperty, value);
-      }
+      set => this.SetValue(IsShowingPixelLengthProperty, value);
     }
 
     /// <summary>
@@ -262,10 +229,7 @@ namespace VianaNET.Data
     /// </summary>
     public bool IsVideoCalibrated
     {
-      get
-      {
-        return (bool)this.GetValue(IsVideoCalibratedProperty);
-      }
+      get => (bool)this.GetValue(IsVideoCalibratedProperty);
 
       set
       {
@@ -283,23 +247,14 @@ namespace VianaNET.Data
     /// <summary>
     ///   Gets the string for the pixel unit.
     /// </summary>
-    public string PixelUnit
-    {
-      get
-      {
-        return LengthUnit.px.ToString();
-      }
-    }
+    public string PixelUnit => LengthUnit.px.ToString();
 
     /// <summary>
     ///   Gets or sets the string value
     /// </summary>
     public TimeUnit TimeUnit
     {
-      get
-      {
-        return (TimeUnit)this.GetValue(TimeUnitProperty);
-      }
+      get => (TimeUnit)this.GetValue(TimeUnitProperty);
 
       set
       {
@@ -314,10 +269,7 @@ namespace VianaNET.Data
     /// </summary>
     public LengthUnit LengthUnit
     {
-      get
-      {
-        return (LengthUnit)this.GetValue(LengthUnitProperty);
-      }
+      get => (LengthUnit)this.GetValue(LengthUnitProperty);
 
       set
       {
@@ -330,24 +282,12 @@ namespace VianaNET.Data
     /// <summary>
     ///   Gets the velocity unit string. (Pixel per second by default)
     /// </summary>
-    public string VelocityUnit
-    {
-      get
-      {
-        return string.Format("{0}/{1}", this.LengthUnit, this.TimeUnit);
-      }
-    }
+    public string VelocityUnit => string.Format("{0}/{1}", this.LengthUnit, this.TimeUnit);
 
     /// <summary>
     ///   Gets the acceleration unit string. (Pixel per second squared by default)
     /// </summary>
-    public string AccelerationUnit
-    {
-      get
-      {
-        return string.Format("{0}/{1}²", this.LengthUnit, this.TimeUnit);
-      }
-    }
+    public string AccelerationUnit => string.Format("{0}/{1}²", this.LengthUnit, this.TimeUnit);
 
     /// <summary>
     ///   Gets or sets a <see cref="string" /> with the addon string
@@ -372,10 +312,7 @@ namespace VianaNET.Data
     /// </summary>
     public LengthUnit RulerUnit
     {
-      get
-      {
-        return this.rulerUnit;
-      }
+      get => this.rulerUnit;
 
       set
       {
@@ -389,10 +326,7 @@ namespace VianaNET.Data
     /// </summary>
     public double RulerValueInRulerUnits
     {
-      get
-      {
-        return (double)this.GetValue(RulerValueInRulerUnitsProperty);
-      }
+      get => (double)this.GetValue(RulerValueInRulerUnitsProperty);
 
       set
       {
@@ -404,13 +338,7 @@ namespace VianaNET.Data
     /// <summary>
     ///   Gets or sets the ruler value in ruler units.
     /// </summary>
-    public string RulerValueInPixelUnits
-    {
-      get
-      {
-        return "1px = " + this.ScalePixelToUnit.ToString("N4") + this.LengthUnit;
-      }
-    }
+    public string RulerValueInPixelUnits => "1px = " + this.ScalePixelToUnit.ToString("N4") + this.LengthUnit;
 
     /// <summary>
     ///   Gets or sets <see cref="double" /> containing the scale factor to
@@ -424,15 +352,9 @@ namespace VianaNET.Data
     /// </summary>
     public Matrix CoordinateTransform
     {
-      get
-      {
-        return (Matrix)this.GetValue(CoordinateTransformProperty);
-      }
+      get => (Matrix)this.GetValue(CoordinateTransformProperty);
 
-      set
-      {
-        this.SetValue(CoordinateTransformProperty, value);
-      }
+      set => this.SetValue(CoordinateTransformProperty, value);
     }
 
     #endregion

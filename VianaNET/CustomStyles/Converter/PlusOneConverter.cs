@@ -57,7 +57,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvert = (int)value;
+      int valueToConvert = (int)value;
       return valueToConvert + 1;
     }
 
@@ -81,7 +81,7 @@ namespace VianaNET.CustomStyles.Converter
     /// </returns>
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var valueToConvertBack = (int)value;
+      int valueToConvertBack = (int)value;
       return valueToConvertBack - 1;
     }
 

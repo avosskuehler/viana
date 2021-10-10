@@ -27,8 +27,6 @@ namespace VianaNET.Modules.Video.BlobDetection
   using System.Windows.Controls;
   using System.Windows.Media;
   using System.Windows.Shapes;
-
-  using VianaNET.Application;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Filter;
@@ -69,23 +67,23 @@ namespace VianaNET.Modules.Video.BlobDetection
     public void UpdateDataPoints()
     {
       this.CanvasDataPoints.Children.Clear();
-      foreach (TimeSample sample in Viana.Project.VideoData.Samples)
+      foreach (TimeSample sample in App.Project.VideoData.Samples)
       {
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           if (sample.Object == null || sample.Object[i] == null)
           {
             continue;
           }
 
-          var dataPoint = new Ellipse
+          Ellipse dataPoint = new Ellipse
                             {
-                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+                              Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
                               StrokeThickness = 2,
                               Width = 15,
                               Height = 15
                             };
-          var location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
+          Point location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
           Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
@@ -98,9 +96,9 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// </summary>
     public void WirePropertyChangedEvents()
     {
-      Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
-      Viana.Project.VideoData.PropertyChanged += this.VideoDataPropertyChanged;
-      Viana.Project.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
+      App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      App.Project.VideoData.PropertyChanged += this.VideoDataPropertyChanged;
+      App.Project.CalibrationData.PropertyChanged += this.CalibrationDataPropertyChanged;
       Video.Instance.PropertyChanged += this.VideoPropertyChanged;
 
     }
@@ -135,7 +133,7 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// </param>
     private void CanvasDataPointsSizeChanged(object sender, SizeChangedEventArgs e)
     {
-      var videoSizeToCanvasSize = new ScaleTransform
+      ScaleTransform videoSizeToCanvasSize = new ScaleTransform
                                     {
                                       ScaleX =
                                         this.CanvasDataPoints.ActualWidth
@@ -192,13 +190,13 @@ namespace VianaNET.Modules.Video.BlobDetection
         // it is zero during deserialization
         if (scaleX != 0 && scaleY != 0)
         {
-          var geometry = this.OuterRegion.Data as CombinedGeometry;
-          var outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
+          CombinedGeometry geometry = this.OuterRegion.Data as CombinedGeometry;
+          RectangleGeometry outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
           outerRectangleGeometry.Rect = new Rect(0, 0, this.OriginalImageControl.ActualWidth, this.OriginalImageControl.ActualHeight);
-          var innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
-          var innerRect = new Rect(
-            new Point(Viana.Project.CalibrationData.ClipRegion.Left * scaleX, Viana.Project.CalibrationData.ClipRegion.Top * scaleY),
-            new Point(Viana.Project.CalibrationData.ClipRegion.Right * scaleX, Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY));
+          RectangleGeometry innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
+          Rect innerRect = new Rect(
+            new Point(App.Project.CalibrationData.ClipRegion.Left * scaleX, App.Project.CalibrationData.ClipRegion.Top * scaleY),
+            new Point(App.Project.CalibrationData.ClipRegion.Right * scaleX, App.Project.CalibrationData.ClipRegion.Bottom * scaleY));
           innerRectangleGeometry.Rect = innerRect;
         }
       }
@@ -217,15 +215,15 @@ namespace VianaNET.Modules.Video.BlobDetection
     {
       if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection")
       {
-        if (Viana.Project.ProcessingData.IsUsingColorDetection && Viana.Project.ProcessingData.IsUsingMotionDetection)
+        if (App.Project.ProcessingData.IsUsingColorDetection && App.Project.ProcessingData.IsUsingMotionDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
         }
-        else if (Viana.Project.ProcessingData.IsUsingColorDetection)
+        else if (App.Project.ProcessingData.IsUsingColorDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.ColorProcessedImageSource;
         }
-        else if (Viana.Project.ProcessingData.IsUsingMotionDetection)
+        else if (App.Project.ProcessingData.IsUsingMotionDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
         }
@@ -248,7 +246,7 @@ namespace VianaNET.Modules.Video.BlobDetection
 
       if (e.PropertyName == "HasClipRegion")
       {
-        this.OuterRegion.Visibility = Viana.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden;
+        this.OuterRegion.Visibility = App.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden;
       }
     }
 
@@ -272,17 +270,17 @@ namespace VianaNET.Modules.Video.BlobDetection
         return;
       }
 
-      for (int i = 0; i < Viana.Project.ProcessingData.DetectedBlob.Count; i++)
+      for (int i = 0; i < App.Project.ProcessingData.DetectedBlob.Count; i++)
       {
-        Segment blob = Viana.Project.ProcessingData.DetectedBlob[i];
+        Segment blob = App.Project.ProcessingData.DetectedBlob[i];
 
         if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
             && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
         {
-          SolidColorBrush fill = Viana.Project.ProcessingData.TargetColor.Count > i
-                                   ? new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i])
+          SolidColorBrush fill = App.Project.ProcessingData.TargetColor.Count > i
+                                   ? new SolidColorBrush(App.Project.ProcessingData.TargetColor[i])
                                    : Brushes.Black;
-          var blobEllipse = new Ellipse
+          Ellipse blobEllipse = new Ellipse
                               {
                                 Fill = fill,
                                 Stroke = Brushes.Black,
@@ -312,16 +310,16 @@ namespace VianaNET.Modules.Video.BlobDetection
     {
       if (Video.Instance.IsDataAcquisitionRunning)
       {
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          var dataPoint = new Ellipse
+          Ellipse dataPoint = new Ellipse
                             {
-                              Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+                              Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
                               StrokeThickness = 2,
                               Width = 15,
                               Height = 15
                             };
-          Point location = Viana.Project.VideoData.LastPoint[i];
+          Point location = App.Project.VideoData.LastPoint[i];
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
           Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);

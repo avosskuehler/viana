@@ -51,10 +51,7 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </summary>
     public InterpolationFilter ChoosenInterpolationFilter
     {
-      get
-      {
-        return this.CurrentInterpolationFilter;
-      }
+      get => this.CurrentInterpolationFilter;
 
       set
       {
@@ -107,7 +104,7 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </param>
     private void InterpolationFilterComboSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      var filter = (InterpolationFilter)this.InterpolationFilterCombo.SelectedItem;
+      InterpolationFilter filter = (InterpolationFilter)this.InterpolationFilterCombo.SelectedItem;
 
       this.CurrentInterpolationFilter = filter;
 

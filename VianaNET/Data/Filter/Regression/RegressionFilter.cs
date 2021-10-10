@@ -27,11 +27,7 @@ namespace VianaNET.Data.Filter.Regression
   using System.Collections.Generic;
   using System.Linq;
   using System.Xml.Serialization;
-
-  using VianaNET.Application;
-
-
-  using WPFMath;
+  using WpfMath;
 
   /// <summary>
   ///   The line fit class.
@@ -402,7 +398,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public void UpdateRegressionFunctionString()
     {
-      Viana.Project.CurrentFilterData.RegressionFunctionTexFormula =
+      App.Project.CurrentFilterData.RegressionFunctionTexFormula =
         this.GetRegressionFunctionTexFormula(this.RegressionType);
     }
 
@@ -529,7 +525,7 @@ namespace VianaNET.Data.Filter.Regression
         }
       }
 
-      var tempWertY = new List<double>();
+      List<double> tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertY.Add(0);
@@ -621,7 +617,7 @@ namespace VianaNET.Data.Filter.Regression
     private void BestimmeExpSpezFkt()
     {
       int k;
-      var tempWertY = new List<double>();
+      List<double> tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertY.Add(Math.Log(this.WertY[k]));
@@ -651,7 +647,7 @@ namespace VianaNET.Data.Filter.Regression
     private void BestimmeLogFkt()
     {
       int k;
-      var tempWertX = new List<double>();
+      List<double> tempWertX = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertX.Add(Math.Log(this.WertX[k]));
@@ -673,8 +669,8 @@ namespace VianaNET.Data.Filter.Regression
     private void BestimmePotFkt()
     {
       int k, start;
-      var tempWertX = new List<double>();
-      var tempWertY = new List<double>();
+      List<double> tempWertX = new List<double>();
+      List<double> tempWertY = new List<double>();
 
       if ((this.WertX[0] <= 0) || (this.WertY[0] <= 0))
       {
@@ -731,8 +727,8 @@ namespace VianaNET.Data.Filter.Regression
       // a*sumX4 + b*sumX3 +c*sumX2 = sumX2Y
       // a*sumX3 + b*sumX2 +c*sumX  = sumXY
       // a*sumX2 + b*sumX  +c*k     = sumY
-      var m = new Matrix(3, 3);
-      var v = new Matrix(3, 1);
+      Matrix m = new Matrix(3, 3);
+      Matrix v = new Matrix(3, 1);
       m[0, 0] = sumX4;
       m[0, 1] = sumX3;
       m[0, 2] = sumX2;
@@ -779,8 +775,8 @@ namespace VianaNET.Data.Filter.Regression
     {
       double yi;
       int k;
-      var tempWertX = new List<double>();
-      var tempWertY = new List<double>();
+      List<double> tempWertX = new List<double>();
+      List<double> tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertX.Add(0);
@@ -922,8 +918,8 @@ namespace VianaNET.Data.Filter.Regression
       double bestA = 0;
       double bestB = b;
       double bestC = 0;
-      var tempWertX = new List<double>();
-      var tempWertY = new List<double>();
+      List<double> tempWertX = new List<double>();
+      List<double> tempWertY = new List<double>();
       for (k = 0; k < this.anzahl; k++)
       {
         tempWertX.Add(0);
@@ -1031,7 +1027,7 @@ namespace VianaNET.Data.Filter.Regression
       double d = (maxY + minY) / 2;
 
       // Periodenlänge:
-      var tempWertY = new List<double>();
+      List<double> tempWertY = new List<double>();
 
       for (k = 0; k < this.anzahl; k++)
       {
@@ -1079,8 +1075,8 @@ namespace VianaNET.Data.Filter.Regression
         // a1*sumSin2   + c1*sumSinCos + d*sumSin  = sumSinY
         // a1*sumSinCos + c1*sumCos2   + d*sumCos  = sumCosY
         // a1*sumSin    + c1*sumCos    + d*k       = sumY
-        var m = new Matrix(3, 3);
-        var v = new Matrix(3, 1);
+        Matrix m = new Matrix(3, 3);
+        Matrix v = new Matrix(3, 1);
         m[0, 0] = sumSin2;
         m[0, 1] = sumSinCos;
         m[0, 2] = sumSin;
@@ -1406,7 +1402,7 @@ namespace VianaNET.Data.Filter.Regression
 
       // mittleres Abweichungsquadrat errechnen
       this.GetAverageAberration(tempAberration);
-      Viana.Project.CurrentFilterData.RegressionAberration = this.Aberration;
+      App.Project.CurrentFilterData.RegressionAberration = this.Aberration;
       FitParameterMatrix[(int)regTyp, 5] = this.Aberration;
     }
 
@@ -1425,10 +1421,10 @@ namespace VianaNET.Data.Filter.Regression
       double b = FitParameterMatrix[(int)regTyp, 1];
       double c = FitParameterMatrix[(int)regTyp, 2];
       double d = FitParameterMatrix[(int)regTyp, 3];
-      string aString = Viana.Project.CurrentFilterData.GetFormattedString(a);
-      string bString = Viana.Project.CurrentFilterData.GetFormattedString(b);
-      string cString = Viana.Project.CurrentFilterData.GetFormattedString(c);
-      string dString = Viana.Project.CurrentFilterData.GetFormattedString(d);
+      string aString = App.Project.CurrentFilterData.GetFormattedString(a);
+      string bString = App.Project.CurrentFilterData.GetFormattedString(b);
+      string cString = App.Project.CurrentFilterData.GetFormattedString(c);
+      string dString = App.Project.CurrentFilterData.GetFormattedString(d);
       string fktStr;
 
       if (this.AusgleichsFunktion != null)

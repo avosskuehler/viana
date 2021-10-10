@@ -30,11 +30,8 @@ namespace VianaNET.Modules.DataGrid
   using System.Windows.Controls;
   using System.Windows.Data;
   using System.Windows.Input;
-
-  using VianaNET.Application;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.DataAcquisition;
-
 
   /// <summary>
   ///   The data grid window.
@@ -50,10 +47,10 @@ namespace VianaNET.Modules.DataGrid
     {
       this.InitializeComponent();
       this.PopulateDataGridWithColumns();
-      Viana.Project.CalibrationData.PropertyChanged += this.DataPropertyChanged;
-      Viana.Project.VideoData.PropertyChanged += this.DataPropertyChanged;
-      //Viana.Project.VideoData.SelectionChanged += VideoData_SelectionChanged;
-      Viana.Project.ProcessingData.PropertyChanged += this.DataPropertyChanged;
+      App.Project.CalibrationData.PropertyChanged += this.DataPropertyChanged;
+      App.Project.VideoData.PropertyChanged += this.DataPropertyChanged;
+      //App.Project.VideoData.SelectionChanged += VideoData_SelectionChanged;
+      App.Project.ProcessingData.PropertyChanged += this.DataPropertyChanged;
     }
 
 
@@ -67,7 +64,7 @@ namespace VianaNET.Modules.DataGrid
     public void Refresh()
     {
       this.DataGrid.ItemsSource = null;
-      this.DataGrid.ItemsSource = Viana.Project.VideoData.Samples;
+      this.DataGrid.ItemsSource = App.Project.VideoData.Samples;
     }
 
     #endregion
@@ -83,7 +80,7 @@ namespace VianaNET.Modules.DataGrid
     /// <param name="measurement">The measurement.</param>
     private void CreateColumn(string path, string header, string[] cellstyles, string measurement)
     {
-      var newColumn = new DataGridTextColumn
+      DataGridTextColumn newColumn = new DataGridTextColumn
                         {
                           Header = header,
                           HeaderStyle = (Style)this.Resources[cellstyles[0]],
@@ -94,7 +91,7 @@ namespace VianaNET.Modules.DataGrid
                         };
 
       // newColumn.SortMemberPath = path;
-      var valueBinding = new Binding(path)
+      Binding valueBinding = new Binding(path)
                            {
                              Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
                              ConverterParameter = this.Resources[measurement]
@@ -116,21 +113,19 @@ namespace VianaNET.Modules.DataGrid
         return;
       }
 
-      var row = sender as DataGridRow;
-      if (row == null)
+      if (!(sender is DataGridRow row))
       {
         return;
       }
 
-      var sample = row.Item as TimeSample;
-      var modifyWindow = new ModifyDataWindow();
-      if (sample != null)
+      ModifyDataWindow modifyWindow = new ModifyDataWindow();
+      if (row.Item is TimeSample sample)
       {
         modifyWindow.MoveToFrame(sample.Framenumber);
       }
 
       modifyWindow.ShowDialog();
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>
@@ -155,7 +150,7 @@ namespace VianaNET.Modules.DataGrid
       }
       else if (e.PropertyName == "UseEveryNthPoint")
       {
-        this.DataGrid.AlternationCount = Viana.Project.VideoData.UseEveryNthPoint;
+        this.DataGrid.AlternationCount = App.Project.VideoData.UseEveryNthPoint;
       }
     }
 
@@ -168,7 +163,7 @@ namespace VianaNET.Modules.DataGrid
       this.DataGrid.Columns.Clear();
 
       // Create style string arrays
-      var cellStyles = new List<string[]>
+      List<string[]> cellStyles = new List<string[]>
                          {
                            new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" }, 
                            new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" }, 
@@ -176,9 +171,9 @@ namespace VianaNET.Modules.DataGrid
                          };
 
       // Create default framenumber colum
-      var frameColumn = new DataGridTextColumn
+      DataGridTextColumn frameColumn = new DataGridTextColumn
                           {
-                            Header = VianaNET.Resources.Labels.DataGridFramenumber,
+                            Header = VianaNET.Localization.Labels.DataGridFramenumber,
                             HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
                             CellStyle = (Style)this.Resources["DataGridCellStyle"],
                             CanUserReorder = false,
@@ -187,14 +182,14 @@ namespace VianaNET.Modules.DataGrid
                           };
 
       // frameColumn.SortMemberPath = "Framenumber";
-      var valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
+      Binding valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
       frameColumn.Binding = valueBinding;
       this.DataGrid.Columns.Add(frameColumn);
 
       // Create default time column
-      var timeColumn = new DataGridTextColumn
+      DataGridTextColumn timeColumn = new DataGridTextColumn
                          {
-                           Header = VianaNET.Resources.Labels.DataGridTimestamp,
+                           Header = VianaNET.Localization.Labels.DataGridTimestamp,
                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
                            CellStyle = (Style)this.Resources["DataGridCellStyle"],
                            CanUserReorder = false,
@@ -203,7 +198,7 @@ namespace VianaNET.Modules.DataGrid
                          };
 
       // timeColumn.SortMemberPath = "Timestamp";
-      var valueBindingTime = new Binding("Timestamp")
+      Binding valueBindingTime = new Binding("Timestamp")
                                {
                                  Converter =
                                    (IValueConverter)this.Resources["UnitDoubleStringConverter"],
@@ -214,38 +209,38 @@ namespace VianaNET.Modules.DataGrid
       this.DataGrid.Columns.Add(timeColumn);
 
       // For each tracked object create the whole bunch of columns
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        string prefix = Viana.Project.ProcessingData.NumberOfTrackedObjects > 1
+        string prefix = App.Project.ProcessingData.NumberOfTrackedObjects > 1
                           ? "Nr." + (i + 1).ToString(CultureInfo.InvariantCulture) + " "
                           : string.Empty;
         string obj = "Object[" + i.ToString(CultureInfo.InvariantCulture) + "].";
-        this.CreateColumn(obj + "PixelX", prefix + VianaNET.Resources.Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
-        this.CreateColumn(obj + "PixelY", prefix + VianaNET.Resources.Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
-        this.CreateColumn(obj + "PositionX", prefix + VianaNET.Resources.Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "PositionY", prefix + VianaNET.Resources.Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Distance", prefix + VianaNET.Resources.Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "DistanceX", prefix + VianaNET.Resources.Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "DistanceY", prefix + VianaNET.Resources.Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Length", prefix + VianaNET.Resources.Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "LengthX", prefix + VianaNET.Resources.Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "LengthY", prefix + VianaNET.Resources.Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
-        this.CreateColumn(obj + "Velocity", prefix + VianaNET.Resources.Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
-        this.CreateColumn(obj + "VelocityX", prefix + VianaNET.Resources.Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
-        this.CreateColumn(obj + "VelocityY", prefix + VianaNET.Resources.Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "PixelX", prefix + VianaNET.Localization.Labels.DataGridXPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PixelY", prefix + VianaNET.Localization.Labels.DataGridYPixel, cellStyles[i], "PixelMeasurement");
+        this.CreateColumn(obj + "PositionX", prefix + VianaNET.Localization.Labels.DataGridXPosition, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "PositionY", prefix + VianaNET.Localization.Labels.DataGridYPosition, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Distance", prefix + VianaNET.Localization.Labels.DataGridDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceX", prefix + VianaNET.Localization.Labels.DataGridXDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "DistanceY", prefix + VianaNET.Localization.Labels.DataGridYDistance, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Length", prefix + VianaNET.Localization.Labels.DataGridLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthX", prefix + VianaNET.Localization.Labels.DataGridXLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "LengthY", prefix + VianaNET.Localization.Labels.DataGridYLength, cellStyles[i], "PositionMeasurement");
+        this.CreateColumn(obj + "Velocity", prefix + VianaNET.Localization.Labels.DataGridVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityX", prefix + VianaNET.Localization.Labels.DataGridXVelocity, cellStyles[i], "VelocityMeasurement");
+        this.CreateColumn(obj + "VelocityY", prefix + VianaNET.Localization.Labels.DataGridYVelocity, cellStyles[i], "VelocityMeasurement");
         this.CreateColumn(
           obj + "Acceleration",
-          prefix + VianaNET.Resources.Labels.DataGridAcceleration,
+          prefix + VianaNET.Localization.Labels.DataGridAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
           obj + "AccelerationX",
-          prefix + VianaNET.Resources.Labels.DataGridXAcceleration,
+          prefix + VianaNET.Localization.Labels.DataGridXAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
         this.CreateColumn(
           obj + "AccelerationY",
-          prefix + VianaNET.Resources.Labels.DataGridYAcceleration,
+          prefix + VianaNET.Localization.Labels.DataGridYAcceleration,
           cellStyles[i],
           "AccelerationMeasurement");
       }
@@ -257,18 +252,18 @@ namespace VianaNET.Modules.DataGrid
     {
       if (e.Key == Key.Delete)
       {
-        //Viana.Project.VideoData.DeleteSelectedSamples();
+        //App.Project.VideoData.DeleteSelectedSamples();
         if (this.DataGrid.SelectedItems.Count > 0)
         {
-          var removeItems = (from object item in this.DataGrid.SelectedItems select item as TimeSample).ToList();
+          List<TimeSample> removeItems = (from object item in this.DataGrid.SelectedItems select item as TimeSample).ToList();
 
-          foreach (var removeItem in removeItems)
+          foreach (TimeSample removeItem in removeItems)
           {
-            Viana.Project.VideoData.Samples.Remove(removeItem);
+            App.Project.VideoData.Samples.Remove(removeItem);
           }
         }
 
-        Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+        App.Project.VideoData.RefreshDistanceVelocityAcceleration();
       }
     }
 
@@ -282,12 +277,12 @@ namespace VianaNET.Modules.DataGrid
     //  }
 
     //  this.DataGrid.UnselectAll();
-    //  if (Viana.Project.VideoData.Samples.AllSamplesSelected)
+    //  if (App.Project.VideoData.Samples.AllSamplesSelected)
     //  {
     //    return;
     //  }
 
-    //  foreach (var selectedSample in Viana.Project.VideoData.Samples.Select(o => o.IsSelected))
+    //  foreach (var selectedSample in App.Project.VideoData.Samples.Select(o => o.IsSelected))
     //  {
     //    this.DataGrid.SelectedItems.Add(selectedSample);
     //  }
@@ -313,7 +308,7 @@ namespace VianaNET.Modules.DataGrid
     //    }
     //  }
     //  this.isCallingItself = true;
-    //  Viana.Project.VideoData.OnSelectionChanged();
+    //  App.Project.VideoData.OnSelectionChanged();
     //  this.isCallingItself = false;
     //}
   }

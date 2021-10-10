@@ -129,10 +129,7 @@ namespace VianaNET.CustomStyles.Types
     /// <exception cref="ArgumentException"></exception>
     public int Capacity
     {
-      get
-      {
-        return this.values.Length;
-      }
+      get => this.values.Length;
 
       set
       {
@@ -145,7 +142,7 @@ namespace VianaNET.CustomStyles.Types
 
           if (value > 0)
           {
-            var tempValues = new TValue[value];
+            TValue[] tempValues = new TValue[value];
             if (this.size > 0)
             {
               // copy only when size is greater than zero
@@ -165,24 +162,12 @@ namespace VianaNET.CustomStyles.Types
     /// <summary>
     ///   Gets the count.
     /// </summary>
-    public int Count
-    {
-      get
-      {
-        return this.size;
-      }
-    }
+    public int Count => this.size;
 
     /// <summary>
     ///   Gets a value indicating whether is read only.
     /// </summary>
-    public bool IsReadOnly
-    {
-      get
-      {
-        return false;
-      }
-    }
+    public bool IsReadOnly => false;
 
     #endregion
 
@@ -500,13 +485,7 @@ namespace VianaNET.CustomStyles.Types
       /// <summary>
       ///   Gets the current.
       /// </summary>
-      public TValue Current
-      {
-        get
-        {
-          return this.currentValue;
-        }
-      }
+      public TValue Current => this.currentValue;
 
       #endregion
 

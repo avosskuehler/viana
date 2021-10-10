@@ -170,7 +170,7 @@ namespace VianaNET.MainWindow
         if (attributes.Length > 0)
         {
           // Select the first one
-          var titleAttribute = (AssemblyTitleAttribute)attributes[0];
+          AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
 
           // If it is not an empty string, return it
           if (titleAttribute.Title != string.Empty)
@@ -187,24 +187,12 @@ namespace VianaNET.MainWindow
     /// <summary>
     ///   Gets OGAMAs current version.
     /// </summary>
-    public static string AssemblyVersionLong
-    {
-      get
-      {
-        return "(" + Assembly.GetExecutingAssembly().GetName().Version + ")";
-      }
-    }
+    public static string AssemblyVersionLong => "(" + Assembly.GetExecutingAssembly().GetName().Version + ")";
 
     /// <summary>
     ///   Gets OGAMAs current version.
     /// </summary>
-    public static string AssemblyVersionShort
-    {
-      get
-      {
-        return Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
-      }
-    }
+    public static string AssemblyVersionShort => Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
 
     #endregion
 

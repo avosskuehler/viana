@@ -105,13 +105,7 @@ namespace VianaNET.CustomStyles.Colors
     ///   Gets a value indicating whether this pallet
     ///   is of <see cref="ColorType.HSL" />
     /// </summary>
-    private bool IsHSL
-    {
-      get
-      {
-        return this.colorType == ColorType.HSL;
-      }
-    }
+    private bool IsHSL => this.colorType == ColorType.HSL;
 
     #endregion
 
@@ -163,7 +157,7 @@ namespace VianaNET.CustomStyles.Colors
 
       this.CalculateParameters(x, this.palletInfo.XMin, this.palletInfo.XMax, out diffX, out constraintX, out auxX);
 
-      var result = new Color[this.sourcePallet.Length];
+      Color[] result = new Color[this.sourcePallet.Length];
       HSXColor sourceColor;
       HSXColor resultColor;
 

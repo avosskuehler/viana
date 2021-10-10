@@ -99,10 +99,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public Color TargetColor
     {
-      get
-      {
-        return this.targetColor;
-      }
+      get => this.targetColor;
 
       set
       {
@@ -116,10 +113,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int Threshold
     {
-      get
-      {
-        return this.threshold;
-      }
+      get => this.threshold;
 
       set
       {
@@ -192,7 +186,7 @@ namespace VianaNET.Modules.Video.Filter
     /// <param name="image">
     /// Source image data. 
     /// </param>
-    public override unsafe void ProcessInPlace(IntPtr image)
+    public unsafe override void ProcessInPlace(IntPtr image)
     {
       int t = this.Threshold;
       int ipx = this.ImagePixelSize;
@@ -225,7 +219,7 @@ namespace VianaNET.Modules.Video.Filter
       int offset = this.ImageStride - this.ImageWidth * this.ImagePixelSize;
 
       // do the job
-      var ptr = (byte*)image;
+      byte* ptr = (byte*)image;
 
       // Threshold every pixel
       for (int i = 0; i < this.ImageWidth * this.ImageHeight; i++, ptr += ipx)

@@ -107,15 +107,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string MessagesLabel
     {
-      get
-      {
-        return (string)this.GetValue(MessagesLabelProperty);
-      }
+      get => (string)this.GetValue(MessagesLabelProperty);
 
-      set
-      {
-        this.SetValue(MessagesLabelProperty, value);
-      }
+      set => this.SetValue(MessagesLabelProperty, value);
     }
 
     /// <summary>
@@ -123,15 +117,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public double ProgressBarValue
     {
-      get
-      {
-        return (double)this.GetValue(ProgressBarValueProperty);
-      }
+      get => (double)this.GetValue(ProgressBarValueProperty);
 
-      set
-      {
-        this.SetValue(ProgressBarValueProperty, value);
-      }
+      set => this.SetValue(ProgressBarValueProperty, value);
     }
 
     /// <summary>
@@ -139,15 +127,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string StatusLabel
     {
-      get
-      {
-        return (string)this.GetValue(StatusLabelProperty);
-      }
+      get => (string)this.GetValue(StatusLabelProperty);
 
-      set
-      {
-        this.SetValue(StatusLabelProperty, value);
-      }
+      set => this.SetValue(StatusLabelProperty, value);
     }
 
     /// <summary>
@@ -155,15 +137,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string VideoFilename
     {
-      get
-      {
-        return (string)this.GetValue(VideoFilenameProperty);
-      }
+      get => (string)this.GetValue(VideoFilenameProperty);
 
-      set
-      {
-        this.SetValue(VideoFilenameProperty, value);
-      }
+      set => this.SetValue(VideoFilenameProperty, value);
     }
 
     #endregion

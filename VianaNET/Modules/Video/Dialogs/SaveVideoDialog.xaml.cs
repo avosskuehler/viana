@@ -30,11 +30,11 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.IO;
   using System.Windows;
   using System.Windows.Controls;
-  using System.Windows.Forms;
 
 
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
+  using WPFFolderBrowser;
 
   /// <summary>
   ///   The save video dialog.
@@ -55,7 +55,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <summary>
     ///   The folder browser dialog.
     /// </summary>
-    private readonly FolderBrowserDialog folderBrowserDialog;
+    private readonly WPFFolderBrowserDialog folderBrowserDialog;
 
     // The auto incremented number to tack on the end of the file to make a unique filename
     /// <summary>
@@ -82,10 +82,9 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.InitializeComponent();
       this.InitializeDeviceCombo();
-      this.folderBrowserDialog = new FolderBrowserDialog();
-      this.folderBrowserDialog.Description = VianaNET.Resources.Labels.VideoSaveFolderBrowserDescriptionTitle;
-      this.folderBrowserDialog.ShowNewFolderButton = true;
-      this.folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyDocuments;
+      this.folderBrowserDialog = new WPFFolderBrowserDialog();
+      this.folderBrowserDialog.Title = VianaNET.Localization.Labels.VideoSaveFolderBrowserDescriptionTitle;
+      this.folderBrowserDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       this.FolderTextBox.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       this.FileNameTextBox.Text = "Video";
       this.liveVideoController = new LiveVideoController();
@@ -154,9 +153,9 @@ namespace VianaNET.Modules.Video.Dialogs
     private void FolderButton_Click(object sender, RoutedEventArgs e)
     {
       // Show the folder browser
-      if (this.folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+      if (this.folderBrowserDialog.ShowDialog().GetValueOrDefault(false))
       {
-        this.FolderTextBox.Text = this.folderBrowserDialog.SelectedPath;
+        this.FolderTextBox.Text = this.folderBrowserDialog.FileName;
       }
     }
 
@@ -313,7 +312,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.FolderTextBox.IsEnabled = isEnabled;
       this.FolderButton.IsEnabled = isEnabled;
       this.CompressorComboBox.IsEnabled = isEnabled;
-      this.StatusBarReadyLabel.Content = isEnabled ? VianaNET.Resources.Labels.StatusBarReady : VianaNET.Resources.Labels.IsRecordingVideo;
+      this.StatusBarReadyLabel.Content = isEnabled ? VianaNET.Localization.Labels.StatusBarReady : VianaNET.Localization.Labels.IsRecordingVideo;
       this.RunAnalysisButton.IsEnabled = isEnabled;
 
       if (isEnabled)

@@ -34,8 +34,6 @@ namespace VianaNET.Modules.DataGrid
   using Ionic.Zip;
 
   using Microsoft.Office.Interop.Excel;
-
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data.Collections;
   using VianaNET.Logging;
@@ -130,22 +128,22 @@ namespace VianaNET.Modules.DataGrid
     public static void ToOds(DataCollection dataSource, string outputFilePath, ExportOptions options)
     {
       // Generate arrays
-      var arrays = GenerateExportArray(dataSource, options);
+      List<List<object>> arrays = GenerateExportArray(dataSource, options);
 
-      var templateFile =
+      ZipFile templateFile =
         ZipFile.Read(
           Assembly.GetExecutingAssembly().GetManifestResourceStream("VianaNET.Modules.DataGrid.template.ods"));
-      var contentXml = GetContentXmlFile(templateFile);
-      var nmsManager = new XmlNamespaceManager(contentXml.NameTable);
+      XmlDocument contentXml = GetContentXmlFile(templateFile);
+      XmlNamespaceManager nmsManager = new XmlNamespaceManager(contentXml.NameTable);
 
       for (int i = 0; i < Namespaces.GetLength(0); i++)
       {
         nmsManager.AddNamespace(Namespaces[i, 0], Namespaces[i, 1]);
       }
 
-      var tableNodes =
+      XmlNodeList tableNodes =
         contentXml.SelectNodes("/office:document-content/office:body/office:spreadsheet/table:table", nmsManager);
-      var sheetsRootNode = tableNodes.Item(0).ParentNode;
+      XmlNode sheetsRootNode = tableNodes.Item(0).ParentNode;
 
       // remove sheets from template file
       foreach (XmlNode tableNode in tableNodes)
@@ -154,17 +152,17 @@ namespace VianaNET.Modules.DataGrid
       }
 
       // Save data
-      var ownerDocument = sheetsRootNode.OwnerDocument;
+      XmlDocument ownerDocument = sheetsRootNode.OwnerDocument;
 
       XmlNode sheetNode = ownerDocument.CreateElement("table:table", GetNamespaceUri("table"));
 
-      var sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
-      sheetName.Value = Viana.Project.ProjectFilename;
+      XmlAttribute sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
+      sheetName.Value = App.Project.ProjectFilename;
       sheetNode.Attributes.Append(sheetName);
 
       // SaveColumnDefinition
-      var columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
-      var columnsCount = ownerDocument.CreateAttribute(
+      XmlElement columnDefinition = ownerDocument.CreateElement("table:table-column", GetNamespaceUri("table"));
+      XmlAttribute columnsCount = ownerDocument.CreateAttribute(
         "table:number-columns-repeated",
         GetNamespaceUri("table"));
       columnsCount.Value = arrays[0].Count.ToString(CultureInfo.InvariantCulture);
@@ -172,7 +170,7 @@ namespace VianaNET.Modules.DataGrid
       sheetNode.AppendChild(columnDefinition);
 
       // Save rows
-      foreach (var row in arrays)
+      foreach (List<object> row in arrays)
       {
         XmlNode rowNode = ownerDocument.CreateElement("table:table-row", GetNamespaceUri("table"));
         foreach (object column in row)
@@ -193,31 +191,31 @@ namespace VianaNET.Modules.DataGrid
           else if (column is double)
           {
             // We save values as text (string)
-            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            XmlAttribute valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
             valueType.Value = "float";
             cellNode.Attributes.Append(valueType);
 
-            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
-            var doubleValue = (double)column;
+            XmlAttribute value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            double doubleValue = (double)column;
             value.Value = doubleValue.ToString("N2", new CultureInfo("en-US"));
             cellNode.Attributes.Append(value);
 
-            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            XmlElement cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
             cellValue.InnerText = column.ToString();
             cellNode.AppendChild(cellValue);
           }
           else if (column is int)
           {
             // We save values as text (string)
-            var valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
+            XmlAttribute valueType = ownerDocument.CreateAttribute("office:value-type", GetNamespaceUri("office"));
             valueType.Value = "float";
             cellNode.Attributes.Append(valueType);
 
-            var value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
+            XmlAttribute value = ownerDocument.CreateAttribute("office:value", GetNamespaceUri("office"));
             value.Value = column.ToString();
             cellNode.Attributes.Append(value);
 
-            var cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
+            XmlElement cellValue = ownerDocument.CreateElement("text:p", GetNamespaceUri("text"));
             cellValue.InnerText = column.ToString();
             cellNode.AppendChild(cellValue);
           }
@@ -233,7 +231,7 @@ namespace VianaNET.Modules.DataGrid
       // SaveContentXml
       templateFile.RemoveEntry("content.xml");
 
-      var memStream = new MemoryStream();
+      MemoryStream memStream = new MemoryStream();
       contentXml.Save(memStream);
       memStream.Seek(0, SeekOrigin.Begin);
 
@@ -272,14 +270,14 @@ namespace VianaNET.Modules.DataGrid
     /// </param>
     public static void ToXls(DataCollection dataSource, ExportOptions options)
     {
-      Application.Current.MainWindow.Cursor = Cursors.Wait;
+      App.Current.MainWindow.Cursor = Cursors.Wait;
       try
       {
-        var xla = new Microsoft.Office.Interop.Excel.Application { Visible = true };
+        Microsoft.Office.Interop.Excel.Application xla = new Microsoft.Office.Interop.Excel.Application { Visible = true };
 
         xla.Workbooks.Add(XlSheetType.xlWorksheet);
 
-        var ws = (Worksheet)xla.ActiveSheet;
+        Worksheet ws = (Worksheet)xla.ActiveSheet;
 
         List<List<object>> arrays = GenerateExportArray(dataSource, options);
 
@@ -299,7 +297,7 @@ namespace VianaNET.Modules.DataGrid
       }
       finally
       {
-        Application.Current.MainWindow.Cursor = Cursors.Arrow;
+        App.Current.MainWindow.Cursor = Cursors.Arrow;
       }
     }
 
@@ -318,7 +316,7 @@ namespace VianaNET.Modules.DataGrid
     public static void ToXml(DataCollection dataSource, ExportOptions options, string fileName)
     {
       // XML-Schreiber erzeugen
-      var writer = new XmlTextWriter(fileName, Encoding.UTF8);
+      XmlTextWriter writer = new XmlTextWriter(fileName, Encoding.UTF8);
 
       // Ausgabedatei für bessere Lesbarkeit formatieren (einrücken etc.)
       writer.Formatting = Formatting.Indented;
@@ -402,7 +400,7 @@ namespace VianaNET.Modules.DataGrid
       writer.WriteAttributeString("ss", "DefaultColumnWidth", string.Empty, "60");
 
       List<List<object>> arrays = GenerateExportArray(dataSource, options);
-      foreach (var row in arrays)
+      foreach (List<object> row in arrays)
       {
         // <Row>
         writer.WriteStartElement("Row");
@@ -496,10 +494,10 @@ namespace VianaNET.Modules.DataGrid
     /// </returns>
     private static List<List<object>> GenerateExportArray(DataCollection dataSource, ExportOptions options)
     {
-      var exportArray = new List<List<object>>();
+      List<List<object>> exportArray = new List<List<object>>();
 
       // Write column header
-      var header = new List<object>();
+      List<object> header = new List<object>();
       if (options.Axes.Contains(DataAxis.DataAxes[0]))
       {
         header.Add(DataAxis.DataAxes[0].Description);
@@ -507,99 +505,99 @@ namespace VianaNET.Modules.DataGrid
 
       if (options.Axes.Contains(DataAxis.DataAxes[1]))
       {
-        header.Add(DataAxis.DataAxes[1].Description + " [" + Viana.Project.CalibrationData.TimeUnit + "]");
+        header.Add(DataAxis.DataAxes[1].Description + " [" + App.Project.CalibrationData.TimeUnit + "]");
       }
 
       foreach (int objectIndex in options.Objects)
       {
         int oneBased = objectIndex + 1;
         string title = options.Objects.Count > 1
-                         ? VianaNET.Resources.Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": "
+                         ? VianaNET.Localization.Labels.DataGridObjectPrefix + " " + oneBased.ToString(CultureInfo.InvariantCulture) + ": "
                          : string.Empty;
         if (options.Axes.Contains(DataAxis.DataAxes[2]))
         {
-          header.Add(title + DataAxis.DataAxes[2].Description + " [" + Viana.Project.CalibrationData.PixelUnit + "]");
+          header.Add(title + DataAxis.DataAxes[2].Description + " [" + App.Project.CalibrationData.PixelUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[3]))
         {
-          header.Add(title + DataAxis.DataAxes[3].Description + " [" + Viana.Project.CalibrationData.PixelUnit + "]");
+          header.Add(title + DataAxis.DataAxes[3].Description + " [" + App.Project.CalibrationData.PixelUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[4]))
         {
-          header.Add(title + DataAxis.DataAxes[4].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[4].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[5]))
         {
-          header.Add(title + DataAxis.DataAxes[5].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[5].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[6]))
         {
-          header.Add(title + DataAxis.DataAxes[6].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[6].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[7]))
         {
-          header.Add(title + DataAxis.DataAxes[7].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[7].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[8]))
         {
-          header.Add(title + DataAxis.DataAxes[8].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[8].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[9]))
         {
-          header.Add(title + DataAxis.DataAxes[9].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[9].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[10]))
         {
-          header.Add(title + DataAxis.DataAxes[10].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[10].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[11]))
         {
-          header.Add(title + DataAxis.DataAxes[11].Description + " [" + Viana.Project.CalibrationData.LengthUnit + "]");
+          header.Add(title + DataAxis.DataAxes[11].Description + " [" + App.Project.CalibrationData.LengthUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[12]))
         {
           header.Add(
-            title + DataAxis.DataAxes[12].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+            title + DataAxis.DataAxes[12].Description + " [" + App.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[13]))
         {
           header.Add(
-            title + DataAxis.DataAxes[13].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+            title + DataAxis.DataAxes[13].Description + " [" + App.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[14]))
         {
           header.Add(
-            title + DataAxis.DataAxes[14].Description + " [" + Viana.Project.CalibrationData.VelocityUnit + "]");
+            title + DataAxis.DataAxes[14].Description + " [" + App.Project.CalibrationData.VelocityUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[15]))
         {
           header.Add(
-            title + DataAxis.DataAxes[15].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+            title + DataAxis.DataAxes[15].Description + " [" + App.Project.CalibrationData.AccelerationUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[16]))
         {
           header.Add(
-            title + DataAxis.DataAxes[16].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+            title + DataAxis.DataAxes[16].Description + " [" + App.Project.CalibrationData.AccelerationUnit + "]");
         }
 
         if (options.Axes.Contains(DataAxis.DataAxes[17]))
         {
           header.Add(
-            title + DataAxis.DataAxes[17].Description + " [" + Viana.Project.CalibrationData.AccelerationUnit + "]");
+            title + DataAxis.DataAxes[17].Description + " [" + App.Project.CalibrationData.AccelerationUnit + "]");
         }
       }
 
@@ -607,7 +605,7 @@ namespace VianaNET.Modules.DataGrid
 
       foreach (TimeSample sample in dataSource)
       {
-        var columns = new List<object>();
+        List<object> columns = new List<object>();
         if (options.Axes.Contains(DataAxis.DataAxes[0]))
         {
           columns.Add(sample.Framenumber);
@@ -615,7 +613,7 @@ namespace VianaNET.Modules.DataGrid
 
         if (options.Axes.Contains(DataAxis.DataAxes[1]))
         {
-          TimeUnit timeunit = Viana.Project.CalibrationData.TimeUnit;
+          TimeUnit timeunit = App.Project.CalibrationData.TimeUnit;
           switch (timeunit)
           {
             case TimeUnit.ms:
@@ -850,7 +848,7 @@ namespace VianaNET.Modules.DataGrid
       contentStream.Seek(0, SeekOrigin.Begin);
 
       // Create XmlDocument from MemoryStream (MemoryStream contains content.xml).
-      var contentXml = new XmlDocument();
+      XmlDocument contentXml = new XmlDocument();
       contentXml.Load(contentStream);
 
       return contentXml;
@@ -865,7 +863,7 @@ namespace VianaNET.Modules.DataGrid
     /// <returns>
     /// The string with the namespace uri
     /// </returns>
-    /// <exception cref="System.InvalidOperationException">
+    /// <exception cref="InvalidOperationException">
     /// Can't find that namespace URI
     /// </exception>
     private static string GetNamespaceUri(string prefix)
@@ -926,9 +924,9 @@ namespace VianaNET.Modules.DataGrid
     /// </param>
     private static void WriteToFileWithSeparator(List<List<object>> arrays, string fileName, string separator)
     {
-      using (var sw = new StreamWriter(fileName))
+      using (StreamWriter sw = new StreamWriter(fileName))
       {
-        foreach (var row in arrays)
+        foreach (List<object> row in arrays)
         {
           foreach (object column in row)
           {

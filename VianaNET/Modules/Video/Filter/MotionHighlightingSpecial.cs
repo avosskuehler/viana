@@ -77,15 +77,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </remarks>
     public Color HighlightColor
     {
-      get
-      {
-        return this.highlightColor;
-      }
+      get => this.highlightColor;
 
-      set
-      {
-        this.highlightColor = value;
-      }
+      set => this.highlightColor = value;
     }
 
     #endregion
@@ -139,8 +133,8 @@ namespace VianaNET.Modules.Video.Filter
         return;
       }
 
-      var src = (byte*)videoFrame.ImageData.ToPointer();
-      var motion = (byte*)motionFrame.ImageData.ToPointer();
+      byte* src = (byte*)videoFrame.ImageData.ToPointer();
+      byte* motion = (byte*)motionFrame.ImageData.ToPointer();
 
       int srcOffset = videoFrame.Stride - width * pixelSize;
       int motionOffset = motionFrame.Stride - width;
@@ -148,7 +142,7 @@ namespace VianaNET.Modules.Video.Filter
       if (pixelSize == 1)
       {
         // grayscale case
-        var fillG =
+        byte fillG =
           (byte)(0.2125 * this.highlightColor.R + 0.7154 * this.highlightColor.G + 0.0721 * this.highlightColor.B);
 
         for (int y = 0; y < height; y++)

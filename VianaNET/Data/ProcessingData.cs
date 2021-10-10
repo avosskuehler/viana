@@ -38,7 +38,6 @@ namespace VianaNET.Data
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Filter;
 
-
   /// <summary>
   ///   The image processing.
   /// </summary>
@@ -262,8 +261,8 @@ namespace VianaNET.Data
       this.ColorThreshold.CollectionChanged += this.HlslParamsCollectionChanged;
       this.BlobMinDiameter.CollectionChanged += this.HlslParamsCollectionChanged;
       this.BlobMaxDiameter.CollectionChanged += this.HlslParamsCollectionChanged;
-      var motionDetector = new TwoFramesDifferenceDetectorSpecial();
-      var motionProcessor = new MotionAreaHighlightingSpecial();
+      TwoFramesDifferenceDetectorSpecial motionDetector = new TwoFramesDifferenceDetectorSpecial();
+      MotionAreaHighlightingSpecial motionProcessor = new MotionAreaHighlightingSpecial();
       this.detector = new MotionDetector(motionDetector, motionProcessor);
       this.MotionThreshold.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
       this.SuppressNoise.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
@@ -296,15 +295,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<double> BlobMaxDiameter
     {
-      get
-      {
-        return (ObservableCollection<double>)this.GetValue(BlobMaxDiameterProperty);
-      }
+      get => (ObservableCollection<double>)this.GetValue(BlobMaxDiameterProperty);
 
-      set
-      {
-        this.SetValue(BlobMaxDiameterProperty, value);
-      }
+      set => this.SetValue(BlobMaxDiameterProperty, value);
     }
 
     /// <summary>
@@ -312,15 +305,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<double> BlobMinDiameter
     {
-      get
-      {
-        return (ObservableCollection<double>)this.GetValue(BlobMinDiameterProperty);
-      }
+      get => (ObservableCollection<double>)this.GetValue(BlobMinDiameterProperty);
 
-      set
-      {
-        this.SetValue(BlobMinDiameterProperty, value);
-      }
+      set => this.SetValue(BlobMinDiameterProperty, value);
     }
 
     /// <summary>
@@ -328,15 +315,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<int> ColorThreshold
     {
-      get
-      {
-        return (ObservableCollection<int>)this.GetValue(ColorThresholdProperty);
-      }
+      get => (ObservableCollection<int>)this.GetValue(ColorThresholdProperty);
 
-      set
-      {
-        this.SetValue(ColorThresholdProperty, value);
-      }
+      set => this.SetValue(ColorThresholdProperty, value);
     }
 
     /// <summary>
@@ -344,15 +325,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<Point?> CurrentBlobCenter
     {
-      get
-      {
-        return (ObservableCollection<Point?>)this.GetValue(CurrentBlobCenterProperty);
-      }
+      get => (ObservableCollection<Point?>)this.GetValue(CurrentBlobCenterProperty);
 
-      set
-      {
-        this.SetValue(CurrentBlobCenterProperty, value);
-      }
+      set => this.SetValue(CurrentBlobCenterProperty, value);
     }
 
     /// <summary>
@@ -360,15 +335,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<Segment> DetectedBlob
     {
-      get
-      {
-        return (ObservableCollection<Segment>)this.GetValue(DetectedBlobsProperty);
-      }
+      get => (ObservableCollection<Segment>)this.GetValue(DetectedBlobsProperty);
 
-      set
-      {
-        this.SetValue(DetectedBlobsProperty, value);
-      }
+      set => this.SetValue(DetectedBlobsProperty, value);
     }
 
     /// <summary>
@@ -376,15 +345,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<int> MotionThreshold
     {
-      get
-      {
-        return (ObservableCollection<int>)this.GetValue(MotionThresholdProperty);
-      }
+      get => (ObservableCollection<int>)this.GetValue(MotionThresholdProperty);
 
-      set
-      {
-        this.SetValue(MotionThresholdProperty, value);
-      }
+      set => this.SetValue(MotionThresholdProperty, value);
     }
 
     /// <summary>
@@ -392,15 +355,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<bool> PositiveContrast
     {
-      get
-      {
-        return (ObservableCollection<bool>)this.GetValue(PositiveContrastProperty);
-      }
+      get => (ObservableCollection<bool>)this.GetValue(PositiveContrastProperty);
 
-      set
-      {
-        this.SetValue(PositiveContrastProperty, value);
-      }
+      set => this.SetValue(PositiveContrastProperty, value);
     }
 
     /// <summary>
@@ -408,15 +365,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<bool> SuppressNoise
     {
-      get
-      {
-        return (ObservableCollection<bool>)this.GetValue(SuppressNoiseProperty);
-      }
+      get => (ObservableCollection<bool>)this.GetValue(SuppressNoiseProperty);
 
-      set
-      {
-        this.SetValue(SuppressNoiseProperty, value);
-      }
+      set => this.SetValue(SuppressNoiseProperty, value);
     }
 
     /// <summary>
@@ -424,15 +375,9 @@ namespace VianaNET.Data
     /// </summary>
     public int IndexOfObject
     {
-      get
-      {
-        return (int)this.GetValue(IndexOfObjectProperty);
-      }
+      get => (int)this.GetValue(IndexOfObjectProperty);
 
-      set
-      {
-        this.SetValue(IndexOfObjectProperty, value);
-      }
+      set => this.SetValue(IndexOfObjectProperty, value);
     }
 
     /// <summary>
@@ -440,15 +385,9 @@ namespace VianaNET.Data
     /// </summary>
     public bool IsTargetColorSet
     {
-      get
-      {
-        return (bool)this.GetValue(IsTargetColorSetProperty);
-      }
+      get => (bool)this.GetValue(IsTargetColorSetProperty);
 
-      set
-      {
-        this.SetValue(IsTargetColorSetProperty, value);
-      }
+      set => this.SetValue(IsTargetColorSetProperty, value);
     }
 
     /// <summary>
@@ -456,15 +395,9 @@ namespace VianaNET.Data
     /// </summary>
     public int NumberOfTrackedObjects
     {
-      get
-      {
-        return (int)this.GetValue(NumberOfTrackedObjectsProperty);
-      }
+      get => (int)this.GetValue(NumberOfTrackedObjectsProperty);
 
-      set
-      {
-        this.SetValue(NumberOfTrackedObjectsProperty, value);
-      }
+      set => this.SetValue(NumberOfTrackedObjectsProperty, value);
     }
 
     /// <summary>
@@ -472,15 +405,9 @@ namespace VianaNET.Data
     /// </summary>
     public ObservableCollection<Color> TargetColor
     {
-      get
-      {
-        return (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
-      }
+      get => (ObservableCollection<Color>)this.GetValue(TargetColorProperty);
 
-      set
-      {
-        this.SetValue(TargetColorProperty, value);
-      }
+      set => this.SetValue(TargetColorProperty, value);
     }
 
     /// <summary>
@@ -488,15 +415,9 @@ namespace VianaNET.Data
     /// </summary>
     public DifferenceQuotientType DifferenceQuotientType
     {
-      get
-      {
-        return (DifferenceQuotientType)this.GetValue(DifferenceQuotientTypeProperty);
-      }
+      get => (DifferenceQuotientType)this.GetValue(DifferenceQuotientTypeProperty);
 
-      set
-      {
-        this.SetValue(DifferenceQuotientTypeProperty, value);
-      }
+      set => this.SetValue(DifferenceQuotientTypeProperty, value);
     }
 
     /// <summary>
@@ -507,15 +428,9 @@ namespace VianaNET.Data
     /// </value>
     public bool IsUsingColorDetection
     {
-      get
-      {
-        return (bool)this.GetValue(IsUsingColorDetectionProperty);
-      }
+      get => (bool)this.GetValue(IsUsingColorDetectionProperty);
 
-      set
-      {
-        this.SetValue(IsUsingColorDetectionProperty, value);
-      }
+      set => this.SetValue(IsUsingColorDetectionProperty, value);
     }
 
     /// <summary>
@@ -526,15 +441,9 @@ namespace VianaNET.Data
     /// </value>
     public bool IsUsingMotionDetection
     {
-      get
-      {
-        return (bool)this.GetValue(IsUsingMotionDetectionProperty);
-      }
+      get => (bool)this.GetValue(IsUsingMotionDetectionProperty);
 
-      set
-      {
-        this.SetValue(IsUsingMotionDetectionProperty, value);
-      }
+      set => this.SetValue(IsUsingMotionDetectionProperty, value);
     }
 
     #endregion
@@ -546,8 +455,8 @@ namespace VianaNET.Data
     /// </summary>
     public void InitializeImageFilters()
     {
-      var videoWidth = (int)Video.Instance.VideoElement.NaturalVideoWidth;
-      var videoHeight = (int)Video.Instance.VideoElement.NaturalVideoHeight;
+      int videoWidth = (int)Video.Instance.VideoElement.NaturalVideoWidth;
+      int videoHeight = (int)Video.Instance.VideoElement.NaturalVideoHeight;
 
       this.colorAndCropFilter.ImageWidth = videoWidth;
       this.colorAndCropFilter.ImageHeight = videoHeight;
@@ -556,9 +465,9 @@ namespace VianaNET.Data
       this.colorAndCropFilter.BlankColor = Colors.Black;
       this.colorAndCropFilter.TargetColor = this.TargetColor[0];
       this.colorAndCropFilter.Threshold = this.ColorThreshold[0];
-      if (Viana.Project.CalibrationData.HasClipRegion)
+      if (App.Project.CalibrationData.HasClipRegion)
       {
-        this.colorAndCropFilter.CropRectangle = Viana.Project.CalibrationData.ClipRegion;
+        this.colorAndCropFilter.CropRectangle = App.Project.CalibrationData.ClipRegion;
       }
       else
       {
@@ -572,9 +481,9 @@ namespace VianaNET.Data
       this.cropFilter.ImageStride = Video.Instance.VideoElement.Stride;
       this.cropFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
       this.cropFilter.BlankColor = Colors.Black;
-      if (Viana.Project.CalibrationData.HasClipRegion)
+      if (App.Project.CalibrationData.HasClipRegion)
       {
-        this.cropFilter.CropRectangle = Viana.Project.CalibrationData.ClipRegion;
+        this.cropFilter.CropRectangle = App.Project.CalibrationData.ClipRegion;
       }
       else
       {
@@ -588,12 +497,11 @@ namespace VianaNET.Data
       this.histogrammFilter.ImageStride = Video.Instance.VideoElement.Stride;
       this.histogrammFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
 
-      var algorithm = this.detector.MotionDetectionAlgorithm as TwoFramesDifferenceDetectorSpecial;
-      if (algorithm != null)
+      if (this.detector.MotionDetectionAlgorithm is TwoFramesDifferenceDetectorSpecial algorithm)
       {
-        algorithm.DifferenceThreshold = Viana.Project.ProcessingData.MotionThreshold[0];
-        algorithm.IsPositiveThreshold = Viana.Project.ProcessingData.PositiveContrast[0];
-        algorithm.SuppressNoise = Viana.Project.ProcessingData.SuppressNoise[0];
+        algorithm.DifferenceThreshold = App.Project.ProcessingData.MotionThreshold[0];
+        algorithm.IsPositiveThreshold = App.Project.ProcessingData.PositiveContrast[0];
+        algorithm.SuppressNoise = App.Project.ProcessingData.SuppressNoise[0];
       }
 
       Video.Instance.RefreshProcessingMap();
@@ -625,7 +533,7 @@ namespace VianaNET.Data
       this.watch.Start();
       long start = this.watch.ElapsedMilliseconds;
 
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
         // Console.Write("BeforeColorFilte ");
         // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
@@ -654,12 +562,11 @@ namespace VianaNET.Data
         // Apply motion detection if applicable
         if (this.IsUsingMotionDetection)
         {
-          var algorithm = this.detector.MotionDetectionAlgorithm as TwoFramesDifferenceDetectorSpecial;
-          if (algorithm != null)
+          if (this.detector.MotionDetectionAlgorithm is TwoFramesDifferenceDetectorSpecial algorithm)
           {
-            algorithm.DifferenceThreshold = Viana.Project.ProcessingData.MotionThreshold[i];
-            algorithm.IsPositiveThreshold = Viana.Project.ProcessingData.PositiveContrast[i];
-            algorithm.SuppressNoise = Viana.Project.ProcessingData.SuppressNoise[i];
+            algorithm.DifferenceThreshold = App.Project.ProcessingData.MotionThreshold[i];
+            algorithm.IsPositiveThreshold = App.Project.ProcessingData.PositiveContrast[i];
+            algorithm.SuppressNoise = App.Project.ProcessingData.SuppressNoise[i];
           }
 
           Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
@@ -681,7 +588,7 @@ namespace VianaNET.Data
           mapToUse = Video.Instance.VideoElement.MotionProcessingMapping;
         }
 
-        var histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
+        Histogram histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
         this.segmentator.Histogram = histogram;
         this.segmentator.ThresholdLuminance = histogram.Max * 0.5f;
         this.segmentator.MinDiameter = this.BlobMinDiameter[i];
@@ -710,7 +617,7 @@ namespace VianaNET.Data
 
         if (Video.Instance.IsDataAcquisitionRunning)
         {
-          Viana.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i]);
+          App.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i]);
         }
       }
 
@@ -730,11 +637,11 @@ namespace VianaNET.Data
       this.isReady = true;
       if (objectsFound)
       {
-        StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.BlobsObjectsFound;
+        StatusBarContent.Instance.MessagesLabel = VianaNET.Localization.Labels.BlobsObjectsFound;
         return true;
       }
 
-      StatusBarContent.Instance.MessagesLabel = VianaNET.Resources.Labels.BlobsNoObjectFound;
+      StatusBarContent.Instance.MessagesLabel = VianaNET.Localization.Labels.BlobsNoObjectFound;
       return false;
     }
 
@@ -743,7 +650,7 @@ namespace VianaNET.Data
     /// </summary>
     public void Reset()
     {
-      this.ResetProcessing(Viana.Project.ProcessingData.NumberOfTrackedObjects);
+      this.ResetProcessing(App.Project.ProcessingData.NumberOfTrackedObjects);
     }
 
     #endregion
@@ -810,7 +717,7 @@ namespace VianaNET.Data
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
-    /// <exception cref="System.NotImplementedException"></exception>
+    /// <exception cref="NotImplementedException"></exception>
     void MotionDetectionParameterCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
       if (!this.doNotThrowPropertyChanged)
@@ -866,7 +773,7 @@ namespace VianaNET.Data
 
         if (!Project.IsDeserializing)
         {
-          Viana.Project.VideoData.FilterSamples();
+          App.Project.VideoData.FilterSamples();
         }
       }
       else if (e.PropertyName == "NumberOfTrackedObjects")

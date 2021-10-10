@@ -27,10 +27,8 @@
 namespace VianaNET.Data.Filter.Interpolation
 {
   using System.Windows.Controls;
-
-  using Application;
-  using Collections;
-  using CustomStyles.Types;
+  using VianaNET.Data.Collections;
+  using VianaNET.CustomStyles.Types;
 
   /// <summary>
   ///   The exponential smooth filter.
@@ -56,13 +54,7 @@ namespace VianaNET.Data.Filter.Interpolation
     /// <summary>
     /// Gets the ExponentialSmoothControl.
     /// </summary>
-    public override UserControl CustomUserControl
-    {
-      get
-      {
-        return new ExponentialSmoothControl(this);
-      }
-    }
+    public override UserControl CustomUserControl => new ExponentialSmoothControl(this);
 
     /// <summary>
     ///   Gets or sets the smoothing factor.
@@ -80,15 +72,15 @@ namespace VianaNET.Data.Filter.Interpolation
     {
       base.CalculateFilterValues();
 
-      var fittedSamples = new SortedObservableCollection<XYSample>();
+      SortedObservableCollection<XYSample> fittedSamples = new SortedObservableCollection<XYSample>();
 
-      for (var i = 1; i < this.WertY.Count; i++)
+      for (int i = 1; i < this.WertY.Count; i++)
       {
-        var smoothValue = this.SmoothingFactor * this.WertY[i] + (1 - this.SmoothingFactor) * this.WertY[i - 1];
+        double smoothValue = this.SmoothingFactor * this.WertY[i] + (1 - this.SmoothingFactor) * this.WertY[i - 1];
         fittedSamples.Add(new XYSample(this.WertX[i], smoothValue));
       }
 
-      Viana.Project.CurrentFilterData.InterpolationSeries = fittedSamples;
+      App.Project.CurrentFilterData.InterpolationSeries = fittedSamples;
     }
 
     #endregion

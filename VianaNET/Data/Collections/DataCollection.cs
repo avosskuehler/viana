@@ -23,7 +23,6 @@
 namespace VianaNET.Data.Collections
 {
   using System;
-  using System.Collections.Generic;
   using System.Linq;
 
   using VianaNET.CustomStyles.Types;
@@ -57,13 +56,7 @@ namespace VianaNET.Data.Collections
     /// <value>
     ///   <c>true</c> if all samples are selected otherwise, <c>false</c>.
     /// </value>
-    public bool AllSamplesSelected
-    {
-      get
-      {
-        return this.All(timesample => timesample.IsSelected);
-      }
-    }
+    public bool AllSamplesSelected => this.All(timesample => timesample.IsSelected);
 
     #endregion
 
@@ -77,7 +70,7 @@ namespace VianaNET.Data.Collections
     /// </returns>
     public object Clone()
     {
-      var returnCollection = new DataCollection();
+      DataCollection returnCollection = new DataCollection();
       foreach (TimeSample sample in this)
       {
         returnCollection.Add(sample);

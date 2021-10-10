@@ -25,7 +25,6 @@
 namespace VianaNET.Data.Filter
 {
   using System.Windows;
-    using System;
 
   /// <summary>
   ///   The interpolation options dialog.
@@ -39,10 +38,10 @@ namespace VianaNET.Data.Filter
     {
       this.InitializeComponent();
       this.DataContext = this;
-      smallNumber = 123456789E-12;
-      bigNumber = 98765432109E-5;
-      this.LabelBigNumber.Content = bigNumber.ToString("G0");
-      this.LabelSmallNumber.Content = smallNumber.ToString("G0");
+      this.smallNumber = 123456789E-12;
+      this.bigNumber = 98765432109E-5;
+      this.LabelBigNumber.Content = this.bigNumber.ToString("G0");
+      this.LabelSmallNumber.Content = this.smallNumber.ToString("G0");
     }
 
     /// <summary>
@@ -91,8 +90,8 @@ namespace VianaNET.Data.Filter
         string formatStr1 = string.Concat("G", n.ToString());
         string formatStr2 = string.Concat("G", n.ToString());
       //  string formatStr2 = string.Concat("N", n.ToString());
-        this.LabelFormatSmallNumber.Content =smallNumber.ToString(formatStr1);
-        this.LabelFormatBigNumber.Content = bigNumber.ToString(formatStr2);
+        this.LabelFormatSmallNumber.Content = this.smallNumber.ToString(formatStr1);
+        this.LabelFormatBigNumber.Content = this.bigNumber.ToString(formatStr2);
     }
 
     #endregion

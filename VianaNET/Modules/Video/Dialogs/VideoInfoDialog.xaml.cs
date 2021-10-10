@@ -26,11 +26,8 @@
 
 namespace VianaNET.Modules.Video.Dialogs
 {
-  using System.Globalization;
   using System.IO;
   using System.Windows;
-
-  using VianaNET.Application;
   using VianaNET.Modules.Video.Control;
 
   /// <summary>
@@ -113,12 +110,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void ParseVideoFile()
     {
-      if (Viana.Project == null || Viana.Project.ProjectPath == null)
+      if (App.Project == null || App.Project.ProjectPath == null)
       {
         return;
       }
 
-      var fileWithPath = Path.Combine(Viana.Project.ProjectPath, Viana.Project.VideoFile);
+      string fileWithPath = Path.Combine(App.Project.ProjectPath, App.Project.VideoFile);
 
       if (!System.IO.File.Exists(fileWithPath))
       {
@@ -137,18 +134,18 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Filename = fileWithPath;
 
       // Read out video properties
-      using (var info = new MediaInfo.DotNetWrapper.MediaInfo())
+      using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
       {
-        var status = info.Open(fileWithPath);
-        var komplett = info.Inform();
+        MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileWithPath);
+        string komplett = info.Inform();
 
-        var frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+        string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
         if (float.TryParse(frameratestring, out float fpsfactor1000))
         {
-          var fps = fpsfactor1000 / 1000f;
+          float fps = fpsfactor1000 / 1000f;
           //this.DefaultFrameRate = fps;
 
-          var currentFrameRate = fps / Viana.Project.VideoData.FramerateFactor;
+          double currentFrameRate = fps / App.Project.VideoData.FramerateFactor;
           if (currentFrameRate != fps)
           {
             this.FrameRate = currentFrameRate;
@@ -161,10 +158,10 @@ namespace VianaNET.Modules.Video.Dialogs
         }
 
         // Dauer auslesen
-        var durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
+        string durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
         if (durationmeasure == "ms")
         {
-          var durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+          string durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (int.TryParse(durationstring, out int duration))
           {
             this.Duration = duration;
@@ -219,8 +216,8 @@ namespace VianaNET.Modules.Video.Dialogs
       // Update FPS, if needed
       if (this.DefaultFrameRate != this.FrameRate)
       {
-        var factor = this.DefaultFrameRate / this.FrameRate;
-        Viana.Project.VideoData.FramerateFactor = factor;
+        double factor = this.DefaultFrameRate / this.FrameRate;
+        App.Project.VideoData.FramerateFactor = factor;
         Control.Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
         Control.Video.Instance.VideoElement.FrameTimeInNanoSeconds = (long)(10000000d / this.FrameRate);
       }

@@ -26,8 +26,6 @@ namespace VianaNET.Modules.Base
   using System.Windows.Controls;
   using System.Windows.Input;
 
-  using VianaNET.Application;
-
   /// <summary>
   ///   The window with help is a base class for windows that display the video with some elements on it
   ///   and a help window.
@@ -76,15 +74,9 @@ namespace VianaNET.Modules.Base
     /// </summary>
     public int IndexOfTrackedObject
     {
-      get
-      {
-        return (int)this.GetValue(IndexOfTrackedObjectProperty);
-      }
+      get => (int)this.GetValue(IndexOfTrackedObjectProperty);
 
-      set
-      {
-        this.SetValue(IndexOfTrackedObjectProperty, value);
-      }
+      set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
     #endregion
@@ -134,7 +126,7 @@ namespace VianaNET.Modules.Base
       {
         if (this.GridTop.IsMouseOver)
         {
-          var currentLocation = new Point();
+          Point currentLocation = new Point();
           currentLocation.X = Canvas.GetLeft(this.ControlPanel);
           currentLocation.Y = Canvas.GetTop(this.ControlPanel);
 
@@ -184,10 +176,8 @@ namespace VianaNET.Modules.Base
     /// </param>
     private static void OnPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-      var window = obj as WindowWithHelp;
-
       // Reset index if appropriate
-      if (window != null && window.IndexOfTrackedObject > Viana.Project.ProcessingData.NumberOfTrackedObjects)
+      if (obj is WindowWithHelp window && window.IndexOfTrackedObject > App.Project.ProcessingData.NumberOfTrackedObjects)
       {
         window.IndexOfTrackedObject = 1;
       }

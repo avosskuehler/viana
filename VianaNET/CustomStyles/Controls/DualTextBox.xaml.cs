@@ -79,15 +79,9 @@ namespace VianaNET
     /// </summary>
     public bool IsChecked
     {
-      get
-      {
-        return this.ElementCheckBox.IsChecked();
-      }
+      get => this.ElementCheckBox.IsChecked();
 
-      set
-      {
-        this.ElementCheckBox.IsChecked = value;
-      }
+      set => this.ElementCheckBox.IsChecked = value;
     }
 
     /// <summary>
@@ -95,10 +89,7 @@ namespace VianaNET
     /// </summary>
     public bool IsFirstTextActive
     {
-      get
-      {
-        return this._isFirstTextActive;
-      }
+      get => this._isFirstTextActive;
 
       set
       {
@@ -112,15 +103,9 @@ namespace VianaNET
     /// </summary>
     public string TextA
     {
-      get
-      {
-        return this.ElementTextBoxA.Text;
-      }
+      get => this.ElementTextBoxA.Text;
 
-      set
-      {
-        this.ElementTextBoxA.Text = value;
-      }
+      set => this.ElementTextBoxA.Text = value;
     }
 
     /// <summary>
@@ -128,15 +113,9 @@ namespace VianaNET
     /// </summary>
     public string TextB
     {
-      get
-      {
-        return this.ElementTextBoxB.Text;
-      }
+      get => this.ElementTextBoxB.Text;
 
-      set
-      {
-        this.ElementTextBoxB.Text = value;
-      }
+      set => this.ElementTextBoxB.Text = value;
     }
 
     #endregion
@@ -169,7 +148,7 @@ namespace VianaNET
     /// </param>
     private void ElementTextBox_GotFocus(object sender, RoutedEventArgs e)
     {
-      var textBox = sender as TextBox;
+      TextBox textBox = sender as TextBox;
       textBox.SelectAll();
     }
 

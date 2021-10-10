@@ -27,11 +27,8 @@
 namespace VianaNET.Modules.Video.Dialogs
 {
   using System.Windows;
-  using Application;
-  using CustomStyles.Types;
-  using MainWindow;
-
-
+  using VianaNET.CustomStyles.Types;
+  using VianaNET.MainWindow;
 
   /// <summary>
   ///   The length dialog.
@@ -88,35 +85,35 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {
-          Viana.Project.CalibrationData.RulerUnit = LengthUnit.km;
+          App.Project.CalibrationData.RulerUnit = LengthUnit.km;
         }
         else if (this.rdbM.IsChecked.GetValueOrDefault(false))
         {
-          Viana.Project.CalibrationData.RulerUnit = LengthUnit.m;
+          App.Project.CalibrationData.RulerUnit = LengthUnit.m;
         }
         else if (this.rdbCM.IsChecked.GetValueOrDefault(false))
         {
-          Viana.Project.CalibrationData.RulerUnit = LengthUnit.cm;
+          App.Project.CalibrationData.RulerUnit = LengthUnit.cm;
         }
         else if (this.rdbMM.IsChecked.GetValueOrDefault(false))
         {
-          Viana.Project.CalibrationData.RulerUnit = LengthUnit.mm;
+          App.Project.CalibrationData.RulerUnit = LengthUnit.mm;
         }
 
         // This line is necessary to get an update event for the ruler value
         // even if only the ruler unit was changed
-        Viana.Project.CalibrationData.RulerValueInRulerUnits = -1;
-        Viana.Project.CalibrationData.RulerValueInRulerUnits = result;
+        App.Project.CalibrationData.RulerValueInRulerUnits = -1;
+        App.Project.CalibrationData.RulerValueInRulerUnits = result;
 
         this.DialogResult = true;
         this.Close();
       }
       else
       {
-        var dlg = new VianaDialog(
-          VianaNET.Resources.Labels.CalibrationErrorTitle,
-          VianaNET.Resources.Labels.CalibrationErrorDescription,
-          VianaNET.Resources.Labels.CalibrationErrorMessage,
+        VianaDialog dlg = new VianaDialog(
+          VianaNET.Localization.Labels.CalibrationErrorTitle,
+          VianaNET.Localization.Labels.CalibrationErrorDescription,
+          VianaNET.Localization.Labels.CalibrationErrorMessage,
           true);
 
         dlg.ShowDialog();

@@ -68,24 +68,12 @@ namespace VianaNET.Modules.Video.Filter
     /// <summary>
     ///   Gets the max.
     /// </summary>
-    public static YCbCrColor Max
-    {
-      get
-      {
-        return new YCbCrColor(1, 0.5f, 0.5f);
-      }
-    }
+    public static YCbCrColor Max => new YCbCrColor(1, 0.5f, 0.5f);
 
     /// <summary>
     ///   Gets the min.
     /// </summary>
-    public static YCbCrColor Min
-    {
-      get
-      {
-        return new YCbCrColor(0, -0.5f, -0.5f);
-      }
-    }
+    public static YCbCrColor Min => new YCbCrColor(0, -0.5f, -0.5f);
 
     /// <summary>
     ///   Gets or sets the cb.

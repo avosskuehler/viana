@@ -69,8 +69,7 @@ namespace VianaNET.Data.Collections
     /// <returns>A value that indicates the relative order of the objects being compared. </returns>
     public int CompareTo(object obj)
     {
-      var otherSample = obj as XYSample;
-      if (otherSample != null)
+      if (obj is XYSample otherSample)
       {
         return otherSample.ValueX.CompareTo(this.ValueX);
       }

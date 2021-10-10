@@ -1,40 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="Freie Universität Berlin">
-//   ************************************************************************
-//   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
-//   ------------------------------------------------------------------------
-//   This program is free software; you can redistribute it and/or modify it 
-//   under the terms of the GNU General Public License as published by the 
-//   Free Software Foundation; either version 2 of the License, or 
-//   (at your option) any later version.
-//   This program is distributed in the hope that it will be useful, 
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of 
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-//   See the GNU General Public License for more details.
-//   You should have received a copy of the GNU General Public License 
-//   along with this program; if not, write to the Free Software Foundation, 
-//   Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//   ************************************************************************
-// </copyright>
-// <author>Dr. Adrian Voßkühler</author>
-// <email>adrian@vosskuehler.name</email>
-// <summary>
-//   AssemblyInfo.cs
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-#region Using directives
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 
-#endregion
-
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
+// Allgemeine Informationen über eine Assembly werden über die folgenden
+// Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
+// die einer Assembly zugeordnet sind.
 [assembly: AssemblyTitle("Viana.NET")]
 [assembly: AssemblyDescription("Automatische Videoanalyse")]
 [assembly: AssemblyConfiguration("")]
@@ -43,29 +13,42 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
+// Durch Festlegen von ComVisible auf FALSE werden die Typen in dieser Assembly
+// für COM-Komponenten unsichtbar.  Wenn Sie auf einen Typ in dieser Assembly von
+// COM aus zugreifen müssen, sollten Sie das ComVisible-Attribut für diesen Typ auf "True" festlegen.
 [assembly: ComVisible(false)]
 
-// Specifies the location in which theme dictionaries are stored for types in an assembly.
-[assembly: ThemeInfo( // Specifies the location of system theme-specific resource dictionaries for this project.
-  // The default setting in this project is "None" since this default project does not
-  // include these user-defined theme files:
-  // Themes\Aero.NormalColor.xaml
-  // Themes\Classic.xaml
-  // Themes\Luna.Homestead.xaml
-  // Themes\Luna.Metallic.xaml
-  // Themes\Luna.NormalColor.xaml
-  // Themes\Royale.NormalColor.xaml
-  ResourceDictionaryLocation.None, // Specifies the location of the system non-theme specific resource dictionary:
-  // Themes\generic.xaml
-  ResourceDictionaryLocation.SourceAssembly)]
+//Um mit dem Erstellen lokalisierbarer Anwendungen zu beginnen, legen Sie
+//<UICulture>ImCodeVerwendeteKultur</UICulture> in der .csproj-Datei
+//in einer <PropertyGroup> fest.  Wenn Sie in den Quelldateien beispielsweise Deutsch
+//(Deutschland) verwenden, legen Sie <UICulture> auf \"de-DE\" fest.  Heben Sie dann die Auskommentierung
+//des nachstehenden NeutralResourceLanguage-Attributs auf.  Aktualisieren Sie "en-US" in der nachstehenden Zeile,
+//sodass es mit der UICulture-Einstellung in der Projektdatei übereinstimmt.
 
-// Version information for an assembly consists of the following four values:
-// Major Version
-// Minor Version 
-// Build Number
-// Revision
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("5.5.*")]
+//[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
+
+
+[assembly: ThemeInfo(
+    ResourceDictionaryLocation.None, //Speicherort der designspezifischen Ressourcenwörterbücher
+                                     //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
+                                     // oder in den Anwendungsressourcen-Wörterbüchern nicht gefunden werden kann.)
+    ResourceDictionaryLocation.SourceAssembly //Speicherort des generischen Ressourcenwörterbuchs
+                                              //(wird verwendet, wenn eine Ressource auf der Seite nicht gefunden wird,
+                                              // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
+)]
+
+
+// Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
+//
+//      Hauptversion
+//      Nebenversion
+//      Buildnummer
+//      Revision
+//
+// Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
+// indem Sie "*" wie unten gezeigt eingeben:
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("6.0.*")]
+[assembly: AssemblyFileVersion("6.0.0")]
 [assembly: Guid("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]
-[assembly: AssemblyFileVersion("5.5.0")]

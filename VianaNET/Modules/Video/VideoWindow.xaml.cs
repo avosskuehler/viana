@@ -38,13 +38,11 @@ namespace VianaNET.Modules.Video
   using System.Windows.Media;
   using System.Windows.Shapes;
   using System.Windows.Threading;
-  using VianaNET.Application;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
-
 
   /// <summary>
   ///   The video window.
@@ -123,18 +121,18 @@ namespace VianaNET.Modules.Video
       // this.thresholdEffect = new ThresholdEffect();
       RenderOptions.SetBitmapScalingMode(this.VideoImage, BitmapScalingMode.LowQuality);
 
-      Viana.Project.CalibrationData.PropertyChanged += this.CalibrationPropertyChanged;
+      App.Project.CalibrationData.PropertyChanged += this.CalibrationPropertyChanged;
 
       Video.Instance.VideoFrameChanged += this.OnVideoFrameChanged;
 
       Video.Instance.VideoPlayerElement.StepComplete += this.VideoPlayerElementStepComplete;
       Video.Instance.VideoPlayerElement.FileComplete += this.VideoPlayerElementFileComplete;
 
-      Viana.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
-      Viana.Project.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
+      App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
+      App.Project.ProcessingData.FrameProcessed += this.ProcessingDataFrameProcessed;
       this.TimelineSlider.SelectionEndReached += this.TimelineSliderSelectionEndReached;
       this.TimelineSlider.SelectionAndValueChanged += this.TimelineSliderSelectionAndValueChanged;
-      Video.Instance.OriginalImageSource = Viana.GetImageSource("NoVideo800600.png");
+      Video.Instance.OriginalImageSource = App.GetImageSource("NoVideo800600.png");
 
     }
 
@@ -169,9 +167,9 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void RunAutomaticDataAquisition()
     {
-      StatusBarContent.Instance.StatusLabel = VianaNET.Resources.Labels.StatusIsCalculating;
+      StatusBarContent.Instance.StatusLabel = VianaNET.Localization.Labels.StatusIsCalculating;
 
-      Viana.Project.VideoData.Reset();
+      App.Project.VideoData.Reset();
 
       // Set acquisition mode
       Video.Instance.IsDataAcquisitionRunning = true;
@@ -203,9 +201,9 @@ namespace VianaNET.Modules.Video
     public void SetVideoMode(VideoMode newVideoMode)
     {
       // Reset UI
-      Viana.Project.CalibrationData.Reset();
-      Viana.Project.VideoData.Reset();
-      Viana.Project.ProcessingData.Reset();
+      App.Project.CalibrationData.Reset();
+      App.Project.VideoData.Reset();
+      App.Project.ProcessingData.Reset();
       this.BlobsControl.UpdateDataPoints();
       this.TimelineSlider.ResetSelection();
       this.CreateCrossHairLines();
@@ -252,7 +250,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowCalibration(bool show)
     {
-      if (Viana.Project.CalibrationData.IsVideoCalibrated)
+      if (App.Project.CalibrationData.IsVideoCalibrated)
       {
         this.ShowOrHideCalibration(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -266,7 +264,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowPixelLength(bool show)
     {
-      if (Viana.Project.CalibrationData.IsVideoCalibrated)
+      if (App.Project.CalibrationData.IsVideoCalibrated)
       {
         this.ShowOrHidePixelLength(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -280,7 +278,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowClipRegion(bool show)
     {
-      if (Viana.Project.CalibrationData.HasClipRegion)
+      if (App.Project.CalibrationData.HasClipRegion)
       {
         this.ShowOrHideClipRegion(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -308,7 +306,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void UpdateCalibration()
     {
-      this.ShowOrHideCalibration(Viana.Project.CalibrationData.IsVideoCalibrated ? Visibility.Visible : Visibility.Hidden);
+      this.ShowOrHideCalibration(App.Project.CalibrationData.IsVideoCalibrated ? Visibility.Visible : Visibility.Hidden);
       this.PlaceCalibration();
     }
 
@@ -317,7 +315,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     public void UpdateClippingRegion()
     {
-      this.ShowOrHideClipRegion(Viana.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden);
+      this.ShowOrHideClipRegion(App.Project.CalibrationData.HasClipRegion ? Visibility.Visible : Visibility.Hidden);
       this.PlaceClippingRegion();
     }
 
@@ -334,11 +332,11 @@ namespace VianaNET.Modules.Video
       this.cancelCalculation = false;
 
       // Reset Statusbar
-      StatusBarContent.Instance.StatusLabel = VianaNET.Resources.Labels.StatusBarReady;
+      StatusBarContent.Instance.StatusLabel = VianaNET.Localization.Labels.StatusBarReady;
       StatusBarContent.Instance.ProgressBarValue = 0;
 
       // Recalculate dependent data values
-      Viana.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      App.Project.VideoData.RefreshDistanceVelocityAcceleration();
     }
 
     /// <summary>
@@ -385,16 +383,16 @@ namespace VianaNET.Modules.Video
         }
       }
 
-      this.blobHorizontalLines = new Line[Viana.Project.ProcessingData.NumberOfTrackedObjects];
-      this.blobVerticalLines = new Line[Viana.Project.ProcessingData.NumberOfTrackedObjects];
+      this.blobHorizontalLines = new Line[App.Project.ProcessingData.NumberOfTrackedObjects];
+      this.blobVerticalLines = new Line[App.Project.ProcessingData.NumberOfTrackedObjects];
 
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        var widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
-        var newHorizontalLine = new Line
+        Binding widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
+        Line newHorizontalLine = new Line
         {
           Visibility = Visibility.Hidden,
-          Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
           StrokeThickness = 2,
           X1 = 0,
           X2 = 0,
@@ -405,11 +403,11 @@ namespace VianaNET.Modules.Video
         this.blobHorizontalLines[i] = newHorizontalLine;
         this.OverlayCanvas.Children.Add(newHorizontalLine);
 
-        var heightBinding = new Binding("ActualHeight") { ElementName = "VideoImage" };
-        var newVerticalLine = new Line
+        Binding heightBinding = new Binding("ActualHeight") { ElementName = "VideoImage" };
+        Line newVerticalLine = new Line
         {
           Visibility = Visibility.Hidden,
-          Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]),
+          Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
           StrokeThickness = 2,
           X1 = 0,
           X2 = 0,
@@ -476,14 +474,14 @@ namespace VianaNET.Modules.Video
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+        for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          if (Viana.Project.ProcessingData.CurrentBlobCenter.Count <= i)
+          if (App.Project.ProcessingData.CurrentBlobCenter.Count <= i)
           {
             continue;
           }
 
-          Point? blobCenter = Viana.Project.ProcessingData.CurrentBlobCenter[i];
+          Point? blobCenter = App.Project.ProcessingData.CurrentBlobCenter[i];
           if (blobCenter.HasValue)
           {
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -519,11 +517,11 @@ namespace VianaNET.Modules.Video
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
-        if (Viana.Project.ProcessingData.IsTargetColorSet)
+        if (App.Project.ProcessingData.IsTargetColorSet)
         {
           this.UpdateCrossHairColors();
 
-          for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+          for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
           {
             this.blobVerticalLines[i].Visibility = Visibility.Visible;
             this.blobHorizontalLines[i].Visibility = Visibility.Visible;
@@ -689,7 +687,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void ProcessImage()
     {
-      this.Dispatcher.BeginInvoke((ThreadStart)(() => Viana.Project.ProcessingData.ProcessImage()));
+      this.Dispatcher.BeginInvoke((ThreadStart)(() => App.Project.ProcessingData.ProcessImage()));
     }
 
     /// <summary>
@@ -714,12 +712,12 @@ namespace VianaNET.Modules.Video
 
       if (this.GetScales(out scaleX, out scaleY))
       {
-        Canvas.SetLeft(this.OriginPath, Viana.Project.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
-        Canvas.SetTop(this.OriginPath, Viana.Project.CalibrationData.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
-        this.RulerLine.X1 = Viana.Project.CalibrationData.RulerStartPointInPixel.X * scaleX;
-        this.RulerLine.Y1 = Viana.Project.CalibrationData.RulerStartPointInPixel.Y * scaleY;
-        this.RulerLine.X2 = Viana.Project.CalibrationData.RulerEndPointInPixel.X * scaleX;
-        this.RulerLine.Y2 = Viana.Project.CalibrationData.RulerEndPointInPixel.Y * scaleY;
+        Canvas.SetLeft(this.OriginPath, App.Project.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
+        Canvas.SetTop(this.OriginPath, App.Project.CalibrationData.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
+        this.RulerLine.X1 = App.Project.CalibrationData.RulerStartPointInPixel.X * scaleX;
+        this.RulerLine.Y1 = App.Project.CalibrationData.RulerStartPointInPixel.Y * scaleY;
+        this.RulerLine.X2 = App.Project.CalibrationData.RulerEndPointInPixel.X * scaleX;
+        this.RulerLine.Y2 = App.Project.CalibrationData.RulerEndPointInPixel.Y * scaleY;
         double centerLineX = (this.RulerLine.X1 + this.RulerLine.X2) / 2;
         double centerLineY = (this.RulerLine.Y1 + this.RulerLine.Y2) / 2;
 
@@ -741,24 +739,24 @@ namespace VianaNET.Modules.Video
         return;
       }
 
-      if (this.OuterRegion.IsVisible && Viana.Project.CalibrationData.ClipRegion != Rect.Empty)
+      if (this.OuterRegion.IsVisible && App.Project.CalibrationData.ClipRegion != Rect.Empty)
       {
-        this.TopLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left * scaleX;
-        this.TopLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right * scaleX;
-        this.TopLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top * scaleY;
-        this.TopLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Top * scaleY;
-        this.BottomLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left * scaleX;
-        this.BottomLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right * scaleX;
-        this.BottomLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY;
-        this.BottomLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY;
-        this.LeftLine.X1 = Viana.Project.CalibrationData.ClipRegion.Left * scaleX;
-        this.LeftLine.X2 = Viana.Project.CalibrationData.ClipRegion.Left * scaleX;
-        this.LeftLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top * scaleY;
-        this.LeftLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY;
-        this.RightLine.X1 = Viana.Project.CalibrationData.ClipRegion.Right * scaleX;
-        this.RightLine.X2 = Viana.Project.CalibrationData.ClipRegion.Right * scaleX;
-        this.RightLine.Y1 = Viana.Project.CalibrationData.ClipRegion.Top * scaleY;
-        this.RightLine.Y2 = Viana.Project.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.TopLine.X1 = App.Project.CalibrationData.ClipRegion.Left * scaleX;
+        this.TopLine.X2 = App.Project.CalibrationData.ClipRegion.Right * scaleX;
+        this.TopLine.Y1 = App.Project.CalibrationData.ClipRegion.Top * scaleY;
+        this.TopLine.Y2 = App.Project.CalibrationData.ClipRegion.Top * scaleY;
+        this.BottomLine.X1 = App.Project.CalibrationData.ClipRegion.Left * scaleX;
+        this.BottomLine.X2 = App.Project.CalibrationData.ClipRegion.Right * scaleX;
+        this.BottomLine.Y1 = App.Project.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.BottomLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.LeftLine.X1 = App.Project.CalibrationData.ClipRegion.Left * scaleX;
+        this.LeftLine.X2 = App.Project.CalibrationData.ClipRegion.Left * scaleX;
+        this.LeftLine.Y1 = App.Project.CalibrationData.ClipRegion.Top * scaleY;
+        this.LeftLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom * scaleY;
+        this.RightLine.X1 = App.Project.CalibrationData.ClipRegion.Right * scaleX;
+        this.RightLine.X2 = App.Project.CalibrationData.ClipRegion.Right * scaleX;
+        this.RightLine.Y1 = App.Project.CalibrationData.ClipRegion.Top * scaleY;
+        this.RightLine.Y2 = App.Project.CalibrationData.ClipRegion.Bottom * scaleY;
         this.ResetOuterRegion();
       }
     }
@@ -768,11 +766,11 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void ResetOuterRegion()
     {
-      var geometry = this.OuterRegion.Data as CombinedGeometry;
-      var outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
+      CombinedGeometry geometry = this.OuterRegion.Data as CombinedGeometry;
+      RectangleGeometry outerRectangleGeometry = geometry.Geometry1 as RectangleGeometry;
       outerRectangleGeometry.Rect = new Rect(0, 0, this.VideoImage.ActualWidth, this.VideoImage.ActualHeight);
-      var innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
-      var innerRect = new Rect(
+      RectangleGeometry innerRectangleGeometry = geometry.Geometry2 as RectangleGeometry;
+      Rect innerRect = new Rect(
         new Point(this.LeftLine.X1, this.TopLine.Y1), new Point(this.RightLine.X1, this.BottomLine.Y1));
       innerRectangleGeometry.Rect = innerRect;
 
@@ -785,7 +783,7 @@ namespace VianaNET.Modules.Video
         {
           Rect clipRect = innerRect;
           clipRect.Scale(1 / scaleX, 1 / scaleY);
-          Viana.Project.CalibrationData.ClipRegion = clipRect;
+          App.Project.CalibrationData.ClipRegion = clipRect;
         }
       }
     }
@@ -862,12 +860,12 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void UpdateCrossHairColors()
     {
-      for (int i = 0; i < Viana.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        if (Viana.Project.ProcessingData.TargetColor.Count > i)
+        if (App.Project.ProcessingData.TargetColor.Count > i)
         {
-          this.blobHorizontalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
-          this.blobVerticalLines[i].Stroke = new SolidColorBrush(Viana.Project.ProcessingData.TargetColor[i]);
+          this.blobHorizontalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
+          this.blobVerticalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
         }
       }
     }
@@ -904,7 +902,7 @@ namespace VianaNET.Modules.Video
       this.Dispatcher.Invoke(
         (ThreadStart)delegate
           {
-            Viana.Project.ProcessingData.ProcessImage();
+            App.Project.ProcessingData.ProcessImage();
           });
 
 
@@ -965,7 +963,7 @@ namespace VianaNET.Modules.Video
         this.SetVideoMode(VideoMode.None);
       }
 
-      var saveVideoDialog = new SaveVideoDialog();
+      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
       if (saveVideoDialog.ShowDialog().GetValueOrDefault(false))
       {
         this.SetVideoMode(VideoMode.File);
@@ -992,12 +990,12 @@ namespace VianaNET.Modules.Video
     {
       if (this.isPlaying)
       {
-        this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+        this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
         Video.Instance.Pause();
       }
       else
       {
-        this.BtnPlayImage.Source = Viana.GetImageSource("Pause16.png");
+        this.BtnPlayImage.Source = App.GetImageSource("Pause16.png");
         Video.Instance.Play();
       }
 
@@ -1018,7 +1016,7 @@ namespace VianaNET.Modules.Video
       Video.Instance.Revert();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
-      this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+      this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
     }
 
     private void BtnSeekNextClick(object sender, RoutedEventArgs e)
@@ -1102,7 +1100,7 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderSelectionEndReached(object sender, EventArgs e)
     {
       Video.Instance.Pause();
-      this.BtnPlayImage.Source = Viana.GetImageSource("Start16.png");
+      this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
       this.isPlaying = false;
     }
 
@@ -1193,7 +1191,7 @@ namespace VianaNET.Modules.Video
 
     private void BtnSetZeroTimeClick(object sender, RoutedEventArgs e)
     {
-      Viana.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
+      App.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
     }
   }
 }

@@ -52,11 +52,11 @@ namespace VianaNET.Data.Filter.Regression
       double minX, minY, hilf;
       regressionFilter.GetMinMax(regressionFilter.WertX, out minX, out hilf);
       regressionFilter.GetMinMax(regressionFilter.WertY, out minY, out hilf);
-      var negativeX = minX < 0;
-      var negativeY = minY < 0;
-      negFlag = 0;
-      if (negativeX) { negFlag = 1; }
-      if (negativeY) { negFlag = negFlag+2; }
+      bool negativeX = minX < 0;
+      bool negativeY = minY < 0;
+      this.negFlag = 0;
+      if (negativeX) { this.negFlag = 1; }
+      if (negativeY) { this.negFlag = this.negFlag +2; }
       this.radioButtonPot.IsEnabled = (!negativeX) & (!negativeY);
       if ((!this.radioButtonPot.IsEnabled) & (this.RegressionType == RegressionType.Potenz))
       {
