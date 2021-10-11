@@ -34,7 +34,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public class ColorAndCropFilterYCbCr : FilterBase
   {
-    #region Fields
+
 
     /// <summary>
     ///   The pixel color.
@@ -66,9 +66,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private int threshold;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ColorAndCropFilterYCbCr" /> class.
@@ -80,9 +80,9 @@ namespace VianaNET.Modules.Video.Filter
       this.pixelColor = new YCbCrColor(0, 0, 0);
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the blank color.
@@ -122,9 +122,9 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
 
-    #region Properties
+
+
 
     /// <summary>
     ///   Gets or sets the lower threshold.
@@ -136,7 +136,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private YCbCrColor UpperThreshold { get; set; }
 
-    #endregion
+
 
     // private int startX;
     // private int startY;
@@ -165,7 +165,7 @@ namespace VianaNET.Modules.Video.Filter
     // }
     // }
     // }
-    #region Public Methods and Operators
+
 
     /// <summary>
     ///   The init.
@@ -297,9 +297,9 @@ namespace VianaNET.Modules.Video.Filter
       // }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The update pixel color from rgb.
@@ -340,6 +340,6 @@ namespace VianaNET.Modules.Video.Filter
         1.0f, targetColorInYCbCr.Cb + this.threshold / 500f, targetColorInYCbCr.Cr + this.threshold / 500f);
     }
 
-    #endregion
+
   }
 }

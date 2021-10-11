@@ -35,7 +35,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public abstract class InterpolationFilter : FilterBase
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes static members of the <see cref="InterpolationFilter"/> class.
@@ -50,9 +50,9 @@ namespace VianaNET.Data.Filter.Interpolation
         };
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the List of available fitting algorithms.
@@ -70,9 +70,9 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </summary>
     public InterpolationFilterTypes InterpolationFilterType { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The show interpolation options dialog.
@@ -87,6 +87,6 @@ namespace VianaNET.Data.Filter.Interpolation
       }
     }
 
-    #endregion
+
   }
 }

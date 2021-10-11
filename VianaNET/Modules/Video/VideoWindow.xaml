@@ -8,6 +8,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
 	xmlns:local="clr-namespace:VianaNET"
+  xmlns:fa="http://schemas.fontawesome.com/icons/"
 	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
 	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
@@ -33,10 +34,7 @@
         <Canvas Name="OverlayCanvas" SizeChanged="OverlayCanvasSizeChanged"
                 Width="{Binding ElementName=VideoImage, Path=ActualWidth}"
                 Height="{Binding ElementName=VideoImage, Path=ActualHeight}">
-          <Border RenderTransformOrigin="0.5,0.5" Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
-            <Border.RenderTransform>
-              <ScaleTransform ScaleX="1" ScaleY="-1"/>
-            </Border.RenderTransform>
+          <Border Canvas.Left="10" Canvas.Top="10" Name="PixelLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <Label Name="PixelLabel" 
                      Content="{Binding Path=CalibrationData.RulerValueInPixelUnits,
               Source={x:Static local:App.Project}}"
@@ -53,10 +51,7 @@
           </Path>
           <Label Name="FrameRateLabel"></Label>
           <Line Name="RulerLine" X1="0" Y1="0" X2="50" Y2="50" Stroke="Aquamarine" StrokeThickness="1" Visibility="Hidden" />
-          <Border RenderTransformOrigin="0.5,0.5" Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
-            <Border.RenderTransform>
-              <ScaleTransform ScaleX="1" ScaleY="-1"/>
-            </Border.RenderTransform>
+          <Border Name="RulerLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
             <StackPanel Orientation="Horizontal">
               <Label Name="RulerLabel" Padding="1" 
                    Content="{Binding Path=CalibrationData.RulerValueInRulerUnits,
@@ -83,7 +78,7 @@
           </Path>
         </Canvas>
       </Grid>
-      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="10" Height="10"/>
+      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="10" Height="10" Margin="100"/>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
                           Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"
@@ -98,20 +93,20 @@
       <StackPanel Grid.Column="0" Margin="10,0,10,0">
         <StackPanel Orientation="Horizontal"  >
           <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowRecordButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/Record16.png" Width="16" />
+            <fa:ImageAwesome x:Name="BtnRecordImage" Icon="Solid_Circle" Width="12" Foreground="Red"/>
           </Button>
           <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
-            <Image Name="BtnPlayImage" Source="/VianaNET;component/Images/Start16.png" Width="16"/>
+            <fa:ImageAwesome x:Name="BtnPlayImage" Icon="Solid_Play" Width="11" Foreground="Green"/>
           </Button>
           <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/Stop16.png" Width="16"/>
+            <fa:ImageAwesome Icon="Solid_Stop" Width="12" Foreground="SteelBlue"/>
           </Button>
           <Rectangle Width="8" />
           <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekNextButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SeekNext16.png" Width="16"/>
+            <fa:ImageAwesome Icon="Solid_StepForward" Width="10" Foreground="SteelBlue"/>
           </Button>
           <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekPreviousButtonToolTip}">
-            <Image Source="/VianaNET;component/Images/SeekPrevious16.png" Width="16"/>
+            <fa:ImageAwesome Icon="Solid_StepBackward" Width="10" Foreground="SteelBlue"/>
           </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Name="SelectionPanel" >
@@ -135,7 +130,7 @@
         IsSelectionRangeEnabled="True" 
         TickDownClicked="TimelineSliderTickDownClicked"
         TickUpClicked="TimelineSliderTickUpClicked"
-        FrameTimeInNanoSeconds="{Binding Path=VideoElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
+        FrameTimeInMS="{Binding Path=VideoElement.FrameTimeInMS, Source={x:Static control:Video.Instance}}"
         Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
         SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
         SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"

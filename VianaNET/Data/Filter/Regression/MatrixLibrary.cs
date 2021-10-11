@@ -26,14 +26,12 @@ namespace VianaNET.Data.Filter.Regression
 {
   using System;
 
-  #region "Exception in the Library"
-
   /// <summary>
   ///   The matrix library exceptions.
   /// </summary>
   internal class MatrixLibraryExceptions : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MatrixLibraryExceptions"/> class.
@@ -46,7 +44,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -54,7 +52,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class MatrixNullException : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MatrixNullException" /> class.
@@ -64,7 +62,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -72,7 +70,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class MatrixDimensionException : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MatrixDimensionException" /> class.
@@ -82,7 +80,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -90,7 +88,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class MatrixNotSquare : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MatrixNotSquare" /> class.
@@ -100,7 +98,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -108,7 +106,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class MatrixDeterminentZero : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MatrixDeterminentZero" /> class.
@@ -118,7 +116,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -126,7 +124,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class VectorDimensionException : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VectorDimensionException" /> class.
@@ -136,7 +134,7 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -144,7 +142,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   internal class MatrixSingularException : ApplicationException
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MatrixSingularException" /> class.
@@ -154,10 +152,9 @@ namespace VianaNET.Data.Filter.Regression
     {
     }
 
-    #endregion
+
   }
 
-  #endregion
 
   /// <summary>
   ///   Matrix Library .Net v2.0 By Anas Abidi, 2004.
@@ -179,16 +176,16 @@ namespace VianaNET.Data.Filter.Regression
       return (this.in_Mat != null ? this.in_Mat.GetHashCode() : 0);
     }
 
-    #region Fields
+
 
     /// <summary>
     ///   The in_ mat.
     /// </summary>
     private double[,] in_Mat;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Matrix"/> class. 
@@ -219,9 +216,9 @@ namespace VianaNET.Data.Filter.Regression
       this.in_Mat = (double[,])Mat.Clone();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Set or get the no. of columns in the matrix.
@@ -252,9 +249,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public double[,] toArray => this.in_Mat;
 
-    #endregion
 
-    #region Public Indexers
+
+
 
     /// <summary>
     /// Set or get an element from the matrix
@@ -275,9 +272,9 @@ namespace VianaNET.Data.Filter.Regression
       set => this.in_Mat[Row, Col] = value;
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Returns the summation of two matrices with compatible 
@@ -1421,8 +1418,8 @@ namespace VianaNET.Data.Filter.Regression
       SVD(Mat, out svdS, out svdU, out svdV);
 
       EPS = 2.2204E-16;
-      m ++;
-      n ++;
+      m++;
+      n++;
 
       Part_I = new double[m, n];
       Part_II = new double[m, n];
@@ -2749,7 +2746,7 @@ namespace VianaNET.Data.Filter.Regression
     /// <returns> If two matrices are not equal </returns>
     public static bool operator !=(Matrix Mat1, Matrix Mat2)
     {
-      return ! IsEqual(Mat1.in_Mat, Mat2.in_Mat);
+      return !IsEqual(Mat1.in_Mat, Mat2.in_Mat);
     }
 
     /// <summary>
@@ -2844,9 +2841,9 @@ namespace VianaNET.Data.Filter.Regression
       return PrintMat(this.in_Mat);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The find_ r_ c.
@@ -3008,6 +3005,6 @@ namespace VianaNET.Data.Filter.Regression
       }
     }
 
-    #endregion
+
   }
 }

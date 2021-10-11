@@ -35,7 +35,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(double), typeof(double))]
   public class PercentToDoubleConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -85,6 +85,6 @@ namespace VianaNET.CustomStyles.Converter
       return valueToConvertBack / 100d;
     }
 
-    #endregion
+
   }
 }

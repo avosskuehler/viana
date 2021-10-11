@@ -37,7 +37,7 @@ namespace VianaNET.Modules.Video.Filter
   /// <seealso cref="MotionDetector" />
   public class TwoFramesDifferenceDetectorSpecial : IMotionDetector
   {
-    #region Fields
+
 
     /// <summary>
     /// The erosion filter.
@@ -99,9 +99,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private int width;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="TwoFramesDifferenceDetectorSpecial" /> class.
@@ -121,10 +121,10 @@ namespace VianaNET.Modules.Video.Filter
       this.suppressNoise = suppressNoise;
     }
 
-    #endregion
+
 
     // threshold values
-    #region Public Properties
+
 
     /// <summary>
     ///  Gets or sets the difference threshold value, [1, 255].
@@ -244,9 +244,9 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Process new video frame.
@@ -396,6 +396,6 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
+
   }
 }

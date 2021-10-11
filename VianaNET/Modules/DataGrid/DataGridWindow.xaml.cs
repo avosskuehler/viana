@@ -38,7 +38,7 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public partial class DataGridWindow
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DataGridWindow" /> class.
@@ -54,9 +54,9 @@ namespace VianaNET.Modules.DataGrid
     }
 
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Update the datagrids items source
@@ -67,9 +67,9 @@ namespace VianaNET.Modules.DataGrid
       this.DataGrid.ItemsSource = App.Project.VideoData.Samples;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Creates the column.
@@ -246,7 +246,7 @@ namespace VianaNET.Modules.DataGrid
       }
     }
 
-    #endregion
+
 
     private void DataGrid_OnKeyDown(object sender, KeyEventArgs e)
     {

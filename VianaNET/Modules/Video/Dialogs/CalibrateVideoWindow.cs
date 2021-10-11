@@ -40,7 +40,7 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public class CalibrateVideoWindow : WindowWithHelp
   {
-    #region Fields
+
 
     /// <summary>
     ///   The origin path.
@@ -77,9 +77,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private bool ignoreMouse;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="CalibrateVideoWindow" /> class.
@@ -97,9 +97,9 @@ namespace VianaNET.Modules.Video.Dialogs
       this.originIsSet = false;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Mouse is the over control panel.
@@ -243,6 +243,6 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    #endregion
+
   }
 }

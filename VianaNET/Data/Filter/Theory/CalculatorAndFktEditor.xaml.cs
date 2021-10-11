@@ -38,7 +38,7 @@ namespace VianaNET.Data.Filter.Theory
   /// </summary>
   public partial class CalculatorAndFktEditor
   {
-    #region Fields
+
 
     /// <summary>
     ///   The art.
@@ -52,9 +52,9 @@ namespace VianaNET.Data.Filter.Theory
 
     public readonly bool usesDecimalkomma;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CalculatorAndFktEditor"/> class.
@@ -96,14 +96,14 @@ namespace VianaNET.Data.Filter.Theory
       this.textBox1.Focus();
     }
 
-    #endregion
+
 
     /// <summary>
     /// Gets or sets the ergebnis.
     /// </summary>
     public string Ergebnis { get; set; }
 
-    #region Public Methods and Operators
+
 
     /// <summary>
     ///   The get funktion.
@@ -124,9 +124,9 @@ namespace VianaNET.Data.Filter.Theory
       return this.scannedFkt;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The einfuegen.
@@ -433,6 +433,6 @@ namespace VianaNET.Data.Filter.Theory
       }
     }
 
-    #endregion
+
   }
 }

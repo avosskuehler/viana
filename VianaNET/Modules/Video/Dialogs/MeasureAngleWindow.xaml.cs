@@ -36,7 +36,7 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public partial class MeasureAngleWindow
   {
-    #region Fields
+
 
     /// <summary>
     ///   The timeslider update timer.
@@ -68,9 +68,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private bool centerPointIsSet;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MeasureAngleWindow" /> class.
@@ -83,9 +83,9 @@ namespace VianaNET.Modules.Video.Dialogs
       this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
@@ -288,8 +288,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
       this.isDraggingTimeLineThumb = false;
     }
 
@@ -348,8 +347,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
       {
-        double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
-        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
         Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       }
     }
@@ -452,6 +450,6 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    #endregion
+
   }
 }

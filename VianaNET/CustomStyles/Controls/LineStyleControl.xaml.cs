@@ -35,7 +35,7 @@ namespace VianaNET
   /// </summary>
   public partial class LineStyleControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="LineStyleControl" /> class.
@@ -57,9 +57,9 @@ namespace VianaNET
       }
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the chart model.
@@ -140,18 +140,18 @@ namespace VianaNET
       }
     }
 
-    #endregion
 
-    #region Properties
+
+
 
     /// <summary>
     ///   Gets the sample series
     /// </summary>
     private LineSeries Series => (LineSeries)this.ChartModel.Series[0];
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The color picker selected color changed.
@@ -232,6 +232,6 @@ namespace VianaNET
       this.SeriesStrokeThickness = e.NewValue;
     }
 
-    #endregion
+
   }
 }

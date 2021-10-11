@@ -33,7 +33,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public struct VectorInt
   {
-    #region Fields
+
 
     /// <summary>
     ///   The x.
@@ -45,9 +45,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int Y;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="VectorInt"/> struct.
@@ -75,9 +75,9 @@ namespace VianaNET.Modules.Video.Filter
     {
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the one.
@@ -109,9 +109,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int LengthSq => this.X * this.X + this.Y * this.Y;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Converts a radian into a degreee value.
@@ -334,6 +334,6 @@ namespace VianaNET.Modules.Video.Filter
       return string.Format("({0}, {1})", this.X, this.Y);
     }
 
-    #endregion
+
   }
 }

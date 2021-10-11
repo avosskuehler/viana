@@ -41,7 +41,7 @@ namespace VianaNET.Data
   [Serializable]
   public class CalibrationData : DependencyObject, INotifyPropertyChanged
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IsShowingUnits" />.
@@ -134,9 +134,9 @@ namespace VianaNET.Data
       typeof(CalibrationData),
       new FrameworkPropertyMetadata(Matrix.Identity, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertyChanged));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   Saves the <see cref="CustomStyles.Types.LengthUnit" /> used for the calibration ruler
@@ -144,9 +144,9 @@ namespace VianaNET.Data
     /// </summary>
     private LengthUnit rulerUnit;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CalibrationData"/> class. 
@@ -156,18 +156,18 @@ namespace VianaNET.Data
       this.InitFields();
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   Occurs when a property value changes.
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the clip region.
@@ -357,9 +357,9 @@ namespace VianaNET.Data
       set => this.SetValue(CoordinateTransformProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Resets the properties to their default values.
@@ -369,9 +369,9 @@ namespace VianaNET.Data
       this.InitFields();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
@@ -381,10 +381,7 @@ namespace VianaNET.Data
     /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(args.Property.Name));
     }
 
     /// <summary>
@@ -409,10 +406,7 @@ namespace VianaNET.Data
     /// </param>
     private void OnPropertyChanged(string propertyName)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     /// <summary>
@@ -435,6 +429,6 @@ namespace VianaNET.Data
       this.IsShowingUnits = false;
     }
 
-    #endregion
+
   }
 }

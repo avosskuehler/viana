@@ -52,7 +52,7 @@ namespace VianaNET.Data.Filter
     private double smallNumber;
     private double bigNumber;
 
-    #region Methods
+
 
     /// <summary>
     /// Closes the dialog.
@@ -83,17 +83,17 @@ namespace VianaNET.Data.Filter
       this.Close();
     }
 
-    
+
     private void SliderValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
-        int n = this.NumberOfDigits;
-        string formatStr1 = string.Concat("G", n.ToString());
-        string formatStr2 = string.Concat("G", n.ToString());
+      int n = this.NumberOfDigits;
+      string formatStr1 = string.Concat("G", n.ToString());
+      string formatStr2 = string.Concat("G", n.ToString());
       //  string formatStr2 = string.Concat("N", n.ToString());
-        this.LabelFormatSmallNumber.Content = this.smallNumber.ToString(formatStr1);
-        this.LabelFormatBigNumber.Content = this.bigNumber.ToString(formatStr2);
+      this.LabelFormatSmallNumber.Content = this.smallNumber.ToString(formatStr1);
+      this.LabelFormatBigNumber.Content = this.bigNumber.ToString(formatStr2);
     }
 
-    #endregion
+
   }
 }

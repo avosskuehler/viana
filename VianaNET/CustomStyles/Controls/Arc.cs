@@ -32,7 +32,7 @@ namespace VianaNET.CustomStyles.Controls
   /// </summary>
   public sealed class Arc : Shape
   {
-    #region Static Fields
+
 
     /// <summary>
     /// The center property.
@@ -79,9 +79,9 @@ namespace VianaNET.CustomStyles.Controls
       typeof(Arc),
       new FrameworkPropertyMetadata(0.0d, FrameworkPropertyMetadataOptions.AffectsRender));
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes static members of the <see cref="Arc"/> class.
@@ -91,9 +91,9 @@ namespace VianaNET.CustomStyles.Controls
       DefaultStyleKeyProperty.OverrideMetadata(typeof(Arc), new FrameworkPropertyMetadata(typeof(Arc)));
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     /// Gets or sets the center.
@@ -145,9 +145,9 @@ namespace VianaNET.CustomStyles.Controls
       set => this.SetValue(StartAngleProperty, value);
     }
 
-    #endregion
 
-    #region Properties
+
+
 
     /// <summary>
     /// Gets the defining geometry.
@@ -201,6 +201,6 @@ namespace VianaNET.CustomStyles.Controls
       }
     }
 
-    #endregion
+
   }
 }

@@ -185,12 +185,12 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Filename = string.Empty;
       this.DurationString = string.Empty;
       this.Duration = 0;
-      this.FrameRate = capturer.FPS;
-      this.DefaultFrameRate = capturer.FPS;
+      this.FrameRate = Video.Instance.FPS;
+      this.DefaultFrameRate = Video.Instance.FPS;
       this.FrameCount = 0;
       this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
       this.Codec = string.Empty;
-      this.Bitrate =  "?";
+      this.Bitrate = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.BitRate).ToString();
       return;
     }
 
@@ -219,7 +219,7 @@ namespace VianaNET.Modules.Video.Dialogs
         double factor = this.DefaultFrameRate / this.FrameRate;
         App.Project.VideoData.FramerateFactor = factor;
         Control.Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
-        Control.Video.Instance.VideoElement.FrameTimeInNanoSeconds = (long)(10000000d / this.FrameRate);
+        Control.Video.Instance.VideoElement.FrameTimeInMS = 1000d / this.FrameRate;
       }
 
       this.Close();

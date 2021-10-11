@@ -29,25 +29,25 @@ namespace VianaNET.Logging
   /// </summary>
   public class BindingErrorTraceListener : DefaultTraceListener
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The listener
     /// </summary>
     private static BindingErrorTraceListener listener;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The _ message
     /// </summary>
     private readonly StringBuilder message = new StringBuilder();
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Prevents a default instance of the <see cref="BindingErrorTraceListener" /> class from being created.
@@ -56,9 +56,9 @@ namespace VianaNET.Logging
     {
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Closes the trace.
@@ -145,6 +145,6 @@ namespace VianaNET.Logging
       MessageBox.Show(final, "Binding Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
-    #endregion
+
   }
 }

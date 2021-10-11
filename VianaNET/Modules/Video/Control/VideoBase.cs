@@ -30,6 +30,8 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
+  using System.ComponentModel;
+  using System.Diagnostics;
   using System.Runtime.InteropServices;
   using System.Threading;
   using System.Windows;
@@ -42,6 +44,8 @@ namespace VianaNET.Modules.Video.Control
 
   using DirectShowLib;
   using OpenCvSharp;
+  using OpenCvSharp.WpfExtensions;
+  using VianaNET.Data;
   using VianaNET.Logging;
 
   /// <summary>
@@ -53,17 +57,6 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public abstract class VideoBase : DependencyObject, IDisposable
   {
-    #region Constants
-
-    /// <summary>
-    ///   The nano secs to milli secs.
-    /// </summary>
-    public const float NanoSecsToMilliSecs = 0.0001f;
-
-    #endregion
-
-    #region Static Fields
-
     /// <summary>
     ///   The current state property.
     /// </summary>
@@ -77,11 +70,11 @@ namespace VianaNET.Modules.Video.Control
       "FrameCount", typeof(int), typeof(VideoBase), new UIPropertyMetadata(default(int)));
 
     /// <summary>
-    ///   The frame time in nano seconds property.
+    ///   The frame time in milli seconds property.
     /// </summary>
-    public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
+    public static readonly DependencyProperty FrameTimeInMSProperty =
       DependencyProperty.Register(
-        "FrameTimeInNanoSeconds", typeof(long), typeof(VideoBase), new UIPropertyMetadata(default(long)));
+        "FrameTimeInMS", typeof(double), typeof(VideoBase), new UIPropertyMetadata(default(double)));
 
     /// <summary>
     ///   The media position frame index property.
@@ -90,12 +83,10 @@ namespace VianaNET.Modules.Video.Control
       DependencyProperty.Register(
         "MediaPositionFrameIndex", typeof(int), typeof(VideoBase), new UIPropertyMetadata(default(int)));
 
-    #endregion
-
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Fields
+
 
     /// <summary>
     ///   Saves the bufferLength of the video stream
@@ -103,26 +94,9 @@ namespace VianaNET.Modules.Video.Control
     protected int bufferLength;
 
     /// <summary>
-    ///   This interface provides methods that enable an application to build a filter graph. 
-    ///   The Filter Graph Manager implements this interface.
-    /// </summary>
-    protected IFilterGraph2 filterGraph;
-
-    /// <summary>
     ///   The frame counter.
     /// </summary>
     protected int frameCounter;
-
-    ///// <summary>
-    ///// The ICaptureGraphBuilder2 interface builds capture graphs and other custom filter graphs. 
-    ///// </summary>
-    // protected ICaptureGraphBuilder2 capGraph = null;
-
-    /// <summary>
-    ///   The IMediaControl interface provides methods for controlling the 
-    ///   flow of data through the filter graph. It includes methods for running, pausing, and stopping the graph.
-    /// </summary>
-    protected IMediaControl mediaControl;
 
     /// <summary>
     ///   This points to the starting address of the mapped view of the video frame.
@@ -149,30 +123,45 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected bool skipFrameMode = false;
 
-    #endregion
+    /// <summary>
+    /// The OpenCV VideoCapture Device Control
+    /// </summary>
+    public VideoCapture OpenCVObject { get; private set; }
+
+    /// <summary>
+    /// Frame Available Background worker process
+    /// </summary>
+    protected readonly BackgroundWorker bkgWorker;
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
+    public VideoBase()
+    {
+      this.bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+      this.bkgWorker.DoWork += this.Worker_DoWork;
+
+      this.OpenCVObject = new VideoCapture();
+    }
 
     /// <summary>
     ///   Finalizes an instance of the <see cref="VideoBase" /> class.
     /// </summary>
     ~VideoBase()
     {
-      // Console.WriteLine("VideoBase Destructor");
       this.Dispose();
 
-      // Console.WriteLine("VideoBase Finished");
+      if (this.OpenCVObject != null)
+      {
+        this.OpenCVObject.Dispose();
+      }
     }
-
-    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Events
+
 
     /// <summary>
     ///   The video available.
@@ -183,10 +172,6 @@ namespace VianaNET.Modules.Video.Control
     ///   The video frame changed.
     /// </summary>
     public event EventHandler VideoFrameChanged;
-
-    #endregion
-
-    #region Enums
 
     /// <summary>
     ///   The play state.
@@ -214,12 +199,10 @@ namespace VianaNET.Modules.Video.Control
       Init
     };
 
-    #endregion
-
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the current state.
@@ -242,13 +225,13 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    /// Gets or sets the time between frames in nanoseconds.
+    /// Gets or sets the time between frames in milliseconds.
     /// </summary>
-    public long FrameTimeInNanoSeconds
+    public double FrameTimeInMS
     {
-      get => (long)this.GetValue(FrameTimeInNanoSecondsProperty);
+      get => (double)this.GetValue(FrameTimeInMSProperty);
 
-      set => this.SetValue(FrameTimeInNanoSecondsProperty, value);
+      set => this.SetValue(FrameTimeInMSProperty, value);
     }
 
     /// <summary>
@@ -262,9 +245,9 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   Gets or sets the media position in nano seconds.
+    ///   Gets or sets the media position in milli seconds.
     /// </summary>
-    public virtual long MediaPositionInNanoSeconds { get; set; }
+    public virtual double MediaPositionInMS { get; set; }
 
     /// <summary>
     ///   Gets or sets the natural video height.
@@ -304,9 +287,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public UnmanagedImage UnmanagedImage { get; set; }
 
-    #endregion
-
-    #region Public Methods and Operators
 
     /// <summary>
     ///   Shut down capture.
@@ -327,6 +307,12 @@ namespace VianaNET.Modules.Video.Control
               this.frameCounter = 0;
             },
           null);
+
+        if (this.bkgWorker != null)
+        {
+          this.bkgWorker.CancelAsync();
+        }
+
 
         if (this.originalMapping != IntPtr.Zero)
         {
@@ -363,23 +349,13 @@ namespace VianaNET.Modules.Video.Control
         {
           this.UnmanagedImage.Dispose();
         }
- 
-        if (this.filterGraph != null)
-        {
-          Marshal.FinalReleaseComObject(this.filterGraph);
-          this.filterGraph = null;
-          this.mediaControl = null;
-          Video.Instance.HasVideo = false;
-        }
+
+        Video.Instance.HasVideo = false;
       }
 
-      // #if DEBUG
       // Double check to make sure we aren't releasing something
       // important.
       GC.Collect();
-
-      // GC.WaitForPendingFinalizers();
-      // #endif
     }
 
     /// <summary>
@@ -388,29 +364,14 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public virtual void Pause()
     {
-      if (this.mediaControl == null)
+      if (this.bkgWorker.IsBusy)
       {
-        return;
+        this.bkgWorker.CancelAsync();
       }
+      else
       {
-        // if ((this.CurrentState == PlayState.Running))
-        if (this.mediaControl.Pause() >= 0)
-        {
-          this.CurrentState = PlayState.Paused;
-        }
+        //this.bkgWorker.RunWorkerAsync();
       }
-
-      //// Toggle play/pause behavior
-      // if ((this.currentState == PlayState.Paused) || (this.currentState == PlayState.Stopped))
-      // {
-      // if (this.mediaControl.Run() >= 0)
-      // this.currentState = PlayState.Running;
-      // }
-      // else
-      // {
-      // if (this.mediaControl.Pause() >= 0)
-      // this.currentState = PlayState.Paused;
-      // }
     }
 
     /// <summary>
@@ -418,18 +379,34 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public virtual void Play()
     {
-      if (this.CurrentState != PlayState.Running && this.mediaControl != null)
+      if (!this.bkgWorker.IsBusy)
       {
-        int hr = this.mediaControl.Run();
+        this.bkgWorker.RunWorkerAsync();
+      }
+    }
 
-        if (hr != 0)
-        {
-          ErrorLogger.WriteLine("Error while starting to play. Message: " + DsError.GetErrorText(hr));
-        }
-        else
-        {
-          this.CurrentState = PlayState.Running;
-        }
+    /// <summary>
+    ///   The revert.
+    /// </summary>
+    public virtual void Revert()
+    {
+      this.Stop();
+      this.frameCounter = 0;
+    }
+
+    /// <summary>
+    /// Stops the video capturing or playing without a rewind.
+    /// </summary>
+    public virtual void Stop()
+    {
+      try
+      {
+        this.bkgWorker.CancelAsync();
+        this.CurrentState = PlayState.Stopped;
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, false);
       }
     }
 
@@ -488,47 +465,12 @@ namespace VianaNET.Modules.Video.Control
       CopyMemory(this.UnmanagedImage.ImageData, this.ColorProcessingMapping, this.bufferLength);
     }
 
-    /// <summary>
-    ///   The revert.
-    /// </summary>
-    public virtual void Revert()
-    {
-      this.Stop();
-      this.frameCounter = 0;
-    }
 
-    /// <summary>
-    ///   The stop.
-    /// </summary>
-    public virtual void Stop()
-    {
-      try
-      {
-        if (this.mediaControl != null)
-        {
-          int hr = this.mediaControl.Stop();
-          if (hr != 0)
-          {
-            ErrorLogger.WriteLine("Error while stopping. Message: " + DsError.GetErrorText(hr));
-          }
-          else
-          {
-            this.CurrentState = PlayState.Stopped;
-          }
-        }
-      }
-      catch (Exception ex)
-      {
-        ErrorLogger.ProcessException(ex, false);
-      }
-    }
-
-    #endregion
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Explicit Interface Methods
+
     /// <summary>
     ///   Gets called whenever a new frame arrives
     ///   Updates the memory mapping of the OpenCV image and raises the 
@@ -554,10 +496,9 @@ namespace VianaNET.Modules.Video.Control
               DispatcherPriority.Render,
               (SendOrPostCallback)delegate
               {
-
-                  // Send new image to processing thread
-                  this.OnVideoFrameChanged();
-                },
+                // Send new image to processing thread
+                this.OnVideoFrameChanged();
+              },
               null);
           }
         }
@@ -572,9 +513,9 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Closes an open object handle.
@@ -702,10 +643,7 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected void OnVideoAvailable()
     {
-      if (this.VideoAvailable != null)
-      {
-        this.VideoAvailable(this, EventArgs.Empty);
-      }
+      this.VideoAvailable?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -713,10 +651,7 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected virtual void OnVideoFrameChanged()
     {
-      if (this.VideoFrameChanged != null)
-      {
-        this.VideoFrameChanged(this, EventArgs.Empty);
-      }
+      this.VideoFrameChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -731,7 +666,7 @@ namespace VianaNET.Modules.Video.Control
       // Grab the size info
       this.NaturalVideoWidth = opencvCapture.FrameWidth;
       this.NaturalVideoHeight = opencvCapture.FrameHeight;
-      this.FrameTimeInNanoSeconds = (long)(10000000d / opencvCapture.Fps) + 1;
+      this.FrameTimeInMS = 1000d / opencvCapture.Fps;
 
       this.CreateMemoryMapping(3);
       Video.Instance.OriginalImageSource =
@@ -762,6 +697,123 @@ namespace VianaNET.Modules.Video.Control
           0) as InteropBitmap;
     }
 
-    #endregion
+    Mat frameMat = new Mat();
+
+    private void Worker_DoWork(object sender, DoWorkEventArgs e)
+    {
+      BackgroundWorker worker = (BackgroundWorker)sender;
+      Stopwatch watch = new Stopwatch();
+      double frametimeInMS = 41;
+      this.Dispatcher.Invoke(() =>
+      {
+        frametimeInMS = this.FrameTimeInMS;
+      });
+
+      watch.Start();
+      long starttime = 0;
+      while (!worker.CancellationPending)
+      {
+        var currentPosInMS = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
+
+        bool endreached = false;
+        this.Dispatcher.Invoke(() =>
+        {
+          if (currentPosInMS > App.Project.VideoData.SelectionEnd)
+          {
+            endreached = true;
+          }
+        });
+
+        if (endreached)
+        {
+          break;
+        }
+
+        //if (this.OpenCVObject.Read(this.frameMat))
+        //{
+        //  // Must create and use WriteableBitmap in the same thread(UI Thread).
+        //  this.Dispatcher.Invoke(() =>
+        //  {
+        //    WriteableBitmap newFrame = this.frameMat.ToWriteableBitmap();
+        //    Video.Instance.OriginalImageSource = newFrame;
+        //    Video.Instance.VideoElement.NewFrameCallback(newFrame);
+        //  });
+        //}
+        //else
+        //{
+        //  this.Dispatcher.Invoke(() =>
+        //  {
+        //    this.Stop();
+        //    if (Video.Instance.VideoMode == CustomStyles.Types.VideoMode.File)
+        //    {
+        //      var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
+        //      this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
+        //      this.GrabCurrentFrame();
+        //      Video.Instance.VideoPlayerElement.RaiseFileComplete();
+        //    }
+        //  });
+
+        //  break;
+        //}
+
+        using (Mat frameMat = this.OpenCVObject.RetrieveMat())
+        {
+          if (frameMat.Empty())
+          {
+            this.Dispatcher.Invoke(() =>
+            {
+              this.Stop();
+              if (Video.Instance.VideoMode == CustomStyles.Types.VideoMode.File)
+              {
+                var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
+                this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
+                this.GrabCurrentFrame();
+                Video.Instance.VideoPlayerElement.RaiseFileComplete();
+              }
+            });
+
+            break;
+          }
+
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          this.Dispatcher.Invoke(() =>
+          {
+            System.Windows.Media.Imaging.WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
+            Video.Instance.OriginalImageSource = newFrame;
+            Video.Instance.VideoElement.NewFrameCallback(newFrame);
+          });
+        }
+
+        while (watch.ElapsedMilliseconds - starttime < frametimeInMS)
+        {
+          Thread.Sleep(1);
+        }
+
+        starttime = watch.ElapsedMilliseconds;
+      }
+    }
+
+    /// <summary>
+    ///  Retrieves the current frame from the opencv capture object and
+    ///  sends it to the processing pipe
+    /// </summary>
+    protected void GrabCurrentFrame()
+    {
+      using (Mat frameMat = this.OpenCVObject.RetrieveMat())
+      {
+        if (frameMat.Empty())
+        {
+          return;
+        }
+
+        // Must create and use WriteableBitmap in the same thread(UI Thread).
+        this.Dispatcher.Invoke(() =>
+        {
+          WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
+          Video.Instance.OriginalImageSource = newFrame;
+          Video.Instance.VideoElement.NewFrameCallback(newFrame);
+        });
+      }
+    }
   }
 }

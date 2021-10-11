@@ -29,7 +29,7 @@ namespace VianaNET.Modules.Chart
   /// </summary>
   public partial class ChartHelpDialog
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ChartHelpDialog" /> class.
@@ -39,9 +39,9 @@ namespace VianaNET.Modules.Chart
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Event handler for the button click event.
@@ -55,6 +55,6 @@ namespace VianaNET.Modules.Chart
       this.Close();
     }
 
-    #endregion
+
   }
 }

@@ -39,16 +39,16 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   internal class LiveVideoController : IDisposable
   {
-    #region Constants
+
 
     /// <summary>
     ///   The never.
     /// </summary>
     private const long NEVER = long.MaxValue;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The capture graph source filter.
@@ -130,12 +130,12 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private Panel videoPanel;
 
-    #endregion
+
 
     // Property to return the current filename
 
     // Property to report whether we are capturing
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets a value indicating whether capturing.
@@ -176,9 +176,9 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The dispose.
@@ -471,10 +471,10 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
-    #endregion
+
 
     // Configure the video to fit in the provided window (if any)
-    #region Methods
+
 
     /// <summary>
     ///   The configure video.
@@ -599,6 +599,6 @@ namespace VianaNET.Modules.Video.Control
       DsError.ThrowExceptionForHR(hr);
     }
 
-    #endregion
+
   }
 }

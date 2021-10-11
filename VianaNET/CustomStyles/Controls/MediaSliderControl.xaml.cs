@@ -32,7 +32,7 @@ namespace VianaNET
   /// </summary>
   public partial class MediaSliderControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MediaSliderControl" /> class.
@@ -42,9 +42,9 @@ namespace VianaNET
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The media slider_ mouse left button down.
@@ -85,6 +85,6 @@ namespace VianaNET
     {
     }
 
-    #endregion
+
   }
 }

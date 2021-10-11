@@ -37,7 +37,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(LineStyle), typeof(bool))]
   public class LineStyleToBooleanConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Converts a value.
@@ -76,6 +76,6 @@ namespace VianaNET.CustomStyles.Converter
       return valueToConvertBack ? LineStyle.Solid : LineStyle.None;
     }
 
-    #endregion
+
   }
 }

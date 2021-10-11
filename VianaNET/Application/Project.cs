@@ -44,7 +44,7 @@ namespace VianaNET.Application
   [XmlInclude(typeof(ExponentialSmoothFilter))]
   public class Project : INotifyPropertyChanged
   {
-    #region Fields
+
 
     /// <summary>
     ///   The filter data for the specific <see cref="ChartType" />
@@ -56,9 +56,9 @@ namespace VianaNET.Application
     /// </summary>
     private ChartType currentChartType;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Project" /> class.
@@ -75,9 +75,9 @@ namespace VianaNET.Application
       this.currentChartType = ChartType.YoverX;
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   Implements INotifyPropertyChanged
@@ -91,9 +91,9 @@ namespace VianaNET.Application
     [field: NonSerialized]
     public event EventHandler<EventArgs> UpdateChartRequested;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     /// Gets or sets a value indicating whether we are in the deserialization process of a project.
@@ -194,9 +194,9 @@ namespace VianaNET.Application
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Deserializes the experiment settings from the given xml file.
@@ -298,10 +298,7 @@ namespace VianaNET.Application
     /// </param>
     public virtual void OnPropertyChanged(string propertyName)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     /// <summary>
@@ -309,15 +306,12 @@ namespace VianaNET.Application
     /// </summary>
     public void RequestChartUpdate()
     {
-      if (this.UpdateChartRequested != null)
-      {
-        this.UpdateChartRequested(this, EventArgs.Empty);
-      }
+      this.UpdateChartRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The calibration property changed event handler which re-initializes
@@ -374,6 +368,6 @@ namespace VianaNET.Application
       target.TheoryLineThickness = source.TheoryLineThickness;
     }
 
-    #endregion
+
   }
 }

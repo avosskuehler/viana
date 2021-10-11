@@ -57,7 +57,7 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class MainWindow
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the MainWindow class.
@@ -82,9 +82,9 @@ namespace VianaNET.MainWindow
       this.Show();
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset color button.
@@ -98,9 +98,9 @@ namespace VianaNET.MainWindow
       this.SelectColorRibbonButton.Label = VianaNET.Localization.Labels.ButtonSelectColorLabelTitle;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// This method saves the current project into a new file using
@@ -1196,7 +1196,7 @@ namespace VianaNET.MainWindow
       this.MainRibbon.ApplicationMenu.IsDropDownOpen = false;
     }
 
-    #endregion
+
 
     /// <summary>
     /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.

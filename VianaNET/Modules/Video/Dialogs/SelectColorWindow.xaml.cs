@@ -49,7 +49,7 @@ namespace VianaNET.Modules.Video.Dialogs
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -61,21 +61,21 @@ namespace VianaNET.Modules.Video.Dialogs
         typeof(SelectColorWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The mouse down location.
     /// </summary>
     private Point mouseDownLocation;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="SelectColorWindow" /> class.
@@ -86,7 +86,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.ObjectIndexPanel.DataContext = this;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -95,7 +95,7 @@ namespace VianaNET.Modules.Video.Dialogs
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -107,9 +107,9 @@ namespace VianaNET.Modules.Video.Dialogs
       set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The container_ mouse left button down.
@@ -361,7 +361,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Close();
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //

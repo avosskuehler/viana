@@ -35,7 +35,7 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public partial class LengthDialog
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LengthDialog" /> class. 
@@ -47,11 +47,11 @@ namespace VianaNET.Modules.Video.Dialogs
       this.txbLength.Focus();
     }
 
-    #endregion
+
 
     public string UnitValue { get; set; }
 
-    #region Methods
+
 
     /// <summary>
     /// The cancel_ click.
@@ -120,6 +120,6 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    #endregion
+
   }
 }

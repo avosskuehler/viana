@@ -35,7 +35,7 @@ namespace VianaNET
   /// </summary>
   public class MediaTickBar : TickBar
   {
-    #region Methods
+
 
     /// <summary>
     /// The on render.
@@ -75,6 +75,6 @@ namespace VianaNET
       }
     }
 
-    #endregion
+
   }
 }

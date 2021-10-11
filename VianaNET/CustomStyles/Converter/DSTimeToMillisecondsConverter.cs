@@ -35,7 +35,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(long), typeof(double))]
   public class DSTimeToMillisecondsConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -85,6 +85,6 @@ namespace VianaNET.CustomStyles.Converter
       return (long)(valueToConvertBack * 10000);
     }
 
-    #endregion
+
   }
 }

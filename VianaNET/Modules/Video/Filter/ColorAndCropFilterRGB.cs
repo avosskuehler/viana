@@ -34,7 +34,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public class ColorAndCropFilterRgb : FilterBase
   {
-    #region Fields
+
 
     /// <summary>
     ///   The offset.
@@ -61,9 +61,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private int stopY;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the blank color.
@@ -85,9 +85,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int Threshold { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The init.
@@ -192,6 +192,6 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
+
   }
 }

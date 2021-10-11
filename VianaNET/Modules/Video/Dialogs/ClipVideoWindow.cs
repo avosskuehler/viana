@@ -37,16 +37,16 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public class ClipVideoWindow : WindowWithHelp
   {
-    #region Constants
+
 
     /// <summary>
     ///   The margin.
     /// </summary>
     private const int DefaultMargin = 10;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The bottom line.
@@ -78,9 +78,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private Line currentLine;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ClipVideoWindow" /> class.
@@ -137,9 +137,9 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Loaded += this.WindowLoaded;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an element 
@@ -357,6 +357,6 @@ namespace VianaNET.Modules.Video.Dialogs
       this.ResetOuterRegion();
     }
 
-    #endregion
+
   }
 }

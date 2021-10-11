@@ -34,7 +34,7 @@ namespace VianaNET
   /// </summary>
   public class ImageButton : Button
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The content horizontal alignment property.
@@ -61,9 +61,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty OrientationProperty;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="ImageButton" /> class.
@@ -105,9 +105,9 @@ namespace VianaNET
         new FrameworkPropertyMetadata(VerticalAlignment.Center, FrameworkPropertyMetadataOptions.AffectsRender));
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the content horizontal alignment.
@@ -159,6 +159,6 @@ namespace VianaNET
       set => this.SetValue(OrientationProperty, value);
     }
 
-    #endregion
+
   }
 }

@@ -35,7 +35,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(double), typeof(string))]
   public class DoubleToStringConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Converts a value.
@@ -69,6 +69,6 @@ namespace VianaNET.CustomStyles.Converter
       return double.Parse(valueToConvertBack);
     }
 
-    #endregion
+
   }
 }

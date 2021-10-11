@@ -34,7 +34,7 @@ namespace VianaNET
   /// </summary>
   public class MediaTrack : Track
   {
-    #region Methods
+
 
     /// <summary>
     /// The on render.
@@ -48,6 +48,6 @@ namespace VianaNET
       double num = this.Maximum - this.Minimum;
     }
 
-    #endregion
+
   }
 }

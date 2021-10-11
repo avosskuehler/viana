@@ -45,7 +45,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="OfficeColors" /> class.
@@ -61,7 +61,7 @@ namespace VianaNET.CustomStyles.Colors
         };
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -70,7 +70,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the array of <see cref="OfficePallet" /> defining this office
@@ -83,7 +83,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public static List<Type> RegistersTypes { get; set; }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
@@ -94,7 +94,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public class Background
     {
-      #region Static Fields
+  
 
       /// <summary>
       ///   The office color 1.
@@ -521,16 +521,16 @@ namespace VianaNET.CustomStyles.Colors
       /// </summary>
       public static Color RibbonBorderColor = (Color)ColorConverter.ConvertFromString("#BFDBFF");
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
       public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Background];
 
-      #endregion
+  
     }
 
     /// <summary>
@@ -538,7 +538,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public class Disabled
     {
-      #region Static Fields
+  
 
       /// <summary>
       ///   The office color 1.
@@ -560,16 +560,16 @@ namespace VianaNET.CustomStyles.Colors
       /// </summary>
       public static Color OfficeColor4 = (Color)ColorConverter.ConvertFromString("#cccccc");
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
       public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Disabled];
 
-      #endregion
+  
     }
 
     /// <summary>
@@ -577,23 +577,23 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public class EditableControlsBackground
     {
-      #region Static Fields
+  
 
       /// <summary>
       ///   The office color 1.
       /// </summary>
       public static Color OfficeColor1 = (Color)ColorConverter.ConvertFromString("#FFFFFF");
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
       public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.EditableControlsBackground];
 
-      #endregion
+  
     }
 
     /// <summary>
@@ -601,7 +601,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public class Foreground
     {
-      #region Static Fields
+  
 
       /// <summary>
       ///   The office color 1.
@@ -623,16 +623,16 @@ namespace VianaNET.CustomStyles.Colors
       /// </summary>
       public static Color OfficeColor4 = (Color)ColorConverter.ConvertFromString("#4b6c97");
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
       public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.Foreground];
 
-      #endregion
+  
     }
 
     /// <summary>
@@ -640,7 +640,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public class HighLight
     {
-      #region Static Fields
+  
 
       /// <summary>
       ///   The office color 1.
@@ -757,16 +757,16 @@ namespace VianaNET.CustomStyles.Colors
       /// </summary>
       public static Color OfficeColor9 = (Color)ColorConverter.ConvertFromString("#FFF9BE6B");
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the pallet.
       /// </summary>
       public static OfficePallet Pallet => Pallets[(int)OfficeColorPallet.HighLight];
 
-      #endregion
+  
     }
 
     ///////////////////////////////////////////////////////////////////////////////

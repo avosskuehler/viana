@@ -33,7 +33,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public partial class MovingAverageUserControl : UserControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the MovingAverageUserControl class.
@@ -48,18 +48,18 @@ namespace VianaNET.Data.Filter.Interpolation
       this.NumberOfPointsNumeric.Value = this.Filter.NumberOfSamplesToInterpolate;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the filter.
     /// </summary>
     public MovingAverageFilter Filter { get; private set; }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the OnValueChanged event of the NumberOfPointsNumeric control.
@@ -71,7 +71,7 @@ namespace VianaNET.Data.Filter.Interpolation
       this.Filter.NumberOfSamplesToInterpolate = (int)this.NumberOfPointsNumeric.Value;
     }
 
-    #endregion
+
 
   }
 }

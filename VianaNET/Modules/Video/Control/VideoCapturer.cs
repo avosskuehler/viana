@@ -44,7 +44,10 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class VideoCapturer : VideoBase
   {
-    #region Static Fields
+    /// <summary>
+    ///   The frame timer.
+    /// </summary>
+    private Stopwatch frameTimer;
 
     /// <summary>
     ///   The video capture device property.
@@ -56,15 +59,9 @@ namespace VianaNET.Modules.Video.Control
         typeof(VideoCapturer),
         new PropertyMetadata(OnVideoCaptureDevicePropertyChanged));
 
-    #endregion
 
     public VideoCapturer()
     {
-      this.bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
-      this.bkgWorker.DoWork += this.Worker_DoWork;
-
-      this.opencvCapture = new VideoCapture();
-
     }
 
     /// <summary>
@@ -72,53 +69,12 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     ~VideoCapturer()
     {
-
       if (this.VideoDeviceFilter != null)
       {
         Marshal.ReleaseComObject(this.VideoDeviceFilter);
         this.VideoDeviceFilter = null;
       }
-
-      if (this.bkgWorker != null)
-      {
-        this.bkgWorker.CancelAsync();
-      }
-
-      if (this.opencvCapture != null)
-      {
-        this.opencvCapture.Dispose();
-      }
-
     }
-
-    #region Fields
-
-    /// <summary>
-    ///   Saves the framerate of the video stream
-    /// </summary>
-    private double fps;
-
-    /// <summary>
-    ///   The frame timer.
-    /// </summary>
-    private Stopwatch frameTimer;
-
-    /// <summary>
-    /// The OpenCV VideoCapture Device Control
-    /// </summary>
-    private readonly VideoCapture opencvCapture;
-
-    private readonly BackgroundWorker bkgWorker;
-
-
-    #endregion
-
-    #region Public Properties
-
-    /// <summary>
-    ///   Gets the framerate of the video stream.
-    /// </summary>
-    public double FPS => this.fps;
 
     /// <summary>
     ///   Gets a value indicating whether this capturer is in the PlayState.Running state.
@@ -139,20 +95,6 @@ namespace VianaNET.Modules.Video.Control
     ///   Gets the selected video device
     /// </summary>
     public IBaseFilter VideoDeviceFilter { get; private set; }
-
-    #endregion
-
-    #region Public Methods and Operators
-
-    /// <summary>
-    ///   Shut down capture.
-    ///   This is used to release all resources needed by the capture graph.
-    /// </summary>
-    public override void Dispose()
-    {
-      this.Stop();
-      base.Dispose();
-    }
 
     /// <summary>
     /// This method creates a new graph for the given capture device and
@@ -177,14 +119,14 @@ namespace VianaNET.Modules.Video.Control
       try
       {
 
-        if (!this.opencvCapture.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY))
+        if (!this.OpenCVObject.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY))
         {
-          this.opencvCapture.Dispose();
           return;
         }
 
-        Video.Instance.VideoElement.SaveSizeInfo(this.opencvCapture);
-        this.fps = this.opencvCapture.Fps;
+        Video.Instance.VideoElement.SaveSizeInfo(this.OpenCVObject);
+        Video.Instance.FPS = this.OpenCVObject.Fps;
+        Video.Instance.FrameSize = new System.Windows.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight);
 
         if (!this.bkgWorker.IsBusy)
         {
@@ -212,11 +154,6 @@ namespace VianaNET.Modules.Video.Control
     public override void Play()
     {
       base.Play();
-      if (!this.bkgWorker.IsBusy)
-      {
-        this.bkgWorker.RunWorkerAsync();
-      }
-
       this.frameTimer.Start();
     }
 
@@ -230,6 +167,19 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
+    ///   The stop.
+    /// </summary>
+    public override void Stop()
+    {
+      base.Stop();
+      if (this.frameTimer != null)
+      {
+        this.frameTimer.Stop();
+      }
+
+    }
+
+    /// <summary>
     ///   The show property page of video device.
     /// </summary>
     public void ShowPropertyPageOfVideoDevice()
@@ -238,21 +188,10 @@ namespace VianaNET.Modules.Video.Control
       {
         DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.VideoDeviceFilter);
       }
+
+      this.OpenCVObject.Set(VideoCaptureProperties.Settings, 0);
     }
 
-    /// <summary>
-    ///   The stop.
-    /// </summary>
-    public override void Stop()
-    {
-      this.bkgWorker.CancelAsync();
-      if (this.frameTimer != null)
-      {
-        this.frameTimer.Stop();
-      }
-
-      base.Stop();
-    }
 
     /// <summary>
     /// Resets the frame timing, sets frame counter to zero.
@@ -263,10 +202,6 @@ namespace VianaNET.Modules.Video.Control
       this.frameCounter = 0;
     }
 
-    #endregion
-
-    #region Methods
-
     /// <summary>
     ///   The on video frame changed.
     /// </summary>
@@ -275,7 +210,6 @@ namespace VianaNET.Modules.Video.Control
       this.UpdateFrameNumberAndMediatime();
       base.OnVideoFrameChanged();
     }
-
 
     /// <summary>
     /// The on video capture device property changed.
@@ -294,11 +228,6 @@ namespace VianaNET.Modules.Video.Control
       {
         return;
       }
-
-      //if (Video.Instance.VideoMode != VideoMode.Capture)
-      //{
-      //  return;
-      //}
 
       if (obj is VideoCapturer videoCapturer)
       {
@@ -322,29 +251,7 @@ namespace VianaNET.Modules.Video.Control
     private void UpdateFrameNumberAndMediatime()
     {
       this.MediaPositionFrameIndex = this.frameCounter;
-      this.MediaPositionInNanoSeconds = this.frameTimer.ElapsedMilliseconds * 10000;
+      this.MediaPositionInMS = this.frameTimer.ElapsedMilliseconds;
     }
-
-    private void Worker_DoWork(object sender, DoWorkEventArgs e)
-    {
-      BackgroundWorker worker = (BackgroundWorker)sender;
-      while (!worker.CancellationPending)
-      {
-        using (Mat frameMat = this.opencvCapture.RetrieveMat())
-        {
-          // Must create and use WriteableBitmap in the same thread(UI Thread).
-          this.Dispatcher.Invoke(() =>
-          {
-            System.Windows.Media.Imaging.WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
-            Video.Instance.OriginalImageSource = newFrame;
-            Video.Instance.VideoElement.NewFrameCallback(newFrame);
-          });
-        }
-
-        Thread.Sleep(30);
-      }
-    }
-
-    #endregion
   }
 }

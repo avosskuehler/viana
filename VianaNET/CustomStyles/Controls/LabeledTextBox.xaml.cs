@@ -36,7 +36,7 @@ namespace VianaNET
   /// </summary>
   public partial class LabeledTextBox : UserControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="LabeledTextBox" /> class.
@@ -47,9 +47,9 @@ namespace VianaNET
       this.ElementTextBox.IsEnabled = this.IsChecked;
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The checked changed.
@@ -61,9 +61,9 @@ namespace VianaNET
     /// </summary>
     public event EventHandler TextChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets a value indicating whether is checked.
@@ -103,9 +103,9 @@ namespace VianaNET
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The element check box_ checked.
@@ -167,6 +167,6 @@ namespace VianaNET
       this.TextChanged.InvokeEmpty(this);
     }
 
-    #endregion
+
   }
 }

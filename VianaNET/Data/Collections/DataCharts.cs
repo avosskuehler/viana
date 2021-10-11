@@ -37,7 +37,7 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class DataCharts : DependencyObject
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The axis property.
@@ -67,9 +67,9 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public static List<DataCharts> PredefinedDataChartsPositionSpace;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="DataAxis" /> class.
@@ -178,9 +178,9 @@ namespace VianaNET.Data.Collections
       this.Chart = chart;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the chart.
@@ -202,9 +202,9 @@ namespace VianaNET.Data.Collections
       set => this.SetValue(DescriptionProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The to string.
@@ -215,6 +215,6 @@ namespace VianaNET.Data.Collections
       return this.Description;
     }
 
-    #endregion
+
   }
 }

@@ -49,16 +49,16 @@ namespace VianaNET.Modules.Video
   /// </summary>
   public partial class VideoWindow
   {
-    #region Constants
+
 
     /// <summary>
     ///   The margin.
     /// </summary>
     private const int DefaultMargin = 10;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The timeslider update timer.
@@ -101,10 +101,10 @@ namespace VianaNET.Modules.Video
     private bool isDragging;
 
 
- 
-    #endregion
 
-    #region Constructors and Destructors
+
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VideoWindow" /> class.
@@ -140,9 +140,9 @@ namespace VianaNET.Modules.Video
     {
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The load video.
@@ -181,7 +181,7 @@ namespace VianaNET.Modules.Video
         this.automaticDataAquisitionCurrentFrameCount = 0;
         this.automaticDataAquisitionTotalFrameCount =
           (int)Math.Round((this.TimelineSlider.SelectionEnd - this.TimelineSlider.SelectionStart)
-           / (this.TimelineSlider.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs));
+           / this.TimelineSlider.FrameTimeInMS);
         this.ProcessImage();
 
         Video.Instance.StepOneFrame(true);
@@ -319,9 +319,9 @@ namespace VianaNET.Modules.Video
       this.PlaceClippingRegion();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     ///   The automatic aquisition finished.
@@ -678,6 +678,14 @@ namespace VianaNET.Modules.Video
       // In Acquisition mode the processing is done in the StepCompleted event handler
       if (!Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
       {
+        if (Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
+        {
+          Video.Instance.Stop();
+          this.TimelineSlider.Value = this.TimelineSlider.SelectionEnd;
+          this.isPlaying = false;
+          this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+        }
+
         this.ProcessImage();
       }
     }
@@ -889,6 +897,8 @@ namespace VianaNET.Modules.Video
               this.AutomaticAquisitionFinished();
             }
           });
+
+      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
     }
 
     /// <summary>
@@ -990,12 +1000,12 @@ namespace VianaNET.Modules.Video
     {
       if (this.isPlaying)
       {
-        this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
+        this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
         Video.Instance.Pause();
       }
       else
       {
-        this.BtnPlayImage.Source = App.GetImageSource("Pause16.png");
+        this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Pause;
         Video.Instance.Play();
       }
 
@@ -1016,7 +1026,7 @@ namespace VianaNET.Modules.Video
       Video.Instance.Revert();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
-      this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
+      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
     }
 
     private void BtnSeekNextClick(object sender, RoutedEventArgs e)
@@ -1040,8 +1050,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
       this.isDragging = false;
     }
 
@@ -1084,8 +1093,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void TimelineSliderSelectionAndValueChanged(object sender, EventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
     }
 
     /// <summary>
@@ -1100,7 +1108,7 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderSelectionEndReached(object sender, EventArgs e)
     {
       Video.Instance.Pause();
-      this.BtnPlayImage.Source = App.GetImageSource("Start16.png");
+      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
       this.isPlaying = false;
     }
 
@@ -1145,11 +1153,7 @@ namespace VianaNET.Modules.Video
     {
       if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
       {
-        double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
-
-        // double alignedTime = (int)(preciseTime / Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds) *
-        // Video.Instance.VideoPlayerElement.FrameTimeIn100NanoSeconds;
-        this.TimelineSlider.Value = Math.Round(preciseTime * VideoBase.NanoSecsToMilliSecs);
+        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
       }
     }
 
@@ -1175,7 +1179,7 @@ namespace VianaNET.Modules.Video
         Video.Instance.StepOneFrame(true);
       }
     }
-    #endregion
+
 
     private void BtnSetCutoutLeftClick(object sender, RoutedEventArgs e)
     {

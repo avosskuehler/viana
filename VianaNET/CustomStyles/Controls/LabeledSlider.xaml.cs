@@ -38,7 +38,7 @@ namespace VianaNET
   /// </summary>
   public partial class LabeledSlider : UserControl
   {
-    #region Fields
+
 
     /// <summary>
     ///   The _decimals.
@@ -50,9 +50,9 @@ namespace VianaNET
     /// </summary>
     private double _value;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="LabeledSlider" /> class.
@@ -64,9 +64,9 @@ namespace VianaNET
       this.OnValueChanged(true);
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The checked changed.
@@ -78,9 +78,9 @@ namespace VianaNET
     /// </summary>
     public event EventHandler ValueChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the decimals.
@@ -162,9 +162,9 @@ namespace VianaNET
       set => this.ElementSlider.Value = value;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The element check box_ checked.
@@ -220,6 +220,6 @@ namespace VianaNET
       }
     }
 
-    #endregion
+
   }
 }

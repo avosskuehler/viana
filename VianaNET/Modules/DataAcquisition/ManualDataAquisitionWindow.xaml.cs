@@ -39,7 +39,7 @@ namespace VianaNET.Modules.DataAcquisition
   /// </summary>
   public partial class ManualDataAquisitionWindow : Window
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
@@ -60,9 +60,9 @@ namespace VianaNET.Modules.DataAcquisition
         typeof(ManualDataAquisitionWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The timeslider update timer.
@@ -99,9 +99,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private List<Ellipse>[] visualDataPoints;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ManualDataAquisitionWindow" /> class.
@@ -132,9 +132,9 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -161,9 +161,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     public int SkipPointCount { get; set; }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
@@ -518,8 +518,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
       this.isDragging = false;
     }
 
@@ -578,8 +577,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
       {
-        double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
-        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
         Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       }
     }
@@ -660,6 +658,6 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    #endregion
+
   }
 }

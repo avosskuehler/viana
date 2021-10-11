@@ -35,7 +35,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(int), typeof(int))]
   public class PlusOneConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -85,6 +85,6 @@ namespace VianaNET.CustomStyles.Converter
       return valueToConvertBack - 1;
     }
 
-    #endregion
+
   }
 }

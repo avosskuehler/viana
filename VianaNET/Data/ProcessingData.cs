@@ -44,7 +44,7 @@ namespace VianaNET.Data
   [Serializable]
   public class ProcessingData : DependencyObject, INotifyPropertyChanged
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The blob max diameter property.
@@ -183,9 +183,9 @@ namespace VianaNET.Data
       typeof(ProcessingData),
       new FrameworkPropertyMetadata(false));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The color and crop filter.
@@ -237,9 +237,9 @@ namespace VianaNET.Data
     /// </summary>
     private long totalProcessingTime;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ProcessingData" /> class.
@@ -271,9 +271,9 @@ namespace VianaNET.Data
       this.PropertyChanged += this.ProcessingDataPropertyChanged;
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The frame processed.
@@ -285,9 +285,9 @@ namespace VianaNET.Data
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
 
     /// <summary>
@@ -446,9 +446,9 @@ namespace VianaNET.Data
       set => this.SetValue(IsUsingMotionDetectionProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The initialize image filters.
@@ -653,9 +653,9 @@ namespace VianaNET.Data
       this.ResetProcessing(App.Project.ProcessingData.NumberOfTrackedObjects);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The on property changed.
@@ -733,10 +733,7 @@ namespace VianaNET.Data
     /// </summary>
     private void OnFrameProcessed()
     {
-      if (this.FrameProcessed != null)
-      {
-        this.FrameProcessed(this, EventArgs.Empty);
-      }
+      this.FrameProcessed?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -854,6 +851,6 @@ namespace VianaNET.Data
       }
     }
 
-    #endregion
+
   }
 }

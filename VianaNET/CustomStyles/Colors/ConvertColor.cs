@@ -37,7 +37,7 @@ namespace VianaNET.CustomStyles.Colors
   /// </summary>
   public static class ConvertColor
   {
-    #region Constants
+
 
     /// <summary>
     ///   Saves the 1/6 value
@@ -54,9 +54,9 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private const float TwoThirds = 2F / 3F;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// HSL to RGB Color Converter
@@ -427,9 +427,9 @@ namespace VianaNET.CustomStyles.Colors
       return new HSXColor(h, s, v);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Converts colors. Don´t know exactly what it does.
@@ -468,6 +468,6 @@ namespace VianaNET.CustomStyles.Colors
       return value;
     }
 
-    #endregion
+
   }
 }

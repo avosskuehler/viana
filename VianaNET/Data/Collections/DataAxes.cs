@@ -37,7 +37,7 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class DataAxis : DependencyObject
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The axis property.
@@ -71,9 +71,9 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public static List<DataAxis> DataAxes;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="DataAxis" /> class.
@@ -195,9 +195,9 @@ namespace VianaNET.Data.Collections
       this.Axis = axis;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the axis.
@@ -229,9 +229,9 @@ namespace VianaNET.Data.Collections
       set => this.SetValue(ShouldExportProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The to string.
@@ -242,6 +242,6 @@ namespace VianaNET.Data.Collections
       return this.Description;
     }
 
-    #endregion
+
   }
 }

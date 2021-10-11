@@ -36,16 +36,16 @@ namespace VianaNET
   /// </summary>
   public static class ScrollViewerPallet
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The normal border brush.
     /// </summary>
     public static Color NormalBorderBrush;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="ScrollViewerPallet" /> class.
@@ -56,9 +56,9 @@ namespace VianaNET
       OfficeColors.RegistersTypes.Add(typeof(ScrollViewerPallet));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -68,7 +68,7 @@ namespace VianaNET
       NormalBorderBrush = OfficeColors.Background.OfficeColor82;
     }
 
-    #endregion
+
   }
 
   #endregion

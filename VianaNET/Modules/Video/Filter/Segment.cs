@@ -30,7 +30,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public struct Segment
   {
-    #region Fields
+
 
     /// <summary>
     ///   The max.
@@ -42,9 +42,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public VectorInt Min;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Segment"/> struct.
@@ -81,9 +81,9 @@ namespace VianaNET.Modules.Video.Filter
       this.Max = max;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the center.
@@ -110,6 +110,6 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int Width => this.Max.X - this.Min.X;
 
-    #endregion
+
   }
 }

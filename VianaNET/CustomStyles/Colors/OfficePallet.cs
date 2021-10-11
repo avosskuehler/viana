@@ -34,7 +34,7 @@ namespace VianaNET.CustomStyles.Colors
   /// </summary>
   public sealed class OfficePallet
   {
-    #region Fields
+
 
     /// <summary>
     ///   The _ brightness.
@@ -81,9 +81,9 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private Type _Type;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OfficePallet"/> class.
@@ -96,9 +96,9 @@ namespace VianaNET.CustomStyles.Colors
       this.Startup(type);
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the brightness.
@@ -195,9 +195,9 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public Type Type => this._Type;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -212,9 +212,9 @@ namespace VianaNET.CustomStyles.Colors
       this.ArrangeColors();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     ///   The arrange colors.
@@ -349,6 +349,6 @@ namespace VianaNET.CustomStyles.Colors
       this.Reset();
     }
 
-    #endregion
+
   }
 }

@@ -37,7 +37,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Fields
+
 
     /// <summary>
     ///   The hue value of the current HSXColor.
@@ -54,12 +54,12 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private float valueLuminanceBrightness;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the HSXColor struct.
@@ -96,7 +96,7 @@ namespace VianaNET.CustomStyles.Colors
       this.ValueLuminanceBrightness = x;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -105,7 +105,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the hue value of this HSXColor
@@ -161,7 +161,7 @@ namespace VianaNET.CustomStyles.Colors
       set => this.valueLuminanceBrightness = value;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
@@ -170,7 +170,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Methods and Operators
+
 
     /// <summary>
     ///   Overridden <see cref="object.ToString()" />.
@@ -185,7 +185,7 @@ namespace VianaNET.CustomStyles.Colors
         this.ValueLuminanceBrightness);
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //

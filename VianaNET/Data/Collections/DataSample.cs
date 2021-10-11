@@ -35,7 +35,7 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class DataSample
   {
-    #region Public Properties
+
    
     /// <summary>
     ///   Gets or sets the frame number
@@ -141,6 +141,6 @@ namespace VianaNET.Data.Collections
     [XmlIgnore]
     public double? VelocityY { get; set; }
 
-    #endregion
+
   }
 }

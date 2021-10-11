@@ -35,7 +35,7 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public class ExportOptions
   {
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the list of axes for each object beeing exportet
@@ -47,6 +47,6 @@ namespace VianaNET.Modules.DataGrid
     /// </summary>
     public List<int> Objects { get; set; }
 
-    #endregion
+
   }
 }

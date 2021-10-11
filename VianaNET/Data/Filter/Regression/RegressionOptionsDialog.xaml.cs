@@ -32,11 +32,11 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   public partial class RegressionOptionsDialog
   {
-    #region Fields
-      public int negFlag;
-    #endregion
 
-    #region Constructors and Destructors
+      public int negFlag;
+
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RegressionOptionsDialog"/> class.
@@ -107,14 +107,14 @@ namespace VianaNET.Data.Filter.Regression
       }
     }
 
-    #endregion
+
 
     /// <summary>
     ///   Gets the filter.
     /// </summary>
     public RegressionType RegressionType { get; private set; }
 
-    #region Methods
+
 
     /// <summary>
     /// The button regress auswahl_checked.
@@ -201,6 +201,6 @@ namespace VianaNET.Data.Filter.Regression
     {
       this.Close();
     }
-    #endregion
+
   }
 }

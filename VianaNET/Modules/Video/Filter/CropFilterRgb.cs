@@ -31,7 +31,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public class CropFilterRgb : FilterBase
   {
-    #region Fields
+
 
     /// <summary>
     ///   The offset.
@@ -58,9 +58,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private int stopY;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the blank color.
@@ -72,9 +72,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public Rect CropRectangle { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The init.
@@ -145,6 +145,6 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
+
   }
 }

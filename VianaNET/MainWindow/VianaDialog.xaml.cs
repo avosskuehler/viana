@@ -36,7 +36,7 @@ namespace VianaNET.MainWindow
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VianaDialog" /> class. 
@@ -62,9 +62,9 @@ namespace VianaNET.MainWindow
       this.CancelButton.Visibility = isOnlyOk ? Visibility.Hidden : Visibility.Visible;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Sets the description background.
@@ -110,13 +110,13 @@ namespace VianaNET.MainWindow
       set => this.topFrame.Title = value;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
 
-    #region Methods
+
 
     /// <summary>
     /// Event handler for the button click event.
@@ -142,6 +142,6 @@ namespace VianaNET.MainWindow
       this.Close();
     }
 
-    #endregion
+
   }
 }

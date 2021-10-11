@@ -50,7 +50,7 @@ namespace VianaNET.Modules.Video.Dialogs
     ///////////////////////////////////////////////////////////////////////////////
 
     // An instance of the PreviewController class (where all the real work is done)
-    #region Fields
+
 
     /// <summary>
     ///   The folder browser dialog.
@@ -68,12 +68,12 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private LiveVideoController liveVideoController;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the SaveVideoDialog class.
@@ -90,7 +90,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.liveVideoController = new LiveVideoController();
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -99,16 +99,16 @@ namespace VianaNET.Modules.Video.Dialogs
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the last recorded video file.
     /// </summary>
     public string LastRecordedVideoFile { get; set; }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The compression options button_ click.
@@ -367,7 +367,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.liveVideoController.VideoCompressorName = this.CompressorComboBox.SelectedValue.ToString();
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //

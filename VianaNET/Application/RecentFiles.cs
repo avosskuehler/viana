@@ -56,7 +56,7 @@ namespace VianaNET.Application
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Static Fields
+
 
     /// <summary>
     ///   Represents the <see cref="DependencyProperty" /> for the
@@ -75,9 +75,9 @@ namespace VianaNET.Application
     /// </summary>
     private static RecentFiles recentFiles;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The application settings of the main program,
@@ -90,12 +90,12 @@ namespace VianaNET.Application
     /// </summary>
     private int maxLengthDisplay = 40;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Prevents a default instance of the RecentFiles class from being created.
@@ -113,24 +113,24 @@ namespace VianaNET.Application
       }
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Events
+
 
     /// <summary>
     ///   Occurs when a property value changes.
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets the recent files list.
@@ -155,12 +155,12 @@ namespace VianaNET.Application
     /// </summary>
     public string SettingsFile => Path.Combine(this.appSettings.SettingsPath, "VianaRecentFileList.xml");
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Adds new filename to recent files list and saves list to application settings.
@@ -282,7 +282,7 @@ namespace VianaNET.Application
       fs.Close();
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
@@ -291,7 +291,7 @@ namespace VianaNET.Application
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Methods
+
 
     /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
@@ -301,10 +301,7 @@ namespace VianaNET.Application
     /// </param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -400,6 +397,6 @@ namespace VianaNET.Application
       return newImage;
     }
 
-    #endregion
+
   }
 }

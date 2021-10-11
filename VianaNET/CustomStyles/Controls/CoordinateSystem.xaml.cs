@@ -28,7 +28,7 @@ namespace VianaNET.CustomStyles.Controls
   /// </summary>
   public partial class CoordinateSystem : UserControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="CoordinateSystem" /> class.
@@ -38,10 +38,10 @@ namespace VianaNET.CustomStyles.Controls
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Public Properties
 
-    #endregion
+
+
+
   }
 }

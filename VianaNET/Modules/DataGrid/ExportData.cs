@@ -45,7 +45,7 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public class ExportData
   {
-    #region Static Fields
+
 
     /// <summary>
     /// Namespaces. We need this to initialize XmlNamespaceManager so that we can search XmlDocument.
@@ -90,9 +90,9 @@ namespace VianaNET.Modules.DataGrid
       { "config", "urn:oasis:names:tc:opendocument:xmlns:config:1.0" }
     };
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// This method exports the given datasource with the given options to the given file
@@ -476,9 +476,9 @@ namespace VianaNET.Modules.DataGrid
       writer.Close();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Generates the export array.
@@ -939,6 +939,6 @@ namespace VianaNET.Modules.DataGrid
       }
     }
 
-    #endregion
+
   }
 }

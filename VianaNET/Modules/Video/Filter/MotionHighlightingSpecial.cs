@@ -36,16 +36,16 @@ namespace VianaNET.Modules.Video.Filter
   /// <seealso cref="IMotionDetector" />
   public class MotionAreaHighlightingSpecial : IMotionProcessing
   {
-    #region Fields
+
 
     /// <summary>
     /// The highlight color.
     /// </summary>
     private Color highlightColor = Color.Red;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MotionAreaHighlighting" /> class.
@@ -65,9 +65,9 @@ namespace VianaNET.Modules.Video.Filter
       this.highlightColor = highlightColor;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Color used to highlight motion regions.
@@ -82,9 +82,9 @@ namespace VianaNET.Modules.Video.Filter
       set => this.highlightColor = value;
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Process video and motion frames doing further post processing after
@@ -206,6 +206,6 @@ namespace VianaNET.Modules.Video.Filter
     {
     }
 
-    #endregion
+
   }
 }

@@ -38,7 +38,7 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     public struct KonstRec
       {
-          #region Fields
+      
 
           /// <summary>
           ///   long name of constant.
@@ -55,10 +55,10 @@ namespace VianaNET.Data.Filter.Theory
           /// </summary>
           public double wert;
 
-          #endregion
+      
       }
    
-    #region Constants
+
 
     /// <summary>
     ///   The euler number.
@@ -77,9 +77,9 @@ namespace VianaNET.Data.Filter.Theory
 
     // public const double _max_Real = 1.7e38;
     // public const int _Ln_max_Real = 88;
-    #endregion
 
-    #region Static Fields
+
+
 
     /// <summary>
     ///   spezial chars in shortnames of physical constants. 
@@ -114,7 +114,7 @@ namespace VianaNET.Data.Filter.Theory
 
     public static string varName = "x";
 
-    #endregion
+
 
   }
 
@@ -269,7 +269,7 @@ namespace VianaNET.Data.Filter.Theory
   /// </summary>
   public class Parse
   {
-    #region Fields
+
 
     /// <summary>
     ///   The function term/tree.
@@ -396,9 +396,9 @@ namespace VianaNET.Data.Filter.Theory
     /// </summary>
     private FunctionCalcTree xVar;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Error message.
@@ -1345,9 +1345,9 @@ namespace VianaNET.Data.Filter.Theory
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Method of the Scanfkt: reads an integer.
@@ -1389,6 +1389,6 @@ namespace VianaNET.Data.Filter.Theory
       }
     }
 
-    #endregion
+
   }
 }

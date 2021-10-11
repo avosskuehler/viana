@@ -423,7 +423,6 @@
     <Compile Include="Modules\Video\Control\VideoBase.cs" />
     <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
     <Compile Include="Modules\Video\Control\VideoPlayer.cs" />
-    <Compile Include="Modules\Video\Control\VideoPlayerCV.cs" />
     <Compile Include="Modules\Video\Dialogs\CalibrateVideoWindow.cs" />
     <Compile Include="Modules\Video\Dialogs\ClipVideoWindow.cs" />
     <Compile Include="Modules\Video\Dialogs\CoordinateSystemWindow.cs" />

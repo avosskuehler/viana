@@ -36,7 +36,7 @@ namespace VianaNET
   /// </summary>
   public static class ImageButtonDefaultStylePallet
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The default control mouse over 1.
@@ -143,9 +143,9 @@ namespace VianaNET
     /// </summary>
     public static Color PlusLightBorder;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="ImageButtonDefaultStylePallet" /> class.
@@ -156,9 +156,9 @@ namespace VianaNET
       OfficeColors.RegistersTypes.Add(typeof(ImageButtonDefaultStylePallet));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -192,7 +192,7 @@ namespace VianaNET
       DisableBackGround2 = OfficeColors.Disabled.OfficeColor2;
     }
 
-    #endregion
+
   }
 
   #endregion

@@ -32,7 +32,7 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class DataCollection : SortedObservableCollection<TimeSample>, ICloneable
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DataCollection" /> class.
@@ -42,13 +42,13 @@ namespace VianaNET.Data.Collections
     {
     }
 
-    #endregion
 
-    #region Public Events
 
-    #endregion
 
-    #region Public Properties
+
+
+
+
 
     /// <summary>
     ///   Gets a value indicating whether all samples are selected.
@@ -58,9 +58,9 @@ namespace VianaNET.Data.Collections
     /// </value>
     public bool AllSamplesSelected => this.All(timesample => timesample.IsSelected);
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Creates a new object that is a copy of the current instance.
@@ -151,7 +151,7 @@ namespace VianaNET.Data.Collections
       return false;
     }
 
-    #endregion
+
 
   }
 }

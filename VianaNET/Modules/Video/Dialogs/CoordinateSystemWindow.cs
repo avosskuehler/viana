@@ -36,16 +36,16 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public class CoordinateSystemWindow : WindowWithHelp
   {
-    #region Constants
+
 
     /// <summary>
     ///   The padding.
     /// </summary>
     private const double AxisDescriptionPadding = 10d;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The x-direction arrow.
@@ -82,9 +82,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private bool ignoreMouse;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="CoordinateSystemWindow" /> class.
@@ -112,9 +112,9 @@ namespace VianaNET.Modules.Video.Dialogs
       this.Loaded += this.CoordinateSystemWindowLoaded;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
@@ -338,6 +338,6 @@ namespace VianaNET.Modules.Video.Dialogs
       this.SetLabelYPosition(new Point(this.directionY.X2, this.directionY.Y2));
     }
 
-    #endregion
+
   }
 }

@@ -36,7 +36,7 @@ namespace VianaNET
   /// </summary>
   public static class CheckBoxPallet
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The disabled border.
@@ -103,9 +103,9 @@ namespace VianaNET
     /// </summary>
     public static Color Normalbackground;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="CheckBoxPallet" /> class.
@@ -116,9 +116,9 @@ namespace VianaNET
       OfficeColors.RegistersTypes.Add(typeof(CheckBoxPallet));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -146,7 +146,7 @@ namespace VianaNET
       DisabledInternalBorder = OfficeColors.Disabled.OfficeColor1;
     }
 
-    #endregion
+
   }
 
   #endregion

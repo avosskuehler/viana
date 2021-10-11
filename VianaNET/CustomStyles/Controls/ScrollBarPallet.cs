@@ -36,7 +36,7 @@ namespace VianaNET
   /// </summary>
   public static class ScrollBarPallet
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The scroll bar bg 1.
@@ -153,9 +153,9 @@ namespace VianaNET
     /// </summary>
     public static Color ScrollBarThumbPressedBrush4;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="ScrollBarPallet" /> class.
@@ -166,9 +166,9 @@ namespace VianaNET
       OfficeColors.RegistersTypes.Add(typeof(ScrollBarPallet));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -207,7 +207,7 @@ namespace VianaNET
       ScrollBarThumbPressedBrush4 = OfficeColors.Background.OfficeColor81;
     }
 
-    #endregion
+
   }
 
   #endregion

@@ -35,7 +35,7 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public partial class DifferenceQuotientDialog
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DifferenceQuotientDialog" /> class.
@@ -95,9 +95,9 @@ namespace VianaNET.Modules.DataGrid
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the Click event of the Cancel control.
@@ -147,6 +147,6 @@ namespace VianaNET.Modules.DataGrid
       this.Close();
     }
 
-    #endregion
+
   }
 }

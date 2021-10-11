@@ -37,7 +37,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(double), typeof(String))]
   public class UnitDoubleStringConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Converts a value from double to string using the given
@@ -137,6 +137,6 @@ namespace VianaNET.CustomStyles.Converter
       return double.Parse(valueToConvertBack);
     }
 
-    #endregion
+
   }
 }

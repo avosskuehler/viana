@@ -41,7 +41,7 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class DShowUtils
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Enumerates all filters of the selected category and returns the IBaseFilter for the 
@@ -452,7 +452,7 @@ namespace VianaNET.Modules.Video.Control
       media = null;
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -460,7 +460,7 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public static class Oleaut32
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Invokes a new property frame, that is, a property sheet dialog box, whose parent is hwndOwner, where the dialog is positioned at the point (x,y) in the parent window and has the caption lpszCaption.
@@ -515,6 +515,6 @@ namespace VianaNET.Modules.Video.Control
       int dwReserved, 
       IntPtr lpvReserved);
 
-    #endregion
+
   }
 }

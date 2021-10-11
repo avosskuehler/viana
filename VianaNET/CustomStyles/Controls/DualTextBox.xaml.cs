@@ -36,16 +36,16 @@ namespace VianaNET
   /// </summary>
   public partial class DualTextBox
   {
-    #region Fields
+
 
     /// <summary>
     ///   The _is first text active.
     /// </summary>
     private bool _isFirstTextActive;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DualTextBox" /> class.
@@ -56,9 +56,9 @@ namespace VianaNET
       this.UpdateIsEnabled();
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The checked changed.
@@ -70,9 +70,9 @@ namespace VianaNET
     /// </summary>
     public event EventHandler TextChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets a value indicating whether is checked.
@@ -118,9 +118,9 @@ namespace VianaNET
       set => this.ElementTextBoxB.Text = value;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The element check box_ checked.
@@ -191,6 +191,6 @@ namespace VianaNET
       this.ElementTextBoxB.IsEnabled = this.IsChecked;
     }
 
-    #endregion
+
   }
 }

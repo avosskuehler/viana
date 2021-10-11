@@ -35,7 +35,7 @@ namespace VianaNET.Application
   /// </summary>
   public static class ExtensionMethods
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Static. Invokes the given event with the given sender and 
@@ -71,6 +71,6 @@ namespace VianaNET.Application
       return toggleButton.IsChecked.GetValueOrDefault();
     }
 
-    #endregion
+
   }
 }

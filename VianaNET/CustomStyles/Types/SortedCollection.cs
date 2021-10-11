@@ -44,25 +44,25 @@ namespace VianaNET.CustomStyles.Types
   public class SortedCollection<TValue> : IList<TValue>
   {
     // Fields
-    #region Constants
+
 
     /// <summary>
     ///   The defaul t_ capacity.
     /// </summary>
     private const int DEFAULT_CAPACITY = 4;
 
-    #endregion
 
-    #region Static Fields
+
+
 
     /// <summary>
     ///   The empty values.
     /// </summary>
     private static readonly TValue[] emptyValues;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The comparer.
@@ -85,9 +85,9 @@ namespace VianaNET.CustomStyles.Types
     /// </summary>
     private int version;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="SortedCollection" /> class.
@@ -119,9 +119,9 @@ namespace VianaNET.CustomStyles.Types
       this.comparer = comparer;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the capacity.
@@ -169,9 +169,9 @@ namespace VianaNET.CustomStyles.Types
     /// </summary>
     public bool IsReadOnly => false;
 
-    #endregion
 
-    #region Public Indexers
+
+
 
     /// <summary>
     /// The this.
@@ -208,10 +208,10 @@ namespace VianaNET.CustomStyles.Types
       }
     }
 
-    #endregion
+
 
     // Methods
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The add.
@@ -395,9 +395,9 @@ namespace VianaNET.CustomStyles.Types
       this.values[this.size] = default(TValue);
     }
 
-    #endregion
 
-    #region Explicit Interface Methods
+
+
 
     /// <summary>
     ///   The get enumerator.
@@ -408,9 +408,9 @@ namespace VianaNET.CustomStyles.Types
       return new SortedCollectionEnumerator(this);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The check capacity.
@@ -430,7 +430,7 @@ namespace VianaNET.CustomStyles.Types
       this.Capacity = num;
     }
 
-    #endregion
+
 
     /// <summary>
     ///   The sorted collection enumerator.
@@ -439,7 +439,7 @@ namespace VianaNET.CustomStyles.Types
     private sealed class SortedCollectionEnumerator : IEnumerator<TValue>, IDisposable, IEnumerator
     {
       // Fields
-      #region Fields
+  
 
       /// <summary>
       ///   The collection.
@@ -461,10 +461,10 @@ namespace VianaNET.CustomStyles.Types
       /// </summary>
       private int index;
 
-      #endregion
+  
 
       // Methods
-      #region Constructors and Destructors
+  
 
       /// <summary>
       /// Initializes a new instance of the <see cref="SortedCollectionEnumerator"/> class.
@@ -478,18 +478,18 @@ namespace VianaNET.CustomStyles.Types
         this.version = collection.version;
       }
 
-      #endregion
+  
 
-      #region Public Properties
+  
 
       /// <summary>
       ///   Gets the current.
       /// </summary>
       public TValue Current => this.currentValue;
 
-      #endregion
+  
 
-      #region Explicit Interface Properties
+  
 
       /// <summary>
       ///   Gets the current.
@@ -508,9 +508,9 @@ namespace VianaNET.CustomStyles.Types
         }
       }
 
-      #endregion
+  
 
-      #region Public Methods and Operators
+  
 
       /// <summary>
       ///   The dispose.
@@ -545,9 +545,9 @@ namespace VianaNET.CustomStyles.Types
         return false;
       }
 
-      #endregion
+  
 
-      #region Explicit Interface Methods
+  
 
       /// <summary>
       ///   The reset.
@@ -564,7 +564,7 @@ namespace VianaNET.CustomStyles.Types
         this.currentValue = default(TValue);
       }
 
-      #endregion
+  
 
       // Properties
     }

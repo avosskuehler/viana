@@ -45,7 +45,7 @@ namespace VianaNET.MainWindow
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="AboutWindow" /> class. 
@@ -56,9 +56,9 @@ namespace VianaNET.MainWindow
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the company string from the assembly.
@@ -194,9 +194,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     public static string AssemblyVersionShort => Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The button_ click.
@@ -212,7 +212,7 @@ namespace VianaNET.MainWindow
       this.Close();
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //

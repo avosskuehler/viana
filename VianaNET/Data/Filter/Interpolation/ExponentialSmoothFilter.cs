@@ -35,7 +35,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public class ExponentialSmoothFilter : InterpolationFilter
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ExponentialSmoothFilter" /> class.
@@ -47,9 +47,9 @@ namespace VianaNET.Data.Filter.Interpolation
       this.SmoothingFactor = 0.7f;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     /// Gets the ExponentialSmoothControl.
@@ -61,9 +61,9 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </summary>
     public float SmoothingFactor { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Calculate exponential smoothed values for the current data series.
@@ -83,6 +83,6 @@ namespace VianaNET.Data.Filter.Interpolation
       App.Project.CurrentFilterData.InterpolationSeries = fittedSamples;
     }
 
-    #endregion
+
   }
 }

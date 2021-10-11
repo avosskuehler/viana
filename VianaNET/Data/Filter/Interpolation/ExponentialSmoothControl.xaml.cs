@@ -43,7 +43,7 @@ namespace VianaNET.Data.Filter.Interpolation
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the ExponentialSmoothControl class.
@@ -58,7 +58,7 @@ namespace VianaNET.Data.Filter.Interpolation
       this.SmoothingFactorNumeric.Value = (decimal)this.Filter.SmoothingFactor;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -67,14 +67,14 @@ namespace VianaNET.Data.Filter.Interpolation
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets the filter.
     /// </summary>
     public ExponentialSmoothFilter Filter { get; private set; }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
@@ -87,7 +87,7 @@ namespace VianaNET.Data.Filter.Interpolation
     ///////////////////////////////////////////////////////////////////////////////
     // Eventhandler                                                              //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Methods
+
 
     /// <summary>
     /// The smoothing factor numeric_ value changed.
@@ -103,7 +103,7 @@ namespace VianaNET.Data.Filter.Interpolation
       this.Filter.SmoothingFactor = (float)this.SmoothingFactorNumeric.Value;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Methods and Eventhandling for Background tasks                            //

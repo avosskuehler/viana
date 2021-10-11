@@ -33,7 +33,7 @@ namespace VianaNET.Data.Collections
   /// </summary>
   public class TimeSample
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="TimeSample" /> class.
@@ -43,9 +43,9 @@ namespace VianaNET.Data.Collections
       //this.Object = new DataSample[App.Project.ProcessingData.NumberOfTrackedObjects];
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the framenumber.
@@ -60,21 +60,21 @@ namespace VianaNET.Data.Collections
     /// <summary>
     ///   Gets or sets the timestamp.
     /// </summary>
-    public long Timestamp { get; set; }
+    public double Timestamp { get; set; }
 
     /// <summary>
     ///   Gets or sets a value indicating whether this sample is selected
     /// </summary>
     public bool IsSelected { get; set; }
 
-    #endregion
+
 
     /// <summary>
     ///   The time comparer.
     /// </summary>
     public class TimeComparer : IComparer<TimeSample>
     {
-      #region Public Methods and Operators
+  
 
       /// <summary>
       /// The compare.
@@ -93,7 +93,7 @@ namespace VianaNET.Data.Collections
         return (int)(x.Timestamp - y.Timestamp);
       }
 
-      #endregion
+  
     }
   }
 }

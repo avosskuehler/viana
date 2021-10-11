@@ -62,7 +62,7 @@ namespace VianaNET.Data.Filter.Theory
       }
     }
 
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Calculates the theoretical function sample values
@@ -73,6 +73,6 @@ namespace VianaNET.Data.Filter.Theory
       this.TheoryFunction = x => parser.FreierFktWert(this.TheoreticalFunctionCalculatorTree, x);
     }
 
-    #endregion
+
   }
 }

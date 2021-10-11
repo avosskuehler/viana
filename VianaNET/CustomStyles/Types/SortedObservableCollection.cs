@@ -41,7 +41,7 @@ namespace VianaNET.CustomStyles.Types
                                                     INotifyPropertyChanged, 
                                                     INotifyCollectionChanged
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="SortedObservableCollection{TValue}" /> class.
@@ -61,10 +61,10 @@ namespace VianaNET.CustomStyles.Types
     {
     }
 
-    #endregion
+
 
     // Events
-    #region Public Events
+
 
     /// <summary>
     ///   The collection changed.
@@ -76,9 +76,9 @@ namespace VianaNET.CustomStyles.Types
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion
 
-    #region Public Indexers
+
+
 
     /// <summary>
     /// The this.
@@ -102,9 +102,9 @@ namespace VianaNET.CustomStyles.Types
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The clear.
@@ -147,9 +147,9 @@ namespace VianaNET.CustomStyles.Types
       this.OnCollectionChanged(NotifyCollectionChangedAction.Remove, item, index);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The on collection changed.
@@ -159,10 +159,7 @@ namespace VianaNET.CustomStyles.Types
     /// </param>
     protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
-      if (this.CollectionChanged != null)
-      {
-        this.CollectionChanged(this, e);
-      }
+      this.CollectionChanged?.Invoke(this, e);
     }
 
     /// <summary>
@@ -173,10 +170,7 @@ namespace VianaNET.CustomStyles.Types
     /// </param>
     protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, e);
-      }
+      this.PropertyChanged?.Invoke(this, e);
     }
 
     /// <summary>
@@ -255,6 +249,6 @@ namespace VianaNET.CustomStyles.Types
       this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
     }
 
-    #endregion
+
   }
 }

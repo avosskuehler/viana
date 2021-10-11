@@ -34,7 +34,7 @@ namespace VianaNET.Data.Filter.Regression
   /// </summary>
   public class RegressionFilter : FilterBase
   {
-    #region Constants
+
 
     /// <summary>
     ///   (angestrebte) Genauigkeit der Regressionsparameter
@@ -56,9 +56,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     private const double StartAbw = 1E150;
 
-    #endregion
 
-    #region Static Fields
+
+
 
     /// <summary>
     ///   Parameter und Abweichungen der 9 Ausgleichsfunktionen;
@@ -71,9 +71,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     private static double[] param;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   Provides a formula parser which reads tex formulas
@@ -90,9 +90,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     private char funcName = 'y';
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="RegressionFilter" /> class.
@@ -104,9 +104,9 @@ namespace VianaNET.Data.Filter.Regression
       this.formulaParser = new TexFormulaParser();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the aberration for the regression
@@ -124,9 +124,9 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     public RegressionType RegressionType { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Calculates the value of the Regression function at argument x, when the function is exponential.
@@ -402,9 +402,9 @@ namespace VianaNET.Data.Filter.Regression
         this.GetRegressionFunctionTexFormula(this.RegressionType);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     ///   The bestimme exp fkt.
@@ -1499,6 +1499,6 @@ namespace VianaNET.Data.Filter.Regression
       return returnFormula;
     }
 
-    #endregion
+
   }
 }

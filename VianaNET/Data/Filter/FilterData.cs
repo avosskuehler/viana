@@ -45,7 +45,7 @@ namespace VianaNET.Data.Filter
   [Serializable]
   public class FilterData : DependencyObject, INotifyPropertyChanged
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The AxisX property.
@@ -318,9 +318,9 @@ namespace VianaNET.Data.Filter
         typeof(FilterData),
         new UIPropertyMetadata(2d));
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="FilterData" /> class.
@@ -331,18 +331,18 @@ namespace VianaNET.Data.Filter
       this.RegressionFilter = new RegressionFilter();
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The property changed.
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the x axis currently selected in the chart window.
@@ -680,9 +680,9 @@ namespace VianaNET.Data.Filter
       set => this.SetValue(TheoryLineThicknessProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Calculates Interpolation series data points.
@@ -802,9 +802,9 @@ namespace VianaNET.Data.Filter
       this.OnPropertyChanged("HasTheoryFunction");
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The on property changed.
@@ -814,12 +814,9 @@ namespace VianaNET.Data.Filter
     /// </param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    #endregion
+
   }
 }

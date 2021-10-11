@@ -60,7 +60,7 @@
         Style="{StaticResource MediaSliderStyle}"
         IsSelectionRangeEnabled="True" 
         IsShowingTickButtons="Collapsed"
-        FrameTimeInNanoSeconds="40000000"
+        FrameTimeInMS="40000000"
         SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
         SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"
         TickPlacement="BottomRight" 

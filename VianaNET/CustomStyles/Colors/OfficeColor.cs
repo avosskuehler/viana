@@ -43,16 +43,16 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Fields
+
 
     /// <summary>
     ///   The b.
     /// </summary>
     public byte B;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the OfficeColor class.
@@ -146,7 +146,7 @@ namespace VianaNET.CustomStyles.Colors
       this.B = c.B;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -155,7 +155,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the a.
@@ -177,7 +177,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     public byte R { get; set; }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
@@ -202,7 +202,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Methods and Operators
+
 
     /// <summary>
     ///   The op_ implicit.
@@ -224,6 +224,6 @@ namespace VianaNET.CustomStyles.Colors
       return new OfficeColor(c.A, c.R, c.G, c.B, OfficeColorPallet.None);
     }
 
-    #endregion
+
   }
 }

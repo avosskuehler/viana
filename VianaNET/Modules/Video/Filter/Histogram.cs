@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public class Histogram : FilterBase
   {
-    #region Fields
+
 
     /// <summary>
     ///   The offset.
@@ -59,9 +59,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     private int stopY;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="Histogram" /> class.
@@ -116,9 +116,9 @@ namespace VianaNET.Modules.Video.Filter
       this.MaxIndex = new VectorInt(ix, iy);
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the compare empty color.
@@ -145,9 +145,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int[] Y { get; private set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The from int ptr map.
@@ -252,6 +252,6 @@ namespace VianaNET.Modules.Video.Filter
     {
     }
 
-    #endregion
+
   }
 }

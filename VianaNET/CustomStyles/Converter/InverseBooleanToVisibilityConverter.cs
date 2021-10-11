@@ -36,7 +36,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(bool), typeof(Visibility))]
   public class InverseBooleanToVisibilityConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -93,6 +93,6 @@ namespace VianaNET.CustomStyles.Converter
       }
     }
 
-    #endregion
+
   }
 }

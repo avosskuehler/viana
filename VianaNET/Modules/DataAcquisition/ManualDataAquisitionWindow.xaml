@@ -86,7 +86,7 @@
             IsShowingTimes="Collapsed" 
             x:Name="TimelineSlider"  
             Style="{StaticResource MediaSliderStyle}"
-            FrameTimeInNanoSeconds="{Binding Path=VideoPlayerElement.FrameTimeInNanoSeconds, Source={x:Static control:Video.Instance}}"
+            FrameTimeInMS="{Binding Path=VideoPlayerElement.FrameTimeInMS, Source={x:Static control:Video.Instance}}"
             Maximum="{Binding Path=VideoPlayerElement.MediaDurationInMS, Source={x:Static control:Video.Instance}}"
             SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
             SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"

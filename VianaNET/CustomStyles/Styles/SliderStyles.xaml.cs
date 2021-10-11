@@ -34,7 +34,7 @@ namespace VianaNET.CustomStyles.Styles
   /// </summary>
   public static class SliderStyles
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The glyph.
@@ -141,9 +141,9 @@ namespace VianaNET.CustomStyles.Styles
     /// </summary>
     public static Color ThumbBackground4;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="SliderStyles" /> class.
@@ -154,9 +154,9 @@ namespace VianaNET.CustomStyles.Styles
       OfficeColors.RegistersTypes.Add(typeof(SliderStyles));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -191,6 +191,6 @@ namespace VianaNET.CustomStyles.Styles
       SideButtonsPlusLightBackground4 = OfficeColors.Background.OfficeColor85;
     }
 
-    #endregion
+
   }
 }

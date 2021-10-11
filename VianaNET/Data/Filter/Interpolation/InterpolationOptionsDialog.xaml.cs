@@ -31,7 +31,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public partial class InterpolationOptionsDialog
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the InterpolationOptionsDialog class.
@@ -42,9 +42,9 @@ namespace VianaNET.Data.Filter.Interpolation
       this.UpdateUIWithFilter();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the choosen interpolation filter.
@@ -65,9 +65,9 @@ namespace VianaNET.Data.Filter.Interpolation
     /// </summary>
     public InterpolationFilter CurrentInterpolationFilter { get; set; }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Cancel click.
@@ -151,6 +151,6 @@ namespace VianaNET.Data.Filter.Interpolation
       this.InterpolationFilterCombo.SelectedItem = this.CurrentInterpolationFilter;
     }
 
-    #endregion
+
   }
 }

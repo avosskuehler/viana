@@ -36,7 +36,7 @@
       set => project = value;
     }
 
-    #region Public Methods and Operators
+
     private static void InitialiseCultures()
     {
       if (!string.IsNullOrEmpty(Settings.Default.Culture))
@@ -107,9 +107,9 @@
       return terminMenuentryIconImage;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The <see cref="System.Windows.Application.DispatcherUnhandledException"/> event handler.
@@ -144,6 +144,6 @@
       this.MainWindow = new MainWindow.MainWindow();
     }
 
-    #endregion
+
   }
 }

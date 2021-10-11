@@ -38,7 +38,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(double), typeof(String))]
   public class RulerUnitStringConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -110,6 +110,6 @@ namespace VianaNET.CustomStyles.Converter
       return double.Parse(valueToConvertBack);
     }
 
-    #endregion
+
   }
 }

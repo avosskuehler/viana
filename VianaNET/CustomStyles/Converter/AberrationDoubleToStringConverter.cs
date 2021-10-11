@@ -35,7 +35,7 @@ namespace VianaNET.CustomStyles.Converter
   [ValueConversion(typeof(double), typeof(string))]
   public class AberrationDoubleToStringConverter : IValueConverter
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The convert.
@@ -90,6 +90,6 @@ namespace VianaNET.CustomStyles.Converter
       return double.Parse(valueToConvertBack);
     }
 
-    #endregion
+
   }
 }

@@ -28,7 +28,7 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class Video : DependencyObject, INotifyPropertyChanged
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Prevents a default instance of the <see cref="Video" /> class from being created.
@@ -45,9 +45,6 @@ namespace VianaNET.Modules.Video.Control
       this.videoMode = VideoMode.None;
     }
 
-    #endregion
-
-    #region Static Fields
 
     /// <summary>
     ///   The is data acquisition running property.
@@ -103,10 +100,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private static Video instance;
 
-    #endregion
-
-    #region Fields
-
     /// <summary>
     ///   The video capture element.
     /// </summary>
@@ -127,10 +120,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private VideoMode videoMode;
 
-    #endregion
-
-    #region Public Events
-
     /// <summary>
     ///   The property changed.
     /// </summary>
@@ -141,9 +130,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public event EventHandler VideoFrameChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the <see cref="Video" /> singleton.
@@ -177,17 +166,19 @@ namespace VianaNET.Modules.Video.Control
       }
     }
 
+    public System.Windows.Size FrameSize { get; set; }
+
+    public double FPS { get; set; }
+
     /// <summary>
     ///   Gets the frame timestamp in ms.
     /// </summary>
-    public long FrameTimestampInMs => (long)
-          ((this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs)
-           - App.Project.VideoData.TimeZeroPositionInMs);
+    public double FrameTimestampInMs => this.videoElement.MediaPositionInMS - App.Project.VideoData.TimeZeroPositionInMs;
 
     /// <summary>
     ///   Gets the frame timestamp in ms starting with zero at the beginning of the video.
     /// </summary>
-    public long FrameTimestampInMsWithoutOffest => (long)(this.videoElement.MediaPositionInNanoSeconds * VideoBase.NanoSecsToMilliSecs);
+    public double FrameTimestampInMsWithoutOffest => this.videoElement.MediaPositionInMS;
 
     /// <summary>
     ///   Gets or sets a value indicating whether is data acquisition running.
@@ -277,9 +268,9 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public bool HasVideoInputDevices => this.VideoInputDevices.Count > 0;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The cleanup.
@@ -467,9 +458,9 @@ namespace VianaNET.Modules.Video.Control
       this.videoElement.Stop();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     ///   The on property changed.
@@ -479,10 +470,7 @@ namespace VianaNET.Modules.Video.Control
     /// </param>
     protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs args)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(args.Property.Name));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(args.Property.Name));
     }
 
     /// <summary>
@@ -503,10 +491,7 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private void OnVideoFrameChanged()
     {
-      if (this.VideoFrameChanged != null)
-      {
-        this.VideoFrameChanged(this, EventArgs.Empty);
-      }
+      this.VideoFrameChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -570,6 +555,6 @@ namespace VianaNET.Modules.Video.Control
       this.OnVideoFrameChanged();
     }
 
-    #endregion
+
   }
 }

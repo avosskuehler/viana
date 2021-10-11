@@ -42,7 +42,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Variables, Enumerations, Events                                  //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Fields
+
 
     /// <summary>
     ///   The current <see cref="ColorType" /> of the pallet.
@@ -61,12 +61,12 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private HSXColor[] sourcePallet;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the Coloration class with
@@ -90,7 +90,7 @@ namespace VianaNET.CustomStyles.Colors
       this.SetSourcePallet(pallet);
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Defining events, enums, delegates                                         //
@@ -99,7 +99,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Defining Properties                                                       //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Properties
+
 
     /// <summary>
     ///   Gets a value indicating whether this pallet
@@ -107,12 +107,12 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private bool IsHSL => this.colorType == ColorType.HSL;
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Returns a colored pallet for the given hue and saturation.
@@ -186,7 +186,7 @@ namespace VianaNET.CustomStyles.Colors
       return this.palletInfo.HueAvg;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Inherited methods                                                         //
@@ -203,7 +203,7 @@ namespace VianaNET.CustomStyles.Colors
     ///////////////////////////////////////////////////////////////////////////////
     // Methods for doing main class job                                          //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Methods
+
 
     /// <summary>
     /// Calculates color parameters.
@@ -353,7 +353,7 @@ namespace VianaNET.CustomStyles.Colors
       this.palletInfo.HueAvg /= pallet.Length;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Small helping Methods                                                     //
@@ -365,7 +365,7 @@ namespace VianaNET.CustomStyles.Colors
     /// </summary>
     private struct PalletInfo
     {
-      #region Fields
+  
 
       /// <summary>
       ///   Average hue value
@@ -402,7 +402,7 @@ namespace VianaNET.CustomStyles.Colors
       /// </summary>
       public float XMin;
 
-      #endregion
+  
     }
   }
 }

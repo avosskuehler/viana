@@ -36,7 +36,7 @@ namespace VianaNET.Logging
   /// </summary>
   public class ErrorLogger
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="FileStream" /> that gets the messages.
@@ -48,9 +48,9 @@ namespace VianaNET.Logging
     /// </summary>
     private static StreamWriter logWriter;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Prevents a default instance of the ErrorLogger class from being created.
@@ -71,9 +71,9 @@ namespace VianaNET.Logging
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// This method writes the MethodName and Excpetion message into the ErrorLog.txt file.
@@ -131,9 +131,9 @@ namespace VianaNET.Logging
       Console.WriteLine(line);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Returns a human readable string for the exception
@@ -155,6 +155,6 @@ namespace VianaNET.Logging
       return sb.ToString();
     }
 
-    #endregion
+
   }
 }

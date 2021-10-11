@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public abstract class FilterBase
   {
-    #region Constants
+
 
     /// <summary>
     ///   The a.
@@ -54,9 +54,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public const short R = 2;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Height of processed image.
@@ -78,9 +78,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public int ImageWidth { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The process in place.
@@ -90,6 +90,6 @@ namespace VianaNET.Modules.Video.Filter
     /// </param>
     public abstract void ProcessInPlace(IntPtr image);
 
-    #endregion
+
   }
 }

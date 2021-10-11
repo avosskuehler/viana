@@ -29,7 +29,7 @@ namespace VianaNET.Modules.DataGrid
   /// </summary>
   public partial class SkipPointsDialog
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="SkipPointsDialog" /> class.
@@ -41,9 +41,9 @@ namespace VianaNET.Modules.DataGrid
       this.UseEveryNthPointNumericUpDown.Value = App.Project.VideoData.UseEveryNthPoint;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the Click event of the Cancel control.
@@ -75,6 +75,6 @@ namespace VianaNET.Modules.DataGrid
       this.Close();
     }
 
-    #endregion
+
   }
 }

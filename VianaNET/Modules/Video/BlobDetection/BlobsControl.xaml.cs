@@ -36,7 +36,7 @@ namespace VianaNET.Modules.Video.BlobDetection
   /// </summary>
   public partial class BlobsControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="BlobsControl" /> class.
@@ -48,9 +48,9 @@ namespace VianaNET.Modules.Video.BlobDetection
       this.WirePropertyChangedEvents();
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Resets the whole control with the existing data
@@ -104,9 +104,9 @@ namespace VianaNET.Modules.Video.BlobDetection
     }
 
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The blobs control_ is visible changed.
@@ -357,7 +357,7 @@ namespace VianaNET.Modules.Video.BlobDetection
       this.ResetOuterRegion();
     }
 
-    #endregion
+
 
   }
 }

@@ -32,7 +32,7 @@ namespace VianaNET.Modules.Base
   /// </summary>
   public partial class WindowWithHelp : Window
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -44,18 +44,18 @@ namespace VianaNET.Modules.Base
         typeof(WindowWithHelp), 
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The mouse down location.
     /// </summary>
     private Point mouseDownLocation;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="WindowWithHelp" /> class.
@@ -65,9 +65,9 @@ namespace VianaNET.Modules.Base
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -79,9 +79,9 @@ namespace VianaNET.Modules.Base
       set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
@@ -289,6 +289,6 @@ namespace VianaNET.Modules.Base
       }
     }
 
-    #endregion
+
   }
 }

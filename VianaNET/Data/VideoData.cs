@@ -37,7 +37,7 @@ namespace VianaNET.Data
   [Serializable]
   public class VideoData : DependencyObject, INotifyPropertyChanged
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The Filtered samples property.
@@ -99,18 +99,18 @@ namespace VianaNET.Data
       typeof(VideoData),
       new UIPropertyMetadata(1));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The valid data samples for each object
     /// </summary>
     private List<TimeSample>[] validDataSamples;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VideoData" /> class.
@@ -122,9 +122,9 @@ namespace VianaNET.Data
       this.FramerateFactor = 1;
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The property changed.
@@ -136,9 +136,9 @@ namespace VianaNET.Data
     /// </summary>
     public event EventHandler SelectionChanged;
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the filtered sample collection containing the detected samples
@@ -215,7 +215,7 @@ namespace VianaNET.Data
     ///   Gets or sets the time position in milliseconds, where
     ///   the video time should be zero.
     /// </summary>
-    public long TimeZeroPositionInMs { get; set; }
+    public double TimeZeroPositionInMs { get; set; }
 
     /// <summary>
     ///   Gets or sets the skip point count.
@@ -234,9 +234,9 @@ namespace VianaNET.Data
       }
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The add point.
@@ -386,10 +386,7 @@ namespace VianaNET.Data
     /// </summary>
     public void OnSelectionChanged()
     {
-      if (this.SelectionChanged != null)
-      {
-        this.SelectionChanged(this, EventArgs.Empty);
-      }
+      this.SelectionChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -478,9 +475,9 @@ namespace VianaNET.Data
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The on property changed.
@@ -490,10 +487,7 @@ namespace VianaNET.Data
     /// </param>
     protected virtual void OnPropertyChanged(string propertyName)
     {
-      if (this.PropertyChanged != null)
-      {
-        this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     /// <summary>
@@ -661,6 +655,7 @@ namespace VianaNET.Data
 
     #endregion
 
+
     #region Length
 
     /// <summary>
@@ -701,6 +696,7 @@ namespace VianaNET.Data
 
     #endregion
 
+
     #region Velocity
 
     /// <summary>
@@ -719,7 +715,7 @@ namespace VianaNET.Data
     /// <returns>The Distance(currentSample)]/dt</returns>
     private static double? GetVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return currentSample.Object[objectIndex].Distance / dt * GetTimeFactor();
     }
 
@@ -741,7 +737,7 @@ namespace VianaNET.Data
     /// </returns>
     private static double? GetXVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return currentSample.Object[objectIndex].DistanceX / dt * GetTimeFactor();
     }
 
@@ -764,7 +760,7 @@ namespace VianaNET.Data
     private static double? GetYVelocity(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
       // v(t) = [s(t + dt) - s(t)]/dt
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return currentSample.Object[objectIndex].DistanceY / dt * GetTimeFactor();
     }
 
@@ -859,6 +855,7 @@ namespace VianaNET.Data
 
     #endregion
 
+
     #region Acceleration
 
     /// <summary>
@@ -880,7 +877,7 @@ namespace VianaNET.Data
     private static double? GetSimpleAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
       // a(t) = [v(t + dt) - v(t)]/dt
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].Velocity - currentSample.Object[objectIndex].Velocity) / dt
              * GetTimeFactor();
     }
@@ -904,7 +901,7 @@ namespace VianaNET.Data
     private static double? GetSimpleXAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
       // a(t) = [v(t + dt) - v(t)]/dt
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].VelocityX - currentSample.Object[objectIndex].VelocityX) / dt
              * GetTimeFactor();
     }
@@ -928,7 +925,7 @@ namespace VianaNET.Data
     private static double? GetSimpleYAcceleration(TimeSample currentSample, TimeSample nextSample, int objectIndex)
     {
       // a(t) = [v(t + dt) - v(t)]/dt
-      long dt = nextSample.Timestamp - currentSample.Timestamp;
+      double dt = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].VelocityY - currentSample.Object[objectIndex].VelocityY) / dt
              * GetTimeFactor();
     }
@@ -959,8 +956,8 @@ namespace VianaNET.Data
       int objectIndex)
     {
       // a(t) = [v(t+dt) - v(t-dt)]/2dt
-      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
-      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      double timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      double timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].Velocity - previousSample.Object[objectIndex].Velocity)
              / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
@@ -991,8 +988,8 @@ namespace VianaNET.Data
       int objectIndex)
     {
       // a(t) = [v(t+dt) - v(t-dt)]/2dt
-      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
-      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      double timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      double timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].VelocityX - previousSample.Object[objectIndex].VelocityX)
              / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
@@ -1023,8 +1020,8 @@ namespace VianaNET.Data
       int objectIndex)
     {
       // a(t) = [v(t+dt) - v(t-dt)]/2dt
-      long timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
-      long timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
+      double timeTifference1 = currentSample.Timestamp - previousSample.Timestamp;
+      double timeTifference2 = nextSample.Timestamp - currentSample.Timestamp;
       return (nextSample.Object[objectIndex].VelocityY - previousSample.Object[objectIndex].VelocityY)
              / (timeTifference1 + timeTifference2) * GetTimeFactor();
     }
@@ -1285,6 +1282,6 @@ namespace VianaNET.Data
       }
     }
 
-    #endregion
+
   }
 }

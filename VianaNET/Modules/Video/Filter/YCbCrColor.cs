@@ -40,7 +40,7 @@ namespace VianaNET.Modules.Video.Filter
   /// </summary>
   public class YCbCrColor
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="YCbCrColor"/> class.
@@ -61,9 +61,9 @@ namespace VianaNET.Modules.Video.Filter
       this.Cr = cr;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the max.
@@ -90,9 +90,9 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public float Y { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The from argb color.
@@ -195,6 +195,6 @@ namespace VianaNET.Modules.Video.Filter
              | (byte)(b > 255 ? 255 : b);
     }
 
-    #endregion
+
   }
 }

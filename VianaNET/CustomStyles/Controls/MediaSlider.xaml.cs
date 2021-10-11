@@ -36,71 +36,71 @@ namespace VianaNET
   /// </summary>
   public class MediaSlider : Slider
   {
-    #region Constants
+
 
     /// <summary>
     ///   The timeline mouse capture margin.
     /// </summary>
     private const int TimelineMouseCaptureMargin = 25;
 
-    #endregion
 
-    #region Static Fields
+
+
 
     /// <summary>
     ///   The current time string property.
     /// </summary>
     public static readonly DependencyProperty CurrentTimeStringProperty =
       DependencyProperty.Register(
-        "CurrentTimeString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "CurrentTimeString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
-    ///   The frame time in nano seconds property.
+    ///   The frame time in milli seconds property.
     /// </summary>
-    public static readonly DependencyProperty FrameTimeInNanoSecondsProperty =
+    public static readonly DependencyProperty FrameTimeInMSProperty =
       DependencyProperty.Register(
-        "FrameTimeInNanoSeconds", 
-        typeof(long), 
-        typeof(MediaSlider), 
-        new UIPropertyMetadata(default(long), OnFrameTimeChanged));
+        "FrameTimeInMS",
+        typeof(double),
+        typeof(MediaSlider),
+        new UIPropertyMetadata(default(double), OnFrameTimeChanged));
 
     /// <summary>
     ///   The is showing times property.
     /// </summary>
     public static readonly DependencyProperty IsShowingTimesProperty = DependencyProperty.Register(
-      "IsShowingTimes", 
-      typeof(Visibility), 
-      typeof(MediaSlider), 
+      "IsShowingTimes",
+      typeof(Visibility),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The is showing times property.
     /// </summary>
     public static readonly DependencyProperty IsShowingTickButtonsProperty = DependencyProperty.Register(
-      "IsShowingTickButtons", 
-      typeof(Visibility), 
-      typeof(MediaSlider), 
+      "IsShowingTickButtons",
+      typeof(Visibility),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
     /// <summary>
     ///   The maximum string property.
     /// </summary>
     public static readonly DependencyProperty MaximumStringProperty = DependencyProperty.Register(
-      "MaximumString", 
-      typeof(string), 
-      typeof(MediaSlider), 
+      "MaximumString",
+      typeof(string),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The minimum string property.
     /// </summary>
     public static readonly DependencyProperty MinimumStringProperty = DependencyProperty.Register(
-      "MinimumString", 
-      typeof(string), 
-      typeof(MediaSlider), 
+      "MinimumString",
+      typeof(string),
+      typeof(MediaSlider),
       new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -108,9 +108,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionEndStringProperty =
       DependencyProperty.Register(
-        "SelectionEndString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "SelectionEndString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -118,9 +118,9 @@ namespace VianaNET
     /// </summary>
     public static readonly DependencyProperty SelectionStartStringProperty =
       DependencyProperty.Register(
-        "SelectionStartString", 
-        typeof(string), 
-        typeof(MediaSlider), 
+        "SelectionStartString",
+        typeof(string),
+        typeof(MediaSlider),
         new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
@@ -133,9 +133,9 @@ namespace VianaNET
     /// </summary>
     public static RoutedCommand TickUpClickedCommand;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The current range selection thumb.
@@ -167,9 +167,9 @@ namespace VianaNET
     /// </summary>
     private RepeatButton timelineTickUpButton;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="MediaSlider" /> class.
@@ -194,9 +194,9 @@ namespace VianaNET
       this.CommandBindings.Add(bindingTickUpClicked);
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   The selection and value changed.
@@ -223,9 +223,9 @@ namespace VianaNET
     /// </summary>
     public event EventHandler TickUpClicked;
 
-    #endregion
 
-    #region Enums
+
+
 
     /// <summary>
     ///   The range selection thumb.
@@ -235,22 +235,22 @@ namespace VianaNET
       /// <summary>
       ///   The none.
       /// </summary>
-      None, 
+      None,
 
       /// <summary>
       ///   The start.
       /// </summary>
-      Start, 
+      Start,
 
       /// <summary>
       ///   The end.
       /// </summary>
-      End, 
+      End,
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the current time string.
@@ -265,11 +265,11 @@ namespace VianaNET
     /// <summary>
     ///   Gets or sets the Time between frames in ms units.
     /// </summary>
-    public long FrameTimeInNanoSeconds
+    public double FrameTimeInMS
     {
-      get => (long)this.GetValue(FrameTimeInNanoSecondsProperty);
+      get => (double)this.GetValue(FrameTimeInMSProperty);
 
-      set => this.SetValue(FrameTimeInNanoSecondsProperty, value);
+      set => this.SetValue(FrameTimeInMSProperty, value);
     }
 
     /// <summary>
@@ -332,9 +332,9 @@ namespace VianaNET
       set => this.SetValue(SelectionStartStringProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Builds the visual tree for the <see cref="T:System.Windows.Controls.Slider" /> control.
@@ -372,9 +372,9 @@ namespace VianaNET
       this.SelectionEndString = this.ConvertToTimeString(this.SelectionEnd);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/>
@@ -488,10 +488,7 @@ namespace VianaNET
     {
       if (newValue > this.SelectionEnd)
       {
-        if (this.SelectionEndReached != null)
-        {
-          this.SelectionEndReached(this, EventArgs.Empty);
-        }
+        this.SelectionEndReached?.Invoke(this, EventArgs.Empty);
 
         this.Value = this.SelectionEnd;
 
@@ -501,10 +498,7 @@ namespace VianaNET
       }
       else if (newValue < this.SelectionStart)
       {
-        if (this.SelectionStartReached != null)
-        {
-          this.SelectionStartReached(this, EventArgs.Empty);
-        }
+        this.SelectionStartReached?.Invoke(this, EventArgs.Empty);
 
         this.Value = this.SelectionStart;
         newValue = this.SelectionStart;
@@ -562,7 +556,7 @@ namespace VianaNET
     private string ConvertToTimeString(double value)
     {
       //int timeInMS = value;
-      TimeSpan time = new TimeSpan(0, 0, 0, 0,(int)value);
+      TimeSpan time = new TimeSpan(0, 0, 0, 0, (int)value);
       //var seconds = (int)Math.Floor(timeInMS / 1000);
       //var milliseconds = (int)(timeInMS - seconds * 1000);
       string timeValue = time.ToString(@"mm\:ss\.fff");//seconds.ToString("N0") + ":" + milliseconds.ToString("000");
@@ -630,10 +624,7 @@ namespace VianaNET
             if (this.Value < this.SelectionStart)
             {
               this.Value = this.SelectionStart;
-              if (this.SelectionAndValueChanged != null)
-              {
-                this.SelectionAndValueChanged(this, EventArgs.Empty);
-              }
+              this.SelectionAndValueChanged?.Invoke(this, EventArgs.Empty);
             }
 
             break;
@@ -643,10 +634,7 @@ namespace VianaNET
             if (this.Value > this.SelectionEnd)
             {
               this.Value = this.SelectionEnd;
-              if (this.SelectionAndValueChanged != null)
-              {
-                this.SelectionAndValueChanged(this, EventArgs.Empty);
-              }
+              this.SelectionAndValueChanged?.Invoke(this, EventArgs.Empty);
             }
 
             break;
@@ -663,9 +651,7 @@ namespace VianaNET
     {
       // Ggf. TODO
       // this.IsSnapToTickEnabled = false;
-      this.TickFrequency = this.FrameTimeInNanoSeconds * VideoBase.NanoSecsToMilliSecs;
+      this.TickFrequency = this.FrameTimeInMS;
     }
-
-    #endregion
   }
 }

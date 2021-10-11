@@ -37,7 +37,7 @@ namespace VianaNET.Data.Filter
   /// </summary>
   public abstract class FilterBase : DependencyObject
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The number of samples to interpolate property.
@@ -49,7 +49,7 @@ namespace VianaNET.Data.Filter
         typeof(FilterBase),
         new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsRender));
 
-    #endregion
+
 
     /// <summary>
     /// Anzahl der Wertepaare, die für die Berechnungen der Ausgleichsfunktion benutzt werden
@@ -90,7 +90,7 @@ namespace VianaNET.Data.Filter
       this.WertY = new List<double>();
     }
 
-    #region Public Properties
+
 
     /// <summary>
     /// Gets or sets aus den Videodaten herausgelesene Messpaare - 
@@ -128,9 +128,9 @@ namespace VianaNET.Data.Filter
       set => this.SetValue(NumberOfSamplesToInterpolateProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// This virtual method should be overridden from
@@ -171,7 +171,7 @@ namespace VianaNET.Data.Filter
       return sampleCollection;
     }
 
-    #endregion
+
 
     /// <summary>
     /// Copies data sample columns to WertX and WertY arrays.

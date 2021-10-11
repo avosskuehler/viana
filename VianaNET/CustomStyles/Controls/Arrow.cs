@@ -32,7 +32,7 @@ namespace VianaNET.CustomStyles.Controls
   /// </summary>
   public sealed class Arrow : Shape
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The head height property
@@ -100,9 +100,9 @@ namespace VianaNET.CustomStyles.Controls
         0.0,
         FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the height of the head.
@@ -188,9 +188,9 @@ namespace VianaNET.CustomStyles.Controls
       set => this.SetValue(Y2Property, value);
     }
 
-    #endregion
 
-    #region Properties
+
+
 
     /// <summary>
     ///   Gets a value that represents the <see cref="T:System.Windows.Media.Geometry" /> of the
@@ -216,9 +216,9 @@ namespace VianaNET.CustomStyles.Controls
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Internals the draw arrow geometry.
@@ -250,6 +250,6 @@ namespace VianaNET.CustomStyles.Controls
       context.LineTo(pt2, true, true);
     }
 
-    #endregion
+
   }
 }

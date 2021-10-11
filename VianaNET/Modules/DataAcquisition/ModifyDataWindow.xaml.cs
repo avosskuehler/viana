@@ -39,7 +39,7 @@ namespace VianaNET.Modules.DataAcquisition
   /// </summary>
   public partial class ModifyDataWindow
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
@@ -60,9 +60,9 @@ namespace VianaNET.Modules.DataAcquisition
         typeof(ModifyDataWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The timeslider update timer.
@@ -100,9 +100,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private bool hadSharpCursorOnEnteringControlPanel;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModifyDataWindow"/> class. 
@@ -153,9 +153,9 @@ namespace VianaNET.Modules.DataAcquisition
       this.SetVisibilityOfSharpCursor(false);
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -177,9 +177,9 @@ namespace VianaNET.Modules.DataAcquisition
       set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Moves to given frame index.
@@ -187,9 +187,9 @@ namespace VianaNET.Modules.DataAcquisition
     /// <param name="frameIndex">Index of the frame.</param>
     public void MoveToFrame(int frameIndex)
     {
-      var newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInNanoSeconds * frameIndex;
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds = newMediaPosition;
-      this.TimelineSlider.Value = newMediaPosition * VideoBase.NanoSecsToMilliSecs;
+      var newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInMS * frameIndex;
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = newMediaPosition;
+      this.TimelineSlider.Value = newMediaPosition;
       Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       this.UpdateDataPointLocation();
     }
@@ -515,8 +515,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// </param>
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds =
-        (long)(this.TimelineSlider.Value / VideoBase.NanoSecsToMilliSecs);
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
       this.isDraggingTimeLineThumb = false;
       this.UpdateDataPointLocation();
     }
@@ -658,8 +657,7 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
       {
-        double preciseTime = Video.Instance.VideoPlayerElement.MediaPositionInNanoSeconds;
-        this.TimelineSlider.Value = preciseTime * VideoBase.NanoSecsToMilliSecs;
+        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
         Video.Instance.VideoPlayerElement.UpdateFrameIndex();
       }
     }
@@ -743,6 +741,6 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
-    #endregion
+
   }
 }

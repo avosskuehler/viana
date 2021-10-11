@@ -38,7 +38,7 @@ namespace VianaNET.Modules.Video.Filter
     // private Segment lastSegment;
     // private int jitteringAmountThreshold;
     // private int jitteringAmountThresholdSq;
-    #region Public Properties
+
 
     /// <summary>
     ///   Gets or sets the histogram.
@@ -60,7 +60,7 @@ namespace VianaNET.Modules.Video.Filter
     /// </summary>
     public VectorInt ThresholdLuminance { get; set; }
 
-    #endregion
+
 
     // public int JitteringCountThreshold { get; set; }
     // public int JitteringAmountThreshold
@@ -72,7 +72,7 @@ namespace VianaNET.Modules.Video.Filter
     // jitteringAmountThresholdSq = value * value;
     // }
     // }
-    #region Public Methods and Operators
+
 
     /// <summary>
     ///   The process.
@@ -176,9 +176,9 @@ namespace VianaNET.Modules.Video.Filter
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The get index below threshold.
@@ -248,7 +248,7 @@ namespace VianaNET.Modules.Video.Filter
       return result;
     }
 
-    #endregion
+
 
     // public void Reset()
     // {

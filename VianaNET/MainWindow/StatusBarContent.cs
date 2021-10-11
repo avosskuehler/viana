@@ -34,7 +34,7 @@ namespace VianaNET.MainWindow
   /// </summary>
   public class StatusBarContent : DependencyObject
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The messages label property.
@@ -65,9 +65,9 @@ namespace VianaNET.MainWindow
     /// </summary>
     private static StatusBarContent instance;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Prevents a default instance of the <see cref="StatusBarContent" /> class from being created.
@@ -78,9 +78,9 @@ namespace VianaNET.MainWindow
       // ready.SetBinding(this, StatusBarContent.StatusLabelProperty);
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the <see cref="CalibrationData" /> singleton.
@@ -142,6 +142,6 @@ namespace VianaNET.MainWindow
       set => this.SetValue(VideoFilenameProperty, value);
     }
 
-    #endregion
+
   }
 }

@@ -36,7 +36,7 @@ namespace VianaNET
   /// </summary>
   public static class RadioButtonPallet
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The disabled background.
@@ -93,9 +93,9 @@ namespace VianaNET
     /// </summary>
     public static Color PlusLightBackground2;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="RadioButtonPallet" /> class.
@@ -106,9 +106,9 @@ namespace VianaNET
       OfficeColors.RegistersTypes.Add(typeof(RadioButtonPallet));
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   The reset.
@@ -132,7 +132,7 @@ namespace VianaNET
       DisabledForeground = OfficeColors.Disabled.OfficeColor3;
     }
 
-    #endregion
+
   }
 
   #endregion

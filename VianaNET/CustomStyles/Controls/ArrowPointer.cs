@@ -11,7 +11,7 @@ namespace VianaNET.CustomStyles.Controls
   /// </summary>
   public sealed class ArrowPointer : Shape
   {
-    #region Dependency Properties
+
 
     /// <summary>
     /// The x property
@@ -43,9 +43,9 @@ namespace VianaNET.CustomStyles.Controls
     /// </summary>
     public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register("HeadHeight", typeof(double), typeof(ArrowPointer), new FrameworkPropertyMetadata(10.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
-    #endregion
 
-    #region CLR Properties
+
+
 
     /// <summary>
     /// Gets or sets the x.
@@ -126,9 +126,9 @@ namespace VianaNET.CustomStyles.Controls
       set => this.SetValue(HeadHeightProperty, value);
     }
 
-    #endregion
 
-    #region Overrides
+
+
 
     /// <summary>
     /// Gets a value that represents the <see cref="T:System.Windows.Media.Geometry" /> of the <see cref="T:System.Windows.Shapes.Shape" />.
@@ -153,9 +153,9 @@ namespace VianaNET.CustomStyles.Controls
       }
     }
 
-    #endregion
 
-    #region Privates
+
+
 
     /// <summary>
     /// Draw the arrow pointers geometry.
@@ -220,6 +220,6 @@ namespace VianaNET.CustomStyles.Controls
       context.LineTo(pt4, true, true);
     }
 
-    #endregion
+
   }
 }

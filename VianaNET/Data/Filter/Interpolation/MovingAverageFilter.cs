@@ -36,7 +36,7 @@ namespace VianaNET.Data.Filter.Interpolation
   /// </summary>
   public class MovingAverageFilter : InterpolationFilter
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="MovingAverageFilter" /> class.
@@ -47,14 +47,14 @@ namespace VianaNET.Data.Filter.Interpolation
       this.NumberOfSamplesToInterpolate = 3;
     }
 
-    #endregion
+
 
     /// <summary>
     /// Gets or sets the MovingAverageUserControl
     /// </summary>
     public override UserControl CustomUserControl => new MovingAverageUserControl(this);
 
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// Calculate moving average values for the current data series.
@@ -76,6 +76,6 @@ namespace VianaNET.Data.Filter.Interpolation
       App.Project.CurrentFilterData.InterpolationSeries = fittedSamples;
     }
 
-    #endregion
+
   }
 }

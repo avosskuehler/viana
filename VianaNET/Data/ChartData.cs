@@ -41,7 +41,7 @@ namespace VianaNET.Data
   [Serializable]
   public class ChartData
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ChartData" /> class.
@@ -112,9 +112,9 @@ namespace VianaNET.Data
       App.Project.CurrentFilterData.PropertyChanged += this.CurrentFilterDataPropertyChanged;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the chart data model.
@@ -180,9 +180,9 @@ namespace VianaNET.Data
     /// </value>
     public LinearAxis YAxis { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   Updates the appearance of the different data series.
@@ -296,9 +296,9 @@ namespace VianaNET.Data
       this.ChartDataModel.InvalidatePlot(true);
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Gets the target value.
@@ -392,6 +392,6 @@ namespace VianaNET.Data
       series.MarkerStrokeThickness = 1.5;
     }
 
-    #endregion
+
   }
 }

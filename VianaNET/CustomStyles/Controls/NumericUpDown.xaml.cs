@@ -40,7 +40,7 @@ namespace VianaNET
   /// </summary>
   public class NumericUpDown : Control
   {
-    #region Constants
+
 
     /// <summary>
     ///   The default change.
@@ -67,9 +67,9 @@ namespace VianaNET
     /// </summary>
     private const decimal DefaultValue = DefaultMinValue;
 
-    #endregion
 
-    #region Static Fields
+
+
 
     /// <summary>
     ///   The change property.
@@ -146,18 +146,18 @@ namespace VianaNET
     /// </summary>
     private static RoutedCommand _increaseCommand;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   The _number format info.
     /// </summary>
     private readonly NumberFormatInfo _numberFormatInfo = new NumberFormatInfo();
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes static members of the <see cref="NumericUpDown" /> class.
@@ -182,9 +182,9 @@ namespace VianaNET
       this.updateValueString();
     }
 
-    #endregion
 
-    #region Public Events
+
+
 
     /// <summary>
     ///   Occurs when the Value property changes.
@@ -202,9 +202,9 @@ namespace VianaNET
       }
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets the decrease command.
@@ -271,9 +271,9 @@ namespace VianaNET
     /// </summary>
     public string ValueString => (string)this.GetValue(ValueStringProperty);
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Throws an <see cref="ArgumentOutOfRangeException"/> if the provided truth is false.
@@ -320,9 +320,9 @@ namespace VianaNET
       }
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     ///   The on create automation peer.
@@ -676,7 +676,7 @@ namespace VianaNET
       this.SetValue(ValueStringPropertyKey, newValueString);
     }
 
-    #endregion
+
   }
 
   /// <summary>
@@ -684,7 +684,7 @@ namespace VianaNET
   /// </summary>
   public class NumericUpDownAutomationPeer : FrameworkElementAutomationPeer, IRangeValueProvider
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NumericUpDownAutomationPeer"/> class.
@@ -697,9 +697,9 @@ namespace VianaNET
     {
     }
 
-    #endregion
 
-    #region Explicit Interface Properties
+
+
 
     /// <summary>
     ///   Gets a value indicating whether is read only.
@@ -731,18 +731,18 @@ namespace VianaNET
     /// </summary>
     double IRangeValueProvider.Value => (double)this.MyOwner.Value;
 
-    #endregion
 
-    #region Properties
+
+
 
     /// <summary>
     ///   Gets the my owner.
     /// </summary>
     private NumericUpDown MyOwner => (NumericUpDown)base.Owner;
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// The get pattern.
@@ -763,9 +763,9 @@ namespace VianaNET
       return base.GetPattern(patternInterface);
     }
 
-    #endregion
 
-    #region Explicit Interface Methods
+
+
 
     /// <summary>
     /// The set value.
@@ -791,9 +791,9 @@ namespace VianaNET
       this.MyOwner.Value = val;
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// The raise value changed event.
@@ -827,6 +827,6 @@ namespace VianaNET
       return "NumericUpDown";
     }
 
-    #endregion
+
   }
 }

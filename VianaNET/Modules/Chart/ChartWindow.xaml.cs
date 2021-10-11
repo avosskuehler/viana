@@ -60,7 +60,7 @@ namespace VianaNET.Modules.Chart
   /// </summary>
   public partial class ChartWindow
   {
-    #region Static Fields
+
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="ObjectDescriptions" />.
@@ -72,9 +72,9 @@ namespace VianaNET.Modules.Chart
         typeof(ChartWindow),
         new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
 
-    #endregion
 
-    #region Constants
+
+
 
     /// <summary>
     ///   Determines maximum distance of two points (in pixel) given by mouse input
@@ -82,9 +82,9 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private const int Maxdistancepoints = 10;
 
-    #endregion
 
-    #region Fields
+
+
 
     /// <summary>
     ///   Provides a formula parser which reads tex formulas
@@ -145,9 +145,9 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private DataPoint mouseUpPositionInAxesCoordinates;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="ChartWindow" /> class.
@@ -168,9 +168,9 @@ namespace VianaNET.Modules.Chart
       this.PopulateAxesFromChartSelection();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Gets or sets the chart data. This is the view model for the chart.
@@ -190,9 +190,9 @@ namespace VianaNET.Modules.Chart
       set => this.SetValue(ObjectDescriptionsProperty, value);
     }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     ///   This method refreshes the whole series and chart layout
@@ -247,9 +247,9 @@ namespace VianaNET.Modules.Chart
       this.ChartData.UpdateModel();
     }
 
-    #endregion
 
-    #region Methods
+
+
 
     /// <summary>
     /// Calculate Distance of two Vectors per Phythagoras
@@ -1789,6 +1789,6 @@ namespace VianaNET.Modules.Chart
       this.ChartData.ChartDataModel.InvalidatePlot(false);
     }
 
-    #endregion
+
   }
 }

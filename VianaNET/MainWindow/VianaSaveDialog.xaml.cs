@@ -36,7 +36,7 @@ namespace VianaNET.MainWindow
     ///////////////////////////////////////////////////////////////////////////////
     // Construction and Initializing methods                                     //
     ///////////////////////////////////////////////////////////////////////////////
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VianaSaveDialog" /> class. 
@@ -61,9 +61,9 @@ namespace VianaNET.MainWindow
       this.Message = message;
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Sets the description background.
@@ -102,13 +102,13 @@ namespace VianaNET.MainWindow
       set => this.TopFrame.Title = value;
     }
 
-    #endregion
+
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //
     ///////////////////////////////////////////////////////////////////////////////
 
-    #region Methods
+
 
     /// <summary>
     /// Event handler for the button click event.
@@ -134,6 +134,6 @@ namespace VianaNET.MainWindow
       this.DialogResult = false;
       this.Close();
     }
-    #endregion
+
   }
 }

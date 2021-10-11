@@ -37,16 +37,16 @@ namespace VianaNET.CustomStyles.Types
   /// </typeparam>
   public class DictionaryProxy<TK, TV>
   {
-    #region Fields
+
 
     /// <summary>
     /// The list.
     /// </summary>
     private Collection<KeyAndValue> list;
 
-    #endregion
 
-    #region Constructors and Destructors
+
+
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DictionaryProxy{K,V}"/> class.
@@ -67,9 +67,9 @@ namespace VianaNET.CustomStyles.Types
     {
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     /// Gets the keys and values.
@@ -112,9 +112,9 @@ namespace VianaNET.CustomStyles.Types
     [XmlIgnore]
     public IDictionary<TK, TV> Original { get; set; }
 
-    #endregion
 
-    #region Public Methods and Operators
+
+
 
     /// <summary>
     /// Convenience method to return a dictionary from this proxy instance
@@ -127,14 +127,14 @@ namespace VianaNET.CustomStyles.Types
       return this.KeysAndValues.ToDictionary(key => key.Key, value => value.Value);
     }
 
-    #endregion
+
 
     /// <summary>
     ///   Holds the keys and values
     /// </summary>
     public class KeyAndValue
     {
-      #region Public Properties
+  
 
       /// <summary>
       /// Gets or sets the key.
@@ -146,7 +146,7 @@ namespace VianaNET.CustomStyles.Types
       /// </summary>
       public TV Value { get; set; }
 
-      #endregion
+  
     }
   }
 }

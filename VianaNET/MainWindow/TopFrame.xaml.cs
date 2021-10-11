@@ -33,7 +33,7 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class TopFrame : UserControl
   {
-    #region Constructors and Destructors
+
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="TopFrame" /> class.
@@ -43,9 +43,9 @@ namespace VianaNET.MainWindow
       this.InitializeComponent();
     }
 
-    #endregion
 
-    #region Public Properties
+
+
 
     /// <summary>
     ///   Sets the icon.
@@ -76,6 +76,6 @@ namespace VianaNET.MainWindow
       set => this.Header.FontSize = value;
     }
 
-    #endregion
+
   }
 }

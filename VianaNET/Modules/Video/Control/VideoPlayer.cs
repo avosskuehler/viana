@@ -27,12 +27,15 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
+  using System.ComponentModel;
   using System.IO;
   using System.Threading;
   using System.Windows;
   using System.Windows.Threading;
 
   using DirectShowLib;
+  using OpenCvSharp;
+  using OpenCvSharp.WpfExtensions;
   using VianaNET.Logging;
   using VianaNET.MainWindow;
 
@@ -45,8 +48,6 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class VideoPlayer : VideoBase
   {
-    #region Constants
-
     /// <summary>
     ///   The volume full.
     /// </summary>
@@ -57,14 +58,13 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     private const int VolumeSilence = -10000;
 
-    /// <summary>
-    ///   The wm graph notify.
-    /// </summary>
-    private const int WMGraphNotify = 0x0400 + 13;
+    public VideoPlayer()
+    {
+    }
 
-    #endregion
-
-    #region Static Fields
+    ~VideoPlayer()
+    {
+    }
 
     /// <summary>
     ///   The media duration in ms property.
@@ -72,69 +72,6 @@ namespace VianaNET.Modules.Video.Control
     public static readonly DependencyProperty MediaDurationInMSProperty =
       DependencyProperty.Register(
         "MediaDurationInMS", typeof(double), typeof(VideoPlayer), new UIPropertyMetadata(default(double)));
-
-    #endregion
-
-    #region Fields
-
-    /// <summary>
-    ///   The time format.
-    /// </summary>
-    private readonly Guid timeFormat = TimeFormat.MediaTime;
-
-    /// <summary>
-    ///   The basic audio.
-    /// </summary>
-    private IBasicAudio basicAudio;
-
-    /// <summary>
-    ///   The basic video.
-    /// </summary>
-    private IBasicVideo basicVideo;
-
-    /// <summary>
-    ///   The event thread.
-    /// </summary>
-    private Thread eventThread;
-
-    /// <summary>
-    ///   The frame step.
-    /// </summary>
-    private IVideoFrameStep frameStep;
-
-    ///// <summary>
-    /////   The is frame time capable.
-    ///// </summary>
-    //private bool isFrameTimeCapable;
-
-    /// <summary>
-    ///   The media event.
-    /// </summary>
-    private IMediaEvent mediaEvent;
-
-    /// <summary>
-    ///   The media position.
-    /// </summary>
-    private IMediaPosition mediaPosition;
-
-    /// <summary>
-    ///   The media seeking.
-    /// </summary>
-    private IMediaSeeking mediaSeeking;
-
-    /// <summary>
-    ///   The should exit event loop.
-    /// </summary>
-    private volatile bool shouldExitEventLoop;
-
-    /// <summary>
-    ///   The video window.
-    /// </summary>
-    private IVideoWindow videoWindow;
-
-    #endregion
-
-    #region Public Events
 
     /// <summary>
     ///   The file complete.
@@ -145,10 +82,6 @@ namespace VianaNET.Modules.Video.Control
     ///   The step complete.
     /// </summary>
     public event EventHandler StepComplete;
-
-    #endregion
-
-    #region Public Properties
 
     /// <summary>
     /// Gets or sets the filename of the video file
@@ -165,124 +98,31 @@ namespace VianaNET.Modules.Video.Control
       set => this.SetValue(MediaDurationInMSProperty, value);
     }
 
-    ///// <summary>
-    /////   Gets the video duration in ms, which is the media duration
-    /////   times the framerate factor.
-    ///// </summary>
-    //public double VideoDurationInMs
-    //{
-    //  get
-    //  {
-    //    return this.MediaDurationInMS * App.Project.VideoData.FramerateFactor;
-    //  }
-    //}
-
     /// <summary>
-    ///   Gets or sets the media position in nano seconds.
+    ///   Gets or sets the media position in milli seconds.
     /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
-    public override long MediaPositionInNanoSeconds
+    public override double MediaPositionInMS
     {
       get
       {
-        if (this.mediaSeeking == null)
-        {
-          return 0;
-        }
-
-        long currentPosition;
-        //long stopPosition;
-        int hr = this.mediaSeeking.GetCurrentPosition(out currentPosition);
-        //hr = this.mediaSeeking.GetPositions(out currentPosition, out stopPosition);
-        DsError.ThrowExceptionForHR(hr);
-
-        //long milliSeconds = currentPosition;
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  return (long)(currentPosition * this.FrameTimeInNanoSeconds);
-        //}
-        //else
-        //{
-        return (long)(currentPosition * App.Project.VideoData.FramerateFactor);
-        //}
+        var pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
+        return pos;
       }
 
       set
       {
-        if (this.mediaSeeking == null)
-        {
-          return;
-        }
-
-        long currentPosition = (long)(value / App.Project.VideoData.FramerateFactor);
-        if (currentPosition < 0)
-        {
-          currentPosition = 0;
-        }
-
-        int hr = this.mediaSeeking.SetPositions(
-          new DsLong(currentPosition),
-          AMSeekingSeekingFlags.AbsolutePositioning,
-          null,
-          AMSeekingSeekingFlags.NoPositioning);
-        DsError.ThrowExceptionForHR(hr);
-
+        this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value);
+        this.GrabCurrentFrame();
         this.UpdateFrameIndex();
       }
     }
-
-    #endregion
-
-    #region Public Methods and Operators
 
     /// <summary>
     ///   The dispose.
     /// </summary>
     public override void Dispose()
     {
-      this.ReleaseEventThread();
-
-      //// Release and zero DirectShow interfaces
-      if (this.mediaSeeking != null)
-      {
-        this.mediaSeeking = null;
-      }
-
-      if (this.mediaPosition != null)
-      {
-        this.mediaPosition = null;
-      }
-
-      if (this.mediaControl != null)
-      {
-        this.mediaControl = null;
-      }
-
-      if (this.basicAudio != null)
-      {
-        this.basicAudio = null;
-      }
-
-      if (this.basicVideo != null)
-      {
-        this.basicVideo = null;
-      }
-
-      if (this.mediaEvent != null)
-      {
-        this.mediaEvent = null;
-      }
-
-      if (this.videoWindow != null)
-      {
-        this.videoWindow = null;
-      }
-
-      if (this.frameStep != null)
-      {
-        this.frameStep = null;
-      }
-
       // Release DirectShow interfaces
       base.Dispose();
 
@@ -303,8 +143,6 @@ namespace VianaNET.Modules.Video.Control
     /// </returns>
     public bool LoadMovie(string fileName)
     {
-      this.ReleaseEventThread();
-
       try
       {
         if (App.Project.ProjectPath == null)
@@ -404,21 +242,28 @@ namespace VianaNET.Modules.Video.Control
             return false;
           }
 
-          this.FrameTimeInNanoSeconds = (long)(10000000d / fps) + 1;
+          this.FrameTimeInMS = 1000d / fps;
           this.MediaDurationInMS = duration;
           this.FrameCount = frames;
 
         }
 
-
         App.Project.VideoData.FramerateFactor = 1;
         try
         {
-          this.BuildGraph();
+          if (this.OpenCVObject.Open(fileWithPath))
+          {
+            Video.Instance.FPS = this.OpenCVObject.Fps;
+            Video.Instance.FrameSize = new System.Windows.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight);
+          }
+          else
+          {
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Videodatei öffnen", "Konnte die Videodatei nicht öffnen."), true);
+            return false;
+          }
         }
-        catch (ArgumentOutOfRangeException)
+        catch (Exception)
         {
-          // Found no directshow codec to decode
           return false;
         }
 
@@ -444,37 +289,16 @@ namespace VianaNET.Modules.Video.Control
     public override void Revert()
     {
       base.Revert();
+      double zeroPosition = App.Project.VideoData.SelectionStart;
 
-      int hr = 0;
-      DsLong zeroPosition = new DsLong((long)(App.Project.VideoData.SelectionStart / NanoSecsToMilliSecs));
-
-      // if (zeroPosition <= 0)
-      // {
-      // zeroPosition = 1000;
-      // }
       if (zeroPosition < 0)
       {
         zeroPosition = 0;
       }
 
-      if ((this.mediaControl == null) || (this.mediaSeeking == null))
-      {
-        return;
-      }
-
       // Seek to the beginning
-      hr = this.mediaSeeking.SetPositions(
-        zeroPosition, AMSeekingSeekingFlags.AbsolutePositioning, null, AMSeekingSeekingFlags.NoPositioning);
-      if (hr != 0)
-      {
-        ErrorLogger.WriteLine("Error while revert video. Message: " + DsError.GetErrorText(hr));
-      }
-
-      // Display the first frame to indicate the reset condition
-      if (this.mediaControl.Pause() >= 0)
-      {
-        this.CurrentState = PlayState.Paused;
-      }
+      this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, zeroPosition);
+      this.GrabCurrentFrame();
 
       this.UpdateFrameIndex();
     }
@@ -489,32 +313,15 @@ namespace VianaNET.Modules.Video.Control
     {
       if (forward)
       {
-        //if (!this.isFrameTimeCapable || Video.Instance.IsDataAcquisitionRunning)
-        //{
-        //  this.StepFrames(count);
-        //}
-        //else
-        //{
-        this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds * count;
-        //}
+        this.StepFrames(count);
       }
       else
       {
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  this.MediaPositionFrameIndex = this.MediaPositionFrameIndex - count;
-        //}
-        //else
-        //{
-        this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds * count;
-        //}
+        this.StepFrames(-count);
       }
 
-      //// Throw event
-      //if (this.StepComplete != null)
-      //{
-      //  this.StepComplete(this, EventArgs.Empty);
-      //}
+      // Throw event
+      this.StepComplete?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -526,55 +333,44 @@ namespace VianaNET.Modules.Video.Control
     {
       if (forward)
       {
-        if (Video.Instance.IsDataAcquisitionRunning || this.frameStep != null)
-        {
-          this.StepFrames(1);
-        }
-
-        //if (!this.isFrameTimeCapable)// || Video.Instance.IsDataAcquisitionRunning)
-        //{
-        //  this.StepFrames(1);
-        //}
-        else
-        {
-          this.MediaPositionInNanoSeconds += this.FrameTimeInNanoSeconds;
-        }
+        this.StepFrames(1);
       }
       else
       {
-        //if (this.timeFormat == TimeFormat.Frame)
-        //{
-        //  this.MediaPositionFrameIndex--;
-        //}
-        //else
-        //{
-        this.MediaPositionInNanoSeconds -= this.FrameTimeInNanoSeconds;
-        //}
+        this.StepFrames(-1);
       }
 
-      //// Throw event
-      //if (this.StepComplete != null)
-      //{
-      //  this.StepComplete(this, EventArgs.Empty);
-      //}
-
+      // Throw event
+      this.StepComplete?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
-    ///   The stop.
+    /// Steps the given number of frames
     /// </summary>
-    public override void Stop()
+    /// <param name="numberOfFramesToStep">The n frames to step. </param>
+    private void StepFrames(int numberOfFramesToStep)
     {
-      if (this.mediaControl == null)
+      if (numberOfFramesToStep < 0)
       {
-        return;
+        numberOfFramesToStep--;
       }
 
-      if (this.mediaControl.Pause() >= 0)
+      if (numberOfFramesToStep > 0)
       {
-        this.Dispatcher.BeginInvoke(
-          DispatcherPriority.Normal, (SendOrPostCallback)delegate { this.CurrentState = PlayState.Paused; }, null);
+        numberOfFramesToStep--;
       }
+
+      var currentFrame = this.OpenCVObject.Get(VideoCaptureProperties.PosFrames);
+      this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, currentFrame + numberOfFramesToStep);
+      this.GrabCurrentFrame();
+
+      this.UpdateFrameIndex();
+    }
+
+    public void RaiseFileComplete()
+    {
+      // Throw event
+      this.FileComplete?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -582,289 +378,8 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public void UpdateFrameIndex()
     {
-      // long currentTime = this.MediaPositionInNanoSeconds;
-      double index = this.MediaPositionInNanoSeconds / (double)this.FrameTimeInNanoSeconds;
+      double index = this.MediaPositionInMS / this.FrameTimeInMS;
       this.MediaPositionFrameIndex = (int)Math.Round(index);
     }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    ///   The build graph.
-    /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    private void BuildGraph()
-    {
-      if (this.VideoFilename == string.Empty)
-      {
-        return;
-      }
-
-      this.filterGraph = (IFilterGraph2)new FilterGraph();
-
-
-      // IFileSourceFilter urlSourceFilter = new URLReader() as IFileSourceFilter;
-      // IBaseFilter sourceFilter = urlSourceFilter as IBaseFilter;
-
-      // string fileURL = string.Concat(@"file:///", this.filename.Replace("\\","/"));
-      // hr = urlSourceFilter.Load(fileURL, null);
-      // DsError.ThrowExceptionForHR(hr);
-      // this.filterGraph.AddFilter(sourceFilter, "URL Source");
-      IBaseFilter sourceFilter;
-      string fileWithPath = Path.Combine(App.Project.ProjectPath, this.VideoFilename);
-
-      this.filterGraph.AddSourceFilter(fileWithPath, "File Source", out sourceFilter);
-
-      IPin sourceOut;
-
-      //// Have the graph builder construct its the appropriate graph automatically
-      // hr = this.graphBuilder.RenderFile(filename, null);
-      // DsError.ThrowExceptionForHR(hr);
-
-      // QueryInterface for DirectShow interfaces
-      this.mediaControl = (IMediaControl)this.filterGraph;
-
-      // this.mediaEventEx = (IMediaEventEx)this.graphBuilder;
-      this.mediaSeeking = (IMediaSeeking)this.filterGraph;
-      this.mediaPosition = (IMediaPosition)this.filterGraph;
-      this.mediaEvent = (IMediaEvent)this.filterGraph;
-
-      //hr = this.mediaSeeking.IsFormatSupported(TimeFormat.Frame);
-      //if (hr != 0)
-      //{
-      //  this.isFrameTimeCapable = false;
-      //}
-      //else
-      //{
-      //  this.isFrameTimeCapable = true;
-
-      // string text = DsError.GetErrorText(hr);
-      // hr = this.mediaSeeking.SetTimeFormat(TimeFormat.Frame);
-      // text = DsError.GetErrorText(hr);
-      //}
-
-      // hr = this.mediaSeeking.GetTimeFormat(out this.timeFormat);
-      // DsError.ThrowExceptionForHR(hr);
-
-      // Query for video interfaces, which may not be relevant for audio files
-      this.videoWindow = this.filterGraph as IVideoWindow;
-
-      this.basicVideo = this.filterGraph as IBasicVideo;
-
-      // Query for audio interfaces, which may not be relevant for video-only files
-      this.basicAudio = this.filterGraph as IBasicAudio;
-
-      //// Have the graph signal event via window callbacks for performance
-      // hr = this.mediaEventEx.SetNotifyWindow(this.Handle, WMGraphNotify, IntPtr.Zero);
-      // DsError.ThrowExceptionForHR(hr);
-
-      // Reset event loop exit flag
-      this.shouldExitEventLoop = false;
-
-      // Create a new thread to wait for events
-      this.eventThread = new Thread(this.EventWait);
-      this.eventThread.Name = "Media Event Thread";
-      this.eventThread.Start();
-    }
-
-    /// <summary>
-    ///   The event wait.
-    /// </summary>
-    private void EventWait()
-    {
-      // Returned when GetEvent is called but there are no events
-      const int E_ABORT = unchecked((int)0x80004004);
-
-      int hr;
-      IntPtr p1, p2;
-      EventCode ec;
-
-      // Console.WriteLine("LoopStarted");
-      do
-      {
-        // If we are shutting down
-        if (this.shouldExitEventLoop)
-        {
-          break;
-        }
-
-        // Make sure that we don't access the media event interface
-        // after it has already been released.
-        if (this.mediaEvent == null)
-        {
-          return;
-        }
-
-        // Avoid contention for m_State
-        lock (this)
-        {
-          // If we are not shutting down
-          if (!this.shouldExitEventLoop)
-          {
-            // Read the event
-            for (hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 100);
-                 hr >= 0;
-                 hr = this.mediaEvent.GetEvent(out ec, out p1, out p2, 100))
-            {
-              // Console.WriteLine("InLoop");
-              //// Write the event name to the debug window
-              // Debug.WriteLine(ec.ToString());
-
-              // If the clip is finished playing
-              if (ec == EventCode.Complete)
-              {
-                // Call Stop() to set state
-                this.Stop();
-
-                // Throw event
-                if (this.FileComplete != null)
-                {
-                  this.FileComplete(this, EventArgs.Empty);
-                }
-              }
-              else if (ec == EventCode.StepComplete)
-              {
-                Console.WriteLine("StepComplete");
-                // Throw event
-                if (this.StepComplete != null)
-                {
-                  this.StepComplete(this, EventArgs.Empty);
-                }
-              }
-
-              // Release any resources the message allocated
-              hr = this.mediaEvent.FreeEventParams(ec, p1, p2);
-              DsError.ThrowExceptionForHR(hr);
-            }
-
-            // If the error that exited the loop wasn't due to running out of events
-            if (hr != E_ABORT)
-            {
-              DsError.ThrowExceptionForHR(hr);
-            }
-          }
-          else
-          {
-            // We are shutting down
-            break;
-          }
-        }
-      }
-      while (true);
-
-      // Console.WriteLine("LoopExited");
-    }
-
-
-    /// <summary>
-    /// The get frame step interface.
-    /// Some video renderers support stepping media frame by frame with the
-    /// IVideoFrameStep interface.  See the interface documentation for more
-    /// details on frame stepping.
-    /// </summary>
-    /// <returns> True, if frame step interface is available, otherwise false </returns>
-    private bool GetFrameStepInterface()
-    {
-      // FrameStep deaktivieren
-      return false;
-
-
-      int hr = 0;
-
-      IVideoFrameStep frameStepTest = null;
-
-      // Get the frame step interface, if supported
-      frameStepTest = (IVideoFrameStep)this.filterGraph;
-
-      // Check if this decoder can step
-      hr = frameStepTest.CanStep(0, null);
-      if (hr == 0)
-      {
-        this.frameStep = frameStepTest;
-        return true;
-      }
-
-      this.frameStep = null;
-      return false;
-    }
-
-    ///// <summary>
-    /////   The read video properties.
-    ///// </summary>
-    ///// <returns> The <see cref="int" /> . </returns>
-    //private int ReadVideoProperties()
-    //{
-    //  int hr = 0;
-
-    //  if (this.mediaSeeking == null)
-    //  {
-    //    return 0;
-    //  }
-
-    //  long mediaduration;
-    //  hr = this.mediaSeeking.GetDuration(out mediaduration);
-    //  DsError.ThrowExceptionForHR(hr);
-    //  this.MediaDurationInMS = mediaduration * NanoSecsToMilliSecs;
-
-    //  return hr;
-    //}
-
-    /// <summary>
-    ///   The release event thread.
-    /// </summary>
-    private void ReleaseEventThread()
-    {
-      // Shut down event loop
-      this.shouldExitEventLoop = true;
-
-      // Wait for shutdown
-      if (this.eventThread != null)
-      {
-        this.eventThread.Join(500);
-      }
-    }
-
-    /// <summary>
-    /// The step frames.
-    /// </summary>
-    /// <param name="numberOfFramesToStep">
-    /// The n frames to step. 
-    /// </param>
-    /// <returns>
-    /// The <see cref="int"/> . 
-    /// </returns>
-    private int StepFrames(int numberOfFramesToStep)
-    {
-      //Console.WriteLine("StepFrames: #" + Video.Instance.FrameIndex);
-      int hr = 0;
-
-      // If the Frame Stepping interface exists, use it to step frames
-      if (this.frameStep != null)
-      {
-        // The renderer may not support frame stepping for more than one
-        // frame at a time, so check for support.  S_OK indicates that the
-        // renderer can step nFramesToStep successfully.
-        hr = this.frameStep.CanStep(numberOfFramesToStep, null);
-        if (hr == 0)
-        {
-          // The graph must be paused for frame stepping to work
-          if (this.CurrentState != PlayState.Paused)
-          {
-            this.Pause();
-          }
-
-          // Step the requested number of frames, if supported
-          hr = this.frameStep.Step(numberOfFramesToStep, null);
-        }
-      }
-
-      this.UpdateFrameIndex();
-
-      return hr;
-    }
-
-    #endregion
   }
 }

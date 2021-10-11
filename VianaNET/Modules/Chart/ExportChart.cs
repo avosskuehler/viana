@@ -48,7 +48,7 @@ namespace VianaNET.Modules.Chart
   /// </summary>
   public class ExportChart
   {
-    #region Public Methods and Operators
+
 
     /// <summary>
     /// The to clipboard.
@@ -164,6 +164,6 @@ namespace VianaNET.Modules.Chart
       }
     }
 
-    #endregion
+
   }
 }
