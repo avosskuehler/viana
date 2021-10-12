@@ -14,10 +14,7 @@
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid Name="PlayerContainerGrid" RenderTransformOrigin="0.5,0.5">
-    <Grid.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
-    </Grid.RenderTransform>
+  <Grid Name="PlayerContainerGrid">
     <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
       <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
@@ -27,7 +24,6 @@
       <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static local:App.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
-              RenderTransformOrigin="0.5,0.5"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"
               Background="{StaticResource BannerBackgroundBrush}" 
               Canvas.Left="{Binding ElementName=WindowCanvas,Path=ActualWidth}"
@@ -36,8 +32,7 @@
           <TransformGroup>
             <TranslateTransform 
               X="-90" 
-              Y="90"/>
-            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+              Y="-90"/>
           </TransformGroup>
         </Border.RenderTransform>
         <StackPanel>
@@ -57,10 +52,7 @@
             Foreground="White"/>
         </StackPanel>
       </Border>
-      <Border Name="ControlPanel" RenderTransformOrigin="0.5,0.5" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
-        <Border.RenderTransform>
-          <ScaleTransform ScaleX="1" ScaleY="-1"/>
-        </Border.RenderTransform>
+      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="250" MouseEnter="ControlPanelMouseEnter" MouseLeave="ControlPanelMouseLeave">
         <StackPanel Orientation="Vertical">
           <Grid x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>

@@ -32,9 +32,8 @@
         <Border.RenderTransform>
           <TransformGroup>
             <TranslateTransform 
-              X="90" 
-              Y="90"/>
-            <ScaleTransform ScaleX="1" ScaleY="1"/>
+              X="-90" 
+              Y="-90"/>
           </TransformGroup>
         </Border.RenderTransform>
         <StackPanel>

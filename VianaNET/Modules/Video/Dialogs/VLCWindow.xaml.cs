@@ -267,7 +267,7 @@ namespace VianaNET.Modules.Video.Dialogs
       string startTimeOption = "start-time=" + (this.TimelineSlider.SelectionStart / 1000f).ToString("N3", nfi);
       string stopTimeOption = "stop-time=" + (this.TimelineSlider.SelectionEnd / 1000f).ToString("N3", nfi);
       string transcodeOption =
-        @"sout=#transcode{vcodec=mp4v,vb=8000,deinterlace,fps=25,acodec=mpga}:standard{access=file,mux=avi,dst="
+        @"sout=#transcode{vcodec=mp4v,vb=8000,deinterlace=enable,fps=25,acodec=mpga}:standard{access=file,mux=avi,dst="
         + this.convertedFile + "}";
       this.ProgressPanel.Visibility = Visibility.Visible;
       this.VideoPanel.Visibility = Visibility.Hidden;

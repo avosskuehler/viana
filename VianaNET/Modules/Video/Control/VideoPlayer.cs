@@ -40,7 +40,7 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class VideoPlayer : VideoBase
   {
-     public VideoPlayer()
+    public VideoPlayer()
     {
     }
 
@@ -166,6 +166,7 @@ namespace VianaNET.Modules.Video.Control
 
         this.VideoFilename = Path.GetFileName(fileName);
         App.Project.ProjectPath = Path.GetDirectoryName(fileName);
+        App.Project.VideoFile = this.VideoFilename;
         fileWithPath = Path.Combine(App.Project.ProjectPath, fileName);
 
         // Reset status variables
@@ -188,15 +189,19 @@ namespace VianaNET.Modules.Video.Control
           string framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (framerateMode == "VFR")
           {
-            InformationDialog.Show("Bildrate", "Die Datei hat eine variable Bildrate, sie muss zunächst konvertiert werden", false);
-            return false;
+            InformationDialog.Show("Variable Bildrate", "Die Datei hat eine variable Bildrate, die Bilder haben nicht unbedingt zeitlich den gleichen Abstand", false);
+            App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.None;
+          }
+          else
+          {
+            App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.BottomRight;
           }
 
           // Framerate auslesen
           string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (!float.TryParse(frameratestring, out float fpsfactor1000))
           {
-            InformationDialog.Show("Bildrate", "Konnte die Bildrate der Datei nicht auslesen.", false);
+            InformationDialog.Show("Problem beim Auslesen", "Konnte die Bildrate der Datei nicht auslesen.", false);
             return false;
           }
           float fps = fpsfactor1000 / 1000f;
@@ -205,14 +210,14 @@ namespace VianaNET.Modules.Video.Control
           string durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
           if (durationmeasure != "ms")
           {
-            InformationDialog.Show("Dauer", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben.", false);
+            InformationDialog.Show("Problem beim Auslesen", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben.", false);
             return false;
           }
 
           string durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(durationstring, out int duration))
           {
-            InformationDialog.Show("Dauer", "Konnte die Dauer der Datei nicht auslesen.", false);
+            InformationDialog.Show("Problem beim Auslesen", "Konnte die Dauer der Datei nicht auslesen.", false);
             return false;
           }
 
@@ -220,7 +225,7 @@ namespace VianaNET.Modules.Video.Control
           string framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(framestring, out int frames))
           {
-            InformationDialog.Show("Frames", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen.", false);
+            InformationDialog.Show("Problem beim Auslesen", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen.", false);
             return false;
           }
 
@@ -236,7 +241,10 @@ namespace VianaNET.Modules.Video.Control
           if (this.OpenCVObject.Open(fileWithPath))
           {
             Video.Instance.FPS = this.OpenCVObject.Fps;
-            Video.Instance.FrameSize = new System.Windows.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight);
+            Video.Instance.VideoElement.SaveSizeInfo(this.OpenCVObject);
+
+            Video.Instance.VideoElement.NaturalVideoHeight = this.OpenCVObject.FrameHeight;
+            Video.Instance.VideoElement.NaturalVideoWidth = this.OpenCVObject.FrameWidth;
           }
           else
           {

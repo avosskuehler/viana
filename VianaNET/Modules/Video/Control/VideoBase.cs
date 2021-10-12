@@ -662,6 +662,8 @@ namespace VianaNET.Modules.Video.Control
       this.NaturalVideoWidth = opencvCapture.FrameWidth;
       this.NaturalVideoHeight = opencvCapture.FrameHeight;
       this.FrameTimeInMS = 1000d / opencvCapture.Fps;
+      this.PixelSize = 3;
+      this.Stride = (int)this.NaturalVideoWidth * this.PixelSize;
 
       this.CreateMemoryMapping(3);
       Video.Instance.OriginalImageSource =

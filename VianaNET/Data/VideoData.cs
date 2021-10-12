@@ -27,6 +27,7 @@ namespace VianaNET.Data
   using System.ComponentModel;
   using System.Linq;
   using System.Windows;
+  using System.Windows.Controls.Primitives;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
@@ -88,6 +89,14 @@ namespace VianaNET.Data
     public static readonly DependencyProperty SelectionStartProperty = DependencyProperty.Register(
       "SelectionStart",
       typeof(double),
+      typeof(VideoData));
+
+    /// <summary>
+    ///   The selection start property.
+    /// </summary>
+    public static readonly DependencyProperty TickPlacementProperty = DependencyProperty.Register(
+      "TickPlacement",
+      typeof(TickPlacement),
       typeof(VideoData));
 
     /// <summary>
@@ -209,6 +218,16 @@ namespace VianaNET.Data
       get => (double)this.GetValue(SelectionStartProperty);
 
       set => this.SetValue(SelectionStartProperty, value);
+    }
+
+   /// <summary>
+    ///   Gets or sets the tick placement for the media slider
+    /// </summary>
+    public TickPlacement TickPlacement
+    {
+      get => (TickPlacement)this.GetValue(TickPlacementProperty);
+
+      set => this.SetValue(TickPlacementProperty, value);
     }
 
     /// <summary>

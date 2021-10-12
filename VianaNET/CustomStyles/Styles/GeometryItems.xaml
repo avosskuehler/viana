@@ -14,26 +14,17 @@
   </Path>
   <Line x:Key="Ruler" Stroke="Red" StrokeThickness="2" Visibility="Hidden"/>
 
-  <Border RenderTransformOrigin="0.5,0.5" x:Key="LengthLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
-    <Border.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
-    </Border.RenderTransform>
+  <Border x:Key="LengthLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden" >
     <Label Name="LengthLabel" Padding="1"/>
   </Border>
 
   <controls:Arrow Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowX"/>
   <controls:Arrow Stroke="DodgerBlue" Fill="DodgerBlue" HeadHeight="6" HeadWidth="12" StrokeThickness="2" x:Key="DirectionArrowY" Visibility="Hidden"/>
   
-  <Border RenderTransformOrigin="0.5,0.5" x:Key="XLabelBorder" Background="#99FFFFFF" CornerRadius="3">
-    <Border.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
-    </Border.RenderTransform>
+  <Border x:Key="XLabelBorder" Background="#99FFFFFF" CornerRadius="3">
     <Label Padding="1" Content="X"/>
   </Border>
-  <Border RenderTransformOrigin="0.5,0.5" x:Key="YLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden">
-    <Border.RenderTransform>
-      <ScaleTransform ScaleX="1" ScaleY="-1"/>
-    </Border.RenderTransform>
+  <Border x:Key="YLabelBorder" Background="#99FFFFFF" CornerRadius="3" Visibility="Hidden">
     <Label Padding="1" Content="Y"/>
   </Border>
 

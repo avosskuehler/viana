@@ -135,7 +135,7 @@
         SelectionStart="{Binding Path=VideoData.SelectionStart, Source={x:Static local:App.Project}}"
         SelectionEnd="{Binding Path=VideoData.SelectionEnd, Source={x:Static local:App.Project}}"
         SmallChange="1" 
-        TickPlacement="BottomRight" 
+        TickPlacement="{Binding Path=VideoData.TickPlacement, Source={x:Static local:App.Project}}" 
         Interval="1" 
         Minimum="0"
         Thumb.DragStarted="TimelineSliderDragStarted"

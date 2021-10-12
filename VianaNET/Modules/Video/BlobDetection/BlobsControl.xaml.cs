@@ -77,12 +77,12 @@ namespace VianaNET.Modules.Video.BlobDetection
           }
 
           Ellipse dataPoint = new Ellipse
-                            {
-                              Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
-                              StrokeThickness = 2,
-                              Width = 15,
-                              Height = 15
-                            };
+          {
+            Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+            StrokeThickness = 2,
+            Width = 15,
+            Height = 15
+          };
           Point location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
@@ -134,14 +134,10 @@ namespace VianaNET.Modules.Video.BlobDetection
     private void CanvasDataPointsSizeChanged(object sender, SizeChangedEventArgs e)
     {
       ScaleTransform videoSizeToCanvasSize = new ScaleTransform
-                                    {
-                                      ScaleX =
-                                        this.CanvasDataPoints.ActualWidth
-                                        / Video.Instance.VideoElement.NaturalVideoWidth,
-                                      ScaleY =
-                                        this.CanvasDataPoints.ActualHeight
-                                        / Video.Instance.VideoElement.NaturalVideoHeight
-                                    };
+      {
+        ScaleX = this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth,
+        ScaleY = this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight
+      };
       this.CanvasDataPoints.RenderTransform = videoSizeToCanvasSize;
     }
 
@@ -281,13 +277,13 @@ namespace VianaNET.Modules.Video.BlobDetection
                                    ? new SolidColorBrush(App.Project.ProcessingData.TargetColor[i])
                                    : Brushes.Black;
           Ellipse blobEllipse = new Ellipse
-                              {
-                                Fill = fill,
-                                Stroke = Brushes.Black,
-                                StrokeThickness = 1,
-                                Width = blob.Width * scaleX,
-                                Height = blob.Height * scaleY
-                              };
+          {
+            Fill = fill,
+            Stroke = Brushes.Black,
+            StrokeThickness = 1,
+            Width = blob.Width * scaleX,
+            Height = blob.Height * scaleY
+          };
 
           this.OverlayCanvas.Children.Add(blobEllipse);
 
@@ -313,12 +309,12 @@ namespace VianaNET.Modules.Video.BlobDetection
         for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
           Ellipse dataPoint = new Ellipse
-                            {
-                              Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
-                              StrokeThickness = 2,
-                              Width = 15,
-                              Height = 15
-                            };
+          {
+            Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+            StrokeThickness = 2,
+            Width = 15,
+            Height = 15
+          };
           Point location = App.Project.VideoData.LastPoint[i];
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);

@@ -158,6 +158,11 @@ namespace VianaNET.Application
     public string VideoFile { get; set; }
 
     /// <summary>
+    ///   Gets the video file with full path, if in player mode.
+    /// </summary>
+    public string VideoFileWithPath => Path.Combine(this.ProjectPath, this.VideoFile);
+
+    /// <summary>
     ///   Gets or sets the video mode.
     /// </summary>
     public VideoMode VideoMode { get; set; }

@@ -19,6 +19,7 @@ namespace VianaNET.Modules.Video.Control
   using System.Windows.Media.Imaging;
 
   using DirectShowLib;
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Dialogs;
@@ -338,11 +339,10 @@ namespace VianaNET.Modules.Video.Control
         case VideoMode.File:
           this.videoPlayerElement.Dispose();
           success = this.videoPlayerElement.LoadMovie(filename);
-          if (!success && File.Exists(this.videoPlayerElement.VideoFilename))
+          if (!success && File.Exists(App.Project.VideoFileWithPath))
           {
-            string name = this.videoPlayerElement.VideoFilename;
             this.videoPlayerElement.Dispose();
-            success = this.ReRenderVideoFile(name);
+            success = this.ReRenderVideoFile(App.Project.VideoFileWithPath);
           }
 
           StatusBarContent.Instance.VideoFilename = this.videoPlayerElement.VideoFilename;
@@ -372,7 +372,7 @@ namespace VianaNET.Modules.Video.Control
         vlcConverter.ShowDialog();
       }
 
-      return this.LoadMovie(App.Project.VideoFile);
+      return this.LoadMovie(App.Project.VideoFileWithPath);
     }
 
     /// <summary>
