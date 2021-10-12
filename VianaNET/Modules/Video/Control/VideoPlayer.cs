@@ -2,7 +2,7 @@
 // <copyright file="VideoPlayer.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2021 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -27,19 +27,11 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.ComponentModel;
   using System.IO;
-  using System.Threading;
   using System.Windows;
-  using System.Windows.Threading;
-
-  using DirectShowLib;
   using OpenCvSharp;
-  using OpenCvSharp.WpfExtensions;
   using VianaNET.Logging;
   using VianaNET.MainWindow;
-
-
   using File = System.IO.File;
   using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
@@ -48,17 +40,7 @@ namespace VianaNET.Modules.Video.Control
   /// </summary>
   public class VideoPlayer : VideoBase
   {
-    /// <summary>
-    ///   The volume full.
-    /// </summary>
-    private const int VolumeFull = 0;
-
-    /// <summary>
-    ///   The volume silence.
-    /// </summary>
-    private const int VolumeSilence = -10000;
-
-    public VideoPlayer()
+     public VideoPlayer()
     {
     }
 
@@ -206,7 +188,7 @@ namespace VianaNET.Modules.Video.Control
           string framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (framerateMode == "VFR")
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Die Datei hat eine variable Bildrate, sie muss zunächst konvertiert werden"), true);
+            InformationDialog.Show("Bildrate", "Die Datei hat eine variable Bildrate, sie muss zunächst konvertiert werden", false);
             return false;
           }
 
@@ -214,7 +196,7 @@ namespace VianaNET.Modules.Video.Control
           string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (!float.TryParse(frameratestring, out float fpsfactor1000))
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Bildrate", "Konnte die Bildrate der Datei nicht auslesen."), true);
+            InformationDialog.Show("Bildrate", "Konnte die Bildrate der Datei nicht auslesen.", false);
             return false;
           }
           float fps = fpsfactor1000 / 1000f;
@@ -223,14 +205,14 @@ namespace VianaNET.Modules.Video.Control
           string durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
           if (durationmeasure != "ms")
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben."), true);
+            InformationDialog.Show("Dauer", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben.", false);
             return false;
           }
 
           string durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(durationstring, out int duration))
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Dauer", "Konnte die Dauer der Datei nicht auslesen."), true);
+            InformationDialog.Show("Dauer", "Konnte die Dauer der Datei nicht auslesen.", false);
             return false;
           }
 
@@ -238,7 +220,7 @@ namespace VianaNET.Modules.Video.Control
           string framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(framestring, out int frames))
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Frames", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen."), true);
+            InformationDialog.Show("Frames", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen.", false);
             return false;
           }
 

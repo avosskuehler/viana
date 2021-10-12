@@ -1348,6 +1348,15 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
     <value>Bitte geben Sie Dateinamen und Format an ...</value>
   </data>
+  <data name="InformationDialogCopyMessage" xml:space="preserve">
+    <value>Meldung kopieren</value>
+  </data>
+  <data name="InformationDialogTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="InformationDialogTopFrameTitle" xml:space="preserve">
+    <value>Bitte beachten Sie die folgende Information:</value>
+  </data>
   <data name="InterpolationDescriptionTitle" xml:space="preserve">
     <value>Beschreibung des Glättungsfilters</value>
   </data>
@@ -1462,6 +1471,9 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   </data>
   <data name="MovingAverageDialogTitle" xml:space="preserve">
     <value>Gleitender Mittelwert ...</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
   </data>
   <data name="OdsFilter" xml:space="preserve">
     <value>Open Document Spreadsheet Datei (*.ods)|*.ods</value>
@@ -1936,5 +1948,8 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   </data>
   <data name="XmlFilter" xml:space="preserve">
     <value>Xml Datei (*.xml)|*.xml</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

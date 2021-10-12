@@ -2,7 +2,7 @@
 // <copyright file="VideoBase.cs" company="Freie Universität Berlin">
 //   ************************************************************************
 //   Viana.NET - video analysis for physics education
-//   Copyright (C) 2012 Dr. Adrian Voßkühler  
+//   Copyright (C) 2021 Dr. Adrian Voßkühler  
 //   ------------------------------------------------------------------------
 //   This program is free software; you can redistribute it and/or modify it 
 //   under the terms of the GNU General Public License as published by the 
@@ -41,11 +41,8 @@ namespace VianaNET.Modules.Video.Control
   using System.Windows.Threading;
 
   using AForge.Imaging;
-
-  using DirectShowLib;
   using OpenCvSharp;
   using OpenCvSharp.WpfExtensions;
-  using VianaNET.Data;
   using VianaNET.Logging;
 
   /// <summary>
@@ -372,6 +369,7 @@ namespace VianaNET.Modules.Video.Control
       {
         //this.bkgWorker.RunWorkerAsync();
       }
+      this.CurrentState = PlayState.Paused;
     }
 
     /// <summary>
@@ -383,6 +381,7 @@ namespace VianaNET.Modules.Video.Control
       {
         this.bkgWorker.RunWorkerAsync();
       }
+      this.CurrentState = PlayState.Running;
     }
 
     /// <summary>
@@ -512,10 +511,6 @@ namespace VianaNET.Modules.Video.Control
         }
       }
     }
-
-
-
-
 
     /// <summary>
     /// Closes an open object handle.
@@ -765,9 +760,12 @@ namespace VianaNET.Modules.Video.Control
               this.Stop();
               if (Video.Instance.VideoMode == CustomStyles.Types.VideoMode.File)
               {
+                //var pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
                 var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
                 this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-                this.GrabCurrentFrame();
+                //pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
+                //this.GrabCurrentFrame();
+                //pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
                 Video.Instance.VideoPlayerElement.RaiseFileComplete();
               }
             });

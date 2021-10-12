@@ -1335,6 +1335,15 @@
   <data name="GraphicFilesSaveFileDialogTitle" xml:space="preserve">
     <value>@GraphicFilesSaveFileDialogTitle</value>
   </data>
+  <data name="InformationDialogCopyMessage" xml:space="preserve">
+    <value>InformationDialogCopyMessage</value>
+  </data>
+  <data name="InformationDialogTitle" xml:space="preserve">
+    <value>InformationDialogTitle</value>
+  </data>
+  <data name="InformationDialogTopFrameTitle" xml:space="preserve">
+    <value>InformationDialogTopFrameTitle</value>
+  </data>
   <data name="InterpolationDescriptionTitle" xml:space="preserve">
     <value>@InterpolationDescriptionTitle</value>
   </data>
@@ -1445,6 +1454,9 @@
   </data>
   <data name="MovingAverageDialogTitle" xml:space="preserve">
     <value>@MovingAverageDialogTitle</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="OdsFilter" xml:space="preserve">
     <value>@OdsFilter</value>
@@ -1919,5 +1931,8 @@
   </data>
   <data name="XmlFilter" xml:space="preserve">
     <value>@XmlFilter</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

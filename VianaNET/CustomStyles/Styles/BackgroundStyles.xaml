@@ -26,22 +26,24 @@
     <Setter Property="Height" Value="10"/>
   </Style>
 
-  <LinearGradientBrush x:Key="BannerBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+  <SolidColorBrush x:Key="BannerBackgroundBrush" Color="#FF6591CD" />
+  <!--<LinearGradientBrush x:Key="BannerBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Offset="0" Color="#FF567DB1" />
         <GradientStop Offset="0.5" Color="#FF6591CD" />
         <GradientStop Offset="0.8" Color="#FF9EBEE7" />
         <GradientStop Offset="1" Color="#FF6591CD" />
-    </LinearGradientBrush>
+    </LinearGradientBrush>-->
     <LinearGradientBrush x:Key="MainBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Offset="0" Color="#FF84AEE0" />
         <GradientStop Offset="0.1" Color="#FFF1F6FB" />
         <GradientStop Offset="1" Color="#FFD1E7F6" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="PropertiesBackgroundBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+  <SolidColorBrush x:Key="PropertiesBackgroundBrush" Color="#FFD1E7F6" />
+  <!--<LinearGradientBrush x:Key="PropertiesBackgroundBrush" StartPoint="0,0.5" EndPoint="1,0.5">
         <GradientStop Offset="0" Color="#FFD1E7F6" />
         <GradientStop Offset="0.7" Color="#FFF1F6FB" />
         <GradientStop Offset="1" Color="#FF84AEE0" />
-    </LinearGradientBrush>
+    </LinearGradientBrush>-->
     
     <SolidColorBrush x:Key="DefaultWorkspaceAdorner1BackgroundBrush" Color="#FF97B6DC" />
     <SolidColorBrush x:Key="DefaultWorkspaceAdorner1StrokeBrush" Color="#FFAEC7E8" />

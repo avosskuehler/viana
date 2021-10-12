@@ -3715,6 +3715,33 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die InformationDialogCopyMessage ähnelt.
+        /// </summary>
+        public static string InformationDialogCopyMessage {
+            get {
+                return ResourceManager.GetString("InformationDialogCopyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die InformationDialogTitle ähnelt.
+        /// </summary>
+        public static string InformationDialogTitle {
+            get {
+                return ResourceManager.GetString("InformationDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die InformationDialogTopFrameTitle ähnelt.
+        /// </summary>
+        public static string InformationDialogTopFrameTitle {
+            get {
+                return ResourceManager.GetString("InformationDialogTopFrameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @InterpolationDescriptionTitle ähnelt.
         /// </summary>
         public static string InterpolationDescriptionTitle {
@@ -4044,6 +4071,15 @@ namespace VianaNET.Localization {
         public static string MovingAverageDialogTitle {
             get {
                 return ResourceManager.GetString("MovingAverageDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No ähnelt.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -5466,6 +5502,15 @@ namespace VianaNET.Localization {
         public static string XmlFilter {
             get {
                 return ResourceManager.GetString("XmlFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes ähnelt.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

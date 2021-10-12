@@ -269,8 +269,6 @@
     <Compile Include="CustomStyles\Controls\MediaSliderControl.xaml.cs">
       <DependentUpon>MediaSliderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Controls\MediaTickBar.cs" />
-    <Compile Include="CustomStyles\Controls\MediaTrack.cs" />
     <Compile Include="CustomStyles\Controls\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
@@ -300,6 +298,7 @@
     <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
     <Compile Include="CustomStyles\Types\LengthUnit.cs" />
     <Compile Include="CustomStyles\Types\MeasurementType.cs" />
+    <Compile Include="CustomStyles\Types\QuestionResult.cs" />
     <Compile Include="CustomStyles\Types\SortedCollection.cs" />
     <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
@@ -365,6 +364,9 @@
     </Compile>
     <Compile Include="Logging\ErrorLogger.cs" />
     <Compile Include="Logging\TraceListener.cs" />
+    <Compile Include="Logging\InformationDialog.xaml.cs">
+      <DependentUpon>InformationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -594,6 +596,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Logging\InformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

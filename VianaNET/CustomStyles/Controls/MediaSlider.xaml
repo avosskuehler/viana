@@ -115,8 +115,7 @@
               </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>
           </Border.BorderBrush>
-          <Canvas Name="SelectionCanvas"
-                    Margin="-6,-1,-6,-1">
+          <Canvas Name="SelectionCanvas" Margin="-6,-1,-6,-1">
             <Rectangle
                         Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
                         Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
@@ -985,14 +984,10 @@
                     Member="TickPlacement.Both" />
         </Trigger.Value>
       </Trigger>
-      <Trigger
-            Property="Slider.IsSelectionRangeEnabled">
-        <Setter
-                Property="UIElement.Visibility"
-                TargetName="PART_SelectionRange">
+      <Trigger Property="Slider.IsSelectionRangeEnabled">
+        <Setter Property="UIElement.Visibility" TargetName="PART_SelectionRange">
           <Setter.Value>
-            <x:Static
-                        Member="Visibility.Visible" />
+            <x:Static Member="Visibility.Visible" />
           </Setter.Value>
         </Setter>
         <Trigger.Value>

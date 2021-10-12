@@ -55,7 +55,7 @@ namespace VianaNET
         "CurrentTimeString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The frame time in milli seconds property.
@@ -92,7 +92,7 @@ namespace VianaNET
       "MaximumString",
       typeof(string),
       typeof(MediaSlider),
-      new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The minimum string property.
@@ -101,7 +101,7 @@ namespace VianaNET
       "MinimumString",
       typeof(string),
       typeof(MediaSlider),
-      new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The selection end string property.
@@ -111,7 +111,7 @@ namespace VianaNET
         "SelectionEndString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The selection start string property.
@@ -121,7 +121,7 @@ namespace VianaNET
         "SelectionStartString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The tick down clicked command.
@@ -619,7 +619,9 @@ namespace VianaNET
           case RangeSelectionThumb.None:
             break;
           case RangeSelectionThumb.Start:
-            this.SelectionStart = selectionPosition.X * factor;
+            var newPos = selectionPosition.X * factor;
+            var framecount = (int)(newPos / this.FrameTimeInMS);
+            this.SelectionStart = framecount * this.FrameTimeInMS;
             this.SelectionStartString = this.ConvertToTimeString(this.SelectionStart);
             if (this.Value < this.SelectionStart)
             {
@@ -629,7 +631,9 @@ namespace VianaNET
 
             break;
           case RangeSelectionThumb.End:
-            this.SelectionEnd = selectionPosition.X * factor;
+            newPos = selectionPosition.X * factor;
+            framecount = (int)(newPos / this.FrameTimeInMS);
+            this.SelectionEnd = framecount * this.FrameTimeInMS;
             this.SelectionEndString = this.ConvertToTimeString(this.SelectionEnd);
             if (this.Value > this.SelectionEnd)
             {
