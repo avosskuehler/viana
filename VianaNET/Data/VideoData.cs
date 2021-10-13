@@ -303,8 +303,7 @@ namespace VianaNET.Data
       }
 
       // Add new point
-      int index;
-      if (this.Samples.Contains(timeSample, out index))
+      if (this.Samples.Contains(timeSample, out int index))
       {
         if (newObjectSample != null)
         {

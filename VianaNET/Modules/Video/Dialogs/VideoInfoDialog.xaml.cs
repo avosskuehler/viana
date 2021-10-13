@@ -26,8 +26,12 @@
 
 namespace VianaNET.Modules.Video.Dialogs
 {
+  using OpenCvSharp;
+  using System;
+  using System.Diagnostics;
   using System.IO;
   using System.Windows;
+  using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Video.Control;
 
   /// <summary>
@@ -42,6 +46,8 @@ namespace VianaNET.Modules.Video.Dialogs
     public VideoInfoDialog()
     {
       this.InitializeComponent();
+      UiServices.SetBusyState();
+
       this.DataContext = this;
       switch (Video.Instance.VideoMode)
       {
@@ -96,9 +102,14 @@ namespace VianaNET.Modules.Video.Dialogs
     public string FrameSize { get; private set; }
 
     /// <summary>
-    /// Gets the codec of the video file
+    /// Gets the video codec of the video file
     /// </summary>
     public string Codec { get; private set; }
+
+    /// <summary>
+    /// Gets the container format of the video file
+    /// </summary>
+    public string Container { get; private set; }
 
     /// <summary>
     /// Gets the bitrate in kbps of the video file
@@ -131,19 +142,18 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      this.Filename = fileWithPath;
+      this.Filename = App.Project.VideoFile;
 
       // Read out video properties
       using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
       {
         MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileWithPath);
-        string komplett = info.Inform();
 
         string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
         if (float.TryParse(frameratestring, out float fpsfactor1000))
         {
           float fps = fpsfactor1000 / 1000f;
-          //this.DefaultFrameRate = fps;
+          this.DefaultFrameRate = fps;
 
           double currentFrameRate = fps / App.Project.VideoData.FramerateFactor;
           if (currentFrameRate != fps)
@@ -154,7 +164,6 @@ namespace VianaNET.Modules.Video.Dialogs
           {
             this.FrameRate = fps;
           }
-
         }
 
         // Dauer auslesen
@@ -168,13 +177,41 @@ namespace VianaNET.Modules.Video.Dialogs
             this.DurationString = string.Format("{0} ms", duration);
           }
         }
+
+        string bitratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "BitRate_String", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+
+        // CFR = constant frame rate, VFR = variable frame rate
+        string framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
+        if (framerateMode == "VFR")
+        {
+          this.Bitrate = string.Format("{0} mit variabler Bildrate", bitratestring);
+        }
+        else
+        {
+          this.Bitrate = string.Format("{0} mit fester Bildrate", bitratestring);
+        }
+
+        // Anzahl der Frames auslesen
+        string framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+        if (int.TryParse(framestring, out int frames))
+        {
+          this.FrameCount = frames;
+        }
+
+        // Anzahl der Frames auslesen
+        string containerformat = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.General, 0, "Format", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+        string containerformatprofile = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.General, 0, "Format_Profile", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+        string videoformatinfo = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Format/Info", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+        string videoformatprofile = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Format_Profile", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
+        this.Container = string.Format("{0} ({1})", containerformat, containerformatprofile);
+        this.Codec = string.Format("{0} ({1})", videoformatinfo, videoformatprofile);
+
+        // Read out video properties
+        var capturer = Video.Instance.VideoElement;
+        this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
       }
 
 
-      //this.FrameCount = aviFile.FrameCount;
-      //this.FrameSize = aviFile.Video[0].FrameSize;
-      //this.Codec = aviFile.Video[0].Format;
-      //this.Bitrate = aviFile.General.Bitrate.ToString(CultureInfo.InvariantCulture) + " kbps";
     }
 
     private void ParseLiveCamera()
@@ -189,9 +226,25 @@ namespace VianaNET.Modules.Video.Dialogs
       this.DefaultFrameRate = Video.Instance.FPS;
       this.FrameCount = 0;
       this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
-      this.Codec = string.Empty;
+      this.Codec = capturer.OpenCVObject.FourCC;
       this.Bitrate = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.BitRate).ToString();
-      return;
+
+      // Test capture because direct read out of framerate from opencv objects properties does not work
+      double num_frames = 120;
+
+      var watch = new Stopwatch();
+      watch.Start();
+
+      Mat mat = new Mat();
+      for (int i = 0; i < num_frames; i++)
+      {
+        capturer.OpenCVObject.Read(mat);
+      }
+
+      var ms = watch.ElapsedMilliseconds;
+
+      // Calculate frames per second
+      this.DefaultFrameRate = (int)Math.Round(num_frames / ms * 1000, 0);
     }
 
     /// <summary>

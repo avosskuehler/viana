@@ -130,7 +130,7 @@
     <value>Description</value>
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
-    <value>This software is intended to detect and analyse object movements in videos. It is based on the famous Viana version of Thomas Kerstinga t the Universität Essen. 
+    <value>This software is intended to detect and analyse object movements in videos. It is inspired by the famous Viana version of Thomas Kersting at the University Essen. 
 Would like to have feedback:</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
@@ -1768,6 +1768,9 @@ F10: Reset coordinate system.</value>
   <data name="SaveProjectDialogTitle" xml:space="preserve">
     <value>Save project ...</value>
   </data>
+  <data name="SaveVideoDialogCameraLabel" xml:space="preserve">
+    <value>Camera</value>
+  </data>
   <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
     <value>Video compressor</value>
   </data>
@@ -1882,6 +1885,9 @@ F10: Reset coordinate system.</value>
   <data name="VideoInfoCodecLabel" xml:space="preserve">
     <value>Codec</value>
   </data>
+  <data name="VideoInfoContainerLabel" xml:space="preserve">
+    <value>video container</value>
+  </data>
   <data name="VideoInfoDialogTitle" xml:space="preserve">
     <value>Video file ...</value>
   </data>
@@ -1895,7 +1901,10 @@ F10: Reset coordinate system.</value>
     <value>Filename</value>
   </data>
   <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
-    <value>FPS. Change to </value>
+    <value>redefine FPS to</value>
+  </data>
+  <data name="VideoInfoFPSDefaultToolTip" xml:space="preserve">
+    <value>If the fps value is wrong, you may set the correct value here, which can correct timing issues.</value>
   </data>
   <data name="VideoInfoFPSLabel" xml:space="preserve">
     <value>Frames per second</value>

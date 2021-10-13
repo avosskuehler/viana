@@ -130,7 +130,8 @@
     <value>Beschreibung</value>
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
-    <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. Es ist eine komplett modernisierte Version der Software Viana von Thomas Kersting an der Universität Essen.
+    <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. 
+Viana = VIdeoANAlyse... inspiriert wurde die Software von der ersten Viana-Version von Thomas Kersting an der Universität Essen.
 Ich freue mich über Feedback:</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
@@ -1769,6 +1770,9 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="SaveProjectDialogTitle" xml:space="preserve">
     <value>Projekt %1 sichern ...</value>
   </data>
+  <data name="SaveVideoDialogCameraLabel" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
   <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
     <value>Videokompressor</value>
   </data>
@@ -1883,6 +1887,9 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="VideoInfoCodecLabel" xml:space="preserve">
     <value>Codec</value>
   </data>
+  <data name="VideoInfoContainerLabel" xml:space="preserve">
+    <value>Video Container</value>
+  </data>
   <data name="VideoInfoDialogTitle" xml:space="preserve">
     <value>Videodatei ...</value>
   </data>
@@ -1896,7 +1903,10 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
     <value>Dateiname</value>
   </data>
   <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
-    <value>FPS. Ändern in</value>
+    <value>FPS neu festsetzen auf</value>
+  </data>
+  <data name="VideoInfoFPSDefaultToolTip" xml:space="preserve">
+    <value>Wenn die Bildrate fehlerhaft ist, kann hier die korrekte Bildrate festgelegt werden, um Fehler in den Zeitangaben zu korrigieren.</value>
   </data>
   <data name="VideoInfoFPSLabel" xml:space="preserve">
     <value>Bilder pro Sekunde</value>

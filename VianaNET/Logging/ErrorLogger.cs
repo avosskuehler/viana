@@ -86,8 +86,6 @@ namespace VianaNET.Logging
     /// </param>
     public static void ProcessException(Exception ex, bool showMessageBox)
     {
-      string message = string.Empty;
-      message = ex.Message;
       Exception innerException = ex;
 
       WriteLine("------------------------------------");
@@ -99,7 +97,7 @@ namespace VianaNET.Logging
         WriteLine(GetLogEntryForException(innerException));
       }
 
-      message = GetLogEntryForException(innerException);
+      string message = GetLogEntryForException(innerException);
       WriteLine(message);
       {
         // if (showMessageBox)
@@ -131,9 +129,44 @@ namespace VianaNET.Logging
       Console.WriteLine(line);
     }
 
+    /// <summary>
+    /// Raises a "user-friendly" error message dialog.
+    /// </summary>
+    /// <param name="message">A <see cref="string"/> with the message to display.</param>
+    public static void ProcessErrorMessage(string message)
+    {
+      if (message == null)
+      {
+        throw new ArgumentException("Error message string is NULL");
+      }
 
+      // Add error to error log
+      var errorLogFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VianaNETErrorLog.txt");
+      using (var w = File.AppendText(errorLogFile))
+      {
+        LogMessage(message, w);
+      }
 
+      // Show error message dialog
+      InformationDialog.Show("Fehler", message, false);
+    }
 
+    /// <summary>
+    /// This method logs the given message into the file
+    /// given by the <see cref="TextWriter"/>.
+    /// </summary>
+    /// <param name="logMessage">A <see cref="string"/> with the message to log.</param>
+    /// <param name="w">The <see cref="TextWriter"/> to write the message to.</param>
+    public static void LogMessage(string logMessage, TextWriter w)
+    {
+      w.Write("Error on ");
+      w.WriteLine("{0}, {1}", DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString());
+      w.WriteLine("  - {0}", logMessage);
+      w.WriteLine("--------------------------------------------------------------------------------");
+
+      // Update the underlying file.
+      w.Flush();
+    }
 
     /// <summary>
     /// Returns a human readable string for the exception

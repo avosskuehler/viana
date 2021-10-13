@@ -411,11 +411,10 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     private void BestimmeExpFkt()
     {
-      double minY, maxY;
       int k;
 
       // Schätzwert für Verschiebung in y-Richtung; 
-      this.GetMinMax(this.WertY, out minY, out maxY);
+      this.GetMinMax(this.WertY, out double minY, out double maxY);
       double schaetzWert;
       double schaetzStep;
       int sign;
@@ -904,11 +903,10 @@ namespace VianaNET.Data.Filter.Regression
     /// </summary>
     private void BestimmeSinExpFkt()
     {
-      double maxSchaetz, schaetzWert, schaetzStep;
       int k;
 
       // Schätzwert für b ermitteln:  y=a*sin(b*x)*exp(c*x);
-      this.GetPeriode(this.WertX, this.WertY, out schaetzWert, out maxSchaetz, out schaetzStep);
+      this.GetPeriode(this.WertX, this.WertY, out double schaetzWert, out double maxSchaetz, out double schaetzStep);
 
       bool weiter = true;
       int z = 0;
@@ -1010,15 +1008,12 @@ namespace VianaNET.Data.Filter.Regression
     private void BestimmeSinFkt()
     {
       int k;
-      double minY;
-      double maxY;
-      double maxSchaetz, schaetzWert, schaetzStep;
 
       double bestA = 0;
       double bestB = 0;
       double bestC = 0;
       double bestD = 0;
-      this.GetMinMax(this.WertY, out minY, out maxY);
+      this.GetMinMax(this.WertY, out double minY, out double maxY);
 
       // Amplitude a:
       double a = (maxY - minY) * 1.02 / 2;
@@ -1034,7 +1029,7 @@ namespace VianaNET.Data.Filter.Regression
         tempWertY.Add(this.WertY[k] - d);
       }
 
-      this.GetPeriode(this.WertX, tempWertY, out schaetzWert, out maxSchaetz, out schaetzStep);
+      this.GetPeriode(this.WertX, tempWertY, out double schaetzWert, out double maxSchaetz, out double schaetzStep);
 
       // a*sin(b*x+c)+d = a*cos(c)*sin(b*x) + a*sin(c)*cos(b*x)+d = a1*sin(b*x) + c1*cos(b*x) + d;
       // iteration über b:
@@ -1308,10 +1303,9 @@ namespace VianaNET.Data.Filter.Regression
       out double maxSchaetz, 
       out double schaetzStep)
     {
-      double minX, maxX;
 
       // Schätzwert für b ermitteln:  y=a*sin(b*x)*exp(c*x);
-      this.GetMinMax(dataX, out minX, out maxX);
+      this.GetMinMax(dataX, out double minX, out double maxX);
       int sign = Math.Sign(dataY[0]);
       if (sign == 0)
       {

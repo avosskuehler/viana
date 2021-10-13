@@ -847,8 +847,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </param>
     public static void Eigen(Matrix Mat, out Matrix d, out Matrix v)
     {
-      double[,] D, V;
-      Eigen(Mat.in_Mat, out D, out V);
+      Eigen(Mat.in_Mat, out double[,] D, out double[,] V);
       d = new Matrix(D);
       v = new Matrix(V);
     }
@@ -1261,8 +1260,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </param>
     public static void LU(Matrix Mat, out Matrix L, out Matrix U, out Matrix P)
     {
-      double[,] l, u, p;
-      LU(Mat.in_Mat, out l, out u, out p);
+      LU(Mat.in_Mat, out double[,] l, out double[,] u, out double[,] p);
       L = new Matrix(l);
       U = new Matrix(u);
       P = new Matrix(p);
@@ -1403,7 +1401,6 @@ namespace VianaNET.Data.Filter.Regression
       double[,] S, Part_I, Part_II;
       double EPS, MulAdd, Tol, Largest_Item = 0;
 
-      double[,] svdU, svdS, svdV;
 
       try
       {
@@ -1415,7 +1412,7 @@ namespace VianaNET.Data.Filter.Regression
         throw new MatrixNullException();
       }
 
-      SVD(Mat, out svdS, out svdU, out svdV);
+      SVD(Mat, out double[,] svdS, out double[,] svdU, out double[,] svdV);
 
       EPS = 2.2204E-16;
       m++;
@@ -1633,11 +1630,9 @@ namespace VianaNET.Data.Filter.Regression
     public static int Rank(double[,] Mat)
     {
       int r = 0;
-      double[,] S, U, V;
       try
       {
-        int Rows, Cols;
-        Find_R_C(Mat, out Rows, out Cols);
+        Find_R_C(Mat, out int Rows, out int Cols);
       }
       catch
       {
@@ -1645,7 +1640,7 @@ namespace VianaNET.Data.Filter.Regression
       }
 
       double EPS = 2.2204E-16;
-      SVD(Mat, out S, out U, out V);
+      SVD(Mat, out double[,] S, out double[,] U, out double[,] V);
 
       for (int i = 0; i <= S.GetUpperBound(0); i++)
       {
@@ -2121,8 +2116,7 @@ namespace VianaNET.Data.Filter.Regression
     /// </param>
     public static void SVD(Matrix Mat, out Matrix S, out Matrix U, out Matrix V)
     {
-      double[,] s, u, v;
-      SVD(Mat.in_Mat, out s, out u, out v);
+      SVD(Mat.in_Mat, out double[,] s, out double[,] u, out double[,] v);
       S = new Matrix(s);
       U = new Matrix(u);
       V = new Matrix(v);

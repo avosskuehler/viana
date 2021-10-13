@@ -9,7 +9,7 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.Collections.ObjectModel;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Drawing;
   using System.IO;
@@ -18,8 +18,7 @@ namespace VianaNET.Modules.Video.Control
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
 
-  using DirectShowLib;
-  using VianaNET.Application;
+  using SharpDX.MediaFoundation;
   using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Dialogs;
@@ -259,19 +258,33 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   Gets the video input devices.
+    /// Gets the video input devices of this computer using Microsoft Media Foundation
     /// </summary>
-    public ObservableCollection<DsDevice> VideoInputDevices => new ObservableCollection<DsDevice>(DShowUtils.GetVideoInputDevices());
+    public List<CameraDevice> VideoInputDevicesMSMF
+    {
+      get
+      {
+        {
+          var cameras = new List<CameraDevice>();
+          var attributes = new MediaAttributes(1);
+          attributes.Set(CaptureDeviceAttributeKeys.SourceType.Guid, CaptureDeviceAttributeKeys.SourceTypeVideoCapture.Guid);
+          var devices = MediaFactory.EnumDeviceSources(attributes);
+          for (var i = 0; i < devices.Count(); i++)
+          {
+            var friendlyName = devices[i].Get(CaptureDeviceAttributeKeys.FriendlyName);
+            cameras.Add(new CameraDevice(i, friendlyName));
+          }
+
+          return cameras;
+        }
+      }
+    }
 
     /// <summary>
     ///   Gets a valaue indicating whether there are video input devices
     ///   available on the system
     /// </summary>
-    public bool HasVideoInputDevices => this.VideoInputDevices.Count > 0;
-
-
-
-
+    public bool HasVideoInputDevices => this.VideoInputDevicesMSMF.Count > 0;
 
     /// <summary>
     ///   The cleanup.
@@ -357,6 +370,22 @@ namespace VianaNET.Modules.Video.Control
       }
 
       return success;
+    }
+
+    /// <summary>
+    /// Rerenders the video file, cause it could no be opened by the default direct show codecs.
+    /// </summary>
+    /// <param name="videoFile">The video file.</param>
+    /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
+    private bool SetVideoFileInOut(string videoFile)
+    {
+      using (VlcWindow vlcConverter = new VlcWindow())
+      {
+        vlcConverter.VideoFile = videoFile;
+        vlcConverter.ShowDialog();
+      }
+
+      return this.LoadMovie(App.Project.VideoFileWithPath);
     }
 
     /// <summary>
@@ -518,10 +547,10 @@ namespace VianaNET.Modules.Video.Control
           this.videoElement = this.videoPlayerElement;
           break;
         case VideoMode.Capture:
-          if (DShowUtils.GetVideoInputDevices().Any())
+          if (this.VideoInputDevicesMSMF.Any())
           {
             this.videoElement = this.videoCaptureElement;
-            this.videoCaptureElement.NewCamera();
+            this.videoCaptureElement.NewCamera(0);
             StatusBarContent.Instance.VideoFilename = "Live Video";
           }
 

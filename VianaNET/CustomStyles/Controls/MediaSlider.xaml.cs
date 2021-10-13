@@ -29,8 +29,6 @@ namespace VianaNET
   using System.Windows.Input;
   using System.Windows.Shapes;
 
-  using VianaNET.Modules.Video.Control;
-
   /// <summary>
   ///   Interaction logic for MediaSlider.xaml
   /// </summary>

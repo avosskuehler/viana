@@ -49,9 +49,8 @@ namespace VianaNET.Data.Filter.Regression
       this.InitializeComponent();
       this.RegressionType = regressionFilter.RegressionType;
 
-      double minX, minY, hilf;
-      regressionFilter.GetMinMax(regressionFilter.WertX, out minX, out hilf);
-      regressionFilter.GetMinMax(regressionFilter.WertY, out minY, out hilf);
+      regressionFilter.GetMinMax(regressionFilter.WertX, out double minX, out double hilf);
+      regressionFilter.GetMinMax(regressionFilter.WertY, out double minY, out hilf);
       bool negativeX = minX < 0;
       bool negativeY = minY < 0;
       this.negFlag = 0;

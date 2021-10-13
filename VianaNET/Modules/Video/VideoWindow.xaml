@@ -8,7 +8,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vianaNet="clr-namespace:VianaNET"
 	xmlns:local="clr-namespace:VianaNET"
-  xmlns:fa="http://schemas.fontawesome.com/icons/"
+  xmlns:fa="clr-namespace:VianaNET.CustomStyles.FontAwesome"
 	xmlns:controls="clr-namespace:VianaNET.CustomStyles.Controls"
 	mc:Ignorable="d"
   lex:LocalizeDictionary.DesignCulture="de"
@@ -93,20 +93,20 @@
       <StackPanel Grid.Column="0" Margin="10,0,10,0">
         <StackPanel Orientation="Horizontal"  >
           <Button x:Name="BtnRecord" Click="BtnRecordClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowRecordButtonToolTip}">
-            <fa:ImageAwesome x:Name="BtnRecordImage" Icon="Solid_Circle" Width="12" Foreground="Red"/>
+            <fa:IconBlock x:Name="BtnRecordImage" Icon="Circle" FontType="Solid" FontSize="12" Foreground="Red"/>
           </Button>
           <Button x:Name="BtnPlay" Click="BtnPlayClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowPlayButtonToolTip}">
-            <fa:ImageAwesome x:Name="BtnPlayImage" Icon="Solid_Play" Width="11" Foreground="Green"/>
+            <fa:IconBlock x:Name="BtnPlayImage" Icon="Play" Width="11" Foreground="Green" FontType="Solid" FontSize="12" />
           </Button>
           <Button x:Name="BtnStop" Click="BtnStopClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowStopButtonToolTip}">
-            <fa:ImageAwesome Icon="Solid_Stop" Width="12" Foreground="SteelBlue"/>
+            <fa:IconBlock Icon="Stop" Width="12" Foreground="SteelBlue" FontSize="12" FontType="Solid" />
           </Button>
           <Rectangle Width="8" />
           <Button x:Name="BtnSeekNext" Click="BtnSeekNextClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekNextButtonToolTip}">
-            <fa:ImageAwesome Icon="Solid_StepForward" Width="10" Foreground="SteelBlue"/>
+            <fa:IconBlock Icon="StepForward" Width="10" Foreground="SteelBlue" FontSize="12" FontType="Solid"/>
           </Button>
           <Button x:Name="BtnSeekPrevious" Click="BtnSeekPreviousClick" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" ToolTip="{lex:Loc VianaNET:Labels:VideoWindowSeekPreviousButtonToolTip}">
-            <fa:ImageAwesome Icon="Solid_StepBackward" Width="10" Foreground="SteelBlue"/>
+            <fa:IconBlock Icon="StepBackward" Width="10" Foreground="SteelBlue" FontSize="12" FontType="Solid"/>
           </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Name="SelectionPanel" >

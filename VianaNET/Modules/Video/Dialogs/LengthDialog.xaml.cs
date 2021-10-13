@@ -78,10 +78,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void OK_Click(object sender, RoutedEventArgs e)
     {
-      double result;
       string addOn = string.Empty;
 
-      if (double.TryParse(this.txbLength.Text, out result))
+      if (double.TryParse(this.txbLength.Text, out double result))
       {
         if (this.rdbKM.IsChecked.GetValueOrDefault(false))
         {

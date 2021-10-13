@@ -179,9 +179,7 @@ namespace VianaNET.Modules.Video.BlobDetection
         return;
       }
 
-      double scaleX;
-      double scaleY;
-      if (this.GetScalesForProcessedFrame(out scaleX, out scaleY))
+      if (this.GetScalesForProcessedFrame(out double scaleX, out double scaleY))
       {
         // it is zero during deserialization
         if (scaleX != 0 && scaleY != 0)
@@ -258,10 +256,8 @@ namespace VianaNET.Modules.Video.BlobDetection
 
       this.OverlayCanvas.Children.Clear();
 
-      double scaleX;
-      double scaleY;
 
-      if (!this.GetScales(out scaleX, out scaleY))
+      if (!this.GetScales(out double scaleX, out double scaleY))
       {
         return;
       }

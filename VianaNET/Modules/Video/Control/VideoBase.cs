@@ -43,6 +43,7 @@ namespace VianaNET.Modules.Video.Control
   using AForge.Imaging;
   using OpenCvSharp;
   using OpenCvSharp.WpfExtensions;
+  using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
 
   /// <summary>
@@ -293,6 +294,17 @@ namespace VianaNET.Modules.Video.Control
     {
       this.Stop();
 
+      if (this.bkgWorker != null && this.bkgWorker.IsBusy)
+      {
+        this.bkgWorker.CancelAsync();
+      }
+
+      while (this.bkgWorker.IsBusy)
+      {
+        UiServices.WaitUntilReady();
+      }
+
+
       lock (this)
       {
         this.Dispatcher.Invoke(
@@ -305,11 +317,10 @@ namespace VianaNET.Modules.Video.Control
             },
           null);
 
-        if (this.bkgWorker != null)
+        if (this.OpenCVObject.IsOpened())
         {
-          this.bkgWorker.CancelAsync();
+          this.OpenCVObject.Release();
         }
-
 
         if (this.originalMapping != IntPtr.Zero)
         {
@@ -726,33 +737,6 @@ namespace VianaNET.Modules.Video.Control
           break;
         }
 
-        //if (this.OpenCVObject.Read(this.frameMat))
-        //{
-        //  // Must create and use WriteableBitmap in the same thread(UI Thread).
-        //  this.Dispatcher.Invoke(() =>
-        //  {
-        //    WriteableBitmap newFrame = this.frameMat.ToWriteableBitmap();
-        //    Video.Instance.OriginalImageSource = newFrame;
-        //    Video.Instance.VideoElement.NewFrameCallback(newFrame);
-        //  });
-        //}
-        //else
-        //{
-        //  this.Dispatcher.Invoke(() =>
-        //  {
-        //    this.Stop();
-        //    if (Video.Instance.VideoMode == CustomStyles.Types.VideoMode.File)
-        //    {
-        //      var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
-        //      this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-        //      this.GrabCurrentFrame();
-        //      Video.Instance.VideoPlayerElement.RaiseFileComplete();
-        //    }
-        //  });
-
-        //  break;
-        //}
-
         using (Mat frameMat = this.OpenCVObject.RetrieveMat())
         {
           if (frameMat.Empty())
@@ -760,14 +744,10 @@ namespace VianaNET.Modules.Video.Control
             this.Dispatcher.Invoke(() =>
             {
               this.Stop();
-              if (Video.Instance.VideoMode == CustomStyles.Types.VideoMode.File)
+              if (Video.Instance.VideoMode == VideoMode.File)
               {
-                //var pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
                 var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
                 this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-                //pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
-                //this.GrabCurrentFrame();
-                //pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
                 Video.Instance.VideoPlayerElement.RaiseFileComplete();
               }
             });
@@ -778,15 +758,18 @@ namespace VianaNET.Modules.Video.Control
           // Must create and use WriteableBitmap in the same thread(UI Thread).
           this.Dispatcher.Invoke(() =>
           {
-            System.Windows.Media.Imaging.WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
+            WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
             Video.Instance.OriginalImageSource = newFrame;
             Video.Instance.VideoElement.NewFrameCallback(newFrame);
           });
         }
 
-        while (watch.ElapsedMilliseconds - starttime < frametimeInMS)
+        if (Video.Instance.VideoMode == VideoMode.File)
         {
-          Thread.Sleep(1);
+          while (watch.ElapsedMilliseconds - starttime < frametimeInMS)
+          {
+            Thread.Sleep(1);
+          }
         }
 
         starttime = watch.ElapsedMilliseconds;

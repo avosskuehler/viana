@@ -218,13 +218,9 @@ namespace VianaNET.Modules.Chart
       App.Project.CurrentFilterData.AxisX = axisX;
       App.Project.CurrentFilterData.AxisY = axisY;
 
-      string propertyX;
-      string unitNameX;
-      this.UpdateAxisMappings(axisX, out propertyX, out unitNameX);
+      this.UpdateAxisMappings(axisX, out string propertyX, out string unitNameX);
 
-      string propertyY;
-      string unitNameY;
-      this.UpdateAxisMappings(axisY, out propertyY, out unitNameY);
+      this.UpdateAxisMappings(axisY, out string propertyY, out string unitNameY);
 
       this.ChartData.XAxis.Title = axisX.Description;
       this.ChartData.XAxis.Unit = unitNameX;
@@ -1238,14 +1234,13 @@ namespace VianaNET.Modules.Chart
 
       if (regressionOptionsDialog.RegressionType == RegressionType.Best)
       {
-        RegressionType bestRegression;
         if (App.Project.CurrentFilterData.RegressionFilter.WertX.Count == 0)
         {
           App.Project.CurrentFilterData.RegressionFilter.CalculateFilterValues();
         }
 
         App.Project.CurrentFilterData.RegressionFilter.GetBestRegressData(
-          out bestRegression,
+          out RegressionType bestRegression,
           regressionOptionsDialog.negFlag);
         this.UpdateRegressionImageButtonAndLabels(bestRegression);
       }

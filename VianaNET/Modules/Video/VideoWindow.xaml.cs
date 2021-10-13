@@ -136,14 +136,6 @@ namespace VianaNET.Modules.Video
 
     }
 
-    private void Dispose()
-    {
-    }
-
-
-
-
-
     /// <summary>
     /// The load video.
     /// </summary>
@@ -222,7 +214,6 @@ namespace VianaNET.Modules.Video
       switch (newVideoMode)
       {
         case VideoMode.File:
-
           // Update UI
           this.TimelineSlider.Visibility = Visibility.Visible;
           this.BtnRecord.Visibility = Visibility.Collapsed;
@@ -236,8 +227,9 @@ namespace VianaNET.Modules.Video
           this.SelectionPanel.Visibility = Visibility.Collapsed;
           this.BtnSeekPrevious.Visibility = Visibility.Collapsed;
           this.BtnSeekNext.Visibility = Visibility.Collapsed;
-
-
+          break;
+        case VideoMode.None:
+          Video.Instance.VideoElement.Stop();
           break;
       }
     }
@@ -468,11 +460,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void ProcessingDataFrameProcessed(object sender, EventArgs e)
     {
-      //this.isFrameProcessed = true;
-      double scaleX;
-      double scaleY;
-
-      if (this.GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out double scaleX, out double scaleY))
       {
         for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
@@ -675,15 +663,15 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
-      // In Acquisition mode the processing is done in the StepCompleted event handler
-      if (!Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
+      // In Acquisition mode of a file the processing is done in the StepCompleted event handler
+      if (Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
       {
-        if (Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
+        if (Video.Instance.VideoMode == VideoMode.File && Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
         {
           Video.Instance.Stop();
           this.TimelineSlider.Value = this.TimelineSlider.SelectionEnd;
           this.isPlaying = false;
-          this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+          this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
         }
 
         this.ProcessImage();
@@ -715,10 +703,8 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void PlaceCalibration()
     {
-      double scaleX;
-      double scaleY;
 
-      if (this.GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out double scaleX, out double scaleY))
       {
         Canvas.SetLeft(this.OriginPath, App.Project.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
         Canvas.SetTop(this.OriginPath, App.Project.CalibrationData.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
@@ -739,10 +725,8 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void PlaceClippingRegion()
     {
-      double scaleX;
-      double scaleY;
 
-      if (!this.GetScales(out scaleX, out scaleY))
+      if (!this.GetScales(out double scaleX, out double scaleY))
       {
         return;
       }
@@ -782,9 +766,7 @@ namespace VianaNET.Modules.Video
         new Point(this.LeftLine.X1, this.TopLine.Y1), new Point(this.RightLine.X1, this.BottomLine.Y1));
       innerRectangleGeometry.Rect = innerRect;
 
-      double scaleX;
-      double scaleY;
-      if (this.GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out double scaleX, out double scaleY))
       {
         // it is zero during deserialization
         if (scaleX != 0 && scaleY != 0)
@@ -898,7 +880,7 @@ namespace VianaNET.Modules.Video
             }
           });
 
-      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+      this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
     }
 
     /// <summary>
@@ -1000,12 +982,12 @@ namespace VianaNET.Modules.Video
     {
       if (this.isPlaying)
       {
-        this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+        this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
         Video.Instance.Pause();
       }
       else
       {
-        this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Pause;
+        this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Pause;
         Video.Instance.Play();
       }
 
@@ -1026,7 +1008,7 @@ namespace VianaNET.Modules.Video
       Video.Instance.Revert();
       this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
-      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+      this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
     }
 
     private void BtnSeekNextClick(object sender, RoutedEventArgs e)
@@ -1108,7 +1090,7 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderSelectionEndReached(object sender, EventArgs e)
     {
       Video.Instance.Pause();
-      this.BtnPlayImage.Icon = FontAwesome5.EFontAwesomeIcon.Solid_Play;
+      this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
       this.isPlaying = false;
     }
 

@@ -1752,6 +1752,9 @@
   <data name="SaveProjectDialogTitle" xml:space="preserve">
     <value>@SaveProjectDialogTitle</value>
   </data>
+  <data name="SaveVideoDialogCameraLabel" xml:space="preserve">
+    <value>SaveVideoDialogCameraLabel</value>
+  </data>
   <data name="SaveVideoDialogCompressorLabel" xml:space="preserve">
     <value>@SaveVideoDialogCompressorLabel</value>
   </data>
@@ -1866,6 +1869,9 @@
   <data name="VideoInfoCodecLabel" xml:space="preserve">
     <value>VideoInfoCodecLabel</value>
   </data>
+  <data name="VideoInfoContainerLabel" xml:space="preserve">
+    <value>VideoInfoContainerLabel</value>
+  </data>
   <data name="VideoInfoDialogTitle" xml:space="preserve">
     <value>VideoInfoDialogTitle</value>
   </data>
@@ -1880,6 +1886,9 @@
   </data>
   <data name="VideoInfoFPSDefaultLabel" xml:space="preserve">
     <value>VideoInfoFPSDefaultLabel</value>
+  </data>
+  <data name="VideoInfoFPSDefaultToolTip" xml:space="preserve">
+    <value>VideoInfoFPSDefaultToolTip</value>
   </data>
   <data name="VideoInfoFPSLabel" xml:space="preserve">
     <value>VideoInfoFPSLabel</value>

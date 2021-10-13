@@ -533,7 +533,7 @@
             <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
             <RibbonComboBox Grid.Row="1" Grid.Column="0" MinWidth="200" SelectionBoxWidth="150" IsEditable="True" IsReadOnly="True" >
               <RibbonGallery Name="VideoInputDeviceCombo" SelectionChanged="VideoInputDeviceCombo_OnSelectionChanged">
-                <RibbonGalleryCategory Name="VideoSourceGalleryCategory"/>
+                <RibbonGalleryCategory Name="VideoSourceGalleryCategory" DisplayMemberPath="Name"/>
               </RibbonGallery>
             </RibbonComboBox>
             <RibbonButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Click="VideoCaptureDevicePropertiesButtonClick" 

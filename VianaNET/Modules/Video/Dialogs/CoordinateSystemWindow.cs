@@ -151,11 +151,11 @@ namespace VianaNET.Modules.Video.Dialogs
         Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
         Vector vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
         double angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
-        int scaleY = angle > 0 ? 1 : -1;
+        int scaleY = angle < 0 ? 1 : -1;
         Matrix matrix = new Matrix();
         double angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
         matrix.Scale(1, scaleY);
-        matrix.Rotate(-angleX);
+        matrix.Rotate(angleX);
 
         App.Project.CalibrationData.CoordinateTransform = matrix;
         this.Close();
@@ -233,9 +233,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void CoordinateSystemWindowLoaded(object sender, RoutedEventArgs e)
     {
-      double scaleX;
-      double scaleY;
-      if (this.GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out double scaleX, out double scaleY))
       {
         double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
         double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;
@@ -311,9 +309,7 @@ namespace VianaNET.Modules.Video.Dialogs
       Point lineXEndpoint = new Point(this.directionX.X2, this.directionX.Y2);
       this.SetLabelXPosition(lineXEndpoint);
 
-      double scaleX;
-      double scaleY;
-      if (this.GetScales(out scaleX, out scaleY))
+      if (this.GetScales(out double scaleX, out double scaleY))
       {
         double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
         double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;

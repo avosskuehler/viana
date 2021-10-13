@@ -25,13 +25,16 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Dialogs
 {
+  using OpenCvSharp;
+  using OpenCvSharp.WpfExtensions;
   using System;
   using System.ComponentModel;
+  using System.Diagnostics;
   using System.IO;
+  using System.Threading;
   using System.Windows;
   using System.Windows.Controls;
-
-
+  using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
   using VianaNET.Modules.Video.Control;
   using WPFFolderBrowser;
@@ -39,19 +42,8 @@ namespace VianaNET.Modules.Video.Dialogs
   /// <summary>
   ///   The save video dialog.
   /// </summary>
-  public partial class SaveVideoDialog : Window
+  public partial class SaveVideoDialog : System.Windows.Window
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    // An instance of the PreviewController class (where all the real work is done)
-
-
     /// <summary>
     ///   The folder browser dialog.
     /// </summary>
@@ -64,16 +56,25 @@ namespace VianaNET.Modules.Video.Dialogs
     private int fileIndex = -1;
 
     /// <summary>
-    ///   The live video controller.
+    /// The OpenCV VideoCapture Device Control
     /// </summary>
-    private LiveVideoController liveVideoController;
+    public VideoCapture OpenCVObject { get; private set; }
+
+    /// <summary>
+    /// Frame Available Background worker process
+    /// </summary>
+    protected readonly BackgroundWorker bkgWorker;
 
 
+    /// <summary>
+    /// Indicates whether the capturing is in progress
+    /// </summary>
+    private bool isCapturing;
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-
+    /// <summary>
+    /// The <see cref="VideoWriter"/> instance to write the video to disk
+    /// </summary>
+    private VideoWriter videoWriter;
 
     /// <summary>
     ///   Initializes a new instance of the SaveVideoDialog class.
@@ -81,34 +82,88 @@ namespace VianaNET.Modules.Video.Dialogs
     public SaveVideoDialog()
     {
       this.InitializeComponent();
-      this.InitializeDeviceCombo();
       this.folderBrowserDialog = new WPFFolderBrowserDialog();
       this.folderBrowserDialog.Title = VianaNET.Localization.Labels.VideoSaveFolderBrowserDescriptionTitle;
       this.folderBrowserDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       this.FolderTextBox.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       this.FileNameTextBox.Text = "Video";
-      this.liveVideoController = new LiveVideoController();
+
+      this.bkgWorker = new BackgroundWorker { WorkerSupportsCancellation = true };
+      this.bkgWorker.DoWork += this.Worker_DoWork;
+      this.MakeNewCaptureFile();
+
+      this.OpenCVObject = new VideoCapture();
+
+      this.CameraComboBox.ItemsSource = Video.Instance.VideoInputDevicesMSMF;
+      if (Video.Instance.VideoInputDevicesMSMF.Count > 0)
+      {
+        this.CameraComboBox.SelectedIndex = 0;
+      }
+      else
+      {
+        InformationDialog.Show("Keine Kameras gefunden", "Viana kann keine angeschlossenen Kameras finden, daher kann auch keine Videoaufnahme gemacht werden.", false);
+        this.Close();
+      }
     }
 
+    ~SaveVideoDialog()
+    {
+      if (this.OpenCVObject != null)
+      {
+        this.OpenCVObject.Dispose();
+      }
 
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
+      if (this.videoWriter != null)
+      {
+        this.videoWriter.Dispose();
+      }
+    }
 
     /// <summary>
     ///   Gets or sets the last recorded video file.
     /// </summary>
     public string LastRecordedVideoFile { get; set; }
 
+    private void CameraComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      UiServices.SetBusyState();
+      UiServices.WaitUntilReady();
 
+      if (this.bkgWorker != null && this.bkgWorker.IsBusy)
+      {
+        this.bkgWorker.CancelAsync();
+      }
 
+      while (this.bkgWorker.IsBusy)
+      {
+        UiServices.WaitUntilReady();
+      }
 
+      var cameraIndex = ((CameraDevice)this.CameraComboBox.SelectedItem).Index;
+
+      try
+      {
+        if (!this.OpenCVObject.Open(cameraIndex, OpenCvSharp.VideoCaptureAPIs.ANY))
+        {
+          return;
+        }
+
+        this.bkgWorker.RunWorkerAsync();
+        //Video.Instance.VideoElement.SaveSizeInfo(this.OpenCVObject);
+        //Video.Instance.FPS = this.OpenCVObject.Fps;
+        //Video.Instance.FrameSize = new System.Windows.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight);
+      }
+      catch
+      {
+        ErrorLogger.WriteLine("Error in OpenCVObject.Open(), Could not initialize camera");
+        return;
+      }
+    }
+
+    private void CameraOptionsButton_Click(object sender, RoutedEventArgs e)
+    {
+      this.OpenCVObject.Set(VideoCaptureProperties.Settings, 1);
+    }
 
     /// <summary>
     /// The compression options button_ click.
@@ -121,7 +176,10 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void CompressionOptionsButton_Click(object sender, RoutedEventArgs e)
     {
-      this.liveVideoController.ShowVideoCompressorOptionsDialog();
+      //if (this.videoCompressorFilter != null)
+      //{
+      //  DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.videoCompressorFilter);
+      //}
     }
 
     /// <summary>
@@ -135,10 +193,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void CompressorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (this.liveVideoController != null)
-      {
-        this.liveVideoController.VideoCompressorName = this.CompressorComboBox.SelectedValue.ToString();
-      }
+      //this.VideoCompressorName = this.CompressorComboBox.SelectedValue.ToString();
     }
 
     /// <summary>
@@ -160,24 +215,6 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    ///   The initialize device combo.
-    /// </summary>
-    private void InitializeDeviceCombo()
-    {
-      // Load the listbox with video compressor device names
-      this.CompressorComboBox.ItemsSource = DShowUtils.GetVideoCompressors();
-      this.CompressorComboBox.SelectedIndex = 0;
-      for (int i = 0; i < this.CompressorComboBox.Items.Count; i++)
-      {
-        if (this.CompressorComboBox.Items[i].ToString().Contains("ffdshow"))
-        {
-          this.CompressorComboBox.SelectedIndex = i;
-          break;
-        }
-      }
-    }
-
-    /// <summary>
     ///   The make new capture file.
     /// </summary>
     private void MakeNewCaptureFile()
@@ -187,33 +224,20 @@ namespace VianaNET.Modules.Video.Dialogs
       // Find an unused file name
       do
       {
-        sFileName = string.Format(
-          @"{0}\{1}{2}.avi", this.FolderTextBox.Text, this.FileNameTextBox.Text, ++this.fileIndex);
+        sFileName = string.Format(@"{0}\{1}{2}.mp4", this.FolderTextBox.Text, this.FileNameTextBox.Text, ++this.fileIndex);
       }
       while (File.Exists(sFileName));
 
       try
       {
         // Tell the previewer what name to use
-        this.liveVideoController.SetNextFilename(sFileName);
+        this.FileNameTextBox.Text = sFileName;
       }
       catch (Exception ex)
       {
         ErrorLogger.ProcessException(ex, true);
       }
     }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Public methods                                                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Inherited methods                                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Eventhandler                                                              //
-    ///////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     /// The record_ click.
@@ -226,27 +250,20 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void Record_Click(object sender, RoutedEventArgs e)
     {
-      // If we aren't already capturing
-      if (!this.liveVideoController.Capturing)
+      if (!this.isCapturing)
       {
-        // If we have a device
-        if (this.liveVideoController.Selected)
+        var filename = Path.Combine(this.FolderTextBox.Text, this.FileNameTextBox.Text);
+        
+        // Using fixed 25 fps
+        this.videoWriter = new VideoWriter(filename, FourCC.MP4V, 25, new OpenCvSharp.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight));
+        if (this.videoWriter.IsOpened())
         {
-          // Generate a name and send it to the m_Previewer
-          this.MakeNewCaptureFile();
-
+          this.isCapturing = true;
           this.SwitchControlsEnabled(false);
-
-          // Start the capture graph
-          try
-          {
-            this.liveVideoController.StartCapture();
-          }
-          catch (Exception ex)
-          {
-            ErrorLogger.ProcessException(ex, true);
-            this.SwitchControlsEnabled(true);
-          }
+        }
+        else
+        {
+          InformationDialog.Show("Fehler beim Aufzeichnen", "Konnte Videodatei mit dem MJPEG Kompressor nicht aufzeichen", false);
         }
       }
     }
@@ -277,24 +294,15 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void Stop_Click(object sender, RoutedEventArgs e)
     {
-      // Only stop if we are started
-      if (this.liveVideoController.Capturing)
+      if (this.isCapturing)
       {
-        try
-        {
-          this.liveVideoController.StopCapture();
-          this.SwitchControlsEnabled(true);
-
-          // StatusBarReadyLabel
-          string s = string.Format("Captured to {0}", this.liveVideoController.FileName);
-          this.LastRecordedVideoFile = this.liveVideoController.FileName;
-          this.StatusBarReadyLabel.Content = s;
-        }
-        catch (Exception ex)
-        {
-          ErrorLogger.ProcessException(ex, true);
-          this.SwitchControlsEnabled(true);
-        }
+        this.isCapturing = false;
+        this.LastRecordedVideoFile = this.videoWriter.FileName;
+        // StatusBarReadyLabel
+        string s = string.Format("Captured to {0}", this.LastRecordedVideoFile);
+        this.StatusBarReadyLabel.Content = s;
+        this.SwitchControlsEnabled(true);
+        this.videoWriter.Release();
       }
     }
 
@@ -311,7 +319,8 @@ namespace VianaNET.Modules.Video.Dialogs
       this.FileNameTextBox.IsEnabled = isEnabled;
       this.FolderTextBox.IsEnabled = isEnabled;
       this.FolderButton.IsEnabled = isEnabled;
-      this.CompressorComboBox.IsEnabled = isEnabled;
+      this.CameraComboBox.IsEnabled = isEnabled;
+      //this.CompressorComboBox.IsEnabled = isEnabled;
       this.StatusBarReadyLabel.Content = isEnabled ? VianaNET.Localization.Labels.StatusBarReady : VianaNET.Localization.Labels.IsRecordingVideo;
       this.RunAnalysisButton.IsEnabled = isEnabled;
 
@@ -325,52 +334,46 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    /// <summary>
-    /// The window_ closing.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Window_Closing(object sender, CancelEventArgs e)
+    private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
-      if (this.liveVideoController != null)
+      BackgroundWorker worker = (BackgroundWorker)sender;
+      var watch = new Stopwatch();
+      watch.Start();
+
+      // With 25 FPS all webcams will work
+      double frametimeInMS = 40;
+      long starttime = 0;
+
+      while (!worker.CancellationPending)
       {
-        this.liveVideoController.Dispose();
-        this.liveVideoController = null;
+        using (Mat frameMat = this.OpenCVObject.RetrieveMat())
+        {
+          if (frameMat.Empty())
+          {
+            break;
+          }
+
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          this.Dispatcher.Invoke(() =>
+          {
+            this.VideoImage.Source = frameMat.ToWriteableBitmap();
+          });
+
+          if (this.isCapturing)
+          {
+            this.videoWriter.Write(frameMat);
+          }
+
+          // Ensure only a picture every frametimeInMS time interval
+          while (watch.ElapsedMilliseconds - starttime < frametimeInMS)
+          {
+            Thread.Sleep(1);
+          }
+
+          starttime = watch.ElapsedMilliseconds;
+        }
+
       }
     }
-
-    /// <summary>
-    /// The window_ loaded.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-      this.liveVideoController.SelectDevice(Video.Instance.VideoCapturerElement.VideoCaptureDevice, this.VideoHost);
-
-      this.liveVideoController.VideoCompressorName = this.CompressorComboBox.SelectedValue.ToString();
-    }
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

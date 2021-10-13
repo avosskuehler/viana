@@ -14,5 +14,8 @@
     <Setting Name="Culture" Type="System.String" Scope="User">
       <Value Profile="(Default)">de</Value>
     </Setting>
+    <Setting Name="Basisfarbe" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#00000000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

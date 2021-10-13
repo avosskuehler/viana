@@ -70,5 +70,17 @@ namespace VianaNET.Properties {
                 this["Culture"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#00000000")]
+        public global::System.Windows.Media.Color Basisfarbe {
+            get {
+                return ((global::System.Windows.Media.Color)(this["Basisfarbe"]));
+            }
+            set {
+                this["Basisfarbe"] = value;
+            }
+        }
     }
 }

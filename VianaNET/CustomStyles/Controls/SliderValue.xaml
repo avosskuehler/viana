@@ -108,10 +108,7 @@
                 Grid.Column="0"
                 Grid.Row="1"
                 Command="Slider.DecreaseLarge"
-                Style="{StaticResource BaseSliderSidesButtonStyle}">
-
-        <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
-
+                Style="{StaticResource SliderTickMinusStyle}">
       </RepeatButton>
 
       <Track Grid.Column="1" Grid.Row="1" Name="PART_Track">
@@ -130,22 +127,8 @@
                 Grid.Row="1"
                 Grid.Column="2"
                 Command="Slider.IncreaseLarge"
-                Style="{StaticResource BaseSliderSidesButtonStyle}">
+                Style="{StaticResource SliderTickPlusStyle}"/>
 
-        <Path Fill="{StaticResource GlyphBrush}" Stretch="None">
-          <Path.Data>
-            <CombinedGeometry GeometryCombineMode="Union">
-              <CombinedGeometry.Geometry1>
-                <RectangleGeometry Rect="3,0,2,8"></RectangleGeometry>
-              </CombinedGeometry.Geometry1>
-              <CombinedGeometry.Geometry2>
-                <RectangleGeometry Rect="0,3,8,2"></RectangleGeometry>
-              </CombinedGeometry.Geometry2>
-            </CombinedGeometry>
-          </Path.Data>
-        </Path>
-
-      </RepeatButton>
 
       <TickBar
                 Name="BottomTick"
@@ -210,26 +193,6 @@
                 Grid.Column="1" 
                 Content="{TemplateBinding Maximum}" 
                 HorizontalAlignment="Center"/>
-      <!--<RepeatButton
-                Grid.Row="0"
-                Grid.Column="1"
-                Command="Slider.IncreaseLarge"
-                Style="{StaticResource BaseSliderSidesButtonStyle}">
-
-                <Path Fill="{StaticResource GlyphBrush}" Stretch="None">
-                    <Path.Data>
-                        <CombinedGeometry GeometryCombineMode="Union">
-                            <CombinedGeometry.Geometry1>
-                                <RectangleGeometry Rect="3,0,2,8"></RectangleGeometry>
-                            </CombinedGeometry.Geometry1>
-                            <CombinedGeometry.Geometry2>
-                                <RectangleGeometry Rect="0,3,8,2"></RectangleGeometry>
-                            </CombinedGeometry.Geometry2>
-                        </CombinedGeometry>
-                    </Path.Data>
-                </Path>
-
-            </RepeatButton>-->
 
       <Track Grid.Column="1" Grid.Row="1" Name="PART_Track">
         <Track.DecreaseRepeatButton>
@@ -262,16 +225,6 @@
                 Grid.Column="1"
                 Content="{TemplateBinding Minimum}" 
                 HorizontalAlignment="Center"/>
-
-      <!--<RepeatButton
-                Grid.Column="1"
-                Grid.Row="2"
-                Command="Slider.DecreaseLarge"
-                Style="{StaticResource BaseSliderSidesButtonStyle}">
-
-                <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
-
-            </RepeatButton>-->
 
     </Grid>
     <ControlTemplate.Triggers>

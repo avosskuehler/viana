@@ -4966,6 +4966,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SaveVideoDialogCameraLabel ähnelt.
+        /// </summary>
+        public static string SaveVideoDialogCameraLabel {
+            get {
+                return ResourceManager.GetString("SaveVideoDialogCameraLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @SaveVideoDialogCompressorLabel ähnelt.
         /// </summary>
         public static string SaveVideoDialogCompressorLabel {
@@ -5308,6 +5317,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoContainerLabel ähnelt.
+        /// </summary>
+        public static string VideoInfoContainerLabel {
+            get {
+                return ResourceManager.GetString("VideoInfoContainerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoDialogTitle ähnelt.
         /// </summary>
         public static string VideoInfoDialogTitle {
@@ -5349,6 +5367,15 @@ namespace VianaNET.Localization {
         public static string VideoInfoFPSDefaultLabel {
             get {
                 return ResourceManager.GetString("VideoInfoFPSDefaultLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die VideoInfoFPSDefaultToolTip ähnelt.
+        /// </summary>
+        public static string VideoInfoFPSDefaultToolTip {
+            get {
+                return ResourceManager.GetString("VideoInfoFPSDefaultToolTip", resourceCulture);
             }
         }
         

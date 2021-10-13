@@ -15,7 +15,7 @@
         <ColumnDefinition Width="80"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <Image VerticalAlignment="Top" Grid.Column="0" Name="LeftIcon" Width="64" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
+      <Image VerticalAlignment="Top" Grid.Column="0" Name="LeftIcon" Width="32" Margin="8" Source="/VianaNET;component/Images/VianaLogo64.png" />
       <TextBlock VerticalAlignment="Top" Grid.Column="1" Name="Header" Foreground="White" FontSize="14" TextWrapping="Wrap" Margin="5">Title again</TextBlock>
     </Grid>
   </Border>

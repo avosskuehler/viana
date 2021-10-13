@@ -9,13 +9,12 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Labels"
         xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
-        Height="500" Width="350" WindowStyle="ThreeDBorderWindow"
+        WindowStartupLocation="CenterScreen"
+        Height="500" Width="450" WindowStyle="ThreeDBorderWindow"
         Title="{lex:Loc VianaNET:Labels:VideoInfoDialogTitle}" 
         SizeToContent="Height" 
         ShowInTaskbar="True" 
-        Icon="/VianaNET;component/Images/VianaNET.ico" 
-        Topmost="True">
+        Icon="/VianaNET;component/Images/VianaNET.ico">
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
@@ -42,25 +41,27 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
           </Grid.RowDefinitions>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFilenameLabel}"/>
-          <TextBlock Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="0" Grid.Column="1" Text="{Binding Filename}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="0" Grid.Column="1" Content="{Binding Filename}"/>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="1" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoDurationLabel}"/>
           <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="1" Grid.Column="1" Content="{Binding Duration}"/>
           <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFPSLabel}"/>
-          <StackPanel Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{Binding DefaultFrameRate}" ContentStringFormat="F2"/>
-            <Label Content="{lex:Loc VianaNET:Labels:VideoInfoFPSDefaultLabel}"/>
-            <xctk:DoubleUpDown Value="{Binding FrameRate}" Increment="1" Minimum="1" Maximum="500000" FormatString="F2"/>
-          </StackPanel>
-          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameCountLabel}"/>
-          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="1" Content="{Binding FrameCount}"/>
-          <Label Grid.Row="4" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameSizeLabel}"/>
-          <Label Grid.Row="4" Grid.Column="1" Content="{Binding FrameSize}"/>
-          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="5" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoCodecLabel}"/>
-          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="5" Grid.Column="1" Content="{Binding Codec}"/>
-          <Label Grid.Row="6" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoBitrateLabel}"/>
-          <Label Grid.Row="6" Grid.Column="1" Content="{Binding Bitrate}"/>
+          <Label Grid.Row="2" Grid.Column="1" Content="{Binding DefaultFrameRate}" ContentStringFormat="F2"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Content="{lex:Loc VianaNET:Labels:VideoInfoFPSDefaultLabel}" ToolTip="{lex:Loc VianaNET:Labels:VideoInfoFPSDefaultToolTip}"/>
+          <xctk:DoubleUpDown Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="80" Value="{Binding FrameRate}" Increment="1" Minimum="1" Maximum="500000" FormatString="F2"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="4" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameCountLabel}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="4" Grid.Column="1" Content="{Binding FrameCount}"/>
+          <Label Grid.Row="5" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoFrameSizeLabel}"/>
+          <Label Grid.Row="5" Grid.Column="1" Content="{Binding FrameSize}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="6" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoContainerLabel}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="6" Grid.Column="1" Content="{Binding Container}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="7" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoCodecLabel}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="7" Grid.Column="1" Content="{Binding Codec}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="8" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:VideoInfoBitrateLabel}"/>
+          <Label Visibility="{Binding Path=IsLiveCamera, Source={x:Static Control:Video.Instance}, Converter={StaticResource BoolVisibleConverterInverse}}" Grid.Row="8" Grid.Column="1" Content="{Binding Bitrate}"/>
         </Grid>
       </StackPanel>
     </Border>

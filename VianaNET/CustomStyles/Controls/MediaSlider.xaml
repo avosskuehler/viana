@@ -52,14 +52,13 @@
         <RepeatButton Name="TickDownButton"  Grid.Column="1" Grid.Row="1" 
            Visibility="{TemplateBinding viana:MediaSlider.IsShowingTickButtons}" 
           Command="{x:Static viana:MediaSlider.TickDownClickedCommand}"
-          Style="{StaticResource BaseSliderSidesButtonStyle}">
-          <Border Width="8" Height="2" Background="{StaticResource GlyphBrush}"></Border>
+          Style="{StaticResource SliderTickMinusStyle}">
         </RepeatButton>
 
         <RepeatButton Name="TickUpButton" Grid.Row="1" Grid.Column="3"
            Visibility="{TemplateBinding viana:MediaSlider.IsShowingTickButtons}" 
 						Command="{x:Static viana:MediaSlider.TickUpClickedCommand}"
-            Style="{StaticResource BaseSliderSidesButtonStyle}">
+            Style="{StaticResource SliderTickPlusStyle}">
 
           <Path Fill="{StaticResource GlyphBrush}" Stretch="None">
             <Path.Data>

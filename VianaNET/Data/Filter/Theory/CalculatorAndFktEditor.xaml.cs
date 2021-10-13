@@ -86,9 +86,8 @@ namespace VianaNET.Data.Filter.Theory
 
       for (k = 0; k < Constants.konstante.Length; k++)
       {
-        string uiString;
         LocExtension locExtension = new LocExtension("VianaNET:Labels:" + Constants.konstante[k].titel);
-        locExtension.ResolveLocalizedValue(out uiString);
+        locExtension.ResolveLocalizedValue(out string uiString);
         this.comboBox1.Items.Add(uiString);
       }
 

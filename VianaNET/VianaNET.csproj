@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>VianaNET</RootNamespace>
     <AssemblyName>VianaNET</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <Deterministic>false</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -102,20 +103,11 @@
     <Reference Include="AForge.Vision, Version=2.2.5.0, Culture=neutral, PublicKeyToken=b612fa915eefaa06, processorArchitecture=MSIL">
       <HintPath>..\packages\AForge.Vision.2.2.5\lib\AForge.Vision.dll</HintPath>
     </Reference>
-    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
-    </Reference>
-    <Reference Include="DirectShowLib, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DirectShowLib.Standard.2.1.0\lib\net45\DirectShowLib.dll</HintPath>
+    <Reference Include="ControlzEx, Version=5.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.5.0.1\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="Fluent, Version=8.0.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fluent.Ribbon.8.0.3\lib\net452\Fluent.dll</HintPath>
-    </Reference>
-    <Reference Include="FontAwesome5, Version=2.1.4.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FontAwesome5.2.1.4\lib\net40\FontAwesome5.dll</HintPath>
-    </Reference>
-    <Reference Include="FontAwesome5.Net, Version=2.1.4.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FontAwesome5.2.1.4\lib\net40\FontAwesome5.Net.dll</HintPath>
+      <HintPath>..\packages\Fluent.Ribbon.8.0.3\lib\net462\Fluent.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
@@ -132,7 +124,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.37\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenCvSharp4.4.5.3.20210817\lib\net461\OpenCvSharp.dll</HintPath>
@@ -154,6 +146,21 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="ReachFramework" />
+    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D9.4.2.0\lib\net45\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.4.2.0\lib\net45\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Mathematics.4.2.0\lib\net45\SharpDX.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.MediaFoundation, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.MediaFoundation.4.2.0\lib\net45\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -177,7 +184,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -217,7 +224,7 @@
       <HintPath>..\packages\WpfMath.0.11.0\lib\net452\WpfMath.dll</HintPath>
     </Reference>
     <Reference Include="XAMLMarkupExtensions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\XAMLMarkupExtensions.2.1.1\lib\net452\XAMLMarkupExtensions.dll</HintPath>
+      <HintPath>..\packages\XAMLMarkupExtensions.2.1.1\lib\net48\XAMLMarkupExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Xceed.Wpf.Toolkit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
@@ -289,10 +296,21 @@
     <Compile Include="CustomStyles\Converter\PlusOneConverter.cs" />
     <Compile Include="CustomStyles\Converter\RulerUnitStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\UnitDoubleStringConverter.cs" />
+    <Compile Include="CustomStyles\FontAwesome\AwesomeFontType.cs" />
+    <Compile Include="CustomStyles\FontAwesome\Icon.cs" />
+    <Compile Include="CustomStyles\FontAwesome\IconBlock.cs" />
+    <Compile Include="CustomStyles\FontAwesome\IconChar.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IconChar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomStyles\FontAwesome\IconHelper.cs" />
+    <Compile Include="CustomStyles\FontAwesome\IconSource.cs" />
     <Compile Include="CustomStyles\Styles\SliderStyles.xaml.cs">
       <DependentUpon>SliderStyles.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\CameraDevice.cs" />
     <Compile Include="CustomStyles\Types\ChartType.cs" />
     <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
     <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
@@ -302,6 +320,7 @@
     <Compile Include="CustomStyles\Types\SortedCollection.cs" />
     <Compile Include="CustomStyles\Types\SortedObservableCollection.cs" />
     <Compile Include="CustomStyles\Types\TimeUnit.cs" />
+    <Compile Include="CustomStyles\Types\UiServices.cs" />
     <Compile Include="CustomStyles\Types\VideoMode.cs" />
     <Compile Include="CustomStyles\Validation\NumberValidationRule.cs" />
     <Compile Include="Data\CalibrationData.cs" />
@@ -419,8 +438,6 @@
     <Compile Include="Modules\Video\BlobDetection\BlobsControl.xaml.cs">
       <DependentUpon>BlobsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\Control\DShowUtils.cs" />
-    <Compile Include="Modules\Video\Control\LiveVideoController.cs" />
     <Compile Include="Modules\Video\Control\Video.cs" />
     <Compile Include="Modules\Video\Control\VideoBase.cs" />
     <Compile Include="Modules\Video\Control\VideoCapturer.cs" />
@@ -453,7 +470,6 @@
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
     <Compile Include="Modules\Video\Filter\CropFilterRgb.cs" />
     <Compile Include="Modules\Video\Filter\FilterBase.cs" />
-    <Compile Include="Modules\Video\Filter\GMFBridge.cs" />
     <Compile Include="Modules\Video\Filter\Histogram.cs" />
     <Compile Include="Modules\Video\Filter\HistogramMinMaxSegmentator.cs" />
     <Compile Include="Modules\Video\Filter\MotionHighlightingSpecial.cs" />
@@ -721,6 +737,10 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <Resource Include="Fonts\FontAwesome5Brands-Regular-400.otf" />
+    <Resource Include="Fonts\FontAwesome5Pro-Light-300.otf" />
+    <Resource Include="Fonts\FontAwesome5Pro-Regular-400.otf" />
+    <Resource Include="Fonts\FontAwesome5Pro-Solid-900.otf" />
     <None Include="Images\InstallerBanner.psd" />
     <None Include="Images\InstallerBkg.psd" />
     <None Include="Images\NoVideo.psd" />
@@ -905,15 +925,18 @@
     <Resource Include="Images\VideoWindow32.png" />
     <Resource Include="Images\Word16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="CustomStyles\FontAwesome\fontawesome-all.css" />
+    <Content Include="CustomStyles\FontAwesome\IconChar.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IconChar.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets'))" />
-    <Error Condition="!Exists('..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props'))" />
-  </Target>
-  <Import Project="..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets" Condition="Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" />
   <PropertyGroup>
     <PostBuildEvent>if $(PlatformName) == x64 (
   C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
@@ -923,4 +946,12 @@
   C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x86\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
 )</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets" Condition="Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Dieses Projekt verweist auf mindestens ein NuGet-Paket, das auf diesem Computer fehlt. Verwenden Sie die Wiederherstellung von NuGet-Paketen, um die fehlenden Dateien herunterzuladen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=322105". Die fehlende Datei ist "{0}".</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets'))" />
+    <Error Condition="!Exists('..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCvSharp4.runtime.win.4.5.3.20210817\build\net\OpenCvSharp4.runtime.win.props'))" />
+  </Target>
 </Project>

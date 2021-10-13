@@ -143,19 +143,13 @@ namespace VianaNET.CustomStyles.Colors
       float hueDiff = this.palletInfo.HueAvg - hue;
 
       // Saturation
-      float satDiff;
-      float satConstraint;
-      float satAux;
 
       this.CalculateParameters(
-        saturation, this.palletInfo.SatMin, this.palletInfo.SatMax, out satDiff, out satConstraint, out satAux);
+        saturation, this.palletInfo.SatMin, this.palletInfo.SatMax, out float satDiff, out float satConstraint, out float satAux);
 
       // X
-      float diffX;
-      float constraintX;
-      float auxX;
 
-      this.CalculateParameters(x, this.palletInfo.XMin, this.palletInfo.XMax, out diffX, out constraintX, out auxX);
+      this.CalculateParameters(x, this.palletInfo.XMin, this.palletInfo.XMax, out float diffX, out float constraintX, out float auxX);
 
       Color[] result = new Color[this.sourcePallet.Length];
       HSXColor sourceColor;

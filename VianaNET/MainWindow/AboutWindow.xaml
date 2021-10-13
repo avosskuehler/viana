@@ -36,9 +36,12 @@
         </StackPanel>
       </StackPanel>
     </Border>
-    <Border Grid.Row="1" Background="{StaticResource MainBackgroundBrush}">
+    <Border Grid.Row="1">
       <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5">
-        <GroupBox Header="{lex:Loc VianaNET:Labels:AboutBoxDescription}">
+        <HeaderedContentControl>
+          <HeaderedContentControl.Header>
+            <Label FontWeight="Bold" Content="{lex:Loc VianaNET:Labels:AboutBoxDescription}"/>
+          </HeaderedContentControl.Header>
           <StackPanel>
             <TextBlock TextWrapping="Wrap" Text="{lex:Loc Key=AboutBoxTextBlock}"/>
             <TextBlock>
@@ -47,12 +50,15 @@
                         </Hyperlink>
             </TextBlock>
           </StackPanel>
-        </GroupBox>
-        <GroupBox Header="{lex:Loc VianaNET:Labels:AboutBoxCreditsHeader}">
+        </HeaderedContentControl>
+        <HeaderedContentControl>
+          <HeaderedContentControl.Header>
+            <Label FontWeight="Bold" Content="{lex:Loc VianaNET:Labels:AboutBoxCreditsHeader}"/>
+          </HeaderedContentControl.Header>
           <StackPanel>
             <TextBlock TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:AboutBoxCredits}"/>
           </StackPanel>
-        </GroupBox>
+        </HeaderedContentControl>
       </StackPanel>
     </Border>
     <Button Grid.Row="2" HorizontalAlignment="Center" Margin="5" Height="23" Width="80" Click="Button_Click">OK</Button>

@@ -38,8 +38,6 @@ namespace VianaNET.Modules.DataGrid
   using VianaNET.Data.Collections;
   using VianaNET.Logging;
 
-  using Application = System.Windows.Application;
-
   /// <summary>
   ///   Enthält Hilfsfunktionen zum Erzeugen von Excel-Dateien mit SpreadsheetML.
   /// </summary>

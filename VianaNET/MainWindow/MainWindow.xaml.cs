@@ -27,6 +27,7 @@
 namespace VianaNET.MainWindow
 {
   using System;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Globalization;
   using System.IO;
@@ -71,12 +72,13 @@ namespace VianaNET.MainWindow
       App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
-      System.Collections.Generic.List<string> devices = Video.Instance.VideoInputDevices.Select(device => device.Name).ToList();
+
+      List<CameraDevice> devices = Video.Instance.VideoInputDevicesMSMF;
 
       this.VideoSourceGalleryCategory.ItemsSource = devices;
-      if (Video.Instance.VideoInputDevices.Count > 0)
+      if (Video.Instance.VideoInputDevicesMSMF.Count > 0)
       {
-        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevices[0].Name;
+        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevicesMSMF[0];
       }
 
       this.Show();
@@ -486,7 +488,7 @@ namespace VianaNET.MainWindow
     {
       if (Video.Instance.VideoCapturerElement.VideoCaptureDevice == null)
       {
-        Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevices[0];
+        Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevicesMSMF[0];
       }
 
       this.VideoWindow.SetVideoMode(VideoMode.Capture);
@@ -552,25 +554,25 @@ namespace VianaNET.MainWindow
     {
       // Create new SaveFileDialog object
       SaveFileDialog sfd = new SaveFileDialog
-        {
-          // Default file extension
-          DefaultExt = "csv",
+      {
+        // Default file extension
+        DefaultExt = "csv",
 
-          // Available file extensions
-          Filter = VianaNET.Localization.Labels.CsvFilter,
+        // Available file extensions
+        Filter = VianaNET.Localization.Labels.CsvFilter,
 
-          // Adds a extension if the user does not
-          AddExtension = true,
+        // Adds a extension if the user does not
+        AddExtension = true,
 
-          // Restores the selected directory, next time
-          RestoreDirectory = true,
+        // Restores the selected directory, next time
+        RestoreDirectory = true,
 
-          // Dialog title
-          Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
+        // Dialog title
+        Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
 
-          // Startup directory
-          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-        };
+        // Startup directory
+        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+      };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
@@ -592,14 +594,14 @@ namespace VianaNET.MainWindow
     {
       // Create new SaveFileDialog object
       SaveFileDialog sfd = new SaveFileDialog
-                  {
-                    DefaultExt = "txt",
-                    Filter = VianaNET.Localization.Labels.TxtFilter,
-                    AddExtension = true,
-                    RestoreDirectory = true,
-                    Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                  };
+      {
+        DefaultExt = "txt",
+        Filter = VianaNET.Localization.Labels.TxtFilter,
+        AddExtension = true,
+        RestoreDirectory = true,
+        Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
+        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+      };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
@@ -635,14 +637,14 @@ namespace VianaNET.MainWindow
     {
       // Create new SaveFileDialog object
       SaveFileDialog sfd = new SaveFileDialog
-        {
-          DefaultExt = "xml",
-          Filter = VianaNET.Localization.Labels.XmlFilter,
-          AddExtension = true,
-          RestoreDirectory = true,
-          Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
-          InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-        };
+      {
+        DefaultExt = "xml",
+        Filter = VianaNET.Localization.Labels.XmlFilter,
+        AddExtension = true,
+        RestoreDirectory = true,
+        Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
+        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+      };
 
       // Show the dialog and process the result
       if (sfd.ShowDialog().GetValueOrDefault())
@@ -897,7 +899,8 @@ namespace VianaNET.MainWindow
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
         24d,
-        Brushes.Black);
+        Brushes.Black,
+        1);
 
       drawingContext.DrawText(text, new Point(8, 1));
 
@@ -1127,7 +1130,8 @@ namespace VianaNET.MainWindow
         FlowDirection.LeftToRight,
         new Typeface("Verdana"),
         18d,
-        Brushes.Black);
+        Brushes.Black,
+        1);
 
       drawingContext.DrawText(text, new Point(10, 3));
 
@@ -1206,14 +1210,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
     private void VideoInputDeviceCombo_OnSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-      foreach (DirectShowLib.DsDevice videoInputDevice in Video.Instance.VideoInputDevices)
-      {
-        if (videoInputDevice.Name == this.VideoInputDeviceCombo.SelectedItem.ToString())
-        {
-          Video.Instance.VideoCapturerElement.VideoCaptureDevice = videoInputDevice;
-          break;
-        }
-      }
+      Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevicesMSMF.FirstOrDefault(o => o.Index == ((CameraDevice)this.VideoInputDeviceCombo.SelectedItem).Index);
     }
 
     /// <summary>
@@ -1226,7 +1223,5 @@ namespace VianaNET.MainWindow
       SkipPointsDialog dlg = new SkipPointsDialog();
       dlg.ShowDialog();
     }
-
-
   }
 }

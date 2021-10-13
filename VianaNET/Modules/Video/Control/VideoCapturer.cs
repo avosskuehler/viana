@@ -22,16 +22,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace VianaNET.Modules.Video.Control
 {
-  using System;
-  using System.ComponentModel;
   using System.Diagnostics;
-  using System.Runtime.InteropServices;
   using System.Threading;
   using System.Windows;
-
-  using DirectShowLib;
   using OpenCvSharp;
-  using OpenCvSharp.WpfExtensions;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
 
@@ -55,26 +49,10 @@ namespace VianaNET.Modules.Video.Control
     public static readonly DependencyProperty VideoCaptureDeviceProperty =
       DependencyProperty.Register(
         "VideoCaptureDevice",
-        typeof(DsDevice),
+        typeof(CameraDevice),
         typeof(VideoCapturer),
         new PropertyMetadata(OnVideoCaptureDevicePropertyChanged));
 
-
-    public VideoCapturer()
-    {
-    }
-
-    /// <summary>
-    /// Finalizes an instance of the <see cref="VideoCapturer"/> class.
-    /// </summary>
-    ~VideoCapturer()
-    {
-      if (this.VideoDeviceFilter != null)
-      {
-        Marshal.ReleaseComObject(this.VideoDeviceFilter);
-        this.VideoDeviceFilter = null;
-      }
-    }
 
     /// <summary>
     ///   Gets a value indicating whether this capturer is in the PlayState.Running state.
@@ -84,42 +62,41 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     ///   Gets or sets the video capture device.
     /// </summary>
-    public DsDevice VideoCaptureDevice
+    public CameraDevice VideoCaptureDevice
     {
-      get => (DsDevice)this.GetValue(VideoCaptureDeviceProperty);
+      get => (CameraDevice)this.GetValue(VideoCaptureDeviceProperty);
 
       set => this.SetValue(VideoCaptureDeviceProperty, value);
     }
 
     /// <summary>
-    ///   Gets the selected video device
-    /// </summary>
-    public IBaseFilter VideoDeviceFilter { get; private set; }
-
-    /// <summary>
     /// This method creates a new graph for the given capture device and
     ///   properties.
     /// </summary>
-    /// <param name="frameRate">
-    /// The framerate to use.
+    /// <param name="cameraIndex">
+    /// The zero-based Index of the used camera device
     /// </param>
-    /// <param name="width">
-    /// The width to use.
-    /// </param>
-    /// <param name="height">
-    /// The height to use.
-    /// </param>
-    public void NewCamera()
+    public void NewCamera(int cameraIndex)
     {
       this.Dispose();
 
       this.frameCounter = 0;
       this.frameTimer = new Stopwatch();
+      UiServices.WaitUntilReady();
+
+      if (this.bkgWorker != null && this.bkgWorker.IsBusy)
+      {
+        this.bkgWorker.CancelAsync();
+      }
+
+      while (this.bkgWorker.IsBusy)
+      {
+        Thread.Sleep(100);
+      }
 
       try
       {
-
-        if (!this.OpenCVObject.Open(0, OpenCvSharp.VideoCaptureAPIs.ANY))
+        if (!this.OpenCVObject.Open(cameraIndex, VideoCaptureAPIs.ANY))
         {
           return;
         }
@@ -127,16 +104,11 @@ namespace VianaNET.Modules.Video.Control
         Video.Instance.VideoElement.SaveSizeInfo(this.OpenCVObject);
         Video.Instance.FPS = this.OpenCVObject.Fps;
         Video.Instance.FrameSize = new System.Windows.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight);
-
-        if (!this.bkgWorker.IsBusy)
-        {
-          this.bkgWorker.RunWorkerAsync();
-        }
       }
       catch
       {
         this.Dispose();
-        ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize graphs");
+        ErrorLogger.WriteLine("Error in Camera.Capture(), Could not initialize camera");
         Video.Instance.HasVideo = false;
         return;
       }
@@ -184,12 +156,11 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public void ShowPropertyPageOfVideoDevice()
     {
-      if (this.VideoDeviceFilter != null)
-      {
-        DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.VideoDeviceFilter);
-      }
-
-      this.OpenCVObject.Set(VideoCaptureProperties.Settings, 0);
+      //if (this.VideoDeviceIndex != null)
+      //{
+      //  DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.VideoDeviceIndex);
+      //}
+      this.OpenCVObject.Set(VideoCaptureProperties.Settings, 1);
     }
 
 
@@ -224,23 +195,18 @@ namespace VianaNET.Modules.Video.Control
       DependencyObject obj,
       DependencyPropertyChangedEventArgs args)
     {
-      if (args.NewValue as DsDevice == null)
+      if (args.NewValue as CameraDevice == null)
       {
         return;
       }
 
       if (obj is VideoCapturer videoCapturer)
       {
-        DsDevice device = args.NewValue as DsDevice;
-        if (videoCapturer.VideoDeviceFilter != null)
-        {
-          Marshal.ReleaseComObject(videoCapturer.VideoDeviceFilter);
-        }
+        CameraDevice device = args.NewValue as CameraDevice;
 
-        videoCapturer.VideoDeviceFilter = DShowUtils.CreateFilter(FilterCategory.VideoInputDevice, device.Name);
         if (Video.Instance.VideoMode == VideoMode.Capture)
         {
-          videoCapturer.NewCamera();
+          videoCapturer.NewCamera(device.Index);
         }
       }
     }
