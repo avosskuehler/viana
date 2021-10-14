@@ -6,18 +6,11 @@
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="OfficeColors.xaml"/>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/CheckBox.xaml"/>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ComboBox.xaml"/>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ImageButton.xaml"/>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RadioButton.xaml"/>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollBar.xaml"/>
-    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/ScrollViewer.xaml"/>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/Slider.xaml"/>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/SliderValue.xaml"/>
-    <!--<ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/RibbonSliderValue.xaml"/>-->
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/MediaSlider.xaml"/>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Controls/NumericUpDown.xaml"/>
-    <!--<ResourceDictionary Source="DataGridStyles.xaml"/>-->
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Converter/Converter.xaml"/>
     <ResourceDictionary Source="BackgroundStyles.xaml"/>
     <ResourceDictionary Source="GeometryItems.xaml"/>

@@ -107,10 +107,6 @@
       return terminMenuentryIconImage;
     }
 
-
-
-
-
     /// <summary>
     /// The <see cref="System.Windows.Application.DispatcherUnhandledException"/> event handler.
     ///   Displays a message for each otherwise unhandled exception.
@@ -143,7 +139,5 @@
       this.DispatcherUnhandledException += this.App_DispatcherUnhandledException;
       this.MainWindow = new MainWindow.MainWindow();
     }
-
-
   }
 }

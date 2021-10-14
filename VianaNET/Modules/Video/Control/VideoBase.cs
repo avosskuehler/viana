@@ -317,7 +317,7 @@ namespace VianaNET.Modules.Video.Control
             },
           null);
 
-        if (this.OpenCVObject.IsOpened())
+        if (!this.OpenCVObject.IsDisposed && this.OpenCVObject.IsOpened())
         {
           this.OpenCVObject.Release();
         }
@@ -357,8 +357,6 @@ namespace VianaNET.Modules.Video.Control
         {
           this.UnmanagedImage.Dispose();
         }
-
-        Video.Instance.HasVideo = false;
       }
 
       // Double check to make sure we aren't releasing something
@@ -412,7 +410,10 @@ namespace VianaNET.Modules.Video.Control
       try
       {
         this.bkgWorker.CancelAsync();
-        this.CurrentState = PlayState.Stopped;
+        this.Dispatcher.BeginInvoke(
+          DispatcherPriority.Render,
+          (SendOrPostCallback)delegate { this.CurrentState = PlayState.Stopped; },
+          null);
       }
       catch (Exception ex)
       {
@@ -705,8 +706,6 @@ namespace VianaNET.Modules.Video.Control
           0) as InteropBitmap;
     }
 
-    Mat frameMat = new Mat();
-
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
       BackgroundWorker worker = (BackgroundWorker)sender;
@@ -797,6 +796,8 @@ namespace VianaNET.Modules.Video.Control
           Video.Instance.VideoElement.NewFrameCallback(newFrame);
         });
       }
+
+      UiServices.WaitUntilReady();
     }
   }
 }

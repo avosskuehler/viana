@@ -21,6 +21,10 @@
     RowHeaderWidth="20" 
     CanUserDeleteRows="False"
     CanUserResizeColumns="True"
+    EnableRowVirtualization="True" 
+    EnableColumnVirtualization="True"
+    VirtualizingStackPanel.VirtualizationMode="Standard"
+    VirtualizingStackPanel.IsVirtualizing="True"                  
     PreviewKeyDown="DataGrid_OnKeyDown"    >
     <DataGrid.RowStyle>
       <Style TargetType="DataGridRow">

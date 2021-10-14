@@ -48,8 +48,13 @@
     </GroupBox>
     <GroupBox Grid.Row="2" Header="{lex:Loc VianaNET:Labels:BlobsControlDetectedPositionsHeader}">
       <!--Visibility="{Binding Path=IsDataAcquisitionRunning, Source={x:Static Viana:Video.Instance}, Converter={StaticResource BoolVisibleConverter}}">-->
-      <Grid>
-        <Canvas Name="CanvasDataPoints" SizeChanged="CanvasDataPointsSizeChanged"/>
+      <Grid Name="DataPointsGrid">
+        <Image Opacity="0.2" Name="OverlayImageControl2" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
+
+        <Canvas 
+          Name="CanvasDataPoints" 
+          SizeChanged="CanvasDataPointsSizeChanged">
+        </Canvas>
       </Grid>
       <!--<Viana:VianaChart Style="{StaticResource VianaChartStyle}" IsShowingLegend="Collapsed" Title="{x:Null}"  x:Name="DataChart" BorderThickness="0">
         <charting:Chart.Series>

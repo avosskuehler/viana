@@ -155,7 +155,7 @@ namespace VianaNET.Modules.DataGrid
       XmlNode sheetNode = ownerDocument.CreateElement("table:table", GetNamespaceUri("table"));
 
       XmlAttribute sheetName = ownerDocument.CreateAttribute("table:name", GetNamespaceUri("table"));
-      sheetName.Value = App.Project.ProjectFilename;
+      sheetName.Value = App.Project.ProjectFile;
       sheetNode.Attributes.Append(sheetName);
 
       // SaveColumnDefinition

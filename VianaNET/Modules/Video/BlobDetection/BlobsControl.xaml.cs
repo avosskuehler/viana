@@ -83,7 +83,9 @@ namespace VianaNET.Modules.Video.BlobDetection
             Width = 15,
             Height = 15
           };
-          Point location = new Point(sample.Object[i].PositionX, sample.Object[i].PositionY);
+
+          var location = new Point(sample.Object[i].PixelX, sample.Object[i].PixelY);
+
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
           Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
@@ -135,9 +137,10 @@ namespace VianaNET.Modules.Video.BlobDetection
     {
       ScaleTransform videoSizeToCanvasSize = new ScaleTransform
       {
-        ScaleX = this.CanvasDataPoints.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth,
-        ScaleY = this.CanvasDataPoints.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight
+        ScaleX = this.OverlayImageControl2.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth,
+        ScaleY = this.OverlayImageControl2.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight
       };
+
       this.CanvasDataPoints.RenderTransform = videoSizeToCanvasSize;
     }
 

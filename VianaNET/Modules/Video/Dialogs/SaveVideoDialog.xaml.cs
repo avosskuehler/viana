@@ -42,7 +42,7 @@ namespace VianaNET.Modules.Video.Dialogs
   /// <summary>
   ///   The save video dialog.
   /// </summary>
-  public partial class SaveVideoDialog : System.Windows.Window
+  public partial class SaveVideoDialog : System.Windows.Window, IDisposable
   {
     /// <summary>
     ///   The folder browser dialog.
@@ -106,7 +106,7 @@ namespace VianaNET.Modules.Video.Dialogs
       }
     }
 
-    ~SaveVideoDialog()
+    void IDisposable.Dispose()
     {
       if (this.OpenCVObject != null)
       {
@@ -253,7 +253,7 @@ namespace VianaNET.Modules.Video.Dialogs
       if (!this.isCapturing)
       {
         var filename = Path.Combine(this.FolderTextBox.Text, this.FileNameTextBox.Text);
-        
+
         // Using fixed 25 fps
         this.videoWriter = new VideoWriter(filename, FourCC.MP4V, 25, new OpenCvSharp.Size(this.OpenCVObject.FrameWidth, this.OpenCVObject.FrameHeight));
         if (this.videoWriter.IsOpened())
@@ -344,7 +344,7 @@ namespace VianaNET.Modules.Video.Dialogs
       double frametimeInMS = 40;
       long starttime = 0;
 
-      while (!worker.CancellationPending)
+      while (!worker.CancellationPending && !this.OpenCVObject.IsDisposed)
       {
         using (Mat frameMat = this.OpenCVObject.RetrieveMat())
         {
@@ -375,5 +375,6 @@ namespace VianaNET.Modules.Video.Dialogs
 
       }
     }
+
   }
 }

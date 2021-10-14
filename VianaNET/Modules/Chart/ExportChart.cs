@@ -59,8 +59,11 @@ namespace VianaNET.Modules.Chart
     public static void ToClipboard(PlotModel chart)
     {
       PngExporter exporter = new PngExporter();
+      exporter.Width = (int)chart.Width;
+      exporter.Height = (int)chart.Height;
+      chart.Background = OxyColor.FromArgb(255, 255, 255, 255);
       BitmapSource bitmap = exporter.ExportToBitmap(chart);
-      //, (int)chart.Width, (int)chart.Height, OxyColor.FromArgb(255, 255, 255, 255));
+
       Clipboard.SetImage(bitmap);
       StatusBarContent.Instance.MessagesLabel = VianaNET.Localization.Labels.ChartExportedToClipboardMessage;
     }
@@ -123,6 +126,10 @@ namespace VianaNET.Modules.Chart
           }
 
           PngExporter exporter = new PngExporter();
+          exporter.Width = (int)chart.Width;
+          exporter.Height = (int)chart.Height;
+          chart.Background = OxyColor.FromArgb(255, 255, 255, 255);
+
           BitmapSource bitmap = exporter.ExportToBitmap(chart);
 
           // Save to file

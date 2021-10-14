@@ -4057,6 +4057,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ModifyDataWindowNoDataPoints ähnelt.
+        /// </summary>
+        public static string ModifyDataWindowNoDataPoints {
+            get {
+                return ResourceManager.GetString("ModifyDataWindowNoDataPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ModifyDataWindowTrackItemNumberHeader ähnelt.
         /// </summary>
         public static string ModifyDataWindowTrackItemNumberHeader {

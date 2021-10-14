@@ -1465,6 +1465,10 @@ F10: Reset coordinate system.</value>
   <data name="ModifyDataWindowControlTitle" xml:space="preserve">
     <value>Help</value>
   </data>
+  <data name="ModifyDataWindowNoDataPoints" xml:space="preserve">
+    <value>This frame has no data point set.
+It can be newly placed with the mouse now.</value>
+  </data>
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>Modify object: </value>
   </data>
@@ -1877,7 +1881,7 @@ F10: Reset coordinate system.</value>
     <value>Viana.NET message ...</value>
   </data>
   <data name="VideoFilesFilter" xml:space="preserve">
-    <value>Video files (*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov)|*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov|All files|*.*</value>
+    <value>Video files (*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov;*.m4v)|*.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov;*.m4v|All files|*.*</value>
   </data>
   <data name="VideoInfoBitrateLabel" xml:space="preserve">
     <value>Bitrate</value>

@@ -90,7 +90,7 @@ namespace VianaNET.MainWindow
     /// </summary>
     public string MessageDescription
     {
-      set => this.Description.Content = value;
+      set => this.Description.Text = value;
     }
 
 

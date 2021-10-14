@@ -28,6 +28,7 @@ namespace VianaNET.Data
   using System.Linq;
   using System.Windows;
   using System.Windows.Controls.Primitives;
+  using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Data.Collections;
   using VianaNET.Modules.Video.Control;
@@ -220,7 +221,7 @@ namespace VianaNET.Data
       set => this.SetValue(SelectionStartProperty, value);
     }
 
-   /// <summary>
+    /// <summary>
     ///   Gets or sets the tick placement for the media slider
     /// </summary>
     public TickPlacement TickPlacement
@@ -249,7 +250,10 @@ namespace VianaNET.Data
       set
       {
         this.SetValue(UseEveryNthPointProperty, value);
-        this.FilterSamples();
+        if (!Project.IsDeserializing)
+        {
+          this.FilterSamples();
+        }
       }
     }
 
@@ -274,11 +278,11 @@ namespace VianaNET.Data
       }
 
       TimeSample timeSample = new TimeSample
-                         {
-                           Framenumber = Video.Instance.FrameIndex,
-                           Timestamp = Video.Instance.FrameTimestampInMs,
-                           IsSelected = true
-                         };
+      {
+        Framenumber = Video.Instance.FrameIndex,
+        Timestamp = Video.Instance.FrameTimestampInMs,
+        IsSelected = true
+      };
 
       double newTime = Video.Instance.FrameTimestampInMs;
       switch (App.Project.CalibrationData.TimeUnit)
@@ -295,11 +299,11 @@ namespace VianaNET.Data
       DataSample newObjectSample = null;
       if (newSamplePosition.HasValue)
       {
-        Point origin = App.Project.CalibrationData.OriginInPixel;
-        Point transformedPoint = newSamplePosition.Value;
-        transformedPoint.Offset(-origin.X, -origin.Y);
-        transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
-        newObjectSample = new DataSample { Framenumber = timeSample.Framenumber, Time = newTime, PixelX = transformedPoint.X, PixelY = transformedPoint.Y };
+        //Point origin = App.Project.CalibrationData.OriginInPixel;
+        //Point transformedPoint = new Point(newSamplePosition.Value.X-origin.X,origin.Y-newSamplePosition.Value.Y);
+        ////transformedPoint.Offset(-newSamplePosition.Value.X, -newSamplePosition.Value.Y);
+        //transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
+        newObjectSample = new DataSample { Framenumber = timeSample.Framenumber, Time = newTime, PixelX = newSamplePosition.Value.X, PixelY = newSamplePosition.Value.Y };
       }
 
       // Add new point
@@ -479,9 +483,9 @@ namespace VianaNET.Data
       TimeSample sample = this.Samples.GetSampleByFrameindex(frameIndex);
       if (sample != null)
       {
-        Point origin = App.Project.CalibrationData.OriginInPixel;
+        //Point origin = App.Project.CalibrationData.OriginInPixel;
         Point transformedPoint = newLocation;
-        transformedPoint.Offset(-origin.X, -origin.Y);
+        //transformedPoint.Offset(-origin.X, -origin.Y);
         transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         sample.Object[objectIndex].PixelX = transformedPoint.X;
         sample.Object[objectIndex].PixelY = transformedPoint.Y;
@@ -524,11 +528,9 @@ namespace VianaNET.Data
         return new Point(value.PixelX, value.PixelY);
       }
 
-      Point calibratedPoint = new Point(value.PixelX, value.PixelY);
+      Point origin = App.Project.CalibrationData.OriginInPixel;
+      Point calibratedPoint = new Point(value.PixelX - origin.X, origin.Y - value.PixelY);
 
-      // calibratedPoint.Offset(
-      // -App.Project.CalibrationData.OriginInPixel.X,
-      // -App.Project.CalibrationData.OriginInPixel.Y);
       calibratedPoint.X = calibratedPoint.X * App.Project.CalibrationData.ScalePixelToUnit;
       calibratedPoint.Y = calibratedPoint.Y * App.Project.CalibrationData.ScalePixelToUnit;
 

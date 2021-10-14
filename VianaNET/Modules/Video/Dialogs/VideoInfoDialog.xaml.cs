@@ -121,14 +121,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void ParseVideoFile()
     {
-      if (App.Project == null || App.Project.ProjectPath == null)
-      {
-        return;
-      }
-
-      string fileWithPath = Path.Combine(App.Project.ProjectPath, App.Project.VideoFile);
-
-      if (!System.IO.File.Exists(fileWithPath))
+      if (!File.Exists(App.Project.VideoFile))
       {
         this.Filename = string.Empty;
         this.DurationString = string.Empty;
@@ -147,7 +140,7 @@ namespace VianaNET.Modules.Video.Dialogs
       // Read out video properties
       using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
       {
-        MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileWithPath);
+        MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(App.Project.VideoFile);
 
         string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
         if (float.TryParse(frameratestring, out float fpsfactor1000))

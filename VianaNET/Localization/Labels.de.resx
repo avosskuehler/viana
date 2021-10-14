@@ -1467,6 +1467,10 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="ModifyDataWindowControlTitle" xml:space="preserve">
     <value>Hilfe</value>
   </data>
+  <data name="ModifyDataWindowNoDataPoints" xml:space="preserve">
+    <value>In diesem Bild ist bisher kein Datenpunkt gesetzt.
+Mit der Maus kann er jetzt neu gesetzt werden.</value>
+  </data>
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>Ändere Objekt: </value>
   </data>
@@ -1879,7 +1883,7 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
     <value>Viana.NET Mitteilung ...</value>
   </data>
   <data name="VideoFilesFilter" xml:space="preserve">
-    <value>Videodateien ( *.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov)| *.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov|Alle Dateien|*.*</value>
+    <value>Videodateien ( *.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov;*.m4v)| *.avi;*.mpg;*.wmv;*.mpeg;*.mp4;*.mov;*.m4v|Alle Dateien|*.*</value>
   </data>
   <data name="VideoInfoBitrateLabel" xml:space="preserve">
     <value>Bitrate</value>

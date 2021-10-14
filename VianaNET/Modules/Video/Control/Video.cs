@@ -336,14 +336,10 @@ namespace VianaNET.Modules.Video.Control
     }
 
     /// <summary>
-    ///   The load movie.
+    ///   Loads the movie with the given filename
     /// </summary>
-    /// <param name="filename">
-    ///   The filename.
-    /// </param>
-    /// <returns>
-    ///   The <see cref="bool" /> .
-    /// </returns>
+    /// <param name="filename">The filename with full path</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public bool LoadMovie(string filename)
     {
       bool success = true;
@@ -352,15 +348,13 @@ namespace VianaNET.Modules.Video.Control
         case VideoMode.File:
           this.videoPlayerElement.Dispose();
           success = this.videoPlayerElement.LoadMovie(filename);
-          if (!success && File.Exists(App.Project.VideoFileWithPath))
+          if (!success && File.Exists(filename))
           {
             this.videoPlayerElement.Dispose();
-            success = this.ReRenderVideoFile(App.Project.VideoFileWithPath);
+            success = this.ReRenderVideoFile(filename);
           }
 
           StatusBarContent.Instance.VideoFilename = this.videoPlayerElement.VideoFilename;
-          //this.VideoSource = this.videoElement.ImageSource;
-          //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
           break;
         case VideoMode.Capture:
 
@@ -379,13 +373,14 @@ namespace VianaNET.Modules.Video.Control
     /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
     private bool SetVideoFileInOut(string videoFile)
     {
+      // TODO Set InOut on first load
       using (VlcWindow vlcConverter = new VlcWindow())
       {
         vlcConverter.VideoFile = videoFile;
         vlcConverter.ShowDialog();
       }
 
-      return this.LoadMovie(App.Project.VideoFileWithPath);
+      return this.LoadMovie(App.Project.VideoFile);
     }
 
     /// <summary>
@@ -401,7 +396,7 @@ namespace VianaNET.Modules.Video.Control
         vlcConverter.ShowDialog();
       }
 
-      return this.LoadMovie(App.Project.VideoFileWithPath);
+      return this.LoadMovie(App.Project.VideoFile);
     }
 
     /// <summary>

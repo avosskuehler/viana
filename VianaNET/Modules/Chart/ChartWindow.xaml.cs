@@ -1083,13 +1083,16 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == "NumberOfTrackedObjects")
+      if (!Project.IsDeserializing)
       {
-        this.PopulateObjectCombo();
-      }
-      else if (e.PropertyName == "IndexOfObject")
-      {
-        this.Refresh();
+        if (e.PropertyName == "NumberOfTrackedObjects")
+        {
+          this.PopulateObjectCombo();
+        }
+        else if (e.PropertyName == "IndexOfObject")
+        {
+          this.Refresh();
+        }
       }
     }
 

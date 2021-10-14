@@ -30,7 +30,7 @@
               Title="{lex:Loc VianaNET:Labels:ApplicationTitle}" 
               x:Name="MainRibbon">
       <Ribbon.ApplicationMenu>
-        <RibbonApplicationMenu KeyTip="S" Label="Datei" IsMainMenu="True">
+        <RibbonApplicationMenu KeyTip="S" IsMainMenu="True">
           <RibbonApplicationMenuItem 
                         Click="NewProjectOnClick"
                         Header="{lex:Loc VianaNET:Labels:ButtonNewProjectLabelTitle}"
@@ -163,7 +163,7 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <RibbonSeparator Grid.Row="0" Label="{lex:Loc VianaNET:Localization:Labels:RibbonApplicationMenuRecentFilesTitle}"/>
+              <RibbonSeparator Grid.Row="0" Label="{lex:Loc VianaNET:Labels:RibbonApplicationMenuRecentFilesTitle}"/>
               <ItemsControl Grid.Row="2" ItemsSource="{Binding Source={x:Static application:RecentFiles.Instance}, Path=RecentFilesCollection}">
                 <ItemsControl.ItemContainerStyle>
                   <Style TargetType="{x:Type FrameworkElement}">

@@ -30,6 +30,7 @@ namespace VianaNET.Modules.Video.Control
   using System.IO;
   using System.Windows;
   using OpenCvSharp;
+  using VianaNET.Application;
   using VianaNET.Logging;
   using VianaNET.MainWindow;
   using File = System.IO.File;
@@ -66,7 +67,7 @@ namespace VianaNET.Modules.Video.Control
     public event EventHandler StepComplete;
 
     /// <summary>
-    /// Gets or sets the filename of the video file
+    /// Gets or sets the filename with full path of the video file
     /// </summary>
     public string VideoFilename { get; set; }
 
@@ -127,47 +128,55 @@ namespace VianaNET.Modules.Video.Control
     {
       try
       {
-        if (App.Project.ProjectPath == null)
-        {
-          App.Project.ProjectPath = string.Empty;
-        }
-
-        string fileWithPath = Path.Combine(App.Project.ProjectPath, fileName);
-        if (!File.Exists(fileWithPath))
+        if (!File.Exists(fileName))
         {
           if (fileName != string.Empty)
           {
-            string messageTitle = VianaNET.Localization.Labels.AskVideoNotFoundMessageTitle;
-            messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileWithPath));
-            messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileWithPath));
+            var secondTest = Path.Combine(App.Project.ProjectPath, Path.GetFileName(App.Project.VideoFile));
+            if (File.Exists(secondTest))
+            {
+              fileName = secondTest;
+            }
+            else
+            {
+              string messageTitle = VianaNET.Localization.Labels.AskVideoNotFoundMessageTitle;
+              messageTitle = messageTitle.Replace("%1", Path.GetFileName(fileName));
+              messageTitle = messageTitle.Replace("%2", Path.GetDirectoryName(fileName));
 
-            VianaDialog dlg = new VianaDialog(VianaNET.Localization.Labels.AskVideoNotFoundTitle, messageTitle, VianaNET.Localization.Labels.AskVideoNotFoundMessage, false);
-            if (!dlg.ShowDialog().GetValueOrDefault(false))
+              VianaDialog dlg = new VianaDialog(VianaNET.Localization.Labels.AskVideoNotFoundTitle, messageTitle, VianaNET.Localization.Labels.AskVideoNotFoundMessage, false);
+              if (!dlg.ShowDialog().GetValueOrDefault(false))
+              {
+                return false;
+              }
+            }
+          }
+
+          if (!File.Exists(fileName))
+          {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.CheckFileExists = true;
+            ofd.CheckPathExists = true;
+            ofd.FilterIndex = 1;
+            ofd.Filter = VianaNET.Localization.Labels.VideoFilesFilter;
+            ofd.Title = VianaNET.Localization.Labels.LoadVideoFilesTitle;
+            if (ofd.ShowDialog().Value)
+            {
+              fileName = ofd.FileName;
+            }
+            else
             {
               return false;
             }
           }
-
-          OpenFileDialog ofd = new OpenFileDialog();
-          ofd.CheckFileExists = true;
-          ofd.CheckPathExists = true;
-          ofd.FilterIndex = 1;
-          ofd.Filter = VianaNET.Localization.Labels.VideoFilesFilter;
-          ofd.Title = VianaNET.Localization.Labels.LoadVideoFilesTitle;
-          if (ofd.ShowDialog().Value)
-          {
-            fileName = ofd.FileName;
-          }
-          else
-          {
-            return false;
-          }
         }
 
-        this.VideoFilename = Path.GetFileName(fileName);
-        App.Project.ProjectPath = Path.GetDirectoryName(fileName);
+        this.VideoFilename = fileName;
+        if (string.IsNullOrEmpty(App.Project.ProjectFilename))
+        {
+          App.Project.ProjectFilename = Path.Combine(Path.GetDirectoryName(fileName), Path.GetFileNameWithoutExtension(fileName) + ".via");
+        }
+
         App.Project.VideoFile = this.VideoFilename;
-        fileWithPath = Path.Combine(App.Project.ProjectPath, fileName);
 
         // Reset status variables
         this.CurrentState = PlayState.Stopped;
@@ -175,7 +184,7 @@ namespace VianaNET.Modules.Video.Control
         // Read out video properties
         using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
         {
-          MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileWithPath);
+          MediaInfo.DotNetWrapper.Enumerations.Status status = info.Open(fileName);
           string komplett = info.Inform();
           string[] einzeln = komplett.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -238,7 +247,7 @@ namespace VianaNET.Modules.Video.Control
         App.Project.VideoData.FramerateFactor = 1;
         try
         {
-          if (this.OpenCVObject.Open(fileWithPath))
+          if (this.OpenCVObject.Open(fileName))
           {
             Video.Instance.FPS = this.OpenCVObject.Fps;
             Video.Instance.VideoElement.SaveSizeInfo(this.OpenCVObject);

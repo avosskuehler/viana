@@ -64,8 +64,7 @@
 						Background="{StaticResource NormalBackGroundBrush}" 
 						BorderBrush="{StaticResource NormalBorderBrush}" 
 							HorizontalAlignment="{TemplateBinding ContentHorizontalAlignment}"
-							VerticalAlignment="{TemplateBinding ContentVerticalAlignment}"
-						CornerRadius="2">
+							VerticalAlignment="{TemplateBinding ContentVerticalAlignment}">
 
             <StackPanel x:Name="dockPanel" Orientation="Horizontal">
 

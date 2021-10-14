@@ -88,7 +88,7 @@ namespace VianaNET.Application
     /// <summary>
     ///   Maximum length of file name for display in recent file list
     /// </summary>
-    private int maxLengthDisplay = 40;
+    private readonly int maxLengthDisplay = 40;
 
 
 
@@ -177,7 +177,7 @@ namespace VianaNET.Application
         bitmap = new Bitmap(64, 64);
       }
 
-      bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+      //bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
       Bitmap smallBitmap = ScaleImage(bitmap, 64, 64);
       ProjectEntry projectEntry = new ProjectEntry { ProjectFile = file, ProjectIcon = smallBitmap };
 

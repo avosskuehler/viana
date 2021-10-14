@@ -142,15 +142,13 @@ namespace VianaNET.MainWindow
     /// </summary>
     private static void SaveCurrentProject()
     {
-      string filename = App.Project.ProjectPath + Path.DirectorySeparatorChar + App.Project.ProjectFilename;
-
-      if (File.Exists(filename))
+      if (File.Exists(App.Project.ProjectFilename))
       {
         // Save file
-        Project.Serialize(App.Project, filename);
+        Project.Serialize(App.Project, App.Project.ProjectFilename);
 
         // Add project file to recent files list
-        RecentFiles.Instance.Add(filename);
+        RecentFiles.Instance.Add(App.Project.ProjectFilename);
       }
       else
       {
@@ -179,7 +177,7 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void NewProjectOnClick(object sender, RoutedEventArgs e)
     {
-      if (App.Project.ProjectFilename != string.Empty && App.Project.ProjectFilename != null)
+      if (!string.IsNullOrEmpty(App.Project.ProjectFilename))
       {
         VianaDialog dlg = new VianaDialog(
           VianaNET.Localization.Labels.AskSaveProjectDialogTitle,
@@ -343,8 +341,7 @@ namespace VianaNET.MainWindow
 
       this.UpdateColorButton();
 
-      App.Project.ProjectFilename = openedProject.ProjectFilename;
-      App.Project.ProjectPath = openedProject.ProjectPath;
+      App.Project.ProjectFilename = filename;
       App.Project.VideoFile = openedProject.VideoFile;
       App.Project.VideoMode = openedProject.VideoMode;
       //this.VideoWindow.CreateCrossHairLines();
@@ -384,15 +381,8 @@ namespace VianaNET.MainWindow
       this.UpdateColorButton();
       this.UpdateSelectObjectImage();
 
-      if (openedProject.CalibrationData.HasClipRegion)
-      {
-        this.VideoWindow.UpdateClippingRegion();
-      }
-
-      if (openedProject.CalibrationData.IsVideoCalibrated)
-      {
-        this.VideoWindow.UpdateCalibration();
-      }
+      this.VideoWindow.UpdateClippingRegion();
+      this.VideoWindow.UpdateCalibration();
 
       // Reset flag
       Project.IsDeserializing = false;
@@ -700,16 +690,18 @@ namespace VianaNET.MainWindow
         this.VideoWindow.SetVideoMode(VideoMode.None);
       }
 
-      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
-      bool? showDialog = saveVideoDialog.ShowDialog();
-      if (showDialog != null && showDialog.Value)
+      using (SaveVideoDialog saveVideoDialog = new SaveVideoDialog())
       {
-        this.VideoWindow.SetVideoMode(VideoMode.File);
-        this.VideoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
-      }
-      else if (wasCapturing)
-      {
-        this.VideoWindow.SetVideoMode(VideoMode.Capture);
+        bool? showDialog = saveVideoDialog.ShowDialog();
+        if (showDialog != null && showDialog.Value)
+        {
+          this.VideoWindow.SetVideoMode(VideoMode.File);
+          this.VideoWindow.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+        }
+        else if (wasCapturing)
+        {
+          this.VideoWindow.SetVideoMode(VideoMode.Capture);
+        }
       }
     }
 
@@ -1010,14 +1002,14 @@ namespace VianaNET.MainWindow
     private void MainWindowClosing(object sender, CancelEventArgs e)
     {
       Settings.Default.Save();
-      string currentProjectFile = App.Project.ProjectPath + Path.DirectorySeparatorChar + App.Project.ProjectFilename;
-      string title = VianaNET.Localization.Labels.SaveProjectDialogTitle;
-      title = title.Replace("%1", App.Project.ProjectFilename);
 
-      if (File.Exists(currentProjectFile))
+      string title = VianaNET.Localization.Labels.SaveProjectDialogTitle;
+      title = title.Replace("%1", App.Project.ProjectFile);
+
+      if (File.Exists(App.Project.ProjectFilename))
       {
         string description = VianaNET.Localization.Labels.SaveProjectDialogDescription;
-        description = description.Replace("%1", App.Project.ProjectFilename);
+        description = description.Replace("%1", App.Project.ProjectFile);
         VianaSaveDialog dlg = new VianaSaveDialog(
           title,
           description,
@@ -1025,21 +1017,24 @@ namespace VianaNET.MainWindow
 
         if (dlg.ShowDialog().GetValueOrDefault(false))
         {
-          Project.Serialize(App.Project, currentProjectFile);
+          Project.Serialize(App.Project, App.Project.ProjectFilename);
         }
       }
       else
       {
-        string description = VianaNET.Localization.Labels.AskSaveProjectDialogDescription;
-        description = description.Replace("%1", App.Project.ProjectFilename);
-        VianaSaveDialog dlg = new VianaSaveDialog(
-          title,
-          description,
-          VianaNET.Localization.Labels.AskSaveProjectDialogMessage);
-
-        if (dlg.ShowDialog().GetValueOrDefault(false))
+        if (!string.IsNullOrEmpty(App.Project.VideoFile) || Video.Instance.HasVideo)
         {
-          SaveProjectToNewFile();
+          string description = VianaNET.Localization.Labels.AskSaveProjectDialogDescription;
+          description = description.Replace("%1", App.Project.ProjectFile);
+          VianaSaveDialog dlg = new VianaSaveDialog(
+            title,
+            description,
+            VianaNET.Localization.Labels.AskSaveProjectDialogMessage);
+
+          if (dlg.ShowDialog().GetValueOrDefault(false))
+          {
+            SaveProjectToNewFile();
+          }
         }
       }
 

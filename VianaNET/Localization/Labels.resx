@@ -1449,6 +1449,9 @@
   <data name="ModifyDataWindowControlTitle" xml:space="preserve">
     <value>@ModifyDataWindowControlTitle</value>
   </data>
+  <data name="ModifyDataWindowNoDataPoints" xml:space="preserve">
+    <value>ModifyDataWindowNoDataPoints</value>
+  </data>
   <data name="ModifyDataWindowTrackItemNumberHeader" xml:space="preserve">
     <value>@ModifyDataWindowTrackItemNumberHeader</value>
   </data>

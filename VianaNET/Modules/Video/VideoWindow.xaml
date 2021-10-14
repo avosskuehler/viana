@@ -60,11 +60,11 @@
               ConverterParameter={StaticResource PositionMeasurement}}"/>
             </StackPanel>
           </Border>
-          <Line Name="TopLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
-          <Line Name="LeftLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-          <Line Name="BottomLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-          <Line Name="RightLine" Visibility="Hidden" Stroke="#55AAAAAA" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
-          <Path Name="OuterRegion" Visibility="Hidden" Fill="#55AAAAAA">
+          <Line Name="TopLine" Visibility="Visible" Stroke="#77FF0000" StrokeThickness="3" X1="0" X2="200" Y1="10" Y2="10" MouseEnter="TopLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseMove="LineMouseMove" MouseLeftButtonUp="LineMouseLeftButtonUp" />
+          <Line Name="LeftLine" Visibility="Hidden" Stroke="#77FF0000" StrokeThickness="3" X1="10" X2="10" Y1="0" Y2="100" MouseEnter="LeftLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="BottomLine" Visibility="Hidden" Stroke="#77FF0000" StrokeThickness="3" X1="0" X2="100" Y1="100" Y2="100" MouseEnter="BottomLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Line Name="RightLine" Visibility="Hidden" Stroke="#77FF0000" StrokeThickness="3" X1="100" X2="100" Y1="0" Y2="100" MouseEnter="RightLineMouseEnter" MouseLeave="LineMouseLeave" MouseLeftButtonDown="LineMouseLeftButtonDown" MouseLeftButtonUp="LineMouseLeftButtonUp" MouseMove="LineMouseMove" />
+          <Path Name="OuterRegion" Visibility="Hidden" Fill="#88AAAAAA">
             <Path.Data>
               <CombinedGeometry GeometryCombineMode="Xor">
                 <CombinedGeometry.Geometry1>
@@ -78,7 +78,11 @@
           </Path>
         </Canvas>
       </Grid>
-      <controls:CoordinateSystem Grid.Column="0" x:Name="CoordinateSystem" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="10" Height="10" Margin="100"/>
+      <controls:CoordinateSystem 
+        Grid.Column="0" 
+        x:Name="CoordinateSystem" 
+        HorizontalAlignment="Left" 
+        VerticalAlignment="Bottom" Width="120" Height="120"/>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
                           Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"

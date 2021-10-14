@@ -16,7 +16,24 @@
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
   <Grid Name="PlayerContainerGrid">
-    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove"/>
+    <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" MouseEnter="PlayerMouseEnter" MouseLeave="PlayerMouseLeave"/>
+    <Border Name="NoDataWindow" 
+              Visibility="{Binding Path=HasNoDataPoints, Converter={StaticResource BoolVisibleConverter}}"
+              Canvas.Top="10" CornerRadius="5"
+              HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+              Background="{StaticResource BannerBackgroundBrush}" 
+              Height="Auto" Width="Auto">
+      <StackPanel>
+        <TextBox 
+            TextWrapping="Wrap" 
+            Background="Transparent"
+            Text="{lex:Loc VianaNET:Labels:ModifyDataWindowNoDataPoints}"
+            BorderThickness="0"
+            Padding="0 4 0 0"
+            TextAlignment="Center"/>
+      </StackPanel>
+    </Border>
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
       <Line Name="VerticalCursorLineTop" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
       <Line Name="HorizontalCursorLineLeft" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>

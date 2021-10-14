@@ -42,10 +42,9 @@ namespace VianaNET.Application
   [XmlInclude(typeof(MatrixTransform))]
   [XmlInclude(typeof(MovingAverageFilter))]
   [XmlInclude(typeof(ExponentialSmoothFilter))]
+  [XmlInclude(typeof(WpfMath.TexFormula))]
   public class Project : INotifyPropertyChanged
   {
-
-
     /// <summary>
     ///   The filter data for the specific <see cref="ChartType" />
     /// </summary>
@@ -55,10 +54,6 @@ namespace VianaNET.Application
     ///   The current chart type
     /// </summary>
     private ChartType currentChartType;
-
-
-
-
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="Project" /> class.
@@ -75,10 +70,6 @@ namespace VianaNET.Application
       this.currentChartType = ChartType.YoverX;
     }
 
-
-
-
-
     /// <summary>
     ///   Implements INotifyPropertyChanged
     /// </summary>
@@ -90,10 +81,6 @@ namespace VianaNET.Application
     /// </summary>
     [field: NonSerialized]
     public event EventHandler<EventArgs> UpdateChartRequested;
-
-
-
-
 
     /// <summary>
     /// Gets or sets a value indicating whether we are in the deserialization process of a project.
@@ -138,14 +125,21 @@ namespace VianaNET.Application
     // public ChartData ChartData { get; set; }
 
     /// <summary>
-    ///   Gets or sets the filename.
+    ///   Gets or sets the filename with full path to the project file.
     /// </summary>
     public string ProjectFilename { get; set; }
 
     /// <summary>
-    ///   Gets or sets the path.
+    ///   Gets the path of the project
     /// </summary>
-    public string ProjectPath { get; set; }
+    [XmlIgnore]
+    public string ProjectPath => Path.GetDirectoryName(this.ProjectFilename);
+
+    /// <summary>
+    ///   Gets the filename of the project
+    /// </summary>
+    [XmlIgnore]
+    public string ProjectFile => Path.GetFileName(this.ProjectFilename);
 
     /// <summary>
     ///   Gets or sets the video data.
@@ -153,14 +147,15 @@ namespace VianaNET.Application
     public VideoData VideoData { get; set; }
 
     /// <summary>
-    ///   Gets or sets the video file, if in player mode.
+    ///   Gets or sets the video file name with full path, if in player mode.
     /// </summary>
     public string VideoFile { get; set; }
 
     /// <summary>
-    ///   Gets the video file with full path, if in player mode.
+    ///   Gets the video file full path, if in player mode.
     /// </summary>
-    public string VideoFileWithPath => Path.Combine(this.ProjectPath, this.VideoFile);
+    [XmlIgnore]
+    public string VideoFilePath => Path.GetDirectoryName(this.VideoFile);
 
     /// <summary>
     ///   Gets or sets the video mode.
@@ -199,10 +194,6 @@ namespace VianaNET.Application
       }
     }
 
-
-
-
-
     /// <summary>
     /// Deserializes the experiment settings from the given xml file.
     /// </summary>
@@ -229,15 +220,18 @@ namespace VianaNET.Application
           // specify the type of object to be deserialized 
           XmlSerializer serializer = new XmlSerializer(typeof(Project));
 
-          ////* If the XML document has been altered with unknown 
-          ////nodes or attributes, handle them with the 
-          ////UnknownNode and UnknownAttribute events.*/
-          ////serializer.UnknownNode += new XmlNodeEventHandler(serializer_UnknownNode);
-          ////serializer.UnknownAttribute += new XmlAttributeEventHandler(serializer_UnknownAttribute);
+          //* If the XML document has been altered with unknown 
+          //nodes or attributes, handle them with the 
+          //UnknownNode and UnknownAttribute events.*/
+          serializer.UnknownNode += new XmlNodeEventHandler(serializer_UnknownNode);
+          serializer.UnknownAttribute += new XmlAttributeEventHandler(serializer_UnknownAttribute);
 
           /* Use the Deserialize method to restore the object's state with
           data from the XML document. */
           projectFromFile = (Project)serializer.Deserialize(fs);
+
+          // Write modified values back to serialized filterData dictionary
+          projectFromFile.CopyFilterData(projectFromFile.filterData[projectFromFile.currentChartType], projectFromFile.CurrentFilterData);
         }
 
         return projectFromFile;
@@ -250,6 +244,15 @@ namespace VianaNET.Application
       return null;
     }
 
+    private static void serializer_UnknownAttribute(object sender, XmlAttributeEventArgs e)
+    {
+      
+    }
+
+    private static void serializer_UnknownNode(object sender, XmlNodeEventArgs e)
+    {
+    }
+
     /// <summary>
     /// Serializes the project into the given file in a xml structure.
     /// </summary>
@@ -259,17 +262,15 @@ namespace VianaNET.Application
     /// <param name="projectToSerialize">
     /// The <see cref="Project"/> object to serialize.
     /// </param>
-    /// <param name="filePath">
-    /// Full file path to the .via xml settings file.
-    /// </param>
+    /// <param name="fileWithPath">Full file path to the .via xml settings file.</param>
     /// <returns>
     /// <strong>True</strong> if succesful.
     /// </returns>
-    public static bool Serialize(Project projectToSerialize, string filePath)
+    public static bool Serialize(Project projectToSerialize, string fileWithPath)
     {
       try
       {
-        using (TextWriter writer = new StreamWriter(filePath))
+        using (TextWriter writer = new StreamWriter(fileWithPath))
         {
           // Write modified values back to serialized filterData dictionary
           projectToSerialize.CopyFilterData(projectToSerialize.CurrentFilterData, projectToSerialize.filterData[projectToSerialize.currentChartType]);
@@ -277,8 +278,7 @@ namespace VianaNET.Application
           // Create an instance of the XmlSerializer class;
           // specify the type of object to serialize 
           XmlSerializer serializer = new XmlSerializer(typeof(Project));
-          projectToSerialize.ProjectFilename = Path.GetFileName(filePath);
-          projectToSerialize.ProjectPath = Path.GetDirectoryName(filePath);
+          projectToSerialize.ProjectFilename = fileWithPath;
           projectToSerialize.VideoMode = Video.Instance.VideoMode;
           projectToSerialize.VideoFile = Video.Instance.VideoPlayerElement.VideoFilename;
 

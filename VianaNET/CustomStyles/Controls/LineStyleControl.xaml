@@ -37,7 +37,7 @@
                       SelectedColor="Red" Margin="5"
                       SelectedColorChanged="ColorPickerSelectedColorChanged"/>
     <Label Grid.Column="0" Grid.Row="2" Content="{lex:Loc VianaNET:Labels:LineStyleDisplayMarkerLabel}" VerticalAlignment="Center" />
-    <ComboBox Grid.Column="1" Grid.Row="2" Name="MarkerTypeComboBox" VerticalAlignment="Center" Margin="5" SelectionChanged="MarkerTypeComboBox_OnSelectionChanged"/>
+    <ComboBox Grid.Column="1" Grid.Row="2" Name="MarkerTypeComboBox" VerticalAlignment="Center" Margin="5" Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" SelectionChanged="MarkerTypeComboBox_OnSelectionChanged"/>
     <oxy:PlotView Margin="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Model="{Binding ChartModel}"></oxy:PlotView>
   </Grid>
 </UserControl>

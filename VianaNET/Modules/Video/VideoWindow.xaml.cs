@@ -441,8 +441,8 @@ namespace VianaNET.Modules.Video
       // Video.Instance.VideoElement.NaturalVideoWidth *
       // Video.Instance.VideoElement.NaturalVideoHeight;
       // }
-      scaleX = this.VideoImage.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth;
-      scaleY = this.VideoImage.ActualHeight / Video.Instance.VideoElement.NaturalVideoHeight;
+      scaleX = this.VideoImage.ActualWidth / this.VideoImage.Source.Width;
+      scaleY = this.VideoImage.ActualHeight / this.VideoImage.Source.Height;
 
       return !double.IsInfinity(scaleX) && !double.IsNaN(scaleX);
     }
@@ -725,7 +725,6 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void PlaceClippingRegion()
     {
-
       if (!this.GetScales(out double scaleX, out double scaleY))
       {
         return;
@@ -955,15 +954,17 @@ namespace VianaNET.Modules.Video
         this.SetVideoMode(VideoMode.None);
       }
 
-      SaveVideoDialog saveVideoDialog = new SaveVideoDialog();
-      if (saveVideoDialog.ShowDialog().GetValueOrDefault(false))
+      using (SaveVideoDialog saveVideoDialog = new SaveVideoDialog())
       {
-        this.SetVideoMode(VideoMode.File);
-        this.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
-      }
-      else if (wasCapturing)
-      {
-        this.SetVideoMode(VideoMode.Capture);
+        if (saveVideoDialog.ShowDialog().GetValueOrDefault(false))
+        {
+          this.SetVideoMode(VideoMode.File);
+          this.LoadVideo(saveVideoDialog.LastRecordedVideoFile);
+        }
+        else if (wasCapturing)
+        {
+          this.SetVideoMode(VideoMode.Capture);
+        }
       }
     }
 

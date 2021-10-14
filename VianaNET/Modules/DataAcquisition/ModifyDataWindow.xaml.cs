@@ -100,9 +100,10 @@ namespace VianaNET.Modules.DataAcquisition
     /// </summary>
     private bool hadSharpCursorOnEnteringControlPanel;
 
-
-
-
+    /// <summary>
+    /// Gets or sets a value wheter the current video frame has no data points set
+    /// </summary>
+    private bool HasNoDataPoints { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModifyDataWindow"/> class. 
@@ -478,6 +479,36 @@ namespace VianaNET.Modules.DataAcquisition
       this.HorizontalCursorLineLeft.Visibility = vis;
       this.HorizontalCursorLineRight.Visibility = vis;
       this.CursorEllipse.Visibility = vis;
+      //this.ResetSharpCursorBounds();
+    }
+
+    private void ResetSharpCursorBounds()
+    {
+      var left = Canvas.GetLeft(this.CursorEllipse);
+      var top = Canvas.GetTop(this.CursorEllipse);
+
+      //handle too far right
+      if (left + this.CursorEllipse.Width > this.WindowCanvas.ActualWidth)
+      {
+        MoveSharpCursorToScreenLocation(new Point(this.WindowCanvas.ActualWidth - this.CursorEllipse.Width, top));
+      }
+
+      //handle too far left
+      if (left < 0)
+      {
+        MoveSharpCursorToScreenLocation(new Point(0, top));
+      }
+
+      //handle too far up
+      if (top < 0)
+      {
+        MoveSharpCursorToScreenLocation(new Point(left, 0));
+      }
+      //handle too far down
+      if (top + this.CursorEllipse.Height > this.CursorEllipse.ActualHeight)
+      {
+        MoveSharpCursorToScreenLocation(new Point(left, this.WindowCanvas.ActualHeight - this.CursorEllipse.Height));
+      }
     }
 
     /// <summary>
@@ -530,6 +561,7 @@ namespace VianaNET.Modules.DataAcquisition
       bool isSet = false;
       if (sample != null)
       {
+        this.NoDataWindow.Visibility = Visibility.Hidden;
         this.SetVisibilityOfArrowCursor(true);
 
         var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
@@ -541,8 +573,8 @@ namespace VianaNET.Modules.DataAcquisition
           {
             Point location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
             location = App.Project.CalibrationData.CoordinateTransform.Transform(location);
-            Point origin = App.Project.CalibrationData.OriginInPixel;
-            location.Offset(origin.X, origin.Y);
+            //Point origin = App.Project.CalibrationData.OriginInPixel;
+            //location.Offset(origin.X, origin.Y);
             var scaledX = location.X / factorX;
             var scaledY = location.Y / factorY;
 
@@ -566,8 +598,9 @@ namespace VianaNET.Modules.DataAcquisition
       else
       {
         this.IndexOfTrackedObject = 1;
+        this.NoDataWindow.Visibility = Visibility.Visible;
         this.SetVisibilityOfArrowCursor(false);
-        this.SetVisibilityOfSharpCursor(true);
+        //this.SetVisibilityOfSharpCursor(true);
         this.ObjectIndexTextBox.Text = VianaNET.Localization.Labels.ManualDataAcquisitionTrackItemNumberHeader;
       }
     }
@@ -681,15 +714,16 @@ namespace VianaNET.Modules.DataAcquisition
         if (this.GridTop.IsMouseOver)
         {
           Point currentLocation = new Point
-                                  {
-                                    X = Canvas.GetLeft(this.ControlPanel),
-                                    Y = Canvas.GetTop(this.ControlPanel)
-                                  };
+          {
+            X = Canvas.GetLeft(this.ControlPanel),
+            Y = Canvas.GetTop(this.ControlPanel)
+          };
 
           Canvas.SetTop(this.ControlPanel, currentLocation.Y + mouseMoveLocation.Y - this.mouseDownLocation.Y);
           Canvas.SetLeft(this.ControlPanel, currentLocation.X + mouseMoveLocation.X - this.mouseDownLocation.X);
           this.mouseDownLocation = mouseMoveLocation;
         }
+
       }
     }
 
@@ -741,6 +775,14 @@ namespace VianaNET.Modules.DataAcquisition
       }
     }
 
+    private void PlayerMouseEnter(object sender, MouseEventArgs e)
+    {
+      this.SetVisibilityOfSharpCursor(true);
+    }
 
+    private void PlayerMouseLeave(object sender, MouseEventArgs e)
+    {
+      this.SetVisibilityOfSharpCursor(false);
+    }
   }
 }

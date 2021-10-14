@@ -304,7 +304,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private void FinishAndClose()
     {
-      App.Project.VideoFile = Path.GetFileName(this.convertedFile);
+      App.Project.VideoFile = this.convertedFile;
 
       this.Dispatcher.Invoke(
         () =>

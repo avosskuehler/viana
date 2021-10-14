@@ -199,6 +199,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml.Serialization" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="Vlc.DotNet.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
@@ -221,7 +222,8 @@
       <HintPath>..\packages\WPFLocalizeExtension.3.9.0\lib\net452\WPFLocalizeExtension.dll</HintPath>
     </Reference>
     <Reference Include="WpfMath, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WpfMath.0.11.0\lib\net452\WpfMath.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WpfMath\wpf-math\src\WpfMath\bin\Release\net452\WpfMath.dll</HintPath>
     </Reference>
     <Reference Include="XAMLMarkupExtensions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
       <HintPath>..\packages\XAMLMarkupExtensions.2.1.1\lib\net48\XAMLMarkupExtensions.dll</HintPath>
@@ -250,7 +252,6 @@
     <Compile Include="CustomStyles\Controls\Arc.cs" />
     <Compile Include="CustomStyles\Controls\Arrow.cs" />
     <Compile Include="CustomStyles\Controls\ArrowPointer.cs" />
-    <Compile Include="CustomStyles\Controls\CheckBoxPallet.cs" />
     <Compile Include="CustomStyles\Controls\CoordinateSystem.xaml.cs">
       <DependentUpon>CoordinateSystem.xaml</DependentUpon>
     </Compile>
@@ -279,9 +280,6 @@
     <Compile Include="CustomStyles\Controls\NumericUpDown.xaml.cs">
       <DependentUpon>NumericUpDown.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomStyles\Controls\RadioButtonPallet.cs" />
-    <Compile Include="CustomStyles\Controls\ScrollBarPallet.cs" />
-    <Compile Include="CustomStyles\Controls\ScrollViewerPallet.cs" />
     <Compile Include="CustomStyles\Controls\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
@@ -480,14 +478,6 @@
     <Compile Include="Modules\Video\VideoWindow.xaml.cs">
       <DependentUpon>VideoWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="CustomStyles\Controls\CheckBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="CustomStyles\Controls\ComboBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
     <Page Include="CustomStyles\Controls\CoordinateSystem.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
@@ -521,18 +511,6 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="CustomStyles\Controls\NumericUpDown.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="CustomStyles\Controls\RadioButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="CustomStyles\Controls\ScrollBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="CustomStyles\Controls\ScrollViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
@@ -725,10 +703,12 @@
     <EmbeddedResource Include="Localization\Labels.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\Labels.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.en.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -748,7 +728,7 @@
     <None Include="Images\VianaLogo.psd" />
     <None Include="Images\VianaNET32.psd" />
     <None Include="Images\VideoOpen.psd" />
-    <None Include="Modules\DataGrid\template.ods" />
+    <EmbeddedResource Include="Modules\DataGrid\template.ods" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
