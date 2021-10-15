@@ -2131,6 +2131,33 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonRotateVideoLabelTitle ähnelt.
+        /// </summary>
+        public static string ButtonRotateVideoLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonRotateVideoLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonRotateVideoToolTipDescription ähnelt.
+        /// </summary>
+        public static string ButtonRotateVideoToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonRotateVideoToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonRotateVideoToolTipTitle ähnelt.
+        /// </summary>
+        public static string ButtonRotateVideoToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonRotateVideoToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSaveLayoutLabelDescription ähnelt.
         /// </summary>
         public static string ButtonSaveLayoutLabelDescription {

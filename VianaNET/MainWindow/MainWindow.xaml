@@ -10,6 +10,7 @@
   xmlns:dataGrid="clr-namespace:VianaNET.Modules.DataGrid"
   xmlns:chart="clr-namespace:VianaNET.Modules.Chart" 
   xmlns:control="clr-namespace:VianaNET.Modules.Video.Control"
+  xmlns:fa="clr-namespace:VianaNET.CustomStyles.FontAwesome"
   xmlns:mainWindow="clr-namespace:VianaNET.MainWindow" 
   xmlns:vianaNet="clr-namespace:VianaNET" 
   WindowStartupLocation="CenterScreen" WindowState="Maximized"
@@ -285,13 +286,20 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCalibrateVideoToolTipTitle}"
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCalibrateVideoToolTipDescription}"
                          IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
-          <RibbonButton Click="CoordinateSystemButtonClick"
+          <RibbonButton Click="RotateVideoButtonClick"
+                         Label="{lex:Loc VianaNET:Labels:ButtonRotateVideoLabelTitle}"
+                        LargeImageSource="/VianaNET;component/Images/Rotate32.png"
+                         SmallImageSource="/VianaNET;component/Images/Rotate16.png"
+                         ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonRotateVideoToolTipTitle}"
+                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonRotateVideoToolTipDescription}"
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+          <!--<RibbonButton Click="CoordinateSystemButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/CoordinateSystem32.png"
                          SmallImageSource="/VianaNET;component/Images/CoordinateSystem16.png"
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipTitle}"
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipDescription}"
-                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>-->
           <RibbonButton Name="SelectNumberOfObjectsButton"
                          Click="SelectNumberOfObjectsButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 

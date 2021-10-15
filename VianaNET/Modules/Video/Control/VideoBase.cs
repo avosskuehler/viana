@@ -120,6 +120,7 @@ namespace VianaNET.Modules.Video.Control
     ///   This indicates if the frames of the capture callback should be skipped.
     /// </summary>
     protected bool skipFrameMode = false;
+    private RotateFlags? rotation;
 
     /// <summary>
     /// The OpenCV VideoCapture Device Control
@@ -248,6 +249,21 @@ namespace VianaNET.Modules.Video.Control
     public virtual double MediaPositionInMS { get; set; }
 
     /// <summary>
+    ///   Gets or sets the rotation of the video.
+    /// </summary>
+    public RotateFlags? Rotation
+    {
+      get => rotation;
+      set
+      {
+        rotation = value;
+        this.ReleaseMappings();
+        this.SaveSizeInfo(this.OpenCVObject);
+        this.GrabCurrentFrame();
+      }
+    }
+
+    /// <summary>
     ///   Gets or sets the natural video height.
     /// </summary>
     public double NaturalVideoHeight { get; set; }
@@ -310,11 +326,11 @@ namespace VianaNET.Modules.Video.Control
         this.Dispatcher.Invoke(
           DispatcherPriority.Normal,
           (SendOrPostCallback)delegate
-            {
-              Video.Instance.HasVideo = false;
-              this.CurrentState = PlayState.Init;
-              this.frameCounter = 0;
-            },
+          {
+            Video.Instance.HasVideo = false;
+            this.CurrentState = PlayState.Init;
+            this.frameCounter = 0;
+          },
           null);
 
         if (!this.OpenCVObject.IsDisposed && this.OpenCVObject.IsOpened())
@@ -322,46 +338,51 @@ namespace VianaNET.Modules.Video.Control
           this.OpenCVObject.Release();
         }
 
-        if (this.originalMapping != IntPtr.Zero)
-        {
-          UnmapViewOfFile(this.originalMapping);
-          this.originalMapping = IntPtr.Zero;
-        }
-
-        if (this.ColorProcessingMapping != IntPtr.Zero)
-        {
-          UnmapViewOfFile(this.ColorProcessingMapping);
-          this.ColorProcessingMapping = IntPtr.Zero;
-        }
-
-        if (this.originalSection != IntPtr.Zero)
-        {
-          CloseHandle(this.originalSection);
-          this.originalSection = IntPtr.Zero;
-        }
-
-        if (this.colorProcessingSection != IntPtr.Zero)
-        {
-          CloseHandle(this.colorProcessingSection);
-          this.colorProcessingSection = IntPtr.Zero;
-        }
-
-        if (this.motionProcessingSection != IntPtr.Zero)
-        {
-          CloseHandle(this.motionProcessingSection);
-          this.motionProcessingSection = IntPtr.Zero;
-        }
-
-
-        if (this.UnmanagedImage != null)
-        {
-          this.UnmanagedImage.Dispose();
-        }
+        ReleaseMappings();
       }
 
       // Double check to make sure we aren't releasing something
       // important.
       GC.Collect();
+    }
+
+    private void ReleaseMappings()
+    {
+      if (this.originalMapping != IntPtr.Zero)
+      {
+        UnmapViewOfFile(this.originalMapping);
+        this.originalMapping = IntPtr.Zero;
+      }
+
+      if (this.ColorProcessingMapping != IntPtr.Zero)
+      {
+        UnmapViewOfFile(this.ColorProcessingMapping);
+        this.ColorProcessingMapping = IntPtr.Zero;
+      }
+
+      if (this.originalSection != IntPtr.Zero)
+      {
+        CloseHandle(this.originalSection);
+        this.originalSection = IntPtr.Zero;
+      }
+
+      if (this.colorProcessingSection != IntPtr.Zero)
+      {
+        CloseHandle(this.colorProcessingSection);
+        this.colorProcessingSection = IntPtr.Zero;
+      }
+
+      if (this.motionProcessingSection != IntPtr.Zero)
+      {
+        CloseHandle(this.motionProcessingSection);
+        this.motionProcessingSection = IntPtr.Zero;
+      }
+
+
+      if (this.UnmanagedImage != null)
+      {
+        this.UnmanagedImage.Dispose();
+      }
     }
 
     /// <summary>
@@ -673,6 +694,14 @@ namespace VianaNET.Modules.Video.Control
       // Grab the size info
       this.NaturalVideoWidth = opencvCapture.FrameWidth;
       this.NaturalVideoHeight = opencvCapture.FrameHeight;
+      if (this.rotation.HasValue && (this.rotation.Value == RotateFlags.Rotate90Clockwise || this.rotation.Value == RotateFlags.Rotate90Counterclockwise))
+      {
+        // Grab the size info
+        this.NaturalVideoWidth = opencvCapture.FrameHeight;
+        this.NaturalVideoHeight = opencvCapture.FrameWidth;
+      }
+
+      // Grab the size info
       this.FrameTimeInMS = 1000d / opencvCapture.Fps;
       this.PixelSize = 3;
       this.Stride = (int)this.NaturalVideoWidth * this.PixelSize;
@@ -710,13 +739,18 @@ namespace VianaNET.Modules.Video.Control
     {
       BackgroundWorker worker = (BackgroundWorker)sender;
       Stopwatch watch = new Stopwatch();
+      watch.Start();
+
       double frametimeInMS = 41;
       this.Dispatcher.Invoke(() =>
       {
         frametimeInMS = this.FrameTimeInMS;
       });
 
-      watch.Start();
+      Mat rotMat = new Mat();
+      Mat frameMat = new Mat();
+
+
       long starttime = 0;
       while (!worker.CancellationPending)
       {
@@ -736,24 +770,37 @@ namespace VianaNET.Modules.Video.Control
           break;
         }
 
-        using (Mat frameMat = this.OpenCVObject.RetrieveMat())
+        frameMat = this.OpenCVObject.RetrieveMat();
+        if (frameMat.Empty())
         {
-          if (frameMat.Empty())
+          this.Dispatcher.Invoke(() =>
           {
-            this.Dispatcher.Invoke(() =>
+            this.Stop();
+            if (Video.Instance.VideoMode == VideoMode.File)
             {
-              this.Stop();
-              if (Video.Instance.VideoMode == VideoMode.File)
-              {
-                var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
-                this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-                Video.Instance.VideoPlayerElement.RaiseFileComplete();
-              }
-            });
+              var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
+              this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
+              Video.Instance.VideoPlayerElement.RaiseFileComplete();
+            }
+          });
 
-            break;
-          }
+          break;
+        }
 
+        if (this.rotation.HasValue)
+        {
+          Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          this.Dispatcher.Invoke(() =>
+          {
+            WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+            Video.Instance.OriginalImageSource = newFrame;
+            Video.Instance.VideoElement.NewFrameCallback(newFrame);
+          });
+        }
+        else
+        {
           // Must create and use WriteableBitmap in the same thread(UI Thread).
           this.Dispatcher.Invoke(() =>
           {
@@ -773,6 +820,9 @@ namespace VianaNET.Modules.Video.Control
 
         starttime = watch.ElapsedMilliseconds;
       }
+
+      frameMat.Dispose();
+      rotMat.Dispose();
     }
 
     /// <summary>
@@ -781,13 +831,29 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected void GrabCurrentFrame()
     {
-      using (Mat frameMat = this.OpenCVObject.RetrieveMat())
-      {
-        if (frameMat.Empty())
-        {
-          return;
-        }
+      Mat rotMat = new Mat();
+      Mat frameMat = new Mat();
 
+      frameMat = this.OpenCVObject.RetrieveMat();
+      if (frameMat.Empty())
+      {
+        return;
+      }
+
+      if (this.rotation.HasValue)
+      {
+        Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+        // Must create and use WriteableBitmap in the same thread(UI Thread).
+        this.Dispatcher.Invoke(() =>
+        {
+          WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+          Video.Instance.OriginalImageSource = newFrame;
+          Video.Instance.VideoElement.NewFrameCallback(newFrame);
+        });
+      }
+      else
+      {
         // Must create and use WriteableBitmap in the same thread(UI Thread).
         this.Dispatcher.Invoke(() =>
         {
@@ -796,6 +862,10 @@ namespace VianaNET.Modules.Video.Control
           Video.Instance.VideoElement.NewFrameCallback(newFrame);
         });
       }
+
+      frameMat.Dispose();
+      rotMat.Dispose();
+
 
       UiServices.WaitUntilReady();
     }

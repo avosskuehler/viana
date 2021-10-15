@@ -808,6 +808,15 @@ Would like to have feedback:</value>
   <data name="ButtonRestoreLayoutToolTipTitle" xml:space="preserve">
     <value>Load window layout from file.</value>
   </data>
+  <data name="ButtonRotateVideoLabelTitle" xml:space="preserve">
+    <value>Rotate video</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipDescription" xml:space="preserve">
+    <value>Rotates the video clockwise in steps of 90 degrees.</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipTitle" xml:space="preserve">
+    <value>Rotates the video</value>
+  </data>
   <data name="ButtonSaveLayoutLabelDescription" xml:space="preserve">
     <value>Save layout of user interface and window arrangement to a file.</value>
   </data>

@@ -771,6 +771,34 @@ namespace VianaNET.MainWindow
     }
 
     /// <summary>
+    /// Rotate video button click.
+    /// </summary>
+    /// <param name="sender">The sender.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+    private void RotateVideoButtonClick(object sender, RoutedEventArgs e)
+    {
+      if (Video.Instance.VideoElement.Rotation.HasValue)
+      {
+        switch (Video.Instance.VideoElement.Rotation.Value)
+        {
+          case OpenCvSharp.RotateFlags.Rotate90Clockwise:
+            Video.Instance.VideoElement.Rotation = OpenCvSharp.RotateFlags.Rotate180;
+            break;
+          case OpenCvSharp.RotateFlags.Rotate180:
+            Video.Instance.VideoElement.Rotation = OpenCvSharp.RotateFlags.Rotate90Counterclockwise;
+            break;
+          case OpenCvSharp.RotateFlags.Rotate90Counterclockwise:
+            Video.Instance.VideoElement.Rotation = null;
+            break;
+        }
+      }
+      else
+      {
+        Video.Instance.VideoElement.Rotation = OpenCvSharp.RotateFlags.Rotate90Clockwise;
+      }
+    }
+
+    /// <summary>
     /// Coordinate system button click.
     /// </summary>
     /// <param name="sender">The sender.</param>
@@ -1218,5 +1246,6 @@ namespace VianaNET.MainWindow
       SkipPointsDialog dlg = new SkipPointsDialog();
       dlg.ShowDialog();
     }
+
   }
 }

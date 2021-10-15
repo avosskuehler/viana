@@ -807,6 +807,15 @@
   <data name="ButtonRestoreLayoutToolTipTitle" xml:space="preserve">
     <value>@ButtonRestoreLayoutToolTipTitle</value>
   </data>
+  <data name="ButtonRotateVideoLabelTitle" xml:space="preserve">
+    <value>ButtonRotateVideoLabelTitle</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipDescription" xml:space="preserve">
+    <value>ButtonRotateVideoToolTipDescription</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipTitle" xml:space="preserve">
+    <value>ButtonRotateVideoToolTipTitle</value>
+  </data>
   <data name="ButtonSaveLayoutLabelDescription" xml:space="preserve">
     <value>@ButtonSaveLayoutLabelDescription</value>
   </data>

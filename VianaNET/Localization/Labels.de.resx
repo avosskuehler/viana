@@ -809,6 +809,15 @@ Ich freue mich über Feedback:</value>
   <data name="ButtonRestoreLayoutToolTipTitle" xml:space="preserve">
     <value>Layout aus Datei laden.</value>
   </data>
+  <data name="ButtonRotateVideoLabelTitle" xml:space="preserve">
+    <value>Video drehen</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipDescription" xml:space="preserve">
+    <value>Dreht das Video in 90° Schritten im Uhrzeigersinn.</value>
+  </data>
+  <data name="ButtonRotateVideoToolTipTitle" xml:space="preserve">
+    <value>Dreht das Video</value>
+  </data>
   <data name="ButtonSaveLayoutLabelDescription" xml:space="preserve">
     <value>Fensterlayout in Datei speichern</value>
   </data>

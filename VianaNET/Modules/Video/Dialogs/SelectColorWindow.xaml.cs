@@ -150,7 +150,6 @@ namespace VianaNET.Modules.Video.Dialogs
         double factorY = this.VideoImage.Source.Height / this.VideoImage.ActualHeight;
         double originalX = factorX * scaledX;
         double originalY = factorY * scaledY;
-        Int32Rect rect = new Int32Rect((int)originalX, (int)originalY, 1, 1);
 
         Bitmap frame = Video.Instance.CreateBitmapFromCurrentImageSource();
         if (frame == null)
