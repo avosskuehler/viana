@@ -96,6 +96,7 @@ namespace VianaNET.Modules.Video.Control
       set
       {
         this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value);
+        this.OpenCVObject.Grab();
         this.GrabCurrentFrame();
         this.UpdateFrameIndex();
       }
@@ -297,8 +298,8 @@ namespace VianaNET.Modules.Video.Control
 
       // Seek to the beginning
       this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, zeroPosition);
+      this.OpenCVObject.Grab();
       this.GrabCurrentFrame();
-
       this.UpdateFrameIndex();
     }
 
@@ -361,8 +362,8 @@ namespace VianaNET.Modules.Video.Control
 
       var currentFrame = this.OpenCVObject.Get(VideoCaptureProperties.PosFrames);
       this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, currentFrame + numberOfFramesToStep);
+      this.OpenCVObject.Grab();
       this.GrabCurrentFrame();
-
       this.UpdateFrameIndex();
     }
 

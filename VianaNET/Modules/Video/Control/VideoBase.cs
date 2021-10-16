@@ -747,11 +747,8 @@ namespace VianaNET.Modules.Video.Control
         frametimeInMS = this.FrameTimeInMS;
       });
 
-      Mat rotMat = new Mat();
-      Mat frameMat = new Mat();
-
-
       long starttime = 0;
+      Mat frameMat = new Mat();
       while (!worker.CancellationPending)
       {
         var currentPosInMS = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
@@ -770,44 +767,52 @@ namespace VianaNET.Modules.Video.Control
           break;
         }
 
-        frameMat = this.OpenCVObject.RetrieveMat();
-        if (frameMat.Empty())
+        //using (Mat frameMat = new Mat())
         {
-          this.Dispatcher.Invoke(() =>
+          this.OpenCVObject.Read(frameMat);
+          if (frameMat.Empty())
           {
-            this.Stop();
-            if (Video.Instance.VideoMode == VideoMode.File)
+            this.Dispatcher.Invoke(() =>
             {
-              var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
-              this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-              Video.Instance.VideoPlayerElement.RaiseFileComplete();
+              this.Stop();
+              if (Video.Instance.VideoMode == VideoMode.File)
+              {
+                var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
+                this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
+                Video.Instance.VideoPlayerElement.RaiseFileComplete();
+                this.OpenCVObject.Grab();
+                this.GrabCurrentFrame();
+              }
+            });
+
+            break;
+          }
+
+          if (this.rotation.HasValue)
+          {
+            using (Mat rotMat = new Mat())
+            {
+              Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+              // Must create and use WriteableBitmap in the same thread(UI Thread).
+              this.Dispatcher.Invoke(() =>
+              {
+                WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+                Video.Instance.OriginalImageSource = newFrame;
+                Video.Instance.VideoElement.NewFrameCallback(newFrame);
+              });
             }
-          });
-
-          break;
-        }
-
-        if (this.rotation.HasValue)
-        {
-          Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
-
-          // Must create and use WriteableBitmap in the same thread(UI Thread).
-          this.Dispatcher.Invoke(() =>
+          }
+          else
           {
-            WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
-            Video.Instance.OriginalImageSource = newFrame;
-            Video.Instance.VideoElement.NewFrameCallback(newFrame);
-          });
-        }
-        else
-        {
-          // Must create and use WriteableBitmap in the same thread(UI Thread).
-          this.Dispatcher.Invoke(() =>
-          {
-            WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
-            Video.Instance.OriginalImageSource = newFrame;
-            Video.Instance.VideoElement.NewFrameCallback(newFrame);
-          });
+            // Must create and use WriteableBitmap in the same thread(UI Thread).
+            this.Dispatcher.Invoke(() =>
+            {
+              WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
+              Video.Instance.OriginalImageSource = newFrame;
+              Video.Instance.VideoElement.NewFrameCallback(newFrame);
+            });
+          }
         }
 
         if (Video.Instance.VideoMode == VideoMode.File)
@@ -819,10 +824,10 @@ namespace VianaNET.Modules.Video.Control
         }
 
         starttime = watch.ElapsedMilliseconds;
+        GC.Collect();
       }
 
       frameMat.Dispose();
-      rotMat.Dispose();
     }
 
     /// <summary>
@@ -831,41 +836,40 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected void GrabCurrentFrame()
     {
-      Mat rotMat = new Mat();
-      Mat frameMat = new Mat();
-
-      frameMat = this.OpenCVObject.RetrieveMat();
-      if (frameMat.Empty())
+      using (Mat frameMat = new Mat())
       {
-        return;
-      }
-
-      if (this.rotation.HasValue)
-      {
-        Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
-
-        // Must create and use WriteableBitmap in the same thread(UI Thread).
-        this.Dispatcher.Invoke(() =>
+        this.OpenCVObject.Retrieve(frameMat);
+        if (frameMat.Empty())
         {
-          WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
-          Video.Instance.OriginalImageSource = newFrame;
-          Video.Instance.VideoElement.NewFrameCallback(newFrame);
-        });
-      }
-      else
-      {
-        // Must create and use WriteableBitmap in the same thread(UI Thread).
-        this.Dispatcher.Invoke(() =>
+          return;
+        }
+
+        if (this.rotation.HasValue)
         {
-          WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
-          Video.Instance.OriginalImageSource = newFrame;
-          Video.Instance.VideoElement.NewFrameCallback(newFrame);
-        });
+          using (Mat rotMat = new Mat())
+          {
+            Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+            // Must create and use WriteableBitmap in the same thread(UI Thread).
+            this.Dispatcher.Invoke(() =>
+            {
+              WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+              Video.Instance.OriginalImageSource = newFrame;
+              Video.Instance.VideoElement.NewFrameCallback(newFrame);
+            });
+          }
+        }
+        else
+        {
+          // Must create and use WriteableBitmap in the same thread(UI Thread).
+          this.Dispatcher.Invoke(() =>
+          {
+            WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
+            Video.Instance.OriginalImageSource = newFrame;
+            Video.Instance.VideoElement.NewFrameCallback(newFrame);
+          });
+        }
       }
-
-      frameMat.Dispose();
-      rotMat.Dispose();
-
 
       UiServices.WaitUntilReady();
     }

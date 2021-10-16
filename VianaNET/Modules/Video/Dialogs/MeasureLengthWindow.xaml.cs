@@ -38,10 +38,10 @@ namespace VianaNET.Modules.Video.Dialogs
   {
 
 
-    /// <summary>
-    ///   The timeslider update timer.
-    /// </summary>
-    private readonly DispatcherTimer timesliderUpdateTimer;
+    ///// <summary>
+    /////   The timeslider update timer.
+    ///// </summary>
+    //private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
     ///   Mausbewegungen ignorieren, da über Control panel
@@ -84,8 +84,8 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.InitializeComponent();
       this.WindowCanvas.DataContext = this;
-      this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
+      //this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+      //this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
     }
 
 
@@ -126,7 +126,7 @@ namespace VianaNET.Modules.Video.Dialogs
         this.LengthLabelBorder.Visibility = Visibility.Visible;
         this.startPointIsSet = true;
       }
-      else 
+      else
       {
         this.endPoint = new Point(originalX, originalY);
 
@@ -261,6 +261,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
       }
+      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
     }
 
     /// <summary>
@@ -272,6 +273,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
       }
+      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
     }
 
     /// <summary>
@@ -387,10 +389,10 @@ namespace VianaNET.Modules.Video.Dialogs
         if (this.GridTop.IsMouseOver)
         {
           Point currentLocation = new Point
-                                  {
-                                    X = Canvas.GetLeft(this.ControlPanel), 
-                                    Y = Canvas.GetTop(this.ControlPanel)
-                                  };
+          {
+            X = Canvas.GetLeft(this.ControlPanel),
+            Y = Canvas.GetTop(this.ControlPanel)
+          };
 
           Canvas.SetTop(this.ControlPanel, currentLocation.Y + mouseMoveLocation.Y - this.mouseDownLocation.Y);
           Canvas.SetLeft(this.ControlPanel, currentLocation.X + mouseMoveLocation.X - this.mouseDownLocation.X);
@@ -410,7 +412,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
-      this.timesliderUpdateTimer.Start();
+      //this.timesliderUpdateTimer.Start();
     }
 
     /// <summary>

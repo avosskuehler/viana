@@ -38,10 +38,10 @@ namespace VianaNET.Modules.Video.Dialogs
   {
 
 
-    /// <summary>
-    ///   The timeslider update timer.
-    /// </summary>
-    private readonly DispatcherTimer timesliderUpdateTimer;
+    ///// <summary>
+    /////   The timeslider update timer.
+    ///// </summary>
+    //private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
     ///   Mausbewegungen ignorieren, da über Control panel
@@ -79,8 +79,8 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.InitializeComponent();
       this.WindowCanvas.DataContext = this;
-      this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
+      //this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+      //this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
     }
 
 
@@ -264,6 +264,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
       }
+      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
     }
 
     /// <summary>
@@ -275,6 +276,7 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
       }
+      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
     }
 
     /// <summary>
@@ -334,23 +336,23 @@ namespace VianaNET.Modules.Video.Dialogs
       this.StepFramesForward();
     }
 
-    /// <summary>
-    /// Handles the Tick event of the timesliderUpdateTimer control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="EventArgs"/> instance containing the event data.
-    /// </param>
-    private void TimesliderUpdateTimerTick(object sender, EventArgs e)
-    {
-      if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
-      {
-        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
-        Video.Instance.VideoPlayerElement.UpdateFrameIndex();
-      }
-    }
+    ///// <summary>
+    ///// Handles the Tick event of the timesliderUpdateTimer control.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The source of the event.
+    ///// </param>
+    ///// <param name="e">
+    ///// The <see cref="EventArgs"/> instance containing the event data.
+    ///// </param>
+    //private void TimesliderUpdateTimerTick(object sender, EventArgs e)
+    //{
+    //  if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
+    //  {
+    //    this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
+    //    Video.Instance.VideoPlayerElement.UpdateFrameIndex();
+    //  }
+    //}
 
     /// <summary>
     ///   Updates the angle label by calculating the angle between the two lines.
@@ -419,7 +421,7 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </param>
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
-      this.timesliderUpdateTimer.Start();
+      //this.timesliderUpdateTimer.Start();
     }
 
     /// <summary>

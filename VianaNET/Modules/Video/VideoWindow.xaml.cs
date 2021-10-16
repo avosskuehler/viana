@@ -60,10 +60,10 @@ namespace VianaNET.Modules.Video
 
 
 
-    /// <summary>
-    ///   The timeslider update timer.
-    /// </summary>
-    private readonly DispatcherTimer timesliderUpdateTimer;
+    ///// <summary>
+    /////   The timeslider update timer.
+    ///// </summary>
+    //private readonly DispatcherTimer timesliderUpdateTimer;
 
     /// <summary>
     ///   The automatic data aquisition current frame count.
@@ -115,8 +115,8 @@ namespace VianaNET.Modules.Video
       this.InitializeComponent();
       this.SetVideoMode(VideoMode.File);
       this.CreateCrossHairLines();
-      this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
+      //this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
+      //this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
 
       // this.thresholdEffect = new ThresholdEffect();
       RenderOptions.SetBitmapScalingMode(this.VideoImage, BitmapScalingMode.LowQuality);
@@ -149,7 +149,7 @@ namespace VianaNET.Modules.Video
         return;
       }
 
-      this.timesliderUpdateTimer.Start();
+      //this.timesliderUpdateTimer.Start();
 
       // this.VideoImage.Source = Video.Instance.VideoSource;
     }
@@ -663,18 +663,23 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
+      var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS; ;
+
       // In Acquisition mode of a file the processing is done in the StepCompleted event handler
       if (Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
       {
         if (Video.Instance.VideoMode == VideoMode.File && Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
         {
           Video.Instance.Stop();
-          this.TimelineSlider.Value = this.TimelineSlider.SelectionEnd;
+          //this.TimelineSlider.Value = this.TimelineSlider.SelectionEnd;
           this.isPlaying = false;
           this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
         }
 
         this.ProcessImage();
+
       }
     }
 
@@ -1007,7 +1012,7 @@ namespace VianaNET.Modules.Video
     private void BtnStopClick(object sender, RoutedEventArgs e)
     {
       Video.Instance.Revert();
-      this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
+      //this.TimelineSlider.Value = this.TimelineSlider.SelectionStart;
       this.isPlaying = false;
       this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
     }
@@ -1123,22 +1128,22 @@ namespace VianaNET.Modules.Video
       this.StepForward();
     }
 
-    /// <summary>
-    /// The timeslider update timer_ tick.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void TimesliderUpdateTimerTick(object sender, EventArgs e)
-    {
-      if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
-      {
-        this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
-      }
-    }
+    ///// <summary>
+    ///// The timeslider update timer_ tick.
+    ///// </summary>
+    ///// <param name="sender">
+    ///// The sender. 
+    ///// </param>
+    ///// <param name="e">
+    ///// The e. 
+    ///// </param>
+    //private void TimesliderUpdateTimerTick(object sender, EventArgs e)
+    //{
+    //  if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
+    //  {
+    //    //this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
+    //  }
+    //}
 
     /// <summary>
     /// Steps the video one frame backward, if available
@@ -1148,7 +1153,6 @@ namespace VianaNET.Modules.Video
       if (this.TimelineSlider.Value >= this.TimelineSlider.SelectionStart + this.TimelineSlider.TickFrequency)
       {
         Video.Instance.StepOneFrame(false);
-
       }
     }
 
