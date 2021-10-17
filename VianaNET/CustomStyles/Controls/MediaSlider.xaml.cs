@@ -53,7 +53,7 @@ namespace VianaNET
         "CurrentTimeString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("00:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The frame time in milli seconds property.
@@ -90,7 +90,7 @@ namespace VianaNET
       "MaximumString",
       typeof(string),
       typeof(MediaSlider),
-      new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata("00:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The minimum string property.
@@ -99,7 +99,7 @@ namespace VianaNET
       "MinimumString",
       typeof(string),
       typeof(MediaSlider),
-      new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
+      new FrameworkPropertyMetadata("00:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The selection end string property.
@@ -109,7 +109,7 @@ namespace VianaNET
         "SelectionEndString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("00:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The selection start string property.
@@ -119,7 +119,7 @@ namespace VianaNET
         "SelectionStartString",
         typeof(string),
         typeof(MediaSlider),
-        new FrameworkPropertyMetadata("0:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
+        new FrameworkPropertyMetadata("00:00.000", FrameworkPropertyMetadataOptions.AffectsRender));
 
     /// <summary>
     ///   The tick down clicked command.

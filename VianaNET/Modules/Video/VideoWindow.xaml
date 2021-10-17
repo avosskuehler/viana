@@ -142,9 +142,7 @@
         TickPlacement="{Binding Path=VideoData.TickPlacement, Source={x:Static local:App.Project}}" 
         Interval="1" 
         Minimum="0"
-        Thumb.DragStarted="TimelineSliderDragStarted"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
-        Thumb.DragDelta="TimelineSliderDragDelta"
         IsSnapToTickEnabled="True"/>
     </Grid>
   </Grid>

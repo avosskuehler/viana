@@ -36,22 +36,10 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public partial class MeasureAngleWindow
   {
-
-
-    ///// <summary>
-    /////   The timeslider update timer.
-    ///// </summary>
-    //private readonly DispatcherTimer timesliderUpdateTimer;
-
     /// <summary>
     ///   Mausbewegungen ignorieren, da über Control panel
     /// </summary>
     private bool ignoreMouse;
-
-    /// <summary>
-    ///   Indicates the dragging of the time line thumb
-    /// </summary>
-    private bool isDraggingTimeLineThumb;
 
     /// <summary>
     ///   The mouse down location.
@@ -68,10 +56,6 @@ namespace VianaNET.Modules.Video.Dialogs
     /// </summary>
     private bool centerPointIsSet;
 
-
-
-
-
     /// <summary>
     ///   Initializes a new instance of the <see cref="MeasureAngleWindow" /> class.
     /// </summary>
@@ -79,13 +63,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.InitializeComponent();
       this.WindowCanvas.DataContext = this;
-      //this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      //this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
     }
-
-
-
-
 
     /// <summary>
     /// Handles the MouseLeftButtonDown event of the Container control.
@@ -291,21 +269,6 @@ namespace VianaNET.Modules.Video.Dialogs
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
-      this.isDraggingTimeLineThumb = false;
-    }
-
-    /// <summary>
-    /// Handles the DragStarted event of the timelineSlider control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="DragStartedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
-    {
-      this.isDraggingTimeLineThumb = true;
     }
 
     /// <summary>
@@ -335,24 +298,6 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.StepFramesForward();
     }
-
-    ///// <summary>
-    ///// Handles the Tick event of the timesliderUpdateTimer control.
-    ///// </summary>
-    ///// <param name="sender">
-    ///// The source of the event.
-    ///// </param>
-    ///// <param name="e">
-    ///// The <see cref="EventArgs"/> instance containing the event data.
-    ///// </param>
-    //private void TimesliderUpdateTimerTick(object sender, EventArgs e)
-    //{
-    //  if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
-    //  {
-    //    this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
-    //    Video.Instance.VideoPlayerElement.UpdateFrameIndex();
-    //  }
-    //}
 
     /// <summary>
     ///   Updates the angle label by calculating the angle between the two lines.
@@ -411,20 +356,6 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// Handles the Loaded event of the Window control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="RoutedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void WindowLoaded(object sender, RoutedEventArgs e)
-    {
-      //this.timesliderUpdateTimer.Start();
-    }
-
-    /// <summary>
     /// Handles the PreviewKeyDown event of the Window control.
     /// </summary>
     /// <param name="sender">
@@ -451,7 +382,5 @@ namespace VianaNET.Modules.Video.Dialogs
         this.StepFramesBackward();
       }
     }
-
-
   }
 }

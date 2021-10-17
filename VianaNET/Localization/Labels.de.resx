@@ -131,7 +131,7 @@
   </data>
   <data name="AboutBoxTextBlock" xml:space="preserve">
     <value>Das Programm ist für die Erfassung und Analyse von Bewegungen in Videos konzipiert. 
-Viana = VIdeoANAlyse... inspiriert wurde die Software von der ersten Viana-Version von Thomas Kersting an der Universität Essen.
+Inspiriert wurde die Software von der ersten Viana-Version von Thomas Kersting an der Universität Essen.
 Ich freue mich über Feedback:</value>
   </data>
   <data name="AboutBoxTitle" xml:space="preserve">
@@ -1334,6 +1334,12 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="ExportDialogTopFrameTitle" xml:space="preserve">
     <value>Geben die Spalten angeben, die exportiert werden sollen.</value>
   </data>
+  <data name="ExportErrorHeader" xml:space="preserve">
+    <value>Export nicht möglich</value>
+  </data>
+  <data name="ExportErrorMessage" xml:space="preserve">
+    <value>Bitte vor dem Export erst ein Diagramm anlegen.</value>
+  </data>
   <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
     <value>Zu exportierende Spalten:</value>
   </data>
@@ -1934,7 +1940,7 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
     <value>Bitte Verzeichnis für neue Videodateien auswählen ...</value>
   </data>
   <data name="VideoWindowPlayButtonToolTip" xml:space="preserve">
-    <value>Abspielen</value>
+    <value>Abspielen/Anhalten</value>
   </data>
   <data name="VideoWindowRecordButtonToolTip" xml:space="preserve">
     <value>Aufnahme starten</value>

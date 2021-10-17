@@ -1332,6 +1332,12 @@ F10: Reset coordinate system.</value>
   <data name="ExportDialogTopFrameTitle" xml:space="preserve">
     <value>Pleae specify the data columns to be exported.</value>
   </data>
+  <data name="ExportErrorHeader" xml:space="preserve">
+    <value>Export not available</value>
+  </data>
+  <data name="ExportErrorMessage" xml:space="preserve">
+    <value>Please create a graph before export.</value>
+  </data>
   <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
     <value>Columns for export:</value>
   </data>
@@ -1932,7 +1938,7 @@ It can be newly placed with the mouse now.</value>
     <value>Please select a folder for the new video files ...</value>
   </data>
   <data name="VideoWindowPlayButtonToolTip" xml:space="preserve">
-    <value>Play</value>
+    <value>Play/Pause</value>
   </data>
   <data name="VideoWindowRecordButtonToolTip" xml:space="preserve">
     <value>Start recording</value>

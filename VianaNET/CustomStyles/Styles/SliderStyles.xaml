@@ -17,12 +17,13 @@
     <GradientStop Color="{x:Static Styles:SliderStyles.SideButtonsBackground4}" Offset="1"></GradientStop>
   </LinearGradientBrush>
 
-  <LinearGradientBrush x:Key="ThumbBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+  <SolidColorBrush x:Key="ThumbBackgroundBrush" Color="#FFCCCCCC"/>
+  <!--<LinearGradientBrush x:Key="ThumbBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
     <GradientStop Color="{x:Static Styles:SliderStyles.ThumbBackground1}" Offset="0"></GradientStop>
     <GradientStop Color="{x:Static Styles:SliderStyles.ThumbBackground2}" Offset="0.3"></GradientStop>
     <GradientStop Color="{x:Static Styles:SliderStyles.ThumbBackground3}" Offset="0.8"></GradientStop>
     <GradientStop Color="{x:Static Styles:SliderStyles.ThumbBackground4}" Offset="1"></GradientStop>
-  </LinearGradientBrush>
+  </LinearGradientBrush>-->
 
   <LinearGradientBrush x:Key="SideButtonsLightBackgroundBrush" StartPoint="0.5,0" EndPoint="0.5,1">
     <GradientStop Color="{x:Static Styles:SliderStyles.SideButtonsLightBackground1}" Offset="0"></GradientStop>

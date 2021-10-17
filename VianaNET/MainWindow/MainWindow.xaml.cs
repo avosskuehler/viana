@@ -28,6 +28,7 @@ namespace VianaNET.MainWindow
 {
   using System;
   using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Globalization;
   using System.IO;
@@ -73,12 +74,12 @@ namespace VianaNET.MainWindow
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
 
-      List<CameraDevice> devices = Video.Instance.VideoInputDevicesMSMF;
+      ObservableCollection<CameraDevice> devices = Video.Instance.VideoInputDevicesMSMF;
 
-      this.VideoSourceGalleryCategory.ItemsSource = devices;
+      this.VideoInputDeviceCombo.ItemsSource = devices;
       if (Video.Instance.VideoInputDevicesMSMF.Count > 0)
       {
-        this.VideoInputDeviceCombo.SelectedItem = Video.Instance.VideoInputDevicesMSMF[0];
+        this.VideoInputDeviceCombo.SelectedIndex = 0;
       }
 
       this.Show();
@@ -796,6 +797,13 @@ namespace VianaNET.MainWindow
       {
         Video.Instance.VideoElement.Rotation = OpenCvSharp.RotateFlags.Rotate90Clockwise;
       }
+
+      // Reset Calibration
+      App.Project.CalibrationData.OriginInPixel = new Point();
+      App.Project.CalibrationData.RulerEndPointInPixel = new Point();
+      App.Project.CalibrationData.RulerStartPointInPixel = new Point();
+      App.Project.CalibrationData.ScalePixelToUnit = 1;
+      App.Project.CalibrationData.IsVideoCalibrated = false;
     }
 
     /// <summary>
@@ -1223,19 +1231,6 @@ namespace VianaNET.MainWindow
       this.MainRibbon.ApplicationMenu.IsDropDownOpen = false;
     }
 
-
-
-    /// <summary>
-    /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.
-    /// Updates the video capturer with the new device.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
-    private void VideoInputDeviceCombo_OnSelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-    {
-      Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevicesMSMF.FirstOrDefault(o => o.Index == ((CameraDevice)this.VideoInputDeviceCombo.SelectedItem).Index);
-    }
-
     /// <summary>
     /// Skip points button click.
     /// </summary>
@@ -1247,5 +1242,15 @@ namespace VianaNET.MainWindow
       dlg.ShowDialog();
     }
 
+    /// <summary>
+    /// Handles the OnSelectionChanged event of the VideoInputDeviceCombo control.
+    /// Updates the video capturer with the new device.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
+    private void VideoInputDeviceCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevicesMSMF.FirstOrDefault(o => o.Index == ((CameraDevice)this.VideoInputDeviceCombo.SelectedItem).Index);
+    }
   }
 }

@@ -42,14 +42,6 @@ namespace VianaNET.Modules.Video.Dialogs
   /// </summary>
   public partial class SelectColorWindow : Window
   {
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Constants                                                        //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Variables, Enumerations, Events                                  //
-    ///////////////////////////////////////////////////////////////////////////////
-
 
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="IndexOfTrackedObject" />.
@@ -61,21 +53,10 @@ namespace VianaNET.Modules.Video.Dialogs
         typeof(SelectColorWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-
-
-
-
     /// <summary>
     ///   The mouse down location.
     /// </summary>
     private Point mouseDownLocation;
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Construction and Initializing methods                                     //
-    ///////////////////////////////////////////////////////////////////////////////
-
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="SelectColorWindow" /> class.
@@ -85,17 +66,6 @@ namespace VianaNET.Modules.Video.Dialogs
       this.InitializeComponent();
       this.ObjectIndexPanel.DataContext = this;
     }
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining events, enums, delegates                                         //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Defining Properties                                                       //
-    ///////////////////////////////////////////////////////////////////////////////
-
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -108,21 +78,6 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
 
-
-
-
-    /// <summary>
-    /// The container_ mouse left button down.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    protected void Container_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-    }
 
     /// <summary>
     /// The container_ mouse left button up.
@@ -207,16 +162,6 @@ namespace VianaNET.Modules.Video.Dialogs
     }
 
     /// <summary>
-    /// The mouse over control panel.
-    /// </summary>
-    /// <param name="isOver">
-    /// The is over. 
-    /// </param>
-    protected virtual void MouseOverControlPanel(bool isOver)
-    {
-    }
-
-    /// <summary>
     /// Raises the <see cref="PropertyChanged"/> event.
     /// </summary>
     /// <param name="obj">
@@ -234,34 +179,6 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         window.IndexOfTrackedObject = 1;
       }
-    }
-
-    /// <summary>
-    /// The control panel_ mouse enter.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
-    {
-      this.MouseOverControlPanel(true);
-    }
-
-    /// <summary>
-    /// The control panel_ mouse leave.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
-    {
-      this.MouseOverControlPanel(false);
     }
 
     /// <summary>
@@ -355,23 +272,9 @@ namespace VianaNET.Modules.Video.Dialogs
     /// <param name="e">
     /// The e. 
     /// </param>
-    private void btnDone_Click(object sender, RoutedEventArgs e)
+    private void BtnDone_Click(object sender, RoutedEventArgs e)
     {
       this.Close();
     }
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods and Eventhandling for Background tasks                            //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Methods for doing main class job                                          //
-    ///////////////////////////////////////////////////////////////////////////////
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Small helping Methods                                                     //
-    ///////////////////////////////////////////////////////////////////////////////
   }
 }

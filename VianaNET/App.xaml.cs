@@ -84,7 +84,8 @@
       Image terminMenuentryIcon = new Image();
       BitmapImage terminMenuentryIconImage = new BitmapImage();
       terminMenuentryIconImage.BeginInit();
-      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
+      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/VianaNET;component/Images/" + imageName);
+      //terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
       terminMenuentryIconImage.EndInit();
       terminMenuentryIcon.Source = terminMenuentryIconImage;
       return terminMenuentryIcon;
@@ -102,7 +103,8 @@
     {
       BitmapImage terminMenuentryIconImage = new BitmapImage();
       terminMenuentryIconImage.BeginInit();
-      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
+      terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/VianaNET;component/Images/" + imageName);
+      //terminMenuentryIconImage.UriSource = new Uri("pack://application:,,,/Images/" + imageName);
       terminMenuentryIconImage.EndInit();
       return terminMenuentryIconImage;
     }

@@ -60,20 +60,6 @@ namespace VianaNET.Modules.DataAcquisition
         typeof(ModifyDataWindow),
         new FrameworkPropertyMetadata(1, OnPropertyChanged));
 
-
-
-
-
-    ///// <summary>
-    /////   The timeslider update timer.
-    ///// </summary>
-    //private readonly DispatcherTimer timesliderUpdateTimer;
-
-    /// <summary>
-    /// Indicates the dragging of the time line thumb
-    /// </summary>
-    private bool isDraggingTimeLineThumb;
-
     /// <summary>
     /// Stores the dragging state of the (max) three objects
     /// </summary>
@@ -103,7 +89,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     /// Gets or sets a value wheter the current video frame has no data points set
     /// </summary>
-    private bool HasNoDataPoints { get; set; }
+    public bool HasNoDataPoints { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ModifyDataWindow"/> class. 
@@ -142,9 +128,6 @@ namespace VianaNET.Modules.DataAcquisition
       this.CursorEllipse.Width = 2 * this.visualDataPointRadius;
       this.CursorEllipse.Height = 2 * this.visualDataPointRadius;
 
-      //this.timesliderUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-      //this.timesliderUpdateTimer.Tick += this.TimesliderUpdateTimerTick;
-
       if (Video.Instance.VideoMode == VideoMode.Capture)
       {
         this.FramePanel.Visibility = Visibility.Hidden;
@@ -153,10 +136,6 @@ namespace VianaNET.Modules.DataAcquisition
 
       this.SetVisibilityOfSharpCursor(false);
     }
-
-
-
-
 
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
@@ -177,10 +156,6 @@ namespace VianaNET.Modules.DataAcquisition
 
       set => this.SetValue(IndexOfTrackedObjectProperty, value);
     }
-
-
-
-
 
     /// <summary>
     /// Moves to given frame index.
@@ -482,35 +457,6 @@ namespace VianaNET.Modules.DataAcquisition
       //this.ResetSharpCursorBounds();
     }
 
-    private void ResetSharpCursorBounds()
-    {
-      var left = Canvas.GetLeft(this.CursorEllipse);
-      var top = Canvas.GetTop(this.CursorEllipse);
-
-      //handle too far right
-      if (left + this.CursorEllipse.Width > this.WindowCanvas.ActualWidth)
-      {
-        MoveSharpCursorToScreenLocation(new Point(this.WindowCanvas.ActualWidth - this.CursorEllipse.Width, top));
-      }
-
-      //handle too far left
-      if (left < 0)
-      {
-        MoveSharpCursorToScreenLocation(new Point(0, top));
-      }
-
-      //handle too far up
-      if (top < 0)
-      {
-        MoveSharpCursorToScreenLocation(new Point(left, 0));
-      }
-      //handle too far down
-      if (top + this.CursorEllipse.Height > this.CursorEllipse.ActualHeight)
-      {
-        MoveSharpCursorToScreenLocation(new Point(left, this.WindowCanvas.ActualHeight - this.CursorEllipse.Height));
-      }
-    }
-
     /// <summary>
     ///   The step frames backward.
     /// </summary>
@@ -549,7 +495,6 @@ namespace VianaNET.Modules.DataAcquisition
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
-      this.isDraggingTimeLineThumb = false;
       this.UpdateDataPointLocation();
     }
 
@@ -638,20 +583,6 @@ namespace VianaNET.Modules.DataAcquisition
     }
 
     /// <summary>
-    /// Handles the DragStarted event of the timelineSlider control.
-    /// </summary>
-    /// <param name="sender">
-    /// The source of the event.
-    /// </param>
-    /// <param name="e">
-    /// The <see cref="DragStartedEventArgs"/> instance containing the event data.
-    /// </param>
-    private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
-    {
-      this.isDraggingTimeLineThumb = true;
-    }
-
-    /// <summary>
     /// Handles the TickDownClicked event of the timelineSlider control.
     /// </summary>
     /// <param name="sender">
@@ -678,24 +609,6 @@ namespace VianaNET.Modules.DataAcquisition
     {
       this.StepFramesForward();
     }
-
-    ///// <summary>
-    ///// Handles the Tick event of the timesliderUpdateTimer control.
-    ///// </summary>
-    ///// <param name="sender">
-    ///// The source of the event.
-    ///// </param>
-    ///// <param name="e">
-    ///// The <see cref="EventArgs"/> instance containing the event data.
-    ///// </param>
-    //private void TimesliderUpdateTimerTick(object sender, EventArgs e)
-    //{
-    //  if (!this.isDraggingTimeLineThumb && Video.Instance.VideoMode == VideoMode.File)
-    //  {
-    //    this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
-    //    Video.Instance.VideoPlayerElement.UpdateFrameIndex();
-    //  }
-    //}
 
     /// <summary>
     /// Handles the MouseMove event of the windowCanvas control
@@ -746,7 +659,6 @@ namespace VianaNET.Modules.DataAcquisition
       this.VerticalCursorLineBottom.Y2 = this.WindowCanvas.ActualHeight;
 
       this.MoveToFrame(Video.Instance.FrameIndex);
-      //this.timesliderUpdateTimer.Start();
     }
 
     /// <summary>

@@ -521,6 +521,11 @@ namespace VianaNET.Data
         return false;
       }
 
+      if (Project.IsDeserializing)
+      {
+        return false;
+      }
+
       // Skip if working
       if (!this.isReady)
       {

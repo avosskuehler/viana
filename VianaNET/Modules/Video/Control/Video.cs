@@ -10,6 +10,7 @@ namespace VianaNET.Modules.Video.Control
 {
   using System;
   using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Drawing;
   using System.IO;
@@ -260,12 +261,12 @@ namespace VianaNET.Modules.Video.Control
     /// <summary>
     /// Gets the video input devices of this computer using Microsoft Media Foundation
     /// </summary>
-    public List<CameraDevice> VideoInputDevicesMSMF
+    public ObservableCollection<CameraDevice> VideoInputDevicesMSMF
     {
       get
       {
         {
-          var cameras = new List<CameraDevice>();
+          var cameras = new ObservableCollection<CameraDevice>();
           var attributes = new MediaAttributes(1);
           attributes.Set(CaptureDeviceAttributeKeys.SourceType.Guid, CaptureDeviceAttributeKeys.SourceTypeVideoCapture.Guid);
           var devices = MediaFactory.EnumDeviceSources(attributes);
@@ -371,23 +372,6 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     /// <param name="videoFile">The video file.</param>
     /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
-    private bool SetVideoFileInOut(string videoFile)
-    {
-      // TODO Set InOut on first load
-      using (VlcWindow vlcConverter = new VlcWindow())
-      {
-        vlcConverter.VideoFile = videoFile;
-        vlcConverter.ShowDialog();
-      }
-
-      return this.LoadMovie(App.Project.VideoFile);
-    }
-
-    /// <summary>
-    /// Rerenders the video file, cause it could no be opened by the default direct show codecs.
-    /// </summary>
-    /// <param name="videoFile">The video file.</param>
-    /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
     private bool ReRenderVideoFile(string videoFile)
     {
       using (VlcWindow vlcConverter = new VlcWindow())
@@ -447,7 +431,6 @@ namespace VianaNET.Modules.Video.Control
           this.videoPlayerElement.StepFrames(forward, count);
           break;
         case VideoMode.Capture:
-
           // Do nothing
           break;
       }
@@ -481,10 +464,6 @@ namespace VianaNET.Modules.Video.Control
     {
       this.videoElement.Stop();
     }
-
-
-
-
 
     /// <summary>
     ///   The on property changed.
@@ -545,7 +524,7 @@ namespace VianaNET.Modules.Video.Control
           if (this.VideoInputDevicesMSMF.Any())
           {
             this.videoElement = this.videoCaptureElement;
-            this.videoCaptureElement.NewCamera(0);
+            this.videoCaptureElement.NewCamera(Video.Instance.VideoCapturerElement.VideoCaptureDevice.Index);
             StatusBarContent.Instance.VideoFilename = "Live Video";
           }
 
@@ -553,8 +532,6 @@ namespace VianaNET.Modules.Video.Control
       }
 
       this.videoElement.VideoFrameChanged += this.VideoElementVideoFrameChanged;
-      //this.videoElement.ImageSource = this.videoElement.ImageSource;
-      //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
     }
 
     /// <summary>
@@ -564,8 +541,6 @@ namespace VianaNET.Modules.Video.Control
     /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
     private void VideoCaptureElementVideoAvailable(object sender, EventArgs e)
     {
-      //this.VideoSource = this.videoElement.ImageSource;
-      //this.ProcessedVideoSource = this.videoElement.ColorProcessedVideoSource;
       this.videoElement.Play();
     }
 
@@ -578,7 +553,5 @@ namespace VianaNET.Modules.Video.Control
     {
       this.OnVideoFrameChanged();
     }
-
-
   }
 }

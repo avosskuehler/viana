@@ -9,7 +9,6 @@
 	  Height="418" Width="600" WindowState="Maximized" WindowStyle="None" 
   WindowStartupLocation="CenterScreen"
   Background="{Binding Path=CalibrationData.GradientBackground, Source={x:Static local:App.Project}}"
-  Loaded="WindowLoaded" 
   PreviewKeyDown="WindowPreviewKeyDown"
   Title="{lex:Loc VianaNET:Labels:MeasureLengthWindowTitle}">
   <Window.Resources>
@@ -67,7 +66,6 @@
             Height="20"
             TickDownClicked="TimelineSliderTickDownClicked" 
             TickUpClicked="TimelineSliderTickUpClicked"
-            Thumb.DragStarted="TimelineSliderDragStarted"
             Thumb.DragCompleted="TimelineSliderDragCompleted"
             IsSnapToTickEnabled="True"/>
           <Separator/>

@@ -13,7 +13,7 @@
   <Window.Resources>
     <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
   </Window.Resources>
-  <Grid Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonDown="Container_MouseLeftButtonDown" MouseLeftButtonUp="Container_MouseLeftButtonUp">
+  <Grid Name="playerContainerGrid" MouseMove="Container_MouseMove" MouseLeftButtonUp="Container_MouseLeftButtonUp">
     <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static Control:Video.Instance}}"/>
     <Canvas Name="windowCanvas">
       <Canvas.Width>
@@ -56,7 +56,7 @@
         </StackPanel>
       </Border>
 
-      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="300" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+      <Border Name="ControlPanel" Canvas.Top="50" Background="#99DDDDDD" Canvas.Left="50" CornerRadius="10" Height="Auto" Width="300">
         <StackPanel Orientation="Vertical">
           <Grid Grid.Row="0" x:Name="GridTop" Margin="0" VerticalAlignment="Top" Height="25" MouseLeftButtonDown="DragWindowMouseDown" MouseLeftButtonUp="DragWindowMouseUp">
             <Grid.ColumnDefinitions>
@@ -71,7 +71,7 @@
           <Separator/>
           <Label Name="DescriptionTitle" FontFamily="Verdana" FontSize="18" Content="{lex:Loc VianaNET:Labels:SelectColorWindowDescriptionTitle}"/>
           <TextBlock Name="DescriptionMessage" Padding="5" Text="{lex:Loc VianaNET:Labels:SelectColorWindowDescriptionMessage}" TextWrapping="Wrap"/>
-          <Button Name="btnDone" Width="80" IsDefault="True" Click="btnDone_Click" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
+          <Button Name="btnDone" Width="80" IsDefault="True" Click="BtnDone_Click" Margin="5" Content="{lex:Loc VianaNET:Labels:WindowWithHelpButtonDoneLabel}"/>
         </StackPanel>
       </Border>
     </Canvas>

@@ -37,19 +37,14 @@ namespace VianaNET.Modules.Chart
 
   using OxyPlot;
   using OxyPlot.Wpf;
-
+  using VianaNET.Logging;
   using VianaNET.MainWindow;
-
-
-  using wordapp = Microsoft.Office.Interop.Word;
 
   /// <summary>
   ///   The export chart.
   /// </summary>
   public class ExportChart
   {
-
-
     /// <summary>
     /// The to clipboard.
     /// </summary>
@@ -59,6 +54,12 @@ namespace VianaNET.Modules.Chart
     public static void ToClipboard(PlotModel chart)
     {
       PngExporter exporter = new PngExporter();
+      if (chart.Width == 0)
+      {
+        InformationDialog.Show(VianaNET.Localization.Labels.ExportErrorHeader, VianaNET.Localization.Labels.ExportErrorMessage, false);
+        return;
+      }
+
       exporter.Width = (int)chart.Width;
       exporter.Height = (int)chart.Height;
       chart.Background = OxyColor.FromArgb(255, 255, 255, 255);
@@ -76,6 +77,12 @@ namespace VianaNET.Modules.Chart
     /// </param>
     public static void ToFile(PlotModel chart)
     {
+      if (chart.Width == 0)
+      {
+        InformationDialog.Show(VianaNET.Localization.Labels.ExportErrorHeader, VianaNET.Localization.Labels.ExportErrorMessage, false);
+        return;
+      }
+
       SaveFileDialog sfd = new SaveFileDialog();
       sfd.CheckFileExists = false;
       sfd.CheckPathExists = true;
@@ -150,12 +157,18 @@ namespace VianaNET.Modules.Chart
     /// </param>
     public static void ToWord(PlotModel chart)
     {
+      if (chart.Width == 0)
+      {
+        InformationDialog.Show(VianaNET.Localization.Labels.ExportErrorHeader, VianaNET.Localization.Labels.ExportErrorMessage, false);
+        return;
+      }
+
       ToClipboard(chart);
 
       try
       {
         // Insert in word
-        var word = new wordapp.Application();
+        var word = new Microsoft.Office.Interop.Word.Application();
         word.Visible = true;
 
         object template = Missing.Value;

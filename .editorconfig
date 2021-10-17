@@ -8,3 +8,6 @@ csharp_using_directive_placement = inside_namespace
 
 # IDE0058: Der Ausdruckswert wird niemals verwendet.
 csharp_style_unused_value_expression_statement_preference = unused_local_variable
+
+# IDE0017: Initialisierung von Objekten vereinfachen
+dotnet_style_object_initializer = false

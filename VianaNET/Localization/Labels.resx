@@ -1320,6 +1320,12 @@
   <data name="ExportDialogTopFrameTitle" xml:space="preserve">
     <value>@ExportDialogTopFrameTitle</value>
   </data>
+  <data name="ExportErrorHeader" xml:space="preserve">
+    <value>ExportErrorHeader</value>
+  </data>
+  <data name="ExportErrorMessage" xml:space="preserve">
+    <value>ExportErrorMessage</value>
+  </data>
   <data name="ExportOptionsDialogColumnGroupHeader" xml:space="preserve">
     <value>@ExportOptionsDialogColumnGroupHeader</value>
   </data>

@@ -135,7 +135,7 @@ namespace VianaNET.Modules.Video.Dialogs
         return;
       }
 
-      this.Filename = App.Project.VideoFile;
+      this.Filename = Path.GetFileName(App.Project.VideoFile);
 
       // Read out video properties
       using (MediaInfo.DotNetWrapper.MediaInfo info = new MediaInfo.DotNetWrapper.MediaInfo())
@@ -196,15 +196,13 @@ namespace VianaNET.Modules.Video.Dialogs
         string containerformatprofile = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.General, 0, "Format_Profile", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
         string videoformatinfo = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Format/Info", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
         string videoformatprofile = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Format_Profile", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
-        this.Container = string.Format("{0} ({1})", containerformat, containerformatprofile);
-        this.Codec = string.Format("{0} ({1})", videoformatinfo, videoformatprofile);
+        this.Container = string.Format("{0} {1}", containerformat, containerformatprofile != string.Empty ? "(" + containerformatprofile + ")" : string.Empty);
+        this.Codec = string.Format("{0} {1}", videoformatinfo, videoformatprofile != string.Empty ? "(" + videoformatprofile + ")" : string.Empty);
 
         // Read out video properties
         var capturer = Video.Instance.VideoElement;
-        this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
+        this.FrameSize = string.Format("{0} x {1} px", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
       }
-
-
     }
 
     private void ParseLiveCamera()
@@ -218,7 +216,7 @@ namespace VianaNET.Modules.Video.Dialogs
       this.FrameRate = Video.Instance.FPS;
       this.DefaultFrameRate = Video.Instance.FPS;
       this.FrameCount = 0;
-      this.FrameSize = string.Format("{0} x {1}", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
+      this.FrameSize = string.Format("{0} x {1} px", capturer.NaturalVideoWidth, capturer.NaturalVideoHeight);
       this.Codec = capturer.OpenCVObject.FourCC;
       this.Bitrate = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.BitRate).ToString();
 

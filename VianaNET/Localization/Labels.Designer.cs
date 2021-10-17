@@ -3670,6 +3670,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ExportErrorHeader ähnelt.
+        /// </summary>
+        public static string ExportErrorHeader {
+            get {
+                return ResourceManager.GetString("ExportErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ExportErrorMessage ähnelt.
+        /// </summary>
+        public static string ExportErrorMessage {
+            get {
+                return ResourceManager.GetString("ExportErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExportOptionsDialogColumnGroupHeader ähnelt.
         /// </summary>
         public static string ExportOptionsDialogColumnGroupHeader {

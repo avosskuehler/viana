@@ -56,14 +56,7 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private const int DefaultMargin = 10;
 
-
-
-
-
-    ///// <summary>
-    /////   The timeslider update timer.
-    ///// </summary>
-    //private readonly DispatcherTimer timesliderUpdateTimer;
+    private bool isPlaying;
 
     /// <summary>
     ///   The automatic data aquisition current frame count.
@@ -94,17 +87,6 @@ namespace VianaNET.Modules.Video
     ///   The current line.
     /// </summary>
     private Line currentLine;
-
-    /// <summary>
-    ///   The is dragging.
-    /// </summary>
-    private bool isDragging;
-
-
-
-
-
-
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="VideoWindow" /> class.
@@ -227,6 +209,8 @@ namespace VianaNET.Modules.Video
           this.SelectionPanel.Visibility = Visibility.Collapsed;
           this.BtnSeekPrevious.Visibility = Visibility.Collapsed;
           this.BtnSeekNext.Visibility = Visibility.Collapsed;
+          this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Pause;
+
           break;
         case VideoMode.None:
           Video.Instance.VideoElement.Stop();
@@ -242,7 +226,11 @@ namespace VianaNET.Modules.Video
     /// </param>
     public void ShowCalibration(bool show)
     {
-      if (App.Project.CalibrationData.IsVideoCalibrated)
+      if (!App.Project.CalibrationData.IsVideoCalibrated)
+      {
+        this.ShowOrHideCalibration(Visibility.Collapsed);
+      }
+      else
       {
         this.ShowOrHideCalibration(show ? Visibility.Visible : Visibility.Collapsed);
       }
@@ -352,6 +340,10 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void CalibrationPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+      if (!App.Project.CalibrationData.IsVideoCalibrated)
+      {
+        this.ShowCalibration(false);
+      }
     }
 
     /// <summary>
@@ -426,28 +418,11 @@ namespace VianaNET.Modules.Video
     /// </returns>
     private bool GetScales(out double scaleX, out double scaleY)
     {
-      // double sourceRatio = Video.Instance.VideoElement.NaturalVideoWidth / Video.Instance.VideoElement.NaturalVideoHeight;
-      // double destinationRatio = this.VideoImage.ActualWidth / this.VideoImage.ActualHeight;
-
-      // double uniformWidth = this.VideoImage.ActualHeight /
-      // Video.Instance.VideoElement.NaturalVideoHeight *
-      // Video.Instance.VideoElement.NaturalVideoWidth;
-      // double uniformHeight = this.VideoImage.ActualHeight;
-
-      // if (sourceRatio < destinationRatio)
-      // {
-      // uniformWidth = this.VideoImage.ActualWidth;
-      // uniformHeight = this.VideoImage.ActualWidth /
-      // Video.Instance.VideoElement.NaturalVideoWidth *
-      // Video.Instance.VideoElement.NaturalVideoHeight;
-      // }
       scaleX = this.VideoImage.ActualWidth / this.VideoImage.Source.Width;
       scaleY = this.VideoImage.ActualHeight / this.VideoImage.Source.Height;
 
       return !double.IsInfinity(scaleX) && !double.IsNaN(scaleX);
     }
-
-    //private bool isFrameProcessed = false;
 
     /// <summary>
     /// The image processing_ frame processed.
@@ -663,24 +638,29 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
-      var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+      //var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
       var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
-      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS; ;
-
-      // In Acquisition mode of a file the processing is done in the StepCompleted event handler
-      if (Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
+      if (Video.Instance.VideoMode == VideoMode.File)
       {
+        this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
+      }
+
+      //if (Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
+      //{
         if (Video.Instance.VideoMode == VideoMode.File && Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
         {
           Video.Instance.Stop();
-          //this.TimelineSlider.Value = this.TimelineSlider.SelectionEnd;
           this.isPlaying = false;
           this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
         }
+      //}
 
+      // In Acquisition mode of a file the processing is done in the StepCompleted event handler
+      if (!Video.Instance.IsDataAcquisitionRunning)
+      {
         this.ProcessImage();
-
       }
+
     }
 
     /// <summary>
@@ -708,7 +688,6 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void PlaceCalibration()
     {
-
       if (this.GetScales(out double scaleX, out double scaleY))
       {
         Canvas.SetLeft(this.OriginPath, App.Project.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
@@ -925,23 +904,6 @@ namespace VianaNET.Modules.Video
     }
 
     /// <summary>
-    /// The video player_ video file opened.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void VideoPlayerVideoFileOpened(object sender, EventArgs e)
-    {
-      // this.BlobsControl.UpdatedProcessedImage();
-      // this.BlobsControl.UpdateScale();
-      // this.timelineSlider.SelectionStart = 0;
-      // this.timelineSlider.SelectionEnd = this.timelineSlider.Maximum;
-    }
-
-    /// <summary>
     /// The btn record_ click.
     /// </summary>
     /// <param name="sender">
@@ -973,7 +935,6 @@ namespace VianaNET.Modules.Video
       }
     }
 
-    private bool isPlaying;
 
     /// <summary>
     /// The btn start_ click.
@@ -1039,35 +1000,6 @@ namespace VianaNET.Modules.Video
     private void TimelineSliderDragCompleted(object sender, DragCompletedEventArgs e)
     {
       Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
-      this.isDragging = false;
-    }
-
-    /// <summary>
-    /// The timeline slider_ drag delta.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void TimelineSliderDragDelta(object sender, DragDeltaEventArgs e)
-    {
-      // Video.Instance.VideoPlayerElement.MediaPositionInMS = (long)timelineSlider.Value;
-    }
-
-    /// <summary>
-    /// The timeline slider_ drag started.
-    /// </summary>
-    /// <param name="sender">
-    /// The sender. 
-    /// </param>
-    /// <param name="e">
-    /// The e. 
-    /// </param>
-    private void TimelineSliderDragStarted(object sender, DragStartedEventArgs e)
-    {
-      this.isDragging = true;
     }
 
     /// <summary>
@@ -1127,23 +1059,6 @@ namespace VianaNET.Modules.Video
     {
       this.StepForward();
     }
-
-    ///// <summary>
-    ///// The timeslider update timer_ tick.
-    ///// </summary>
-    ///// <param name="sender">
-    ///// The sender. 
-    ///// </param>
-    ///// <param name="e">
-    ///// The e. 
-    ///// </param>
-    //private void TimesliderUpdateTimerTick(object sender, EventArgs e)
-    //{
-    //  if (!this.isDragging && Video.Instance.VideoMode == VideoMode.File)
-    //  {
-    //    //this.TimelineSlider.Value = Video.Instance.VideoPlayerElement.MediaPositionInMS;
-    //  }
-    //}
 
     /// <summary>
     /// Steps the video one frame backward, if available

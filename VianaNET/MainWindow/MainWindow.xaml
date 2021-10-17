@@ -83,7 +83,7 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCaptureVideoToolTipTitle}" 
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCaptureVideoToolTipDescription}" 
                          IsEnabled="{Binding Path=HasVideoInputDevices, Source={x:Static control:Video.Instance}}"/>
-          <RibbonSeparator/>
+          <!--<RibbonSeparator/>-->
           <!--<RibbonApplicationSplitMenuItem
             Header="{lex:Loc VianaNET:Labels:ButtonExportDataLabelTitle}"
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonExportDataToolTipTitle}"
@@ -536,15 +536,36 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
               <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Content="{lex:Loc VianaNET:Labels:RibbonVideoDevicesSelectDeviceLabelTitle}"/>
-            <RibbonComboBox Grid.Row="1" Grid.Column="0" MinWidth="200" SelectionBoxWidth="150" IsEditable="True" IsReadOnly="True" >
+            <ComboBox Name="VideoInputDeviceCombo" Grid.Row="1" Grid.Column="0" DisplayMemberPath="Name" IsReadOnly="True" SelectionChanged="VideoInputDeviceCombo_SelectionChanged">
+              
+            </ComboBox>
+            <!--<RibbonComboBox Grid.Row="1" Grid.Column="0" MinWidth="200" SelectionBoxWidth="150" IsEditable="True" IsReadOnly="True" >
               <RibbonGallery Name="VideoInputDeviceCombo" SelectionChanged="VideoInputDeviceCombo_OnSelectionChanged">
-                <RibbonGalleryCategory Name="VideoSourceGalleryCategory" DisplayMemberPath="Name"/>
+                --><!--<RibbonGalleryCategory Name="VideoSourceGalleryCategory" DisplayMemberPath="Name"/>--><!--
               </RibbonGallery>
-            </RibbonComboBox>
-            <RibbonButton Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Click="VideoCaptureDevicePropertiesButtonClick" 
+              --><!--<RibbonGallery Name="VideoInputDeviceCombo" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <RibbonGallery.CategoryTemplate>
+                  <HierarchicalDataTemplate x:Name="VideoSourceGalleryCategory">
+                    <Border Background="LightGray">
+                      <TextBlock Text="{Binding}" FontWeight="Bold" />
+                    </Border>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                      <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Margin="10,0,0,0" Text="{Binding Name}" />
+                        </StackPanel>
+                      </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                  </HierarchicalDataTemplate>
+                </RibbonGallery.CategoryTemplate>
+              </RibbonGallery>--><!--
+
+            </RibbonComboBox>-->
+            <RibbonButton Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Click="VideoCaptureDevicePropertiesButtonClick" 
                          Label="{lex:Loc VianaNET:Labels:ButtonVideoCaptureDevicePropertiesLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/VideoDeviceOptions32.png" 
                          SmallImageSource="/VianaNET;component/Images/VideoDeviceOptions16.png" 

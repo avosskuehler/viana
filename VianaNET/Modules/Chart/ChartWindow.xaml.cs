@@ -101,14 +101,14 @@ namespace VianaNET.Modules.Chart
     /// </summary>
     private readonly Cursor minusCursor =
       new Cursor(
-        App.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorMinus.cur")).Stream);
+        App.GetResourceStream(new Uri("pack://application:,,,/VianaNET;Component/CustomStyles/Cursors/CursorMinus.cur")).Stream);
 
     /// <summary>
     ///   The plus cursor.
     /// </summary>
     private readonly Cursor plusCursor =
       new Cursor(
-        App.GetResourceStream(new Uri("pack://application:,,,/CustomStyles/Cursors/CursorPlus.cur")).Stream);
+        App.GetResourceStream(new Uri("pack://application:,,,/VianaNET;Component/CustomStyles/Cursors/CursorPlus.cur")).Stream);
 
     /// <summary>
     ///   A character for the axis name

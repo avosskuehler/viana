@@ -109,7 +109,6 @@
             Height="20"
             TickDownClicked="TimelineSliderTickDownClicked" 
             TickUpClicked="TimelineSliderTickUpClicked"
-            Thumb.DragStarted="TimelineSliderDragStarted"
             Thumb.DragCompleted="TimelineSliderDragCompleted"
             IsSnapToTickEnabled="True"/>
           <Separator/>
