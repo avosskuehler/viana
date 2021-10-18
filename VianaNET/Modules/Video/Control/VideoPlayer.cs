@@ -199,7 +199,7 @@ namespace VianaNET.Modules.Video.Control
           string framerateMode = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate_Mode", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (framerateMode == "VFR")
           {
-            InformationDialog.Show("Variable Bildrate", "Die Datei hat eine variable Bildrate, die Bilder haben nicht unbedingt zeitlich den gleichen Abstand", false);
+            InformationDialog.Show(VianaNET.Localization.Labels.VariableFPSHeader, VianaNET.Localization.Labels.VariableFPSMessage, false);
             App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.None;
           }
           else
@@ -211,7 +211,7 @@ namespace VianaNET.Modules.Video.Control
           string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
           if (!float.TryParse(frameratestring, out float fpsfactor1000))
           {
-            InformationDialog.Show("Problem beim Auslesen", "Konnte die Bildrate der Datei nicht auslesen.", false);
+            InformationDialog.Show(VianaNET.Localization.Labels.FileInfoErrorHeader, VianaNET.Localization.Labels.FileInfoFramerateErrorMessage, false);
             return false;
           }
           float fps = fpsfactor1000 / 1000f;
@@ -220,14 +220,14 @@ namespace VianaNET.Modules.Video.Control
           string durationmeasure = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Measure).Trim();
           if (durationmeasure != "ms")
           {
-            InformationDialog.Show("Problem beim Auslesen", "Die Einheit der Videodauer ist nicht in Millisekunden angegeben.", false);
+            InformationDialog.Show(VianaNET.Localization.Labels.FileInfoErrorHeader, VianaNET.Localization.Labels.FileInfoLengthUnitErrorMessage, false);
             return false;
           }
 
           string durationstring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "Duration", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(durationstring, out int duration))
           {
-            InformationDialog.Show("Problem beim Auslesen", "Konnte die Dauer der Datei nicht auslesen.", false);
+            InformationDialog.Show(VianaNET.Localization.Labels.FileInfoErrorHeader, VianaNET.Localization.Labels.FileInfoLengthErrorMessage, false);
             return false;
           }
 
@@ -235,7 +235,7 @@ namespace VianaNET.Modules.Video.Control
           string framestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameCount", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text).Trim();
           if (!int.TryParse(framestring, out int frames))
           {
-            InformationDialog.Show("Problem beim Auslesen", "Konnte die Gesamtanzahl der Frames der Datei nicht auslesen.", false);
+            InformationDialog.Show(VianaNET.Localization.Labels.FileInfoErrorHeader, VianaNET.Localization.Labels.FileInfoFramecountErrorMessage, false);
             return false;
           }
 
@@ -258,7 +258,7 @@ namespace VianaNET.Modules.Video.Control
           }
           else
           {
-            ErrorLogger.ProcessException(new ArgumentOutOfRangeException("Videodatei öffnen", "Konnte die Videodatei nicht öffnen."), true);
+            ErrorLogger.ProcessException(new ArgumentOutOfRangeException(VianaNET.Localization.Labels.FileOpenErrorHeader, VianaNET.Localization.Labels.FileOpenErrorMessage), true);
             return false;
           }
         }

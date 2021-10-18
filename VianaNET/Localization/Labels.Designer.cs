@@ -3742,6 +3742,69 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileInfoErrorHeader ähnelt.
+        /// </summary>
+        public static string FileInfoErrorHeader {
+            get {
+                return ResourceManager.GetString("FileInfoErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileInfoFramecountErrorMessage ähnelt.
+        /// </summary>
+        public static string FileInfoFramecountErrorMessage {
+            get {
+                return ResourceManager.GetString("FileInfoFramecountErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileInfoFramerateErrorMessage ähnelt.
+        /// </summary>
+        public static string FileInfoFramerateErrorMessage {
+            get {
+                return ResourceManager.GetString("FileInfoFramerateErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileInfoLengthErrorMessage ähnelt.
+        /// </summary>
+        public static string FileInfoLengthErrorMessage {
+            get {
+                return ResourceManager.GetString("FileInfoLengthErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileInfoLengthUnitErrorMessage ähnelt.
+        /// </summary>
+        public static string FileInfoLengthUnitErrorMessage {
+            get {
+                return ResourceManager.GetString("FileInfoLengthUnitErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileOpenErrorHeader ähnelt.
+        /// </summary>
+        public static string FileOpenErrorHeader {
+            get {
+                return ResourceManager.GetString("FileOpenErrorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FileOpenErrorMessage ähnelt.
+        /// </summary>
+        public static string FileOpenErrorMessage {
+            get {
+                return ResourceManager.GetString("FileOpenErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @GraphicFilesFilter ähnelt.
         /// </summary>
         public static string GraphicFilesFilter {
@@ -5331,6 +5394,24 @@ namespace VianaNET.Localization {
         public static string TxtFilter {
             get {
                 return ResourceManager.GetString("TxtFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die VariableFPSHeader ähnelt.
+        /// </summary>
+        public static string VariableFPSHeader {
+            get {
+                return ResourceManager.GetString("VariableFPSHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die VariableFPSMessage ähnelt.
+        /// </summary>
+        public static string VariableFPSMessage {
+            get {
+                return ResourceManager.GetString("VariableFPSMessage", resourceCulture);
             }
         }
         

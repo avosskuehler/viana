@@ -352,7 +352,7 @@ namespace VianaNET.Modules.Video.Control
           if (!success && File.Exists(filename))
           {
             this.videoPlayerElement.Dispose();
-            success = this.ReRenderVideoFile(filename);
+            return false;
           }
 
           StatusBarContent.Instance.VideoFilename = this.videoPlayerElement.VideoFilename;
@@ -365,22 +365,6 @@ namespace VianaNET.Modules.Video.Control
       }
 
       return success;
-    }
-
-    /// <summary>
-    /// Rerenders the video file, cause it could no be opened by the default direct show codecs.
-    /// </summary>
-    /// <param name="videoFile">The video file.</param>
-    /// <returns><c>true</c> if conversion was successfull, <c>false</c> otherwise.</returns>
-    private bool ReRenderVideoFile(string videoFile)
-    {
-      using (VlcWindow vlcConverter = new VlcWindow())
-      {
-        vlcConverter.VideoFile = videoFile;
-        vlcConverter.ShowDialog();
-      }
-
-      return this.LoadMovie(App.Project.VideoFile);
     }
 
     /// <summary>

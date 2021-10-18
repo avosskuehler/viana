@@ -17,9 +17,15 @@
              Languages="1031"
              Manufacturer="$(var.Manufactor)"/>
 
-    <PropertyRef Id="NETFRAMEWORK45"/>
-    <Condition Message="This application requires .NET Framework 4.5.1. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    <PropertyRef Id="WIXNETFX4RELEASEINSTALLED" />
+    <Property Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED" Secure="yes" />
+    <SetProperty Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED" Value="1" After="AppSearch">
+      WIXNETFX4RELEASEINSTALLED >= "#$(var.NetFx48MinRelease)"
+    </SetProperty>
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED"/>
+    <Condition Message="Diese Anwendung erfordert die Installation von .NET Framework 4.8. Bitte installieren Sie das .NET Framework zuerst und starten Sie dann diesen Installer erneut.">
+      <![CDATA[Installed OR WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED]]>
     </Condition>
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -27,9 +33,9 @@
     <Icon Id="icon.ico" SourceFile="$(var.SolutionDir)VianaNET\Images\VianaNET.ico"/>
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
     <Property Id="ARPCONTACT" Value="Dr. Adrian Voßkühler" />
-    <Property Id="ARPHELPLINK" Value="http://viananet.codeplex.com" />
+    <Property Id="ARPHELPLINK" Value="https://viananet.de/" />
     <Property Id="ARPURLINFOABOUT" Value="Software for motion analysis in science education" />
-    <Property Id="ARPURLUPDATEINFO" Value="http://viananet.codeplex.com" />
+    <Property Id="ARPURLUPDATEINFO" Value="http://viananet.de/" />
 
     <Media Id="1" Cabinet="viana.cab" EmbedCab="yes" />
 
@@ -37,7 +43,6 @@
       <FeatureRef Id="VianaMainApplicationFeature" />
       <FeatureRef Id='LibsFeature'/>
       <FeatureRef Id='LanguageFeature'/>
-      <FeatureRef Id='VlcFeature'/>
     </Feature>
 
     <WixVariable Id="WixUIDialogBmp" Value="$(var.SolutionDir)Setup\Setup\InstallerBkg.png" />

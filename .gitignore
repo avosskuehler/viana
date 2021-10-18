@@ -5,3 +5,6 @@
 /VianaTestVideos
 /Release/*
 /.vs/VianaNET/DesignTimeBuild
+/Setup/Debug/*
+/Setup/Release/*
+/Setup/Setup/obj/*

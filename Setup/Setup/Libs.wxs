@@ -3,42 +3,6 @@
   <?include $(sys.CURRENTDIR)Config.wxi?>
   <Fragment>
     <DirectoryRef Id="INSTALLLOCATION">
-      <Component Id="C_DirectShowLib_2005" Guid="{F688A329-9CA0-4E79-8048-242F2DB0F44F}" Win64="$(var.Win64)">
-        <File Id="DirectShowLib_2005" Name="DirectShowLib-2005.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="DirectShowLib_2005" AssemblyApplication="DirectShowLib_2005" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_GMFBridge" Guid="{2DE3408E-D135-43E2-9BA5-4CBE78AA4CCF}" Win64="$(var.Win64)">
-        <File Id="GMFBridge" Name="GMFBridge.dll" KeyPath="yes" DiskId="1" SelfRegCost="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_Ionic_Zip_Reduced" Guid="{D73CE331-D904-4DB1-A162-BEAB968AC6CD}" Win64="$(var.Win64)">
-        <File Id="Ionic.Zip.Reduced" Name="Ionic.Zip.Reduced.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Ionic.Zip.Reduced" AssemblyApplication="Ionic.Zip.Reduced" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_MediaInfo" Guid="{C3669411-8F51-4AD8-A66C-F0D64DC1DD9E}" Win64="$(var.Win64)">
-        <File Id="MediaInfo" Name="MediaInfo.dll" KeyPath="yes" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_MediaInfoNET" Guid="{8E4B5273-3AD8-4D4B-8CBC-B75F2EE5528B}" Win64="$(var.Win64)">
-        <File Id="MediaInfoNET" Name="MediaInfoNET.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="MediaInfoNET" AssemblyApplication="MediaInfoNET" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_OxyPlot" Guid="{118B787C-250B-49F4-9C7E-D26E2727766A}" Win64="$(var.Win64)">
-        <File Id="OxyPlot" Name="OxyPlot.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot" AssemblyApplication="OxyPlot" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_OxyPlot.Wpf" Guid="{9E0AD0DE-AE9C-498B-B21C-46E1A708B0A3}" Win64="$(var.Win64)">
-        <File Id="OxyPlot.Wpf" Name="OxyPlot.Wpf.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot.Wpf" AssemblyApplication="OxyPlot.Wpf" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_WPFMath" Guid="{E6587ADB-BC1C-4552-ADC7-B97B113B6D96}" Win64="$(var.Win64)">
-        <File Id="WPFMath" Name="WPFMath.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="WPFMath" AssemblyApplication="WPFMath" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_Xceed.Wpf.Toolkit" Guid="{AD76D4FC-1F76-4119-AA45-3D46D166A35C}" Win64="$(var.Win64)">
-        <File Id="Xceed.Wpf.Toolkit" Name="Xceed.Wpf.Toolkit.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Xceed.Wpf.Toolkit" AssemblyApplication="Xceed.Wpf.Toolkit" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
       <Component Id="C_AForge" Guid="{1889AC8E-60DD-4E3D-A755-ABE47E146F70}" Win64="$(var.Win64)">
         <File Id="AForge" Name="AForge.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge" AssemblyApplication="AForge" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
@@ -55,26 +19,152 @@
         <File Id="AForge.Vision" Name="AForge.Vision.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="AForge.Vision" AssemblyApplication="AForge.Vision" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
-      <Component Id="C_Vlc.DotNet.Core" Guid="{BBA9C5BA-AD0C-4AFB-867F-0CA80F3CE656}" Win64="$(var.Win64)">
-        <File Id="Vlc.DotNet.Core" Name="Vlc.DotNet.Core.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Core" AssemblyApplication="Vlc.DotNet.Core" DiskId="1"
+
+      <!--<Directory Id="dll" Name="dll">-->
+        <?if $(var.Platform) = x64 ?>
+        <!--<Directory Id="x64" Name="x64">-->
+          <Component Id="C_opencv_videoio_ffmpeg453_64" Guid="{2A8BC680-E6BC-4DDA-BB37-BE3043E8C5EC}" Win64="$(var.Win64)">
+            <File Id="opencv_videoio_ffmpeg453_64" Name="opencv_videoio_ffmpeg453_64.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x64\" />
+          </Component>
+          <Component Id="C_OpenCvSharpExtern_64" Guid="{A4D24CD6-4BDC-4501-A4D7-641BB3FD3DD1}" Win64="$(var.Win64)">
+            <File Id="OpenCvSharpExtern_64" Name="OpenCvSharpExtern.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x64\" />
+          </Component>
+        <!--</Directory>-->
+        <?else ?>
+        <!--<Directory Id="x86" Name="x86">-->
+          <Component Id="C_opencv_videoio_ffmpeg453" Guid="{3F255353-80B4-4CCA-A729-F03C396F0935}" Win64="$(var.Win64)">
+            <File Id="opencv_videoio_ffmpeg453" Name="opencv_videoio_ffmpeg453.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x86\" />
+          </Component>
+          <Component Id="C_OpenCvSharpExtern" Guid="{8BE9F0EB-A538-44A9-B0F8-05DFFB612659}" Win64="$(var.Win64)">
+            <File Id="OpenCvSharpExtern" Name="OpenCvSharpExtern.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x86\" />
+          </Component>
+        <!--</Directory>-->
+        <?endif ?>
+      <!--</Directory>-->
+
+
+
+      <Component Id="C_Ionic_Zip_Reduced" Guid="{D73CE331-D904-4DB1-A162-BEAB968AC6CD}" Win64="$(var.Win64)">
+        <File Id="Ionic.Zip.Reduced" Name="Ionic.Zip.Reduced.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Ionic.Zip.Reduced" AssemblyApplication="Ionic.Zip.Reduced" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
-      <Component Id="C_Vlc.DotNet.Core.Interops" Guid="{B5C07D87-5889-4400-B587-93B726A90F86}" Win64="$(var.Win64)">
-        <File Id="Vlc.DotNet.Core.Interops" Name="Vlc.DotNet.Core.Interops.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Core.Interops" AssemblyApplication="Vlc.DotNet.Core.Interops" DiskId="1"
+      <?if $(var.Platform) = x64 ?>
+      <Component Id="C_libcrypto_3_x64" Guid="{7DB957AC-37BC-4E80-A8B2-31638C0107C5}" Win64="$(var.Win64)">
+        <File Id="libcrypto_3_x64" Name="libcrypto-3-x64.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_libssl_3_x64" Guid="{45B8115C-D85D-44BE-9579-276F392F4175}" Win64="$(var.Win64)">
+        <File Id="libssl_3_x64" Name="libssl-3-x64.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <?else ?>
+      <Component Id="C_libcrypto_3" Guid="{7DB957AC-37BC-4E80-A8B2-31638C0107C5}" Win64="$(var.Win64)">
+        <File Id="libcrypto_3" Name="libcrypto-3.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_libssl_3" Guid="{45B8115C-D85D-44BE-9579-276F392F4175}" Win64="$(var.Win64)">
+        <File Id="libssl_3" Name="libssl-3.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <?endif ?>
+      <Component Id="C_libcurl" Guid="{A3DF42B0-5587-4422-B53B-EEF4697C9513}" Win64="$(var.Win64)">
+        <File Id="libcurl" Name="libcurl.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      <Component Id="C_MediaInfo" Guid="{C3669411-8F51-4AD8-A66C-F0D64DC1DD9E}" Win64="$(var.Win64)">
+        <File Id="MediaInfo" Name="MediaInfo.dll" KeyPath="yes" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
-      <Component Id="C_Vlc.DotNet.Forms" Guid="{03870DE7-47C9-4CEB-A64C-611B6330C0A1}" Win64="$(var.Win64)">
-        <File Id="Vlc.DotNet.Forms" Name="Vlc.DotNet.Forms.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Vlc.DotNet.Forms" AssemblyApplication="Vlc.DotNet.Forms" DiskId="1"
+      <Component Id="C_MediaInfo.DotNetWrapper" Guid="{8E4B5273-3AD8-4D4B-8CBC-B75F2EE5528B}" Win64="$(var.Win64)">
+        <File Id="MediaInfo.DotNetWrapper" Name="MediaInfo.DotNetWrapper.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="MediaInfo.DotNetWrapper" AssemblyApplication="MediaInfo.DotNetWrapper" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      <Component Id="C_OpenCvSharp" Guid="{5BAA9016-584D-4089-B7C4-DC2930014D35}" Win64="$(var.Win64)">
+        <File Id="OpenCvSharp" Name="OpenCvSharp.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OpenCvSharp" AssemblyApplication="OpenCvSharp" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_OpenCvSharp.Extensions" Guid="{FE95A073-7D9C-4F4B-8394-A134E6D8582E}" Win64="$(var.Win64)">
+        <File Id="OpenCvSharp.Extensions" Name="OpenCvSharp.Extensions.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OpenCvSharp.Extensions" AssemblyApplication="OpenCvSharp.Extensions" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_OpenCvSharp.WpfExtensions" Guid="{5DA8BC65-F523-43C7-B63F-83EF81CC6D63}" Win64="$(var.Win64)">
+        <File Id="OpenCvSharp.WpfExtensions" Name="OpenCvSharp.WpfExtensions.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OpenCvSharp.WpfExtensions" AssemblyApplication="OpenCvSharp.WpfExtensions" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+
+
+      <Component Id="C_OxyPlot" Guid="{118B787C-250B-49F4-9C7E-D26E2727766A}" Win64="$(var.Win64)">
+        <File Id="OxyPlot" Name="OxyPlot.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot" AssemblyApplication="OxyPlot" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_OxyPlot.Wpf" Guid="{9E0AD0DE-AE9C-498B-B21C-46E1A708B0A3}" Win64="$(var.Win64)">
+        <File Id="OxyPlot.Wpf" Name="OxyPlot.Wpf.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot.Wpf" AssemblyApplication="OxyPlot.Wpf" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_OxyPlot.Wpf.Shared" Guid="{1ACAF15F-733B-4E0D-BEF5-878E8757DCEC}" Win64="$(var.Win64)">
+        <File Id="OxyPlot.Wpf.Shared" Name="OxyPlot.Wpf.Shared.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OxyPlot.Wpf.Shared" AssemblyApplication="OxyPlot.Wpf.Shared" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+
+      <Component Id="C_SharpDX.Direct3D9" Guid="{A1167E3D-60E0-4580-B45E-C005CECA2756}" Win64="$(var.Win64)">
+        <File Id="SharpDX.Direct3D9" Name="SharpDX.Direct3D9.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="SharpDX.Direct3D9" AssemblyApplication="SharpDX.Direct3D9" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_SharpDX" Guid="{564FBBA8-4352-4D5A-94B2-31994B737706}" Win64="$(var.Win64)">
+        <File Id="SharpDX" Name="SharpDX.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="SharpDX" AssemblyApplication="SharpDX" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_SharpDX.DXGI" Guid="{D8E02EF8-0CE5-4621-86E4-29E6B98B1BFE}" Win64="$(var.Win64)">
+        <File Id="SharpDX.DXGI" Name="SharpDX.DXGI.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="SharpDX.DXGI" AssemblyApplication="SharpDX.DXGI" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_SharpDX.Mathematics" Guid="{C23F4921-DC7F-4011-9C53-3E1D0C972AD2}" Win64="$(var.Win64)">
+        <File Id="SharpDX.Mathematics" Name="SharpDX.Mathematics.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="SharpDX.Mathematics" AssemblyApplication="SharpDX.Mathematics" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_SharpDX.MediaFoundation" Guid="{CA086056-7129-4D62-8BE1-BD275608BA8F}" Win64="$(var.Win64)">
+        <File Id="SharpDX.MediaFoundation" Name="SharpDX.MediaFoundation.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="SharpDX.MediaFoundation" AssemblyApplication="SharpDX.MediaFoundation" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+
+      <Component Id="C_System.Buffers" Guid="" Win64="$(var.Win64)">
+        <File Id="System.Buffers" Name="System.Buffers.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Buffers" AssemblyApplication="System.Buffers" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_System.Drawing.Common" Guid="{475A545B-852C-4CA2-A284-AAEB8175516B}" Win64="$(var.Win64)">
+        <File Id="System.Drawing.Common" Name="System.Drawing.Common.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Drawing.Common" AssemblyApplication="System.Drawing.Common" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_System.Memory" Guid="{3C9B81F7-1F60-4FBF-9AA9-89FB2061708B}" Win64="$(var.Win64)">
+        <File Id="System.Memory" Name="System.Memory.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Memory" AssemblyApplication="System.Memory" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_System.Numerics.Vectors" Guid="{8CF12A64-6EBB-4F91-B3DF-6B54B409861B}" Win64="$(var.Win64)">
+        <File Id="System.Numerics.Vectors" Name="System.Numerics.Vectors.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Numerics.Vectors" AssemblyApplication="System.Numerics.Vectors" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_System.Runtime.CompilerServices.Unsafe" Guid="{9C46CACA-73C9-459D-961C-9A98825C0ED6}" Win64="$(var.Win64)">
+        <File Id="System.Runtime.CompilerServices.Unsafe" Name="System.Runtime.CompilerServices.Unsafe.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Runtime.CompilerServices.Unsafe" AssemblyApplication="System.Runtime.CompilerServices.Unsafe" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_System.ValueTuple" Guid="{F0E4E06D-C03F-41F3-B3C5-BAF6EEAE882D}" Win64="$(var.Win64)">
+        <File Id="System.ValueTuple" Name="System.ValueTuple.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.ValueTuple" AssemblyApplication="System.ValueTuple" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_WPFFolderBrowser" Guid="{F5CFAA2C-D2F4-4BED-9D77-306338C0B10F}" Win64="$(var.Win64)">
+        <File Id="WPFFolderBrowser" Name="WPFFolderBrowser.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="WPFFolderBrowser" AssemblyApplication="WPFFolderBrowser" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_WpfMath" Guid="{E6587ADB-BC1C-4552-ADC7-B97B113B6D96}" Win64="$(var.Win64)">
+        <File Id="WpfMath" Name="WpfMath.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="WpfMath" AssemblyApplication="WpfMath" DiskId="1"
+              Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_Xceed.Wpf.Toolkit" Guid="{AD76D4FC-1F76-4119-AA45-3D46D166A35C}" Win64="$(var.Win64)">
+        <File Id="Xceed.Wpf.Toolkit" Name="Xceed.Wpf.Toolkit.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="Xceed.Wpf.Toolkit" AssemblyApplication="Xceed.Wpf.Toolkit" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
     </DirectoryRef>
 
     <Feature Id='LibsFeature' Title='Libs' Description='Installs libraries for the application.' Level='1'>
-      <Feature Id='OxyPlotFeature' Title='OxyPlot' Description='Installs oxyplot libraries for the application.' Level='1'>
-        <ComponentRef Id='C_OxyPlot' />
-        <ComponentRef Id='C_OxyPlot.Wpf' />
-      </Feature>
-
       <Feature Id='AForgeFeature' Title='AForge' Description='Installs AForge libraries for the application.' Level='1'>
         <ComponentRef Id='C_AForge' />
         <ComponentRef Id='C_AForge.Imaging' />
@@ -82,17 +172,54 @@
         <ComponentRef Id='C_AForge.Vision' />
       </Feature>
 
+      <Feature Id='OxyPlotFeature' Title='OxyPlot' Description='Installs oxyplot libraries for the application.' Level='1'>
+        <ComponentRef Id='C_OxyPlot' />
+        <ComponentRef Id='C_OxyPlot.Wpf' />
+        <ComponentRef Id='C_OxyPlot.Wpf.Shared' />
+      </Feature>
+
+      <Feature Id='OpenCVFeature' Title='OpenCV' Description='Installs openCV libraries for the application.' Level='1'>
+        <ComponentRef Id='C_OpenCvSharp' />
+        <ComponentRef Id='C_OpenCvSharp.Extensions' />
+        <ComponentRef Id='C_OpenCvSharp.WpfExtensions' />
+        <?if $(var.Platform) = x64 ?>
+        <ComponentRef Id='C_opencv_videoio_ffmpeg453_64' />
+        <ComponentRef Id='C_OpenCvSharpExtern_64' />
+        <?else ?>
+        <ComponentRef Id='C_opencv_videoio_ffmpeg453' />
+        <ComponentRef Id='C_OpenCvSharpExtern' />
+        <?endif ?>
+      </Feature>
+
+      <Feature Id='SharpDXFeature' Title='SharpDXFeature' Description='Installs sharpDX libraries for the application.' Level='1'>
+        <ComponentRef Id='C_SharpDX.Direct3D9' />
+        <ComponentRef Id='C_SharpDX' />
+        <ComponentRef Id='C_SharpDX.DXGI' />
+        <ComponentRef Id='C_SharpDX.Mathematics' />
+        <ComponentRef Id='C_SharpDX.MediaFoundation' />
+      </Feature>
+
       <Feature Id='ExternalLibsFeature' Title='ExternalLibs' Description='Installs external libraries for the application.' Level='1'>
-        <ComponentRef Id='C_DirectShowLib_2005' />
-        <ComponentRef Id='C_GMFBridge' />
         <ComponentRef Id='C_Ionic_Zip_Reduced' />
+        <ComponentRef Id='C_libcurl' />
+        <?if $(var.Platform) = x64 ?>
+        <ComponentRef Id='C_libcrypto_3_x64' />
+        <ComponentRef Id='C_libssl_3_x64' />
+        <?else ?>
+        <ComponentRef Id='C_libcrypto_3' />
+        <ComponentRef Id='C_libssl_3' />
+        <?endif ?>
         <ComponentRef Id='C_MediaInfo' />
-        <ComponentRef Id='C_MediaInfoNET' />
-        <ComponentRef Id='C_WPFMath' />
+        <ComponentRef Id='C_MediaInfo.DotNetWrapper' />
+        <ComponentRef Id='C_System.Buffers' />
+        <ComponentRef Id='C_System.Drawing.Common' />
+        <ComponentRef Id='C_System.Memory' />
+        <ComponentRef Id='C_System.Numerics.Vectors' />
+        <ComponentRef Id='C_System.Runtime.CompilerServices.Unsafe' />
+        <ComponentRef Id='C_System.ValueTuple' />
+        <ComponentRef Id='C_WPFFolderBrowser' />
+        <ComponentRef Id='C_WpfMath' />
         <ComponentRef Id='C_Xceed.Wpf.Toolkit' />
-        <ComponentRef Id='C_Vlc.DotNet.Core' />
-        <ComponentRef Id='C_Vlc.DotNet.Core.Interops' />
-        <ComponentRef Id='C_Vlc.DotNet.Forms' />
       </Feature>
 
     </Feature>

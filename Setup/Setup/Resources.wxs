@@ -13,16 +13,16 @@
       </Component>
 
       <Directory Id="de" Name="de">
-        <Component Id="C_VianaNET.Localization.Labels.DE" Guid="{8952B8D6-3FFC-489B-BE94-04A8520EFC85}" Win64="$(var.Win64)">
-          <File Id="VianaNET.Localization.Labels.DE" Name="VianaNET.Localization.Labels.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.Localization.Labels.DE" AssemblyApplication="VianaNET.Localization.Labels.DE"
+        <Component Id="C_VianaNET.resources.DE" Guid="{8952B8D6-3FFC-489B-BE94-04A8520EFC85}" Win64="$(var.Win64)">
+          <File Id="VianaNET.resources.DE" Name="VianaNET.resources.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.resources.DE" AssemblyApplication="VianaNET.resources.DE"
                 DiskId="1" Source="$(var.VianaNET.TargetDir)de\" />
 
         </Component>
       </Directory>
       
       <Directory Id="en" Name="en">
-        <Component Id="C_VianaNET.Localization.Labels.EN" Guid="{13C293C4-92AB-4956-981E-25656E38FC28}" Win64="$(var.Win64)">
-          <File Id="VianaNET.Localization.Labels.EN" Name="VianaNET.Localization.Labels.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.Localization.Labels.EN" AssemblyApplication="VianaNET.Localization.Labels.EN"
+        <Component Id="C_VianaNET.resources.EN" Guid="{13C293C4-92AB-4956-981E-25656E38FC28}" Win64="$(var.Win64)">
+          <File Id="VianaNET.resources.EN" Name="VianaNET.resources.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNET.resources.EN" AssemblyApplication="VianaNET.resources.EN"
                 DiskId="1" Source="$(var.VianaNET.TargetDir)en\" />
 
         </Component>
@@ -32,8 +32,8 @@
     <Feature Id='LanguageFeature' Title='Languages' Description='Installs multilanguage support for the application.' Level='1'>
       <ComponentRef Id='C_WPFLocalizeExtension' />
       <ComponentRef Id='C_XAMLMarkupExtensions' />
-      <ComponentRef Id='C_VianaNET.Localization.Labels.DE' />
-      <ComponentRef Id='C_VianaNET.Localization.Labels.EN' />
+      <ComponentRef Id='C_VianaNET.resources.DE' />
+      <ComponentRef Id='C_VianaNET.resources.EN' />
     </Feature>
   </Fragment>
 </Wix>

@@ -1356,6 +1356,27 @@ F10: Reset coordinate system.</value>
   <data name="ExportWhereToSaveFile" xml:space="preserve">
     <value>Where do you want to save the file?</value>
   </data>
+  <data name="FileInfoErrorHeader" xml:space="preserve">
+    <value>Error during file info detection.</value>
+  </data>
+  <data name="FileInfoFramecountErrorMessage" xml:space="preserve">
+    <value>Couldn´t determine the frame count of the video file.</value>
+  </data>
+  <data name="FileInfoFramerateErrorMessage" xml:space="preserve">
+    <value>Couldn´t read the files framerate.</value>
+  </data>
+  <data name="FileInfoLengthErrorMessage" xml:space="preserve">
+    <value>Couldn´t read the files length.</value>
+  </data>
+  <data name="FileInfoLengthUnitErrorMessage" xml:space="preserve">
+    <value>The unit of the files lenght was not given in milliseconds.</value>
+  </data>
+  <data name="FileOpenErrorHeader" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FileOpenErrorMessage" xml:space="preserve">
+    <value>Couldn´t open video file.</value>
+  </data>
   <data name="GraphicFilesFilter" xml:space="preserve">
     <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|XAML - Extensible Application Markup Language|*.xaml|SVG - Scalable Vector Graphics|*.svg|BMP - Bitmap|*.bmp|TIF - Tagged Image File|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
   </data>
@@ -1891,6 +1912,12 @@ It can be newly placed with the mouse now.</value>
   </data>
   <data name="TxtFilter" xml:space="preserve">
     <value>Text file (*.txt)|*.txt</value>
+  </data>
+  <data name="VariableFPSHeader" xml:space="preserve">
+    <value>Variable framerate</value>
+  </data>
+  <data name="VariableFPSMessage" xml:space="preserve">
+    <value>This video file has a variable framerate, so that the frames won´t have neccessarily the same distance in time.</value>
   </data>
   <data name="VianaDialogTitle" xml:space="preserve">
     <value>Viana.NET message ...</value>

@@ -208,15 +208,6 @@
     <Reference Include="System.Xml.Serialization" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="Vlc.DotNet.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.3.1.0\lib\net45\Vlc.DotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Core.Interops.3.1.0\lib\net45\Vlc.DotNet.Core.Interops.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Forms, Version=3.1.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=MSIL">
-      <HintPath>..\packages\Vlc.DotNet.Forms.3.1.0\lib\net45\Vlc.DotNet.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -467,9 +458,6 @@
     <Compile Include="Modules\Video\Dialogs\VideoInfoDialog.xaml.cs">
       <DependentUpon>VideoInfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Video\Dialogs\VLCWindow.xaml.cs">
-      <DependentUpon>VLCWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterRGB.cs" />
     <Compile Include="Modules\Video\Filter\ColorAndCropFilterYCbCr.cs" />
     <Compile Include="Modules\Video\Filter\CropFilterRgb.cs" />
@@ -685,10 +673,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Video\Dialogs\VideoInfoDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Modules\Video\Dialogs\VLCWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -959,13 +943,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(PlatformName) == x64 (
-  C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x64\Native\*.*" "$(TargetDir)" /E /Y /s /f
-  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x64\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
-) ELSE (
- C:\Windows\System32\xcopy "$(SolutionDir)VianaNET\DLL\x86\Native\*.*" "$(TargetDir)" /E /Y /s /f
-  C:\Windows\System32\xcopy "$(SolutionDir)VlcLibs\x86\*.*" "$(TargetDir)VlcLibs" /E /Y /s /f /i
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets" Condition="Exists('..\packages\MediaInfo.Native.21.9.1\build\MediaInfo.Native.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

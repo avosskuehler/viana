@@ -1344,6 +1344,27 @@
   <data name="ExportWhereToSaveFile" xml:space="preserve">
     <value>@ExportWhereToSaveFile</value>
   </data>
+  <data name="FileInfoErrorHeader" xml:space="preserve">
+    <value>FileInfoErrorHeader</value>
+  </data>
+  <data name="FileInfoFramecountErrorMessage" xml:space="preserve">
+    <value>FileInfoFramecountErrorMessage</value>
+  </data>
+  <data name="FileInfoFramerateErrorMessage" xml:space="preserve">
+    <value>FileInfoFramerateErrorMessage</value>
+  </data>
+  <data name="FileInfoLengthErrorMessage" xml:space="preserve">
+    <value>FileInfoLengthErrorMessage</value>
+  </data>
+  <data name="FileInfoLengthUnitErrorMessage" xml:space="preserve">
+    <value>FileInfoLengthUnitErrorMessage</value>
+  </data>
+  <data name="FileOpenErrorHeader" xml:space="preserve">
+    <value>FileOpenErrorHeader</value>
+  </data>
+  <data name="FileOpenErrorMessage" xml:space="preserve">
+    <value>FileOpenErrorMessage</value>
+  </data>
   <data name="GraphicFilesFilter" xml:space="preserve">
     <value>@GraphicFilesFilter</value>
   </data>
@@ -1874,6 +1895,12 @@
   </data>
   <data name="TxtFilter" xml:space="preserve">
     <value>@TxtFilter</value>
+  </data>
+  <data name="VariableFPSHeader" xml:space="preserve">
+    <value>VariableFPSHeader</value>
+  </data>
+  <data name="VariableFPSMessage" xml:space="preserve">
+    <value>VariableFPSMessage</value>
   </data>
   <data name="VianaDialogTitle" xml:space="preserve">
     <value>@VianaDialogTitle</value>

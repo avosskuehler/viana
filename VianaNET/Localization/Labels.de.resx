@@ -1358,6 +1358,27 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="ExportWhereToSaveFile" xml:space="preserve">
     <value>Wo wollen Sie die Datei speichern?</value>
   </data>
+  <data name="FileInfoErrorHeader" xml:space="preserve">
+    <value>Problem beim Auslesen</value>
+  </data>
+  <data name="FileInfoFramecountErrorMessage" xml:space="preserve">
+    <value>Konnte die Gesamtanzahl der Frames der Datei nicht auslesen.</value>
+  </data>
+  <data name="FileInfoFramerateErrorMessage" xml:space="preserve">
+    <value>Konnte die Bildrate der Datei nicht auslesen.</value>
+  </data>
+  <data name="FileInfoLengthErrorMessage" xml:space="preserve">
+    <value>Konnte die Dauer der Datei nicht auslesen.</value>
+  </data>
+  <data name="FileInfoLengthUnitErrorMessage" xml:space="preserve">
+    <value>Die Einheit der Videodauer ist nicht in Millisekunden angegeben.</value>
+  </data>
+  <data name="FileOpenErrorHeader" xml:space="preserve">
+    <value>Lesefehler.</value>
+  </data>
+  <data name="FileOpenErrorMessage" xml:space="preserve">
+    <value>Konnte die Videodatei nicht öffnen.</value>
+  </data>
   <data name="GraphicFilesFilter" xml:space="preserve">
     <value>PNG -  Portable Network Graphics|*.png|JPEG - Joint Photographics Experts Group|*.jpg|XAML - Extensible Application Markup Language|*.xaml|SVG - Scalable Vector Graphics|*.svg|BMP - Bitmap|*.bmp|TIF - Tagged Image Datei|*.tif|GIF - Graphics Interchange|*.gif|WMP - Windows Media Photo|*.wmp</value>
   </data>
@@ -1893,6 +1914,12 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
   </data>
   <data name="TxtFilter" xml:space="preserve">
     <value>Textdatei (*.txt)|*.txt</value>
+  </data>
+  <data name="VariableFPSHeader" xml:space="preserve">
+    <value>Variable Bildrate</value>
+  </data>
+  <data name="VariableFPSMessage" xml:space="preserve">
+    <value>Die Datei hat eine variable Bildrate, die Bilder haben nicht unbedingt zeitlich den gleichen Abstand.</value>
   </data>
   <data name="VianaDialogTitle" xml:space="preserve">
     <value>Viana.NET Mitteilung ...</value>
