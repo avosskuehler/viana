@@ -295,6 +295,12 @@ Would like to have feedback:</value>
   <data name="AxisYoverX" xml:space="preserve">
     <value>x-y</value>
   </data>
+  <data name="BlobsControlBothProcessedImageHeader" xml:space="preserve">
+    <value>Color and motion detection</value>
+  </data>
+  <data name="BlobsControlColorProcessedImageHeader" xml:space="preserve">
+    <value>Color detection</value>
+  </data>
   <data name="BlobsControlDetectedPositionsHeader" xml:space="preserve">
     <value>Detected Positions</value>
   </data>
@@ -303,9 +309,6 @@ Would like to have feedback:</value>
   </data>
   <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
     <value>Motion detection</value>
-  </data>
-  <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
-    <value>Color detection</value>
   </data>
   <data name="BlobsNoObjectFound" xml:space="preserve">
     <value>no object found</value>
@@ -795,6 +798,15 @@ Would like to have feedback:</value>
   </data>
   <data name="ButtonResetColorSchemeToolTipTitle" xml:space="preserve">
     <value>Change color scheme</value>
+  </data>
+  <data name="ButtonResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>Reset values</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipDescription" xml:space="preserve">
+    <value>Resets all video processing parameters to defaults.</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipTitle" xml:space="preserve">
+    <value>Reset values</value>
   </data>
   <data name="ButtonRestoreLayoutLabelDescription" xml:space="preserve">
     <value>Load window layout of user interface and window arrangement from file.</value>
@@ -1323,6 +1335,12 @@ F10: Reset coordinate system.</value>
   <data name="DirectShowErrorTitle" xml:space="preserve">
     <value>DirectShow error occured</value>
   </data>
+  <data name="ErrorMissingColorMessage" xml:space="preserve">
+    <value>Please select a color for detection first, otherwise we could not automatically search for the colored object.</value>
+  </data>
+  <data name="ErrorMissingColorTitle" xml:space="preserve">
+    <value>Color is missing</value>
+  </data>
   <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
     <value>Smoothing factor, determines the weighting of the interpolated data point.</value>
   </data>
@@ -1708,6 +1726,9 @@ It can be newly placed with the mouse now.</value>
   </data>
   <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
     <value>Project</value>
+  </data>
+  <data name="RibbonGroupResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="RibbonGroupStyleLabelTitle" xml:space="preserve">
     <value>Style</value>

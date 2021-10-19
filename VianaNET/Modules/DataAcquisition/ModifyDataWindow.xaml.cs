@@ -29,7 +29,6 @@ namespace VianaNET.Modules.DataAcquisition
   using System.Windows.Controls.Primitives;
   using System.Windows.Input;
   using System.Windows.Media;
-  using System.Windows.Threading;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Video.Control;
@@ -39,8 +38,6 @@ namespace VianaNET.Modules.DataAcquisition
   /// </summary>
   public partial class ModifyDataWindow
   {
-
-
     /// <summary>
     ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
     /// </summary>
@@ -135,6 +132,7 @@ namespace VianaNET.Modules.DataAcquisition
       }
 
       this.SetVisibilityOfSharpCursor(false);
+      this.TimelineSlider.Value = Video.Instance.VideoElement.MediaPositionInMS;
     }
 
     /// <summary>
@@ -467,7 +465,9 @@ namespace VianaNET.Modules.DataAcquisition
         Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
         this.UpdateDataPointLocation();
       }
-      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>
@@ -480,7 +480,9 @@ namespace VianaNET.Modules.DataAcquisition
         Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
         this.UpdateDataPointLocation();
       }
-      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>

@@ -592,6 +592,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die BlobsControlBothProcessedImageHeader ähnelt.
+        /// </summary>
+        public static string BlobsControlBothProcessedImageHeader {
+            get {
+                return ResourceManager.GetString("BlobsControlBothProcessedImageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die BlobsControlColorProcessedImageHeader ähnelt.
+        /// </summary>
+        public static string BlobsControlColorProcessedImageHeader {
+            get {
+                return ResourceManager.GetString("BlobsControlColorProcessedImageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlDetectedPositionsHeader ähnelt.
         /// </summary>
         public static string BlobsControlDetectedPositionsHeader {
@@ -615,15 +633,6 @@ namespace VianaNET.Localization {
         public static string BlobsControlMotionProcessedImageHeader {
             get {
                 return ResourceManager.GetString("BlobsControlMotionProcessedImageHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @BlobsControlProcessedImageHeader ähnelt.
-        /// </summary>
-        public static string BlobsControlProcessedImageHeader {
-            get {
-                return ResourceManager.GetString("BlobsControlProcessedImageHeader", resourceCulture);
             }
         }
         
@@ -2091,6 +2100,33 @@ namespace VianaNET.Localization {
         public static string ButtonResetColorSchemeToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonResetColorSchemeToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonResetProcessingDataLabelTitle ähnelt.
+        /// </summary>
+        public static string ButtonResetProcessingDataLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonResetProcessingDataLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonResetProcessingDataToolTipDescription ähnelt.
+        /// </summary>
+        public static string ButtonResetProcessingDataToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonResetProcessingDataToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ButtonResetProcessingDataToolTipTitle ähnelt.
+        /// </summary>
+        public static string ButtonResetProcessingDataToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonResetProcessingDataToolTipTitle", resourceCulture);
             }
         }
         
@@ -3643,6 +3679,24 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ErrorMissingColorMessage ähnelt.
+        /// </summary>
+        public static string ErrorMissingColorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMissingColorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ErrorMissingColorTitle ähnelt.
+        /// </summary>
+        public static string ErrorMissingColorTitle {
+            get {
+                return ResourceManager.GetString("ErrorMissingColorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @ExponentialSmoothDialogSmoothingFactorLabel ähnelt.
         /// </summary>
         public static string ExponentialSmoothDialogSmoothingFactorLabel {
@@ -4782,6 +4836,15 @@ namespace VianaNET.Localization {
         public static string RibbonGroupProjectLabelTitle {
             get {
                 return ResourceManager.GetString("RibbonGroupProjectLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die RibbonGroupResetProcessingDataLabelTitle ähnelt.
+        /// </summary>
+        public static string RibbonGroupResetProcessingDataLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupResetProcessingDataLabelTitle", resourceCulture);
             }
         }
         

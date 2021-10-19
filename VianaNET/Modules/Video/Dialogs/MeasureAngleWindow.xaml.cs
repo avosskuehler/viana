@@ -63,6 +63,7 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.InitializeComponent();
       this.WindowCanvas.DataContext = this;
+      this.TimelineSlider.Value = Video.Instance.VideoElement.MediaPositionInMS;
     }
 
     /// <summary>
@@ -242,7 +243,8 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(false, App.Project.VideoData.UseEveryNthPoint);
       }
-      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>
@@ -254,7 +256,8 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         Video.Instance.StepFrames(true, App.Project.VideoData.UseEveryNthPoint);
       }
-      this.TimelineSlider.Value = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>

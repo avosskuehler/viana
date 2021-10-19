@@ -200,12 +200,13 @@ namespace VianaNET.Modules.Video.Control
           if (framerateMode == "VFR")
           {
             InformationDialog.Show(VianaNET.Localization.Labels.VariableFPSHeader, VianaNET.Localization.Labels.VariableFPSMessage, false);
-            App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.None;
+            //App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.None;
           }
           else
           {
-            App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.BottomRight;
+            //App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.BottomRight;
           }
+          App.Project.VideoData.TickPlacement = System.Windows.Controls.Primitives.TickPlacement.BottomRight;
 
           // Framerate auslesen
           string frameratestring = info.Get(MediaInfo.DotNetWrapper.Enumerations.StreamKind.Video, 0, "FrameRate", MediaInfo.DotNetWrapper.Enumerations.InfoKind.Text);
@@ -378,8 +379,10 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     public void UpdateFrameIndex()
     {
-      double index = this.MediaPositionInMS / this.FrameTimeInMS;
-      this.MediaPositionFrameIndex = (int)Math.Round(index);
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(VideoCaptureProperties.PosFrames);
+      this.MediaPositionFrameIndex = (int)Math.Round(posFrames);
+      //double index = this.MediaPositionInMS / this.FrameTimeInMS;
+      //this.MediaPositionFrameIndex = (int)Math.Round(index);
     }
   }
 }

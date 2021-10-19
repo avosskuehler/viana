@@ -135,6 +135,14 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// </param>
     private void CanvasDataPointsSizeChanged(object sender, SizeChangedEventArgs e)
     {
+      ScaleCanvasDataPoints();
+    }
+
+    /// <summary>
+    /// Calculates the Scale Transform for the CanvasDataPoints depending on relation between orginal video and control size
+    /// </summary>
+    private void ScaleCanvasDataPoints()
+    {
       ScaleTransform videoSizeToCanvasSize = new ScaleTransform
       {
         ScaleX = this.OverlayImageControl2.ActualWidth / Video.Instance.VideoElement.NaturalVideoWidth,
@@ -215,14 +223,17 @@ namespace VianaNET.Modules.Video.BlobDetection
         if (App.Project.ProcessingData.IsUsingColorDetection && App.Project.ProcessingData.IsUsingMotionDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
+          this.ProcessingGroupBox.Header = VianaNET.Localization.Labels.BlobsControlBothProcessedImageHeader;
         }
         else if (App.Project.ProcessingData.IsUsingColorDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.ColorProcessedImageSource;
+          this.ProcessingGroupBox.Header = VianaNET.Localization.Labels.BlobsControlColorProcessedImageHeader;
         }
         else if (App.Project.ProcessingData.IsUsingMotionDetection)
         {
           this.ProcessedImageControl.Source = Video.Instance.MotionProcessedImageSource;
+          this.ProcessingGroupBox.Header = VianaNET.Localization.Labels.BlobsControlMotionProcessedImageHeader;
         }
       }
 
@@ -272,12 +283,17 @@ namespace VianaNET.Modules.Video.BlobDetection
         if (blob.Height < Video.Instance.VideoElement.NaturalVideoHeight - 10
             && blob.Width < Video.Instance.VideoElement.NaturalVideoWidth - 10 && blob.Diagonal > 0)
         {
-          SolidColorBrush fill = App.Project.ProcessingData.TargetColor.Count > i
-                                   ? new SolidColorBrush(App.Project.ProcessingData.TargetColor[i])
-                                   : Brushes.Black;
+          Color color = Color.FromArgb(128, 0, 0, 0);
+
+          if (App.Project.ProcessingData.IsTargetColorSet && App.Project.ProcessingData.TargetColor.Count > i)
+          {
+            color = App.Project.ProcessingData.TargetColor[i];
+            color.A = 128;
+          }
+
           Ellipse blobEllipse = new Ellipse
           {
-            Fill = fill,
+            Fill = new SolidColorBrush(color),
             Stroke = Brushes.Black,
             StrokeThickness = 1,
             Width = blob.Width * scaleX,
@@ -303,13 +319,20 @@ namespace VianaNET.Modules.Video.BlobDetection
     /// </param>
     private void VideoDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (Video.Instance.IsDataAcquisitionRunning)
+      //if (Video.Instance.IsDataAcquisitionRunning)
       {
         for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
+          Color color = Colors.Black;
+
+          if (App.Project.ProcessingData.IsTargetColorSet && App.Project.ProcessingData.TargetColor.Count > i)
+          {
+            color = App.Project.ProcessingData.TargetColor[i];
+          }
+
           Ellipse dataPoint = new Ellipse
           {
-            Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+            Stroke = new SolidColorBrush(color),
             StrokeThickness = 2,
             Width = 15,
             Height = 15
@@ -339,6 +362,11 @@ namespace VianaNET.Modules.Video.BlobDetection
         {
           this.CanvasDataPoints.Children.Clear();
         }
+      }
+
+      if (e.PropertyName == "HasVideo")
+      {
+        this.ScaleCanvasDataPoints();
       }
     }
 

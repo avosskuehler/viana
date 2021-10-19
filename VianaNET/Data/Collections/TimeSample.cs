@@ -40,12 +40,7 @@ namespace VianaNET.Data.Collections
     /// </summary>
     public TimeSample()
     {
-      //this.Object = new DataSample[App.Project.ProcessingData.NumberOfTrackedObjects];
     }
-
-
-
-
 
     /// <summary>
     ///   Gets or sets the framenumber.

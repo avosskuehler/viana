@@ -219,6 +219,9 @@
   <Style x:Key="DataGridColumnHeaderStyleMagenta" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
     <Setter Property="BorderBrush" Value="{DynamicResource MagentaBrush}"/>
   </Style>
+  <Style x:Key="DataGridColumnHeaderStyleGray" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DataGridColumnHeaderStyle}">
+    <Setter Property="BorderBrush" Value="{DynamicResource GreyBrush}"/>
+  </Style>
 
   <!--Style and template for the DataGridColumnHeadersPresenter.-->
   <Style TargetType="{x:Type DataGridColumnHeadersPresenter}">

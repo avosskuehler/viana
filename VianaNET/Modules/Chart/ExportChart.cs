@@ -89,7 +89,7 @@ namespace VianaNET.Modules.Chart
       sfd.DefaultExt = ".png";
       sfd.AddExtension = true;
       sfd.Filter = VianaNET.Localization.Labels.GraphicFilesFilter;
-      sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      sfd.InitialDirectory = App.Project.ProjectPath;
       sfd.Title = VianaNET.Localization.Labels.GraphicFilesSaveFileDialogTitle;
       if (sfd.ShowDialog().GetValueOrDefault())
       {

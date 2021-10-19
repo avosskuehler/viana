@@ -108,6 +108,8 @@ namespace VianaNET.Modules.DataAcquisition
         this.TimelineSlider.Visibility = Visibility.Hidden;
         Video.Instance.VideoCapturerElement.ResetFrameTiming();
       }
+
+      this.TimelineSlider.Value = Video.Instance.VideoElement.MediaPositionInMS;
     }
 
 
@@ -472,8 +474,9 @@ namespace VianaNET.Modules.DataAcquisition
       {
         Video.Instance.StepFrames(false, this.SkipPointCount);
       }
-      var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
-      this.TimelineSlider.Value = pos;
+
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>
@@ -485,8 +488,9 @@ namespace VianaNET.Modules.DataAcquisition
       {
         Video.Instance.StepFrames(true, this.SkipPointCount);
       }
-      var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
-      this.TimelineSlider.Value = pos;
+
+      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
     }
 
     /// <summary>
@@ -575,8 +579,6 @@ namespace VianaNET.Modules.DataAcquisition
       this.HorizontalCursorLineRight.X2 = this.WindowCanvas.ActualWidth;
       this.VerticalCursorLineTop.Y2 = this.WindowCanvas.ActualHeight;
       this.VerticalCursorLineBottom.Y2 = this.WindowCanvas.ActualHeight;
-
-      //this.timesliderUpdateTimer.Start();
     }
 
     /// <summary>

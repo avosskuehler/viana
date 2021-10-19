@@ -40,6 +40,7 @@ namespace VianaNET.Modules.Video
   using System.Windows.Threading;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
+  using VianaNET.Logging;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
@@ -143,6 +144,12 @@ namespace VianaNET.Modules.Video
     {
       StatusBarContent.Instance.StatusLabel = VianaNET.Localization.Labels.StatusIsCalculating;
 
+      if (App.Project.ProcessingData.IsUsingColorDetection && !App.Project.ProcessingData.IsTargetColorSet)
+      {
+        InformationDialog.Show(VianaNET.Localization.Labels.ErrorMissingColorTitle, VianaNET.Localization.Labels.ErrorMissingColorMessage, false);
+        return;
+      }
+
       App.Project.VideoData.Reset();
 
       // Set acquisition mode
@@ -177,7 +184,7 @@ namespace VianaNET.Modules.Video
       // Reset UI
       App.Project.CalibrationData.Reset();
       App.Project.VideoData.Reset();
-      App.Project.ProcessingData.Reset();
+      //App.Project.ProcessingData.Reset();
       this.BlobsControl.UpdateDataPoints();
       this.TimelineSlider.ResetSelection();
       this.CreateCrossHairLines();
@@ -372,11 +379,23 @@ namespace VianaNET.Modules.Video
 
       for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
+        //if (App.Project.ProcessingData.TargetColor.Count <= i)
+        //{
+        //  continue;
+        //}
+
         Binding widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
+        Color color = Colors.Black;
+
+        if (App.Project.ProcessingData.IsTargetColorSet && App.Project.ProcessingData.TargetColor.Count > i)
+        {
+          color = App.Project.ProcessingData.TargetColor[i];
+        }
+
         Line newHorizontalLine = new Line
         {
           Visibility = Visibility.Hidden,
-          Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+          Stroke = new SolidColorBrush(color),
           StrokeThickness = 2,
           X1 = 0,
           X2 = 0,
@@ -391,7 +410,7 @@ namespace VianaNET.Modules.Video
         Line newVerticalLine = new Line
         {
           Visibility = Visibility.Hidden,
-          Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+          Stroke = new SolidColorBrush(color),
           StrokeThickness = 2,
           X1 = 0,
           X2 = 0,
@@ -435,6 +454,11 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void ProcessingDataFrameProcessed(object sender, EventArgs e)
     {
+      if (this.blobHorizontalLines.Length < App.Project.ProcessingData.NumberOfTrackedObjects)
+      {
+        this.CreateCrossHairLines();
+      }
+
       if (this.GetScales(out double scaleX, out double scaleY))
       {
         for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
@@ -480,7 +504,7 @@ namespace VianaNET.Modules.Video
       }
       else if (e.PropertyName == "IsTargetColorSet")
       {
-        if (App.Project.ProcessingData.IsTargetColorSet)
+        if (App.Project.ProcessingData.IsTargetColorSet || App.Project.ProcessingData.IsUsingMotionDetection)
         {
           this.UpdateCrossHairColors();
 
@@ -647,19 +671,19 @@ namespace VianaNET.Modules.Video
 
       //if (Video.Instance.IsDataAcquisitionRunning || Video.Instance.VideoMode == VideoMode.Capture)
       //{
-        if (Video.Instance.VideoMode == VideoMode.File && Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
-        {
-          Video.Instance.Stop();
-          this.isPlaying = false;
-          this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
-        }
+      if (Video.Instance.VideoMode == VideoMode.File && Video.Instance.VideoElement.MediaPositionInMS >= App.Project.VideoData.SelectionEnd)
+      {
+        Video.Instance.Stop();
+        this.isPlaying = false;
+        this.BtnPlayImage.Icon = CustomStyles.FontAwesome.IconChar.Play;
+      }
       //}
 
-      // In Acquisition mode of a file the processing is done in the StepCompleted event handler
-      if (!Video.Instance.IsDataAcquisitionRunning)
-      {
-        this.ProcessImage();
-      }
+      //// In Acquisition mode of a file the processing is done in the StepCompleted event handler
+      //if (!Video.Instance.IsDataAcquisitionRunning)
+      //{
+      //  this.ProcessImage();
+      //}
 
     }
 

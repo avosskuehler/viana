@@ -296,6 +296,12 @@ Ich freue mich über Feedback:</value>
   <data name="AxisYoverX" xml:space="preserve">
     <value>x-y</value>
   </data>
+  <data name="BlobsControlBothProcessedImageHeader" xml:space="preserve">
+    <value>Farb- und Bewegungserkennung</value>
+  </data>
+  <data name="BlobsControlColorProcessedImageHeader" xml:space="preserve">
+    <value>Farberkennung</value>
+  </data>
   <data name="BlobsControlDetectedPositionsHeader" xml:space="preserve">
     <value>Detektierte Positionen</value>
   </data>
@@ -304,9 +310,6 @@ Ich freue mich über Feedback:</value>
   </data>
   <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
     <value>Bewegungserkennung</value>
-  </data>
-  <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
-    <value>Farberkennung</value>
   </data>
   <data name="BlobsNoObjectFound" xml:space="preserve">
     <value>Kein Objekt gefunden</value>
@@ -796,6 +799,15 @@ Ich freue mich über Feedback:</value>
   </data>
   <data name="ButtonResetColorSchemeToolTipTitle" xml:space="preserve">
     <value>Farbschema zurücksetzen</value>
+  </data>
+  <data name="ButtonResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>Werte zurücksetzen</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipDescription" xml:space="preserve">
+    <value>Setzt alle Werte für das Video-Processing auf die Standardeinstellungen zurück.</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipTitle" xml:space="preserve">
+    <value>Werte zurücksetzen</value>
   </data>
   <data name="ButtonRestoreLayoutLabelDescription" xml:space="preserve">
     <value>Gespeichertes Layout laden</value>
@@ -1325,6 +1337,12 @@ F10: Koordinatensystem auf Standard zurücksetzen.</value>
   <data name="DirectShowErrorTitle" xml:space="preserve">
     <value>Fehler in DirectShow aufgetreten</value>
   </data>
+  <data name="ErrorMissingColorMessage" xml:space="preserve">
+    <value>Bitte zuerst eine Suchfarbe auswählen, sonst funktioniert die Farberkennung nicht.</value>
+  </data>
+  <data name="ErrorMissingColorTitle" xml:space="preserve">
+    <value>Farbe fehlt</value>
+  </data>
   <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
     <value>Glättungsfaktor der bestimmt wie stark der momentane Wert gewichtet wird.</value>
   </data>
@@ -1711,6 +1729,9 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
   <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
     <value>Projekt</value>
   </data>
+  <data name="RibbonGroupResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
   <data name="RibbonGroupStyleLabelTitle" xml:space="preserve">
     <value>Farbschema</value>
   </data>
@@ -1829,7 +1850,7 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
     <value>Video von Kamera aufzeichnen</value>
   </data>
   <data name="SelectColorWindowDescriptionMessage" xml:space="preserve">
-    <value>Bitte klicken Sie mit der Maus ins Zentrum des zu verfolgenden Objekts. Wenn es mehrere Objekte sind (bis zu 3), klicken Sie diese nacheinander an.</value>
+    <value>Bitte klicken Sie mit der Maus ins Zentrum des zu verfolgenden Objekts. Wenn es mehrere Objekte sind (bis zu 6), klicken Sie diese nacheinander an.</value>
   </data>
   <data name="SelectColorWindowDescriptionTitle" xml:space="preserve">
     <value>Bitte Objektfarbe auswählen</value>

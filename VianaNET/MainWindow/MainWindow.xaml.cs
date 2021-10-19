@@ -26,8 +26,8 @@
 
 namespace VianaNET.MainWindow
 {
+  using Microsoft.Win32;
   using System;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Globalization;
@@ -41,8 +41,6 @@ namespace VianaNET.MainWindow
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Media.Imaging;
-
-  using Microsoft.Win32;
   using VianaNET.Application;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Modules.Chart;
@@ -51,7 +49,6 @@ namespace VianaNET.MainWindow
   using VianaNET.Modules.Video.Control;
   using VianaNET.Modules.Video.Dialogs;
   using VianaNET.Properties;
-
   using WPFLocalizeExtension.Engine;
 
   /// <summary>
@@ -59,8 +56,6 @@ namespace VianaNET.MainWindow
   /// </summary>
   public partial class MainWindow
   {
-
-
     /// <summary>
     ///   Initializes a new instance of the MainWindow class.
     /// </summary>
@@ -73,6 +68,7 @@ namespace VianaNET.MainWindow
       App.Project.ProcessingData.PropertyChanged += this.ProcessingDataPropertyChanged;
       this.CreateImageSourceForNumberOfObjects();
       this.UpdateSelectObjectImage();
+      App.Project.ProcessingData.Reset(true);
 
       ObservableCollection<CameraDevice> devices = Video.Instance.VideoInputDevicesMSMF;
 
@@ -328,6 +324,8 @@ namespace VianaNET.MainWindow
       App.Project.ProcessingData.CurrentBlobCenter = openedProject.ProcessingData.CurrentBlobCenter;
       App.Project.ProcessingData.DetectedBlob = openedProject.ProcessingData.DetectedBlob;
       App.Project.ProcessingData.IndexOfObject = openedProject.ProcessingData.IndexOfObject;
+      App.Project.ProcessingData.IsUsingColorDetection = openedProject.ProcessingData.IsUsingColorDetection;
+      App.Project.ProcessingData.IsUsingMotionDetection = openedProject.ProcessingData.IsUsingMotionDetection;
 
       App.Project.ProcessingData.IsTargetColorSet = openedProject.ProcessingData.IsTargetColorSet;
       for (int i = 0; i < openedProject.ProcessingData.TargetColor.Count - openedProject.ProcessingData.NumberOfTrackedObjects; i++)
@@ -337,9 +335,10 @@ namespace VianaNET.MainWindow
 
       App.Project.ProcessingData.NumberOfTrackedObjects = openedProject.ProcessingData.NumberOfTrackedObjects;
 
+      this.VideoWindow.CreateCrossHairLines();
+
       // Update button image source
       this.CreateImageSourceForNumberOfObjects();
-
       this.UpdateColorButton();
 
       App.Project.ProjectFilename = filename;
@@ -562,7 +561,7 @@ namespace VianaNET.MainWindow
         Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
 
         // Startup directory
-        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        InitialDirectory = App.Project.ProjectPath
       };
 
       // Show the dialog and process the result
@@ -591,7 +590,7 @@ namespace VianaNET.MainWindow
         AddExtension = true,
         RestoreDirectory = true,
         Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
-        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        InitialDirectory = App.Project.ProjectPath
       };
 
       // Show the dialog and process the result
@@ -634,7 +633,7 @@ namespace VianaNET.MainWindow
         AddExtension = true,
         RestoreDirectory = true,
         Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
-        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        InitialDirectory = App.Project.ProjectPath
       };
 
       // Show the dialog and process the result
@@ -663,7 +662,7 @@ namespace VianaNET.MainWindow
         AddExtension = true,
         RestoreDirectory = true,
         Title = VianaNET.Localization.Labels.ExportWhereToSaveFile,
-        InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        InitialDirectory = App.Project.ProjectPath
       };
 
       // Show the dialog and process the result
@@ -721,8 +720,8 @@ namespace VianaNET.MainWindow
       // Clear all data to correctly recreate data arrays.
       App.Project.VideoData.Reset();
 
-      // Increase number of objects, shrink to maximal 3.
-      if (App.Project.ProcessingData.NumberOfTrackedObjects == 3)
+      // Increase number of objects, shrink to maximal 6.
+      if (App.Project.ProcessingData.NumberOfTrackedObjects == 6)
       {
         App.Project.ProcessingData.NumberOfTrackedObjects = 1;
       }
@@ -1023,7 +1022,7 @@ namespace VianaNET.MainWindow
       App.Project.VideoData.RefreshDistanceVelocityAcceleration();
 
       // Update BlobsControl Dataview if visible
-      if (App.Project.ProcessingData.IsTargetColorSet)
+      //if (App.Project.ProcessingData.IsTargetColorSet)
       {
         this.VideoWindow.BlobsControl.UpdateDataPoints();
       }
@@ -1251,6 +1250,18 @@ namespace VianaNET.MainWindow
     private void VideoInputDeviceCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       Video.Instance.VideoCapturerElement.VideoCaptureDevice = Video.Instance.VideoInputDevicesMSMF.FirstOrDefault(o => o.Index == ((CameraDevice)this.VideoInputDeviceCombo.SelectedItem).Index);
+    }
+
+    /// <summary>
+    /// Resets the video processing parameters to their defaults.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedPropertyChangedEventArgs{System.Object}"/> instance containing the event data.</param>
+    private void ResetProcessingDataButtonClick(object sender, RoutedEventArgs e)
+    {
+      App.Project.ProcessingData.Reset(false);
+      App.Project.VideoData.Reset();
+      this.Refresh();
     }
   }
 }

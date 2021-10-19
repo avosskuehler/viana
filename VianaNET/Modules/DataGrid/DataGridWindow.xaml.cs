@@ -81,21 +81,21 @@ namespace VianaNET.Modules.DataGrid
     private void CreateColumn(string path, string header, string[] cellstyles, string measurement)
     {
       DataGridTextColumn newColumn = new DataGridTextColumn
-                        {
-                          Header = header,
-                          HeaderStyle = (Style)this.Resources[cellstyles[0]],
-                          CellStyle = (Style)this.Resources[cellstyles[1]],
-                          CanUserReorder = true,
-                          IsReadOnly = true,
-                          CanUserSort = false
-                        };
+      {
+        Header = header,
+        HeaderStyle = (Style)this.Resources[cellstyles[0]],
+        CellStyle = (Style)this.Resources[cellstyles[1]],
+        CanUserReorder = true,
+        IsReadOnly = true,
+        CanUserSort = false
+      };
 
       // newColumn.SortMemberPath = path;
       Binding valueBinding = new Binding(path)
-                           {
-                             Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
-                             ConverterParameter = this.Resources[measurement]
-                           };
+      {
+        Converter = (IValueConverter)this.Resources["UnitDoubleStringConverter"],
+        ConverterParameter = this.Resources[measurement]
+      };
 
       newColumn.Binding = valueBinding;
       this.DataGrid.Columns.Add(newColumn);
@@ -165,21 +165,24 @@ namespace VianaNET.Modules.DataGrid
       // Create style string arrays
       List<string[]> cellStyles = new List<string[]>
                          {
-                           new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" }, 
-                           new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" }, 
-                           new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" }
-                         };
+                           new[] { "DataGridColumnHeaderStyleRed", "DataGridCellStyle" },
+                           new[] { "DataGridColumnHeaderStyleGreen", "DataGridCellStyle" },
+                           new[] { "DataGridColumnHeaderStyleBlue", "DataGridCellStyle" },
+                           new[] { "DataGridColumnHeaderStyleYellow", "DataGridCellStyle" },
+                           new[] { "DataGridColumnHeaderStyleMagenta", "DataGridCellStyle" },
+                           new[] { "DataGridColumnHeaderStyleGray", "DataGridCellStyle" },
+                        };
 
       // Create default framenumber colum
       DataGridTextColumn frameColumn = new DataGridTextColumn
-                          {
-                            Header = VianaNET.Localization.Labels.DataGridFramenumber,
-                            HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
-                            CellStyle = (Style)this.Resources["DataGridCellStyle"],
-                            CanUserReorder = false,
-                            IsReadOnly = true,
-                            CanUserSort = false
-                          };
+      {
+        Header = VianaNET.Localization.Labels.DataGridFramenumber,
+        HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+        CellStyle = (Style)this.Resources["DataGridCellStyle"],
+        CanUserReorder = false,
+        IsReadOnly = true,
+        CanUserSort = false
+      };
 
       // frameColumn.SortMemberPath = "Framenumber";
       Binding valueBinding = new Binding("Framenumber") { StringFormat = "N0" };
@@ -188,22 +191,22 @@ namespace VianaNET.Modules.DataGrid
 
       // Create default time column
       DataGridTextColumn timeColumn = new DataGridTextColumn
-                         {
-                           Header = VianaNET.Localization.Labels.DataGridTimestamp,
-                           HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
-                           CellStyle = (Style)this.Resources["DataGridCellStyle"],
-                           CanUserReorder = false,
-                           IsReadOnly = true,
-                           CanUserSort = false
-                         };
+      {
+        Header = VianaNET.Localization.Labels.DataGridTimestamp,
+        HeaderStyle = (Style)this.Resources["DataGridColumnHeaderStyle"],
+        CellStyle = (Style)this.Resources["DataGridCellStyle"],
+        CanUserReorder = false,
+        IsReadOnly = true,
+        CanUserSort = false
+      };
 
       // timeColumn.SortMemberPath = "Timestamp";
       Binding valueBindingTime = new Binding("Timestamp")
-                               {
-                                 Converter =
+      {
+        Converter =
                                    (IValueConverter)this.Resources["UnitDoubleStringConverter"],
-                                 ConverterParameter = this.Resources["TimeMeasurement"]
-                               };
+        ConverterParameter = this.Resources["TimeMeasurement"]
+      };
 
       timeColumn.Binding = valueBindingTime;
       this.DataGrid.Columns.Add(timeColumn);

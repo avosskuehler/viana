@@ -11,3 +11,6 @@ csharp_style_unused_value_expression_statement_preference = unused_local_variabl
 
 # IDE0017: Initialisierung von Objekten vereinfachen
 dotnet_style_object_initializer = false
+
+# IDE0054: Verbundzuweisung verwenden
+dotnet_style_prefer_compound_assignment = false

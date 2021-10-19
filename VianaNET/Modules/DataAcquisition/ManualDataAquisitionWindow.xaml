@@ -69,7 +69,7 @@
           <StackPanel Name="FramePanel" Orientation="Horizontal" Margin="5">
             <Label Padding="0" Content="{lex:Loc VianaNET:Labels:ManualDataAcquisitionFrameLabel}" VerticalAlignment="Center"/>
             <Label Name="FrameIndex" Width="40" Padding="0"
-                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Converter={StaticResource PlusOneConverter}, Source={x:Static control:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
+                   Content="{Binding Path=VideoPlayerElement.MediaPositionFrameIndex, Source={x:Static control:Video.Instance}}" HorizontalContentAlignment="Right" VerticalAlignment="Center"/>
             <Label Padding="0" Content="/" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
             <Label Name="FrameCount" Content="{Binding Path=VideoElement.FrameCount, Source={x:Static control:Video.Instance}}"  Padding="0" Width="40" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
           </StackPanel>
@@ -86,7 +86,7 @@
             IsSelectionRangeEnabled="True" 
             TickPlacement="BottomRight" 
             Interval="1" 
-            Height="20"
+            Height="30"
             TickDownClicked="TimelineSliderTickDownClicked" 
             TickUpClicked="TimelineSliderTickUpClicked"
             Thumb.DragCompleted="TimelineSliderDragCompleted"

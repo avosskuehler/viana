@@ -47,6 +47,18 @@ namespace VianaNET.Modules.DataGrid
                                           ? Visibility.Visible
                                           : Visibility.Collapsed;
       this.Object3CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 3";
+      this.Object4CheckBox.Visibility = App.Project.ProcessingData.NumberOfTrackedObjects > 3
+                                         ? Visibility.Visible
+                                         : Visibility.Collapsed;
+      this.Object4CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 4";
+      this.Object5CheckBox.Visibility = App.Project.ProcessingData.NumberOfTrackedObjects > 4
+                                          ? Visibility.Visible
+                                          : Visibility.Collapsed;
+      this.Object5CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 5";
+      this.Object6CheckBox.Visibility = App.Project.ProcessingData.NumberOfTrackedObjects > 5
+                                          ? Visibility.Visible
+                                          : Visibility.Collapsed;
+      this.Object6CheckBox.Content = VianaNET.Localization.Labels.DataGridObjectPrefix + " 6";
     }
 
     /// <summary>
@@ -72,6 +84,21 @@ namespace VianaNET.Modules.DataGrid
         if (this.Object3CheckBox.IsChecked.GetValueOrDefault(false) && this.Object3CheckBox.Visibility == Visibility.Visible)
         {
           options.Objects.Add(2);
+        }
+
+        if (this.Object4CheckBox.IsChecked.GetValueOrDefault(false) && this.Object4CheckBox.Visibility == Visibility.Visible)
+        {
+          options.Objects.Add(3);
+        }
+
+        if (this.Object5CheckBox.IsChecked.GetValueOrDefault(false) && this.Object5CheckBox.Visibility == Visibility.Visible)
+        {
+          options.Objects.Add(4);
+        }
+
+        if (this.Object6CheckBox.IsChecked.GetValueOrDefault(false) && this.Object6CheckBox.Visibility == Visibility.Visible)
+        {
+          options.Objects.Add(5);
         }
 
         options.Axes = new List<DataAxis>();

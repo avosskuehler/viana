@@ -183,9 +183,14 @@ namespace VianaNET.Data
       typeof(ProcessingData),
       new FrameworkPropertyMetadata(false));
 
-
-
-
+    /// <summary>
+    /// The is using motion detection property
+    /// </summary>
+    public static readonly DependencyProperty IsDetectionActivatedProperty = DependencyProperty.Register(
+      "IsDetectionActivated",
+      typeof(bool),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(true));
 
     /// <summary>
     ///   The color and crop filter.
@@ -446,9 +451,19 @@ namespace VianaNET.Data
       set => this.SetValue(IsUsingMotionDetectionProperty, value);
     }
 
+    /// <summary>
+    /// Gets a value indicating whether a detection algorithm is activated
+    /// </summary>
+    /// <value>
+    /// <c>true</c> if this instance is using detection; otherwise, <c>false</c>.
+    /// </value>
+    public bool IsDetectionActivated
+    {
+      get => (bool)this.GetValue(IsDetectionActivatedProperty);
 
-
-
+      set => this.SetValue(IsDetectionActivatedProperty, value);
+      //get => this.IsUsingColorDetection || this.IsUsingMotionDetection;
+    }
 
     /// <summary>
     ///   The initialize image filters.
@@ -463,7 +478,7 @@ namespace VianaNET.Data
       this.colorAndCropFilter.ImageStride = Video.Instance.VideoElement.Stride;
       this.colorAndCropFilter.ImagePixelSize = Video.Instance.VideoElement.PixelSize;
       this.colorAndCropFilter.BlankColor = Colors.Black;
-      this.colorAndCropFilter.TargetColor = this.TargetColor[0];
+      this.colorAndCropFilter.TargetColor = this.TargetColor.Count > 0 ? this.TargetColor[0] : Colors.Red;
       this.colorAndCropFilter.Threshold = this.ColorThreshold[0];
       if (App.Project.CalibrationData.HasClipRegion)
       {
@@ -516,7 +531,11 @@ namespace VianaNET.Data
     {
       // Console.WriteLine("ProcessImage: #" + Video.Instance.FrameIndex);
       // Skip if no target color is available
-      if (!this.IsTargetColorSet)
+      //if (!this.IsTargetColorSet)
+      //{
+      //  return false;
+      //}
+      if (!Video.Instance.HasVideo)
       {
         return false;
       }
@@ -542,7 +561,7 @@ namespace VianaNET.Data
       {
         // Console.Write("BeforeColorFilte ");
         // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
-        if (this.TargetColor.Count <= i || this.ColorThreshold.Count <= i || this.BlobMinDiameter.Count <= i
+        if (this.ColorThreshold.Count <= i || this.BlobMinDiameter.Count <= i
             || this.BlobMaxDiameter.Count <= i || this.CurrentBlobCenter.Count <= i)
         {
           break;
@@ -554,7 +573,7 @@ namespace VianaNET.Data
         if (this.IsUsingColorDetection)
         {
           // Apply color and crop filter if applicable
-          this.colorAndCropFilter.TargetColor = this.TargetColor[i];
+          this.colorAndCropFilter.TargetColor = this.TargetColor.Count > i ? this.TargetColor[i] : Colors.Black;
           this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
           this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
         }
@@ -653,9 +672,9 @@ namespace VianaNET.Data
     /// <summary>
     ///   The reset.
     /// </summary>
-    public void Reset()
+    public void Reset(bool complete)
     {
-      this.ResetProcessing(App.Project.ProcessingData.NumberOfTrackedObjects);
+      this.ResetProcessing(App.Project.ProcessingData.NumberOfTrackedObjects, complete);
     }
 
 
@@ -782,11 +801,12 @@ namespace VianaNET.Data
       {
         if (!Project.IsDeserializing)
         {
-          this.Reset();
+          this.Reset(true);
         }
       }
       else if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection" || e.PropertyName == "IsTargetColorSet")
       {
+        this.IsDetectionActivated = this.IsUsingMotionDetection || this.IsUsingColorDetection;
         this.detector.Reset();
         Video.Instance.RefreshProcessingMap();
         Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
@@ -801,7 +821,7 @@ namespace VianaNET.Data
     /// <param name="numberOfObjects">
     /// The number of objects.
     /// </param>
-    private void ResetProcessing(int numberOfObjects)
+    private void ResetProcessing(int numberOfObjects, bool complete)
     {
       this.IndexOfObject = 0;
       this.doNotThrowPropertyChanged = true;
@@ -814,11 +834,17 @@ namespace VianaNET.Data
       this.MotionThreshold.Clear();
       this.PositiveContrast.Clear();
       this.SuppressNoise.Clear();
-      this.TargetColor.Clear();
+      if (complete)
+      {
+        this.TargetColor.Clear();
+      }
 
       for (int i = 0; i < numberOfObjects; i++)
       {
-        this.TargetColor.Add(Colors.Red);
+        //if (complete)
+        //{
+        //  this.TargetColor.Add(Colors.Transparent);
+        //}
         this.ColorThreshold.Add(30);
         this.BlobMinDiameter.Add(4);
         this.BlobMaxDiameter.Add(100);
@@ -827,8 +853,10 @@ namespace VianaNET.Data
         this.PositiveContrast.Add(true);
         this.SuppressNoise.Add(false);
       }
-
-      this.IsTargetColorSet = false;
+      if (complete)
+      {
+        this.IsTargetColorSet = false;
+      }
 
       this.isReady = true;
       this.doNotThrowPropertyChanged = false;
@@ -849,7 +877,7 @@ namespace VianaNET.Data
     /// </param>
     private void TargetColorCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-      if (!this.doNotThrowPropertyChanged)
+      if (!this.doNotThrowPropertyChanged && !Project.IsDeserializing)
       {
         this.ProcessImage();
         this.OnPropertyChanged("TargetColor");

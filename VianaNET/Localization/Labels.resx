@@ -294,6 +294,12 @@
   <data name="AxisYoverX" xml:space="preserve">
     <value>@AxisYoverX</value>
   </data>
+  <data name="BlobsControlBothProcessedImageHeader" xml:space="preserve">
+    <value>BlobsControlBothProcessedImageHeader</value>
+  </data>
+  <data name="BlobsControlColorProcessedImageHeader" xml:space="preserve">
+    <value>BlobsControlColorProcessedImageHeader</value>
+  </data>
   <data name="BlobsControlDetectedPositionsHeader" xml:space="preserve">
     <value>@BlobsControlDetectedPositionsHeader</value>
   </data>
@@ -302,9 +308,6 @@
   </data>
   <data name="BlobsControlMotionProcessedImageHeader" xml:space="preserve">
     <value>@BlobsControlMotionProcessedImageHeader</value>
-  </data>
-  <data name="BlobsControlProcessedImageHeader" xml:space="preserve">
-    <value>@BlobsControlProcessedImageHeader</value>
   </data>
   <data name="BlobsNoObjectFound" xml:space="preserve">
     <value>@BlobsNoObjectFound</value>
@@ -794,6 +797,15 @@
   </data>
   <data name="ButtonResetColorSchemeToolTipTitle" xml:space="preserve">
     <value>@ButtonResetColorSchemeToolTipTitle</value>
+  </data>
+  <data name="ButtonResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>ButtonResetProcessingDataLabelTitle</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipDescription" xml:space="preserve">
+    <value>ButtonResetProcessingDataToolTipDescription</value>
+  </data>
+  <data name="ButtonResetProcessingDataToolTipTitle" xml:space="preserve">
+    <value>ButtonResetProcessingDataToolTipTitle</value>
   </data>
   <data name="ButtonRestoreLayoutLabelDescription" xml:space="preserve">
     <value>@ButtonRestoreLayoutLabelDescription</value>
@@ -1311,6 +1323,12 @@
   <data name="DirectShowErrorTitle" xml:space="preserve">
     <value>@DirectShowErrorTitle</value>
   </data>
+  <data name="ErrorMissingColorMessage" xml:space="preserve">
+    <value>ErrorMissingColorMessage</value>
+  </data>
+  <data name="ErrorMissingColorTitle" xml:space="preserve">
+    <value>ErrorMissingColorTitle</value>
+  </data>
   <data name="ExponentialSmoothDialogSmoothingFactorLabel" xml:space="preserve">
     <value>@ExponentialSmoothDialogSmoothingFactorLabel</value>
   </data>
@@ -1691,6 +1709,9 @@
   </data>
   <data name="RibbonGroupProjectLabelTitle" xml:space="preserve">
     <value>@RibbonGroupProjectLabelTitle</value>
+  </data>
+  <data name="RibbonGroupResetProcessingDataLabelTitle" xml:space="preserve">
+    <value>RibbonGroupResetProcessingDataLabelTitle</value>
   </data>
   <data name="RibbonGroupStyleLabelTitle" xml:space="preserve">
     <value>@RibbonGroupStyleLabelTitle</value>

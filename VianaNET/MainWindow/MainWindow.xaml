@@ -416,7 +416,8 @@
             SmallImageSource="/VianaNET;component/Images/ColorDetection16.png" 
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonIsUsingColorDetectionToolTipTitle}"
             ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonIsUsingColorDetectionToolTipDescription}" 
-            IsChecked="{Binding Path=ProcessingData.IsUsingColorDetection, Source={x:Static local:App.Project}}"/>
+            IsChecked="{Binding Path=ProcessingData.IsUsingColorDetection, Source={x:Static local:App.Project}}"
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <Grid Name="ColorDetectionGrid" Margin="10,1,1,1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
@@ -470,6 +471,7 @@
             IsSnapToTickEnabled="True"
             IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           </Grid>
+
         </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupVideoAutoDetectionMotionOptionsLabelTitle}" LargeImageSource="/VianaNET;component/Images/MotionDetection32.png">
           <RibbonToggleButton 
@@ -479,7 +481,8 @@
             SmallImageSource="/VianaNET;component/Images/MotionDetection16.png" 
             ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonIsUsingMotionDetectionToolTipTitle}"
             ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonIsUsingMotionDetectionToolTipDescription}" 
-            IsChecked="{Binding Path=ProcessingData.IsUsingMotionDetection, Source={x:Static local:App.Project}}"/>
+            IsChecked="{Binding Path=ProcessingData.IsUsingMotionDetection, Source={x:Static local:App.Project}}"
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <Grid Name="MotionDetectionGrid" Margin="10,1,1,1">
             <Grid.ColumnDefinitions>
               <ColumnDefinition/>
@@ -517,6 +520,17 @@
                             ToolTipDescription="{lex:Loc VianaNET:Labels:RibbonLabelAutoDetectionMotionSuppressNoiseCheckboxToolTipDescription}"
                             HorizontalAlignment="Left"/>
           </Grid>
+        </RibbonGroup>
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupResetProcessingDataLabelTitle}" LargeImageSource="/VianaNET;component/Images/Restart32.png">
+          <RibbonButton 
+            Name="ButtonResetProcessingData" 
+            Click="ResetProcessingDataButtonClick"
+            Label="{lex:Loc VianaNET:Labels:ButtonResetProcessingDataLabelTitle}" 
+            LargeImageSource="/VianaNET;component/Images/Restart32.png" 
+            SmallImageSource="/VianaNET;component/Images/Restart16.png" 
+            ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonResetProcessingDataToolTipTitle}"
+            ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonResetProcessingDataToolTipDescription}" 
+            IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
         </RibbonGroup>
       </RibbonTab>
       <RibbonTab x:Name="RibbonTabVideo" Header="{lex:Loc VianaNET:Labels:RibbonTabVideoLabel}">

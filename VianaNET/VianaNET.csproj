@@ -280,6 +280,7 @@
     <Compile Include="CustomStyles\Controls\SliderValue.xaml.cs">
       <DependentUpon>SliderValue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomStyles\Controls\VianaTickBar.cs" />
     <Compile Include="CustomStyles\Controls\VisualContainerElement.cs" />
     <Compile Include="CustomStyles\Converter\AberrationDoubleToStringConverter.cs" />
     <Compile Include="CustomStyles\Converter\DoubleToStringConverter.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="CustomStyles\Types\ChartType.cs" />
     <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
     <Compile Include="CustomStyles\Types\DifferenceQuotientType.cs" />
+    <Compile Include="CustomStyles\Types\DoubleUtilities.cs" />
     <Compile Include="CustomStyles\Types\LengthUnit.cs" />
     <Compile Include="CustomStyles\Types\MeasurementType.cs" />
     <Compile Include="CustomStyles\Types\QuestionResult.cs" />
@@ -901,6 +903,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IconChar.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\Restart16.png" />
+    <Resource Include="Images\Restart32.png" />
     <Resource Include="Images\Rotate16.png" />
     <Resource Include="Images\Rotate32.png" />
   </ItemGroup>

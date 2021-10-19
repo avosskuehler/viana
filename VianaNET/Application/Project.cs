@@ -212,7 +212,7 @@ namespace VianaNET.Application
       try
       {
         Project projectFromFile;
-
+        
         // A FileStream is needed to read the XML document.
         using (FileStream fs = new FileStream(filePath, FileMode.Open))
         {
@@ -223,8 +223,8 @@ namespace VianaNET.Application
           //* If the XML document has been altered with unknown 
           //nodes or attributes, handle them with the 
           //UnknownNode and UnknownAttribute events.*/
-          serializer.UnknownNode += new XmlNodeEventHandler(serializer_UnknownNode);
-          serializer.UnknownAttribute += new XmlAttributeEventHandler(serializer_UnknownAttribute);
+          //serializer.UnknownNode += new XmlNodeEventHandler(serializer_UnknownNode);
+          //serializer.UnknownAttribute += new XmlAttributeEventHandler(serializer_UnknownAttribute);
 
           /* Use the Deserialize method to restore the object's state with
           data from the XML document. */
@@ -244,14 +244,14 @@ namespace VianaNET.Application
       return null;
     }
 
-    private static void serializer_UnknownAttribute(object sender, XmlAttributeEventArgs e)
-    {
+    //private static void serializer_UnknownAttribute(object sender, XmlAttributeEventArgs e)
+    //{
       
-    }
+    //}
 
-    private static void serializer_UnknownNode(object sender, XmlNodeEventArgs e)
-    {
-    }
+    //private static void serializer_UnknownNode(object sender, XmlNodeEventArgs e)
+    //{
+    //}
 
     /// <summary>
     /// Serializes the project into the given file in a xml structure.

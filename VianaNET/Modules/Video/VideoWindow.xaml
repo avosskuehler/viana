@@ -85,7 +85,7 @@
         VerticalAlignment="Bottom" Width="120" Height="120"/>
       <blobDetection:BlobsControl Width="Auto" 
                           Height="Auto" 
-                          Visibility="{Binding Path=ProcessingData.IsTargetColorSet, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"
+                          Visibility="{Binding Path=ProcessingData.IsDetectionActivated, Source={x:Static local:App.Project}, Converter={StaticResource BoolVisibleConverter}}"
                           Grid.Column="1" 
                           x:Name="BlobsControl"/>
     </Grid>
@@ -142,6 +142,7 @@
         TickPlacement="{Binding Path=VideoData.TickPlacement, Source={x:Static local:App.Project}}" 
         Interval="1" 
         Minimum="0"
+        SnapsToDevicePixels="True"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
         IsSnapToTickEnabled="True"/>
     </Grid>

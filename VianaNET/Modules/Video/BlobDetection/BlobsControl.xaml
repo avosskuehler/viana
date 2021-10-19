@@ -17,7 +17,7 @@
       <RowDefinition/>
       <RowDefinition/>
     </Grid.RowDefinitions>
-    <GroupBox Grid.Row="0" Header="{lex:Loc VianaNET:Labels:BlobsControlProcessedImageHeader}">
+    <GroupBox Grid.Row="0" Name="ProcessingGroupBox" Header="{lex:Loc VianaNET:Labels:BlobsControlColorProcessedImageHeader}">
       <Grid>
         <Image Name="OriginalImageControl" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>
         <Image Opacity="0.8" Name="ProcessedImageControl" Source="{Binding Path=ColorProcessedImageSource, Source={x:Static control:Video.Instance}}" HorizontalAlignment="Center"/>

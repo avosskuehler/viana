@@ -31,6 +31,7 @@ namespace VianaNET.Modules.Video.Dialogs
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
+  using System.Windows.Media;
   using VianaNET.MainWindow;
   using VianaNET.Modules.Video.Control;
 
@@ -114,6 +115,11 @@ namespace VianaNET.Modules.Video.Dialogs
 
         Color color = frame.GetPixel((int)originalX, (int)originalY);
         System.Windows.Media.Color selectedColor = System.Windows.Media.Color.FromArgb(255, color.R, color.G, color.B);
+        if (App.Project.ProcessingData.TargetColor.Count < this.IndexOfTrackedObject)
+        {
+          App.Project.ProcessingData.TargetColor.Add(Colors.Black);
+        }
+
         App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] = selectedColor;
         //Project.TrackObjectColors[this.IndexOfTrackedObject - 1] = new SolidColorBrush(selectedColor);
       }
