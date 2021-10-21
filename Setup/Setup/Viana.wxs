@@ -1,17 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(sys.CURRENTDIR)Config.wxi?>
+
   <Fragment>
- 
     <Directory Id="TARGETDIR" Name="SourceDir">
 
-      <Directory Id="DesktopFolder" SourceName="Desktop">
-        <!--<Component Id="C_ShortCutDesktop" Guid="{D8DFF141-B56E-41C8-8A41-3E967B1494E2}" Transitive="yes" Win64="$(var.Win64)">
-          <Shortcut Id="ShortCutDesktop" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
-        </Component>-->
+      <?if $(sys.BUILDARCH)=x64?>
+      <Directory Id="ProgramFilesFolder"/>
+      <?endif?>
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
+        <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)">
+        </Directory>
       </Directory>
 
+      <Directory Id="DesktopFolder" SourceName="Desktop" />
+      <!--<Directory Id="DesktopFolder" SourceName="User's Desktop">
+        <Component Id="C_ShortCutDesktop" Guid="{B57FB044-6F44-46CF-BE54-5FC3F64B00DD}" Transitive="yes" Win64="$(var.Win64)">
+          <Shortcut Id="ShortCutDesktop" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+        </Component>
+      </Directory>-->
+
       <Directory Id="ProgramMenuFolder" SourceName="User's Programs Menu">
+        <Directory Id="VianaNET" Name="$(var.ProductName)">
+          <Component Id="C_ShortCutComponent" Guid="{F6B81D14-B701-4529-AD3D-EB7228AA08AD}" Transitive="yes" Win64="$(var.Win64)">
+            <Shortcut Id="ShortCutDesktop" Name="VianaNET" Directory="DesktopFolder" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" Target="[INSTALLLOCATION]VianaNET.exe" />
+            <Shortcut Id="ProgShortCut" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe" Icon="VianaNET.ico"></Shortcut>
+            <CreateFolder Directory="VianaNET" />
+            <RegistryValue Id="R_Software" Root="HKCU" Key="Software\$(var.Manufactor)\$(var.ProductName)" Name="VianaNET" Value="[VianaNET]" Type="string" KeyPath="yes" />
+            <RemoveFolder Id="Remove" Directory="VianaNET" On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="C_VianaNET.Exe" DiskId="1" Guid="{832E2327-ED4A-4A1B-A4D1-51A86BA070EA}" Win64="$(var.Win64)">
+        <File Id="VianaNET.Exe" Name="VianaNET.Exe" Source="$(var.VianaNET.TargetDir)" KeyPath="yes"/>
+        <ProgId Id="VianaNET" Description="Viana.NET xml-Projektdatei." Icon="VianaNET.ico" IconIndex="0" Advertise="yes">
+          <Extension Id="via" Advertise="yes">
+            <Verb Id="open" Command="&amp;Open" Argument="&quot;%1&quot;" Sequence="1" />
+          </Extension>
+        </ProgId>
+        <!--<Shortcut Id="ShortCutDesktop" Directory="DesktopFolder" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+        <Shortcut Id="ShortCutProgramMenu" Directory="ProgramMenuFolder\VianaNET" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
+        <?if $(sys.BUILDARCH)=x64?>
+        <Shortcut Id="UninstallShortCut" Directory="ProgramMenuFolder\VianaNET" Name="Uninstall $(var.ProductName)" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
+        <?else?>
+        <Shortcut Id="UninstallShortCut" Directory="ProgramMenuFolder\VianaNET" Name="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]"/>
+        <?endif?>-->
+      </Component>
+      <Component Id="C_VianaNET.EXE.CONFIG" DiskId="1" Guid="{D6EDFDFB-DF47-40D2-904F-EDA93E680C44}" Win64="$(var.Win64)">
+        <File Id="VianaNET.EXE.CONFIG" Name="VianaNET.exe.config" Source="$(var.VianaNET.TargetDir)" />
+      </Component>
+      <Component Id="C_License" Guid="{50737152-D57F-4100-8055-2746E405BF1A}" Win64="$(var.Win64)">
+        <File Id="License" Name="License.rtf" KeyPath="yes" DiskId="1"
+              Source="$(var.SolutionDir)Setup\Setup\" />
+      </Component>
+    </DirectoryRef>
+
+    <!--<Directory Id="TARGETDIR" Name="SourceDir">-->
+
+    <!--<Directory Id="DesktopFolder" SourceName="Desktop">-->
+    <!--<Component Id="C_ShortCutDesktop" Guid="{D8DFF141-B56E-41C8-8A41-3E967B1494E2}" Transitive="yes" Win64="$(var.Win64)">
+          <Shortcut Id="ShortCutDesktop" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
+        </Component>-->
+    <!--</Directory>-->
+
+    <!--<Directory Id="ProgramMenuFolder" SourceName="User's Programs Menu">
         <Directory Id="VianaNET" Name="$(var.ProductName)">
           <Component Id="C_ShortCutMenu" Guid="{BA432F39-4E9D-4DFC-B535-455249EAA452}" Transitive="yes" Win64="$(var.Win64)">
             <Shortcut Id="ProgShortCut" Name="$(var.ProductName)" Description="$(var.ProductName) Verknüpfung" Target="[INSTALLLOCATION]VianaNET.exe"></Shortcut>
@@ -21,13 +76,13 @@
             <Shortcut Id="UninstallShortCut" Name="Uninstall $(var.ProductName)" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]"/>
             <?endif?>
             <CreateFolder Directory="VianaNET" />
-            <RegistryValue Id="R_Software" Root="HKCU" Key="Software\$(var.Manufactor)\$(var.ProductName)\{BA432F39-4E9D-4DFC-B535-455249EAA452}" Name="VianaNET" Value="[VianaNET]" Type="string" KeyPath="yes" />
+            <RegistryValue Id="R_Software" Root="HKCU" Key="Software\$(var.Manufactor)\$(var.ProductName)" Name="VianaNET" Value="[VianaNET]" Type="string" KeyPath="yes" />
             <RemoveFolder Id="Remove" Directory="VianaNET" On="uninstall" />
           </Component>
         </Directory>
-      </Directory>
+      </Directory>-->
 
-      <Directory Id="$(var.PlatformProgramFilesFolder)">
+    <!--<Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)">
           <Component Id="C_VianaNETExe" Guid="{1246AC67-0A60-4224-8C33-8A4868FD3957}" Win64="$(var.Win64)">
             <File Id="VianaNETExe" Name="VianaNET.exe" KeyPath="yes" Assembly=".net" AssemblyManifest="VianaNETExe" AssemblyApplication="VianaNETExe" DiskId="1"
@@ -37,7 +92,9 @@
                 <Verb Id="open" Command="&amp;Open" Argument="&quot;%1&quot;" Sequence="1" />
               </Extension>
             </ProgId>
-            <!--<Shortcut Id="_A07C5294E7E24F4CB7D6F426AE6326AB" Directory="DesktopFolder" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />-->
+            -->
+    <!--<Shortcut Id="_A07C5294E7E24F4CB7D6F426AE6326AB" Directory="DesktopFolder" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />-->
+    <!--
             <Shortcut Id="_A2BF88A82C6947B294A261A87EBACFC4" Directory="VianaNET" Name="VianaNET" Description="Startet Viana.NET" Icon="VianaNET.ico" IconIndex="0" Show="normal" WorkingDirectory="TARGETDIR" Advertise="yes" />
           </Component>
           <Component Id="C_VianaNETConfig" Guid="{A5DCF465-A9B5-4B96-341F-66BC43F8B985}" Win64="$(var.Win64)">
@@ -45,16 +102,21 @@
                   Source="$(var.VianaNET.TargetDir)" />
           </Component>
         </Directory>
-      </Directory>
-    </Directory>
+      </Directory>-->
+    <!--</Directory>-->
 
     <Icon Id="VianaNET.ico" SourceFile="$(var.SolutionDir)VianaNET\Images\VianaNET.ico" />
 
     <Feature Id='VianaMainApplicationFeature' Title='Viana.Net application' Description='Installs viana.net core components.' Level='1'>
-      <ComponentRef Id='C_VianaNETExe' />
-      <!--<ComponentRef Id="C_ShortCutDesktop" />-->
+      <ComponentRef Id='C_License' />
+      <ComponentRef Id='C_ShortCutComponent' />
+      <!--<ComponentRef Id='C_ShortCutDesktop' />-->
+      <ComponentRef Id='C_VianaNET.Exe' />
+      <ComponentRef Id="C_VianaNET.EXE.CONFIG" />
+      <!--<ComponentRef Id='C_VianaNETExe' />
+      <ComponentRef Id="C_ShortCutDesktop" />
       <ComponentRef Id="C_ShortCutMenu" />
-      <ComponentRef Id="C_VianaNETConfig" />
+      <ComponentRef Id="C_VianaNETConfig" />-->
     </Feature>
   </Fragment>
 </Wix>

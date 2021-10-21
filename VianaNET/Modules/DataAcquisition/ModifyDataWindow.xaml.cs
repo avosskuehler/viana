@@ -104,9 +104,10 @@ namespace VianaNET.Modules.DataAcquisition
       this.arrowPointers = new ArrowPointer[arrowCount];
       for (int i = 0; i < arrowCount; i++)
       {
+        Color color = App.Project.ProcessingData.TargetColor.Count > i ? App.Project.ProcessingData.TargetColor[i] : Colors.Black;
         ArrowPointer pointer = new ArrowPointer();
         pointer.Name = "Object" + (i + 1).ToString(CultureInfo.InvariantCulture);
-        pointer.Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
+        pointer.Stroke = new SolidColorBrush(color);
         pointer.Fill = Brushes.Transparent;
         pointer.Length = 50;
         pointer.CenterSpace = 5;
@@ -193,7 +194,8 @@ namespace VianaNET.Modules.DataAcquisition
           window.IndexOfTrackedObject = 1;
         }
 
-        window.BrushOfCossHair = new SolidColorBrush(App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+        Color color = App.Project.ProcessingData.TargetColor.Count > window.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1] : Colors.Black;
+        window.BrushOfCossHair = new SolidColorBrush(color);
       }
     }
 
@@ -322,7 +324,7 @@ namespace VianaNET.Modules.DataAcquisition
         var originalX = factorX * scaledX;
         var originalY = factorY * scaledY;
 
-        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
 
         if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {
@@ -412,7 +414,7 @@ namespace VianaNET.Modules.DataAcquisition
         App.Project.VideoData.UpdatePoint(
           Video.Instance.FrameIndex,
           this.IndexOfTrackedObject - 1,
-          new Point(originalX, originalY));
+          new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
 
       }
     }
@@ -435,7 +437,8 @@ namespace VianaNET.Modules.DataAcquisition
       Canvas.SetLeft(this.CursorEllipse, newLocation.X - this.visualDataPointRadius);
 
       // Update crosshair brush
-      this.BrushOfCossHair = new SolidColorBrush(App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1]);
+      Color color = App.Project.ProcessingData.TargetColor.Count > this.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] : Colors.Black;
+      this.BrushOfCossHair = new SolidColorBrush(color);
     }
 
     /// <summary>
@@ -520,7 +523,7 @@ namespace VianaNET.Modules.DataAcquisition
         {
           if (sample.Object != null && sample.Object[i - 1] != null)
           {
-            Point location = new Point(sample.Object[i - 1].PixelX, sample.Object[i - 1].PixelY);
+            Point location = new Point(sample.Object[i - 1].PixelX, Video.Instance.VideoElement.NaturalVideoHeight - sample.Object[i - 1].PixelY);
             location = App.Project.CalibrationData.CoordinateTransform.Transform(location);
             //Point origin = App.Project.CalibrationData.OriginInPixel;
             //location.Offset(origin.X, origin.Y);

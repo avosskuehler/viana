@@ -9,15 +9,15 @@
   <?define SupportPhone = "adrian@vosskuehler.name"?>
   <?define InstallDescription = "Video analysis for science education."?>
   <?define UpgradeGuid = "{4830D7E5-685D-4637-B1BD-9A347BB911CF}"?>
-  <?define ProductVersion="6.0.0" ?>
+  <?define ProductVersion="6.1.0" ?>
 
   <?if $(var.Platform) = x64 ?>
-  <?define ProductName = "Viana.NET 6.0" ?>
+  <?define ProductName = "Viana.NET 6.1" ?>
   <?define Win64 = "yes" ?>
   <?define PlatformName = "x64"?>
   <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
   <?else ?>
-  <?define ProductName = "Viana.NET 6.0" ?>
+  <?define ProductName = "Viana.NET 6.1" ?>
   <?define Win64 = "no" ?>
   <?define PlatformName = "x86"?>
   <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>

@@ -641,7 +641,11 @@ namespace VianaNET.Data
 
         if (Video.Instance.IsDataAcquisitionRunning)
         {
-          App.Project.VideoData.AddPoint(i, this.CurrentBlobCenter[i]);
+          if (this.CurrentBlobCenter[i].HasValue)
+          {
+            var flippedPoint = new Point(this.CurrentBlobCenter[i].Value.X, Video.Instance.VideoElement.NaturalVideoHeight - this.CurrentBlobCenter[i].Value.Y);
+            App.Project.VideoData.AddPoint(i, flippedPoint);
+          }
         }
       }
 

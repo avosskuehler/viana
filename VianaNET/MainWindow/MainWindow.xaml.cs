@@ -176,9 +176,12 @@ namespace VianaNET.MainWindow
     {
       if (!string.IsNullOrEmpty(App.Project.ProjectFilename))
       {
+        string description = VianaNET.Localization.Labels.AskSaveProjectDialogDescription;
+        description = description.Replace("%1", Path.GetFileName(App.Project.ProjectFilename));
+
         VianaDialog dlg = new VianaDialog(
           VianaNET.Localization.Labels.AskSaveProjectDialogTitle,
-          VianaNET.Localization.Labels.AskSaveProjectDialogDescription,
+          description,
           VianaNET.Localization.Labels.AskSaveProjectDialogMessage,
           false);
         if (dlg.ShowDialog().GetValueOrDefault(false))
@@ -732,6 +735,7 @@ namespace VianaNET.MainWindow
 
       // Update button image source
       this.CreateImageSourceForNumberOfObjects();
+      this.ResetColorButton();
     }
 
     /// <summary>
@@ -777,6 +781,9 @@ namespace VianaNET.MainWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void RotateVideoButtonClick(object sender, RoutedEventArgs e)
     {
+      App.Project.CalibrationData.Reset();
+      App.Project.VideoData.Reset();
+      this.VideoWindow.BlobsControl.ResetBlobsControl();
       if (Video.Instance.VideoElement.Rotation.HasValue)
       {
         switch (Video.Instance.VideoElement.Rotation.Value)
@@ -1011,6 +1018,7 @@ namespace VianaNET.MainWindow
       ModifyDataWindow modifyDataWindow = new ModifyDataWindow();
       modifyDataWindow.ShowDialog();
       App.Project.VideoData.RefreshDistanceVelocityAcceleration();
+      this.VideoWindow.BlobsControl.UpdateDataPoints();
     }
 
     /// <summary>
@@ -1104,8 +1112,9 @@ namespace VianaNET.MainWindow
       float bandwidth = 26f / count;
       for (int i = 0; i < count; i++)
       {
+        Color color = App.Project.ProcessingData.TargetColor.Count > i ? App.Project.ProcessingData.TargetColor[i] : Colors.Black;
         drawingContext.DrawRectangle(
-          new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+          new SolidColorBrush(color),
           null,
           new Rect(3 + i * bandwidth, 3, bandwidth, 27));
       }

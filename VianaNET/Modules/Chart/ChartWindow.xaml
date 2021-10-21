@@ -38,8 +38,8 @@
             <ComboBox 
               Name="ObjectSelectionCombo"
               Grid.Column="1" 
-              Text="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=SelectedItem}"
-              ItemsSource="{Binding Path=ProcessingData.IndexOfObject, Source={x:Static local:App.Project}}"
+              ItemsSource="{Binding Path=ObjectDescriptions}"
+              DisplayMemberPath="Name"
               SelectionChanged="ObjectSelectionComboSelectionChanged" />
           </Grid>
           <TabControl Name="ChartContentTab">

@@ -126,7 +126,7 @@
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
 
-      <Component Id="C_System.Buffers" Guid="" Win64="$(var.Win64)">
+      <Component Id="C_System.Buffers" Guid="{63A5EAE8-4A52-4C70-9514-C865EEC6DFFC}" Win64="$(var.Win64)">
         <File Id="System.Buffers" Name="System.Buffers.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="System.Buffers" AssemblyApplication="System.Buffers" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>

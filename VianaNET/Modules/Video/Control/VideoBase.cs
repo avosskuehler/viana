@@ -259,6 +259,7 @@ namespace VianaNET.Modules.Video.Control
         rotation = value;
         this.ReleaseMappings();
         this.SaveSizeInfo(this.OpenCVObject);
+        App.Project.ProcessingData.InitializeImageFilters();
         this.GrabCurrentFrame();
       }
     }

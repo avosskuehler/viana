@@ -682,7 +682,7 @@ namespace VianaNET.Modules.Video
       //// In Acquisition mode of a file the processing is done in the StepCompleted event handler
       //if (!Video.Instance.IsDataAcquisitionRunning)
       //{
-      //  this.ProcessImage();
+      this.ProcessImage();
       //}
 
     }
@@ -897,12 +897,12 @@ namespace VianaNET.Modules.Video
     /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void VideoPlayerElementStepComplete(object sender, EventArgs e)
     {
-      // Process Image
-      this.Dispatcher.Invoke(
-        (ThreadStart)delegate
-          {
-            App.Project.ProcessingData.ProcessImage();
-          });
+      //// Process Image
+      //this.Dispatcher.Invoke(
+      //  (ThreadStart)delegate
+      //    {
+      //      App.Project.ProcessingData.ProcessImage();
+      //    });
 
 
       // Run next sample
@@ -1122,6 +1122,11 @@ namespace VianaNET.Modules.Video
     private void BtnSetZeroTimeClick(object sender, RoutedEventArgs e)
     {
       App.Project.VideoData.TimeZeroPositionInMs = Video.Instance.FrameTimestampInMsWithoutOffest;
+    }
+
+    private void TimelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
     }
   }
 }

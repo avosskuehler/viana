@@ -144,6 +144,7 @@
         Minimum="0"
         SnapsToDevicePixels="True"
         Thumb.DragCompleted="TimelineSliderDragCompleted"
+        Thumb.DragDelta="TimelineSlider_DragDelta"
         IsSnapToTickEnabled="True"/>
     </Grid>
   </Grid>

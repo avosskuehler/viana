@@ -24,6 +24,7 @@ namespace VianaNET.Modules.Chart
 {
   using System;
   using System.Collections.Generic;
+  using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Globalization;
   using System.Linq;
@@ -68,9 +69,9 @@ namespace VianaNET.Modules.Chart
     public static readonly DependencyProperty ObjectDescriptionsProperty =
       DependencyProperty.Register(
         "ObjectDescriptions",
-        typeof(List<string>),
+        typeof(ObservableCollection<TrackObject>),
         typeof(ChartWindow),
-        new FrameworkPropertyMetadata(new List<string>(), OnPropertyChanged));
+        new FrameworkPropertyMetadata(new ObservableCollection<TrackObject>(), OnPropertyChanged));
 
 
 
@@ -183,9 +184,9 @@ namespace VianaNET.Modules.Chart
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
     /// </summary>
-    public List<string> ObjectDescriptions
+    public ObservableCollection<TrackObject> ObjectDescriptions
     {
-      get => (List<string>)this.GetValue(ObjectDescriptionsProperty);
+      get => (ObservableCollection<TrackObject>)this.GetValue(ObjectDescriptionsProperty);
 
       set => this.SetValue(ObjectDescriptionsProperty, value);
     }
@@ -594,8 +595,8 @@ namespace VianaNET.Modules.Chart
         return;
       }
 
-      string entry = (string)this.ObjectSelectionCombo.SelectedItem;
-      App.Project.ProcessingData.IndexOfObject = int.Parse(entry.Substring(entry.Length - 1, 1)) - 1;
+      TrackObject entry = (TrackObject)this.ObjectSelectionCombo.SelectedItem;
+      App.Project.ProcessingData.IndexOfObject = entry.Index;
     }
 
     /// <summary>
@@ -1062,14 +1063,16 @@ namespace VianaNET.Modules.Chart
 
       for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
       {
-        this.ObjectDescriptions.Add(VianaNET.Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture));
+        this.ObjectDescriptions.Add(new TrackObject(i, VianaNET.Localization.Labels.DataGridObjectPrefix + " " + (i + 1).ToString(CultureInfo.InvariantCulture)));
       }
 
+      this.ObjectSelectionCombo.SelectedIndex = 0;
+
       // this.ObjectSelectionCombo.ItemsSource = null;
-      this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
-      Binding indexBinding = new Binding("ProcessingData.IndexOfObject") { Source = App.Project };
-      this.ObjectSelectionCombo.SetBinding(Selector.SelectedIndexProperty, indexBinding);
-      App.Project.ProcessingData.IndexOfObject++;
+      //this.ObjectSelectionCombo.ItemsSource = this.ObjectDescriptions;
+      //Binding indexBinding = new Binding("ProcessingData.IndexOfObject") { Source = App.Project };
+      //this.ObjectSelectionCombo.SetBinding(Selector.SelectedIndexProperty, indexBinding);
+      //App.Project.ProcessingData.IndexOfObject++;
     }
 
     /// <summary>
@@ -1083,13 +1086,13 @@ namespace VianaNET.Modules.Chart
     /// </param>
     private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+      if (e.PropertyName == "NumberOfTrackedObjects")
+      {
+        this.PopulateObjectCombo();
+      }
       if (!Project.IsDeserializing)
       {
-        if (e.PropertyName == "NumberOfTrackedObjects")
-        {
-          this.PopulateObjectCombo();
-        }
-        else if (e.PropertyName == "IndexOfObject")
+        if (e.PropertyName == "IndexOfObject")
         {
           this.Refresh();
         }

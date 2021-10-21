@@ -170,8 +170,9 @@ namespace VianaNET.Modules.DataAcquisition
           window.IndexOfTrackedObject = 1;
         }
 
+        Color color = App.Project.ProcessingData.TargetColor.Count > window.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1] : Colors.Black;
         window.BrushOfCossHair =
-          new SolidColorBrush(App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1]);
+          new SolidColorBrush(color);
       }
     }
 
@@ -252,13 +253,14 @@ namespace VianaNET.Modules.DataAcquisition
         this.visualDataPoints = new List<Ellipse>[App.Project.ProcessingData.NumberOfTrackedObjects];
         for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
+          Color color = App.Project.ProcessingData.TargetColor.Count > j ? App.Project.ProcessingData.TargetColor[j] : Colors.Black;
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
           {
             Ellipse visualDataPoint = new Ellipse();
             visualDataPoint.Width = 2 * this.visualDataPointRadius;
             visualDataPoint.Height = 2 * this.visualDataPointRadius;
-            visualDataPoint.Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[j]);
+            visualDataPoint.Stroke = new SolidColorBrush(color);
             visualDataPoint.IsEnabled = false;
             visualDataPoint.IsHitTestVisible = false;
 
@@ -356,7 +358,7 @@ namespace VianaNET.Modules.DataAcquisition
         double originalX = factorX * (scaledX - spaceX);
         double originalY = factorY * (scaledY - spaceY);
 
-        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
 
         if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {
@@ -475,8 +477,11 @@ namespace VianaNET.Modules.DataAcquisition
         Video.Instance.StepFrames(false, this.SkipPointCount);
       }
 
-      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
-      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
+      if (Video.Instance.VideoMode == VideoMode.File)
+      {
+        var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+        this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
+      }
     }
 
     /// <summary>
@@ -489,8 +494,11 @@ namespace VianaNET.Modules.DataAcquisition
         Video.Instance.StepFrames(true, this.SkipPointCount);
       }
 
-      var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
-      this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
+      if (Video.Instance.VideoMode == VideoMode.File)
+      {
+        var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
+        this.TimelineSlider.Value = (posFrames - 1) * Video.Instance.VideoElement.FrameTimeInMS;
+      }
     }
 
     /// <summary>

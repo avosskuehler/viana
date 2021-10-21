@@ -76,15 +76,16 @@ namespace VianaNET.Modules.Video.BlobDetection
             continue;
           }
 
+          Color color = App.Project.ProcessingData.TargetColor.Count > i ? App.Project.ProcessingData.TargetColor[i] : Colors.Black;
           Ellipse dataPoint = new Ellipse
           {
-            Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]),
+            Stroke = new SolidColorBrush(color),
             StrokeThickness = 2,
             Width = 15,
             Height = 15
           };
 
-          var location = new Point(sample.Object[i].PixelX, sample.Object[i].PixelY);
+          var location = new Point(sample.Object[i].PixelX, Video.Instance.VideoElement.NaturalVideoHeight - sample.Object[i].PixelY);
 
           this.CanvasDataPoints.Children.Add(dataPoint);
           Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
@@ -303,7 +304,7 @@ namespace VianaNET.Modules.Video.BlobDetection
           this.OverlayCanvas.Children.Add(blobEllipse);
 
           Canvas.SetLeft(blobEllipse, blob.Center.X * scaleX - blobEllipse.Width / 2);
-          Canvas.SetTop(blobEllipse, blob.Center.Y * scaleY - blobEllipse.Height / 2);
+          Canvas.SetTop(blobEllipse, (blob.Center.Y) * scaleY - blobEllipse.Height / 2);
         }
       }
     }
@@ -337,10 +338,14 @@ namespace VianaNET.Modules.Video.BlobDetection
             Width = 15,
             Height = 15
           };
-          Point location = App.Project.VideoData.LastPoint[i];
-          this.CanvasDataPoints.Children.Add(dataPoint);
-          Canvas.SetTop(dataPoint, location.Y - dataPoint.Height / 2);
-          Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+
+          if (App.Project.VideoData.LastPoint.Length > i)
+          {
+            Point location = App.Project.VideoData.LastPoint[i];
+            this.CanvasDataPoints.Children.Add(dataPoint);
+            Canvas.SetTop(dataPoint, (Video.Instance.VideoElement.NaturalVideoHeight - location.Y) - dataPoint.Height / 2);
+            Canvas.SetLeft(dataPoint, location.X - dataPoint.Width / 2);
+          }
         }
       }
     }

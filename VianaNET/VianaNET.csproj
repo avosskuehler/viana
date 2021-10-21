@@ -306,6 +306,7 @@
       <DependentUpon>SliderStyles.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\TrackObject.cs" />
     <Compile Include="CustomStyles\Types\CameraDevice.cs" />
     <Compile Include="CustomStyles\Types\ChartType.cs" />
     <Compile Include="CustomStyles\Types\DictionaryProxy.cs" />
