@@ -529,7 +529,7 @@ namespace VianaNET.Data
       }
 
       Point origin = App.Project.CalibrationData.OriginInPixel;
-      Point calibratedPoint = new Point(value.PixelX - origin.X, origin.Y - value.PixelY);
+      Point calibratedPoint = new Point(value.PixelX - origin.X, value.PixelY - origin.Y);
 
       calibratedPoint.X = calibratedPoint.X * App.Project.CalibrationData.ScalePixelToUnit;
       calibratedPoint.Y = calibratedPoint.Y * App.Project.CalibrationData.ScalePixelToUnit;

@@ -133,7 +133,7 @@ namespace VianaNET.Modules.Video.Dialogs
 
       if (!this.originIsSet)
       {
-        App.Project.CalibrationData.OriginInPixel = new Point(originalX, originalY);
+        App.Project.CalibrationData.OriginInPixel = new Point(originalX, Video.Control.Video.Instance.VideoElement.NaturalVideoHeight - originalY);
         this.originIsSet = true;
         this.originPath.Visibility = Visibility.Visible;
         Canvas.SetLeft(this.originPath, scaledX - this.originPath.ActualWidth / 2);

@@ -715,7 +715,7 @@ namespace VianaNET.Modules.Video
       if (this.GetScales(out double scaleX, out double scaleY))
       {
         Canvas.SetLeft(this.OriginPath, App.Project.CalibrationData.OriginInPixel.X * scaleX - this.OriginPath.ActualWidth / 2);
-        Canvas.SetTop(this.OriginPath, App.Project.CalibrationData.OriginInPixel.Y * scaleY - this.OriginPath.ActualHeight / 2);
+        Canvas.SetTop(this.OriginPath, (Video.Instance.VideoElement.NaturalVideoHeight - App.Project.CalibrationData.OriginInPixel.Y) * scaleY - this.OriginPath.ActualHeight / 2);
         this.RulerLine.X1 = App.Project.CalibrationData.RulerStartPointInPixel.X * scaleX;
         this.RulerLine.Y1 = App.Project.CalibrationData.RulerStartPointInPixel.Y * scaleY;
         this.RulerLine.X2 = App.Project.CalibrationData.RulerEndPointInPixel.X * scaleX;
