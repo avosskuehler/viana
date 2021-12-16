@@ -89,13 +89,18 @@ namespace VianaNET.Modules.Video.Control
     {
       get
       {
+        // PosMsec in OpenCV is not reliable, https://github.com/opencv/opencv/issues/9053#issuecomment-745635554
         var pos = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
-        return pos;
+        return pos * App.Project.VideoData.FramerateFactor;
+
+        //var pos = this.OpenCVObject.Get(VideoCaptureProperties.PosFrames);
+        //return pos * this.FrameTimeInMS * App.Project.VideoData.FramerateFactor;
       }
 
       set
       {
-        this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value);
+        this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value / App.Project.VideoData.FramerateFactor);
+        //this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, value / this.FrameTimeInMS / App.Project.VideoData.FramerateFactor);
         this.OpenCVObject.Grab();
         this.GrabCurrentFrame();
         this.UpdateFrameIndex();
@@ -299,6 +304,7 @@ namespace VianaNET.Modules.Video.Control
 
       // Seek to the beginning
       this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, zeroPosition);
+      //this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, zeroPosition / FrameTimeInMS);
       this.OpenCVObject.Grab();
       this.GrabCurrentFrame();
       this.UpdateFrameIndex();

@@ -274,6 +274,8 @@ namespace VianaNET.Data
       this.PositiveContrast.CollectionChanged += this.MotionDetectionParameterCollectionChanged;
 
       this.PropertyChanged += this.ProcessingDataPropertyChanged;
+
+      this.IsDetectionActivated = this.IsUsingMotionDetection || (this.IsUsingColorDetection && this.IsTargetColorSet);
     }
 
 
@@ -557,94 +559,97 @@ namespace VianaNET.Data
       this.watch.Start();
       long start = this.watch.ElapsedMilliseconds;
 
-      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      if (App.Project.ProcessingData.IsDetectionActivated)
       {
-        // Console.Write("BeforeColorFilte ");
-        // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
-        if (this.ColorThreshold.Count <= i || this.BlobMinDiameter.Count <= i
-            || this.BlobMaxDiameter.Count <= i || this.CurrentBlobCenter.Count <= i)
+        for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
         {
-          break;
-        }
-
-        // Get original picture
-        Video.Instance.RefreshProcessingMap();
-
-        if (this.IsUsingColorDetection)
-        {
-          // Apply color and crop filter if applicable
-          this.colorAndCropFilter.TargetColor = this.TargetColor.Count > i ? this.TargetColor[i] : Colors.Black;
-          this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
-          this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
-        }
-        else
-        {
-          // Only apply crop filter
-          this.cropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
-        }
-
-        // Apply motion detection if applicable
-        if (this.IsUsingMotionDetection)
-        {
-          if (this.detector.MotionDetectionAlgorithm is TwoFramesDifferenceDetectorSpecial algorithm)
+          // Console.Write("BeforeColorFilte ");
+          // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+          if (this.ColorThreshold.Count <= i || this.BlobMinDiameter.Count <= i
+              || this.BlobMaxDiameter.Count <= i || this.CurrentBlobCenter.Count <= i)
           {
-            algorithm.DifferenceThreshold = App.Project.ProcessingData.MotionThreshold[i];
-            algorithm.IsPositiveThreshold = App.Project.ProcessingData.PositiveContrast[i];
-            algorithm.SuppressNoise = App.Project.ProcessingData.SuppressNoise[i];
+            break;
           }
 
-          Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
-          this.detector.ProcessFrame(Video.Instance.VideoElement.UnmanagedImage);
-          Video.Instance.VideoElement.CopyProcessedDataToProcessingMap();
-        }
+          // Get original picture
+          Video.Instance.RefreshProcessingMap();
 
-        // Send modified image to blobs control
-        Video.Instance.VideoElement.UpdateProcessedImageSource();
-
-        // Get blobs from filtered process
-        IntPtr mapToUse;
-        if (this.IsUsingColorDetection && !this.IsUsingMotionDetection)
-        {
-          mapToUse = Video.Instance.VideoElement.ColorProcessingMapping;
-        }
-        else
-        {
-          mapToUse = Video.Instance.VideoElement.MotionProcessingMapping;
-        }
-
-        Histogram histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
-        this.segmentator.Histogram = histogram;
-        this.segmentator.ThresholdLuminance = histogram.Max * 0.5f;
-        this.segmentator.MinDiameter = this.BlobMinDiameter[i];
-        this.segmentator.MaxDiameter = this.BlobMaxDiameter[i];
-
-        Segment foundSegment = this.segmentator.Process();
-        while (this.DetectedBlob.Count <= i)
-        {
-          this.DetectedBlob.Add(new Segment());
-        }
-
-        this.DetectedBlob[i] = foundSegment;
-
-        // Console.Write("AfterBlobDetection: ");
-        // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
-        if (foundSegment.Diagonal != 0 && (foundSegment.Height < (this.colorAndCropFilter.ImageHeight - 10))
-            && (foundSegment.Width < (this.colorAndCropFilter.ImageWidth - 10)))
-        {
-          this.CurrentBlobCenter[i] = new Point(foundSegment.Center.X, foundSegment.Center.Y);
-          objectsFound = true;
-        }
-        else
-        {
-          this.CurrentBlobCenter[i] = null;
-        }
-
-        if (Video.Instance.IsDataAcquisitionRunning)
-        {
-          if (this.CurrentBlobCenter[i].HasValue)
+          if (this.IsUsingColorDetection)
           {
-            var flippedPoint = new Point(this.CurrentBlobCenter[i].Value.X, Video.Instance.VideoElement.NaturalVideoHeight - this.CurrentBlobCenter[i].Value.Y);
-            App.Project.VideoData.AddPoint(i, flippedPoint);
+            // Apply color and crop filter if applicable
+            this.colorAndCropFilter.TargetColor = this.TargetColor.Count > i ? this.TargetColor[i] : Colors.Black;
+            this.colorAndCropFilter.Threshold = this.ColorThreshold[i];
+            this.colorAndCropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
+          }
+          else
+          {
+            // Only apply crop filter
+            this.cropFilter.ProcessInPlace(Video.Instance.VideoElement.ColorProcessingMapping);
+          }
+
+          // Apply motion detection if applicable
+          if (this.IsUsingMotionDetection)
+          {
+            if (this.detector.MotionDetectionAlgorithm is TwoFramesDifferenceDetectorSpecial algorithm)
+            {
+              algorithm.DifferenceThreshold = App.Project.ProcessingData.MotionThreshold[i];
+              algorithm.IsPositiveThreshold = App.Project.ProcessingData.PositiveContrast[i];
+              algorithm.SuppressNoise = App.Project.ProcessingData.SuppressNoise[i];
+            }
+
+            Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();
+            this.detector.ProcessFrame(Video.Instance.VideoElement.UnmanagedImage);
+            Video.Instance.VideoElement.CopyProcessedDataToProcessingMap();
+          }
+
+          // Send modified image to blobs control
+          Video.Instance.VideoElement.UpdateProcessedImageSource();
+
+          // Get blobs from filtered process
+          IntPtr mapToUse;
+          if (this.IsUsingColorDetection && !this.IsUsingMotionDetection)
+          {
+            mapToUse = Video.Instance.VideoElement.ColorProcessingMapping;
+          }
+          else
+          {
+            mapToUse = Video.Instance.VideoElement.MotionProcessingMapping;
+          }
+
+          Histogram histogram = this.histogrammFilter.FromIntPtrMap(mapToUse);
+          this.segmentator.Histogram = histogram;
+          this.segmentator.ThresholdLuminance = histogram.Max * 0.5f;
+          this.segmentator.MinDiameter = this.BlobMinDiameter[i];
+          this.segmentator.MaxDiameter = this.BlobMaxDiameter[i];
+
+          Segment foundSegment = this.segmentator.Process();
+          while (this.DetectedBlob.Count <= i)
+          {
+            this.DetectedBlob.Add(new Segment());
+          }
+
+          this.DetectedBlob[i] = foundSegment;
+
+          // Console.Write("AfterBlobDetection: ");
+          // Console.WriteLine(watch.ElapsedMilliseconds.ToString());
+          if (foundSegment.Diagonal != 0 && (foundSegment.Height < (this.colorAndCropFilter.ImageHeight - 10))
+              && (foundSegment.Width < (this.colorAndCropFilter.ImageWidth - 10)))
+          {
+            this.CurrentBlobCenter[i] = new Point(foundSegment.Center.X, foundSegment.Center.Y);
+            objectsFound = true;
+          }
+          else
+          {
+            this.CurrentBlobCenter[i] = null;
+          }
+
+          if (Video.Instance.IsDataAcquisitionRunning)
+          {
+            if (this.CurrentBlobCenter[i].HasValue)
+            {
+              var flippedPoint = new Point(this.CurrentBlobCenter[i].Value.X, Video.Instance.VideoElement.NaturalVideoHeight - this.CurrentBlobCenter[i].Value.Y);
+              App.Project.VideoData.AddPoint(i, flippedPoint);
+            }
           }
         }
       }
@@ -810,7 +815,7 @@ namespace VianaNET.Data
       }
       else if (e.PropertyName == "IsUsingMotionDetection" || e.PropertyName == "IsUsingColorDetection" || e.PropertyName == "IsTargetColorSet")
       {
-        this.IsDetectionActivated = this.IsUsingMotionDetection || this.IsUsingColorDetection;
+        this.IsDetectionActivated = this.IsUsingMotionDetection || (this.IsUsingColorDetection && this.IsTargetColorSet);
         this.detector.Reset();
         Video.Instance.RefreshProcessingMap();
         Video.Instance.VideoElement.CopyProcessingMapToUnmanagedImage();

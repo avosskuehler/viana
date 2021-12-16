@@ -663,6 +663,11 @@ namespace VianaNET.Modules.Video
     private void OnVideoFrameChanged(object sender, EventArgs e)
     {
       //var pos = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosMsec);
+      //if (Video.Instance.VideoMode == VideoMode.File)
+      //{
+      //  this.TimelineSlider.Value = pos * App.Project.VideoData.FramerateFactor;
+      //}
+
       var posFrames = Video.Instance.VideoElement.OpenCVObject.Get(OpenCvSharp.VideoCaptureProperties.PosFrames);
       if (Video.Instance.VideoMode == VideoMode.File)
       {
@@ -1126,7 +1131,10 @@ namespace VianaNET.Modules.Video
 
     private void TimelineSlider_DragDelta(object sender, DragDeltaEventArgs e)
     {
-      Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
+      if (Video.Instance.VideoPlayerElement.CurrentState != VideoBase.PlayState.Running)
+      {
+        Video.Instance.VideoPlayerElement.MediaPositionInMS = this.TimelineSlider.Value;
+      }
     }
   }
 }

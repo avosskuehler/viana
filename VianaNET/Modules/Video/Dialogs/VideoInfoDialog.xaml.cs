@@ -262,8 +262,8 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         double factor = this.DefaultFrameRate / this.FrameRate;
         App.Project.VideoData.FramerateFactor = factor;
-        Control.Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
-        Control.Video.Instance.VideoElement.FrameTimeInMS = 1000d / this.FrameRate;
+        Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
+        Video.Instance.VideoElement.FrameTimeInMS = 1000d / this.FrameRate;
       }
 
       this.Close();

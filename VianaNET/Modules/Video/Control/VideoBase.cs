@@ -740,95 +740,121 @@ namespace VianaNET.Modules.Video.Control
     {
       BackgroundWorker worker = (BackgroundWorker)sender;
       Stopwatch watch = new Stopwatch();
+      //Stopwatch fpswatch = new Stopwatch();
       watch.Start();
+      //fpswatch.Start();
 
       double frametimeInMS = 41;
+      double framerateFactor = 1;
+      double selectionEnd = 1;
       this.Dispatcher.Invoke(() =>
       {
         frametimeInMS = this.FrameTimeInMS;
+        framerateFactor = App.Project.VideoData.FramerateFactor;
+        selectionEnd = App.Project.VideoData.SelectionEnd;
       });
 
-      long starttime = 0;
-      Mat frameMat = new Mat();
-      while (!worker.CancellationPending)
+      using (Mat frameMat = new Mat())
       {
-        var currentPosInMS = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
-
-        bool endreached = false;
-        this.Dispatcher.Invoke(() =>
+        while (!worker.CancellationPending)
         {
-          if (currentPosInMS > App.Project.VideoData.SelectionEnd)
+          var currentPosInMS = this.OpenCVObject.Get(VideoCaptureProperties.PosMsec);
+          //var currentPosInMS = this.OpenCVObject.Get(VideoCaptureProperties.PosFrames) * frametimeInMS;
+
+          var scaledCurrentPosInMS = currentPosInMS * framerateFactor;
+
+          if (scaledCurrentPosInMS >= selectionEnd)
           {
-            endreached = true;
-          }
-        });
-
-        if (endreached)
-        {
-          break;
-        }
-
-        //using (Mat frameMat = new Mat())
-        {
-          this.OpenCVObject.Read(frameMat);
-          if (frameMat.Empty())
-          {
-            this.Dispatcher.Invoke(() =>
-            {
-              this.Stop();
-              if (Video.Instance.VideoMode == VideoMode.File)
-              {
-                var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
-                this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
-                Video.Instance.VideoPlayerElement.RaiseFileComplete();
-                this.OpenCVObject.Grab();
-                this.GrabCurrentFrame();
-              }
-            });
-
             break;
           }
 
-          if (this.rotation.HasValue)
+          if (Video.Instance.VideoMode == VideoMode.File)
           {
-            using (Mat rotMat = new Mat())
-            {
-              Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+            // Get the time it took to process the last frame
+            var total = watch.ElapsedMilliseconds;
 
+            if (total < frametimeInMS)
+            {
+              // Processing time is shorter that default frametime, so wait till frametime is over, to have correct FPS
+              var wait = new TimeSpan((long)((frametimeInMS - total) * 10000));
+              Thread.Sleep(wait);
+              //Console.WriteLine("In Time, wait: {0}", wait.Milliseconds);
+            }
+            else
+            {
+              // Processing has taken more time, than a frame should last, so skip the next frame to be in time again.
+              var skipCount = Math.Floor(total / frametimeInMS);
+              //Console.WriteLine("Skip: {0}", skipCount);
+              for (int i = 0; i < skipCount; i++)
+              {
+                this.OpenCVObject.Grab();
+                this.frameCounter++;
+              }
+
+              watch.Restart();
+              continue;
+            }
+
+            watch.Restart();
+          }
+
+          // Output FPS
+          //Console.WriteLine("FPS: {0}", 1f / fpswatch.ElapsedMilliseconds * 1000);
+          //fpswatch.Restart();
+
+          // Bildverarbeitung grab, retreive, analyze, send to processing chain
+          {
+            this.OpenCVObject.Read(frameMat);
+            if (frameMat.Empty())
+            {
+              // Letztes Bild erreicht
+              this.Dispatcher.Invoke(() =>
+              {
+                this.Stop();
+                if (Video.Instance.VideoMode == VideoMode.File)
+                {
+                  var lastFrameIndex = this.OpenCVObject.Get(VideoCaptureProperties.FrameCount);
+                  this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, lastFrameIndex);
+                  Video.Instance.VideoPlayerElement.RaiseFileComplete();
+                  this.OpenCVObject.Grab();
+                  this.GrabCurrentFrame();
+                }
+              });
+
+              break;
+            }
+
+            if (this.rotation.HasValue)
+            {
+              using (Mat rotMat = new Mat())
+              {
+                Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+                // Must create and use WriteableBitmap in the same thread(UI Thread).
+                this.Dispatcher.Invoke(() =>
+                {
+                  WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+                  Video.Instance.OriginalImageSource = newFrame;
+                  Video.Instance.VideoElement.NewFrameCallback(newFrame);
+                });
+              }
+            }
+            else
+            {
               // Must create and use WriteableBitmap in the same thread(UI Thread).
               this.Dispatcher.Invoke(() =>
               {
-                WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+                WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
                 Video.Instance.OriginalImageSource = newFrame;
                 Video.Instance.VideoElement.NewFrameCallback(newFrame);
               });
             }
           }
-          else
-          {
-            // Must create and use WriteableBitmap in the same thread(UI Thread).
-            this.Dispatcher.Invoke(() =>
-            {
-              WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
-              Video.Instance.OriginalImageSource = newFrame;
-              Video.Instance.VideoElement.NewFrameCallback(newFrame);
-            });
-          }
-        }
 
-        if (Video.Instance.VideoMode == VideoMode.File)
-        {
-          while (watch.ElapsedMilliseconds - starttime < frametimeInMS)
-          {
-            Thread.Sleep(1);
-          }
-        }
 
-        starttime = watch.ElapsedMilliseconds;
-        GC.Collect();
+          GC.Collect();
+        }
       }
-
-      frameMat.Dispose();
     }
 
     /// <summary>
