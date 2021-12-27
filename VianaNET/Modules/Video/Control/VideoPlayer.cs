@@ -99,11 +99,18 @@ namespace VianaNET.Modules.Video.Control
 
       set
       {
-        this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value / App.Project.VideoData.FramerateFactor);
-        //this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, value / this.FrameTimeInMS / App.Project.VideoData.FramerateFactor);
-        this.OpenCVObject.Grab();
-        this.GrabCurrentFrame();
-        this.UpdateFrameIndex();
+        try
+        {
+          this.OpenCVObject.Set(VideoCaptureProperties.PosMsec, value / App.Project.VideoData.FramerateFactor);
+          //this.OpenCVObject.Set(VideoCaptureProperties.PosFrames, value / this.FrameTimeInMS / App.Project.VideoData.FramerateFactor);
+          this.OpenCVObject.Grab();
+          this.GrabCurrentFrame();
+          this.UpdateFrameIndex();
+        }
+        catch (Exception ex)
+        {
+          ErrorLogger.ProcessException(ex, false);
+        }
       }
     }
 

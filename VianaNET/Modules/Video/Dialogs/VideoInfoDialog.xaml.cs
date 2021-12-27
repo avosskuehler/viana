@@ -257,14 +257,11 @@ namespace VianaNET.Modules.Video.Dialogs
     {
       this.DialogResult = true;
 
-      // Update FPS, if needed
-      if (this.DefaultFrameRate != this.FrameRate)
-      {
-        double factor = this.DefaultFrameRate / this.FrameRate;
-        App.Project.VideoData.FramerateFactor = factor;
-        Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
-        Video.Instance.VideoElement.FrameTimeInMS = 1000d / this.FrameRate;
-      }
+      // Update FPS always cause, when resetting to equal values, it ignores the value
+      double factor = this.DefaultFrameRate / this.FrameRate;
+      App.Project.VideoData.FramerateFactor = factor;
+      Video.Instance.VideoPlayerElement.MediaDurationInMS = this.Duration * factor;
+      Video.Instance.VideoElement.FrameTimeInMS = 1000d / this.FrameRate;
 
       this.Close();
     }

@@ -142,6 +142,7 @@ namespace VianaNET.Modules.Video.Control
       this.bkgWorker.DoWork += this.Worker_DoWork;
 
       this.OpenCVObject = new VideoCapture();
+      this.OpenCVObject.SetExceptionMode(true);
     }
 
     /// <summary>
@@ -754,7 +755,7 @@ namespace VianaNET.Modules.Video.Control
         selectionEnd = App.Project.VideoData.SelectionEnd;
       });
 
-      using (Mat frameMat = new Mat())
+      try
       {
         while (!worker.CancellationPending)
         {
@@ -803,6 +804,8 @@ namespace VianaNET.Modules.Video.Control
           //fpswatch.Restart();
 
           // Bildverarbeitung grab, retreive, analyze, send to processing chain
+          var frameMat = new Mat();
+          //using (var frameMat = new Mat())
           {
             this.OpenCVObject.Read(frameMat);
             if (frameMat.Empty())
@@ -826,7 +829,8 @@ namespace VianaNET.Modules.Video.Control
 
             if (this.rotation.HasValue)
             {
-              using (Mat rotMat = new Mat())
+              var rotMat = new Mat();
+              //using (Mat rotMat = new Mat())
               {
                 Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
 
@@ -838,6 +842,8 @@ namespace VianaNET.Modules.Video.Control
                   Video.Instance.VideoElement.NewFrameCallback(newFrame);
                 });
               }
+
+              rotMat.Release();
             }
             else
             {
@@ -851,9 +857,13 @@ namespace VianaNET.Modules.Video.Control
             }
           }
 
-
+          frameMat.Release();
           GC.Collect();
         }
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, false);
       }
     }
 
@@ -863,42 +873,57 @@ namespace VianaNET.Modules.Video.Control
     /// </summary>
     protected void GrabCurrentFrame()
     {
-      using (Mat frameMat = new Mat())
+      try
       {
-        this.OpenCVObject.Retrieve(frameMat);
-        if (frameMat.Empty())
-        {
-          return;
-        }
 
-        if (this.rotation.HasValue)
+        var frameMat = new Mat();
+        //using (Mat frameMat = new Mat())
         {
-          using (Mat rotMat = new Mat())
+          this.OpenCVObject.Retrieve(frameMat);
+          if (frameMat.Empty())
           {
-            Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+            return;
+          }
 
+          if (this.rotation.HasValue)
+          {
+            var rotMat = new Mat();
+            //using (Mat rotMat = new Mat())
+            {
+              Cv2.Rotate(frameMat, rotMat, this.rotation.Value);
+
+              // Must create and use WriteableBitmap in the same thread(UI Thread).
+              this.Dispatcher.Invoke(() =>
+              {
+                WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+                Video.Instance.OriginalImageSource = newFrame;
+                Video.Instance.VideoElement.NewFrameCallback(newFrame);
+              });
+            }
+
+            rotMat.Release();
+          }
+          else
+          {
             // Must create and use WriteableBitmap in the same thread(UI Thread).
             this.Dispatcher.Invoke(() =>
             {
-              WriteableBitmap newFrame = rotMat.ToWriteableBitmap();
+              WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
               Video.Instance.OriginalImageSource = newFrame;
               Video.Instance.VideoElement.NewFrameCallback(newFrame);
             });
           }
         }
-        else
-        {
-          // Must create and use WriteableBitmap in the same thread(UI Thread).
-          this.Dispatcher.Invoke(() =>
-          {
-            WriteableBitmap newFrame = frameMat.ToWriteableBitmap();
-            Video.Instance.OriginalImageSource = newFrame;
-            Video.Instance.VideoElement.NewFrameCallback(newFrame);
-          });
-        }
-      }
 
-      UiServices.WaitUntilReady();
+        frameMat.Release();
+        GC.Collect();
+
+        UiServices.WaitUntilReady();
+      }
+      catch (Exception ex)
+      {
+        ErrorLogger.ProcessException(ex, false);
+      }
     }
   }
 }

@@ -220,7 +220,7 @@
     </Reference>
     <Reference Include="WpfMath, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WpfMath\wpf-math\src\WpfMath\bin\Release\net452\WpfMath.dll</HintPath>
+      <HintPath>..\..\wpf-math\src\WpfMath\bin\Release\net452\WpfMath.dll</HintPath>
     </Reference>
     <Reference Include="XAMLMarkupExtensions, Version=2.1.2.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
       <HintPath>..\packages\XAMLMarkupExtensions.2.1.2\lib\net48\XAMLMarkupExtensions.dll</HintPath>
@@ -939,22 +939,22 @@
   <ItemGroup>
     <PublishFile Include="CustomStyles\FontAwesome\fontawesome-all.css">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="CustomStyles\FontAwesome\IconChar.tt">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>
