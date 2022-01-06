@@ -104,6 +104,12 @@ namespace VianaNET.Application
     private RecentFiles()
     {
       this.appSettings = Settings.Default;
+      this.appSettings.SettingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VianaNET");
+      if (!Directory.Exists(this.appSettings.SettingsPath))
+      {
+        Directory.CreateDirectory(this.appSettings.SettingsPath);
+      }
+
       maxNumItems = this.appSettings.NumberOfRecentFiles;
       this.Load();
 
@@ -154,8 +160,6 @@ namespace VianaNET.Application
     /// to the settings file used to store recent file collection.
     /// </summary>
     public string SettingsFile => Path.Combine(this.appSettings.SettingsPath, "VianaRecentFileList.xml");
-
-
 
     ///////////////////////////////////////////////////////////////////////////////
     // Public methods                                                            //

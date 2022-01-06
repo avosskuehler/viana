@@ -99,7 +99,7 @@ namespace VianaNET.Logging
 
       string message = GetLogEntryForException(innerException);
       WriteLine(message);
-      
+
       if (showMessageBox)
       {
         VianaDialog dlg = new VianaDialog("Exception occured", ex.Message, message, true);
@@ -118,10 +118,7 @@ namespace VianaNET.Logging
       // Use always ErrorLog.txt in LocalApplicationData
       if (logWriter == null)
       {
-        fs =
-          new FileStream(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VianaNETErrorLog.txt",
-            FileMode.Append);
+        fs = new FileStream(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VianaNET", "VianaNETErrorLog.txt"), FileMode.Append);
         logWriter = new StreamWriter(fs);
       }
 
