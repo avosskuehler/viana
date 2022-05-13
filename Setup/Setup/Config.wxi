@@ -9,7 +9,7 @@
   <?define SupportPhone = "adrian@vosskuehler.name"?>
   <?define InstallDescription = "Video analysis for science education."?>
   <?define UpgradeGuid = "{4830D7E5-685D-4637-B1BD-9A347BB911CF}"?>
-  <?define ProductVersion="6.3.1" ?>
+  <?define ProductVersion="6.4.1" ?>
 
   <?if $(var.Platform) = x64 ?>
   <?define ProductName = "Viana.NET" ?>

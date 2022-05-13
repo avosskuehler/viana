@@ -165,7 +165,22 @@ namespace VianaNET.Modules.Video
            / this.TimelineSlider.FrameTimeInMS);
         this.ProcessImage();
 
-        Video.Instance.StepOneFrame(true);
+        while (Video.Instance.IsDataAcquisitionRunning)
+        {
+          Video.Instance.StepOneFrame(true);
+
+          this.automaticDataAquisitionCurrentFrameCount++;
+          StatusBarContent.Instance.ProgressBarValue = (double)this.automaticDataAquisitionCurrentFrameCount
+                                                   / (this.automaticDataAquisitionTotalFrameCount - 1) * 100;
+
+          if (this.automaticDataAquisitionCurrentFrameCount == this.automaticDataAquisitionTotalFrameCount - 1
+          || this.cancelCalculation)
+          {
+            this.AutomaticAquisitionFinished();
+            return;
+          }
+
+        }
       }
       else
       {
@@ -910,26 +925,26 @@ namespace VianaNET.Modules.Video
       //    });
 
 
-      // Run next sample
-      this.Dispatcher.Invoke(
-        (ThreadStart)delegate
-          {
-            if (Video.Instance.IsDataAcquisitionRunning)
-            {
-              this.automaticDataAquisitionCurrentFrameCount++;
-              StatusBarContent.Instance.ProgressBarValue = (double)this.automaticDataAquisitionCurrentFrameCount
-                                                           / (this.automaticDataAquisitionTotalFrameCount - 1) * 100;
+      //// Run next sample
+      //this.Dispatcher.Invoke(
+      //  (ThreadStart)delegate
+      //    {
+      //      if (Video.Instance.IsDataAcquisitionRunning)
+      //      {
+      //        this.automaticDataAquisitionCurrentFrameCount++;
+      //        StatusBarContent.Instance.ProgressBarValue = (double)this.automaticDataAquisitionCurrentFrameCount
+      //                                                     / (this.automaticDataAquisitionTotalFrameCount - 1) * 100;
 
-              if (this.automaticDataAquisitionCurrentFrameCount == this.automaticDataAquisitionTotalFrameCount - 1
-                  || this.cancelCalculation)
-              {
-                this.AutomaticAquisitionFinished();
-                return;
-              }
+      //        if (this.automaticDataAquisitionCurrentFrameCount == this.automaticDataAquisitionTotalFrameCount - 1
+      //            || this.cancelCalculation)
+      //        {
+      //          this.AutomaticAquisitionFinished();
+      //          return;
+      //        }
 
-              Video.Instance.StepOneFrame(true);
-            }
-          });
+      //        Video.Instance.StepOneFrame(true);
+      //      }
+      //    });
     }
 
     /// <summary>
