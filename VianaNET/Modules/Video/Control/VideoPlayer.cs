@@ -275,8 +275,10 @@ namespace VianaNET.Modules.Video.Control
             return false;
           }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+          var mode = this.OpenCVObject.GetExceptionMode();
+          ErrorLogger.ProcessException(ex, true);
           return false;
         }
 

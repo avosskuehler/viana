@@ -252,14 +252,11 @@ namespace VianaNET.Data
         this.SetValue(UseEveryNthPointProperty, value);
         if (!Project.IsDeserializing)
         {
-          this.FilterSamples();
+          RefreshDistanceVelocityAcceleration();
+          //this.FilterSamples();
         }
       }
     }
-
-
-
-
 
     /// <summary>
     /// The add point.
@@ -1058,13 +1055,13 @@ namespace VianaNET.Data
       for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
-        for (int i = 1; i < this.validDataSamples[j].Count; i++)
+        for (int i = this.UseEveryNthPoint; i < this.validDataSamples[j].Count; i += this.UseEveryNthPoint)
         {
           DataSample currentSample = this.validDataSamples[j][i].Object[j];
-          DataSample previousSample = this.validDataSamples[j][i - 1].Object[j];
+          DataSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint].Object[j];
 
           // Calculate distance and length except first point
-          if (i == 1)
+          if (i == this.UseEveryNthPoint)
           {
             currentSample.Distance = GetSimpleDistance(currentSample, previousSample);
             currentSample.DistanceX = GetSimpleXDistance(currentSample, previousSample);
@@ -1085,20 +1082,20 @@ namespace VianaNET.Data
         }
 
         // Calculate velocity
-        for (int i = 1; i < this.validDataSamples[j].Count; i++)
+        for (int i = this.UseEveryNthPoint; i < this.validDataSamples[j].Count; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample previousSample = this.validDataSamples[j][i - 1];
+          TimeSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint];
 
           currentSample.Object[j].Velocity = -GetVelocity(currentSample, previousSample, j);
           currentSample.Object[j].VelocityX = -GetXVelocity(currentSample, previousSample, j);
           currentSample.Object[j].VelocityY = -GetYVelocity(currentSample, previousSample, j);
         }
 
-        for (int i = 1; i < this.validDataSamples[j].Count; i++)
+        for (int i = this.UseEveryNthPoint; i < this.validDataSamples[j].Count; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample previousSample = this.validDataSamples[j][i - 1];
+          TimeSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint];
 
           currentSample.Object[j].Acceleration = GetSimpleAcceleration(previousSample, currentSample, j);
           currentSample.Object[j].AccelerationX = GetSimpleXAcceleration(previousSample, currentSample, j);
@@ -1119,7 +1116,7 @@ namespace VianaNET.Data
       for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
           TimeSample nextSample = this.validDataSamples[j][i + 1];
@@ -1134,9 +1131,9 @@ namespace VianaNET.Data
             currentSample.Object[j].LengthX = currentSample.Object[j].DistanceX;
             currentSample.Object[j].LengthY = currentSample.Object[j].DistanceY;
           }
-          else if (i < this.Samples.Count - 1)
+          else if (i < this.Samples.Count - this.UseEveryNthPoint)
           {
-            TimeSample previousSample = this.validDataSamples[j][i - 1];
+            TimeSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint];
             currentSample.Object[j].Distance = GetCentralDistance(previousSample, nextSample, j);
             currentSample.Object[j].DistanceX = GetCentralXDistance(previousSample, nextSample, j);
             currentSample.Object[j].DistanceY = GetCentralYDistance(previousSample, nextSample, j);
@@ -1146,10 +1143,10 @@ namespace VianaNET.Data
           }
         }
 
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample nextSample = this.validDataSamples[j][i + 1];
+          TimeSample nextSample = this.validDataSamples[j][i + this.UseEveryNthPoint];
 
           // Calculate velocity except last point
           if (i == 0)
@@ -1158,7 +1155,7 @@ namespace VianaNET.Data
             currentSample.Object[j].VelocityX = GetXVelocity(currentSample, nextSample, j);
             currentSample.Object[j].VelocityY = GetYVelocity(currentSample, nextSample, j);
           }
-          else if (i < this.Samples.Count - 1)
+          else if (i < this.Samples.Count - this.UseEveryNthPoint)
           {
             currentSample.Object[j].Velocity = GetVelocity(currentSample, nextSample, j);
             currentSample.Object[j].VelocityX = GetXVelocity(currentSample, nextSample, j);
@@ -1167,10 +1164,10 @@ namespace VianaNET.Data
         }
 
         // Calculate acceleration
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample nextSample = this.validDataSamples[j][i + 1];
+          TimeSample nextSample = this.validDataSamples[j][i + this.UseEveryNthPoint];
 
           // Calculate acceleration except last point
           if (i == 0)
@@ -1179,9 +1176,9 @@ namespace VianaNET.Data
             currentSample.Object[j].AccelerationX = GetSimpleXAcceleration(currentSample, nextSample, j);
             currentSample.Object[j].AccelerationY = GetSimpleYAcceleration(currentSample, nextSample, j);
           }
-          else if (i < this.Samples.Count - 1)
+          else if (i < this.Samples.Count - this.UseEveryNthPoint)
           {
-            TimeSample previousSample = this.validDataSamples[j][i - 1];
+            TimeSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint];
             currentSample.Object[j].Acceleration = GetCentralAcceleration(previousSample, currentSample, nextSample, j);
             currentSample.Object[j].AccelerationX = GetCentralXAcceleration(previousSample, currentSample, nextSample, j);
             currentSample.Object[j].AccelerationY = GetCentralYAcceleration(previousSample, currentSample, nextSample, j);
@@ -1200,10 +1197,10 @@ namespace VianaNET.Data
       for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
       {
         // Calculate distance and length
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           DataSample currentSample = this.validDataSamples[j][i].Object[j];
-          DataSample nextSample = this.validDataSamples[j][i + 1].Object[j];
+          DataSample nextSample = this.validDataSamples[j][i + this.UseEveryNthPoint].Object[j];
 
           // Calculate distance and length except last point
           if (i == 0)
@@ -1215,9 +1212,9 @@ namespace VianaNET.Data
             currentSample.LengthX = currentSample.DistanceX;
             currentSample.LengthY = currentSample.DistanceY;
           }
-          else if (i < this.Samples.Count - 1)
+          else if (i < this.Samples.Count - this.UseEveryNthPoint)
           {
-            DataSample previousSample = this.validDataSamples[j][i - 1].Object[j];
+            DataSample previousSample = this.validDataSamples[j][i - this.UseEveryNthPoint].Object[j];
             currentSample.Distance = GetSimpleDistance(nextSample, currentSample);
             currentSample.DistanceX = GetSimpleXDistance(nextSample, currentSample);
             currentSample.DistanceY = GetSimpleYDistance(nextSample, currentSample);
@@ -1228,10 +1225,10 @@ namespace VianaNET.Data
         }
 
         // Calculate Velocity
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample nextSample = this.validDataSamples[j][i + 1];
+          TimeSample nextSample = this.validDataSamples[j][i + this.UseEveryNthPoint];
 
           currentSample.Object[j].Velocity = GetVelocity(currentSample, nextSample, j);
           currentSample.Object[j].VelocityX = GetXVelocity(currentSample, nextSample, j);
@@ -1239,10 +1236,10 @@ namespace VianaNET.Data
         }
 
         // Calculate Acceleration
-        for (int i = 0; i < this.validDataSamples[j].Count - 1; i++)
+        for (int i = 0; i < this.validDataSamples[j].Count - this.UseEveryNthPoint; i += this.UseEveryNthPoint)
         {
           TimeSample currentSample = this.validDataSamples[j][i];
-          TimeSample nextSample = this.validDataSamples[j][i + 1];
+          TimeSample nextSample = this.validDataSamples[j][i + this.UseEveryNthPoint];
 
           currentSample.Object[j].Acceleration = GetSimpleAcceleration(currentSample, nextSample, j);
           currentSample.Object[j].AccelerationX = GetSimpleXAcceleration(currentSample, nextSample, j);
