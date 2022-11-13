@@ -17,11 +17,11 @@
   <Grid Name="PlayerContainerGrid">
     <Image Name="VideoImage" Stretch="Uniform" Source="{Binding Path=OriginalImageSource, Source={x:Static control:Video.Instance}}" MouseDown="PlayerMouseDown" MouseMove="PlayerMouseMove" />
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
-      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
+      <Line Name="VerticalCursorLineTop" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="HorizontalCursorLineLeft" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="VerticalCursorLineBottom" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="HorizontalCursorLineRight" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCrossHair}" Stretch="Fill" Width="10" Height="10" IsEnabled="False" IsHitTestVisible="False" />
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static local:App.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"

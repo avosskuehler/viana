@@ -1,0 +1,48 @@
+﻿<Window x:Class="VianaNET.Modules.DataAcquisition.SelectCursorcolorDlg"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension" xmlns:mainWindow="clr-namespace:VianaNET.MainWindow"
+    xmlns:local="clr-namespace:VianaNET"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    lex:LocalizeDictionary.DesignCulture="de"
+    ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"
+    Height="250" Width="600" WindowStyle="ThreeDBorderWindow"
+    Title="{lex:Loc VianaNET:Labels:SelectCursorcolorDialogTitle}" Icon="/VianaNET;component/Images/Color32.png"
+    DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}">
+  <Window.Resources>
+    <ResourceDictionary Source="/VianaNET;component/CustomStyles/Styles/VianaStyle.xaml"/>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="60"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <mainWindow:TopFrame x:Name="TopFrame" Grid.Row="0" Icon="/VianaNET;component/Images/SelectColor32.png" Title="{lex:Loc VianaNET:Labels:SelectCursorcolorDialogTopFrameTitle}"/>
+    <Border Name="DescriptionArea"  Grid.Row="1" Background="{StaticResource MainBackgroundBrush}" Padding="10">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="12"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Grid.Row="0" Content="{lex:Loc VianaNET:Labels:SelectCursorcolorDialogColorLabel}"/>
+        <xctk:ColorPicker Grid.Column="1" Grid.Row="0" SelectedColor="{Binding Source={x:Static local:App.Project}, Path=ProcessingData.Cursorcolor}"/>
+        <Label Grid.Column="0" Grid.Row="2" Content="{lex:Loc VianaNET:Labels:SelectCursorcolorDialogTypeLabel}"/>
+        <ComboBox Grid.Column="1" Grid.Row="2" 
+                  ItemsSource="{Binding Source={StaticResource CursorcolorTypes}}" 
+                  SelectedItem="{Binding Source={x:Static local:App.Project}, Path=ProcessingData.CursorcolorType}"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" Text="{lex:Loc VianaNET:Labels:SelectCursorcolorDialogTypeDescription}"></TextBlock>
+      </Grid>
+    </Border>
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+      <Button Name="SaveAndCloseButton" Click="SaveAndCloseButtonClick" IsDefault="True" Content="{lex:Loc VianaNET:Labels:OK}" Height="21" Width="124" Margin="5" />
+    </StackPanel>
+  </Grid>
+</Window>

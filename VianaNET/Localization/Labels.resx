@@ -852,6 +852,15 @@
   <data name="ButtonSelectColorToolTipTitle" xml:space="preserve">
     <value>@ButtonSelectColorToolTipTitle</value>
   </data>
+  <data name="ButtonSelectCursorcolorLabelTitle" xml:space="preserve">
+    <value>@ButtonSelectCursorcolorLabelTitle</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipDescription" xml:space="preserve">
+    <value>@ButtonSelectCursorcolorToolTipDescription</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipTitle" xml:space="preserve">
+    <value>@ButtonSelectCursorcolorToolTipTitle</value>
+  </data>
   <data name="ButtonSelectedColorLabelTitle" xml:space="preserve">
     <value>@ButtonSelectedColorLabelTitle</value>
   </data>
@@ -1677,6 +1686,9 @@
   <data name="RibbonGroupChartShowWindowLabelTitle" xml:space="preserve">
     <value>@RibbonGroupChartShowWindowLabelTitle</value>
   </data>
+  <data name="RibbonGroupCursorcolorLabelTitle" xml:space="preserve">
+    <value>@RibbonGroupCursorcolorLabelTitle</value>
+  </data>
   <data name="RibbonGroupDatagridExportLabelTitle" xml:space="preserve">
     <value>@RibbonGroupDatagridExportLabelTitle</value>
   </data>
@@ -1844,6 +1856,21 @@
   </data>
   <data name="SelectColorWindowTitle" xml:space="preserve">
     <value>@SelectColorWindowTitle</value>
+  </data>
+  <data name="SelectCursorcolorDialogColorLabel" xml:space="preserve">
+    <value>@SelectCursorcolorDialogColorLabel</value>
+  </data>
+  <data name="SelectCursorcolorDialogTitle" xml:space="preserve">
+    <value>@SelectCursorcolorDialogTitle</value>
+  </data>
+  <data name="SelectCursorcolorDialogTopFrameTitle" xml:space="preserve">
+    <value>@SelectCursorcolorDialogTopFrameTitle</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeDescription" xml:space="preserve">
+    <value>@SelectCursorcolorDialogTypeDescription</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeLabel" xml:space="preserve">
+    <value>@SelectCursorcolorDialogTypeLabel</value>
   </data>
   <data name="SelectVlcLibrariesDescription" xml:space="preserve">
     <value>@SelectVlcLibrariesDescription</value>

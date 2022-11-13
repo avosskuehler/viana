@@ -39,10 +39,10 @@ namespace VianaNET.Modules.DataAcquisition
   public partial class ModifyDataWindow
   {
     /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCrossHair" />.
     /// </summary>
-    public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair",
+    public static readonly DependencyProperty BrushOfCrossHairProperty = DependencyProperty.Register(
+      "BrushOfCrossHair",
       typeof(SolidColorBrush),
       typeof(ModifyDataWindow),
       new FrameworkPropertyMetadata(Brushes.Red, OnPropertyChanged));
@@ -139,11 +139,11 @@ namespace VianaNET.Modules.DataAcquisition
     /// <summary>
     ///   Gets or sets the index of the currently tracked object
     /// </summary>
-    public SolidColorBrush BrushOfCossHair
+    public SolidColorBrush BrushOfCrossHair
     {
-      get => (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
+      get => (SolidColorBrush)this.GetValue(BrushOfCrossHairProperty);
 
-      set => this.SetValue(BrushOfCossHairProperty, value);
+      set => this.SetValue(BrushOfCrossHairProperty, value);
     }
 
     /// <summary>
@@ -195,7 +195,7 @@ namespace VianaNET.Modules.DataAcquisition
         }
 
         Color color = App.Project.ProcessingData.TargetColor.Count > window.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1] : Colors.Black;
-        window.BrushOfCossHair = new SolidColorBrush(color);
+        window.BrushOfCrossHair = new SolidColorBrush(color);
       }
     }
 
@@ -438,7 +438,7 @@ namespace VianaNET.Modules.DataAcquisition
 
       // Update crosshair brush
       Color color = App.Project.ProcessingData.TargetColor.Count > this.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[this.IndexOfTrackedObject - 1] : Colors.Black;
-      this.BrushOfCossHair = new SolidColorBrush(color);
+      this.BrushOfCrossHair = new SolidColorBrush(color);
     }
 
     /// <summary>

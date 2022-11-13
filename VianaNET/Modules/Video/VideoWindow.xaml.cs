@@ -37,7 +37,6 @@ namespace VianaNET.Modules.Video
   using System.Windows.Input;
   using System.Windows.Media;
   using System.Windows.Shapes;
-  using System.Windows.Threading;
   using VianaNET.CustomStyles.Controls;
   using VianaNET.CustomStyles.Types;
   using VianaNET.Logging;
@@ -402,9 +401,18 @@ namespace VianaNET.Modules.Video
         Binding widthBinding = new Binding("ActualWidth") { ElementName = "VideoImage" };
         Color color = Colors.Black;
 
-        if (App.Project.ProcessingData.IsTargetColorSet && App.Project.ProcessingData.TargetColor.Count > i)
+        switch (App.Project.ProcessingData.CursorcolorType)
         {
-          color = App.Project.ProcessingData.TargetColor[i];
+          default:
+          case CursorcolorType.Fix:
+            color = App.Project.ProcessingData.Cursorcolor;
+            break;
+          case CursorcolorType.Flex:
+            if (App.Project.ProcessingData.IsTargetColorSet && App.Project.ProcessingData.TargetColor.Count > i)
+            {
+              color = App.Project.ProcessingData.TargetColor[i];
+            }
+            break;
         }
 
         Line newHorizontalLine = new Line
@@ -513,7 +521,7 @@ namespace VianaNET.Modules.Video
     /// </param>
     private void ProcessingDataPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      if (e.PropertyName == "TargetColor")
+      if (e.PropertyName == "TargetColor" || e.PropertyName == "Cursorcolor" || e.PropertyName == "CursorcolorType")
       {
         this.UpdateCrossHairColors();
       }
@@ -877,13 +885,29 @@ namespace VianaNET.Modules.Video
     /// </summary>
     private void UpdateCrossHairColors()
     {
-      for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
+      switch (App.Project.ProcessingData.CursorcolorType)
       {
-        if (App.Project.ProcessingData.TargetColor.Count > i)
-        {
-          this.blobHorizontalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
-          this.blobVerticalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
-        }
+        default:
+        case CursorcolorType.Fix:
+          for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
+          {
+            if (App.Project.ProcessingData.TargetColor.Count > i)
+            {
+              this.blobHorizontalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.Cursorcolor);
+              this.blobVerticalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.Cursorcolor);
+            }
+          }
+          break;
+        case CursorcolorType.Flex:
+          for (int i = 0; i < App.Project.ProcessingData.NumberOfTrackedObjects; i++)
+          {
+            if (App.Project.ProcessingData.TargetColor.Count > i)
+            {
+              this.blobHorizontalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
+              this.blobVerticalLines[i].Stroke = new SolidColorBrush(App.Project.ProcessingData.TargetColor[i]);
+            }
+          }
+          break;
       }
     }
 

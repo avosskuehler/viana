@@ -19,7 +19,7 @@ namespace VianaNET.Localization {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -2262,6 +2262,33 @@ namespace VianaNET.Localization {
         public static string ButtonSelectColorToolTipTitle {
             get {
                 return ResourceManager.GetString("ButtonSelectColorToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectCursorcolorLabelTitle ähnelt.
+        /// </summary>
+        public static string ButtonSelectCursorcolorLabelTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectCursorcolorLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectCursorcolorToolTipDescription ähnelt.
+        /// </summary>
+        public static string ButtonSelectCursorcolorToolTipDescription {
+            get {
+                return ResourceManager.GetString("ButtonSelectCursorcolorToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @ButtonSelectCursorcolorToolTipTitle ähnelt.
+        /// </summary>
+        public static string ButtonSelectCursorcolorToolTipTitle {
+            get {
+                return ResourceManager.GetString("ButtonSelectCursorcolorToolTipTitle", resourceCulture);
             }
         }
         
@@ -4741,6 +4768,15 @@ namespace VianaNET.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupCursorcolorLabelTitle ähnelt.
+        /// </summary>
+        public static string RibbonGroupCursorcolorLabelTitle {
+            get {
+                return ResourceManager.GetString("RibbonGroupCursorcolorLabelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @RibbonGroupDatagridExportLabelTitle ähnelt.
         /// </summary>
         public static string RibbonGroupDatagridExportLabelTitle {
@@ -5241,6 +5277,51 @@ namespace VianaNET.Localization {
         public static string SelectColorWindowTitle {
             get {
                 return ResourceManager.GetString("SelectColorWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SelectCursorcolorDialogColorLabel ähnelt.
+        /// </summary>
+        public static string SelectCursorcolorDialogColorLabel {
+            get {
+                return ResourceManager.GetString("SelectCursorcolorDialogColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SelectCursorcolorDialogTitle ähnelt.
+        /// </summary>
+        public static string SelectCursorcolorDialogTitle {
+            get {
+                return ResourceManager.GetString("SelectCursorcolorDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SelectCursorcolorDialogTopFrameTitle ähnelt.
+        /// </summary>
+        public static string SelectCursorcolorDialogTopFrameTitle {
+            get {
+                return ResourceManager.GetString("SelectCursorcolorDialogTopFrameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SelectCursorcolorDialogTypeDescription ähnelt.
+        /// </summary>
+        public static string SelectCursorcolorDialogTypeDescription {
+            get {
+                return ResourceManager.GetString("SelectCursorcolorDialogTypeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SelectCursorcolorDialogTypeLabel ähnelt.
+        /// </summary>
+        public static string SelectCursorcolorDialogTypeLabel {
+            get {
+                return ResourceManager.GetString("SelectCursorcolorDialogTypeLabel", resourceCulture);
             }
         }
         

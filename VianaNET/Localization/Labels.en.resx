@@ -853,6 +853,15 @@ Would like to have feedback:</value>
   <data name="ButtonSelectColorToolTipTitle" xml:space="preserve">
     <value>Select target color.</value>
   </data>
+  <data name="ButtonSelectCursorcolorLabelTitle" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipDescription" xml:space="preserve">
+    <value>This dialog defines type and color of the object cursor.</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipTitle" xml:space="preserve">
+    <value>Set cursorcolor</value>
+  </data>
   <data name="ButtonSelectedColorLabelTitle" xml:space="preserve">
     <value>Target color</value>
   </data>
@@ -1694,6 +1703,9 @@ It can be newly placed with the mouse now.</value>
   <data name="RibbonGroupChartShowWindowLabelTitle" xml:space="preserve">
     <value>Activate</value>
   </data>
+  <data name="RibbonGroupCursorcolorLabelTitle" xml:space="preserve">
+    <value>Cursor</value>
+  </data>
   <data name="RibbonGroupDatagridExportLabelTitle" xml:space="preserve">
     <value>Export data</value>
   </data>
@@ -1861,6 +1873,22 @@ It can be newly placed with the mouse now.</value>
   </data>
   <data name="SelectColorWindowTitle" xml:space="preserve">
     <value>Color selection</value>
+  </data>
+  <data name="SelectCursorcolorDialogColorLabel" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="SelectCursorcolorDialogTitle" xml:space="preserve">
+    <value>select cursorcolor</value>
+  </data>
+  <data name="SelectCursorcolorDialogTopFrameTitle" xml:space="preserve">
+    <value>Please select object cursors type and color.</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeDescription" xml:space="preserve">
+    <value>Fix:   The cursor color will always be the selected color.
+Flex: The cursor color depends on the color of the auto-tracked object.</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeLabel" xml:space="preserve">
+    <value>Automatic type</value>
   </data>
   <data name="SelectVlcLibrariesDescription" xml:space="preserve">
     <value>Please select Vlc libraries folder.</value>

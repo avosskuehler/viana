@@ -193,6 +193,24 @@ namespace VianaNET.Data
       new FrameworkPropertyMetadata(true));
 
     /// <summary>
+    ///   The cursorcolor type property.
+    /// </summary>
+    public static readonly DependencyProperty CursorcolorTypeProperty = DependencyProperty.Register(
+      "CursorcolorType",
+      typeof(CursorcolorType),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(CursorcolorType.Flex));
+
+    /// <summary>
+    ///   The default color of the cursor property.
+    /// </summary>
+    public static readonly DependencyProperty CursorcolorProperty = DependencyProperty.Register(
+      "Cursorcolor",
+      typeof(Color),
+      typeof(ProcessingData),
+      new FrameworkPropertyMetadata(Colors.Black));
+
+    /// <summary>
     ///   The color and crop filter.
     /// </summary>
     private readonly ColorAndCropFilterRgb colorAndCropFilter;
@@ -241,9 +259,6 @@ namespace VianaNET.Data
     ///   The total processing time.
     /// </summary>
     private long totalProcessingTime;
-
-
-
 
 
     /// <summary>
@@ -465,6 +480,24 @@ namespace VianaNET.Data
 
       set => this.SetValue(IsDetectionActivatedProperty, value);
       //get => this.IsUsingColorDetection || this.IsUsingMotionDetection;
+    }
+
+    /// <summary>
+    ///   Gets or sets the CursorcolorType
+    /// </summary>
+    public CursorcolorType CursorcolorType
+    {
+      get => (CursorcolorType)this.GetValue(CursorcolorTypeProperty);
+      set => this.SetValue(CursorcolorTypeProperty, value);
+    }
+
+    /// <summary>
+    ///   Gets or sets the Cursorcolor
+    /// </summary>
+    public Color Cursorcolor
+    {
+      get => (Color)this.GetValue(CursorcolorProperty);
+      set => this.SetValue(CursorcolorProperty, value);
     }
 
     /// <summary>

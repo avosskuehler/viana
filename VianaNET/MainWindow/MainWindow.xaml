@@ -758,6 +758,15 @@
         </RibbonGroup>
       </RibbonTab>
       <RibbonTab x:Name="RibbonTabOptions" Header="{lex:Loc VianaNET:Labels:RibbonTabOptionsLabel}">
+        <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupCursorcolorLabelTitle}">
+          <RibbonButton Click="SelectCursorcolorButtonClick" 
+                         Name="SelectCursorcolorRibbonButton"
+                         Label="{lex:Loc VianaNET:Labels:ButtonSelectCursorcolorLabelTitle}" 
+                         LargeImageSource="/VianaNET;component/Images/SelectColor32.png" 
+                         SmallImageSource="/VianaNET;component/Images/SelectColor16.png" 
+                         ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonSelectCursorcolorToolTipTitle}"
+                         ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonSelectCursorcolorToolTipDescription}"/>
+        </RibbonGroup>
         <RibbonGroup Header="{lex:Loc VianaNET:Labels:RibbonGroupLanguageLabelTitle, ForceCulture=en }">
           <Grid Name="LanguageGrid">
             <Grid.RowDefinitions>

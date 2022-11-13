@@ -316,6 +316,7 @@
       <DependentUpon>SliderStyles.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomStyles\Types\AxisType.cs" />
+    <Compile Include="CustomStyles\Types\CursorcolorType.cs" />
     <Compile Include="CustomStyles\Types\TrackObject.cs" />
     <Compile Include="CustomStyles\Types\CameraDevice.cs" />
     <Compile Include="CustomStyles\Types\ChartType.cs" />
@@ -420,6 +421,9 @@
       <DependentUpon>ChartWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Chart\ExportChart.cs" />
+    <Compile Include="Modules\DataAcquisition\SelectCursorcolorDlg.xaml.cs">
+      <DependentUpon>SelectCursorcolorDlg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\DataAcquisition\ManualDataAquisitionWindow.xaml.cs">
       <DependentUpon>ManualDataAquisitionWindow.xaml</DependentUpon>
     </Compile>
@@ -630,6 +634,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Chart\ChartWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\DataAcquisition\SelectCursorcolorDlg.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

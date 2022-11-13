@@ -35,11 +35,11 @@
       </StackPanel>
     </Border>
     <Canvas Name="WindowCanvas" MouseMove="WindowCanvasMouseMove" PreviewMouseMove="WindowCanvasMouseMove">
-      <Line Name="VerticalCursorLineTop" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineLeft" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="VerticalCursorLineBottom" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Line Name="HorizontalCursorLineRight" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCossHair}"></Line>
-      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCossHair}" Width="15" Height="15" />
+      <Line Name="VerticalCursorLineTop" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="HorizontalCursorLineLeft" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="VerticalCursorLineBottom" IsHitTestVisible="False" X1="50" X2="50" Y1="0" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Line Name="HorizontalCursorLineRight" IsHitTestVisible="False" X1="0" X2="50" Y1="50" Y2="50" Stroke="{Binding BrushOfCrossHair}"></Line>
+      <Ellipse Name="CursorEllipse" Stroke="{Binding BrushOfCrossHair}" Width="15" Height="15" />
       <Border Name="ObjectIndexPanel" 
               Visibility="{Binding Path=ProcessingData.NumberOfTrackedObjects, Source={x:Static local:App.Project}, Converter={StaticResource NumberOfObjectsToVisibilityConverter}}"
               Canvas.Top="{Binding ElementName=WindowCanvas,Path=ActualHeight}"

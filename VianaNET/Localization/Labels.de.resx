@@ -854,6 +854,15 @@ Ich freue mich über Feedback:</value>
   <data name="ButtonSelectColorToolTipTitle" xml:space="preserve">
     <value>Objektfarbe wählen</value>
   </data>
+  <data name="ButtonSelectCursorcolorLabelTitle" xml:space="preserve">
+    <value>Wählen</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipDescription" xml:space="preserve">
+    <value>In diesem Dialog kann die Art und Farbe des Objektcursors festgelegt werden.</value>
+  </data>
+  <data name="ButtonSelectCursorcolorToolTipTitle" xml:space="preserve">
+    <value>Cursorfarbe festlegen</value>
+  </data>
   <data name="ButtonSelectedColorLabelTitle" xml:space="preserve">
     <value>Objektfarbe</value>
   </data>
@@ -1696,6 +1705,9 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
   <data name="RibbonGroupChartShowWindowLabelTitle" xml:space="preserve">
     <value>Aktivieren</value>
   </data>
+  <data name="RibbonGroupCursorcolorLabelTitle" xml:space="preserve">
+    <value>Cursor</value>
+  </data>
   <data name="RibbonGroupDatagridExportLabelTitle" xml:space="preserve">
     <value>Datenexport</value>
   </data>
@@ -1863,6 +1875,22 @@ Mit der Maus kann er jetzt neu gesetzt werden.</value>
   </data>
   <data name="SelectColorWindowTitle" xml:space="preserve">
     <value>Farbwahl</value>
+  </data>
+  <data name="SelectCursorcolorDialogColorLabel" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="SelectCursorcolorDialogTitle" xml:space="preserve">
+    <value>Cursorfarbe wählen</value>
+  </data>
+  <data name="SelectCursorcolorDialogTopFrameTitle" xml:space="preserve">
+    <value>Bitte Art und Farbe des Objektcursors festlegen.</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeDescription" xml:space="preserve">
+    <value>Fix:   Der Objektcursor behält immer die oben festgelegte Farbe.
+Flex: Der Objektcursor bekommt die Farbe des jeweils zuletzt erfassten Objekts.</value>
+  </data>
+  <data name="SelectCursorcolorDialogTypeLabel" xml:space="preserve">
+    <value>Automatiktyp</value>
   </data>
   <data name="SelectVlcLibrariesDescription" xml:space="preserve">
     <value>Bitte wählen Sie den Ordner mit den VLC Bibliotheken aus.</value>

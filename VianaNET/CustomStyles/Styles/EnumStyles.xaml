@@ -7,4 +7,9 @@
       <x:Type TypeName="types:TimeUnit" />
     </ObjectDataProvider.MethodParameters>
   </ObjectDataProvider>
+  <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="CursorcolorTypes">
+    <ObjectDataProvider.MethodParameters>
+      <x:Type TypeName="types:CursorcolorType" />
+    </ObjectDataProvider.MethodParameters>
+  </ObjectDataProvider>
 </ResourceDictionary>

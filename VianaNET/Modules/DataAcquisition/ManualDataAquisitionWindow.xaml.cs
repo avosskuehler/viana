@@ -42,10 +42,10 @@ namespace VianaNET.Modules.DataAcquisition
 
 
     /// <summary>
-    ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCossHair" />.
+    ///   The <see cref="DependencyProperty" /> for the property <see cref="BrushOfCrossHair" />.
     /// </summary>
-    public static readonly DependencyProperty BrushOfCossHairProperty = DependencyProperty.Register(
-      "BrushOfCossHair",
+    public static readonly DependencyProperty BrushOfCrossHairProperty = DependencyProperty.Register(
+      "BrushOfCrossHair",
       typeof(SolidColorBrush),
       typeof(ManualDataAquisitionWindow),
       new FrameworkPropertyMetadata(Brushes.Red, OnPropertyChanged));
@@ -110,6 +110,7 @@ namespace VianaNET.Modules.DataAcquisition
       }
 
       this.TimelineSlider.Value = Video.Instance.VideoElement.MediaPositionInMS;
+      this.BrushOfCrossHair = new SolidColorBrush(App.Project.ProcessingData.Cursorcolor);
     }
 
 
@@ -117,13 +118,13 @@ namespace VianaNET.Modules.DataAcquisition
 
 
     /// <summary>
-    ///   Gets or sets the index of the currently tracked object
+    ///   Gets or sets the brush of the crosshair
     /// </summary>
-    public SolidColorBrush BrushOfCossHair
+    public SolidColorBrush BrushOfCrossHair
     {
-      get => (SolidColorBrush)this.GetValue(BrushOfCossHairProperty);
+      get => (SolidColorBrush)this.GetValue(BrushOfCrossHairProperty);
 
-      set => this.SetValue(BrushOfCossHairProperty, value);
+      set => this.SetValue(BrushOfCrossHairProperty, value);
     }
 
     /// <summary>
@@ -169,11 +170,26 @@ namespace VianaNET.Modules.DataAcquisition
         {
           window.IndexOfTrackedObject = 1;
         }
-
-        Color color = App.Project.ProcessingData.TargetColor.Count > window.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1] : Colors.Black;
-        window.BrushOfCossHair =
-          new SolidColorBrush(color);
       }
+
+      switch (App.Project.ProcessingData.CursorcolorType)
+      {
+        case CursorcolorType.Fix:
+          if (window.BrushOfCrossHair.Color != App.Project.ProcessingData.Cursorcolor)
+          {
+            window.BrushOfCrossHair = new SolidColorBrush(App.Project.ProcessingData.Cursorcolor);
+          }
+          break;
+        default:
+        case CursorcolorType.Flex:
+          Color color = App.Project.ProcessingData.TargetColor.Count > window.IndexOfTrackedObject - 1 ? App.Project.ProcessingData.TargetColor[window.IndexOfTrackedObject - 1] : App.Project.ProcessingData.Cursorcolor;
+          if (window.BrushOfCrossHair.Color != color)
+          {
+            window.BrushOfCrossHair = new SolidColorBrush(color);
+          }
+          break;
+      }
+
     }
 
     /// <summary>
@@ -253,7 +269,17 @@ namespace VianaNET.Modules.DataAcquisition
         this.visualDataPoints = new List<Ellipse>[App.Project.ProcessingData.NumberOfTrackedObjects];
         for (int j = 0; j < App.Project.ProcessingData.NumberOfTrackedObjects; j++)
         {
-          Color color = App.Project.ProcessingData.TargetColor.Count > j ? App.Project.ProcessingData.TargetColor[j] : Colors.Black;
+          Color color;
+          switch (App.Project.ProcessingData.CursorcolorType)
+          {
+            case CursorcolorType.Fix:
+              color = App.Project.ProcessingData.Cursorcolor;
+              break;
+            default:
+            case CursorcolorType.Flex:
+              color = App.Project.ProcessingData.TargetColor.Count > j ? App.Project.ProcessingData.TargetColor[j] : App.Project.ProcessingData.Cursorcolor;
+              break;
+          }
           this.visualDataPoints[j] = new List<Ellipse>(count);
           for (int i = 0; i < count; i++)
           {

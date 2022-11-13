@@ -77,6 +77,7 @@ namespace VianaNET.MainWindow
       {
         this.VideoInputDeviceCombo.SelectedIndex = 0;
       }
+      this.UpdateCursorcolorButton();
 
       this.Show();
     }
@@ -1271,6 +1272,52 @@ namespace VianaNET.MainWindow
       App.Project.ProcessingData.Reset(false);
       App.Project.VideoData.Reset();
       this.Refresh();
+    }
+
+    private void SelectCursorcolorButtonClick(object sender, RoutedEventArgs e)
+    {
+      SelectCursorcolorDlg dlg = new SelectCursorcolorDlg();
+      if (dlg.ShowDialog().GetValueOrDefault())
+      {
+        this.UpdateCursorcolorButton();
+      }
+    }
+
+    /// <summary>
+    /// Updates the color button with the correct colors
+    /// </summary>
+    private void UpdateCursorcolorButton()
+    {
+      DrawingVisual drawingVisual = new DrawingVisual();
+      DrawingContext drawingContext = drawingVisual.RenderOpen();
+      drawingContext.DrawRoundedRectangle(Brushes.Transparent, null, new Rect(0, 0, 32, 32), 5, 5);
+      int count = App.Project.ProcessingData.NumberOfTrackedObjects;
+      float bandwidth = 26f / count;
+      for (int i = 0; i < count; i++)
+      {
+        Color color = Colors.Black;
+        switch (App.Project.ProcessingData.CursorcolorType)
+        {
+          case CursorcolorType.Fix:
+            color = App.Project.ProcessingData.Cursorcolor;
+            break;
+          default:
+          case CursorcolorType.Flex:
+            color = App.Project.ProcessingData.TargetColor.Count > i ? App.Project.ProcessingData.TargetColor[i] : App.Project.ProcessingData.Cursorcolor;
+            break;
+        }
+        drawingContext.DrawRectangle(
+          new SolidColorBrush(color),
+          null,
+          new Rect(3 + i * bandwidth, 3, bandwidth, 27));
+      }
+
+      drawingContext.DrawRoundedRectangle(Brushes.Transparent, new Pen(Brushes.White, 2f), new Rect(2, 2, 28, 28), 5, 5);
+
+      drawingContext.Close();
+      RenderTargetBitmap bmp = new RenderTargetBitmap(32, 32, 96, 96, PixelFormats.Pbgra32);
+      bmp.Render(drawingVisual);
+      this.SelectCursorcolorRibbonButton.LargeImageSource = bmp;
     }
   }
 }
