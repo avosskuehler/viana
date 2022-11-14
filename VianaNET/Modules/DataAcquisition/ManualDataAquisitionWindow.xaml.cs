@@ -375,16 +375,14 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (e.ChangedButton == MouseButton.Left)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-        double spaceX = 0; // (this.videoSurfaceClone.ActualWidth - this.videoSurfaceClone.UniformWidth) / 2;
-        double spaceY = 0; // (this.videoSurfaceClone.ActualHeight - this.videoSurfaceClone.UniformHeight) / 2;
-        double originalX = factorX * (scaledX - spaceX);
-        double originalY = factorY * (scaledY - spaceY);
+        double posX = e.GetPosition(this.VideoImage).X;
+        double posY = e.GetPosition(this.VideoImage).Y;
+        double scaleX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        double scaleY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+        double pixelX = scaleX * posX;
+        double pixelY = scaleY * posY;
 
-        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(pixelX, Video.Instance.VideoElement.NaturalVideoHeight - pixelY));
 
         if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {

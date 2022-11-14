@@ -162,7 +162,7 @@ namespace VianaNET.Modules.DataAcquisition
     /// <param name="frameIndex">Index of the frame.</param>
     public void MoveToFrame(int frameIndex)
     {
-      var newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInMS * frameIndex;
+      var newMediaPosition = Video.Instance.VideoPlayerElement.FrameTimeInMS * (frameIndex - 1);
       Video.Instance.VideoPlayerElement.MediaPositionInMS = newMediaPosition;
       this.TimelineSlider.Value = newMediaPosition;
       Video.Instance.VideoPlayerElement.UpdateFrameIndex();
@@ -317,14 +317,14 @@ namespace VianaNET.Modules.DataAcquisition
     {
       if (e.ChangedButton == MouseButton.Left)
       {
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        var factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        var factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-        var originalX = factorX * scaledX;
-        var originalY = factorY * scaledY;
+        double posX = e.GetPosition(this.VideoImage).X;
+        double posY = e.GetPosition(this.VideoImage).Y;
+        double scaleX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        double scaleY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+        double pixelX = scaleX * posX;
+        double pixelY = scaleY * posY;
 
-        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
+        App.Project.VideoData.AddPoint(this.IndexOfTrackedObject - 1, new Point(pixelX, Video.Instance.VideoElement.NaturalVideoHeight - pixelY));
 
         if (this.IndexOfTrackedObject == App.Project.ProcessingData.NumberOfTrackedObjects)
         {
@@ -404,18 +404,17 @@ namespace VianaNET.Modules.DataAcquisition
         this.SetVisibilityOfSharpCursor(false);
         this.Cursor = Cursors.Arrow;
 
-        double scaledX = e.GetPosition(this.VideoImage).X;
-        double scaledY = e.GetPosition(this.VideoImage).Y;
-        double factorX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
-        double factorY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
-        double originalX = factorX * scaledX;
-        double originalY = factorY * scaledY;
+        double posX = e.GetPosition(this.VideoImage).X;
+        double posY = e.GetPosition(this.VideoImage).Y;
+        double scaleX = Video.Instance.VideoElement.NaturalVideoWidth / this.VideoImage.ActualWidth;
+        double scaleY = Video.Instance.VideoElement.NaturalVideoHeight / this.VideoImage.ActualHeight;
+        double pixelX = scaleX * posX;
+        double pixelY = scaleY * posY;
 
         App.Project.VideoData.UpdatePoint(
           Video.Instance.FrameIndex,
           this.IndexOfTrackedObject - 1,
-          new Point(originalX, Video.Instance.VideoElement.NaturalVideoHeight - originalY));
-
+          new Point(pixelX, Video.Instance.VideoElement.NaturalVideoHeight - pixelY));
       }
     }
 
@@ -524,7 +523,7 @@ namespace VianaNET.Modules.DataAcquisition
           if (sample.Object != null && sample.Object[i - 1] != null)
           {
             Point location = new Point(sample.Object[i - 1].PixelX, Video.Instance.VideoElement.NaturalVideoHeight - sample.Object[i - 1].PixelY);
-            location = App.Project.CalibrationData.CoordinateTransform.Transform(location);
+            //location = App.Project.CalibrationData.CoordinateTransform.Transform(location);
             //Point origin = App.Project.CalibrationData.OriginInPixel;
             //location.Offset(origin.X, origin.Y);
             var scaledX = location.X / factorX;

@@ -160,7 +160,14 @@ namespace VianaNET.Modules.Video.Control
       //{
       //  DShowUtils.DisplayPropertyPage(IntPtr.Zero, this.VideoDeviceIndex);
       //}
-      this.OpenCVObject.Set(VideoCaptureProperties.Settings, 1);
+      try
+      {
+        this.OpenCVObject.Set(VideoCaptureProperties.Settings, 1);
+      }
+      catch (System.Exception)
+      {
+        InformationDialog.Show("Fehler", "Eigenschaftsseite kann nicht angezeigt werden", false);
+      }
     }
 
 

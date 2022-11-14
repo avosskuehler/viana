@@ -293,13 +293,13 @@
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonRotateVideoToolTipTitle}"
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonRotateVideoToolTipDescription}"
                          IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
-          <!--<RibbonButton Click="CoordinateSystemButtonClick"
+          <RibbonButton Click="CoordinateSystemButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemLabelTitle}"
                          LargeImageSource="/VianaNET;component/Images/CoordinateSystem32.png"
                          SmallImageSource="/VianaNET;component/Images/CoordinateSystem16.png"
                          ToolTipTitle="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipTitle}"
                          ToolTipDescription="{lex:Loc VianaNET:Labels:ButtonCoordinateSystemToolTipDescription}"
-                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>-->
+                         IsEnabled="{Binding Path=HasVideo, Source={x:Static control:Video.Instance}}"/>
           <RibbonButton Name="SelectNumberOfObjectsButton"
                          Click="SelectNumberOfObjectsButtonClick"
                          Label="{lex:Loc VianaNET:Labels:ButtonSelectNumberOfObjectsLabelTitle}" 

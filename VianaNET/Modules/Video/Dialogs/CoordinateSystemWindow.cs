@@ -23,6 +23,7 @@
 
 namespace VianaNET.Modules.Video.Dialogs
 {
+  using SharpDX.Direct3D9;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
@@ -148,14 +149,17 @@ namespace VianaNET.Modules.Video.Dialogs
       {
         this.DialogResult = true;
         Vector vectorDefault = new Vector(1, 0);
-        Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
-        Vector vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y2 - this.directionY.Y1);
+        Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y1 - this.directionX.Y2);
+        Vector vectorYAxis = new Vector(this.directionY.X2 - this.directionY.X1, this.directionY.Y1 - this.directionY.Y2);
         double angle = Vector.AngleBetween(vectorXAxis, vectorYAxis);
-        int scaleY = angle < 0 ? 1 : -1;
+
+        // angle = 90 is CCW right handed
+        // angle = -90 is CW left hand
+        int scaleY = angle < 0 ? -1 : 1;
         Matrix matrix = new Matrix();
         double angleX = Vector.AngleBetween(vectorDefault, vectorXAxis);
         matrix.Scale(1, scaleY);
-        matrix.Rotate(angleX);
+        matrix.Rotate(-angleX);
 
         App.Project.CalibrationData.CoordinateTransform = matrix;
         this.Close();
@@ -236,7 +240,7 @@ namespace VianaNET.Modules.Video.Dialogs
       if (this.GetScales(out double scaleX, out double scaleY))
       {
         double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
-        double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;
+        double originYInScreenPixel = (Video.Control.Video.Instance.VideoElement.NaturalVideoHeight - App.Project.CalibrationData.OriginInPixel.Y) * scaleY;
         Canvas.SetLeft(this.originPath, originXInScreenPixel - this.originPath.ActualWidth / 2);
         Canvas.SetTop(this.originPath, originYInScreenPixel - this.originPath.ActualHeight / 2);
         this.directionX.X1 = originXInScreenPixel;
@@ -312,20 +316,20 @@ namespace VianaNET.Modules.Video.Dialogs
       if (this.GetScales(out double scaleX, out double scaleY))
       {
         double originXInScreenPixel = App.Project.CalibrationData.OriginInPixel.X * scaleX;
-        double originYInScreenPixel = App.Project.CalibrationData.OriginInPixel.Y * scaleY;
+        double originYInScreenPixel = (Video.Control.Video.Instance.VideoElement.NaturalVideoHeight - App.Project.CalibrationData.OriginInPixel.Y) * scaleY;
 
         Vector vectorXAxis = new Vector(this.directionX.X2 - this.directionX.X1, this.directionX.Y2 - this.directionX.Y1);
         Vector vectorMouse = new Vector(mouseLocation.X - originXInScreenPixel, mouseLocation.Y - originYInScreenPixel);
         double angleMouseXAxis = Vector.AngleBetween(vectorXAxis, vectorMouse);
         Vector vectorY;
-        if (angleMouseXAxis >= 0 && angleMouseXAxis <= 180)
-        {
-          vectorY = new Vector(-vectorXAxis.Y, vectorXAxis.X);
-        }
-        else
-        {
+        //if (angleMouseXAxis >= 0 && angleMouseXAxis <= 180)
+        //{
+       //   vectorY = new Vector(-vectorXAxis.Y, vectorXAxis.X);
+        //}
+        //else
+        //{
           vectorY = new Vector(vectorXAxis.Y, -vectorXAxis.X);
-        }
+        //}
 
         this.directionY.X2 = originXInScreenPixel + vectorY.X;
         this.directionY.Y2 = originYInScreenPixel + vectorY.Y;

@@ -483,7 +483,7 @@ namespace VianaNET.Data
         //Point origin = App.Project.CalibrationData.OriginInPixel;
         Point transformedPoint = newLocation;
         //transformedPoint.Offset(-origin.X, -origin.Y);
-        transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
+        //transformedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(transformedPoint);
         sample.Object[objectIndex].PixelX = transformedPoint.X;
         sample.Object[objectIndex].PixelY = transformedPoint.Y;
       }
@@ -520,7 +520,7 @@ namespace VianaNET.Data
     /// </returns>
     private static Point CalibrateSample(DataSample value)
     {
-      if (!App.Project.CalibrationData.IsVideoCalibrated)
+      if (!App.Project.CalibrationData.IsVideoCalibrated && App.Project.CalibrationData.CoordinateTransform.IsIdentity)
       {
         return new Point(value.PixelX, value.PixelY);
       }
@@ -528,11 +528,40 @@ namespace VianaNET.Data
       Point origin = App.Project.CalibrationData.OriginInPixel;
       Point calibratedPoint = new Point(value.PixelX - origin.X, value.PixelY - origin.Y);
 
+      calibratedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(calibratedPoint);
+
       calibratedPoint.X = calibratedPoint.X * App.Project.CalibrationData.ScalePixelToUnit;
       calibratedPoint.Y = calibratedPoint.Y * App.Project.CalibrationData.ScalePixelToUnit;
 
       return calibratedPoint;
     }
+
+    ///// <summary>
+    ///// The calibrate sample.
+    ///// </summary>
+    ///// <param name="value">
+    ///// The value.
+    ///// </param>
+    ///// <returns>
+    ///// The <see cref="Point"/> .
+    ///// </returns>
+    //private static DataSample RevertSampleCalibration(Point value)
+    //{
+    //  if (!App.Project.CalibrationData.IsVideoCalibrated && App.Project.CalibrationData.CoordinateTransform.IsIdentity)
+    //  {
+    //    return new Point(value.PixelX, value.PixelY);
+    //  }
+
+    //  Point origin = App.Project.CalibrationData.OriginInPixel;
+    //  Point calibratedPoint = new Point(value.PixelX - origin.X, value.PixelY - origin.Y);
+
+    //  calibratedPoint = App.Project.CalibrationData.CoordinateTransform.Transform(calibratedPoint);
+
+    //  calibratedPoint.X = calibratedPoint.X * App.Project.CalibrationData.ScalePixelToUnit;
+    //  calibratedPoint.Y = calibratedPoint.Y * App.Project.CalibrationData.ScalePixelToUnit;
+
+    //  return calibratedPoint;
+    //}
 
     /// <summary>
     ///   Returns the factor to convert sample with milliseconds in the current time unit;
