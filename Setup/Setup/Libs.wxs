@@ -23,8 +23,8 @@
       <!--<Directory Id="dll" Name="dll">-->
         <?if $(var.Platform) = x64 ?>
         <!--<Directory Id="x64" Name="x64">-->
-          <Component Id="C_opencv_videoio_ffmpeg453_64" Guid="{2A8BC680-E6BC-4DDA-BB37-BE3043E8C5EC}" Win64="$(var.Win64)">
-            <File Id="opencv_videoio_ffmpeg453_64" Name="opencv_videoio_ffmpeg453_64.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x64\" />
+          <Component Id="C_opencv_videoio_ffmpeg455_64" Guid="{2A8BC680-E6BC-4DDA-BB37-BE3043E8C5EC}" Win64="$(var.Win64)">
+            <File Id="opencv_videoio_ffmpeg455_64" Name="opencv_videoio_ffmpeg455_64.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x64\" />
           </Component>
           <Component Id="C_OpenCvSharpExtern_64" Guid="{A4D24CD6-4BDC-4501-A4D7-641BB3FD3DD1}" Win64="$(var.Win64)">
             <File Id="OpenCvSharpExtern_64" Name="OpenCvSharpExtern.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x64\" />
@@ -32,8 +32,8 @@
         <!--</Directory>-->
         <?else ?>
         <!--<Directory Id="x86" Name="x86">-->
-          <Component Id="C_opencv_videoio_ffmpeg453" Guid="{3F255353-80B4-4CCA-A729-F03C396F0935}" Win64="$(var.Win64)">
-            <File Id="opencv_videoio_ffmpeg453" Name="opencv_videoio_ffmpeg453.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x86\" />
+          <Component Id="C_opencv_videoio_ffmpeg455" Guid="{3F255353-80B4-4CCA-A729-F03C396F0935}" Win64="$(var.Win64)">
+            <File Id="opencv_videoio_ffmpeg455" Name="opencv_videoio_ffmpeg455.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x86\" />
           </Component>
           <Component Id="C_OpenCvSharpExtern" Guid="{8BE9F0EB-A538-44A9-B0F8-05DFFB612659}" Win64="$(var.Win64)">
             <File Id="OpenCvSharpExtern" Name="OpenCvSharpExtern.dll" DiskId="1" Source="$(var.VianaNET.TargetDir)dll\x86\" />
@@ -78,10 +78,6 @@
 
       <Component Id="C_OpenCvSharp" Guid="{5BAA9016-584D-4089-B7C4-DC2930014D35}" Win64="$(var.Win64)">
         <File Id="OpenCvSharp" Name="OpenCvSharp.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OpenCvSharp" AssemblyApplication="OpenCvSharp" DiskId="1"
-              Source="$(var.VianaNET.TargetDir)" />
-      </Component>
-      <Component Id="C_OpenCvSharp.Extensions" Guid="{FE95A073-7D9C-4F4B-8394-A134E6D8582E}" Win64="$(var.Win64)">
-        <File Id="OpenCvSharp.Extensions" Name="OpenCvSharp.Extensions.dll" KeyPath="yes" Assembly=".net" AssemblyManifest="OpenCvSharp.Extensions" AssemblyApplication="OpenCvSharp.Extensions" DiskId="1"
               Source="$(var.VianaNET.TargetDir)" />
       </Component>
       <Component Id="C_OpenCvSharp.WpfExtensions" Guid="{5DA8BC65-F523-43C7-B63F-83EF81CC6D63}" Win64="$(var.Win64)">
@@ -180,13 +176,12 @@
 
       <Feature Id='OpenCVFeature' Title='OpenCV' Description='Installs openCV libraries for the application.' Level='1'>
         <ComponentRef Id='C_OpenCvSharp' />
-        <ComponentRef Id='C_OpenCvSharp.Extensions' />
         <ComponentRef Id='C_OpenCvSharp.WpfExtensions' />
         <?if $(var.Platform) = x64 ?>
-        <ComponentRef Id='C_opencv_videoio_ffmpeg453_64' />
+        <ComponentRef Id='C_opencv_videoio_ffmpeg455_64' />
         <ComponentRef Id='C_OpenCvSharpExtern_64' />
         <?else ?>
-        <ComponentRef Id='C_opencv_videoio_ffmpeg453' />
+        <ComponentRef Id='C_opencv_videoio_ffmpeg455' />
         <ComponentRef Id='C_OpenCvSharpExtern' />
         <?endif ?>
       </Feature>
