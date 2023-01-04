@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Freie Universität Berlin")]
 [assembly: AssemblyProduct("Viana.NET")]
-[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2022")]
+[assembly: AssemblyCopyright("Copyright @ Dr. Adrian Voßkühler 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -49,6 +49,6 @@ using System.Windows;
 // Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 // indem Sie "*" wie unten gezeigt eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("6.5.*")]
-[assembly: AssemblyFileVersion("6.5.1")]
+[assembly: AssemblyVersion("6.6.*")]
+[assembly: AssemblyFileVersion("6.6.1")]
 [assembly: Guid("1E23CAD1-6F4B-4a08-BF9B-91E27D8E2503")]

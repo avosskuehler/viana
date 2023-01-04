@@ -9,7 +9,6 @@
 namespace VianaNET.Modules.Video.Control
 {
   using System;
-  using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.ComponentModel;
   using System.Drawing;
@@ -22,7 +21,6 @@ namespace VianaNET.Modules.Video.Control
   using SharpDX.MediaFoundation;
   using VianaNET.CustomStyles.Types;
   using VianaNET.MainWindow;
-  using VianaNET.Modules.Video.Dialogs;
 
   /// <summary>
   ///   This class is the base class for all video inputs.

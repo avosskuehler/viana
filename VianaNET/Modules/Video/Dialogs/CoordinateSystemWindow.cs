@@ -23,7 +23,6 @@
 
 namespace VianaNET.Modules.Video.Dialogs
 {
-  using SharpDX.Direct3D9;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
